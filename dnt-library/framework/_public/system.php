@@ -1,0 +1,233 @@
+<?php
+
+function _init(){
+	
+	$dntSs = new Sessions();
+	$dntSs->init_session();
+	$dntSs->set_session_data("page_id", set_rand_string(10));
+	
+	if($dntSs->get_session_data("session_id") == false){
+		$dntSs->set_session_data("session_id", set_rand_string(10));
+	}
+	
+	
+}
+
+function del_old_cache(){
+	$dir = "dnt-cache/";
+	if (is_dir($dir)){
+	  if ($dh = opendir($dir)){
+		while (($filename = readdir($dh)) !== false){
+			$dateArr = explode(" ", date ("F d Y H:i:s.", filemtime($dir.$filename)));
+			$datum_mesiac = $dateArr[0];
+			$datum_den = $dateArr[1];
+			$datum_rok = $dateArr[2];
+			
+			if($datum_den != "01"){ //prvy den v mesiaci sa nemaze
+				if($datum_den < dvojcifernyDatum(get_den())){
+					//echo "$dir.$filename was last modified: " . date ("m d Y H:i:s.", filemtime($dir.$filename))."<br/>";
+					//echo $datum_den."<br/>";
+					@unlink($dir.$filename);
+				}
+			}
+		}
+		closedir($dh);
+	  }
+	}
+}
+
+function get_http_header($arr){
+	
+	$httpCacheStatus = CACHE_HTTP_STATUS;
+	
+	if(isset($arr['http_request'])){
+		$http_request = $arr['http_request'];
+	}
+	else{
+		$http_request = 200;
+	}
+	
+	if(isset($arr['http_request_info'])){
+		$http_request_info = $arr['http_request_info'];
+	}
+	else{
+		$http_request_info = false;
+	}
+	
+	
+	
+	if($http_request == $httpCacheStatus){
+		$headerMsgCache = "content-cache";
+	}
+	else{
+		$headerMsgCache = "no-cache";
+	}
+	
+	
+	//get instance
+	$dntVendor 	= new Vendor();
+	$dntSs 		= new Sessions();
+	$dntSs->init_session();
+	
+	header($_SERVER["SERVER_PROTOCOL"]." ".$http_request." ".$http_request_info." ");
+	
+	if($http_request == $httpCacheStatus){
+		header('Cache-Control: cache');
+		header('Cache-Control: cache');
+		header("Expires: wait-time ".CACHE_TIME_SEC. "sec");
+		header("Pragma: cache");
+		header('Dnt-Cache-Time: '.CACHE_TIME_SEC. "sec");
+	}
+	//header('Content-Type: text/html');
+	header('Dnt-Request-System: '.GET_SYSTEM_NAME);
+	header('Dnt-Request-Url: '.WWW_FULL_PATH);
+	header('Dnt-Framework: '.GET_SYSTEM_VERSION);
+	header('Dnt-Version: '.GET_SYSTEM_VERSION);
+	header('Dnt-Log: '.$dntSs->get_session_data( "page_id" ));
+	header('Dnt-Vendor: '.$dntVendor->getVendorUrl());
+	header('Dnt-Vendor-Id: '.$dntVendor->getVendorId());
+	header('Dnt-Server-Frontend: tom_F::brick-01');
+	header('Dnt-Server-Backend: tom_B::brick-01');
+	header('Dnt-Server-CDN: tom_C::brick-01');
+	header('Dnt-Server-Varnish: tom_V::brick-01 @path\./\!dnt-cache');
+	header('Dnt-Database-Model: Claster');
+	//header('Dnt-Composer: '.GET_SYSTEM_COMPOSER);
+	//header('Dnt-Engine-Pattern: '.GET_SYSTEM_ENGINE_PATTERN);
+	//header('Dnt-Search-Engine: '.GET_SYSTEM_SEARCH_ENGINE);
+	//header('Dnt-Components: '.GET_SYSTEM_COMPONENTS);
+	//header('Dnt-Varnish: no-varnish');
+	header('Dnt-Cache: '.$headerMsgCache);
+	//header('Dnt-Admin: Open');
+	
+	
+	header('Dnt-Subsystem-Packages: dnt_logs(c), dnt_cache(c) ');
+	header('Dnt-Author: Designdnt(c) ');
+	//header('Server: Designdnt3 ');
+	
+}
+
+function add_logg($arr){
+
+
+	$dntVendor = new Vendor();
+	$dntSs = new Sessions();
+	$db = new DB();
+	$dntSs->init_session();
+	
+	if(isset($arr['msg'])){
+		$msg = $arr['msg'];
+	}else{
+		$msg = false;
+	}
+	
+	if(isset($arr['http_response'])){
+		$http_response = $arr['http_response'];
+	}else{
+		$http_response = false;
+	}
+	
+	if(isset($arr['system_status'])){
+		$system_status = $arr['system_status'];
+	}else{
+		$system_status = false;
+	}
+	
+	if(isset($arr['system_status'])){
+		$system_status = $arr['system_status'];
+	}else{
+		$system_status = false;
+	}
+	
+	//header($_SERVER["SERVER_PROTOCOL"]." ".$http_response." ");
+	
+	//this array included ar variables of global variable SERVER
+	$serverVariables = array(
+		"HTTP_HOST",
+		"HTTP_CONNECTION",
+		"HTTP_USER_AGENT",
+		"HTTP_ACCEPT",
+		"HTTP_REFERER",
+		"HTTP_ACCEPT_ENCODING",
+		"HTTP_ACCEPT_LANGUAGE",
+		"HTTP_ACCEPT_CHARSET",
+		"HTTP_COOKIE",
+		"PATH",
+		"SystemRoot",
+		"COMSPEC",
+		"PATHEXT",
+		"WINDIR",
+		"SERVER_SIGNATURE",
+		"SERVER_SOFTWARE",
+		"SERVER_NAME",
+		"SERVER_ADDR",
+		"SERVER_PORT",
+		"REMOTE_ADDR",
+		"DOCUMENT_ROOT",
+		"SERVER_ADMIN",
+		"SCRIPT_FILENAME",
+		"REMOTE_PORT",
+		"GATEWAY_INTERFACE",
+		"SERVER_PROTOCOL",
+		"REQUEST_METHOD",
+		"QUERY_STRING",
+		"REQUEST_URI",
+		"SCRIPT_NAME",
+		"PHP_SELF",
+		"REQUEST_TIME",
+	);
+	
+	foreach($serverVariables as $item){
+		$arrToInsert[$item] = @$_SERVER[$item];
+	};
+	
+	//custom INPUTS
+	$arrToInsert['vendor_id'] = $dntSs->get_session_data("getVendorId");
+	$arrToInsert['http_response'] = $http_response;
+	$arrToInsert['system_status'] = $system_status;
+	$arrToInsert['log_id'] = $dntSs->get_session_data("page_id");
+	$arrToInsert['msg'] = $msg;
+	$arrToInsert['THIS_URL'] = WWW_FULL_PATH;
+	
+	$db->insert( 'dnt_logs', $arrToInsert );
+	
+	if($http_response >= 490){
+		$mailer = new Mailer;
+		$mailer->set_recipient(
+					array(
+						"thomas.doubek@gmail.com",
+						)
+					);
+		$mailer->set_msg("
+				<h2>Designdnt 3 reguest Error, eCatch ".$http_response."</h2> 
+				<table>
+					<tr><td><b>STATUS:</b></td><td> ".$msg."</td></tr>
+					<tr><td><b>LOG:</b></td><td> ".$dntSs->get_session_data("page_id")."</td></tr>
+					<tr><td><b>VISITED:</b></td><td> ".$arrToInsert['THIS_URL']."</td></tr>
+					<tr><td><b>VENDOR ID:</b></td><td> ".$arrToInsert['vendor_id']."</td></tr>
+					<tr><td><b>VENDOR URL:</b></td><td> ".$dntVendor->getVendorUrl()."</td></tr>
+					<tr><td><br/><b>INFO:</b></td><td><br/> This is service email sent by Designdnt3 CMS. Please do not reply to this email.</td></tr>
+				</table>
+			"
+			);
+		$mailer->set_subject("Designdnt3 request ".$http_response." - ".$dntVendor->getVendorUrl());
+		$mailer->set_sender_name("Designdnt 3");
+		$mailer->sent_email();
+	}
+	
+}
+
+
+function rewrited_url(){
+	$addr = new Addr();
+	$addr->getModuleUrl();
+	$rest = new Rest();
+	
+	if(in_string(".php", $addr->module[0]) || $rest->get("_rc") == "-2"){
+		return false;
+	}
+	else{
+		return true;
+	}
+	
+}
+
