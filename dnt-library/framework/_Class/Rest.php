@@ -1,6 +1,6 @@
 <?php
 
-class Rest extends Addr{
+class Rest{
 	
     var $get; //variable of get result
     var $post; //variable of get post
@@ -54,7 +54,8 @@ class Rest extends Addr{
 
 	
 	public function getModul(){
-		$this->webhook = getWebhooks();
+		$webhook = new Webhook;
+		$this->webhook = $webhook->get();
 		foreach(array_keys($this->webhook) as $this->index){
 			foreach($this->webhook[$this->index] as $this->key=>$this->value){
 				if($this->webhook(1) == ""){

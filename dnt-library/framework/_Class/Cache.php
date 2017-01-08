@@ -89,5 +89,29 @@ class Cache {
                 return false;
         }
     }
+	
+	public function deleteOld(){
+		$dnt = new Dnt;
+		$dir = "dnt-cache/";
+		if (is_dir($dir)){
+		  if ($dh = opendir($dir)){
+			while (($filename = readdir($dh)) !== false){
+				$dateArr = explode(" ", date ("F d Y H:i:s.", filemtime($dir.$filename)));
+				$datum_mesiac = $dateArr[0];
+				$datum_den = $dateArr[1];
+				$datum_rok = $dateArr[2];
+				
+				if($datum_den != "01"){ //prvy den v mesiaci sa nemaze
+					if($datum_den < $dnt->dvojcifernyDatum($dnt->get_den())){
+						//echo "$dir.$filename was last modified: " . date ("m d Y H:i:s.", filemtime($dir.$filename))."<br/>";
+						//echo $datum_den."<br/>";
+						@unlink($dir.$filename);
+					}
+				}
+			}
+			closedir($dh);
+		  }
+		}
+	}
 
 }

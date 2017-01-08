@@ -1,23 +1,45 @@
 <?php
-include "autoload.php";
-//http://localhost/dnt3/sk/domov?a=35&45=2
-/* webhook defined
-	0 => lang  //not important
-	1 => main modul
-	2 => main category
-	3 => sub category
-	4 => sub category
-*/
+//include "autoload.php";
+include "dnt-library/framework/_Class/Autoload.php";
 
-$rest = new Rest;
+
+$autoload		= new Autoload;
+$autoload->load();
+$rest 			= new Rest;
+$config 		= new Config;
+$dntLog 		= new DntLog;
+$XMLgenerator	= new XMLgenerator;
+$dnt 			= new Dnt;
+
+
+
+
+
 echo $rest->getModul();
+
+$columns 	= "id,timestamp";
+$table 		= "dnt_logs";
+$downloadXlsPath 		= "dnt-system/data/test.csv";
+$XMLgenerator->creatCsvFile($table, $columns, false, $downloadXlsPath);
 
 if($rest->getModul()){
 	
+	$dntLog->add(array(
+			"http_response" 	=> 200,
+			"system_status" 	=> "log",		
+			"msg"				=> "Default Log", 
+			));
+			
 	$rest->loadModul();
 	echo $rest->getModul();
 	echo $rest->webhook(0);
 	
+	
+	echo $config->getValue("default_modul");
+	
+	echo "<hr>";
+	echo WWW_PATH;
+	echo "<hr>";
 	
 	if($rest->webhook(0) == "sk"){
 		echo "Slovensky";
@@ -26,8 +48,13 @@ if($rest->getModul()){
 		echo "English";
 	}
 }else{
-	//echo "NOT FOUND";
-	//echo "25";
 	$rest->loadMyModul("default");
+	$dntLog->add(array(
+			"http_response" 	=> 404,
+			"system_status" 	=> "log",		
+			"msg"				=> "Default Log", 
+			));
 	
 }
+
+			
