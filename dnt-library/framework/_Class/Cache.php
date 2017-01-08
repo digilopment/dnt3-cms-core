@@ -33,16 +33,11 @@ class Cache {
     }
 
     function start(){
+		$dntLog = new DntLog;
         $location = array_slice(explode('/',$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']), 2);
-        if(!in_array(@$location[0],$this->doNotCache) && rewrited_url() == true){
+        if(!in_array(@$location[0],$this->doNotCache)){
             if(file_exists($this->cacheFileName) && (time() - filemtime($this->cacheFileName)) < @$this->cacheTime && @$this->cacheLog[@$this->cacheFile] == 1 ){
-				get_http_header(
-					array(
-						"http_request" => CACHE_HTTP_STATUS,
-						"http_request_info" => " From Cache, Dnt-Cache-Control"
-						)
-					);
-				add_logg(
+				$dntLog->add(
 					array(
 						"http_response" 	=> CACHE_HTTP_STATUS,
 						"system_status" 	=> "cache",		
@@ -63,7 +58,7 @@ class Cache {
 
     function end(){
         if($this->caching){
-            file_put_contents($this->cacheFileName,ob_get_contents());
+            @file_put_contents($this->cacheFileName,ob_get_contents());
             ob_end_flush();
             $this->cacheLog[$this->cacheFile] = 1;
             if(file_put_contents($this->cacheLogFile,serialize($this->cacheLog)))

@@ -19,7 +19,7 @@ define( 'SRC', 'src' ); // ser $_GET['{eny}']
  *
 */
 define( 'GET_SYSTEM_NAME', 'Designdnt 3' );
-define( 'GET_SYSTEM_VERSION', 'dnt_4.03, December' );
+define( 'GET_SYSTEM_VERSION', 'dnt_5.00, January 2017' );
 define( 'GET_SYSTEM_COMPOSER', 'dnt_1.13' );
 define( 'GET_SYSTEM_ENGINE_PATTERN', 'Model-View-Controller (MVC)' );
 define( 'GET_SYSTEM_SEARCH_ENGINE', 'Dnt-SE-keys, zostava 1200' );

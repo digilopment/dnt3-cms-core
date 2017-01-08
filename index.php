@@ -10,11 +10,13 @@ $config 		= new Config;
 $dntLog 		= new DntLog;
 $XMLgenerator	= new XMLgenerator;
 $dnt 			= new Dnt;
+$dntCache = new Cache;
 
 
 
 
 
+//$dntCache->start();
 echo $rest->getModul();
 
 $columns 	= "id,timestamp";
@@ -56,5 +58,7 @@ if($rest->getModul()){
 			));
 	
 }
+//$dntCache->end();
+$dntCache->deleteOld();
 
 			
