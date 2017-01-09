@@ -40,7 +40,6 @@ if($session->get("admin_logged")){
 	}else{
 		include_once "modules/".DEFAULT_MODUL_ADMIN."/webhook.php";
 	}
-	echo "Ok";
 }else{
 	include "modules/login/webhook.php";
 }
