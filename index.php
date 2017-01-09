@@ -1,16 +1,16 @@
 <?php
 //include "autoload.php";
 include "dnt-library/framework/_Class/Autoload.php";
-
-
 $autoload		= new Autoload;
-$autoload->load();
+$path			= "/";
+$autoload->load($path);
+
 $rest 			= new Rest;
 $config 		= new Config;
 $dntLog 		= new DntLog;
 $XMLgenerator	= new XMLgenerator;
 $dnt 			= new Dnt;
-$dntCache = new Cache;
+$dntCache 		= new Cache;
 
 
 

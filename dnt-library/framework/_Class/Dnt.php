@@ -129,7 +129,7 @@ public function set_url_adresa($url_adresa){
     return $url_adresa;
   }
   	
-public function presmeruj_url($presmeruj_url){
+public function redirect($presmeruj_url){
     if (!headers_sent()){
         header('Location: '.$presmeruj_url);
       }

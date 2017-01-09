@@ -1,0 +1,31 @@
+.designdnt_a{
+	color: #fff;
+	}
+
+.designdnt_b{
+	color: #ff6a9d;
+	}
+
+.post_type {
+float: left; 
+text-decoration: none; 
+list-style: none; 
+margin: -10px 40px 10px -22px;
+}
+
+.post_type {
+float: left; 
+text-decoration: none; 
+list-style: none; 
+margin: 0px 40px 10px -22px;
+}
+
+.dnt_lang{
+	font-weight: bold;
+	text-align: left;
+}
+
+.search table tr td img {
+    width: auto; 
+    height: 50px;
+}
