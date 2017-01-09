@@ -24,6 +24,7 @@ class Autoload{
 	include  $path."dnt-library/framework/_Class/DntMailer.php";
 	include  $path."dnt-library/framework/_Class/DntLog.php";
 	include  $path."dnt-library/framework/_Class/XMLgenerator.php";
+	include  $path."dnt-library/framework/_Class/AdminUser.php";
 	}
 
 }

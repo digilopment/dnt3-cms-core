@@ -16,8 +16,8 @@
 						<form name="login" action="<?php echo WWW_PATH_ADMIN."index.php?src=login&action=1"; ?>" method="POST" class="form-login">
 							<input type="text" name="email" class="form-control" placeholder="Email, alebo login" autofocus>
 							
-							<input type="password" name="heslo" class="form-control" placeholder="Heslo">
-							<button class="btn btn-lg btn-primary btn-block" name="odoslat" type="submit">Prihlásiť sa</button>
+							<input type="password" name="pass" class="form-control" placeholder="Heslo">
+							<button class="btn btn-lg btn-primary btn-block" name="sent" type="submit">Prihlásiť sa</button>
 							<label class="checkbox pull-left">
 								<!--<input type="checkbox" value="remember-me">Remember me-->
 							</label>

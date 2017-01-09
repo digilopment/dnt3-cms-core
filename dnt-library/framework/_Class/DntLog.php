@@ -4,13 +4,13 @@ class DntLog{
 	
 	function getID(){
 		
-		$dntSs = new Sessions();
+		$session = new Sessions();
 		$dnt = new Dnt();
-		$dntSs->init_session();
-		$dntSs->set_session_data("page_id", $dnt->set_rand_string(10));
+		$session->init();
+		$session->set("page_id", $dnt->set_rand_string(10));
 		
-		if($dntSs->get_session_data("session_id") == false){
-			$dntSs->set_session_data("session_id",  $dnt->set_rand_string(10));
+		if($session->get("session_id") == false){
+			$session->set("session_id",  $dnt->set_rand_string(10));
 		}
 	
 	}
@@ -45,9 +45,9 @@ class DntLog{
 		
 		//get instance
 		$dntVendor 	= new Vendor();
-		$dntSs 		= new Sessions();
-		$dntSs->init_session();
-		//header('Dnt-Log: '.$dntSs->get_session_data( "page_id" ));
+		$session 		= new Sessions();
+		$session->init();
+		//header('Dnt-Log: '.$session->get_session_data( "page_id" ));
 		
 		//header($_SERVER["SERVER_PROTOCOL"]." ".$http_request." ".$http_request_info." ");
 		
@@ -97,9 +97,9 @@ class DntLog{
 	$this->get_http_header(array("http_response" => $arr['http_response']));
 
 	$dntVendor = new Vendor();
-	$dntSs = new Sessions();
+	$session = new Sessions();
 	$db = new DB();
-	$dntSs->init_session();
+	$session->init();
 	
 	if(isset($arr['msg'])){
 		$msg = $arr['msg'];
@@ -168,10 +168,10 @@ class DntLog{
 	};
 	
 	//custom INPUTS
-	$arrToInsert['vendor_id'] = $dntSs->get_session_data("getVendorId");
+	$arrToInsert['vendor_id'] = $session->get("getVendorId");
 	$arrToInsert['http_response'] = $http_response;
 	$arrToInsert['system_status'] = $system_status;
-	$arrToInsert['log_id'] = $dntSs->get_session_data("page_id");
+	$arrToInsert['log_id'] = $session->get("page_id");
 	$arrToInsert['msg'] = $msg;
 	$arrToInsert['THIS_URL'] = WWW_FULL_PATH;
 	
@@ -188,7 +188,7 @@ class DntLog{
 				<h2>Designdnt 3 reguest Error, eCatch ".$http_response."</h2> 
 				<table>
 					<tr><td><b>STATUS:</b></td><td> ".$msg."</td></tr>
-					<tr><td><b>LOG:</b></td><td> ".$dntSs->get_session_data("page_id")."</td></tr>
+					<tr><td><b>LOG:</b></td><td> ".$session->get("page_id")."</td></tr>
 					<tr><td><b>VISITED:</b></td><td> ".$arrToInsert['THIS_URL']."</td></tr>
 					<tr><td><b>VENDOR ID:</b></td><td> ".$arrToInsert['vendor_id']."</td></tr>
 					<tr><td><b>VENDOR URL:</b></td><td> ".$dntVendor->getVendorUrl()."</td></tr>

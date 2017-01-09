@@ -8,17 +8,22 @@ $rest = new Rest;
 $db = new Db;
 $session = new Sessions;
 $session->init();
+$adminUser = new AdminUser;
+
+
 
 
 //$session->set("logged", "1");
 
 if($session->get("admin_logged")){
-	$query = 	"SELECT * FROM `dnt_admin_menu` WHERE 
+	
+	
+	
+	$query = "SELECT * FROM `dnt_admin_menu` WHERE 
 				`parent_id` = '0' AND 
 				`show` = '1' AND
 				`type` = 'menu'";
 	$data = $db->get_results($query);
-	
 	//add static modul to arrat
 	array_push($data, 
 		array("name_url" => "login"), 

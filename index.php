@@ -22,7 +22,7 @@ echo $rest->getModul();
 $columns 	= "id,timestamp";
 $table 		= "dnt_logs";
 $downloadXlsPath 		= "dnt-system/data/test.csv";
-$XMLgenerator->creatCsvFile($table, $columns, false, $downloadXlsPath);
+//$XMLgenerator->creatCsvFile($table, $columns, false, $downloadXlsPath);
 
 if($rest->getModul()){
 	
