@@ -20,6 +20,23 @@ class Api{
 		}
 	}
 	
+	public	function getQuery($name_url, $id, $getQuery){
+		if($getQuery){
+			return urldecode($getQuery);
+		}else{
+			$db = new DB();
+			$query = "SELECT query FROM dnt_api WHERE `id` = '$id' AND `name_url` = '$name_url'";
+			if ($db->num_rows($query) > 0){
+				foreach($db->get_results($query) as $row){
+					return $row['query'];
+				}
+			}
+			else{
+				return false;
+			}
+		}
+	}
+	
 	public function getXmlData($query){
 		$xml = new SimpleXMLElement('<xml/>');
 		$db = new Db;
