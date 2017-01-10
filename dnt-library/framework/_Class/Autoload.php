@@ -14,6 +14,7 @@ class Autoload{
 	include  $path."dnt-library/framework/_Class/Vendor.php";
 	include  $path."dnt-library/framework/_Class/Mail.php";
 	include  $path."dnt-library/framework/_Class/Upload.php";
+	include  $path."dnt-library/framework/_Class/DntUpload.php";
 	include  $path."dnt-library/framework/_Class/ExceptionThrower.php";
 	include  $path."dnt-library/framework/_Class/Session.php";
 	include  $path."dnt-library/framework/_Class/Dnt.php";

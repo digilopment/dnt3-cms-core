@@ -60,7 +60,7 @@
                   <input type="text" class="btn-default btn-lg btn-block" name="vendor_iban" value="<?php echo  Settings::get("vendor_iban"); ?>" />
                   <div class="padding"></div>
                   <?php echo Dnt::returnInput();?>
-                  <input type="submit" name="odoslat_3" class="btn btn-danger btn-radius" value="Upraviť nastavenia" />
+                  <input type="submit" name="sent_3" class="btn btn-danger btn-radius" value="Upraviť nastavenia" />
                   <div class="padding"></div>
                </form>
             </div>
@@ -92,7 +92,7 @@
                <input type="text" name="dph" class="btn-default btn-lg btn-block" value="<?php echo Settings::get("vendor_dph"); ?>" />
                <div class="padding"></div>
                <?php echo Dnt::returnInput();?>
-               <input type="submit" name="odoslat_4" class="btn btn-warning btn-radius" value="Upraviť nastavenia" />
+               <input type="submit" name="sent_4" class="btn btn-warning btn-radius" value="Upraviť nastavenia" />
             </form>
             <!-- end is here! -->
             <!-- Rozšírené nastavenia vlastníctva-->
@@ -100,7 +100,7 @@
             <!-- begin is here!-->
             <div class="row">
                <div class="col-md-6">
-                  <form id="obchod" enctype='multipart/form-data' action="<?php echo WWW_PATH_ADMIN."index.php?src=settings&update ";?>" method="post">
+                  <form id="obchod" enctype='multipart/form-data' action="<?php echo WWW_PATH_ADMIN."index.php?src=settings&pa=4&action=update ";?>" method="post">
                      <p class="lead">Nastavte logo <b>vašej firmy</b></p>
                      <p>Ak máte eshop a vystavíte faktúru, vaše logo bude v hlavičke faktúry</p>
                      <img src="<?php echo Settings::getImage("logo_firmy");?>" style="max-width: 200px; margin: 15px;" alt="" />
@@ -111,7 +111,7 @@
                   </form>
                </div>
                <div class="col-md-6">
-                  <form id="obchod" enctype='multipart/form-data' action="<?php echo WWW_PATH_ADMIN."index.php?src=settings&update ";?>" method="post">
+                  <form id="obchod" enctype='multipart/form-data' action="<?php echo WWW_PATH_ADMIN."index.php?src=settings&pa=4&action=update";?>" method="post">
                      <p class="lead">Nastavte defaultný <b>obrázok</b></p>
                      <p>Tento obrázok sa zobrazí všade tam, kde nenastavíte vlastný obrázok</p>
                      <img src="<?php echo Settings::getImage("no_img");?>" style="max-width: 200px; margin: 15px;" alt="" />
@@ -153,7 +153,7 @@
                   <input type="text" class="btn-default btn-lg btn-block" name="google_map" value="<?php echo Settings::get("google_map"); ?>" />
                   <div class="padding"></div>
                   <?php echo Dnt::returnInput();?>
-                  <input type="submit" name="odoslat_2" class="btn btn-warning btn-radius" value="Upraviť nastavenia" />
+                  <input type="submit" name="sent_2" class="btn btn-warning btn-radius" value="Upraviť nastavenia" />
                   <div class="padding"></div>
                </form>
             </div>

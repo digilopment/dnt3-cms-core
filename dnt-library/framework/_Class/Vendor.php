@@ -26,9 +26,10 @@ class Vendor{
 	}
 	
 	
-	public function getVendorId(){
+	public function getId(){
 		
-		$db = new DB();//get instance
+		return VENDOR_ID;
+		/*$db = new DB();//get instance
 		
 		$query = "SELECT id FROM `dnt_vendors` WHERE
 		`parent_id` = '0' AND
@@ -45,6 +46,7 @@ class Vendor{
 		}
 		
 		return $this->vendor_id;
+		*/
 		
 	}
 	
