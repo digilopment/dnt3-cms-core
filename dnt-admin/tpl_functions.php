@@ -290,3 +290,25 @@
          <!-- END NAVBAR -->
       </header>
 <?php } ?>
+<?php function getConfirmMessage($kam_presmerovat, $hlaska){?>
+<div class="row" style="padding: 0px 30px;">
+	<div class="grid">
+		<div class="grid-header bg-green">
+			<i class="fa fa-laptop"></i>
+			<span class="grid-title">Gratulujeme! Údaje sa úspešne zmenili.</span>
+			<div class="pull-right grid-tools">
+				<a data-widget="collapse" title="Collapse"><i class="fa fa-chevron-up"></i></a>
+				<a data-widget="remove" title="Remove"><i class="fa fa-times"></i></a>
+			</div>
+		</div>
+		<div class="grid-body">
+			<h3>V poriadku! <?php echo $hlaska; ?></h3>
+				<br/>
+			<br/><br/>
+			<p>
+				<a href="<?php echo $kam_presmerovat;?>"><span type="button" class="btn btn-success">Naspäť</span></a>
+			</p>
+		</div>
+	</div>
+</div>
+<?php } ?>

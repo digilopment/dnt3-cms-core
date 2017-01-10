@@ -1,19 +1,18 @@
 <?php
 include "../dnt-library/framework/_Class/Autoload.php";
-$autoload		= new Autoload;
 $path			= "../";
-$autoload->load($path);
+Autoload::load($path);
 
 $rest 			= new Rest;
 $dntCache 		= new Cache;
 $dntLog 		= new DntLog;
-$api = new Api;
+$api 			= new Api;
 
 $query = $api->getQuery(
-					$rest->webhook(2), 
-					$rest->webhook(3), 
-					$rest->get("query")
-					);
+						$rest->webhook(2), 
+						$rest->webhook(3), 
+						$rest->get("query")
+						);
 
 if($rest->webhook(1) == "xml"){
 	$api->getXmlData($query);
@@ -27,9 +26,9 @@ if($rest->webhook(1) == "xml"){
 
 //ADD LOG
 $dntLog->add(
-			array(
-				"http_response" 	=> 200,
-				"system_status" 	=> "log",		
-				"msg"				=> "Api log $type - $query", 
-			)
-		);
+	array(
+			"http_response" 	=> 200,
+			"system_status" 	=> "log",		
+			"msg"				=> "Api log $type - $query", 
+		)
+	);

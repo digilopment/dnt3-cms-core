@@ -393,7 +393,7 @@ public function my_email($predmet, $komu, $od_meno, $od_email, $email_sprava){
 		}
 		
 public function returnInput(){
-	echo "<input type='hidden' name='return' value='".WWW_PATH."' />";
+	echo "<input type='hidden' name='return' value='".WWW_FULL_PATH."' />";
 }
 
 }

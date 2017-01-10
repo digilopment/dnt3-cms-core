@@ -189,7 +189,7 @@
             <?php }else{ ?>
             <!-- Nastavenia stránky-->
             <div class="grid-body">
-               <form  action="<?php echo WWW_PATH_ADMIN."index.php?src=settings&update";?>" method="post">
+               <form  action="<?php echo WWW_PATH_ADMIN."index.php?src=settings&pa=1&action=update";?>" method="post">
                   <p class="lead">Defaultný jazyk</p>
                   <p>Tento jazyk bude ako prednastavený jazyk po načítaní.</p>
                   <?php /*<select name="default_lang" class="btn-default btn-lg btn-block" type="text" size="1">
@@ -268,7 +268,7 @@
                   </select>
                   <div class="padding"></div>
                   <?php echo Dnt::returnInput();?>
-                  <input type="submit" name="odoslat_1" class="btn btn-success btn-radius" value="Upraviť nastavenia" />
+                  <input type="submit" name="sent_1" class="btn btn-success btn-radius" value="Upraviť nastavenia" />
                   <div class="padding"></div>
                </form>
             </div>
