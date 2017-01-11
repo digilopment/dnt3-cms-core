@@ -48,7 +48,7 @@ class Api{
 					$track->addChild($column, $row[$column]);
 				}
 			}
-			Header('Content-type: text/xml');
+			//Header('Content-type: text/xml');
 			print($xml->asXML());
 		}
 	}

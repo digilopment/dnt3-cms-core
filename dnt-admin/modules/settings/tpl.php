@@ -18,7 +18,7 @@
             <!-- Nastavenia vlastníctva-->
             <p class="lead">Nastavenia vlastníctva</p>
             <div class="grid-body">
-               <form id="obchod" action="<?php echo WWW_PATH_ADMIN."index.php?src=settings&update ";?>" method="post">
+               <form id="obchod" action="<?php echo WWW_PATH_ADMIN."index.php?src=settings&pa=2&action=update ";?>" method="post">
                   <p class="lead">Nastavte <b>meno </b> Vašej firmy</p>
                   <p>Tento údaj sa bude zobrazovať všade tam, kde budete prezentovať Vašu firmu</p>
                   <input type="text" class="btn-default btn-lg btn-block" name="vendor_company" value="<?php echo Settings::get("vendor_company"); ?>" />
@@ -125,7 +125,7 @@
             <!-- end is here! -->
             <?php }elseif(isset($_GET[ 'pa']) && $_GET[ 'pa']==5 ){?>
             <div class="grid-body">
-               <form  id="socialne-siete" action="<?php echo WWW_PATH_ADMIN."index.php?src=settings&update";?>" method="post">
+               <form  id="socialne-siete" action="<?php echo WWW_PATH_ADMIN."index.php?src=settings&pa=5&action=update";?>" method="post">
                   <p class="lead">Nastavte si Váš email</p>
                   <p>Nastavenie emailu: 
                      <b>Tento email bude fungovať ako <br/> notifakčný email a bude Vás kontaktovať, ak to bude potrebné</b>

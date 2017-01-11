@@ -312,3 +312,30 @@
 	</div>
 </div>
 <?php } ?>
+<?php function no_results(){?>
+<tr>
+	<td colspan="20" style="text-align: center;">
+		<h3>Ľutujeme, ale pre toto zobrazenie neexistujú žiadne výsledky</h3>
+	</td>
+</tr>
+<?php } ?>
+<?php
+function admin_zobrazenie_stav($zobrazenie){
+	if ($zobrazenie == 1)
+		$return = "fa fa-arrow-right bg-green action";
+	else{
+		$return = "fa fa-times bg-red action";
+		}
+	return $return;
+	}
+function getParamUrl(){
+	$adresa = explode("?", WWW_FULL_PATH);
+	if(isset($_GET['page'])){
+		$adresa_bez_page = explode("&page=".$_GET['page']."", $adresa[1]); //src=obsah&page=2
+		return $adresa_bez_page[0];
+	}
+	else{
+		return $adresa[1]; //this function return an array
+	}
+}
+?>

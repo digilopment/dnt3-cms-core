@@ -8,20 +8,31 @@ $dntCache 		= new Cache;
 $dntLog 		= new DntLog;
 $api 			= new Api;
 
+
 $query = $api->getQuery(
 						$rest->webhook(2), 
 						$rest->webhook(3), 
 						$rest->get("query")
 						);
 
-if($rest->webhook(1) == "xml"){
-	$api->getXmlData($query);
-	$type = "xml";
-}elseif($rest->webhook(1) == "json"){
-	$api->getJsonData($query);
-	$type = "json";
+if($query){
+	if($rest->webhook(1) == "xml"){
+		header('Content-type: text/xml');
+		$dntCache->start();
+		$api->getXmlData($query);
+		$dntCache->end();
+		$type = "xml";
+	}elseif($rest->webhook(1) == "json"){
+		header('Content-Type: application/json');
+		$dntCache->start();
+		$api->getJsonData($query);
+		$dntCache->end();
+		$type = "json";
+	}else{
+		$type = "no data";
+	}
 }else{
-	$type = "no data";
+	$type = "no query";
 }
 
 //ADD LOG

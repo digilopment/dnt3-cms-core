@@ -4,4 +4,3 @@
 	 <div class="scroll-to-top"></div>
 	 <!-- END SCROLL TO TOP -->
   </div>
-</body>

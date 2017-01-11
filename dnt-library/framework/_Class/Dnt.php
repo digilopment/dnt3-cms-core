@@ -114,7 +114,7 @@ public function set_rand_string($dlzka = 10){
 public function set_four_one(){
 	return "".rand(1, 9)."".rand(1, 9)."".rand(1, 9)."".rand(1, 9)."";
 	}
-public function set_url_adresa($url_adresa){    
+public function name_url($url_adresa){    
     # všetky znaky, ktoré v unicode nie sú písmená, čísla alebo podtržítka nahradíme pomlčkou
     $url_adresa = preg_replace('/[^\pL0-9_]+/u', '-', $url_adresa);
     # trimneme pomlčky
