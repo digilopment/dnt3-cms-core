@@ -13,11 +13,11 @@ $dnt 			= new Dnt;
 $dntCache 		= new Cache;
 
 
-
-
-
 //$dntCache->start();
+
 echo $rest->getModul();
+echo "<hr/>";
+echo "<hr/>";
 
 $columns 	= "id,timestamp";
 $table 		= "dnt_logs";

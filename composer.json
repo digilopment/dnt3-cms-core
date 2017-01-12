@@ -1,0 +1,23 @@
+{
+    "name": "CMS Designdnt3",
+    "description": "PHP CMS framework",
+    "type": "framework",
+    "homepage":"http://designdnt.query.sk/domov",
+    "keywords": ["cms", "dnt3"],
+    "license": "GPLv2",
+    "authors": [
+        {
+            "name": "Tomáš Doubek",
+            "email": "thomas.doubek@gmail.com"
+        }
+    ],
+    "support":{
+        "email":"thomas.doubek@gmail.com"
+    },
+    "require": {
+        "php": ">=5"
+    },
+    "autoload": {
+        "classmap": ["dnt-library/framework/_Class/Autoload.php"]
+    }
+}

@@ -117,7 +117,7 @@
          <li>
             <a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$row['name_url']."&filter=".$row2['id'];?>">
             <span><?php echo $row2['name'];?></span>
-            &nbsp;&nbsp;<i style="text-align: right;" class="fa <?php echo $row2['ico'];?>"></i>
+            &nbsp;&nbsp;<i style="text-align: right;" class="fa fa-laptop"></i>
             </a>
          </li>
          <?php
@@ -130,7 +130,6 @@
       }
       else{
       ?>
-   <!--<li class="<?php if(isset($_GET['src']) && ($_GET['src'] == $row['name_url'])) echo "active"; else echo "menu"; ?>">-->
    <?php
       $query2 = "SELECT * FROM `dnt_admin_menu` 
       WHERE type = 'submenu' AND 
