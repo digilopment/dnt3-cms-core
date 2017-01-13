@@ -5,11 +5,30 @@ class AdminContent{
 		return 20;
 	}
 	
+	public function primaryCat(){
+		return array(
+			"post" 		=> "Obsah",
+			"sitemap" 	=> "Sitemapa",
+			"article" 	=> "Články"
+		);
+	}
 	protected function prepare_query($is_limit){
 		$db = new Db();
 		
-		if(isset($_GET['filter']))
-			$typ = "AND type = '".$_GET['filter']."'";
+		
+		//default cat
+		if(isset($_GET['included']) && $_GET['included'] == "article"){
+			$typ = "AND cat_id = '".$_GET['filter']."'";
+		}
+		elseif(isset($_GET['included']) && $_GET['included'] == "sitemap-sub"){
+			$typ = "AND cat_id = '".$_GET['filter']."'";
+		}
+		elseif(isset($_GET['included']) && $_GET['included'] == "sitemap"){
+			$typ = "AND cat_id = '".$_GET['filter']."'";
+		}
+		
+		elseif(isset($_GET['filter']))
+			$typ = "AND sub_cat_id = '".$_GET['filter']."'";
 		elseif(isset($_GET['search'])){
 			$typ = "AND `name_url` LIKE '%".Dnt::name_url($_GET['search'])."%'";
 		}
@@ -114,20 +133,54 @@ class AdminContent{
 		return WWW_PATH_ADMIN."index.php?".$return."&page=".self::getPage($index);
 	}
 	
-	public function url($action, $type, $id, $page){
+	public function url($action, $cat_id, $sub_cat_id, $type, $post_id, $page){
 		if($action == "filter"){
-			return WWW_PATH_ADMIN."index.php?src=content&filter=$type";
+			return WWW_PATH_ADMIN."index.php?src=content&filter=$cat_id&sub_cat_id=$sub_cat_id&type=$type";
 		}else{
 			if(isset($_GET['filter'])){
-				return WWW_PATH_ADMIN."index.php?src=content&filter=$type&id=$id&page=$page&action=$action";
+				return WWW_PATH_ADMIN."index.php?src=content&filter=$cat_id&sub_cat_id=$sub_cat_id&post_id=$post_id&page=$page&action=$action&type=$type";
 			}else{
-				return WWW_PATH_ADMIN."index.php?src=content&id=$id&page=$page&action=$action";
+				return WWW_PATH_ADMIN."index.php?src=content&post_id=$post_id&page=$page&action=$action&type=$type";
 			}
 		}
 	}
 	
+	public function getPostParam($column, $post_id){
+		$db 	= new Db;
+		$rest 	= new Rest;
+		
+		$query 	= "SELECT `$column` FROM dnt_posts WHERE id = $post_id";
+		if($db->num_rows($query)>0){
+		   foreach($db->get_results($query) as $row){
+			   return $row[$column];
+		   }
+		 }else{
+			 return false;
+		 }
+		 
+	}
+	
 	public function showOrder(){
 		return (AdminContent::getPage("current")*AdminContent::limit())-AdminContent::limit() + 1;
+	}
+	
+	/* tags */
+	public function databseTagsString($tags){
+		$tags = str_replace(", ", ",", $tags); 
+		$tags = str_replace(" ,", ",", $tags); 
+		$tags = str_replace(", ", ",", $tags); 
+		$tags = str_replace(" ", "-", $tags); 
+		return $tags;
+	}
+
+
+	public function showTags($data){
+		return explode(",", $data);
+	}
+
+	public function showTagName($data){
+		$data = str_replace("-", " ", $data); 
+		return ucfirst($data);
 	}
    
    	

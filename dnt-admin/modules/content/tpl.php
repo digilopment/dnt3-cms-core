@@ -37,34 +37,38 @@
 				  $i = AdminContent::showOrder();
                   if($db->num_rows($query)>0){
                   	foreach($db->get_results($query) as $row){
+					$cat_id 	= $row['cat_id'];
+					$post_id 	= $row['id'];
+					$sub_cat_id 	= $row['sub_cat_id'];
 					$type 	= $row['type'];
-					$id 	= $row['id'];
 					$page 	= AdminContent::getPage("current");
                   ?>
 				   <tr>
 					  <td><?php echo $i++; ?></td>
 					  <td><?php echo $row['id'] ?></td>
-					  <td style="max-width: 500px;"><b><a href="<?php echo AdminContent::url("edit", $type, $id, $page) ?>"><?php echo $row['name']; ?></a></b></td>
-					  <td><a href="<?php echo AdminContent::url("filter", $type, $id, $page) ?>"><span class="label label-<?php echo $row['type'];?>"><?php echo $row['type']; ?></span></a></td>
+					  <td style="max-width: 500px;"><b><a href="<?php echo AdminContent::url("edit", $cat_id, $sub_cat_id, $post_id, $page) ?>"><?php echo $row['name']; ?></a></b></td>
+					  <td><a href="<?php echo AdminContent::url("filter", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>">
+						<?php echo AdminContent::getPostParam("sub_cat_id", $row['id'])." -> ".AdminContent::getPostParam("cat_id", $row['id']); ?>
+						</a></td>
 					  <td><b><?php echo $row['datetime_creat']; ?></b></td>
 					  <td>
-						 <a href="<?php echo AdminContent::url("show_hide", $type, $id, $page) ?>">
+						 <a href="<?php echo AdminContent::url("show_hide", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>">
 						 <i class="<?php echo admin_zobrazenie_stav($row['show']);?>"></i>
 						 </a>
 					  </td>
 					  <td>
 						 <span class="text-green">
-						 <a href="<?php echo AdminContent::url("move_up", $type, $id, $page) ?>"><i class="fa fa-angle-up"></i></a>
-						 <a href="<?php echo AdminContent::url("mowe_down", $type, $id, $page) ?>"><i class="fa fa-angle-down"></i></a>
+						 <a href="<?php echo AdminContent::url("move_up", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>"><i class="fa fa-angle-up"></i></a>
+						 <a href="<?php echo AdminContent::url("mowe_down", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>"><i class="fa fa-angle-down"></i></a>
 						 </span>
 					  </td>
 					  <td>
-						 <a href="<?php echo AdminContent::url("edit", $type, $id, $page) ?>"><i class="fa fa-pencil bg-blue action"></i></a>
+						 <a href="<?php echo AdminContent::url("edit",$cat_id, $sub_cat_id, $type, $post_id, $page) ?>"><i class="fa fa-pencil bg-blue action"></i></a>
 						 <?php 
 							if($row['protected'] == 1){
 								echo "<i class='fa fa-times bg-red action' style='opacity: 0.1' title='Chránené proti zmazaniu'></i>";
 							}else{?>	
-							<a href="<?php echo AdminContent::url("del", $type, $id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
+							<a href="<?php echo AdminContent::url("del", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
 						 <?php } ?>
 					  </td>
 				   </tr>

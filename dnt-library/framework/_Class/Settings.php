@@ -28,6 +28,15 @@ class Settings{
 		}
 	}
 	
+	public function showStatus(){
+		return array(
+			"0" => "Vymazať",
+			"1" => "Publikovať post",
+			"2" => "Povoliť na webe (nezobrazí sa v menu alebo listingu)",
+			"3" => "Skryť z webu",
+		);
+	}
+	
 
 	
 }

@@ -7,6 +7,18 @@ public function cislo($link){
   return preg_replace("/[^0-9]/","",$link);
 }
 
+public function datetime(){
+	return date("Y-m-d H:i:s");
+}
+public function timestamp(){
+	return time();
+}
+public function timeToDbFormat($separator, $time){
+	$dateAndTime = explode(" ", $time);
+	$data = explode($separator, $dateAndTime[0]);
+	return $data[2]."-".$data[1]."-".$data[0]." ".$dateAndTime[1].":00";
+}
+
 public function dvojcifernyDatum($cislo){
 	if(strlen($cislo) > 2){
 		$return = $cislo;

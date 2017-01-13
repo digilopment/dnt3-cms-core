@@ -24,7 +24,7 @@
       <!-- BEGIN CSS PLUGIN -->
       <link rel="stylesheet" href="<?php echo WWW_PATH_ADMIN; ?>css/pace-theme-minimal.css">
       <link rel="stylesheet" href="<?php echo WWW_PATH_ADMIN; ?>css/jquery.gritter.css">
-      <link rel="stylesheet" href="<?php echo WWW_PATH_ADMIN; ?>css/bootstrap-datetimepicker.min.css">
+      <link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
       <link rel="stylesheet" href="<?php echo WWW_PATH_ADMIN; ?>css/jquery-jvectormap-1.2.2.css">
       <link rel="stylesheet" href="<?php echo WWW_PATH_ADMIN; ?>css/blue.css">
       <!-- END CSS PLUGIN -->
@@ -36,36 +36,13 @@
       <!-- CK EDITOR -->
       <!-- this editor is saved in designdnt library as included module -->
       <script src="../dnt-library/ckeditor/ckeditor.js"></script>
-      <!-- END CK EDITOR -->
-   </head>
-<?php } ?>
-<?php function get_bottom(){ ?>
-      <script type="text/javascript">
-         /* MAGNIFIC POPUP */
-         $('.popup-gallery').magnificPopup({
-         	delegate: 'a',
-         	type: 'image',
-         	tLoading: 'Loading image #%curr%...',
-         	mainClass: 'mfp-img-mobile',
-         	gallery: {
-         		enabled: true,
-         		navigateByImgClick: true,
-         		preload: [0,1] // Will preload 0 - before current, and 1 after the current image
-         	},
-         	image: {
-         		tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
-         		titleSrc: function(item) {
-         			return item.el.attr('title') + '<small>by Ryan McGuire</small>';
-         		}
-         	}
-         });
-      </script>
-      <!-- BEGIN JS FRAMEWORK -->
+	  
+	   <!-- BEGIN JS FRAMEWORK -->
       <script src="<?php echo WWW_PATH_ADMIN; ?>js/jquery-2.1.0.min.js"></script>
       <script src="<?php echo WWW_PATH_ADMIN; ?>js/bootstrap.min.js"></script>
       <!-- END JS FRAMEWORK -->
       <!-- BEGIN JS PLUGIN -->
-      <script src="<?php echo WWW_PATH_ADMIN; ?>js/pace.min.js"></script>
+	  <script src="<?php echo WWW_PATH_ADMIN; ?>js/pace.min.js"></script>
       <script src="<?php echo WWW_PATH_ADMIN; ?>js/jquery.totemticker.min.js"></script>
       <script src="<?php echo WWW_PATH_ADMIN; ?>js/jquery.ba-resize.min.js"></script>
       <script src="<?php echo WWW_PATH_ADMIN; ?>js/jquery.blockUI.min.js"></script>
@@ -81,6 +58,35 @@
       <!-- BEGIN JS TEMPLATE -->
       <script src="<?php echo WWW_PATH_ADMIN; ?>js/main_system.js"></script>
       <script src="<?php echo WWW_PATH_ADMIN; ?>js/skin-selector.js"></script>
+	  
+	  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+  <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
+	
+      <!-- END CK EDITOR -->
+   </head>
+<?php } ?>
+<?php function get_bottom(){ ?>
+      <script type="text/javascript">
+         /* MAGNIFIC POPUP */
+         /*$('.popup-gallery').magnificPopup({
+         	delegate: 'a',
+         	type: 'image',
+         	tLoading: 'Loading image #%curr%...',
+         	mainClass: 'mfp-img-mobile',
+         	gallery: {
+         		enabled: true,
+         		navigateByImgClick: true,
+         		preload: [0,1] // Will preload 0 - before current, and 1 after the current image
+         	},
+         	image: {
+         		tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+         		titleSrc: function(item) {
+         			return item.el.attr('title') + '<small>by Ryan McGuire</small>';
+         		}
+         	}
+         });*/
+      </script>
+     
    </body>
 </html>
 <?php } ?>
@@ -97,7 +103,9 @@
 <ul class="sidebar-menu">
    <?php
       foreach($db->get_results($query) as $row){
-      	if($row['name_url'] == "content"){ ?>
+if($row['name_url'] == "content"){ 
+	$included = $row['included'];
+?>
    <li class="menu">
       <a href="">
       <i class="fa <?php echo $row['ico'];?>"></i>
@@ -109,17 +117,17 @@
             $query2 = "SELECT * FROM `dnt_post_type` 
             WHERE 
             `show` = '1' AND 
-            `included` = 'post' AND 
+            `admin_cat` = '".$row['included']."' AND 
             `vendor_id` = '".VENDOR_ID."' ORDER BY `order` desc";
             if ($db->num_rows($query2) > 0){
             foreach($db->get_results($query2) as $row2){
             ?>
-         <li>
-            <a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$row['name_url']."&filter=".$row2['id'];?>">
-            <span><?php echo $row2['name'];?></span>
-            &nbsp;&nbsp;<i style="text-align: right;" class="fa fa-laptop"></i>
-            </a>
-         </li>
+			 <li>
+				<a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$row['name_url']."&included=".$row2['name_url']."&filter=".$row2['id'];?>">
+				<span><?php echo $row2['name'];?></span>
+				&nbsp;&nbsp;<i style="text-align: right;" class="fa fa-laptop"></i>
+				</a>
+			 </li>
          <?php
             }
             }
@@ -336,5 +344,87 @@ function getParamUrl(){
 	else{
 		return $adresa[1]; //this function return an array
 	}
+}
+?>
+<?php
+function get_typ_zaradenie($cat_id, $sub_cat_id, $type){
+$db = new Db;	
+?>
+	<h5>Zaradenie postu v rámci typu:<br/></h5>
+	<select name="type" id="cname" class="form-control" minlength="2" required style="">
+	<?php 
+
+		   foreach(AdminContent::primaryCat() as $key => $value){
+			   if($key == $type)
+				echo '<option value="'.$key.'" selected>'.$value.'</option>';
+			   else
+				echo '<option value="'.$key.'">'.$value.'</option>';
+			}
+	   ?>
+	</select>
+	<br/>
+	
+	<h5>Zaradenie postu v rámci kategórie:<br/></h5>
+	<select name="cat_id" id="cname" class="form-control" minlength="2" required style="">
+	<?php 
+	   
+	   
+	   foreach(AdminContent::primaryCat() as $key => $value){
+	   $query = "SELECT * FROM `dnt_post_type` WHERE 
+	   `show` = '1'  AND 
+	   `vendor_id` = '".Vendor::getId()."' AND 
+	   `admin_cat` = '".$key."'";
+	   echo '<option value="">(nezaradené)</option>';
+	    if($db->num_rows($query)>0){
+		   foreach($db->get_results($query) as $row){
+			   if($row['id'] == $cat_id)
+				echo '<option value="'.$row['id'].'" selected>'.$value.' -> '.$row['name'].'</option>';
+			   else
+				echo '<option value="'.$row['id'].'">'.$value.' -> '.$row['name'].'</option>';
+			}
+	   }
+	   else{
+			echo '<option value="page">Hlavná kategória</option>';
+	   }
+	   }
+	   ?>
+	</select>
+	<br/>
+	
+	<h5>Zaradenie v rámci subkategórie:<br/></h5>
+	<select name="sub_cat_id" id="cname" class="form-control">
+	<?php 
+	   foreach(AdminContent::primaryCat() as $key => $value){
+	   $query = "SELECT * FROM `dnt_post_type` WHERE 
+	   `show` = '1'  AND 
+	   `vendor_id` = '".Vendor::getId()."' AND 
+	   `admin_cat` = '".$key."'";
+	   echo '<option value="">(nezaradené)</option>';
+	   if($db->num_rows($query)>0){
+		   foreach($db->get_results($query) as $row){
+			if($sub_cat_id == $row['id'])
+				echo '<option value="'.$row['id'].'" selected>'.$value.' -> '.$row['name'].'</option>';
+			else
+				echo '<option value="'.$row['id'].'">'.$value.' -> '.$row['name'].'</option>';
+			}
+
+	   }else{
+		echo '<option value="page">Stránka</option>';
+		}
+	}
+	   ?>
+	</select>
+	<br/>
+<?php
+   }
+?>
+<?php
+function getZobrazenie($stav){
+		foreach (Settings::showStatus() as $key => $value) {
+			if($stav == $key)
+				echo "<option value='".$key."' selected>".$value."</option>"; 
+			else
+				echo "<option value='".$key."'>".$value."</option>"; 
+		}
 }
 ?>

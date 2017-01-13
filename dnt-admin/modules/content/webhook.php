@@ -5,13 +5,14 @@ $dnt 	= new Dnt;
 $db 	= new Db;
 
 
-if($rest->get("id") && $rest->get("action") == "edit")
+if($rest->get("post_id") && $rest->get("action") == "edit")
 {
 	include "edit.php";
 }
-elseif($rest->get("id") && $rest->get("action") == "edit_action")
+elseif($rest->get("post_id") && $rest->get("action") == "edit_action")
 {
 	//default article view action add
+	include "update.php";
 }
 elseif($rest->get("id") == "add")
 {

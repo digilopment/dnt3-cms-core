@@ -8,6 +8,7 @@ class Rest{
     
 	//this method creat a GET method of `default` and `rewrited` addr
 	public function get($get){
+		
 		@$addr1 = explode($get."=", WWW_FULL_PATH);
 		@$addr  = $addr1[1];
 		
@@ -19,6 +20,7 @@ class Rest{
 			$this->get = $addr;
 		}
 		return $this->get;
+		
 	}
 	
 	public function webhook($thisArg){
