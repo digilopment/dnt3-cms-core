@@ -29,3 +29,8 @@ margin: 0px 40px 10px -22px;
     width: auto; 
     height: 50px;
 }
+.right-side > .content-header {
+    padding: 15px 20px 1px 15px;
+    background: #f1f1f1;
+    box-shadow: none;
+}

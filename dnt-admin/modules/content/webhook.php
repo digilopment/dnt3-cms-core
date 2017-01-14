@@ -14,9 +14,10 @@ elseif($rest->get("post_id") && $rest->get("action") == "edit_action")
 	//default article view action add
 	include "update.php";
 }
-elseif($rest->get("id") == "add")
+elseif($rest->get("action") == "add")
 {
-	//default article view detail
+	//default article view action add
+	include "add.php";
 }
 else
 {

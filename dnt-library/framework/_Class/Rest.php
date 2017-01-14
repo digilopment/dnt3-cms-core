@@ -100,6 +100,24 @@ class Rest{
 		return $this->post;
 	}
 	
+	public function setGet($arr){
+		
+		
+		foreach($arr as $key=>$value){
+			/*$explodedArr = explode("?$key", WWW_FULL_PATH);
+			if(count($explodedArr)>1){
+				$get_s[] = "a=b";
+			}elseif(count($explodedArr)>1){
+				$get_s[] = "a=b";
+			}else{
+				$get_s[] = "$key=$value";
+			}*/
+			$get_s[] = "$key=$value";
+		}
+		
+		$params = implode("&", $get_s);
+		return WWW_FULL_PATH."&$params";
+	}
 	
 	public function escape($input){
 		$this->escape = mysql_real_escape_string($input);
