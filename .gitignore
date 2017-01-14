@@ -1,2 +1,6 @@
-dnt-cache/
-dnt-system/data/
+dnt-cache/*
+!dnt-cache/readme.txt
+dnt-api/dnt-cache/*
+
+dnt-system/data/*
+!dnt-system/data/readme.txt

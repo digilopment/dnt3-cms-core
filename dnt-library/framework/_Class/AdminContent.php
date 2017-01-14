@@ -1,6 +1,6 @@
 <?php
 class AdminContent{
-	
+		
 	public function limit(){
 		return 20;
 	}
