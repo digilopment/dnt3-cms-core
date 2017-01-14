@@ -21,10 +21,12 @@
    $content 		= AdminContent::getPostParam("content", $post_id);
    $embed 			= AdminContent::getPostParam("embed", $post_id);
    $tags 			= AdminContent::getPostParam("tags", $post_id);
-
- 
-   //echo $sub_cat_id;
-   ?>
+   
+   //osetrenie vstupov
+   if($datetime_publish == "0000-00-00 00:00:00"){
+	   $datetime_publish = Dnt::datetime();
+   }
+?>
    
   		
 <section class="content">
