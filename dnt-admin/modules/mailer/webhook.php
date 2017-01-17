@@ -19,10 +19,16 @@ elseif($rest->get("action") == "add")
 	//default article view action add
 	include "add.php";
 }
-elseif($rest->get("action") == "del")
+elseif($rest->get("action") == "del_mail")
 {
 	//default article view action add
-	include "del.php";
+	include "del_mail.php";
+}
+elseif($rest->get("action") == "edit_mail")
+{
+	//default article view action add
+	//echo "OK";
+	include "edit_mail.php";
 }
 else
 {

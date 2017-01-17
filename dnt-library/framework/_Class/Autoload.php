@@ -29,6 +29,7 @@ class Autoload{
 	include  $path."dnt-library/framework/_Class/Settings.php";
 	include  $path."dnt-library/framework/_Class/Api.php";
 	include  $path."dnt-library/framework/_Class/AdminContent.php";
+	include  $path."dnt-library/framework/_Class/AdminMailer.php";
 	include  $path."dnt-library/framework/_Class/Image.php";
 	}
 
