@@ -320,24 +320,65 @@ if($row['name_url'] == "content"){
 </div>
 <?php } ?>
 <?php
-function confrim_message($kam_presmerovat, $hlaska){
+function error_message($nazov_pola, $volitelne_pole){
+	if($volitelne_pole == false){
+		$volitelne_pole = false;
+		}
+	else{
+		$volitelne_pole = $volitelne_pole;
+		}
 ?>
 <div class="row" style="padding: 0px 30px;">
 	<div class="grid">
-		<div class="grid-header bg-green">
+		<div class="grid-header bg-red">
 			<i class="fa fa-laptop"></i>
-			<span class="grid-title">Gratulujeme! Údaje sa úspešne zmenili.</span>
+			<span class="grid-title">Hups, niečo je zle &nbsp;&nbsp;<i class="fa fa-meh-o"></i></span>
 			<div class="pull-right grid-tools">
 				<a data-widget="collapse" title="Collapse"><i class="fa fa-chevron-up"></i></a>
 				<a data-widget="remove" title="Remove"><i class="fa fa-times"></i></a>
 			</div>
 		</div>
 		<div class="grid-body">
-			<h3>V poriadku! <?php echo $hlaska; ?></h3>
+			<h3>Ľutujeme, ale pole <b><?php echo $nazov_pola;?></b> je zle vyplnené. Prosím opravte chybu a akciu zopakujte.
 				<br/>
+				<br/>( <?php echo $volitelne_pole ;?> )
+				</h3>
 			<br/><br/>
 			<p>
-				<a href="<?php echo $kam_presmerovat;?>"><span type="button" class="btn btn-success">Naspäť</span></a>
+				<a href="javascript:history.back(1)"><span type="button" class="btn btn-danger">Opraviť</span></a>
+			</p>
+		</div>
+	</div>
+</div>
+<?php
+}
+function deleteMssage($presmeruj, $volitelne_pole){
+	if($volitelne_pole == false){
+		$volitelne_pole = false;
+		}
+	else{
+		$volitelne_pole = "( ".$volitelne_pole." )";
+	}
+?>
+<div class="row" style="padding: 0px 30px;">
+	<div class="grid">
+		<div class="grid-header bg-red">
+			<i class="fa fa-laptop"></i>
+			<span class="grid-title">Rozhodli ste sa <b>zmazať</b> túto položku? &nbsp;&nbsp;</span>
+			<div class="pull-right grid-tools">
+				<a data-widget="collapse" title="Collapse"><i class="fa fa-chevron-up"></i></a>
+				<a data-widget="remove" title="Remove"><i class="fa fa-times"></i></a>
+			</div>
+		</div>
+		<div class="grid-body">
+			<h3>Pozor, klikli ste na tlačídlo <b>zmazať</b>. Naozaj chcete pokračovať a zmazať danú položku?
+				<br/>Zmeny už nie je možné vrátiť späť.
+				<br/> <?php echo $volitelne_pole ;?>
+				</h3>
+			<br/><br/>
+			<p>
+				<a href="javascript:history.back(1)"><span type="button" class="btn btn-danger">Vrátiť sa späť</span></a>
+				<a href="<?php echo $presmeruj;?>"><span type="button" class="btn btn-default">Zmazať navždy</span></a>
 			</p>
 		</div>
 	</div>

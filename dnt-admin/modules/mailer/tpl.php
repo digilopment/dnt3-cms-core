@@ -45,7 +45,7 @@
 <div class="modal fade" id="modalPrimary2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel8" aria-hidden="true">
    <div class="modal-wrapper">
       <div class="modal-dialog">
-         <form action="<?php echo AdminMailer::url("add_mail", $cat_id, false, false, $post_id, $page) ?>" method="POST">
+         <form action="<?php echo AdminMailer::url("add_mail", false, false, false, false, false) ?>" method="POST">
             <div class="modal-content">
                <div class="modal-header bg-blue">
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -65,7 +65,7 @@
                         $pocet = $db->num_rows($query);
                         if($db->num_rows($query)>0){
                         foreach($db->get_results($query) as $row){
-                        echo"<option value='".$row['cat_id']."'>".$row['name']."</option>";
+                        echo"<option value='".$row['id']."'>".$row['name']."</option>";
                         	}
                         }
                         ?>
@@ -74,7 +74,7 @@
                <div class="modal-footer">
                   <div class="btn-group">
                      <button type="button" class="btn btn-default" data-dismiss="modal">Zavrieť</button>
-                     <input type="submit" name="pridat" value="Pridať email" class="btn btn-primary" />
+                     <input type="submit" name="sent" value="Pridať email" class="btn btn-primary" />
                   </div>
                </div>
             </div>
@@ -87,20 +87,20 @@
 <div class="modal fade" id="pridat_kat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel8" aria-hidden="true">
    <div class="modal-wrapper">
       <div class="modal-dialog">
-         <form action="index.php?src=mailer&pridat-mail-akcia" method="POST">
+         <form action="<?php echo AdminMailer::url("add_cat", false, false, false, false, false) ?>" method="POST">
             <div class="modal-content">
                <div class="modal-header bg-blue">
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                   <h4 class="modal-title" id="myModalLabel8">Pridať novú kategóriu do zoznamu</h4>
                </div>
                <div class="modal-body">
-                  <input type="text" name="nazov" class="form-control" placeholder="Názov kategórie:"/>
+                  <input type="text" name="name" class="form-control" placeholder="Názov kategórie:"/>
                   <br/>
                </div>
                <div class="modal-footer">
                   <div class="btn-group">
                      <button type="button" class="btn btn-default" data-dismiss="modal">Zavrieť</button>
-                     <input type="submit" name="pridat_kat" value="Pridať" class="btn btn-primary" />
+                     <input type="submit" name="sent" value="Pridať" class="btn btn-primary" />
                   </div>
                </div>
             </div>
@@ -214,21 +214,21 @@
                   <form method="POST" action="<?php echo AdminMailer::url("edit_mail", $cat_id, false, false, $post_id, $page) ?>" >
                      <tr>
                         <td><?php echo $i++; ?></td>
-                        <td><b><input style="width: 60%;" type="text" name="meno" value="<?php echo $row['name']; ?>" /></b></td>
-                        <td><b><input style="width: 60%;" type="text" name="priezvisko" value="<?php echo $row['surname']; ?>" /></b></td>
+                        <td><b><input style="width: 60%;" type="text" name="name" value="<?php echo $row['name']; ?>" /></b></td>
+                        <td><b><input style="width: 60%;" type="text" name="surname" value="<?php echo $row['surname']; ?>" /></b></td>
                         <td><b><input style="width: 100%;" type="email" name="email" value="<?php echo $row['email']; ?>" /></b></td>
                         <!--<td><?php echo $row['date_update']; ?></td>-->
                         <td>
-                           <select name="typ" id="cname" class="form-control" minlength="2" required >
+                           <select name="cat_id" id="cname" class="form-control" minlength="2" required >
                            <?php
                               $query = AdminMailer::catQuery();
                               $pocet = $db->num_rows($query);
                               if($db->num_rows($query)>0){
                               	foreach($db->get_results($query) as $row2){
                               		if($row2['id'] == $row['cat_id'])
-                              			echo"<option value='".$row2['cat_id']."' selected>".$row2['name']."</option>";
+                              			echo"<option value='".$row2['id']."' selected>".$row2['name']."</option>";
                               		else
-                              			echo"<option value='".$row2['cat_id']."'>".$row2['name']."</option>";
+                              			echo"<option value='".$row2['id']."'>".$row2['name']."</option>";
                               		}
                               	}
                                                    ?>
@@ -236,7 +236,7 @@
                         </td>
                         <td>
                            <?php echo Dnt::returnInput();?>
-                           <input type="submit" name="odoslat" value="Upraviť" class="label-primary bg-green" />
+                           <input type="submit" name="sent" value="Upraviť" class="label-primary bg-green" />
                         </td>
                         <td>
                            <a href="<?php echo AdminMailer::url("del_mail", $cat_id, false, false, $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>

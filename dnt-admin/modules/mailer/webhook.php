@@ -4,34 +4,27 @@ $session = new Sessions;
 $dnt 	= new Dnt;
 $db 	= new Db;
 
-
-if($rest->get("post_id") && $rest->get("action") == "edit")
+if($rest->get("action") == "add_mail") //add email
 {
-	include "edit.php";
+	include "add_mail.php";
 }
-elseif($rest->get("post_id") && $rest->get("action") == "edit_action")
+elseif($rest->get("action") == "add_cat") //add cat
 {
-	//default article view action add
-	include "update.php";
+	include "add_cat.php";
 }
-elseif($rest->get("action") == "add")
+elseif($rest->get("action") == "del_mail") //remove email
 {
-	//default article view action add
-	include "add.php";
-}
-elseif($rest->get("action") == "del_mail")
-{
-	//default article view action add
 	include "del_mail.php";
 }
-elseif($rest->get("action") == "edit_mail")
+elseif($rest->get("action") == "del_mail_confirm") //remove email confirm
 {
-	//default article view action add
-	//echo "OK";
+	include "del_mail_confirm.php";
+}
+elseif($rest->get("action") == "edit_mail") //edit and update email
+{
 	include "edit_mail.php";
 }
 else
 {
-	//default article list template
-	include "tpl.php";
+	include "tpl.php"; //default template
 }
