@@ -428,5 +428,36 @@ public function my_email($predmet, $komu, $od_meno, $od_email, $email_sprava){
 		 }
 		 
 	}
+	
+	public function db_current_id($table, $and_where){
+		$db 	= new Db;
+		$rest 	= new Rest;
+		
+		$query 	= "SELECT `id` FROM `$table` WHERE vendor_id = '".Vendor::getId()."' $and_where ORDER BY id asc LIMIT 1";
+		if($db->num_rows($query)>0){
+		   foreach($db->get_results($query) as $row){
+			   return $row['id'];
+		   }
+		 }else{
+			 return false;
+		 }
+		 
+	}
+
+	
+	public function db_next_id($table, $and_where, $currentId){
+		$db 	= new Db;
+		$rest 	= new Rest;
+		
+		$query 	= "SELECT `id` FROM `$table` WHERE `id` > '$currentId' AND `vendor_id` = '".Vendor::getId()."' $and_where LIMIT 1";
+		if($db->num_rows($query)>0){
+		   foreach($db->get_results($query) as $row){
+			   return $row['id'];
+		   }
+		 }else{
+			 return false;
+		 }
+		 
+	}
 
 }

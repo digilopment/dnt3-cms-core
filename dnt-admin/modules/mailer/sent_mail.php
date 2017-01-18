@@ -1,66 +1,54 @@
 <?php
-/*
 if(isset($_POST['sent'])){
+	$session = new Sessions;
 	
-	//echo "POST";
-	$post_id	= $rest->get("post_id");
-	$name		= $rest->post("name");
-	$surname 	= $rest->post("surname");
-	$email 		= $rest->post("email");
-	$cat_id 	= $rest->post("cat_id");
-	$return 	= $rest->post("return");
-	$table 		= "dnt_mailer_mails";
-
+	$subject	= $rest->post("subject");
+	$template 	= $rest->post("template");
+	$cat_id 	= $rest->post("users");
+	$message 	= $rest->post("message");
 	
-	//echo $embed;
-	
-	 $db->update(
-		$table,	//table
-		array(	//set
-			'name' => $name,
-			'surname' => $surname,
-			'email' => $email,
-			'cat_id' => $cat_id,
-			'datetime_update' => Dnt::datetime()
-			), 
-		array( 	//where
-			'id' 			=> $post_id, 
-			'`vendor_id`' 	=> Vendor::getId())
-	);
-	$dnt->redirect($return);
-	
-}else{
-	//$dnt->redirect(WWW_PATH_ADMIN."?src=".DEFAULT_MODUL_ADMIN);
-	echo "OK";
+	$session->set("subject", $subject);
+	$session->set("template", $template);
+	$session->set("cat_id", $cat_id);
+	$session->set("message", $message);
 }
-*/
-include "tpl_functions.php";
+
+$table 	= "dnt_mailer_mails";
+$cat_id = $session->get("cat_id");
+
+$query = "SELECT * FROM dnt_mailer_mails WHERE cat_id = '".$cat_id."' AND vendor_id = '".Vendor::getId()."'";
+$sending_mail = $db->num_rows($query);
+	
 if(isset($_GET['mail_id'])){
-	$mail_id = $rest->get("mail_id");
+	$post_id = $rest->get("mail_id");
+	$next_id = dnt::db_next_id($table, "AND cat_id = '".$cat_id."'", $post_id);
 }else{
-	$mail_id = 12;
+	$post_id = dnt::db_current_id($table, "AND cat_id = '".$cat_id."'");
+	$next_id = dnt::db_next_id($table, "AND cat_id = '".$cat_id."'", $post_id);
 }
-$dntMailer		= new Mailer;
-$sender_email	= dnt::getPostParam("dnt_mailer_mails", "email", $mail_id);
-$msg 			= "Test Msg content";
-$heading 		= "Test Msg";
-$sending_mail	= 30;
-$sended_mails	= 10;
-$to_finish		= 20;
-$next_id		= 57;
 
-$dntMailer->set_recipient(array($sender_email));
-$dntMailer->set_msg($msg);
-$dntMailer->set_subject($heading);
-$dntMailer->set_sender_name($heading);
-$dntMailer->sent_email();
+$query = "SELECT * FROM dnt_mailer_mails WHERE cat_id = '".$cat_id."' AND vendor_id = '".Vendor::getId()."' AND id <= '$post_id'";
+$sended_mails = $db->num_rows($query);
 
 if($next_id){
+	include "tpl_functions.php";
+	$dntMailer		= new Mailer;
+	$sender_email	= dnt::getPostParam("dnt_mailer_mails", "email", $post_id);
+	$msg 			= $session->get("message");
+	$heading 		= $session->get("subject");
+	$to_finish		= $sending_mail - $sended_mails;
+
+	$dntMailer->set_recipient(array($sender_email));
+	$dntMailer->set_msg($msg);
+	$dntMailer->set_subject($heading);
+	$dntMailer->set_sender_name($heading);
+	$dntMailer->sent_email();
 	tpl_sending_mails($to_finish, $sender_email, $next_id);
 }else{
-	tpl_sending_finish();
+	include "tpl_functions.php";
+	$session->remove("cat_id");
+	$session->remove("subject");
+	$session->remove("template");
+	$session->remove("message");
+	tpl_sending_finish($sending_mail );
 }
-
-
-
-?>

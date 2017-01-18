@@ -529,4 +529,36 @@ echo '
 ';
 get_bottom();
 }
+function tpl_sending_finish($sending_mail){
+get_top();
+	echo '
+<body class="error">
+  <div class="outer">
+	<div class="middle">
+		<div class="inner">
+			<div class="row">
+				<!-- BEGIN ERROR PAGE -->
+				<div class="col-lg-12">
+					<!-- BEGIN ERROR -->
+					<div class="circle">
+						<i class="fa fa-chain-broken bg-blue"></i>
+					<span>'.$sending_mail .'</span>
+					</div>
+					<!-- END ERROR -->
+					<!-- BEGIN ERROR DESCRIPTION -->
+					<span class="status">mailov bolo úspešne odoslaných</span>
+					<br/>
+					<a href="'.WWW_PATH_ADMIN.'?src=mailer">Domov</a>
+					<!-- END ERROR DESCRIPTION -->
+				</div>
+				<!-- END ERROR PAGE -->
+			</div>
+		</div>
+	</div>
+  </div>
+</div>
+
+';
+get_bottom();
+}
 ?>

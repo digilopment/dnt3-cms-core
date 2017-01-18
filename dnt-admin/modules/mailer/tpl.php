@@ -121,9 +121,9 @@
       <h4 class="modal-title" id="myModalLabel8">Pridať email do zoznamu</h4>
    </div>
    <div class="modal-body">
-      <input type="text" name="predmet" class="form-control" placeholder="Predmet:"/>
+      <input type="text" name="subject" class="form-control" placeholder="Predmet:"/>
       <br/>
-      <select name="news" id="cname" class="form-control" minlength="2" required="">
+      <select name="template" id="cname" class="form-control" minlength="2" required="">
          <option value="NULL">(vyberte šablonu)</option>
          <?php
 			$query = "SELECT * FROM dnt_posts WHERE cat_id = '76' AND vendor_id = '".Vendor::getId()."'";
@@ -132,17 +132,6 @@
 					echo"<option value='".$row['cat_id']."'>".$row['name']."</option>";
 				}
 			}
-			
-	
-			/*$mailer_maily = dnt_query("SELECT * FROM `dnt_posts` 
-				WHERE typ='newsletters' AND
-				vendor = '".getVendorId($dntDb)."'"
-				,$dntDb);
-				if(mysql_num_rows($mailer_types)>0){
-				while($mailer_mail = mysql_fetch_array($mailer_maily)){
-				echo"<option value='".$mailer_mail['id']."'>".$mailer_mail['nazov']."</option>";
-					}
-				}*/
             ?>
       </select>
       <br/>
@@ -160,7 +149,7 @@
          
       </select>
       <br/>
-      <textarea  name="sprava" class="form-control" placeholder="Správa:"/></textarea>
+      <textarea  name="message" class="form-control" placeholder="Správa:"/></textarea>
    </div>
    <div class="modal-footer">
       <div class="btn-group">
