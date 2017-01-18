@@ -15,6 +15,11 @@ class AdminMailer{
 	}
 	*/
 	
+	public function sent_next_mail($next_id){
+		return WWW_PATH_ADMIN."?src=mailer&action=sent_mail&post_id=&mail_id=".$next_id."";
+	}
+	
+	
 	public function url($action, $cat_id, $sub_cat_id, $type, $post_id, $page){
 		if($action == "filter"){
 			return WWW_PATH_ADMIN."index.php?src=mailer&filter=$cat_id&sub_cat_id=$sub_cat_id&type=$type";

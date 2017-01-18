@@ -110,12 +110,11 @@
 </div>
 <!-- END MODAL -->
 
-<?php /*
    <!-- MODAL ODOSLAT EMAILY-->
    <div class="modal fade" id="modalPrimary3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel8" aria-hidden="true">
       <div class="modal-wrapper">
          <div class="modal-dialog">
-            <form action="<?php echo getMyServerRs($dntDb)."modules/mailer/odoslat-news-akcia.php";?>" method="POST">
+            <form action="<?php echo AdminMailer::url("sent_mail", false, false, false, false, false) ?>" method="POST">
 <div class="modal-content">
    <div class="modal-header bg-blue">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -127,28 +126,38 @@
       <select name="news" id="cname" class="form-control" minlength="2" required="">
          <option value="NULL">(vyberte šablonu)</option>
          <?php
-            $mailer_maily = dnt_query("SELECT * FROM `dnt_posts` 
-            WHERE typ='newsletters' AND
-            vendor = '".getVendorId($dntDb)."'"
-            ,$dntDb);
-            if(mysql_num_rows($mailer_types)>0){
-            while($mailer_mail = mysql_fetch_array($mailer_maily)){
-            echo"<option value='".$mailer_mail['id']."'>".$mailer_mail['nazov']."</option>";
-            	}
-            }
+			$query = "SELECT * FROM dnt_posts WHERE cat_id = '76' AND vendor_id = '".Vendor::getId()."'";
+			if($db->num_rows($query)>0){
+				foreach($db->get_results($query) as $row){
+					echo"<option value='".$row['cat_id']."'>".$row['name']."</option>";
+				}
+			}
+			
+	
+			/*$mailer_maily = dnt_query("SELECT * FROM `dnt_posts` 
+				WHERE typ='newsletters' AND
+				vendor = '".getVendorId($dntDb)."'"
+				,$dntDb);
+				if(mysql_num_rows($mailer_types)>0){
+				while($mailer_mail = mysql_fetch_array($mailer_maily)){
+				echo"<option value='".$mailer_mail['id']."'>".$mailer_mail['nazov']."</option>";
+					}
+				}*/
             ?>
       </select>
       <br/>
-      <select name="prijmatelia" id="cname" class="form-control" minlength="2" required="">
+      <select name="users" id="cname" class="form-control" minlength="2" required="">
          <option value="NULL">(vyberte kategóriu prijmateľov)</option>
-         <?php
-            $mailer_prijmatelia = dnt_query("SELECT * FROM `dnt_mailer_type` WHERE vendor = '".getVendorId($dntDb)."'", $dntDb);
-            if(mysql_num_rows($mailer_prijmatelia)>0){
-            while($mailer_prijmatel = mysql_fetch_array($mailer_prijmatelia)){
-            echo"<option value='".$mailer_prijmatel['typ']."'>".$mailer_prijmatel['nazov']."</option>";
-            	}
-            }
-            ?>
+		  <?php
+			$query = AdminMailer::catQuery();
+			$pocet = $db->num_rows($query);
+			if($db->num_rows($query)>0){
+			foreach($db->get_results($query) as $row){
+			echo"<option value='".$row['id']."'>".$row['name']."</option>";
+				}
+			}
+			?>
+         
       </select>
       <br/>
       <textarea  name="sprava" class="form-control" placeholder="Správa:"/></textarea>
@@ -156,7 +165,7 @@
    <div class="modal-footer">
       <div class="btn-group">
          <button type="button" class="btn btn-default" data-dismiss="modal">Zavrieť</button>
-         <input type="submit" name="odoslat" value="Odoslať" class="btn btn-primary" />
+         <input type="submit" name="sent" value="Odoslať" class="btn btn-primary" />
       </div>
    </div>
 </div>
@@ -165,7 +174,6 @@
 </div>
 </div>
 <!-- END MODAL -->
-*/?>
 
 <!-- BEGIN CUSTOM TABLE -->
 <br/>

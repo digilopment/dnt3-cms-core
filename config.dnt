@@ -60,7 +60,12 @@ define( 'DISPLAY_DEBUG', true ); //display db errors?
 
 
 //DEFAULT EMAIL
-define( 'DEFAULT_EMAIL', "info@vyhrat.com" ); //display db errors?
+define( 'DEFAULT_EMAIL', "thomas.doubek@gmail.com" ); 
+define( 'SEND_EMAIL_VIA', "internal" ); //internal, send_grid
+	define( 'SEND_GRID_API_REQUEST', "https://api.sendgrid.com/api/mail.send.json" ); //display db errors?
+	define( 'SEND_GRID_API_KEY', "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" );
+	define( 'SEND_GRID_API_TEMPLATE_ID', "cb890767-83e8-4824-9c63-bf68435599a8" );
+
 
 //DEFAULT VENDOR NAME
 define( 'DEFAULT_NAME', "Vyhrat" ); //display db errors?

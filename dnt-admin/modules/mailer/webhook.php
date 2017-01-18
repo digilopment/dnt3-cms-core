@@ -24,6 +24,10 @@ elseif($rest->get("action") == "edit_mail") //edit and update email
 {
 	include "edit_mail.php";
 }
+elseif($rest->get("action") == "sent_mail") //edit and update email
+{
+	include "sent_mail.php";
+}
 else
 {
 	include "tpl.php"; //default template

@@ -494,4 +494,39 @@ function getZobrazenie($stav){
 				echo "<option value='".$key."'>".$value."</option>"; 
 		}
 }
+function tpl_sending_mails($to_finish, $sender_email, $next_id){
+get_top();
+
+echo '
+<body class="error">
+  <div class="outer">
+	<div class="middle">
+		<div class="inner">
+			<div class="row">
+				<!-- BEGIN ERROR PAGE -->
+				<div class="col-lg-12">
+					<!-- BEGIN ERROR -->
+					<div class="circle">
+						<i class="fa fa-chain-broken bg-blue"></i>
+					<span>'.$to_finish.'</span>
+					</div>
+					<!-- END ERROR -->
+					<!-- BEGIN ERROR DESCRIPTION -->
+					<span class="status">...emailov ešte musím odoslať</span>
+					<span class="detail">Teraz odosielam na adresu: 
+						<b><a href="mailto:'.$sender_email.'" target="_blank">'.$sender_email.'</a></b>
+					</span>
+					<!-- END ERROR DESCRIPTION -->
+				</div>
+				<!-- END ERROR PAGE -->
+			</div>
+		</div>
+	</div>
+  </div>
+</div>
+<!--<meta http-equiv="refresh" content="2;url='.Rest::setGet(array("mail_id" => $next_id)).'">-->
+<meta http-equiv="refresh" content="2;url='.AdminMailer::sent_next_mail($next_id).'">
+';
+get_bottom();
+}
 ?>

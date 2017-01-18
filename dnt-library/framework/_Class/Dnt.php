@@ -213,19 +213,25 @@ public function get_perex($input, $maxWords, $maxChars)
     }
 }
 
-public function perex($str, $maxPocetSlov){
-			 
-			$str = not_html($str);
-			$slova = explode(" ", $str);
-			$pocetSlov = count($slova);
-			
-			for($i = 0; $i<$maxPocetSlov; $i++){
-				$return .= " ".$slova[$i];
-			}
-			
-			return $return."...";
-			
-		 }
+public function perex($str, $maxPocetSlov){		 
+	$str = not_html($str);
+	$slova = explode(" ", $str);
+	$pocetSlov = count($slova);
+	
+	for($i = 0; $i<$maxPocetSlov; $i++){
+		$return .= " ".$slova[$i];
+	}
+	
+	return $return."...";
+	
+}
+
+public function not_html($str) {
+	//return htmlspecialchars($str); 
+	$str = strip_tags($str);
+	$str = trim($str);
+	return $str;
+}
 
 public function is_email($email){
 	if ($email == "")
@@ -404,8 +410,23 @@ public function my_email($predmet, $komu, $od_meno, $od_email, $email_sprava){
 		
 		}
 		
-public function returnInput(){
-	echo "<input type='hidden' name='return' value='".WWW_FULL_PATH."' />";
-}
+	public function returnInput(){
+		echo "<input type='hidden' name='return' value='".WWW_FULL_PATH."' />";
+	}
+	
+	public function getPostParam($table, $column, $post_id){
+		$db 	= new Db;
+		$rest 	= new Rest;
+		
+		$query 	= "SELECT `$column` FROM `$table` WHERE id = $post_id";
+		if($db->num_rows($query)>0){
+		   foreach($db->get_results($query) as $row){
+			   return $row[$column];
+		   }
+		 }else{
+			 return false;
+		 }
+		 
+	}
 
 }
