@@ -11,6 +11,19 @@ class PollsFrontend extends Polls{
 		$next_question 	= false;
 		$prev_question 	= false;
 		
+		//first question 
+		$query = "SELECT `question_id` FROM dnt_polls_composer WHERE
+		vendor_id 	= ".Vendor::getId()." AND
+		`key`       = 'question' AND
+		poll_id 	= '".$poll_id."' LIMIT 1";
+		if($db->num_rows($query)>0){
+			foreach($db->get_results($query) as $row){
+				$first_question = $row['question_id'];
+			}
+		}else{
+			$first_question = false;
+		}
+		
 		//next question
 		$query = "SELECT `question_id` FROM dnt_polls_composer WHERE
 		vendor_id 	= ".Vendor::getId()." AND
@@ -45,7 +58,7 @@ class PollsFrontend extends Polls{
 			return WWW_PATH."".$rest->webhook(1)."/".$poll_id."/".$rest->webhook(3)."/".$prev_question;
 		}
 		elseif($index == "first"){
-			return WWW_PATH."".$rest->webhook(1)."/".$poll_id."/".$rest->webhook(3)."/1";
+			return WWW_PATH."".$rest->webhook(1)."/".$poll_id."/".$rest->webhook(3)."/".$first_question;
 			//www_PATH."/".$rest->webhook(1)."/".$rest->webhook(2)."/".$rest->webhook(3)."/1"
 		}
 	}

@@ -21,7 +21,7 @@ echo "<hr/>";
 
 $columns 	= "id,timestamp";
 $table 		= "dnt_logs";
-$downloadXlsPath 		= "dnt-system/data/test.csv";
+$downloadXlsPath 		= "dnt-view/data/test.csv";
 //$XMLgenerator->creatCsvFile($table, $columns, false, $downloadXlsPath);
 
 if($rest->getModul()){

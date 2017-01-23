@@ -113,7 +113,9 @@
             <label class="col-sm-2 control-label"><b>Názov vstupu</b></label>
             <label class="col-sm-2 control-label"><b>Zobraziť na webe?</b></label>
             <label class="col-sm-4 control-label"><b>Nastavenie hodnoty</b></label>
-            <label class="col-sm-1 control-label"><b>Počet bodov</b></label>
+			<?php if(Polls::getParam("type", $poll_id) == 2){?>
+				<label class="col-sm-1 control-label"><b>Počet bodov</b></label>
+			<?php } ?>
 			<?php if(Polls::getParam("type", $poll_id) == 1){?>
 				<label class="col-sm-1 control-label"><b>Definujte správnu odpoveď</b></label>
 			<?php } ?>
@@ -155,21 +157,22 @@
                   <div class="col-sm-4 text-left">
                      <input type="text" name="<?php echo $poll_name_key?>" value="<?php echo $row['value']?>" class="form-control" placeholder="">
                   </div>
+				  <?php if(Polls::getParam("type", $poll_id) == 2){?>
                   <div class="col-sm-1 text-left">
                      <input type="number" name="<?php echo $poll_name_points?>" value="<?php echo $row['points']?>" class="form-control" placeholder="">
                   </div>
-				 
+				 <?php } ?>
 				 <!-- len ak je typ 1 -->
 				 <?php if($row['key'] != "question"){?>
-				 <?php if(Polls::getParam("type", $poll_id) == 1){?>
-                  <div class="col-sm-1 text-left">
-                     <?php if($row['is_correct'] == 1){ ?>
-                     <input type="radio" name="is_correct_<?php echo $thisId?>" value="<?php echo  $poll_name_is_correct; ?>" checked="checked">
-                     <?php }else{ ?>
-                     <input type="radio" name="is_correct_<?php echo $thisId?>" value="<?php echo $poll_name_is_correct?>">
-                     <?php } ?>
-                  </div>
-				  <?php } ?>
+					 <?php if(Polls::getParam("type", $poll_id) == 1){?>
+					  <div class="col-sm-1 text-left">
+						 <?php if($row['is_correct'] == 1){ ?>
+						 <input type="radio" name="is_correct_<?php echo $thisId?>" value="<?php echo  $poll_name_is_correct; ?>" checked="checked">
+						 <?php }else{ ?>
+						 <input type="radio" name="is_correct_<?php echo $thisId?>" value="<?php echo $poll_name_is_correct?>">
+						 <?php } ?>
+					  </div>
+					  <?php } ?>
 				  <?php }else{
 					  echo ' <div class="col-sm-1 text-left"></div>';
 				  } ?>
@@ -177,7 +180,7 @@
 				  <label class="col-sm-2 control-label"><b>
                   <?php 
                      if($row['key'] == "question"){
-						echo "<big><a href='index.php?src=polls&action=del_question&post_id=".$poll_id."&question_id=".$row['question_id']."'><span style='color: #ff0000'>Vymazať celú otázku</span></a></big>";
+						echo "<big><a ".Dnt::confirmMsg("Naozaj chcete zmazať túto otázku?")." href='index.php?src=polls&action=del_question&post_id=".$poll_id."&question_id=".$row['question_id']."'><span style='color: #ff0000'>Vymazať celú otázku</span></a></big>";
                      }
 					 /*else{
                       echo "Vymazať tento field";
@@ -193,15 +196,21 @@
 				  $i++;
                   }
                   ?>
-				  
+            <!-- base settings -->
 				  <div class="row form"> 
-				  <label class="col-xs-12 control-label">
-					 <a href="index.php?src=polls&action=add_question&post_id=<?php echo $poll_id;?>&question_id=<?php echo $last_question_id;?>">Pridať ďalšiu otázku</a>
-				</label>
-				 </div>
-				  
-               <?php echo Dnt::returnInput();?>
-               <input type="submit" name="sent" class="btn btn-primary btn-lg btn-block" value="Uložiť všetky údaje">
+				   <label class="col-sm-3 control-label">
+					<a <?php echo Dnt::confirmMsg("Pridať ďalšiu otázku?"); ?>href="index.php?src=polls&action=add_question&post_id=<?php echo $poll_id;?>&question_id=<?php echo $last_question_id;?>">
+						<span type="button" class="btn btn-success btn-block">Pridať ďalšiu otázku</span>
+					</a>
+				   </label>
+				   <label class="col-sm-5 control-label">
+					<?php echo Dnt::returnInput();?>
+					<input type="submit" name="sent" class="btn btn-primary btn-block" value="Uložiť všetky údaje">
+				   </label>
+				   <label class="col-sm-3 control-label"></label>
+				   <label class="col-sm-1 control-label"></label>
+				</div>
+				 
             </div>
          </div>
          <!-- nastavenia partnera -->

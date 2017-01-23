@@ -414,6 +414,11 @@ public function my_email($predmet, $komu, $od_meno, $od_email, $email_sprava){
 		echo "<input type='hidden' name='return' value='".WWW_FULL_PATH."' />";
 	}
 	
+	public function confirmMsg($msg){
+		return " onclick=\"return confirm('$msg');\" ";
+	}
+	
+	
 	public function getPostParam($table, $column, $post_id){
 		$db 	= new Db;
 		$rest 	= new Rest;

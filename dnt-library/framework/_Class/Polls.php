@@ -53,7 +53,8 @@ class Polls{
 				'datetime_creat' 	=> Dnt::datetime(),
 				'datetime_update' 	=> Dnt::datetime(),
 				'datetime_publish' 	=> Dnt::datetime(),
-				'`show`' 			=> '0' 
+				'`show`' 			=> '0',
+				'count_questions' 	=> $rest->post("count_questions")
 			);
 
 		$db->insert('dnt_polls', $insertedData);
@@ -114,6 +115,7 @@ class Polls{
 		$questions 			= 5;
 		$order 				= $questions;
 		$winning_combination= 3;
+		$count_questions	= self::getParam("count_questions", $poll_id);
 		
 		//generovanie inputov pre vyherne kombinacie..
 		for($i=1;$i<=$winning_combination;$i++){
@@ -121,7 +123,7 @@ class Polls{
 			$insertedData = array(
 				'`vendor_id`' 			=> Vendor::getId(), 
 				'`poll_id`' 			=> $poll_id, 
-				'`question_id`' 		=> $question_id, 
+				'`question_id`' 		=> "0", // winning_combination ma vzdy index 0
 				'`key`' 				=> "winning_combination",
 				'`value`' 				=> "Výherná kombinácia č. $i",
 				'`description`' 		=> "Výherná kombinácia č. $i",
@@ -148,7 +150,7 @@ class Polls{
 			$db->insert('dnt_polls_composer', $insertedData);
 				
 			//generovanie inputov pre typy odpovedí A,B,C,D...
-			for($i=1;$i<=4;$i++){
+			for($i=1;$i<=$count_questions;$i++){
 				$insertedData = array(
 				'`vendor_id`' 			=> Vendor::getId(), 
 				'`poll_id`' 			=> $poll_id, 
@@ -168,7 +170,9 @@ class Polls{
 	
 	public function addQuestion($poll_id, $question_id){
 		$db 				= new Db;
-		$question_id = $question_id +1;
+		$count_questions	= self::getParam("count_questions", $poll_id);
+		$question_id 		= $question_id +1;
+		
 		$insertedData = array(
 				'`vendor_id`' 			=> Vendor::getId(), 
 				'`poll_id`' 			=> $poll_id, 
@@ -181,7 +185,7 @@ class Polls{
 			);
 		$db->insert('dnt_polls_composer', $insertedData);
 		
-		for($i=1;$i<=4;$i++){
+		for($i=1;$i<=$count_questions;$i++){
 			$insertedData = array(
 			'`vendor_id`' 			=> Vendor::getId(), 
 			'`poll_id`' 			=> $poll_id, 

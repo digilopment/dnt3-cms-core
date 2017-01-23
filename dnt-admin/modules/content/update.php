@@ -51,7 +51,7 @@ if(isset($_POST['sent'])){
 					"img",	 								//update table column
 					"`id`", 								//where column
 					$post_id, 								//where value
-					"../dnt-system/data/".Vendor::getId() 	//path
+					"../dnt-view/data/".Vendor::getId() 	//path
 				);
 	
 	//show template

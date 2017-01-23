@@ -1,6 +1,6 @@
 <?php
-include "dnt-system/layouts/markiza/tpl_functions.php";
-include "dnt-system/layouts/markiza/tpl_top.php";
+include "dnt-view/layouts/markiza/tpl_functions.php";
+include "dnt-view/layouts/markiza/top.php";
 $rest 		= new Rest;
 $db 		= new Db;
 $poll_id 	= $rest->webhook(2);
@@ -124,4 +124,4 @@ $poll_input_name = "poll_".$poll_id."_".$question_id;
 	</script>
 </div>
 <?php
-include "dnt-system/layouts/markiza/tpl_bottom.php";
+include "dnt-view/layouts/markiza/bottom.php";

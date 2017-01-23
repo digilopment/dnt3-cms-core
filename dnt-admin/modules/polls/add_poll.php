@@ -29,8 +29,15 @@
                         <br>
                      </div>
                   </div>
+				  <div class="row form-group ">
+                     <label class="col-sm-2 control-label"><b>Počet možností ku každej otázke</b></label>
+                     <div class="col-sm-6">
+                       <input type="number" name="count_questions" value="4" class="form-control" placeholder="">
+                        <br>
+                     </div>
+                  </div>
                   <div class="row form-group ">
-                     <label class="col-sm-2 control-label"><b>Vztvoriť kópiu už z existujúcej ankety:</b></label>
+                     <label class="col-sm-2 control-label"><b>Vytvoriť kópiu už z existujúcej ankety:</b></label>
                      <div class="col-sm-6">
                         <select class="form-control" name="poll_id">
                            <option value="0">(nekopírovať, ale použiť základné nastavenie ankety)</option>
