@@ -7,7 +7,6 @@ $poll_id 	= $rest->webhook(2);
 $question_id= $rest->webhook(4);
 $poll_input_name = "poll_".$poll_id."_".$question_id;
 ?>
-
 <div class="panel panel-primary dnt-poll">
    <div class="panel-heading">
       <h3 class="panel-title">
@@ -47,69 +46,8 @@ $poll_input_name = "poll_".$poll_id."_".$question_id;
          </ul>
       </nav>
    </div>
+</div>
    <script>
-   
-   function pollThisDomain() {
-       var domena_all = document.domain.split(".sk")[0];
-       var domena = domena_all.split(".");
-       var lastItem = domena.pop();
-       return lastItem;
-   }
-
-   function pollDeleteCookie(name) {
-       createCookie(name, "", -1);
-   }
-
-   function pollSetCookie(cname, cvalue, exMinutes) {
-       var d = new Date();
-       d.setTime(d.getTime() + (exMinutes * 60 * 1000));
-       var expires = "expires=" + d.toGMTString();
-       document.cookie = cname + "=" + cvalue + ";path=/;domain=" + pollThisDomain() + ".sk; " + expires;
-   }
-
-   function pollGetCookie(cname) {
-       var name = cname + "=";
-       var ca = document.cookie.split(';');
-       for (var i = 0; i < ca.length; i++) {
-           var c = ca[i];
-           while (c.charAt(0) == ' ') c = c.substring(1);
-           if (c.indexOf(name) == 0) {
-               return c.substring(name.length, c.length);
-           }
-       }
-       return "";
-   }
-
-   function pollCheckCookie() {
-       var user = getCookie("username");
-       if (user != "") {
-           alert("Welcome again " + user);
-       } else {
-           user = prompt("Please enter your name:", "");
-           if (user != "" && user != null) {
-               pollSetCookie("username", user, 30);
-           }
-       }
-   }
-
-   function pollIsCookie(name) {
-
-       var myCookie = getCookie(name);
-
-       if (myCookie != "") {
-           return true;
-       } else {
-           return false;
-       }
-   }
-
-   function pollSetCookie(cname, cvalue, exMinutes) {
-       var d = new Date();
-       d.setTime(d.getTime() + (exMinutes * 60 * 1000));
-       var expires = "expires=" + d.toGMTString();
-       document.cookie = cname + "=" + cvalue + ";path=/;domain=" + pollThisDomain() + "; " + expires;
-   }
-	
 	 $( document ).ready(function() {
 		 var pollData;
 		$("input[name=<?php echo $poll_input_name; ?>]").click(function() {    
@@ -122,6 +60,5 @@ $poll_input_name = "poll_".$poll_id."_".$question_id;
 		});
 	});
 	</script>
-</div>
 <?php
 include "dnt-view/layouts/markiza/bottom.php";

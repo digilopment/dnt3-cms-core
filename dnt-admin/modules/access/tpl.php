@@ -28,15 +28,16 @@
             </thead>
             <tbody>
                <?php
-                  $query = "SELECT * FROM `dnt_admin_users` 
+                  $query = "SELECT * FROM `dnt_users` 
                    WHERE `status` = '1' AND
                    vendor_id = '".Vendor::getId()."'";
                    $pocet_aktivne = $db->num_rows($query);
                   
                    
                    //$query = dnt_query("SELECT * FROM obchod_objednavky WHERE  parent_id = '0' $typ ORDER BY poradie", $dntDb);
-                   $query = "SELECT * FROM `dnt_admin_users` WHERE 
+                   $query = "SELECT * FROM `dnt_users` WHERE 
                    parent_id = '0' AND
+                   type = 'admin' AND
                    vendor_id = '".Vendor::getId()."' ORDER BY id desc"; 
                     if($db->num_rows($query)>0){
                    	foreach($db->get_results($query) as $row){

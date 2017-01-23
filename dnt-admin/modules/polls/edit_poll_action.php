@@ -65,7 +65,6 @@ if($rest->post("sent")){
 					'id' 			=> $is_correct, 
 					'`vendor_id`' 	=> Vendor::getId())
 			);
-		echo $is_correct;
 			
     }
 	Dnt::redirect($return);

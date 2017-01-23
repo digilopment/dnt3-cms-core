@@ -1,6 +1,17 @@
 <?php
 class Url{
 	
+	public function getCss($file){
+		$path = WWW_CDN_PATH."dnt-view/layouts/markiza/css/".$file;
+		return '<link href="'.$path.'" media="screen, tv, projection" rel="stylesheet" type="text/css" />';
+	}
+	
+	public function getJs($file){
+		$path = WWW_CDN_PATH."dnt-view/layouts/markiza/js/".$file;
+		return '<script src="'.$path.'" type="text/javascript"></script>';
+	}
+	
+	/**** OLD */
     var $url;
     var $modul_name;
     var $modul_img;
@@ -98,7 +109,6 @@ class Url{
 		
 		return WWW_CDN_PATH."".SYSTEM_NAME."/layouts/".$this->layout."/images/".$img.$this->get_img_version();
 	}
-	
 	
 
 	

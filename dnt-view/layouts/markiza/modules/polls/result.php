@@ -9,5 +9,7 @@ $poll_input_name = "poll_".$poll_id."_".$question_id;
 
 echo "<br>result<hr/>";
 echo PollsFrontend::getResultPercent($poll_id);
+echo "<br>result<hr/>";
+echo PollsFrontend::getVendorPoints($poll_id);
 
 include "dnt-view/layouts/markiza/bottom.php";

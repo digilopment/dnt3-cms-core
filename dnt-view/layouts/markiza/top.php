@@ -4063,3 +4063,6 @@
 	
 <div class="row" data-time="1485161907">
     <div class="col-md-12 slider_main_cont" />
+	
+<?php echo Url::getCss("custom.css");?>
+<?php echo Url::getJs("custom.js");?>

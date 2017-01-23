@@ -79,20 +79,7 @@ class PollsFrontend extends Polls{
 		}
 	}
 	
-	public function getCorrectOpinion($vendor_ansewer_id){
-		$db 	= new Db;
-		$query = "SELECT `is_correct` FROM dnt_polls_composer WHERE
-		vendor_id 	= ".Vendor::getId()." AND
-		is_correct 	= '1' AND
-		id 	= '".$vendor_ansewer_id."'";
-		if($db->num_rows($query)>0){
-			foreach($db->get_results($query) as $row){
-				return $row['is_correct'];
-			}
-		}else{
-			return 0;
-		}
-	}
+	
 	
 	public function getPollsIds($poll_id){
 		$db 	= new Db;
@@ -111,6 +98,21 @@ class PollsFrontend extends Polls{
 		return $arr;
 	}
 	
+/**** METODA 1 *****/	
+	public function getCorrectOpinion($vendor_ansewer_id){
+		$db 	= new Db;
+		$query = "SELECT `is_correct` FROM dnt_polls_composer WHERE
+		vendor_id 	= ".Vendor::getId()." AND
+		is_correct 	= '1' AND
+		id 	= '".$vendor_ansewer_id."'";
+		if($db->num_rows($query)>0){
+			foreach($db->get_results($query) as $row){
+				return $row['is_correct'];
+			}
+		}else{
+			return 0;
+		}
+	}
 	
 	//Funkcia vrati počet spravnych odpovedí v type ankety, kde je očakávaný počet percent ako výsledok
 	public function getCorrectAnsewers($poll_id){
@@ -130,6 +132,36 @@ class PollsFrontend extends Polls{
 		return (100 * self::getCorrectAnsewers($poll_id)) / self::getNumberOfQuestions($poll_id);
 	}
 	
+/**** METODA 2 *****/	
+	public function getVendorAnsewerPoints($vendor_ansewer_id){
+		$db 	= new Db;
+		$query = "SELECT `points` FROM dnt_polls_composer WHERE
+		vendor_id 	= ".Vendor::getId()." AND
+		id 	= '".$vendor_ansewer_id."'";
+		if($db->num_rows($query)>0){
+			foreach($db->get_results($query) as $row){
+				return $row['points'];
+			}
+		}else{
+			return 0;
+		}
+	}
+	
+	
+	public function getVendorPoints($poll_id){
+		$correct = 0;
+		 foreach(self::getPollsIds($poll_id) as $i){
+			 $vendor_ansewer_id = Cookie::Get("poll_".$poll_id."_".$i);
+			 self::getVendorAnsewerPoints($vendor_ansewer_id);
+			 if(self::getVendorAnsewerPoints($vendor_ansewer_id)){
+				 $correct +=self::getVendorAnsewerPoints($vendor_ansewer_id);
+			 }
+		}
+		return $correct;
+	}
+
+
+
 	public function deleteCookies($poll_id){
 		foreach(PollsFrontend::getPollsIds($poll_id) as $i){
 			Cookie::Delete("poll_".$poll_id."_".$i);
