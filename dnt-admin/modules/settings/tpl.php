@@ -162,14 +162,14 @@
                <div class="row">
                   <div class="col-md-6">
                      <form enctype='multipart/form-data' id="pristupy" action="<?php echo WWW_PATH_ADMIN."index.php?src=pristupy&update";?>" method="post">
-                        <input type="hidden" name="id" value="<?php echo AdminUser::data("id");?>" />
+                        <input type="hidden" name="id" value="<?php echo AdminUser::data("admin", "id");?>" />
                         <p class="lead">Nastavte Vaše <b>meno</b></p>
                         <p>Ak máte eshop a vystavíte faktúru, vaše meno tam bude predvyplnené</p>
-                        <input type="text" class="btn-default btn-lg btn-block" name="meno" value="<?php echo AdminUser::data("name");?>" />
+                        <input type="text" class="btn-default btn-lg btn-block" name="meno" value="<?php echo AdminUser::data("admin", "name");?>" />
                         <div class="padding"></div>
                         <p class="lead">Nastavte Vaše <b>priezvisko</b></p>
                         <p>Ak máte eshop a vystavíte faktúru, vaše meno tam bude predvyplnené</p>
-                        <input type="text" class="btn-default btn-lg btn-block" name="priezvisko" value="<?php echo AdminUser::data("surname");?>" />
+                        <input type="text" class="btn-default btn-lg btn-block" name="priezvisko" value="<?php echo AdminUser::data("admin", "surname");?>" />
                         <div class="padding"></div>
                   </div>
                   <div class="col-md-6">									

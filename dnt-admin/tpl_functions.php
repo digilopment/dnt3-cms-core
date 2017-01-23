@@ -260,7 +260,7 @@ if($row['name_url'] == "content"){
                   <li class="dropdown profile-menu">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                      <i class="fa fa-cog fa-lg"></i>
-                     <span class="username"><?php echo AdminUser::data("name")." ".AdminUser::data("surname"); ?></span>
+                     <span class="username"><?php echo AdminUser::data("admin", "name")." ".AdminUser::data("admin", "surname"); ?></span>
                      <i class="caret"></i>
                      </a>
                      <ul class="dropdown-menu box profile">

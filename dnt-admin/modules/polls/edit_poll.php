@@ -1,0 +1,214 @@
+<?php include "tpl_functions.php"; ?>
+<?php get_top(); ?>
+<?php include "top.php"; ?>
+<?php
+   $poll_id = $rest->get("post_id");
+   ?>
+<form action="index.php?src=polls&action=edit_poll_action&post_id=<?php echo $poll_id; ?>" method="POST" >
+   <section class="content">
+      <div class="col-md-12">
+         <div class="grid no-border">
+            <div class="grid-header">
+               <span class="grid-title"> <b>Základné nastavenia</b> - <?php echo Polls::getParam("name", $poll_id);?></span>
+               <div class="pull-right grid-tools">
+                  <a data-widget="collapse" title="Collapse"><i class="fa fa-chevron-up"></i></a>
+                  <a data-widget="reload" title="Reload"><i class="fa fa-refresh"></i></a>
+                  <a data-widget="remove" title="Remove"><i class="fa fa-times"></i></a>
+               </div>
+            </div>
+            <!--template pre zakladne nastavenie -->
+            <div class="grid-body">
+               <table class="table table-hover">
+                  <thead>
+                     <tr>
+                        <th>#id</th>
+                        <th>Názov ankety</th>
+                        <th>Publikovať anketu?</th>
+                        <th>Typ ankety</th>
+                        <th>Zobrazenie na pracovnej adrese</th>
+                        <th>Zobrazenie na produkcii</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td><?php echo Polls::getParam("id", $poll_id);?></td>
+                        <td style="max-width: 500px;">
+                           <input type="text" name="poll_name" value="<?php echo Polls::getParam("name", $poll_id);?>" class="form-control" placeholder="">
+                        </td>
+                        <td>
+                           <select class="form-control" name="poll_show" style="border: 2px #3C763D solid;width:200px">
+                           <?php getZobrazenie(Polls::getParam("show", $poll_id)); ?>
+                           </select>
+                        </td>
+                        <td>
+                           <select class="form-control" name="poll_type" style="border: 2px #3C763D solid;">
+                           <?php Polls::currentType(Polls::getParam("type", $poll_id));?>
+                           </select>
+                        </td>
+                        <td style="text-align: center;">
+                           <a href="<?php echo WWW_PATH."ankety/".Polls::getParam("id", $poll_id)."/".Polls::getParam("name_url", $poll_id)."" ?>" target="_blank"><i class="fa fa-arrow-right bg-blue action"></i></a>
+                        </td>
+                        <td style="text-align: center;">
+                           <a href="<?php echo WWW_PATH."ankety/".Polls::getParam("id", $poll_id)."/".Polls::getParam("name_url", $poll_id)."" ?>" target="_blank"><i class="fa fa-arrow-right bg-blue action"></i></a>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <div class="dnt-devider"></div>
+           
+			<!-- nastavenie v pripade že sa ma anketa spravať ako typ 2 -->
+			 <?php if(Polls::getParam("type", $poll_id) == 2){?>
+            <div class="grid-header">
+               <span class="grid-title"><b>Rozšírené nastavenia pre</b> Anketu s predpokladaným výsledkom kategorizácie</span>
+               <br/>
+               <br/>
+               <span class="grid-title">Maximálny možný počet bodov k získaniu: <b><?php echo Polls::getMaxPoint($poll_id); ?></b></span>
+               <div class="pull-right grid-tools">
+                  <a data-widget="collapse" title="Collapse"><i class="fa fa-chevron-up"></i></a>
+                  <a data-widget="reload" title="Reload"><i class="fa fa-refresh"></i></a>
+                  <a data-widget="remove" title="Remove"><i class="fa fa-times"></i></a>
+               </div>
+            </div>
+            <div class="grid-body">
+               <table class="table table-hover">
+                  <thead>
+                     <tr>
+                        <th>#id</th>
+                        <th>Názov vstupu</th>
+                        <th>Zadajte maximálny počet bodov (alebo hornú hranicu rozsahu), ktorý je potrebné získať pre dosiahnutie tejto odpovede.</th>
+                        <th>Výsledok</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <?php
+                        $query = Polls::getWinningCombinationData($poll_id);
+                        if($db->num_rows($query)>0){
+                         foreach($db->get_results($query) as $row){
+                         $poll_name_points = Polls::inputName("points", $row['id'], $row['points']);
+                         $poll_name_key 	= Polls::inputName("key", $row['id'], $row['key']);
+                        ?>
+                     <tr>
+                        <td style="width:50px"><?php echo Polls::getParam("id", $poll_id);?></td>
+                        <td style="width:200px"><?php echo $row['description'];?></td>
+                        <td style="width:200px">
+                           <input type="number" name="<?php echo $poll_name_points; ?>" value="<?php echo $row['points'];?>" class="form-control" placeholder="">
+                        </td>
+                        <td style="width:auto">
+                           <input type="text" name="<?php echo $poll_name_key; ?>" value="<?php echo $row['value'];?>" class="form-control" placeholder="">
+                        </td>
+                     </tr>
+                     <?php
+                        }
+                      }
+                      ?>
+                  </tbody>
+               </table>
+            </div>
+		  <?php } ?>
+		</div>
+      </div>
+      <div class="col-md-12">
+         <div class="row" style="background-color: #fff;padding: 5px;margin: 0px;">
+            <label class="col-sm-2 control-label"><b>Názov vstupu</b></label>
+            <label class="col-sm-2 control-label"><b>Zobraziť na webe?</b></label>
+            <label class="col-sm-4 control-label"><b>Nastavenie hodnoty</b></label>
+            <label class="col-sm-1 control-label"><b>Počet bodov</b></label>
+			<?php if(Polls::getParam("type", $poll_id) == 1){?>
+				<label class="col-sm-1 control-label"><b>Definujte správnu odpoveď</b></label>
+			<?php } ?>
+            <label class="col-sm-1 control-label"><b>Vzmazať pole</b></label>
+         </div>
+         <div class="dnt-devider"></div>
+         <div class=" tab-content">
+            <!-- base settings -->
+            <div class="tab-pane active" id="sutaz">
+               <?php
+                  //for($i=1;$i<=Polls::getNumberOfQuestions($poll_id);$i++){
+				  $i=1;
+				  foreach(PollsFrontend::getPollsIds($poll_id) as $thisId){
+                  $query = Polls::getCurrentAnsewerData($poll_id, $thisId);
+                  if($db->num_rows($query)>0){
+					  $j = 1;
+                  foreach($db->get_results($query) as $row){
+                  
+                  $poll_name_show 	= Polls::inputName("show", $row['id'], $row['show']);
+                  $poll_name_key 	= Polls::inputName("key", $row['id'], $row['key']);
+                  $poll_name_points = Polls::inputName("points", $row['id'], $row['points']);
+                  $poll_name_is_correct = Polls::inputName("is_correct", $row['id'], $row['is_correct']);
+                  $last_question_id = $row['question_id'];
+                  ?>
+				  <div class="row form">
+                  <label class="col-sm-2 control-label"><b><?php 
+                     if($row['key'] == "question"){
+						 echo "<big><big>Otázka č. $i</big></big>";
+                     }else{
+						 echo "Odpoveď pre otázku č $i, možnosť č. $j";
+                     }
+                     ?>
+                  </b></label>
+                  <label class="col-sm-2 control-label">
+                  <select class="form-control" name="<?php echo $poll_name_show ?>" style="border: 2px #3C763D solid;">
+                  <?php getZobrazenie($row['show']);?>
+                  </select>
+                  </label>
+                  <div class="col-sm-4 text-left">
+                     <input type="text" name="<?php echo $poll_name_key?>" value="<?php echo $row['value']?>" class="form-control" placeholder="">
+                  </div>
+                  <div class="col-sm-1 text-left">
+                     <input type="number" name="<?php echo $poll_name_points?>" value="<?php echo $row['points']?>" class="form-control" placeholder="">
+                  </div>
+				 
+				 <!-- len ak je typ 1 -->
+				 <?php if($row['key'] != "question"){?>
+				 <?php if(Polls::getParam("type", $poll_id) == 1){?>
+                  <div class="col-sm-1 text-left">
+                     <?php if($row['is_correct'] == 1){ ?>
+                     <input type="radio" name="is_correct_<?php echo $thisId?>" value="<?php echo  $poll_name_is_correct; ?>" checked="checked">
+                     <?php }else{ ?>
+                     <input type="radio" name="is_correct_<?php echo $thisId?>" value="<?php echo $poll_name_is_correct?>">
+                     <?php } ?>
+                  </div>
+				  <?php } ?>
+				  <?php }else{
+					  echo ' <div class="col-sm-1 text-left"></div>';
+				  } ?>
+                  
+				  <label class="col-sm-2 control-label"><b>
+                  <?php 
+                     if($row['key'] == "question"){
+						echo "<big><a href='index.php?src=polls&action=del_question&post_id=".$poll_id."&question_id=".$row['question_id']."'><span style='color: #ff0000'>Vymazať celú otázku</span></a></big>";
+                     }
+					 /*else{
+                      echo "Vymazať tento field";
+                     }*/
+                     ?></b></label>
+               </div>
+               <br>
+               <?php
+					$j++;
+                  }
+                  }
+                  echo '<div class="dnt-devider"></div>';
+				  $i++;
+                  }
+                  ?>
+				  
+				  <div class="row form"> 
+				  <label class="col-xs-12 control-label">
+					 <a href="index.php?src=polls&action=add_question&post_id=<?php echo $poll_id;?>&question_id=<?php echo $last_question_id;?>">Pridať ďalšiu otázku</a>
+				</label>
+				 </div>
+				  
+               <?php echo Dnt::returnInput();?>
+               <input type="submit" name="sent" class="btn btn-primary btn-lg btn-block" value="Uložiť všetky údaje">
+            </div>
+         </div>
+         <!-- nastavenia partnera -->
+      </div>
+      </div>
+   </section>
+</form>
+<!-- END CUSTOM TABLE -->
+<?php include "bottom.php"; ?>
+<?php get_bottom(); ?>

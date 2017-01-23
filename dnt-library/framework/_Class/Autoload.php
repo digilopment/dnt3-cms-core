@@ -17,6 +17,7 @@ class Autoload{
 	include  $path."dnt-library/framework/_Class/DntUpload.php";
 	include  $path."dnt-library/framework/_Class/ExceptionThrower.php";
 	include  $path."dnt-library/framework/_Class/Session.php";
+	include  $path."dnt-library/framework/_Class/Cookie.php";
 	include  $path."dnt-library/framework/_Class/Dnt.php";
 	include  $path."dnt-library/framework/_Class/Rest.php";
 	include  $path."dnt-library/framework/_Class/Url.php";
@@ -31,6 +32,9 @@ class Autoload{
 	include  $path."dnt-library/framework/_Class/AdminContent.php";
 	include  $path."dnt-library/framework/_Class/AdminMailer.php";
 	include  $path."dnt-library/framework/_Class/Image.php";
+	include  $path."dnt-library/framework/_Class/Polls.php";
+	include  $path."dnt-library/framework/_Class/PollsFrontend.php";
+	
 	}
 
 }

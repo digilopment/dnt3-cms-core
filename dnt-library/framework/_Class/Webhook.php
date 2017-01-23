@@ -26,6 +26,10 @@ class Webhook {
 						"error-404",
 						"not-found",
 					),
+		"polls" => array(
+						"ankety",
+						"anketa",
+					),
 		);
 	}
 }

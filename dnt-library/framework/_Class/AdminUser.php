@@ -1,9 +1,9 @@
 <?php
 class AdminUser{
 	
-	public function validProcessLogin($email, $pass){
+	public function validProcessLogin($type, $email, $pass){
 		$db = new Db;
-		$query = "SELECT pass FROM dnt_admin_users WHERE email = '".$email."'";
+		$query = "SELECT pass FROM dnt_users WHERE type = '$type' AND email = '".$email."' ";
 		if ($db->num_rows($query) > 0){
 			foreach($db->get_results($query) as $row){
 				$db_pass = $row['pass'];
@@ -18,10 +18,10 @@ class AdminUser{
 		}
 	}
 	
-	public function data($column){
+	public function data($type, $column){
 		$db = new Db;
 		$session = new Sessions();
-		$query = "SELECT $column FROM dnt_admin_users WHERE email = '".$session->get("admin_id")."'";
+		$query = "SELECT $column FROM dnt_users WHERE type = '$type' AND email = '".$session->get("admin_id")."'";
 		if ($db->num_rows($query) > 0){
 			foreach($db->get_results($query) as $row){
 				return $row[$column];
@@ -32,7 +32,7 @@ class AdminUser{
 	}
 	
 	public function avatar(){
-		return WWW_PATH_FILES."".AdminUser::data("img");
+		return WWW_PATH_FILES."".AdminUser::data("admin", "img");
 	}
 	
 }

@@ -78,6 +78,7 @@ define( 'VENDOR_ID', "1" );
 
 //LAYOUT ID
 define( 'LAYOUT_ID', "13" ); //server path too root file usualy index.php
+define( 'VENDOR_LAYOUT', "markiza" ); //server path too root file usualy index.php
 
 //SYSTEM PATHS
 define( 'LIBRARY_NAME', 'dnt-library' ); // set library name

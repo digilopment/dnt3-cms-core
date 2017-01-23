@@ -73,7 +73,7 @@ class Rest{
 	public function loadModul(){
 		if($this->getModul()){
 			$function = "dnt-modules/".$this->getModul()."/functions.php";
-			$template = "dnt-modules/".$this->getModul()."/template.php";
+			$template = "dnt-modules/".$this->getModul()."/webhook.php";
 			if(file_exists($function))
 				include $function;
 			if(file_exists($template))

@@ -8,7 +8,7 @@ if($rest->get("action") == 1){
 	if(isset($_POST['sent'])){
 		$email = $rest->post("email");
 		$pass = $rest->post("pass");
-		if($adminUser->validProcessLogin($email, $pass)){
+		if($adminUser->validProcessLogin("admin", $email, $pass)){
 			$session->set("admin_logged", "1");
 			$session->set("admin_id",$email);
 		}
