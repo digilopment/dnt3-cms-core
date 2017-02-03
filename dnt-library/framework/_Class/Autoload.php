@@ -3,10 +3,9 @@
 class Autoload{
 	
 	public function load($path){
-	
 	//CONFIG
 	include $path."config.dnt";
-
+	
 	//CLASS
 	include  $path."dnt-library/framework/_Class/Webhook.php";
 	include  $path."dnt-library/framework/_Class/Config.php";
@@ -34,6 +33,7 @@ class Autoload{
 	include  $path."dnt-library/framework/_Class/Image.php";
 	include  $path."dnt-library/framework/_Class/Polls.php";
 	include  $path."dnt-library/framework/_Class/PollsFrontend.php";
+	include  $path."dnt-library/framework/_Class/ArticleView.php";
 	
 	}
 

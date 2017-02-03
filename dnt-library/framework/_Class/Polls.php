@@ -4,8 +4,8 @@ class Polls{
 	
 	public function getTypes(){
 		return array(
-			"1" => "Anketa s percentuálnou úspešnosťou",
-			"2" => "Anketa s predpokladaným výsledkom kategorizácie",
+			"1" => "Kvíz s percentuálnou úspešnosťou (Vedomostný kvíz)",
+			"2" => "Kvíz s predpokladaným výsledkom kategorizácie (Priraďovací kvíz)",
 		);
 	}
 	
@@ -201,6 +201,25 @@ class Polls{
 		
 	}
 	
+	public function AddWinningCombination($poll_id, $question_id = 0){
+		$db 				= new Db;
+		
+		$insertedData = array(
+				'`vendor_id`' 			=> Vendor::getId(), 
+				'`poll_id`' 			=> $poll_id, 
+				'`question_id`' 		=> $question_id, 
+				'`key`' 				=> "winning_combination",
+				'`value`' 				=> "Výherná kombinácia",
+				'`description`' 		=> "Výherná kombinácia",
+				'`show`' 				=> "1",
+				'`order`' 				=> "$order",
+			);
+		$db->insert('dnt_polls_composer', $insertedData);
+		
+		
+		
+	}
+	
 	
 	public function delQuestion($poll_id, $question_id){
 		$db 				= new Db;
@@ -292,6 +311,14 @@ class Polls{
 		return $id."_".$prefix."_". $column;
 	}
 	
+	
+	
+	public function getMaxPointInQuestion($poll_id, $question_id){
+		$db = new Db;
+		$query = "SELECT MAX(points) FROM dnt_polls_composer WHERE vendor_id = '1' AND `key` LIKE '%ans%' AND poll_id = '6' AND question_id = '".$question_id."'";
+		$max = $db->get_row($query);
+		return $max[0];
+	}
 	/* 
 	 *
 	 *return @string
@@ -299,6 +326,7 @@ class Polls{
 	 *
 	 */
 	public function getMaxPoint($poll_id){
+		
 		$db = new Db;
 		$query = "SELECT * FROM dnt_polls_composer WHERE
 		vendor_id 	= ".Vendor::getId()." AND
@@ -306,13 +334,10 @@ class Polls{
 		poll_id 	= ".$poll_id."";
 		
 		$points = 0;
-		if($db->num_rows($query)>0){
-			foreach($db->get_results($query) as $row){
-				$points += $row['points'];
-			}
-		}else{
-			$points = false;
+		foreach(PollsFrontend::getPollsIds($poll_id) as $question_id){
+			$points += self::getMaxPointInQuestion($poll_id, $question_id);
 		}
+		
 		return $points;
 	}
 	

@@ -159,6 +159,60 @@ class PollsFrontend extends Polls{
 		}
 		return $correct;
 	}
+	
+	public function getVendorResultPointsRange($poll_id){
+		$db 	= new Db;
+		$points = self::getVendorPoints($poll_id);
+		$data 	= array(false);
+		$points_MAX = 0;
+		$points_MIN = 0;
+		
+		$query 	= self::getWinningCombinationData($poll_id);
+		if($db->num_rows($query)>0){
+			foreach($db->get_results($query) as $row){
+				//ziska maximum z rozsahu
+				if($row['points'] >= $points){
+					$points_MAX = $row['points'];
+					break; //zabezpeči len nasledujucu hodnotu, nie tie dalsie 
+				}
+			}
+			
+			foreach($db->get_results($query) as $row){
+				//ziska minimum z rozsah
+				if($row['points'] < $points){
+					$points_MIN = $row['points'];
+				}
+			}
+			
+		}
+		$data = array(
+				"max" => $points_MAX,
+				"min" => $points_MIN + 1 //+1 preto, aby sa dopočítal rozsah
+			);
+		return $data;
+	}
+	
+	public function getVendorResultPointsCat($poll_id){
+		$db 	= new Db;
+		$points_range = self::getVendorResultPointsRange($poll_id);
+		$poins_max 	= $points_range['max'];
+		//$points_range = self::getVendorResultPointsRange($poll_id);
+		
+		$query 	= "SELECT * FROM dnt_polls_composer WHERE 
+		`poll_id` = '$poll_id' AND
+		`points` = '$poins_max' AND
+		`key` = 'winning_combination' AND
+		`vendor_id` = '".Vendor::getId()."'";
+		if($db->num_rows($query)>0){
+			foreach($db->get_results($query) as $row){
+				$points = $row['id'];
+			}
+		}else{
+			$points = false;
+		}
+		
+		return $points;
+	}
 
 
 

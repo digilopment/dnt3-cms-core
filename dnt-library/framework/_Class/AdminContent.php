@@ -147,9 +147,8 @@ class AdminContent{
 	
 	public function getPostParam($column, $post_id){
 		$db 	= new Db;
-		$rest 	= new Rest;
 		
-		$query 	= "SELECT `$column` FROM dnt_posts WHERE id = $post_id";
+		$query 	= "SELECT `$column` FROM dnt_posts WHERE id = '$post_id'";
 		if($db->num_rows($query)>0){
 		   foreach($db->get_results($query) as $row){
 			   return $row[$column];

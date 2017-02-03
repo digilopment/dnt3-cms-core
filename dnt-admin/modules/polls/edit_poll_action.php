@@ -1,5 +1,5 @@
 <?php
-
+$dntUpload = new DntUpload;
 if($rest->post("sent")){
 	$poll_id = $rest->get("post_id");
 	
@@ -28,15 +28,28 @@ if($rest->post("sent")){
 	$table	 = "dnt_polls_composer";
 	//update data 
 	//for($i=1;$i<=Polls::getNumberOfQuestions($poll_id);$i++){
+	$k = 1;
 	foreach(PollsFrontend::getPollsIds($poll_id) as $i){
 	$query = Polls::getPollData($poll_id);
 	  if($db->num_rows($query)>0){
 		foreach($db->get_results($query) as $row){
 			 $poll_name_show 	= $rest->post(Polls::inputName("show", $row['id'], $row['show']));
              $poll_name_key 	= $rest->post(Polls::inputName("key", $row['id'], $row['key']));
-             $poll_name_points 	= $rest->post(Polls::inputName("points", $row['id'], $row['points']));
+             $poll_name_points 	= $rest->post(Polls::inputName("points", $row['id'], $row['key']));
 			 $dnt_polls_meta_id = explode("_", Polls::inputName("key", $row['id'], $row['key']));
+			 $poll_name_img   	= Polls::inputName("img", $row['id'], $row['img']);
 			 $meta_id = $dnt_polls_meta_id[0];
+			 
+			if($row['key'] == "winning_combination" && $k == 1){
+				$dntUpload->addDefaultImage(
+					$poll_name_img, 						//input type file
+					"dnt_polls_composer", 					//update table
+					"img", 									//update table column
+					"`id`", 								//where column
+					$meta_id, 								//where value
+					"../dnt-view/data/".Vendor::getId() 	//path
+				);
+			}
 			 
 			 $db->update(
 				$table,	//table
@@ -51,7 +64,9 @@ if($rest->post("sent")){
 					'`vendor_id`' 	=> Vendor::getId())
 			);
 			//echo $poll_name_key ." ".$meta_id."<br/>";
+			
 		}
+		$k++;
 	  }
 	  
 	  $is_correct = explode("_", $rest->post("is_correct_".$i));

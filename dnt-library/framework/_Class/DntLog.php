@@ -2,6 +2,17 @@
 
 class DntLog{
 	
+	public function is_error(){
+		if(count(error_get_last()) == 0){
+			return false;
+		}
+		return true;
+	}
+	
+	public function error_to_json(){
+		return json_encode(error_get_last());
+	}
+	
 	function getID(){
 		
 		$session = new Sessions();
@@ -15,6 +26,7 @@ class DntLog{
 	
 	}
 	
+
 	public function get_http_header($arr){
 	
 		$httpCacheStatus = CACHE_HTTP_STATUS;
@@ -51,41 +63,44 @@ class DntLog{
 		
 		//header($_SERVER["SERVER_PROTOCOL"]." ".$http_request." ".$http_request_info." ");
 		
-		if($http_request == $httpCacheStatus){
-			header('Cache-Control: cache');
-			header('Cache-Control: cache');
-			header("Expires: wait-time ".CACHE_TIME_SEC. "sec");
-			header("Pragma: cache");
-			header('Dnt-Cache-Time: '.CACHE_TIME_SEC. "sec");
+		//headers
+		if(isset($arr['http_response'])){
+			if($http_request == $httpCacheStatus){
+				header('Cache-Control: cache');
+				header('Cache-Control: cache');
+				header("Expires: wait-time ".CACHE_TIME_SEC. "sec");
+				header("Pragma: cache");
+				header('Dnt-Cache-Time: '.CACHE_TIME_SEC. "sec");
+			}
+			//header('Content-Type: text/html');
+			http_response_code($arr['http_response']);
+			header('Dnt-Request-System: '.GET_SYSTEM_NAME);
+			header('Dnt-Request-Url: '.WWW_FULL_PATH);
+			header('Dnt-Framework: '.GET_SYSTEM_VERSION);
+			header('Dnt-Version: '.GET_SYSTEM_VERSION);
+			
+			header('Dnt-Log: '.$_SESSION['page_id']);
+			//header('Dnt-Vendor: '.$dntVendor->getVendorUrl());
+			//header('Dnt-Vendor-Id: '.$dntVendor->getVendorId());
+			
+			header('Dnt-Server-Frontend: tom_F::brick-01');
+			header('Dnt-Server-Backend: tom_B::brick-01');
+			header('Dnt-Server-CDN: tom_C::brick-01');
+			header('Dnt-Server-Varnish: tom_V::brick-01 @path/dnt-cache');
+			//header('Dnt-Database-Model: Claster');
+			//header('Dnt-Composer: '.GET_SYSTEM_COMPOSER);
+			//header('Dnt-Engine-Pattern: '.GET_SYSTEM_ENGINE_PATTERN);
+			//header('Dnt-Search-Engine: '.GET_SYSTEM_SEARCH_ENGINE);
+			//header('Dnt-Components: '.GET_SYSTEM_COMPONENTS);
+			//header('Dnt-Varnish: no-varnish');
+			header('Dnt-Cache: '.$headerMsgCache);
+			//header('Dnt-Admin: Open');
+			
+			
+			header('Dnt-Subsystem-Packages: dnt_logs(c), dnt_cache(c) ');
+			header('Dnt-Author: Designdnt(c) ');
+			//header('Server: Designdnt3 ');
 		}
-		//header('Content-Type: text/html');
-		http_response_code($arr['http_response']);
-		header('Dnt-Request-System: '.GET_SYSTEM_NAME);
-		header('Dnt-Request-Url: '.WWW_FULL_PATH);
-		header('Dnt-Framework: '.GET_SYSTEM_VERSION);
-		header('Dnt-Version: '.GET_SYSTEM_VERSION);
-		
-		header('Dnt-Log: '.$_SESSION['page_id']);
-		//header('Dnt-Vendor: '.$dntVendor->getVendorUrl());
-		//header('Dnt-Vendor-Id: '.$dntVendor->getVendorId());
-		
-		header('Dnt-Server-Frontend: tom_F::brick-01');
-		header('Dnt-Server-Backend: tom_B::brick-01');
-		header('Dnt-Server-CDN: tom_C::brick-01');
-		header('Dnt-Server-Varnish: tom_V::brick-01 @path\./\!dnt-cache');
-		header('Dnt-Database-Model: Claster');
-		//header('Dnt-Composer: '.GET_SYSTEM_COMPOSER);
-		//header('Dnt-Engine-Pattern: '.GET_SYSTEM_ENGINE_PATTERN);
-		//header('Dnt-Search-Engine: '.GET_SYSTEM_SEARCH_ENGINE);
-		//header('Dnt-Components: '.GET_SYSTEM_COMPONENTS);
-		//header('Dnt-Varnish: no-varnish');
-		header('Dnt-Cache: '.$headerMsgCache);
-		//header('Dnt-Admin: Open');
-		
-		
-		header('Dnt-Subsystem-Packages: dnt_logs(c), dnt_cache(c) ');
-		header('Dnt-Author: Designdnt(c) ');
-		//header('Server: Designdnt3 ');
 		
 		
 		
@@ -94,7 +109,10 @@ class DntLog{
     public function add($arr){
 	
 	$this->getID();
-	$this->get_http_header(array("http_response" => $arr['http_response']));
+	
+	if(isset($arr['http_response'])){
+		$this->get_http_header(array("http_response" => $arr['http_response']));
+	}
 
 	$dntVendor = new Vendor();
 	$session = new Sessions();
@@ -173,6 +191,7 @@ class DntLog{
 	$arrToInsert['system_status'] = $system_status;
 	$arrToInsert['log_id'] = $session->get("page_id");
 	$arrToInsert['msg'] = $msg;
+	$arrToInsert['err_msg'] = $this->error_to_json();
 	$arrToInsert['THIS_URL'] = WWW_FULL_PATH;
 	
 	$db->insert( 'dnt_logs', $arrToInsert );
@@ -201,6 +220,29 @@ class DntLog{
 		$mailer->sent_email();
 	}
 	
-}
+	}
+	
+	public function show($log_id){
+		$db = new DB();
+		$columnsData	= new XMLgenerator;
+		//HTTP_COOKIE,PATH,SystemRoot,COMSPEC,PATHEXT,WINDIR,SERVER_SIGNATURE,SERVER_SOFTWARE,SERVER_NAME,SERVER_ADDR,SERVER_PORT,REMOTE_ADDR,DOCUMENT_ROOT,SERVER_ADMIN,SCRIPT_FILENAME,REMOTE_PORT,GATEWAY_INTERFACE,SERVER_PROTOCOL,REQUEST_METHOD,GET,QUERY_STRING,REQUEST_URI,SCRIPT_NAME,PHP_SELF,REQUEST_TIME"; 
+		//$columns = "id, http_response, system_status, log_id, timestamp, vendor_id, msg, msg, THIS_URL";
+		$columns	= "id,http_response,system_status,log_id,timestamp,vendor_id,msg,err_msg,THIS_URL,HTTP_REFERER,HTTP_HOST,HTTP_USER_AGENT,HTTP_ACCEPT,HTTP_ACCEPT_ENCODING,HTTP_ACCEPT_LANGUAGE,HTTP_ACCEPT_CHARSET,HTTP_COOKIE";
+		
+
+		if($log_id == "last"){
+			$query = "SELECT * FROM `dnt_logs` WHERE id=(SELECT max(id) FROM dnt_logs)";
+		}else{
+			$query = "SELECT * FROM `dnt_logs` WHERE `log_id` = '".$log_id."'";
+		}
+		
+		if ($db->num_rows($query) > 0){
+		  foreach($db->get_results($query) as $row){
+			  foreach($columnsData->getTableColumns("dnt_logs", $columns) as $key => $value){
+				print $value."\t\t\t => ".$row[$value]."\n";
+			  }
+		  }
+	   } 
+	}
 	
 }

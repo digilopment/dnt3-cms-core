@@ -4,7 +4,7 @@
 <?php
    $poll_id = $rest->get("post_id");
    ?>
-<form action="index.php?src=polls&action=edit_poll_action&post_id=<?php echo $poll_id; ?>" method="POST" >
+<form enctype='multipart/form-data' action="index.php?src=polls&action=edit_poll_action&post_id=<?php echo $poll_id; ?>" method="POST" >
    <section class="content">
       <div class="col-md-12">
          <div class="grid no-border">
@@ -63,7 +63,8 @@
                <span class="grid-title"><b>Rozšírené nastavenia pre</b> Anketu s predpokladaným výsledkom kategorizácie</span>
                <br/>
                <br/>
-               <span class="grid-title">Maximálny možný počet bodov k získaniu: <b><?php echo Polls::getMaxPoint($poll_id); ?></b></span>
+               <span class="grid-title">Maximálny možný počet bodov k získaniu: <b><?php echo Polls::getMaxPoint($poll_id); ?></b>
+			   Berie sa najvyššia bodová hodnota z danej otázky .</span>
                <div class="pull-right grid-tools">
                   <a data-widget="collapse" title="Collapse"><i class="fa fa-chevron-up"></i></a>
                   <a data-widget="reload" title="Reload"><i class="fa fa-refresh"></i></a>
@@ -78,6 +79,7 @@
                         <th>Názov vstupu</th>
                         <th>Zadajte maximálny počet bodov (alebo hornú hranicu rozsahu), ktorý je potrebné získať pre dosiahnutie tejto odpovede.</th>
                         <th>Výsledok</th>
+                        <th>Fotka</th>
                      </tr>
                   </thead>
                   <tbody>
@@ -85,17 +87,24 @@
                         $query = Polls::getWinningCombinationData($poll_id);
                         if($db->num_rows($query)>0){
                          foreach($db->get_results($query) as $row){
-                         $poll_name_points = Polls::inputName("points", $row['id'], $row['points']);
-                         $poll_name_key 	= Polls::inputName("key", $row['id'], $row['key']);
+                         $poll_name_points 	= Polls::inputName("points", $row['id'], $row['key']);
+                         $poll_name_key    	= Polls::inputName("key", $row['id'], $row['key']);
+                         $poll_name_img   	= Polls::inputName("img", $row['id'], $row['img']);
                         ?>
                      <tr>
                         <td style="width:50px"><?php echo Polls::getParam("id", $poll_id);?></td>
                         <td style="width:200px"><?php echo $row['description'];?></td>
                         <td style="width:200px">
-                           <input type="number" name="<?php echo $poll_name_points; ?>" value="<?php echo $row['points'];?>" class="form-control" placeholder="">
+							<input type="number" name="<?php echo $poll_name_points; ?>" value="<?php echo $row['points'];?>" class="form-control" placeholder="">
                         </td>
                         <td style="width:auto">
-                           <input type="text" name="<?php echo $poll_name_key; ?>" value="<?php echo $row['value'];?>" class="form-control" placeholder="">
+							<input type="text" name="<?php echo $poll_name_key; ?>" value="<?php echo $row['value'];?>" class="form-control" placeholder="">
+                        </td>
+						 <td style="width:200px">
+							<input type="file" name="<?php echo $poll_name_img; ?>"  class="btn-default btn-block" />
+                        </td>
+						<td style="width:100px">
+							<img src="<?php echo Image::getPostImage($row['id'],"dnt_polls_composer");?>" style="height: 80px" />
                         </td>
                      </tr>
                      <?php
@@ -104,6 +113,14 @@
                       ?>
                   </tbody>
                </table>
+			   <div class="row form"> 
+				   <label class="col-sm-3 control-label">
+					<a <?php echo Dnt::confirmMsg("Pridať ďalšiu možnosť? Pozor, ak ste vykonali nejaké zmeny, po vykonaní tejto akcie sa neuložia. Preto si prosím najprv uložte všetki zmeny."); ?>href="index.php?src=polls&action=winning_combination&post_id=<?php echo $poll_id;?>&question_id=0">
+						<span type="button" class="btn btn-success btn-block">Pridať ďalšiu možnosť</span>
+					</a>
+				   </label>
+				   <label class="col-sm-9 control-label"></label>
+				</div>
             </div>
 		  <?php } ?>
 		</div>
@@ -136,7 +153,7 @@
                   
                   $poll_name_show 	= Polls::inputName("show", $row['id'], $row['show']);
                   $poll_name_key 	= Polls::inputName("key", $row['id'], $row['key']);
-                  $poll_name_points = Polls::inputName("points", $row['id'], $row['points']);
+                  $poll_name_points = Polls::inputName("points", $row['id'], $row['key']);
                   $poll_name_is_correct = Polls::inputName("is_correct", $row['id'], $row['is_correct']);
                   $last_question_id = $row['question_id'];
                   ?>
@@ -157,7 +174,7 @@
                   <div class="col-sm-4 text-left">
                      <input type="text" name="<?php echo $poll_name_key?>" value="<?php echo $row['value']?>" class="form-control" placeholder="">
                   </div>
-				  <?php if(Polls::getParam("type", $poll_id) == 2){?>
+				  <?php if(Polls::getParam("type", $poll_id) == 2 && $row['key'] != "question"){?>
                   <div class="col-sm-1 text-left">
                      <input type="number" name="<?php echo $poll_name_points?>" value="<?php echo $row['points']?>" class="form-control" placeholder="">
                   </div>
@@ -190,7 +207,7 @@
                <br>
                <?php
 					$j++;
-                  }
+					}
                   }
                   echo '<div class="dnt-devider"></div>';
 				  $i++;
@@ -199,8 +216,8 @@
             <!-- base settings -->
 				  <div class="row form"> 
 				   <label class="col-sm-3 control-label">
-					<a <?php echo Dnt::confirmMsg("Pridať ďalšiu otázku?"); ?>href="index.php?src=polls&action=add_question&post_id=<?php echo $poll_id;?>&question_id=<?php echo $last_question_id;?>">
-						<span type="button" class="btn btn-success btn-block">Pridať ďalšiu otázku</span>
+					<a <?php echo Dnt::confirmMsg("Pridať ďalšiu otázku? Pozor, ak ste vykonali nejaké zmeny, po vykonaní tejto akcie sa neuložia. Preto si prosím najprv uložte všetki zmeny."); ?>href="index.php?src=polls&action=add_question&post_id=<?php echo $poll_id;?>&question_id=<?php echo $last_question_id;?>">
+						<span type="button" class="btn btn-success btn-block">Pridať ďalšiu otázku?</span>
 					</a>
 				   </label>
 				   <label class="col-sm-5 control-label">

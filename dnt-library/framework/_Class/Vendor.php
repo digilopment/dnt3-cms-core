@@ -8,13 +8,13 @@ class Vendor{
 	
 	public function getVendorUrl(){
 		
-		$hosts = explode(".", $_SERVER['HTTP_HOST']);
+		$hosts = explode(".", @$_SERVER['HTTP_HOST']);
 		$host = $hosts[0];
 		
 		if($host == "www"){
 			$this->vendor_url = $hosts[1];
 		}
-		elseif($host == $_SERVER['HTTP_HOST']){ //ak nie je subdomena, tak vrati false
+		elseif($host == @$_SERVER['HTTP_HOST']){ //ak nie je subdomena, tak vrati false
 			$this->vendor_url = false;
 		}
 		else{

@@ -1,5 +1,11 @@
 <?php
-
+/*
+ *
+ * The Rest protocol developed by Tomas Doubek
+ * thomas.doubek@gmail.com
+ *
+ *
+*/
 class Rest{
 	
     var $get; //variable of get result

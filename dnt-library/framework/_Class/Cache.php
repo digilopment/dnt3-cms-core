@@ -22,7 +22,7 @@ class Cache {
 	var $CACHE_ADDR;
 
     function __construct(){
-        $this->cacheFile = base64_encode($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+        $this->cacheFile = base64_encode(@$_SERVER['HTTP_HOST'].@$_SERVER['REQUEST_URI']);
         $this->cacheFileName = $this->cacheDir.'/'.$this->cacheFile.'.txt';
         $this->cacheLogFile = $this->cacheDir."/log.txt";
         if(!is_dir($this->cacheDir)) mkdir($this->cacheDir, 0755);
@@ -34,7 +34,7 @@ class Cache {
 
     function start(){
 		$dntLog = new DntLog;
-        $location = array_slice(explode('/',$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']), 2);
+        $location = array_slice(explode('/',@$_SERVER['HTTP_HOST'].@$_SERVER['REQUEST_URI']), 2);
         if(!in_array(@$location[0],$this->doNotCache)){
             if(file_exists($this->cacheFileName) && (time() - filemtime($this->cacheFileName)) < @$this->cacheTime && @$this->cacheLog[@$this->cacheFile] == 1 ){
 				$dntLog->add(
