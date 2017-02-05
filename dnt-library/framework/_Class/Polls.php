@@ -227,6 +227,12 @@ class Polls{
 		$db->delete( 'dnt_polls_composer', $where);
 	}
 	
+	public function delComposerInput($id){
+		$db 				= new Db;
+		$where = array( 'id' => $id, 'vendor_id' => Vendor::getId());
+		$db->delete( 'dnt_polls_composer', $where);
+	}
+	
 	
 	/* 
 	 *

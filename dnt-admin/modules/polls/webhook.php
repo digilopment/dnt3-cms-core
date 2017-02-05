@@ -22,6 +22,9 @@ elseif($rest->get("action") == "add_question"){
 elseif($rest->get("action") == "del_question"){
 	include "del_question.php";
 }
+elseif($rest->get("action") == "del_winning_combination"){
+	include "del_winning_combination.php";
+}
 elseif($rest->get("action") == "winning_combination"){
 	include "winning_combination.php";
 }

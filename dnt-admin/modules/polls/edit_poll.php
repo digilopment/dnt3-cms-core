@@ -75,11 +75,15 @@
                <table class="table table-hover">
                   <thead>
                      <tr>
-                        <th>#id</th>
-                        <th>Názov vstupu</th>
-                        <th>Zadajte maximálny počet bodov (alebo hornú hranicu rozsahu), ktorý je potrebné získať pre dosiahnutie tejto odpovede.</th>
+                        <!--<th>#id</th>-->
+                        <!--<th>Názov vstupu</th>-->
+                        <!--<th>Zadajte maximálny počet bodov (alebo hornú hranicu rozsahu), ktorý je potrebné získať pre dosiahnutie tejto odpovede.</th>-->
+                        <th>Dolná hranica rozsahu</th>
+                        <th>Horná hranica rozsahu</th>
                         <th>Výsledok</th>
+                        <th>Description</th>
                         <th>Fotka</th>
+                        <th>Vymazať</th>
                      </tr>
                   </thead>
                   <tbody>
@@ -90,23 +94,43 @@
                          $poll_name_points 	= Polls::inputName("points", $row['id'], $row['key']);
                          $poll_name_key    	= Polls::inputName("key", $row['id'], $row['key']);
                          $poll_name_img   	= Polls::inputName("img", $row['id'], $row['img']);
+						 $poll_min  		= false;
                         ?>
                      <tr>
-                        <td style="width:50px"><?php echo Polls::getParam("id", $poll_id);?></td>
-                        <td style="width:200px"><?php echo $row['description'];?></td>
-                        <td style="width:200px">
+                        <!--<td style="width:50px"><?php echo Polls::getParam("id", $poll_id);?></td>-->
+                        <!--<td style="width:100px"><?php echo $row['description'];?></td>-->
+						<td style="width:50px">
+							<input type="number" name="" value="<?php echo $poll_min ;?>" class="form-control" placeholder="" disabled> - 
+                        </td>
+                        <td style="width:80px">
 							<input type="number" name="<?php echo $poll_name_points; ?>" value="<?php echo $row['points'];?>" class="form-control" placeholder="">
                         </td>
-                        <td style="width:auto">
+                        <td style="width:400px">
 							<input type="text" name="<?php echo $poll_name_key; ?>" value="<?php echo $row['value'];?>" class="form-control" placeholder="">
                         </td>
+						<td style="width:auto" colspan="">
+							<textarea name="content" class="" style="min-height: 100px;width:100%"><?php echo $row['description'];?></textarea>
+						</td>
 						 <td style="width:200px">
+							
+							<img src="<?php echo Image::getPostImage($row['id'],"dnt_polls_composer");?>" style="height: 80px" />
+							<br/>
+							<br/>
 							<input type="file" name="<?php echo $poll_name_img; ?>"  class="btn-default btn-block" />
                         </td>
-						<td style="width:100px">
-							<img src="<?php echo Image::getPostImage($row['id'],"dnt_polls_composer");?>" style="height: 80px" />
-                        </td>
+						<td style="text-align: right;width: 50px;">
+							<?php echo "<a ".Dnt::confirmMsg("Naozaj chcete zmazať túto kombináciu?")." href='index.php?src=polls&action=del_winning_combination&post_id=".$poll_id."&composer_id=".$row['id']."'>";?>
+							<i class="fa fa-times bg-red action"></i>
+							</a>
+						</td>
+						
                      </tr>
+					 <!--<tr>
+					 <td style="width:100%" colspan="12">
+					   <textarea name="content" class="" style="min-height: 200px;"><?php echo $row['description'];?></textarea>
+					  </td>
+					 </tr>-->
+					 
                      <?php
                         }
                       }
@@ -167,7 +191,7 @@
                      ?>
                   </b></label>
                   <label class="col-sm-2 control-label">
-                  <select class="form-control" name="<?php echo $poll_name_show ?>" style="border: 2px #3C763D solid;">
+                  <select class="form-control" name="<?php echo $poll_name_show ?>" style="border: 2px #3C763D solid;" disabled>
                   <?php getZobrazenie($row['show']);?>
                   </select>
                   </label>
