@@ -27,6 +27,7 @@
                         <th>Typ ankety</th>
                         <th>Zobrazenie na pracovnej adrese</th>
                         <th>Zobrazenie na produkcii</th>
+                        <th>Obrázok</th>
                      </tr>
                   </thead>
                   <tbody>
@@ -50,6 +51,13 @@
                         </td>
                         <td style="text-align: center;">
                            <a href="<?php echo WWW_PATH."ankety/".Polls::getParam("id", $poll_id)."/".Polls::getParam("name_url", $poll_id)."" ?>" target="_blank"><i class="fa fa-arrow-right bg-blue action"></i></a>
+                        </td>
+						 <td style="width:200px">
+							
+							<img src="<?php echo Image::getPostImage($poll_id,"dnt_polls");?>" style="max-height: 80px" />
+							<br/>
+							<br/>
+							<input type="file" name="poll_image"  class="btn-default btn-block" />
                         </td>
                      </tr>
                   </tbody>

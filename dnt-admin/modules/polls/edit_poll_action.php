@@ -21,6 +21,14 @@ if($rest->post("sent")){
 			'id' 			=> $poll_id, 
 			'`vendor_id`' 	=> Vendor::getId())
 	);
+	$dntUpload->addDefaultImage(
+		"poll_image", 							//input type file
+		"dnt_polls", 							//update table
+		"img", 									//update table column
+		"`id`", 								//where column
+		$poll_id, 								//where value
+		"../dnt-view/data/".Vendor::getId() 	//path
+	);
 	
 	
 	//update all generated inputs dnt_polls_composer
@@ -40,7 +48,7 @@ if($rest->post("sent")){
 			 $poll_name_img   	= Polls::inputName("img", $row['id'], $row['img']);
 			 $meta_id = $dnt_polls_meta_id[0];
 			 
-			if($row['key'] == "winning_combination" && $k == 1){
+			if($row['key'] == "winning_combination" && $k == 1 && Polls::getParam("type", $poll_id) == 2){
 				$dntUpload->addDefaultImage(
 					$poll_name_img, 						//input type file
 					"dnt_polls_composer", 					//update table
