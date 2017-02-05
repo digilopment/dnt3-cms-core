@@ -259,10 +259,39 @@ class Polls{
 					'`show`' 				=> $row['show'],
 					'`points`' 				=> $row['points'],
 					'`order`' 				=> $row['order'],
+					'`is_correct`' 			=> $row['is_correct'],
+					'`img`' 				=> $row['img'],
 				);
 				$db->insert('dnt_polls_composer', $insertedData);
 			}
 		}
+		
+		$query = "SELECT * FROM dnt_polls WHERE
+		vendor_id 	= ".Vendor::getId()." AND
+		id 	= ".$copy_poll_id."";
+		if($db->num_rows($query)>0){
+			foreach($db->get_results($query) as $row){
+				
+				$table	 = "dnt_polls";
+				$db->update(
+					$table,	//table
+					array(	//set
+						'name' 				=> $row['name'],
+						'name_url' 			=> $row['name_url'],
+						'type' 				=> $row['type'],
+						'img' 				=> $row['img'],
+						'content' 			=> $row['content'],
+						'count_questions' 	=> $row['count_questions'],
+						), 
+					array( 	//where
+						'id' 			=> $poll_id, 
+						'`vendor_id`' 	=> Vendor::getId())
+				);
+				
+			}
+		}
+		
+		
 	}
 	
 	/* 
