@@ -5,6 +5,7 @@ if($rest->post("sent")){
 	
 	//update static inputs => dnt_polls
 	$poll_show 		= $rest->post("poll_show");
+	$poll_content 	= $rest->post("poll_content");
 	$poll_type 		= $rest->post("poll_type");
 	$poll_name 		= $rest->post("poll_name");
 	$poll_name_url 	= Dnt::name_url($poll_name);
@@ -16,6 +17,7 @@ if($rest->post("sent")){
 			'name_url' 		=> $poll_name_url,
 			'type' 			=> $poll_type,
 			'show' 			=> $poll_show,
+			'content' 		=> $poll_content,
 			), 
 		array( 	//where
 			'id' 			=> $poll_id, 
@@ -44,6 +46,7 @@ if($rest->post("sent")){
 			 $poll_name_show 	= $rest->post(Polls::inputName("show", $row['id'], $row['show']));
              $poll_name_key 	= $rest->post(Polls::inputName("key", $row['id'], $row['key']));
              $poll_name_points 	= $rest->post(Polls::inputName("points", $row['id'], $row['key']));
+             $poll_name_content = $rest->post(Polls::inputName("content", $row['id'], $row['key']));
 			 $dnt_polls_meta_id = explode("_", Polls::inputName("key", $row['id'], $row['key']));
 			 $poll_name_img   	= Polls::inputName("img", $row['id'], $row['img']);
 			 $meta_id = $dnt_polls_meta_id[0];
@@ -65,6 +68,7 @@ if($rest->post("sent")){
 					'value' 		=> $poll_name_key,
 					'show' 			=> $poll_name_show,
 					'points' 		=> $poll_name_points,
+					'description' 	=> $poll_name_content,
 					), 
 				array( 	//where
 					'id' 			=> $meta_id, 

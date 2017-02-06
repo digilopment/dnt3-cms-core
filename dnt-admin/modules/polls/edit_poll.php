@@ -63,6 +63,9 @@
                   </tbody>
                </table>
             </div>
+			<div class="grid-body">
+				<textarea name="poll_content" class="ckeditor"><?php echo Polls::getParam("content", $poll_id); ?></textarea>
+			</div>
             <div class="dnt-devider"></div>
            
 			<!-- nastavenie v pripade že sa ma anketa spravať ako typ 2 -->
@@ -102,6 +105,7 @@
                          $poll_name_points 	= Polls::inputName("points", $row['id'], $row['key']);
                          $poll_name_key    	= Polls::inputName("key", $row['id'], $row['key']);
                          $poll_name_img   	= Polls::inputName("img", $row['id'], $row['img']);
+                         $poll_name_content = Polls::inputName("content", $row['id'], $row['key']);
 						 $poll_min  		= false;
                         ?>
                      <tr>
@@ -117,7 +121,7 @@
 							<input type="text" name="<?php echo $poll_name_key; ?>" value="<?php echo $row['value'];?>" class="form-control" placeholder="">
                         </td>
 						<td style="width:auto" colspan="">
-							<textarea name="content" class="" style="min-height: 100px;width:100%"><?php echo $row['description'];?></textarea>
+							<textarea name="<?php echo $poll_name_content; ?>" class="" style="min-height: 100px;width:100%"><?php echo $row['description'];?></textarea>
 						</td>
 						 <td style="width:200px">
 							
