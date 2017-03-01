@@ -24,6 +24,11 @@ elseif($rest->get("action") == "del")
 	//default article view action add
 	include "del.php";
 }
+elseif($rest->get("action") == "show_hide")
+{
+	//default article view action add
+	include "show_hide.php";
+}
 else
 {
 	//default article list template

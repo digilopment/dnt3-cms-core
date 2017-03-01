@@ -72,7 +72,7 @@ class DB
             $headers .= 'To: Admin <'.SEND_ERRORS_TO.'>' . "\r\n";
             $headers .= 'From: Yoursite <system@'.$_SERVER['SERVER_NAME'].'.com>' . "\r\n";
 
-            mail( SEND_ERRORS_TO, 'Database Error', $message, $headers );   
+            @mail( SEND_ERRORS_TO, 'Database Error', $message, $headers );   
         }
         else
         {

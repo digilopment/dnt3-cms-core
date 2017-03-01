@@ -27,27 +27,55 @@ class Vendor{
 	
 	
 	public function getId(){
+		$db 	= new Db;
+		$host = explode(".", $_SERVER["HTTP_HOST"]);
 		
-		return VENDOR_ID;
-		/*$db = new DB();//get instance
+		//ak je host[1] existuje subdomena
+		if(isset($host[1])){
+			$vendor_url = $host[0];
+			$status		= "url";
+		}else{
+			$vendor_url = false;
+			$status		= "default";
+		}
 		
-		$query = "SELECT id FROM `dnt_vendors` WHERE
-		`parent_id` = '0' AND
-		`url` = '".$this->vendor_url."' AND
-		`aktivne` = '1' LIMIT 1";
+		$query = "SELECT `id` FROM `dnt_vendors` WHERE
+		name_url = '".$vendor_url."'";
 		
-		if ($db->num_rows($query) > 0){
+		if($db->num_rows($query)>0){
 			foreach($db->get_results($query) as $row){
-				$this->vendor_id = $row['id'];
+				$vendor_id =  $row['id'];
+			}
+		}else{
+			$query2 = "SELECT `id` FROM `dnt_vendors` WHERE `is_default` = '1'";
+			if($db->num_rows($query2)>0){
+				foreach($db->get_results($query2) as $row2){
+					$vendor_id = $row2['id'];
+				}
+			}else{
+				$vendor_id = false;
 			}
 		}
-		else{
-			$this->vendor_id = false;
+		
+		return $vendor_id;
+	}
+	
+	public function getLayout(){
+		$db 	= new Db;
+		
+		$query = "SELECT `layout` FROM `dnt_vendors` WHERE
+		id = '".self::getId()."'";
+		
+		if($db->num_rows($query)>0){
+			foreach($db->get_results($query) as $row){
+				$layout =  $row['layout'];
+			}
+		}else{
+			$layout = false;
 		}
 		
-		return $this->vendor_id;
-		*/
-		
+		return $layout;
 	}
 	
 }
+

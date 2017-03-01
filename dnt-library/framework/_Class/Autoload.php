@@ -7,6 +7,8 @@ class Autoload{
 	include $path."config.dnt";
 	
 	//CLASS
+	include  $path."dnt-library/framework/_Class/Db.php";
+	include  $path."dnt-library/framework/_Class/MultyLanguage.php";
 	include  $path."dnt-library/framework/_Class/Webhook.php";
 	include  $path."dnt-library/framework/_Class/Config.php";
 	include  $path."dnt-library/framework/_Class/Cache.php";
@@ -20,7 +22,6 @@ class Autoload{
 	include  $path."dnt-library/framework/_Class/Dnt.php";
 	include  $path."dnt-library/framework/_Class/Rest.php";
 	include  $path."dnt-library/framework/_Class/Url.php";
-	include  $path."dnt-library/framework/_Class/Db.php";
 	include  $path."dnt-library/framework/_Class/FaceDetector.php";
 	include  $path."dnt-library/framework/_Class/DntMailer.php";
 	include  $path."dnt-library/framework/_Class/DntLog.php";

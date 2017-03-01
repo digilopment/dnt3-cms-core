@@ -32,7 +32,7 @@ class Polls{
 	}
 	
 	public function getPollsAdmin(){
-		return "SELECT * FROM dnt_polls";
+		return "SELECT * FROM dnt_polls WHERE vendor_id = '".Vendor::getId()."'";
 	}
 	
 	/* 

@@ -71,21 +71,16 @@
             <form id="obchod" action="<?php echo WWW_PATH_ADMIN."index.php?src=settings&update ";?>" method="post">
                <p class="lead">Ste platcom <b>DPH</b>?</p>
                <p>Tento údaj sa bude zobrazovať všade tam, kde budete prezentovať Vašu firmu</p>
-               <select class="btn-default btn-lg btn-block" name="platca_dph">
-               <?php getZobrazenie(isVendorPlatcaDph($dntDb), $dntDb);?>
-               </select>
+               <input type="text" class="btn-default btn-lg btn-block" name="platca_dph">
                <div class="padding"></div>
                <p class="lead">Vyberte znak platobnej <b>meny</b></p>
                <p>Vyberte znak Vašej meny, ktorou sa bude v eshope platiť</p>
-               <select class="btn-default btn-lg btn-block" name="znak_meny">
-               <?php getMenaZnak(get_currency($dntDb), $dntDb); ?>
-               </select>
+              <input type="text"  class="btn-default btn-lg btn-block" name="znak_meny">
                <div class="padding"></div>
                <p class="lead">Vyberte názov platobnej <b>meny</b></p>
                <p>Vyberte názov Vašej meny, ktorou sa bude v eshope platiť</p>
-               <select class="btn-default btn-lg btn-block" name="nazov_meny">
-               <?php getMenaNazov(getCurrencyNazov($dntDb), $dntDb); ?>
-               </select>
+              <input type="text"  class="btn-default btn-lg btn-block" name="nazov_meny">
+           
                <div class="padding"></div>
                <p class="lead">Nastavte hodnotu <b>DPH</b></p>
                <p>Aktuálna cena DPH sa bude prepočítavať podľa aktuálnej hodnoty DPH</p>

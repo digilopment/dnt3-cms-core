@@ -8,7 +8,7 @@
             <section class="sidebar">
                <div class="user-panel">
                   <div class="pull-left image">
-                     <img src="<?php echo AdminUser::avatar();?>" class="img-circle" alt="<?php echo AdminUser::data("admin", "name")." ".AdminUser::data("surname"); ?>">
+                     <img src="<?php echo AdminUser::avatar();?>" class="img-circle" alt="<?php echo AdminUser::data("admin", "name")." ".AdminUser::data("admin", "surname"); ?>">
                   </div>
                   <div class="pull-left info">
                      <p><strong><?php echo AdminUser::data("admin", "name")." ".AdminUser::data("admin", "surname"); ?></strong></p>

@@ -83,6 +83,10 @@
             <!-- prava strana-->
             <div class="col-md-8">
                <div class="col">
+			   
+			   
+				<?php echo getLangNavigation(); ?>
+   
                   <!-- tabs begin here! -->
                   <?php /*navBarLang($dntDb);*/?>
                   <div class="tab-content" style="border: 0px solid; padding: 0px;">
@@ -132,7 +136,8 @@
                         </div>
                         <br/>
                      </div>
-                     <?php /*getTabLanguages(true, true, true, $post['id'], "dnt_posts", $dntDb);*/?>
+					 
+                     <?php contentLanguagesVariations(); /*getTabLanguages(true, true, true, $post['id'], "dnt_posts", $dntDb);*/?>
                   </div>
                   <!-- end here -->
 				  <?php echo Dnt::returnInput();?>

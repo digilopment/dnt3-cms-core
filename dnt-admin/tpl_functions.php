@@ -65,6 +65,95 @@
       <!-- END CK EDITOR -->
    </head>
 <?php } ?>
+<?php function getLangNavigation(){ ?>
+ <ul class="nav nav-tabs">
+   <li class="active"><a href="#home-lang" data-toggle="tab">Defaultný jazyk</a></li>
+   <?php 
+   $db 	= new Db;
+   $multylanguages 	= new MultyLanguage;
+    $query 	= $multylanguages->getLangs();
+	if($db->num_rows($query)>0){
+	   foreach($db->get_results($query) as $row){
+		   echo '<li class=""><a href="#lang-'.$row['slug'].'" data-toggle="tab">'.$row['name'].'</a></li>';
+		} 
+	} 
+	?>
+ </ul>
+<?php } ?>
+
+
+
+<?php function contentLanguagesVariations(){ ?>
+ <?php 
+   $db 		= new Db;
+   $rest 	= new Rest;
+   $id 		=  $rest->get('post_id');
+   $multylanguages 	= new MultyLanguage;
+   $query 	= $multylanguages->getLangs();
+	if($db->num_rows($query)>0){
+	   foreach($db->get_results($query) as $row){
+		   
+$name = $multylanguages->getTranslateLang(array("type" => "name", "lang_id" => $row['slug'], "translate_id" => $id, "table" => "dnt_posts"));
+$name_url = $multylanguages->getTranslateLang(array("type" => "name_url", "lang_id" => $row['slug'], "translate_id" => $id, "table" => "dnt_posts"));
+$content = $multylanguages->getTranslateLang(array("type" => "content", "lang_id" => $row['slug'], "translate_id" => $id, "table" => "dnt_posts"));
+$perex = $multylanguages->getTranslateLang(array("type" => "perex", "lang_id" => $row['slug'], "translate_id" => $id, "table" => "dnt_posts"));
+$tags = $multylanguages->getTranslateLang(array("type" => "tags", "lang_id" => $row['slug'], "translate_id" => $id, "table" => "dnt_posts"));
+
+$name_name = "name_".$row['slug'];
+$name_url_name = "name_url_".$row['slug'];
+$name_tags = "name_tags_".$row['slug'];
+$content_name = "name_content_".$row['slug'];
+$perex_name = "name_perex_".$row['slug'];
+?>
+<div class="tab-pane" id="lang-<?php echo $row['slug'] ?>">
+   <p class="lead dnt_bold">
+      <span class="dnt_lang"><?php echo $row['name'] ?></span>
+   </p>
+   <br/>
+   <div class="row">
+      <div class="form-group">
+         <div class="form-group">
+            <label class="col-sm-2 control-label text-left"><b>Post Name:</b></label>
+            <div class="col-sm-10">
+               <input type="text" name="<?php echo $name_name; ?>" value="<?php echo $name;?>" class="form-control" placeholder="Názov:" minlength="2"  >
+               <br/>
+            </div>
+         </div>
+         <div class="form-group">
+            <label class="col-sm-2 control-label text-left"><b>URL Address:</b></label>
+            <div class="col-sm-10">
+               <input type="text" name="<?php echo $name_url_name; ?>" value="<?php echo $name_url;?>" class="form-control" placeholder="Url:">
+               <br/>
+            </div>
+         </div>
+         <?php /*<div style="text-align: left;">
+            <h3>Prílohy</h3>
+            <input type="text" name="embed" value="<?php echo $embed;?>" class="form-control" placeholder="Prílohy:">
+         </div>*/?>
+         <div style="text-align: left;">
+            <h3>Tags</h3>
+            <input type="text" name="<?php echo $name_tags; ?>" value="<?php echo $tags; ?>" class="form-control" placeholder="Tags">
+         </div> 
+         <div id="click2edit" style="min-height: 495px;" >
+            <div style="text-align: left;">
+               <h3>Perex</h3>
+            </div>
+            <textarea name="<?php echo $perex_name; ?>" class="ckeditor" style="width: 100%; min-height: 200px;"><?php echo $perex;?></textarea>
+            <div style="text-align: left;">
+               <h3>Content</h3>
+            </div>
+            <textarea name="<?php echo $content_name; ?>" class="ckeditor" style="min-height: 495px;"><?php echo $content;?></textarea>
+         </div>
+         <br/>
+      </div>
+   </div>
+   <br/>
+</div>
+<?php
+		} 
+	} 
+	?>
+<?php } ?>
 <?php function get_bottom(){ ?>
       <script type="text/javascript">
          /* MAGNIFIC POPUP */
@@ -97,7 +186,7 @@
    $query = "SELECT * FROM `dnt_admin_menu` WHERE 
    `type` = 'menu' AND 
    `show` = '1' ".$andWhere." AND 
-   `vendor_id` = '".VENDOR_ID."' ORDER BY `order`";
+   `vendor_id` = '".Vendor::getId()."' ORDER BY `order`";
    if ($db->num_rows($query) > 0){
    	?>
 <ul class="sidebar-menu">
@@ -118,7 +207,7 @@ if($row['name_url'] == "content"){
             WHERE 
             `show` = '1' AND 
             `admin_cat` = '".$row['included']."' AND 
-            `vendor_id` = '".VENDOR_ID."' ORDER BY `order` desc";
+            `vendor_id` = '".Vendor::getId()."' ORDER BY `order` desc";
             if ($db->num_rows($query2) > 0){
             foreach($db->get_results($query2) as $row2){
             ?>
@@ -143,7 +232,7 @@ if($row['name_url'] == "content"){
       WHERE type = 'submenu' AND 
       `show` = '1' AND 
       `name_url` = '".$row['name_url']."' AND
-      `vendor_id` = '".VENDOR_ID."' ORDER BY  `order` desc";
+      `vendor_id` = '".Vendor::getId()."' ORDER BY  `order` desc";
       
       if ($db->num_rows($query2) > 0){
       ?>
@@ -420,7 +509,6 @@ $db = new Db;
 	<h5>Zaradenie postu v rámci typu:<br/></h5>
 	<select name="type" id="cname" class="form-control" minlength="2" required style="">
 	<?php 
-
 		   foreach(AdminContent::primaryCat() as $key => $value){
 			   if($key == $type)
 				echo '<option value="'.$key.'" selected>'.$value.'</option>';
@@ -435,13 +523,13 @@ $db = new Db;
 	<select name="cat_id" id="cname" class="form-control" minlength="2" required style="">
 	<?php 
 	   
-	   
+	   echo '<option value="">(nezaradené)</option>';
 	   foreach(AdminContent::primaryCat() as $key => $value){
 	   $query = "SELECT * FROM `dnt_post_type` WHERE 
 	   `show` = '1'  AND 
 	   `vendor_id` = '".Vendor::getId()."' AND 
 	   `admin_cat` = '".$key."'";
-	   echo '<option value="">(nezaradené)</option>';
+	   
 	    if($db->num_rows($query)>0){
 		   foreach($db->get_results($query) as $row){
 			   if($row['id'] == $cat_id)
@@ -458,15 +546,16 @@ $db = new Db;
 	</select>
 	<br/>
 	
-	<h5>Zaradenie v rámci subkategórie:<br/></h5>
+	<h5>Zaradenie substránky:<br/></h5>
 	<select name="sub_cat_id" id="cname" class="form-control">
 	<?php 
+	echo '<option value="">(nezaradené)</option>';
 	   foreach(AdminContent::primaryCat() as $key => $value){
-	   $query = "SELECT * FROM `dnt_post_type` WHERE 
+	   $query = "SELECT * FROM `dnt_posts` WHERE 
 	   `show` = '1'  AND 
 	   `vendor_id` = '".Vendor::getId()."' AND 
-	   `admin_cat` = '".$key."'";
-	   echo '<option value="">(nezaradené)</option>';
+	   `cat_id` = '".AdminContent::getCatId($key)."'";
+	   if($key == "sitemap"){
 	   if($db->num_rows($query)>0){
 		   foreach($db->get_results($query) as $row){
 			if($sub_cat_id == $row['id'])
@@ -476,8 +565,25 @@ $db = new Db;
 			}
 
 	   }else{
-		echo '<option value="page">Stránka</option>';
+		//echo '<option value="page">Stránka</option>';
 		}
+	  }elseif($key == "article"){
+		   $query = "SELECT * FROM `dnt_post_type` WHERE 
+		   `show` = '1'  AND 
+		   `vendor_id` = '".Vendor::getId()."' AND 
+		   `admin_cat` = 'article'";
+		  if($db->num_rows($query)>0){
+		   foreach($db->get_results($query) as $row){
+			if($sub_cat_id == $row['id'])
+				echo '<option value="'.$row['id'].'" selected>'.$value.' -> '.$row['name'].'</option>';
+			else
+				echo '<option value="'.$row['id'].'">'.$value.' -> '.$row['name'].'</option>';
+			}
+
+	   }else{
+		   //echo '<option value="page">Stránka</option>';
+		}
+	  }
 	}
 	   ?>
 	</select>

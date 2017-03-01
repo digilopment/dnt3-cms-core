@@ -10,7 +10,27 @@ class Webhook {
 	public function getSitemapModules(){
 		$db = new Db;
 		$arr = array();
-		$query = "SELECT `name_url` FROM dnt_posts WHERE `type` = 'sitemap' AND `show` = '1'";
+		$query = "SELECT `name_url` FROM dnt_posts WHERE `type` = 'sitemap' AND `show` = '1' AND vendor_id = '".Vendor::getId()."'";
+		if ($db->num_rows($query) > 0){
+			foreach($db->get_results($query) as $row){
+				$arr[] = $row['name_url'];
+			}
+		}else{
+			$arr = array(false);
+		}
+		return $arr;
+	}
+	
+	/*
+	 *
+	 * returns array
+	 * array of articles cat(s)
+	 *
+	*/ 
+	public function getArticleViewCat(){
+		$db = new Db;
+		$arr = array();
+		$query = "SELECT `name_url` FROM dnt_posts WHERE `type` = 'sitemap' AND `show` = '1' AND vendor_id = '".Vendor::getId()."'";
 		if ($db->num_rows($query) > 0){
 			foreach($db->get_results($query) as $row){
 				$arr[] = $row['name_url'];

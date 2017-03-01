@@ -2,5 +2,6 @@ dnt-cache/*
 !dnt-cache/readme.txt
 dnt-api/dnt-cache/*
 
-dnt-view/data/*
+dnt-view/*
 !dnt-view/data/readme.txt
+/nbproject/private/

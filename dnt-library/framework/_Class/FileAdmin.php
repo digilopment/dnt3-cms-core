@@ -1,5 +1,5 @@
 <?php
-class AdminContent extends MultyLanguage{
+class AdminContent{
 		
 	public function limit(){
 		return 20;
@@ -12,19 +12,6 @@ class AdminContent extends MultyLanguage{
 			"article" 	=> "Články"
 		);
 	}
-		
-	public function getCatId($type){
-		$db = new Db;
-		$query = "SELECT id FROM dnt_post_type WHERE name_url = '".$type."' AND `vendor_id` = '".Vendor::getId()."'";
-		if($db->num_rows($query)>0){
-		   foreach($db->get_results($query) as $row){
-			   return $row['id'];
-		   }
-		 }else{
-			 return false;
-		 }
-	}
-	
 	protected function prepare_query($is_limit){
 		$db = new Db();
 		
@@ -161,7 +148,7 @@ class AdminContent extends MultyLanguage{
 	public function getPostParam($column, $post_id){
 		$db 	= new Db;
 		
-		$query 	= "SELECT `$column` FROM dnt_posts WHERE id = '$post_id' AND vendor_id = '".Vendor::getId()."'";
+		$query 	= "SELECT `$column` FROM dnt_posts WHERE id = '$post_id'";
 		if($db->num_rows($query)>0){
 		   foreach($db->get_results($query) as $row){
 			   return $row[$column];

@@ -86,7 +86,7 @@ class Mailer{
 		
 		
 		if(SEND_EMAIL_VIA == "internal"){
-			mail($to, $subject, $message, $headers);
+			@mail($to, $subject, $message, $headers);
 		}
 		elseif(SEND_EMAIL_VIA == "send_grid"){
 			$js = array(
