@@ -18,7 +18,19 @@ class Webhook {
 		}else{
 			$arr = array(false);
 		}
-		return $arr;
+		//return $arr;
+		
+		//$query = "SELECT `translate` FROM dnt_translates WHERE `type` = 'name_url' AND `show` = '1' AND vendor_id = '".Vendor::getId()."'";
+		$query = "SELECT `translate` FROM dnt_translates WHERE `type` = 'name_url' AND translate <> '' AND vendor_id = '".Vendor::getId()."'";
+			if ($db->num_rows($query) > 0){
+				foreach($db->get_results($query) as $row){
+					$arr2[] = $row['translate'];
+				}
+			}else{
+				$arr2 = array(false);
+			}
+			
+		return array_merge($arr, $arr2);
 	}
 	
 	/*
@@ -38,7 +50,19 @@ class Webhook {
 		}else{
 			$arr = array(false);
 		}
+		
 		return $arr;
+		/*
+		$query = "SELECT `translate` FROM dnt_translates WHERE `type` = 'name_url' AND translate <> '' AND vendor_id = '".Vendor::getId()."'";
+		if ($db->num_rows($query) > 0){
+			foreach($db->get_results($query) as $row){
+				$arr2[] = $row['translate'];
+			}
+		}else{
+			$arr2 = array(false);
+		}
+		return array_merge($arr, $arr2);
+		*/
 	}
 	
 	

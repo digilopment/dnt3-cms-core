@@ -35,6 +35,7 @@ class Autoload{
 	include  $path."dnt-library/framework/_Class/Polls.php";
 	include  $path."dnt-library/framework/_Class/PollsFrontend.php";
 	include  $path."dnt-library/framework/_Class/ArticleView.php";
+	include  $path."dnt-library/framework/_Class/Frontend.php";
 	
 	}
 

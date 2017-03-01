@@ -24,10 +24,10 @@ Class Image{
 		}
 		$imageId = self::get($id, $table);
 		
-		$query = "SELECT name FROM dnt_uploads WHERE `id` = '".$imageId."' AND `vendor_id` = '".VENDOR_ID."'";
+		$query = "SELECT name FROM dnt_uploads WHERE `id` = '".$imageId."' AND `vendor_id` = '".Vendor::getId()."'";
 		if ($db->num_rows($query) > 0){
 			foreach($db->get_results($query) as $row){
-				return WWW_PATH_FILES."".$row['name'];
+				return WWW_PATH."dnt-view/data/".Vendor::getId()."/".$row['name'];
 			}
 		}else{
 			return false;

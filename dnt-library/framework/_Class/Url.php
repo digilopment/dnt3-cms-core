@@ -1,6 +1,8 @@
 <?php
 class Url{
 	
+	
+	
 	public function getCss($file){
 		$path = WWW_CDN_PATH."dnt-view/layouts/markiza/css/".$file;
 		return '<link href="'.$path.'" media="screen, tv, projection" rel="stylesheet" type="text/css" />';
@@ -9,6 +11,20 @@ class Url{
 	public function getJs($file){
 		$path = WWW_CDN_PATH."dnt-view/layouts/markiza/js/".$file;
 		return '<script src="'.$path.'" type="text/javascript"></script>';
+	}
+	
+	public function get($url){
+		if($url == "WWW_PATH"){
+			$lang = MultyLanguage::getLang();
+			if($lang == DEAFULT_LANG){
+				$lg = false;
+			}else{
+				$lg = $lang;
+			}
+			$r = WWW_PATH."".$lg."/";
+		}
+		
+		return $r;
 	}
 	
 	/**** OLD */

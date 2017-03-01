@@ -6,8 +6,12 @@ class MultyLanguage{
 		return $rest->webhook(0);
 	}
 	
-	public function getLangs(){
-		return  "SELECT * FROM dnt_languages WHERE `show` = '1' AND vendor_id = '".Vendor::getId()."'";
+	public function getLangs($frontend = false){
+		if($frontend == true){
+			return  "SELECT * FROM dnt_languages WHERE `show` = '1' AND vendor_id = '".Vendor::getId()."'";
+		}else{
+			return  "SELECT * FROM dnt_languages WHERE `home_lang` = '0' AND `show` = '1' AND vendor_id = '".Vendor::getId()."'";
+		}
 	}
 	
 	public function getDefault($id, $table, $column){
@@ -21,6 +25,23 @@ class MultyLanguage{
 		 }else{
 			 return false;
 		 }
+	}
+	
+	public function changeLanguage($lang){
+		$rest 	= new Rest;
+		$scale	= explode(self::getLang(), WWW_FULL_PATH);
+		if(isset($scale[1])){
+			$after_lang = $scale[1];
+		}else{
+			$scale	= explode(WWW_PATH, WWW_FULL_PATH);
+			$after_lang = $scale[1];
+		}
+		
+		$return_url = WWW_PATH."".$lang."".$after_lang;
+		$return_url = str_replace("///", "/", $return_url);
+		$return_url = str_replace("//", "/", $return_url);
+		$return_url = str_replace(":/", "://", $return_url);
+		return $return_url;
 	}
 	
 	
@@ -67,7 +88,7 @@ class MultyLanguage{
 		if($type == "static"){
 			$query = "SELECT `translate` FROM `dnt_translates` WHERE
 			`parent_id` = '0' AND
-			`vendor_id` = '".VENDOR_ID."' AND
+			`vendor_id` = '".Vendor::getId()."' AND
 			`lang_id` = '".$this->getLang()."' AND
 			`translate_id` = '".$translate_id."' AND
 			`type` = '".$type."'
@@ -76,7 +97,7 @@ class MultyLanguage{
 		}else{
 			$query = "SELECT `translate` FROM `dnt_translates` WHERE
 			`parent_id` = '0' AND
-			`vendor_id` = '".VENDOR_ID."' AND
+			`vendor_id` = '".Vendor::getId()."' AND
 			`lang_id` = '".$this->getLang()."' AND
 			`translate_id` = '".$translate_id."' AND
 			`type` = '".$type."' AND
