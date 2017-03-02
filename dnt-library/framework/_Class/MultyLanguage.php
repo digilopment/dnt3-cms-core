@@ -37,7 +37,7 @@ class MultyLanguage{
 			$after_lang = $scale[1];
 		}
 		
-		$return_url = WWW_PATH."".$lang."".$after_lang;
+		$return_url = WWW_PATH."".$lang."/".$after_lang;
 		$return_url = str_replace("///", "/", $return_url);
 		$return_url = str_replace("//", "/", $return_url);
 		$return_url = str_replace(":/", "://", $return_url);

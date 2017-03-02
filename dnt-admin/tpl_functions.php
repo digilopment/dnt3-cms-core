@@ -212,7 +212,7 @@ if($row['name_url'] == "content"){
             foreach($db->get_results($query2) as $row2){
             ?>
 			 <li>
-				<a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$row['name_url']."&included=".$row2['name_url']."&filter=".$row2['id'];?>">
+				<a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$row['name_url']."&included=".$row2['admin_cat']."&filter=".$row2['id'];?>">
 				<span><?php echo $row2['name'];?></span>
 				&nbsp;&nbsp;<i style="text-align: right;" class="fa fa-laptop"></i>
 				</a>
@@ -486,6 +486,9 @@ function deleteMssage($presmeruj, $volitelne_pole){
 function admin_zobrazenie_stav($zobrazenie){
 	if ($zobrazenie == 1)
 		$return = "fa fa-arrow-right bg-green action";
+	elseif ($zobrazenie == 2){
+		$return = "fa fa-arrow-down bg-blue action";
+	}
 	else{
 		$return = "fa fa-times bg-red action";
 		}

@@ -10,7 +10,14 @@ class ArticleView extends AdminContent{
 				return $row[$column];
 			}
 		}else{
-			return false;
+			$query = "SELECT `translate_id` FROM dnt_translates WHERE `type` = 'name_url' AND translate = '".$name_url."' AND vendor_id = '".Vendor::getId()."'";
+			if($db->num_rows($query)>0){
+				foreach($db->get_results($query) as $row){
+					return $row['translate_id'];
+				}
+			}else{
+				return false;
+			}
 		}
 	}
 	

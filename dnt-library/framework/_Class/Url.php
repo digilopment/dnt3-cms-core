@@ -19,9 +19,9 @@ class Url{
 			if($lang == DEAFULT_LANG){
 				$lg = false;
 			}else{
-				$lg = $lang;
+				$lg = $lang."/";
 			}
-			$r = WWW_PATH."".$lg."/";
+			$r = WWW_PATH."".$lg;
 		}
 		
 		return $r;

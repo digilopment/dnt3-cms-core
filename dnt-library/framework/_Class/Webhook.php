@@ -10,7 +10,7 @@ class Webhook {
 	public function getSitemapModules(){
 		$db = new Db;
 		$arr = array();
-		$query = "SELECT `name_url` FROM dnt_posts WHERE `type` = 'sitemap' AND `show` = '1' AND vendor_id = '".Vendor::getId()."'";
+		$query = "SELECT `name_url` FROM dnt_posts WHERE `type` = 'sitemap' AND `show` > '0' AND vendor_id = '".Vendor::getId()."'";
 		if ($db->num_rows($query) > 0){
 			foreach($db->get_results($query) as $row){
 				$arr[] = $row['name_url'];
@@ -42,7 +42,7 @@ class Webhook {
 	public function getArticleViewCat(){
 		$db = new Db;
 		$arr = array();
-		$query = "SELECT `name_url` FROM dnt_posts WHERE `type` = 'sitemap' AND `show` = '1' AND vendor_id = '".Vendor::getId()."'";
+		$query = "SELECT `name_url` FROM dnt_posts WHERE `type` = 'sitemap' AND `show` > '0' AND vendor_id = '".Vendor::getId()."'";
 		if ($db->num_rows($query) > 0){
 			foreach($db->get_results($query) as $row){
 				$arr[] = $row['name_url'];
@@ -74,13 +74,28 @@ class Webhook {
 	 *
 	 *
 	*/
-	public function get(){
+	public function get($custom_modules = false){
 		
-
+		if($custom_modules == false){
+			$custom_modules = array(array(false));
+		}else{
+			$custom_modules = $custom_modules;
+		}
+		
+		/*
+		$custom_modules = array(
+			"contact" => array(
+				"kontakt",
+				"contact",
+			),
+			"sponsors" => array(
+				"sponzori",
+				"sponsors",
+			),
+		);
+		*/
 		
 		$modules = array(
-		
-		
 			//homepage
 			"homepage" => array(
 							"domov",
@@ -98,7 +113,7 @@ class Webhook {
 				array( //static webhooks
 					"clanok",
 					"post"
-				), 
+				),
 				$this->getSitemapModules()), //sitemaps webhooks
 			
 			//404
@@ -113,6 +128,10 @@ class Webhook {
 							//"tomas",
 						),
 		);
+		//var_dump($getCustomSitemapModule);
+		//var_dump($modules);
+		$modules = array_merge($custom_modules, $modules);
+		//var_dump($modules);
 		return $modules;
 	}
 }

@@ -31,12 +31,15 @@ class AdminContent extends MultyLanguage{
 		
 		//default cat
 		if(isset($_GET['included']) && $_GET['included'] == "article"){
-			$typ = "AND cat_id = '".$_GET['filter']."'";
+			$typ = "AND sub_cat_id = '".$_GET['filter']."'";
 		}
 		elseif(isset($_GET['included']) && $_GET['included'] == "sitemap-sub"){
 			$typ = "AND cat_id = '".$_GET['filter']."'";
 		}
 		elseif(isset($_GET['included']) && $_GET['included'] == "sitemap"){
+			$typ = "AND cat_id = '".$_GET['filter']."'";
+		}
+		elseif(isset($_GET['included']) && $_GET['included'] == "post"){
 			$typ = "AND cat_id = '".$_GET['filter']."'";
 		}
 		

@@ -7,10 +7,13 @@ if($db->num_rows($query)>0){
  }
 }
 
-if($show == 1){
-    $set_show = 0;
-}else{
+if($show == 0){
     $set_show = 1;
+}
+elseif($show == 1){
+    $set_show = 2;
+}else{
+    $set_show = 0;
 }
 $table = "dnt_posts";
 $db->update(

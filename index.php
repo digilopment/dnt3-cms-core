@@ -27,6 +27,11 @@ if($rest->getModul()){
 				"msg"				=> "Default Log",
 			));
 		}*/
+		$dntLog->add(array(
+				"http_response" 	=> 200,
+				"system_status" 	=> "log",		
+				"msg"				=> "Default Log",
+			));
 		$rest->loadModul();
 	//$dntCache->end();
 	

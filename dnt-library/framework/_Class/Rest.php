@@ -62,8 +62,20 @@ class Rest{
 
 	
 	public function getModul(){
+		$file = "dnt-view/layouts/".Vendor::getLayout()."/conf.php";
+		if(file_exists($file)){
+			include_once $file;
+			if(function_exists("custom_modules")){
+				$custom_modules = custom_modules();
+			}else{
+				$custom_modules = false;
+			}
+		}else{
+			$custom_modules = false;
+		}
+		
 		$webhook = new Webhook;
-		$this->webhook = $webhook->get();
+		$this->webhook = $webhook->get($custom_modules);
 		foreach(array_keys($this->webhook) as $this->index){
 			foreach($this->webhook[$this->index] as $this->key=>$this->value){
 				if($this->webhook(1) == ""){
@@ -84,12 +96,18 @@ class Rest{
 				include $function;
 			if(file_exists($template))
 				include $template;
+			
+			//include_once "dnt-view/layouts/".Vendor::getLayout()."/modules/".$this->getModul()."/webhook.php";
 		}
+	}
+	
+	public function loadDefault(){
+		include "dnt-view/layouts/".Vendor::getLayout()."/modules/default/webhook.php";
 	}
 	
 	public function loadMyModul($module){
 			$function = "dnt-modules/".$module."/functions.php";
-			$template = "dnt-modules/".$module."/template.php";
+			$template = "dnt-modules/".$module."/webhook.php";
 			if(file_exists($function))
 				include $function;
 			if(file_exists($template))
