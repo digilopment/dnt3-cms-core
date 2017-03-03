@@ -223,14 +223,23 @@
                      ?>
                   </select>
                   <div class="padding"></div>
-                  <p class="lead">Kľúčové slová</p>
-                  <p>Zadajte tie najkľúčovejšie slová pre vašu stránku (slová oddeľujte čiarkou)</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="keywords" value="<?php echo Settings::get("keywords"); ?>" />
-                  <div class="padding"></div>
-                  <p class="lead">Nadpis stránky</p>
+				  
+				  <p class="lead">Nadpis stránky</p>
                   <p>Nadpis sa zobrazí v hlavičke vygenerovaného HTML dokumentu</p>
                   <input type="text" class="btn-default btn-lg btn-block" name="title" value="<?php echo Settings::get("title"); ?>" />
                   <div class="padding"></div>
+				  
+                  <p class="lead">Description webu</p>
+                  <p>Zadajte tie krátky popis vášho webu</p>
+                  <input type="text" class="btn-default btn-lg btn-block" name="description" value="<?php echo Settings::get("description"); ?>" />
+                  <div class="padding"></div>
+				  
+				  <p class="lead">Kľúčové slová</p>
+                  <p>Zadajte tie najkľúčovejšie slová pre vašu stránku (slová oddeľujte čiarkou)</p>
+                  <input type="text" class="btn-default btn-lg btn-block" name="keywords" value="<?php echo Settings::get("keywords"); ?>" />
+                  <div class="padding"></div>
+				  
+                 
                   <p class="lead">Štartovací modul</p>
                   <p>Vyberte modul, ktorý sa ako prvý zobrazí pri načítaní Vašej stránky</p>
                   <?php /*<select name="startovaci_modul" class="btn-default btn-lg btn-block" type="text" size="1">

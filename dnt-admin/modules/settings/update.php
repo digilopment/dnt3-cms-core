@@ -2,6 +2,7 @@
 if(isset($_POST['sent_1'])){
 		
 	$keywords 			= $rest->post('keywords');
+	$description 		= $rest->post('description');
 	$nadpis_stranky 	= $rest->post('title');
 	$startovaci_modul 	= $rest->post('startovaci_modul');
 	$target 			= $rest->post('startovaci_modul');
@@ -11,6 +12,7 @@ if(isset($_POST['sent_1'])){
 	$cachovanie 		= $rest->post('cachovanie');
 	
 	$db->update('dnt_settings', array( 'value' => $default_lang), array( '`key`' => 'default_lang', '`vendor_id`' => Vendor::getId()));
+	$db->update('dnt_settings', array( 'value' => $description), array( '`key`' => 'description', '`vendor_id`' => Vendor::getId()));
 	$db->update('dnt_settings', array( 'value' => $keywords), array( '`key`' => 'keywords', '`vendor_id`' => Vendor::getId()));
 	$db->update('dnt_settings', array( 'value' => $nadpis_stranky), array( '`key`' => 'title', '`vendor_id`' => Vendor::getId()));
 	$db->update('dnt_settings', array( 'value' => $startovaci_modul), array( '`key`' => 'startovaci_modul', '`vendor_id`' => Vendor::getId()));
