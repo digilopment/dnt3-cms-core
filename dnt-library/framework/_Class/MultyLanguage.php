@@ -76,6 +76,19 @@ class MultyLanguage{
 		return $return;
 	}
 	
+	/*protected function getDefaultTranslate($column, $post_id){
+		$db 	= new Db;
+		$query 	= "SELECT `$column` FROM dnt_posts WHERE id = '$post_id' AND vendor_id = '".Vendor::getId()."'";
+		
+		if($db->num_rows($query)>0){
+		   foreach($db->get_results($query) as $row){
+			   return $row[$column];
+		   }
+		}else{
+			return false;
+		}
+	}*/
+	
 	public function getTranslate($data){
 		
 		$translate_id 	= isset($data['translate_id']) ? $data['translate_id'] : false;
@@ -105,9 +118,14 @@ class MultyLanguage{
 			";
 			$default = $this->getDefault($translate_id, $table, $type);
 		}
+		//return $default;
 		if($db->num_rows($query) > 0){
 			foreach($db->get_results($query) as $row){
-				$return = $row['translate'];
+				if($row['translate'] == ""){
+					$return = $default;
+				}else{
+					$return = $row['translate'];
+				}
 			}
 		}else{
 			$return = $default;

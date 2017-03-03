@@ -47,14 +47,22 @@ class ArticleView extends AdminContent{
 		}
 	}
 	
-	public function getPostParam($column, $post_id){
+	public function getPostParam($column, $post_id, $full_url = false){
 		$db 	= new Db;
-		
 		$query 	= "SELECT `$column` FROM dnt_posts WHERE id = '$post_id' AND vendor_id = '".Vendor::getId()."'";
+		
 		if($db->num_rows($query)>0){
 		   foreach($db->get_results($query) as $row){
 			   //return $row[$column];
-			   return $this->getTranslate(array("type" => $column, "translate_id" => $post_id, "table" => "dnt_posts"));
+			   if( $full_url == false){
+				   return $this->getTranslate(array("type" => $column, "translate_id" => $post_id, "table" => "dnt_posts"));
+			   }else{
+				   if($column == "name_url"){
+					   return  Url::get("WWW_PATH").$this->getTranslate(array("type" => $column, "translate_id" => $post_id, "table" => "dnt_posts"));
+				   }else{
+					   return $this->getTranslate(array("type" => $column, "translate_id" => $post_id, "table" => "dnt_posts"));
+				   }
+			   }
 		   }
 		 }else{
 			 return false;

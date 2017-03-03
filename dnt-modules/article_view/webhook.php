@@ -1,7 +1,7 @@
 <?php
-$rest = new Rest;
-$article = new ArticleView;
+include "dnt-view/layouts/".Vendor::getLayout()."/modules/article_view/webhook.php";
 
+/*
 if(empty($rest->webhook(2))){
 	//echo "static_view";
 	$post_id = $article->getStaticId();
@@ -33,6 +33,7 @@ if(empty($rest->webhook(2))){
 	
 	include "dnt-view/layouts/".Vendor::getLayout()."/modules/article_view/tpl.php";
 }
+*/
 
 
 /*
