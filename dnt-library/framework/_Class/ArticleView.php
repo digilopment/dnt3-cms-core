@@ -1,6 +1,40 @@
 <?php
 class ArticleView extends AdminContent{
 	
+	
+	public function getPosts($post_type){
+		//$post_type = "personal";
+		$db = new Db;
+		$query = "SELECT * FROM dnt_posts WHERE 
+			type = 'post' AND 
+			`show` = '1' AND 
+			cat_id = '".self::getCatId($post_type)."' AND 
+			vendor_id = '".Vendor::getId()."'";
+			
+		if($db->num_rows($query)>0){
+			return $db->get_results($query);
+		}else{
+			return array(false);
+		}
+	}
+	
+	public function getSitemap(){
+		//$post_type = "personal";
+		$db = new Db;
+		 $query = "SELECT * FROM dnt_posts WHERE 
+				  type = 'sitemap' AND 
+				  cat_id = '".AdminContent::getCatId("sitemap")."' AND 
+				  `show` = '1'";
+			
+		if($db->num_rows($query)>0){
+			return $db->get_results($query);
+		}else{
+			return array(false);
+		}
+	}
+	
+	
+	
 	public function StaticViewParam($column, $name_url){
 		$rest = new Rest;
 		$db = new Db;

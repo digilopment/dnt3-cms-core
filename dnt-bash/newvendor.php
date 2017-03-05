@@ -1,5 +1,5 @@
 <?php
-include "dnt-library/framework/_Class/Autoload.php";
+include "../dnt-library/framework/_Class/Autoload.php";
 $autoload		= new Autoload;
 $path			= "../";
 $autoload->load($path);
@@ -10,21 +10,21 @@ $XMLgenerator	= new XMLgenerator;
 $api			= new Api;
 
 //settings
-$COPY_FROM 		= 1;
-$NEW_VENDOR_ID 	= 2;
-$STATUS 		= "del"; //add;dell
+$COPY_FROM 		= 2;
+$NEW_VENDOR_ID 	= 3;
+$STATUS 		= "creat"; //add;dell
 
 //tabulky
 $tables = array(
 	//"dnt_api",
 	//"dnt_languages",
-	"dnt_posts",
+	/*"dnt_posts",
 	"dnt_post_type",
 	"dnt_polls",
 	"dnt_polls_composer",
-	
+	*/
 	//VSETKY STLPCE
-	/*"dnt_admin_menu",
+	"dnt_admin_menu",
 	"dnt_api",
 	"dnt_config",
 	"dnt_languages",
@@ -39,7 +39,7 @@ $tables = array(
 	"dnt_settings",
 	"dnt_translates",
 	"dnt_uploads",
-	"dnt_users",*/
+	"dnt_users",
 );
 
 
@@ -91,6 +91,25 @@ if($STATUS == "del"){
 		echo "<hr/>";
 		echo "<hr/>";
 	}
+	
+	//DELETE DATA FROM
+	$tables = array(
+		"dnt_logs",
+		"dnt_mailer_mails",
+		"dnt_mailer_type",
+		"dnt_polls",
+		"dnt_polls_composer",
+		"dnt_posts",
+		"dnt_posts_meta",
+		"dnt_post_type",
+		"dnt_uploads",
+	);
+	foreach($tables as $table){
+		$where = array( 'vendor_id' => $NEW_VENDOR_ID);
+		$db->delete( $table, $where);
+	}
+	
+	//CREAT POST COMPOSER
 }
 
 
