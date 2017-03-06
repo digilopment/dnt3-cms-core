@@ -135,5 +135,9 @@ function delVendor($id, $tables){
 	echo "Deleted";
 }
 
+function install(){
+	return true;
+}
+
 addVendor($tables, $VENDOR_NAME, $COPY_FROM);
 //delVendor(7 , $tables);

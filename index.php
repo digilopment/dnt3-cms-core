@@ -10,6 +10,10 @@ $XMLgenerator	= new XMLgenerator;
 $dnt 			= new Dnt;
 $dntCache 		= new Cache;
 
+if(!Install::db_exists()){
+	Dnt::redirect("dnt-install/index.php");
+}
+
 if($rest->getModul()){
 	
 	//$dntCache->start();		
