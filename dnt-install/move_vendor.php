@@ -5,8 +5,8 @@ $path			= "../";
 $autoload->load($path);
 $install = new Install;
 
-$VENDOR_NAME 	= "Skeleton";
-$COPY_FROM 		= "2";
+$vendor_id 			= "12";
+$vendor_movde_to 	= "1";
 $tables = array(
 	//VSETKY STLPCE
 	"dnt_admin_menu",
@@ -27,5 +27,5 @@ $tables = array(
 	"dnt_users",
 );
 
-$install->addVendor($tables, $VENDOR_NAME, $COPY_FROM);
+$install->moveVendor($vendor_id, $vendor_movde_to, $tables);
 

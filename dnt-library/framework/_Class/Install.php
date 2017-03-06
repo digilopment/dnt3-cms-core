@@ -130,6 +130,34 @@ Class Install{
 		
 		echo "Deleted";
 	}
+	
+	function moveVendor($id, $move_to, $tables){
+		
+		$db = new Db;
+
+		foreach($tables as $table){
+			$where = array( 'vendor_id' => $id);
+			 
+			 $db->update(
+				$table,	//table
+				array(	//set
+					'vendor_id' => $move_to,
+					), 
+				array( 	//where
+					'vendor_id' 	=> $id)
+			);
+		}
+		
+		
+		
+		$query =
+		"
+		UPDATE `dnt_vendors` SET `id` = '".$move_to."' WHERE `dnt_vendors`.`id` = $id
+		";
+		$db->query($query);
+		
+		echo "Updated";
+	}
 
 	function installation(){
 		
