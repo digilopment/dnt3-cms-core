@@ -3,3 +3,19 @@ dnt-cache/*
 
 dnt-api/dnt-cache/*
 !dnt-api/dnt-cache/readme.txt
+
+dnt-view/layouts/designdnt/
+dnt-view/layouts/markiza/
+dnt-view/layouts/nastrojaren/
+dnt-view/layouts/osmos/
+dnt-view/layouts/pdc/
+
+dnt-view/data/2/
+dnt-view/data/3/
+dnt-view/data/8/
+dnt-view/data/10/
+
+
+#dnt-view/*
+#!dnt-view/data/1/*
+#!dnt-view/layouts/skeleton/*
