@@ -18,7 +18,10 @@ Class Image{
 		$db = new Db;
 		$imageId = $id;
 		
-		$query = "SELECT name FROM dnt_uploads WHERE `id` = '".$imageId."' AND `vendor_id` = '".Vendor::getId()."'";
+		$query = "SELECT name FROM dnt_uploads WHERE 
+		`id` = '".$imageId."' AND 
+		`vendor_id` = '".Vendor::getId()."' AND 
+		`show` = '1' or `show` = '2'";
 		if ($db->num_rows($query) > 0){
 			foreach($db->get_results($query) as $row){
 				return WWW_PATH."dnt-view/data/".Vendor::getId()."/".$row['name'];
