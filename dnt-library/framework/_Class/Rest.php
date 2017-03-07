@@ -148,4 +148,11 @@ class Rest{
 		return $this->escape;
 	}
 	
+	public function isAdmin(){
+		if(Dnt::in_string("dnt-admin", WWW_FULL_PATH)){
+			return true;
+		}else{
+			return false;
+		}
+	}
 }

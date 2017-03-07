@@ -7,6 +7,16 @@ public function cislo($link){
   return preg_replace("/[^0-9]/","",$link);
 }
 
+public function showStatus($column){
+	$rest = new Rest;
+	if($rest->isAdmin()){
+		//return "`show` = '1' or `show` = '2'";
+		return "`$column` >= '0'";
+	}else{
+		return "`$column` = '1' or `$column` = '2'";
+	}
+}
+
 public function datetime(){
 	return date("Y-m-d H:i:s");
 }
