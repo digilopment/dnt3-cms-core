@@ -29,7 +29,7 @@ class MultyLanguage{
 	
 	public function changeLanguage($lang){
 		$rest 	= new Rest;
-		$scale	= explode(self::getLang(), WWW_FULL_PATH);
+		$scale	= explode("/".self::getLang(), WWW_FULL_PATH);
 		if(isset($scale[1])){
 			$after_lang = $scale[1];
 		}else{
