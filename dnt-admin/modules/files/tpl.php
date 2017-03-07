@@ -4,6 +4,7 @@
 <?php 
 	$db 	= new Db;
 	$rest 	= new Rest;
+	$image 	= new Image;
 ?>
 <!-- BEGIN CUSTOM TABLE -->
 <section class="row content-header">
@@ -46,12 +47,12 @@
                <tr>
                   <th>#</th>
                   <th>post ID</th>
-                  <th>Názov postu</th>
+                  <th>Názov súboru</th>
                   <th>Typ postu</th>
-                  <th>Dátum zverejnenia</th>
-                  <th>Zobrazenie</th>
-                  <th>Pozícia</th>
-                  <th>Akcia</th>
+                  <th>Datetime</th>
+                  <th>File</th>
+				   <th>Zobrazenie</th>
+                  <th>Vymazať</th>
                </tr>
             </thead>
             <tbody>
@@ -60,39 +61,39 @@
 				  $i = FileAdmin::showOrder();
                   if($db->num_rows($query)>0){
                   	foreach($db->get_results($query) as $row){
-					$cat_id 	= $row['cat_id'];
+					$cat_id 	= false;
 					$post_id 	= $row['id'];
-					$sub_cat_id 	= $row['sub_cat_id'];
+					$sub_cat_id = false;
 					$type 	= $row['type'];
 					$page 	= FileAdmin::getPage("current");
                   ?>
 				   <tr>
 					  <td><?php echo $i++; ?></td>
 					  <td><?php echo $row['id'] ?></td>
-					  <td style="max-width: 500px;"><b><a href="<?php echo FileAdmin::url("edit", $cat_id, $sub_cat_id, false, $post_id, $page) ?>"><?php echo $row['name']; ?></a></b></td>
-					  <td><a href="<?php echo FileAdmin::url("filter", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>">
-						<?php echo FileAdmin::getPostParam("sub_cat_id", $row['id'])." -> ".FileAdmin::getPostParam("cat_id", $row['id']); ?>
-						</a></td>
-					  <td><b><?php echo $row['datetime_creat']; ?></b></td>
+					  <td style="max-width: 500px;"><b><a target="_blank" href="<?php echo $image->getFileImage($post_id);?>">
+					  <?php echo $row['name']; ?></a></b><br/><br/><input style="width: 250px" type="text" value="<?php echo $image->getFileImage($post_id);?>"></td>
 					  <td>
+						<?php echo FileAdmin::getPostParam("type", $row['id']); ?>
+					 </td>
+					  <td><b><?php echo $row['datetime']; ?></b></td>
+					 
+					   <td><b>
+					   <?php 
+						echo '<a target="_blank" href="'.$image->getFileImage($post_id).'">'; 
+						if(Dnt::in_string("image", $row['type'])){ 
+							echo '<img style="width: 100px;" src="'.$image->getFileImage($post_id).'"/>';
+						}else{
+							echo "Súbor";
+						} 
+						echo '</a>'; ?>
+						</b></td>
+						 <td>
 						 <a href="<?php echo FileAdmin::url("show_hide", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>">
 						 <i class="<?php echo admin_zobrazenie_stav($row['show']);?>"></i>
 						 </a>
 					  </td>
 					  <td>
-						 <span class="text-green">
-						 <a href="<?php echo FileAdmin::url("move_up", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>"><i class="fa fa-angle-up"></i></a>
-						 <a href="<?php echo FileAdmin::url("mowe_down", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>"><i class="fa fa-angle-down"></i></a>
-						 </span>
-					  </td>
-					  <td>
-						 <a href="<?php echo FileAdmin::url("edit",$cat_id, $sub_cat_id, $type, $post_id, $page) ?>"><i class="fa fa-pencil bg-blue action"></i></a>
-						 <?php 
-							if($row['protected'] == 1){
-								echo "<i class='fa fa-times bg-red action' style='opacity: 0.1' title='Chránené proti zmazaniu'></i>";
-							}else{?>	
-							<a href="<?php echo FileAdmin::url("del", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
-						 <?php } ?>
+						<a href="<?php echo FileAdmin::url("del", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
 					  </td>
 				   </tr>
                <?php

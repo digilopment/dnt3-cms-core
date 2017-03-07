@@ -1,5 +1,5 @@
 <?php
-class AdminUser{
+class AdminUser extends Image{
 	
 	public function validProcessLogin($type, $email, $pass){
 		$db = new Db;
@@ -32,7 +32,8 @@ class AdminUser{
 	}
 	
 	public function avatar(){
-		return WWW_PATH_FILES."".AdminUser::data("admin", "img");
+		$imageId = self::data("admin", "img");
+		return self::getFileImage($imageId);
 	}
 	
 }

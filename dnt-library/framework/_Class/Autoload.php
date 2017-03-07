@@ -26,17 +26,19 @@ class Autoload{
 	include  $path."dnt-library/framework/_Class/DntMailer.php";
 	include  $path."dnt-library/framework/_Class/DntLog.php";
 	include  $path."dnt-library/framework/_Class/XMLgenerator.php";
+	include  $path."dnt-library/framework/_Class/Image.php";
 	include  $path."dnt-library/framework/_Class/AdminUser.php";
 	include  $path."dnt-library/framework/_Class/Settings.php";
 	include  $path."dnt-library/framework/_Class/Api.php";
 	include  $path."dnt-library/framework/_Class/AdminContent.php";
 	include  $path."dnt-library/framework/_Class/AdminMailer.php";
-	include  $path."dnt-library/framework/_Class/Image.php";
+	
 	include  $path."dnt-library/framework/_Class/Polls.php";
 	include  $path."dnt-library/framework/_Class/PollsFrontend.php";
 	include  $path."dnt-library/framework/_Class/ArticleView.php";
 	include  $path."dnt-library/framework/_Class/Frontend.php";
 	include  $path."dnt-library/framework/_Class/Install.php";
+	include  $path."dnt-library/framework/_Class/FileAdmin.php";
 	
 	}
 

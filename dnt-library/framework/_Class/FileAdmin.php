@@ -1,22 +1,16 @@
 <?php
-class AdminContent{
+class FileAdmin{
 		
 	public function limit(){
 		return 20;
 	}
 	
-	public function primaryCat(){
-		return array(
-			"post" 		=> "Obsah",
-			"sitemap" 	=> "Sitemapa",
-			"article" 	=> "Články"
-		);
-	}
 	protected function prepare_query($is_limit){
 		$db = new Db();
 		
 		
 		//default cat
+		/*
 		if(isset($_GET['included']) && $_GET['included'] == "article"){
 			$typ = "AND cat_id = '".$_GET['filter']."'";
 		}
@@ -29,18 +23,20 @@ class AdminContent{
 		
 		elseif(isset($_GET['filter']))
 			$typ = "AND sub_cat_id = '".$_GET['filter']."'";
-		elseif(isset($_GET['search'])){
-			$typ = "AND `name_url` LIKE '%".Dnt::name_url($_GET['search'])."%'";
+			*/
+		if(isset($_GET['search'])){
+			$typ = "AND `name` LIKE '%".Dnt::name_url($_GET['search'])."%'";
 		}
-		else
+		else{
 			$typ = false;
+		}
 		
 		if($is_limit == false)
 			$limit = false;
 		else
 			$limit = $is_limit;
 		
-			$query = "SELECT * FROM `dnt_posts` WHERE  `vendor_id` = '".Vendor::getId()."' ".$typ." ORDER BY `order` DESC ".$limit."";
+			$query = "SELECT * FROM `dnt_uploads` WHERE  `vendor_id` = '".Vendor::getId()."' ".$typ." ORDER BY `id` DESC ".$limit."";
 			return $query;
    	}
 	
@@ -135,12 +131,12 @@ class AdminContent{
 	
 	public function url($action, $cat_id, $sub_cat_id, $type, $post_id, $page){
 		if($action == "filter"){
-			return WWW_PATH_ADMIN."index.php?src=content&filter=$cat_id&sub_cat_id=$sub_cat_id&type=$type";
+			return WWW_PATH_ADMIN."index.php?src=files&filter=$cat_id&sub_cat_id=$sub_cat_id&type=$type";
 		}else{
 			if(isset($_GET['filter'])){
-				return WWW_PATH_ADMIN."index.php?src=content&filter=$cat_id&sub_cat_id=$sub_cat_id&post_id=$post_id&page=$page&action=$action&type=$type";
+				return WWW_PATH_ADMIN."index.php?src=files&filter=$cat_id&sub_cat_id=$sub_cat_id&post_id=$post_id&page=$page&action=$action&type=$type";
 			}else{
-				return WWW_PATH_ADMIN."index.php?src=content&post_id=$post_id&page=$page&action=$action&type=$type";
+				return WWW_PATH_ADMIN."index.php?src=files&post_id=$post_id&page=$page&action=$action&type=$type";
 			}
 		}
 	}
@@ -148,7 +144,7 @@ class AdminContent{
 	public function getPostParam($column, $post_id){
 		$db 	= new Db;
 		
-		$query 	= "SELECT `$column` FROM dnt_posts WHERE id = '$post_id'";
+		$query 	= "SELECT `$column` FROM dnt_uploads WHERE id = '$post_id'";
 		if($db->num_rows($query)>0){
 		   foreach($db->get_results($query) as $row){
 			   return $row[$column];
@@ -163,24 +159,7 @@ class AdminContent{
 		return (AdminContent::getPage("current")*AdminContent::limit())-AdminContent::limit() + 1;
 	}
 	
-	/* tags */
-	public function databseTagsString($tags){
-		$tags = str_replace(", ", ",", $tags); 
-		$tags = str_replace(" ,", ",", $tags); 
-		$tags = str_replace(", ", ",", $tags); 
-		$tags = str_replace(" ", "-", $tags); 
-		return $tags;
-	}
 
-
-	public function showTags($data){
-		return explode(",", $data);
-	}
-
-	public function showTagName($data){
-		$data = str_replace("-", " ", $data); 
-		return ucfirst($data);
-	}
    
    	
 }
