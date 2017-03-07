@@ -1,8 +1,8 @@
 <?php
-include "dnt-view/layouts/osmos/tpl_functions.php";
+include "dnt-view/layouts/".Vendor::getLayout()."/tpl_functions.php";
 $data = Frontend::get($custom_data);
 get_top($data);
-include "dnt-view/layouts/osmos/top.php";
+include "dnt-view/layouts/".Vendor::getLayout()."/top.php";
 
 ?>
 <style type="text/css">

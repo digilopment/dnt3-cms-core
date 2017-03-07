@@ -1,11 +1,11 @@
 <?php
-include "dnt-view/layouts/osmos/tpl_functions.php";
+include "dnt-view/layouts/".Vendor::getLayout()."/tpl_functions.php";
 $data = Frontend::get();
 get_top($data);
 $multylanguage 	= new MultyLanguage;
 $article 		= new ArticleView;
 $translate['citat_viac'] = $multylanguage->getTranslate(array("type" => "static", "translate_id" => "citat_viac"));
-include "dnt-view/layouts/osmos/top.php";
+include "dnt-view/layouts/".Vendor::getLayout()."/top.php";
 ?>
 
       <!-- End header-v8 -->

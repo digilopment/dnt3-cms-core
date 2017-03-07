@@ -1690,7 +1690,7 @@ CREATE TABLE `dnt_users` (
 --
 
 INSERT INTO `dnt_users` (`id`, `vendor_id`, `session_id`, `type`, `name`, `surname`, `login`, `ulica`, `c_domu`, `mesto`, `okres`, `krajina`, `psc`, `pass`, `email`, `name_url`, `tel_c`, `custom_1`, `hladam`, `sex`, `vaha`, `vyska`, `datetime_creat`, `datetime_update`, `datetime_publish`, `podmienky`, `news`, `news_2`, `perex`, `content`, `img`, `status`, `kliknute`, `ip_adresa`, `parent_id`) VALUES
-(5, 3, '', 'admin', 'Tomáš', 'Doubek', 'nastrojaren', '', '', '', 0, '', '', 'b69a84481c97f320c80020b01d5620b5', 'thomas.doubek@gmail.com', '', '', '', 0, 0, 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', '', '0', '', '', 'profile.jpg', 1, 0, '', 0);
+(5, 3, '', 'admin', 'Tomáš', 'Doubek', 'skeleton', '', '', '', 0, '', '', 'b69a84481c97f320c80020b01d5620b5', 'thomas.doubek@gmail.com', '', '', '', 0, 0, 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', '', '0', '', '', 'profile.jpg', 1, 0, '', 0);
 
 -- --------------------------------------------------------
 
@@ -1711,7 +1711,7 @@ CREATE TABLE `dnt_vendors` (
 --
 
 INSERT INTO `dnt_vendors` (`id`, `name`, `name_url`, `layout`, `is_default`) VALUES
-(3, 'Nástrojáreň\r\n', 'nastrojaren', 'nastrojaren', 1);
+(3, 'Skeletón', 'skeleton', 'skeleton', 1);
 
 --
 -- Kľúče pre exportované tabuľky

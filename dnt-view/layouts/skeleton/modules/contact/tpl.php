@@ -1,7 +1,7 @@
 <?php
-include "dnt-view/layouts/osmos/tpl_functions.php";
+include "dnt-view/layouts/".Vendor::getLayout()."/tpl_functions.php";
 get_top($data);
-include "dnt-view/layouts/osmos/top.php";
+include "dnt-view/layouts/".Vendor::getLayout()."/top.php";
 
 $multylanguage 	= new MultyLanguage;
 $article 		= new ArticleView;
