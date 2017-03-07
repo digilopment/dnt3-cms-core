@@ -130,7 +130,7 @@ class Webhook {
 		);
 		//var_dump($getCustomSitemapModule);
 		//var_dump($modules);
-		$modules = array_merge($modules, $custom_modules);
+		$modules = array_merge($custom_modules, $modules);
 		//var_dump($modules);
 		return $modules;
 	}
