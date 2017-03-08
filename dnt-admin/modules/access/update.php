@@ -1,5 +1,6 @@
 <?php
 if(isset($_POST['sent'])){
+	$session = new Sessions;
 	
 	$table 			= "dnt_users";
 	
@@ -13,7 +14,9 @@ if(isset($_POST['sent'])){
 	$pass 			= $rest->post("pass");
 	$group 			= $rest->post("group");
 	
-	$db->update(
+
+	if($adminUser->validProcessLogin("admin", $session->get("admin_id"), $pass)){
+		$db->update(
 		$table,	//table
 		array(	//set
 			'name' => $name,
@@ -25,25 +28,32 @@ if(isset($_POST['sent'])){
 		array( 	//where
 			'id' 			=> $post_id, 
 			'`vendor_id`' 	=> Vendor::getId())
-	);
+		);
 	
-	$dntUpload = new DntUpload;
-	$dntUpload->addDefaultImage(
-					"userfile",								//input type file
-					$table, 								//update table
-					"img",	 								//update table column
-					"`id`", 								//where column
-					$post_id, 								//where value
-					"../dnt-view/data/".Vendor::getId() 	//path
-				);
-	
-	include "tpl_functions.php";
-	get_top();
-	include "top.php";
-	getConfirmMessage($return, "<br/>Údaje sa úspešne uložili ");
-	include "bottom.php";
-	get_bottom();
-	
+		$dntUpload = new DntUpload;
+		$dntUpload->addDefaultImage(
+						"userfile",								//input type file
+						$table, 								//update table
+						"img",	 								//update table column
+						"`id`", 								//where column
+						$post_id, 								//where value
+						"../dnt-view/data/".Vendor::getId() 	//path
+					);
+		include "tpl_functions.php";
+		get_top();
+		include "top.php";
+		getConfirmMessage($return, "<br/>Údaje sa úspešne uložili ");
+		include "bottom.php";
+		get_bottom();
+	}
+	else{
+		include "tpl_functions.php";
+		get_top();
+		include "top.php";
+		error_message("heslo", "<b>Prosím zadajte vaše heslo pre uloženie údajov</b>");
+		include "bottom.php";
+		get_bottom();
+	}
 }else{
 	$dnt->redirect(WWW_PATH_ADMIN."?src=".DEFAULT_MODUL_ADMIN);
 }

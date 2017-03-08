@@ -32,6 +32,7 @@
                    parent_id = '0' AND
                    type = 'admin' AND
                    vendor_id = '".Vendor::getId()."' ORDER BY id desc"; 
+				   $pocet_aktivne = $db->num_rows($query);
                     if($db->num_rows($query)>0){
                    	foreach($db->get_results($query) as $row){
                    ?>

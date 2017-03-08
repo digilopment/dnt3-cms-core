@@ -19,3 +19,4 @@ dnt-view/data/10/
 #dnt-view/*
 #!dnt-view/data/1/*
 #!dnt-view/layouts/skeleton/*
+/nbproject/private/
