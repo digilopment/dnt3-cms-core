@@ -4,10 +4,16 @@ $session = new Sessions;
 $dnt = new Dnt;
 $adminUser = new AdminUser;
 
-if($rest->get("action") == 1){
-	
+if($rest->get("action") == "edit")
+{
+	include "edit.php";
 }
-else{
+elseif($rest->get("action") == "update")
+{
+	include "update.php";
+}
+else
+{
 	include "tpl.php";
 }
 

@@ -36,6 +36,23 @@ class AdminUser extends Image{
 		return self::getFileImage($imageId);
 	}
 	
+	public function dataById($type, $column, $id){
+		$db = new Db;
+		$session = new Sessions();
+		$query = "SELECT $column FROM dnt_users WHERE type = '$type' AND id = '".$id."' AND vendor_id = '".Vendor::getId()."'";
+		if ($db->num_rows($query) > 0){
+			foreach($db->get_results($query) as $row){
+				return $row[$column];
+			}
+		}else{
+			return false;
+		}
+	}
+	public function avatarById($id){
+		$imageId = self::dataById("admin", "img", $id);
+		return self::getFileImage($imageId);
+	}
+	
 }
 
 

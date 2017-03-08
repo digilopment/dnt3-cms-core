@@ -28,13 +28,6 @@
             </thead>
             <tbody>
                <?php
-                  $query = "SELECT * FROM `dnt_users` 
-                   WHERE `status` = '1' AND
-                   vendor_id = '".Vendor::getId()."'";
-                   $pocet_aktivne = $db->num_rows($query);
-                  
-                   
-                   //$query = dnt_query("SELECT * FROM obchod_objednavky WHERE  parent_id = '0' $typ ORDER BY poradie", $dntDb);
                    $query = "SELECT * FROM `dnt_users` WHERE 
                    parent_id = '0' AND
                    type = 'admin' AND
@@ -66,11 +59,11 @@
                         	?>
                   </td>
                   <td>
-                     <a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$rest->get('src')."&upravit&id=".$row['id']; ?>"><i class="fa fa-pencil bg-blue action"></i></a>
+                     <a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$rest->get('src')."&action=edit&post_id=".$row['id']; ?>"><i class="fa fa-pencil bg-blue action"></i></a>
                      <?php
                         if (($pocet_aktivne > 1) || ($row['status'] == 0)){
                         ?>
-                     <a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$rest->get('src')."&vymazat&id=".$row['id']; ?>"><i class="fa fa-times bg-red action"></i></a>
+                     <a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$rest->get('src')."&vymazat&post_id=".$row['id']; ?>"><i class="fa fa-times bg-red action"></i></a>
                      <?php
                         }
                         else{
