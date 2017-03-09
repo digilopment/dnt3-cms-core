@@ -156,15 +156,18 @@
             <div class="grid-body">
                <div class="row">
                   <div class="col-md-6">
-                     <form enctype='multipart/form-data' id="pristupy" action="<?php echo WWW_PATH_ADMIN."index.php?src=pristupy&update";?>" method="post">
+                     <form enctype='multipart/form-data' id="pristupy" action="<?php echo WWW_PATH_ADMIN."index.php?src=access&action=update&post_id=".AdminUser::data("admin", "id")."";?>" method="post">
                         <input type="hidden" name="id" value="<?php echo AdminUser::data("admin", "id");?>" />
                         <p class="lead">Nastavte Vaše <b>meno</b></p>
                         <p>Ak máte eshop a vystavíte faktúru, vaše meno tam bude predvyplnené</p>
-                        <input type="text" class="btn-default btn-lg btn-block" name="meno" value="<?php echo AdminUser::data("admin", "name");?>" />
+                        <input type="text" class="btn-default btn-lg btn-block" name="name" value="<?php echo AdminUser::data("admin", "name");?>" />
                         <div class="padding"></div>
                         <p class="lead">Nastavte Vaše <b>priezvisko</b></p>
                         <p>Ak máte eshop a vystavíte faktúru, vaše meno tam bude predvyplnené</p>
-                        <input type="text" class="btn-default btn-lg btn-block" name="priezvisko" value="<?php echo AdminUser::data("admin", "surname");?>" />
+                        <input type="text" class="btn-default btn-lg btn-block" name="surname" value="<?php echo AdminUser::data("admin", "surname");?>" />
+                        <div class="padding"></div>
+						<p>Zadajte heslo na overenie totožnosti:</p>
+                        <input type="password" class="btn-default btn-lg btn-block" name="pass" value="" />
                         <div class="padding"></div>
                   </div>
                   <div class="col-md-6">									
@@ -173,9 +176,10 @@
                   <img src="<?php echo AdminUser::avatar();?>" style="max-width: 200px; margin: 15px;" alt="" />
                   <input type="file" name="userfile"  class="btn-default btn-lg btn-block" />
                   <div class="padding"></div>
-                  <?php echo Dnt::returnInput();?>
-                  <input type="hidden" name="url_fotka" value="" />
-                  <input type="submit" name="odoslat_short" class="btn btn-primary btn-radius" value="Upraviť nastavenia" />
+                  
+				  <?php echo Dnt::returnInput();?>
+				  
+                  <input type="submit" name="sent" class="btn btn-primary btn-radius" value="Upraviť nastavenia" />
                   <div class="padding"></div>
                   </form>
                   </div>

@@ -3,15 +3,12 @@
 <?php include "top.php"; ?>
 <?php 
 $rest = new Rest;
-$user = new Api;
-$admin = new AdminUser;
 $post_id = $rest->get("post_id");
-$query = "SELECT * FROM dnt_users";
-//var_dump($user->getColumns($query));
+
 ?>
 <section class="content">
    <div class="row">
-      <form enctype="multipart/form-data" action="index.php?src=access&action=add_data" method="POST">
+      <form enctype="multipart/form-data" action="index.php?src=access&action=update&post_id=<?php echo $post_id; ?>" method="POST">
          <!-- BEGIN SEARCH RESULT -->
          <div class="col-md-12">
             <div class="grid search">
@@ -23,59 +20,28 @@ $query = "SELECT * FROM dnt_users";
                         <h2 class="grid-title"><i class="fa fa-filter"></i>Administrátor</h2>
                         <hr>
                         <!-- BEGIN FILTER BY CATEGORY -->
-						<h5>Typ používateľa:</h5>
-					   <div class="checkbox">
-						  <select type="" name="type" class="form-control">
-						  <?php 
-						  foreach($admin->getUserTypes() as $row){
-							echo '<option value="'.$row['name_url'].'">'.$row['name'].'</option>';
-						  }
-						  ?>
-						  </select>
-					   </div>
-						   
                         <span style="font-weight: bold;">
-						<?php 
-						foreach($user->getColumns($query) as $key => $value){ 
-						if(
-							$value != "id" &&
-							$value != "type" &&
-							$value != "session_id" &&
-							$value != "news" &&
-							$value != "news_2" &&
-							$value != "kliknute" &&
-							$value != "vendor_id" &&
-							$value != "datetime_creat" &&
-							$value != "datetime_update" &&
-							$value != "datetime_publish" &&
-							$value != "podmienky" &&
-							$value != "img" &&
-							$value != "ip_adresa" &&
-							$value != "parent_id" &&
-							$value != "hladam" &&
-							$value != "custom_1" &&
-							$value != "status" &&
-							$value != "sex" &&
-							$value != "pass"
-						){
-						?>
-                           <h5><?php echo $value; ?>:</h5>
+                           <h5>Meno:</h5>
                            <div class="checkbox">
-                              <input type="text" name="<?php echo $value; ?>" value="" class="form-control">
+                              <input type="text" name="name" value="<?php echo AdminUser::dataById("admin", "name", $post_id);?>" class="form-control">
                            </div>
-						<?php } ?>  
-						<?php } ?>
-						<br/>						
-						<h5><b>Vaše heslo:</b></h5>
+                           <h5>Priezvisko:</h5>
+                           <div class="checkbox">
+                              <input type="text" name="surname" value="<?php echo AdminUser::dataById("admin", "surname", $post_id);?>" class="form-control">
+                           </div>
+                           <h5>Email:</h5>
+                           <div class="checkbox">
+                              <input type="text" name="email" value="<?php echo AdminUser::dataById("admin", "email", $post_id);?>" class="form-control">
+                           </div>
+                           <h5>Aktívny prístup?</h5>
+                           <div class="checkbox">
+                              <input type="radio" name="show" value="1" checked="">Áno
+                              <input type="radio" name="show" value="0">Nie										
+                           </div>
+                           <h5>Zadajte heslo na overenie totožnosti:</h5>
                            <div class="checkbox">
                               <input type="password" name="pass" value="" class="form-control">
                            </div>
-						   
-						  <h5><b>Potvrdte heslo:</b></h5>
-                           <div class="checkbox">
-                              <input type="password" name="re_pass" value="" class="form-control">
-                           </div>
-						
                         </span>
                      </div>
                      <!-- END FILTERS -->
@@ -89,7 +55,8 @@ $query = "SELECT * FROM dnt_users";
                         <div class="padding"></div>
                         <div class="checkbox">
 							<?php echo Dnt::returnInput();?>
-							 <input type="submit" name="sent" value="Uložiť" class="btn btn-primary" style="width: 40%;">
+							<input type="hidden" name="group" value="<?php echo AdminUser::dataById("admin", "type", $post_id);?>" class="form-control">
+                           <input type="submit" name="sent" value="Uložiť" class="btn btn-primary" style="width: 40%;">
                         </div>
                      </div>
                      <!-- END TABLE RESULT -->

@@ -18,6 +18,18 @@ class AdminUser extends Image{
 		}
 	}
 	
+	public function getUserTypes(){
+		$db = new Db;
+		$query = "SELECT * FROM dnt_post_type WHERE 
+		admin_cat = 'user' AND
+		vendor_id = '".Vendor::getId()."'";
+			if($db->num_rows($query)>0){
+				return $db->get_results($query);
+			}else{
+				return array(false);
+			}
+	}
+	
 	public function getUserColumns(){
 		$columns = new XMLgenerator;
 		return $columns->getTableColumns("dnt_users", "*");

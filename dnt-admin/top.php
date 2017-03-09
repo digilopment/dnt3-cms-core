@@ -7,12 +7,15 @@
          <aside class="left-side sidebar-offcanvas">
             <section class="sidebar">
                <div class="user-panel">
-                  <div class="pull-left image">
-                     <img src="<?php echo AdminUser::avatar();?>" class="img-circle" alt="<?php echo AdminUser::data("admin", "name")." ".AdminUser::data("admin", "surname"); ?>">
-                  </div>
+			     <div class="pull-left image">
+				  
+                     <img style="cursor:pointer" onclick="location.href='index.php?src=access&action=edit&post_id=<?php echo AdminUser::data("admin", "id")."";?>'" src="<?php echo AdminUser::avatar();?>" class="img-circle" alt="<?php echo AdminUser::data("admin", "name")." ".AdminUser::data("admin", "surname"); ?>">
+                
+				  </div>
+				
                   <div class="pull-left info">
-                     <p><strong><?php echo AdminUser::data("admin", "name")." ".AdminUser::data("admin", "surname"); ?></strong></p>
-                     <a href="#"><i class="fa fa-circle text-green"></i> Online</a>
+                     <p><strong style="cursor:pointer" onclick="location.href='index.php?src=access&action=edit&post_id=<?php echo AdminUser::data("admin", "id")."";?>'" ><?php echo AdminUser::data("admin", "name")." ".AdminUser::data("admin", "surname"); ?></strong></p>
+                     <span ><i class="fa fa-circle text-green"></i> Online</span>
                   </div>
                </div>
                <form action="<?php echo WWW_PATH_ADMIN; ?>index.php?src=<?php echo $rest->get("src")?>" method="GET" class="sidebar-form">

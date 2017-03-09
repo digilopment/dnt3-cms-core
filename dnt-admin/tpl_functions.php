@@ -181,6 +181,7 @@ $perex_name = "name_perex_".$row['slug'];
 <?php } ?>
 <?php function admin_menu(){
    $db = new Db;
+   $admin = new AdminUser;
    $andWhere = false;
    
    $query = "SELECT * FROM `dnt_admin_menu` WHERE 
@@ -225,6 +226,45 @@ if($row['name_url'] == "content"){
    </li>
    <?php
       }
+	  elseif($row['name_url'] == "access"){ 
+	  ?>
+	  	 <li class="menu">
+      <a href="">
+      <i class="fa <?php echo $row['ico'];?>"></i>
+      <span><?php echo $row['name'];?></span>
+      <i class="fa fa-angle-left pull-right"></i>
+      </a>
+      <ul class="sub-menu">
+		<li>
+            <a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$row['name_url'];?>" >
+            <span>Všetci používatelia</span>
+            &nbsp;&nbsp;<i style="text-align: right;" class="fa "></i>
+            </a>
+         </li>
+		 <li>
+            <a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$row['name_url']."&action=add";?>" >
+            <span>Pridať používatelia</span>
+            &nbsp;&nbsp;<i style="text-align: right;" class="fa "></i>
+            </a>
+         </li>
+         <?php
+            //$admin->getUserColumns();
+            foreach($admin->getUserTypes() as $row2){
+            ?>
+			 <li>
+				<a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$row['name_url']."&type=".$row2['name_url'];?>">
+				<span><?php echo $row2['name'];?></span>
+				&nbsp;&nbsp;<i style="text-align: right;" class="fa fa-laptop"></i>
+				</a>
+			 </li>
+         <?php
+            }
+            ?>
+      </ul>
+   </li>
+	<?php		
+	  //getUserColumns()
+	  }
       else{
       ?>
    <?php
@@ -357,7 +397,7 @@ if($row['name_url'] == "content"){
                            <div class="up-arrow"></div>
                         </li>
                         <li class="border-top">
-                           <a href="index.php?src=pristupy&upravit&id=1"><i class="fa fa-user"></i>Môj účet</a>
+                           <a href="index.php?src=access&action=edit&post_id=<?php echo AdminUser::data("admin", "id")."";?>"><i class="fa fa-user"></i>Môj účet</a>
                         </li>
                         <li>
                            <a href="index.php?src=content&add"><i class="fa fa-laptop"></i>Pridať post</a>

@@ -4,7 +4,6 @@
 <?php 
 $rest = new Rest;
 $user = new Api;
-$admin = new AdminUser;
 $post_id = $rest->get("post_id");
 $query = "SELECT * FROM dnt_users";
 //var_dump($user->getColumns($query));
@@ -26,11 +25,7 @@ $query = "SELECT * FROM dnt_users";
 						<h5>Typ používateľa:</h5>
 					   <div class="checkbox">
 						  <select type="" name="type" class="form-control">
-						  <?php 
-						  foreach($admin->getUserTypes() as $row){
-							echo '<option value="'.$row['name_url'].'">'.$row['name'].'</option>';
-						  }
-						  ?>
+							<option value="admin">Admin</option>
 						  </select>
 					   </div>
 						   

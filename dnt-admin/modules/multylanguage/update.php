@@ -3,28 +3,12 @@ if(isset($_POST['sent'])){
 	$session = new Sessions;
 	
 	$table 			= "dnt_users";
-	$user 			= new Api;
+	
 	$rest 			= new Rest;
 	$post_id		= $rest->get("post_id");
 	$return 		= $rest->post("return");
-	$pass 			= $rest->post("pass");
-	//var_dump($user->getColumns($query));
-	$query = $query = "SELECT * FROM dnt_users";
-	foreach($user->getColumns($query) as $key => $value){
-		if($value != "id" && ($rest->post($value) != false)){
-			$setData["".$value.""] = $rest->post($value);
-		}
-	}
-	if($adminUser->validProcessLogin("admin", $session->get("admin_id"), $pass)){
-		$db->update(
-		$table,	//table
-		$setData, //set 
-		array( 	//where
-			'id' 			=> $post_id, 
-			'`vendor_id`' 	=> Vendor::getId())
-		);
-		
-	/*$name 			= $rest->post("name");
+	
+	$name 			= $rest->post("name");
 	$surname 		= $rest->post("surname");
 	$email 			= $rest->post("email");
 	$pass 			= $rest->post("pass");
@@ -45,7 +29,6 @@ if(isset($_POST['sent'])){
 			'id' 			=> $post_id, 
 			'`vendor_id`' 	=> Vendor::getId())
 		);
-	*/
 	
 		$dntUpload = new DntUpload;
 		$dntUpload->addDefaultImage(
