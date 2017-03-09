@@ -18,6 +18,11 @@ class AdminUser extends Image{
 		}
 	}
 	
+	public function getUserColumns(){
+		$columns = new XMLgenerator;
+		return $columns->getTableColumns("dnt_users", "*");
+	}
+	
 	public function data($type, $column){
 		$db = new Db;
 		$session = new Sessions();
