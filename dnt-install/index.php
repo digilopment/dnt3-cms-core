@@ -43,8 +43,8 @@ if(Install::db_exists()){
 		<h3>Skeletón bol úspešne nainštalovaný</h3>
 		<table>
 			<tr><td><b>Váš web:</td><td><a target="_blank" href='.$web.'></b>'.$web.'</a></td></tr>
-			<tr><td><b>Váš admin:</td><td><a target="_blank" href='.$adm.'></b>'.WWW_PATH_ADMIN.'</a></td></tr>
-			<tr><td><b>Váše prihlasovacie meno:</td><td>root@root.sk</b></td></tr>
+			<tr><td><b>Váš admin:</td><td><a target="_blank" href='.$adm.'></b>'.$adm.'</a></td></tr>
+			<tr><td><b>Váše prihlasovacie meno:</td><td>admin@root.sk</b></td></tr>
 			<tr><td><b>Váše prihlasovacie heslo:</td><td>admin</b></td></tr>
 		</table>
 	  </body>
