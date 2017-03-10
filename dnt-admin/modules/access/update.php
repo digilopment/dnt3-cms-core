@@ -11,7 +11,7 @@ if(isset($_POST['sent'])){
 	//var_dump($user->getColumns($query));
 	$query = $query = "SELECT * FROM dnt_users";
 	foreach($user->getColumns($query) as $key => $value){
-		if($value != "id" && ($rest->post($value) != false)){
+		if($value != "id" && ($rest->post($value) != false) && $value != "pass"){
 			$setData["".$value.""] = $rest->post($value);
 		}
 	}
