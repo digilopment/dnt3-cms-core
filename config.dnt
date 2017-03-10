@@ -1,15 +1,36 @@
 <?php
+/* 
+ *
+ *
+ ************* SECRED/PUBLIC KEYS CONFIG ********************************************************************************
+ *
+*/
+include "../dnt-library/framework/_keys/public.php";
+
+
 
 /* 
  *
  *
- ************* DEFAULT********************************************************************************
+ ************* DATABASE CONNECT ********************************************************************************
  *
 */
+define( 'DB_HOST', 'localhost' ); 	// set database host
+define( 'DB_USER', 'root' ); 		// set database user
+define( 'DB_PASS', '' ); 			// set database password
+define( 'DB_NAME', 'dnt3' ); 		// set database name
+
+
+
+/* 
+ *
+ *
+ ************* APPLICATION SETTING ********************************************************************************
+ *
+*/
+define( 'WWW_FOLDERS', "/dnt3" ); //YOUR APPLICATION FOLDER. IF APPLICATION IS IN ROOT FOLDER PLEASE SET as define( 'WWW_FOLDERS', "" );
 define( 'DEAFULT_MODUL', 'homepage' ); // set system name
 define( 'DEFAULT_MODUL_ADMIN', 'settings' ); // set system name
-define( 'DEAFULT_LANG', 'sk' ); // set system lang
-define( 'SRC', 'src' ); // ser $_GET['{eny}']
 
 
 
@@ -20,7 +41,7 @@ define( 'SRC', 'src' ); // ser $_GET['{eny}']
  *
 */
 define( 'GET_SYSTEM_NAME', 'Designdnt 3' );
-define( 'GET_SYSTEM_VERSION', 'dnt_5.00, January 2017' );
+define( 'GET_SYSTEM_VERSION', 'dnt_5.20, Marec 2017' );
 define( 'GET_SYSTEM_COMPOSER', 'dnt_1.13' );
 define( 'GET_SYSTEM_ENGINE_PATTERN', 'Model-View-Controller (MVC)' );
 define( 'GET_SYSTEM_SEARCH_ENGINE', 'Dnt-SE-keys, zostava 1200' );
@@ -42,47 +63,41 @@ define( 'CACHE_URL', '0' );
 
 
 
-
 /* 
  *
  *
- ************* DATABASE CONNECT ********************************************************************************
+ ************* DEVELOPERS SETTINGS ********************************************************************************
  *
 */
-define( 'DB_HOST', 'localhost' ); // set database host
-define( 'DB_USER', 'root' ); // set database user
-define( 'DB_PASS', '' ); // set database password
-define( 'DB_NAME', 'dnt3' ); // set database name
-define( 'SEND_ERRORS_TO', 'info@vyhrat.com' ); //set email notification email address
+define( 'DEAFULT_LANG', 'sk' ); // set system lang
+define( 'SRC', 'src' ); // ser $_GET['{eny}']
+define( 'SEND_ERRORS_TO', '' ); //set email notification email address
 define( 'DISPLAY_DEBUG', true ); //display db errors?
 
 
 
-
-//DEFAULT EMAIL
-define( 'DEFAULT_EMAIL', "thomas.doubek@gmail.com" ); 
+/* 
+ *
+ *
+ *************MAIL CONFIGURATION *************
+ *
+*/
 define( 'SEND_EMAIL_VIA', "internal" ); //internal, send_grid
-	define( 'SEND_GRID_API_REQUEST', "https://api.sendgrid.com/api/mail.send.json" ); //display db errors?
-	define( 'SEND_GRID_API_KEY', "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" );
-	define( 'SEND_GRID_API_TEMPLATE_ID', "cb890767-83e8-4824-9c63-bf68435599a8" );
+	define( 'SEND_GRID_API_REQUEST', "https://api.sendgrid.com/api/mail.send.json" ); 
+	define( 'SEND_GRID_API_KEY', "$YOUR_SEND_GRID_API_KEY_INSERT_HERE" );
+	define( 'SEND_GRID_API_TEMPLATE_ID', "$YOUR_SEND_GRID_API_TEMPLATE_ID" );
 
 
-//DEFAULT VENDOR NAME
-define( 'DEFAULT_NAME', "Vyhrat" ); //display db errors?
 
-//LANG
-define( 'LANG', "sk/" ); //folder or folders in root host folder
-
-//VENDOR ID
-define( 'VENDOR_ID', "1" ); 
-
-//LAYOUT ID
-define( 'LAYOUT_ID', "13" ); //server path too root file usualy index.php
-define( 'VENDOR_LAYOUT', "markiza" ); //server path too root file usualy index.php
-
-//SYSTEM PATHS
-define( 'LIBRARY_NAME', 'dnt-library' ); // set library name
-define( 'SYSTEM_NAME', 'dnt-view' ); // set system name
+/* 
+ *
+ *
+ *************MESSENGER CONFIGURATION *************
+ *
+*/
+define("IS_INIT", false);
+define("HUB_VERIFY_TOKEN", "$YOUR_MESSNGER_HUB_VERIFY_TOKEN");
+define("ACCESS_TOKEN", "$YOUR_MESSNGER_ACCESS_TOKEN	");
 
 
 
@@ -92,20 +107,14 @@ define( 'SYSTEM_NAME', 'dnt-view' ); // set system name
  *************DEFINITIONS OF SERVER PATH *************
  *
 */
-
-//CONF PROTOCOL AND FOLSER OF WEB IF EXISTS
-define( 'HTTP_PROTOCOL', "http://" ); //protocol
-define( 'WWW_FOLDERS', "/dnt3" ); //folder or folders in root host folder "/folser"
-
-
 //URL PATH
+define( 'HTTP_PROTOCOL', (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://" ); //protocol
 define( 'SERVER_NAME', $_SERVER['SERVER_NAME'] ); //server path too root file usualy index.php or home.php
 define( 'WWW_PATH', HTTP_PROTOCOL.@$_SERVER['SERVER_NAME'].WWW_FOLDERS."/" ); //server path too root file usualy index.php or home.php
 define( 'WWW_PATH_ADMIN', HTTP_PROTOCOL."".@$_SERVER['SERVER_NAME'].WWW_FOLDERS."/dnt-admin/" ); //server path too root file usualy index.php or home.php
 
 //CDN PATH
 define( 'WWW_CDN_PATH', HTTP_PROTOCOL."dnt.static-cdn.".@$_SERVER['SERVER_NAME'].WWW_FOLDERS."/" ); //server path too root file usualy index.php
-define( 'WWW_PATH_FILES', WWW_CDN_PATH."dnt-view/data/".VENDOR_ID."/" ); //server path too root file usualy index.php or home.php
 
 //FULL PATH
 define( 'WWW_FULL_PATH', HTTP_PROTOCOL.@$_SERVER['SERVER_NAME'].@$_SERVER['REQUEST_URI'] ); //full virtual path of actual address

@@ -44,7 +44,7 @@ class Mailer{
 		
 		//SENDER
 		if($this->sender_email == false){
-			$od_email = DEFAULT_EMAIL;
+			$od_email = Settings::get("vendor_email");
 		}
 		else{
 			$od_email = $this->sender_email;
@@ -60,7 +60,7 @@ class Mailer{
 		
 		//OD MENO
 		if($this->sender_name == false){
-			$od_meno = DEFAULT_NAME;
+			$od_meno = Settings::get("vendor_company");
 		}
 		else{
 			$od_meno = Dnt::odstran_diakritiku($this->sender_name);

@@ -10,10 +10,6 @@
  * @since 2016
 **/
 
-define("IS_INIT", false);
-define("HUB_VERIFY_TOKEN", "TOKEN_dnt_bot_partak_2016_heroku");
-define("ACCESS_TOKEN", "EAAZAep9FZCRqUBAOJl8cW2rfgZANRvO39weQMcuaqcrMtoRmnZCr7gfs89ELGb5zwV6diIe2sFGsZAIIwSCXBe3bZAZCFpgn5VBmo76xKaw0NwRVCIaknNIQqUrtmQa06JMZCSAnBiAkCWgZCLIYvmUqZBxaL37fI5u4mJFarnaxPAFAZDZD");
-
 include "../dnt-library/framework/_Class/Autoload.php";
 $path			= "../";
 Autoload::load($path);
