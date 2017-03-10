@@ -4,6 +4,7 @@ class Autoload{
 	
 	public function load($path){
 	//CONFIG
+	include $path."dnt-library/framework/_keys/public.php";
 	include $path."config.dnt";
 	
 	//CLASS
