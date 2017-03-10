@@ -39,6 +39,7 @@ Disallow: /dnt-view/
 Disallow: .gitignore
 Disallow: composer.json
 Disallow: robots.php
+Disallow: config.dnt
 <?php
 
 ?>

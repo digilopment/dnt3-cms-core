@@ -1,5 +1,6 @@
 RewriteEngine on
 RewriteRule robots.txt$     robots.php [L]
+RewriteRule config.dnt$     config.noexist [L]
 
 RewriteCond  $1 ^([^_][a-zA-Z0-9\ _/:\-%]+)
 RewriteRule  ^([^_][a-zA-Z0-9\ _/:\-%]+)$     index.php?src=$1   [L]
