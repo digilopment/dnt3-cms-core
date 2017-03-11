@@ -150,6 +150,34 @@ public function name_url($url_adresa){
 
     return $url_adresa;
   }
+  
+public function is_external_url($name_url){
+	if(self::in_string("http:\/\/", $name_url)){
+		$return = true;
+	}
+	//https protocol
+	elseif(self::in_string("https:\/\/", $name_url)){
+		$return = true;
+	}
+	//protocol relative
+	elseif(self::in_string("\/\/", $name_url)){
+		$return = true;
+	}else{
+		$return = false;
+	}
+}
+public function creat_name_url($name, $name_url){
+	if(empty($name_url)){
+		return self::name_url($name);
+	}
+	//http is_external_url
+	elseif(self::is_external_url($name_url)){
+		return $name_url;
+	}
+	else{
+		return self::name_url($name_url);
+	}
+}
   	
 public function redirect($presmeruj_url){
     if (!headers_sent()){

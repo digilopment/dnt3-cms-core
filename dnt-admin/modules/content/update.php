@@ -12,7 +12,7 @@ if(isset($_POST['sent'])){
 	$show 			= $rest->post("show");
 	$protected 		= $rest->post("protected");
 	$name 			= $rest->post("name");
-	$name_url 		= $rest->post("name_url");
+	$name_url 		= Dnt::creat_name_url($rest->post("name"), $rest->post("name_url"));
 	$datetime_publish = Dnt::timeToDbFormat(".", $rest->post("datetime_publish"));
 	$perex 			= $rest->post("perex");
 	$content 		= $rest->post("content");

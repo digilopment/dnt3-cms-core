@@ -88,7 +88,11 @@ class ArticleView extends AdminContent{
 		if($db->num_rows($query)>0){
 		   foreach($db->get_results($query) as $row){
 			   //return $row[$column];
-			   if( $full_url == false){
+			   
+			   if(Dnt::is_external_url($this->getTranslate(array("type" => $column, "translate_id" => $post_id, "table" => "dnt_posts")))){
+				   return $this->getTranslate(array("type" => $column, "translate_id" => $post_id, "table" => "dnt_posts"));
+			   }
+			   elseif( $full_url == false){
 				   return $this->getTranslate(array("type" => $column, "translate_id" => $post_id, "table" => "dnt_posts"));
 			   }else{
 				   if($column == "name_url"){
