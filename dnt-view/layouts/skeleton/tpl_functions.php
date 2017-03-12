@@ -212,33 +212,28 @@ $translate['prihlasit'] = $multylanguage->getTranslate(array("type" => "static",
          <div class="res-container">
             <ul class="nav navbar-nav">
                <!-- Home -->
-               <?php
-                  $query = "SELECT * FROM dnt_posts WHERE 
-				  type = 'sitemap' AND 
-				  cat_id = '".AdminContent::getCatId("sitemap")."' AND 
-				  `show` = '1'";
-                  if($db->num_rows($query)>0){
-                   foreach($db->get_results($query) as $row){
-                  	$name_url_1 = $article->getPostParam("name_url", $row['id'], false);
-                  	$query2 = "SELECT * FROM `dnt_posts` WHERE type = 'sitemap' AND `show` = '1' AND sub_cat_id = '".$row['id']."' AND vendor_id = '".Vendor::getId()."'";
-                  ?>
-               <li class="dropdown home <?php if($article->getPostParam("name_url", $row['id']) == $rest->webhook(1)){echo "active";}?> ">
-                  <?php
-                     if($row['name_url'] == "no_url"){ ?>
+               <?php 
+				foreach(Navigation::getParents() as $row){ 
+				$name_url_1 = $article->getPostParam("name_url", $row['id'], false);
+				?>
+				<li class="dropdown home <?php if($article->getPostParam("name_url", $row['id']) == $rest->webhook(1)){echo "active";}?> ">
+                  <?php if($row['name_url'] == "no_url"){ ?>
                   <a><?php echo $article->getPostParam("name", $row['id']);?></a>
-                  <?php
-                     }else{
-                     ?>
+                  <?php }else{?>
                   <a  href="<?php echo $name_url_1;?>"><?php echo  $article->getPostParam("name", $row['id']);?></a>
                   <?php } ?>
-                  <?php  if($db->num_rows($query2)>0){ ?>
+                  <?php  if(Navigation::hasChild($row['id'])){ ?>
                   <ul class="dropdown-menu">
                      <?php   
-						foreach($db->get_results($query2) as $row2){ 
+						foreach(Navigation::getChildren($row['id']) as $row2){ 
 						$name_url_2 = $article->getPostParam("name_url", $row2['id'], false);
 					 ?>
                      <li class="<?php if($article->getPostParam("name_url", $row['id']) == $rest->webhook(1)){echo "active";}?>"><a href="<?php echo $name_url_2;?>"><?php echo $article->getPostParam("name", $row2['id']);?></a></li>
                      <?php } ?>
+                  </ul>
+                  <?php } ?>
+				</li>
+				<?php } ?>
                   </ul>
                   <?php } ?>
                </li>
