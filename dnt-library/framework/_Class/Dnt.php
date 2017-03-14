@@ -29,6 +29,11 @@ public function timeToDbFormat($separator, $time){
 	return $data[2]."-".$data[1]."-".$data[0]." ".$dateAndTime[1].":00";
 }
 
+public function formatTime($time, $format){
+	$date=date_create($time);
+	return date_format($date,$format);
+}
+
 public function dvojcifernyDatum($cislo){
 	if(strlen($cislo) > 2){
 		$return = $cislo;

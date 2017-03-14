@@ -97,24 +97,30 @@ class Webhook {
 		
 		$modules = array(
 			//homepage
-			"homepage" => array(
+			/*"homepage" => array(
 							"domov",
 							"home",
 						),
+		*/
 			
-			//article list
-			"article_list" => array(
-							"clanky",
-							"posts",
-						),
 			
 			//article view
-			"article_view" => array_merge(
+			/*"article_view" => array(
+							"clanok",
+							"post",
+						),//sitemaps webhooks*/
+			
+			"static_view" => array_merge(
 				array( //static webhooks
-					"clanok",
-					"post"
+					"a",
 				),
 				$this->getSitemapModules()), //sitemaps webhooks
+			
+			//article list
+			/*"article_list" => array(
+							"clanky",
+							"posts",
+						),*/
 			
 			//404
 			"default" => array(
