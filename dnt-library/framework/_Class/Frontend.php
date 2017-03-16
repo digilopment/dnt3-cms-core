@@ -47,7 +47,11 @@ class Frontend{
 			"tags" => $article->getPostTags($post_id),
 			"img" => $article->getPostImage($post_id),
 		),
+		"timestamp" => time(),
 	);
+	
+	
+	
 	
 	$data = array_merge($data,$custom_data);
 	//var_dump($data);

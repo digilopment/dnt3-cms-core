@@ -127,6 +127,10 @@ class Webhook {
 							"error-404",
 							"not-found",
 						),
+			//404
+			"rpc" => array(
+							"rpc",
+						),
 			//polls
 			"polls" => array(
 							"ankety",

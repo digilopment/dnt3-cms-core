@@ -2,6 +2,7 @@
 if(isset($_POST['sent'])){
 	
 	//echo "POST";
+	$cache 			= new Cache;
 	$post_id		= $rest->get("post_id");
 	$return 		= $rest->post("return");
 	$table 			= "dnt_posts";
@@ -45,8 +46,9 @@ if(isset($_POST['sent'])){
 	);
 	
 	
-	//MULTYLANGUAGE BEGIN
+	$cache->delete($name_url);
 	
+	//MULTYLANGUAGE BEGIN
 	//vymaze aktualne preklady
 	$where = array( '`translate_id`' => $post_id, '`table`' => "dnt_posts");
 	$db->delete( 'dnt_translates', $where);

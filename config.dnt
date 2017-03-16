@@ -72,7 +72,7 @@ define( 'DISPLAY_DEBUG', true ); //display db errors?
  *************MAIL CONFIGURATION *************
  *
 */
-define( 'SEND_EMAIL_VIA', "internal" ); //internal, send_grid
+define( 'SEND_EMAIL_VIA', "send_grid" ); //internal, send_grid
 	define( 'SEND_GRID_API_REQUEST', "https://api.sendgrid.com/api/mail.send.json" ); 
 	define( 'SEND_GRID_API_KEY', "$YOUR_SEND_GRID_API_KEY_INSERT_HERE" );
 	define( 'SEND_GRID_API_TEMPLATE_ID', "$YOUR_SEND_GRID_API_TEMPLATE_ID" );

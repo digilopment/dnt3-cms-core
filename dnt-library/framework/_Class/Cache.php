@@ -8,7 +8,7 @@
 class Cache {
 
     // Pages you do not want to Cache:
-    var $doNotCache = array("admin","profile");
+    var $doNotCache = array("rpc");
 
     // General Config Vars
     var $cacheDir = "dnt-cache";
@@ -73,6 +73,23 @@ class Cache {
             return true;
         else
             return false;
+    }
+	
+	function delete($location){
+        $location = base64_encode($location);
+		
+		$dir = "dnt-cache/";
+		if (is_dir($dir)){
+		  if ($dh = opendir($dir)){
+			while (($file = readdir($dh)) !== false){
+				if(preg_match('/'.$location.'/', $file)){
+					$fileName = $dir.$file;
+					unlink($fileName);
+				}
+			}
+			closedir($dh);
+		  }
+		}
     }
 
     function purge_all(){
