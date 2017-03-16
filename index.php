@@ -1,7 +1,12 @@
 <?php
-
-//echo base64_encode(@$_SERVER['HTTP_HOST'].@$_SERVER['REQUEST_URI']);
-
+/*
+ * => Designdnt3 Application
+ * => Framework Dnt3
+ * => CMS Designdnt3
+ * => Skeleton template
+ * => author: thomas.doubek@gmail.com
+ * => Thanks for using!
+*/
 include "dnt-library/framework/_Class/Autoload.php";
 $autoload		= new Autoload;
 $path			= "";
@@ -12,13 +17,6 @@ $dntLog 		= new DntLog;
 $XMLgenerator	= new XMLgenerator;
 $dnt 			= new Dnt;
 $dntCache 		= new Cache;
-
-
-/*
-$location = "o-nas";
-$cache = new Cache;
-$cache->delete($location);
-*/
 
 if(!Install::db_exists()){
 	Dnt::redirect("dnt-install/index.php");
@@ -33,7 +31,7 @@ if($rest->getModul()){
 	));
 			
 	/*
-	 * IS_CACHING 					= GLOBAL Cache
+	 * IS_CACHING 				= GLOBAL Cache
 	 * Settings::get("cachovanie") 	= VENDOR Cache
 	 * 
 	*/
