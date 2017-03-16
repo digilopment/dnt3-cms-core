@@ -175,6 +175,9 @@ public function creat_name_url($name, $name_url){
 	if(empty($name_url)){
 		return self::name_url($name);
 	}
+	elseif(self::in_string("#", $name_url)){
+		return $name_url;
+	}
 	//http is_external_url
 	elseif(self::is_external_url($name_url)){
 		return $name_url;
