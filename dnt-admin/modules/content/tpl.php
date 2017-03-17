@@ -83,7 +83,8 @@
 					  <td>
 						 <span class="text-green">
 						 <a href="<?php echo AdminContent::url("move_up", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>"><i class="fa fa-angle-up"></i></a>
-						 <a href="<?php echo AdminContent::url("mowe_down", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>"><i class="fa fa-angle-down"></i></a>
+						 <a href="<?php echo AdminContent::url("move_down", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>"><i class="fa fa-angle-down"></i></a>
+						 <?php echo $row['order'];?>
 						 </span>
 					  </td>
 					  <td>

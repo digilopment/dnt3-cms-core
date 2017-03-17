@@ -29,6 +29,16 @@ elseif($rest->get("action") == "show_hide")
 	//default article view action add
 	include "show_hide.php";
 }
+elseif($rest->get("action") == "move_up")
+{
+	//default article view action add
+	include "move_up.php";
+}
+elseif($rest->get("action") == "move_down")
+{
+	//default article view action add
+	include "move_down.php";
+}
 else
 {
 	//default article list template

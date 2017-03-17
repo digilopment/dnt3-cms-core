@@ -56,7 +56,6 @@ class ArticleList extends AdminContent{
    	}
 	
 	public function getArticleUrl($id){
-		//return  Url::get("WWW_PATH").$this->getTranslate(array("type" => $column, "translate_id" => $post_id, "table" => "dnt_posts"));
 		return Url::get("WWW_PATH")."clanok/".$id."/".$this->getTranslate(array("type" => "name_url", "translate_id" => $id, "table" => "dnt_posts"));
 	}
 	

@@ -150,13 +150,15 @@ class AdminContent extends MultyLanguage{
 	}
 	
 	public function url($action, $cat_id, $sub_cat_id, $type, $post_id, $page){
+		
 		if($action == "filter"){
-			return WWW_PATH_ADMIN."index.php?src=content&filter=$cat_id&sub_cat_id=$sub_cat_id&type=$type";
+			return WWW_PATH_ADMIN."index.php?src=content&filter=$cat_id&sub_cat_id=$sub_cat_id&included=$type";
 		}else{
 			if(isset($_GET['filter'])){
-				return WWW_PATH_ADMIN."index.php?src=content&filter=$cat_id&sub_cat_id=$sub_cat_id&post_id=$post_id&page=$page&action=$action&type=$type";
+				//return "aa";
+				return WWW_PATH_ADMIN."index.php?src=content&filter=$cat_id&sub_cat_id=$sub_cat_id&post_id=$post_id&page=$page&action=$action&included=$type";
 			}else{
-				return WWW_PATH_ADMIN."index.php?src=content&post_id=$post_id&page=$page&action=$action&type=$type";
+				return WWW_PATH_ADMIN."index.php?src=content&post_id=$post_id&page=$page&action=$action&included=$type";
 			}
 		}
 	}
