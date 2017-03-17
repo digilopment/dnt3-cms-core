@@ -1,4 +1,5 @@
 <?php
+$time_start = microtime(true);
 include "../dnt-library/framework/_Class/Autoload.php";
 $autoload		= new Autoload;
 $path			= "../";
@@ -25,7 +26,8 @@ $db = new Db;
 	`vendor_id` = '".Vendor::getId()."' AND 
 	`type` = 'article' 
   ORDER BY `order`";
- 
+
+  
 $defaultLang = array(array("slug" => "")); 
 
 $queryLangs = MultyLanguage::getLangs(1);
@@ -38,28 +40,44 @@ $queryLangs = MultyLanguage::getLangs(1);
 			   $lang = false;
 
 		foreach($webhook->get($custom_modules) as $moduleName=>$addrs){
-			
+			foreach($addrs as $addr){
 			if($moduleName == "article_view"){
 				if ($db->num_rows($query) > 0){
 					foreach($db->get_results($query) as $row){
-						$data[] = Url::get("WWW_PATH")."".$lang."".$addr."/".$row['id']."/".$row['name_url']."";
+						$data[] = Url::get("WWW_PATH")."".$lang."clanok/".$row['id']."/".$row['name_url']."";
 					}
 				}	
+			}
+			elseif($moduleName == "article_list"){
+						$data[] = Url::get("WWW_PATH")."".$lang."clanky/novinky";
 			}else{
-				foreach($addrs as $addr){
 					$data[] = Url::get("WWW_PATH")."".$lang."".$addr;
-				}
 			}
 			
 		}
+		}
 	}
 }
- 
- foreach($data as $value){
-	echo $value."<br/>";
-	//file_get_contents($value);
- }
 
+$data  =array_unique($data);
+//echo preg_match('/domov/', 'http://pdc.dnt3.loc/dnt3/sk/domov');
+//echo count($data
+foreach($data as $value){
+	/*if(
+	preg_match('/dnt3\/domov#/', $value."") ||
+	preg_match('/dnt3\/novinky/', $value."")
+	
+	){
+		file_get_contents($value);
+		echo $value."<br/>";
+	}*/
+	file_get_contents($value);
+	//echo $value."<br/>";
+}
 
+//echo file_get_contents("http://pdc.dnt3.loc/dnt3/");
 
+$time_end = microtime(true);
+$execution_time = $time_end - $time_start;
+//echo 'Total execution time in seconds: ' . $execution_time;
 //echo "OK";

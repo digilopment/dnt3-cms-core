@@ -1,5 +1,4 @@
 <?php
-
 //Module cachuje len vtedy, ak sa jedna o adresu, ktorá je rewritovaná PR: http://localhost/www/abc
 //Ak sa jedná o adresu, ktorá nie je rewritovaná, modul necachuje		PR: http://localhost/www/index.php?src=abc 
 //Obe adresy vyssie su zhodne, teda vracaju rovnaky conten

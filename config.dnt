@@ -45,8 +45,8 @@ define( 'GET_SYSTEM_COMPONENTS', 'DntJson, DntSoap, DntXml, DntRss, DntXSSLoader
  ************* CACHE SETTING ********************************************************************************
  *
 */
-define( 'IS_CACHING', true );
-define( 'IS_LOGSYSTEM_ON', true );
+define( 'IS_CACHING', false );
+define( 'IS_LOGSYSTEM_ON', false );
 define( 'CACHE_HTTP_STATUS', '201' );
 define( 'CACHE_TIME_SEC', '86400' );
 define( 'CACHE_URL', '0' );
@@ -104,7 +104,7 @@ define( 'WWW_PATH', HTTP_PROTOCOL.@$_SERVER['SERVER_NAME'].WWW_FOLDERS."/" ); //
 define( 'WWW_PATH_ADMIN', HTTP_PROTOCOL."".@$_SERVER['SERVER_NAME'].WWW_FOLDERS."/dnt-admin/" ); //server path too root file usualy index.php or home.php
 
 //CDN PATH
-define( 'WWW_CDN_PATH', HTTP_PROTOCOL."dnt.static-cdn.".@$_SERVER['SERVER_NAME'].WWW_FOLDERS."/" ); //server path too root file usualy index.php
+define( 'WWW_CDN_PATH', HTTP_PROTOCOL."".@$_SERVER['SERVER_NAME'].WWW_FOLDERS."/" ); //server path too root file usualy index.php
 
 //FULL PATH
 define( 'WWW_FULL_PATH', HTTP_PROTOCOL.@$_SERVER['SERVER_NAME'].@$_SERVER['REQUEST_URI'] ); //full virtual path of actual address

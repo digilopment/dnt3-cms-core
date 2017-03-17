@@ -216,12 +216,12 @@
                   </p>
                   <select name="cachovanie" class="btn-default btn-lg btn-block" type="text" size="1">
                   <?php
-                     if(Settings::get("cache") == "0"){
-                     	echo "<option value='0' selected>Cachovanie vypnuté</option>";
+                     if(Settings::get("cachovanie") == "0"){
+                     	echo "<option value='0' selected>Cachovanie zapnuté</option>";
                      	echo "<option value='1'>Cachovanie nastavené</option>";
                      }
                      else{
-                     	echo "<option value='1' selected>Cachovanie nastavené</option>";
+                     	echo "<option value='1' selected>Cachovanie zapnuté</option>";
                      	echo "<option value='0' >Cachovanie vypnuté</option>";
                      	}
                      ?>
