@@ -96,7 +96,7 @@ class DntUpload{
 					);
 				 $db->insert('dnt_uploads', $insertedData);
 				 //get last ID of this file
-				 $imgId = $db->lastid();
+				 //$imgId = $db->lastid();
 				 //update settings columns
 				 /*$db->update(
 					$table, //table 

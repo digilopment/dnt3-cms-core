@@ -1,8 +1,8 @@
 <?php
 $insertedData = array(
 					'vendor_id' 		=> Vendor::getId(), 
-					'cat_id' 			=> $rest->get("cat_id"), 
-					'sub_cat_id' 		=> $rest->get("filter"), 
+					'cat_id' 			=> $rest->get("filter"), 
+					//'sub_cat_id' 		=> $rest->get("filter"), 
 					'`type`' 			=> $rest->get("included"), 
 					'datetime_creat' 	=> Dnt::datetime(),
 					'datetime_update' 	=> Dnt::datetime(),
@@ -11,4 +11,10 @@ $insertedData = array(
 				);
 
 $db->insert('dnt_posts', $insertedData);
-$dnt->redirect(WWW_PATH_ADMIN."index.php?src=content&filter=".$rest->get("filter")."&sub_cat_id=".$rest->get("included")."&post_id=".$db->lastid()."&page=1&action=edit&type=".$rest->get("included")."");
+$redirect = WWW_PATH_ADMIN."index.php?src=content&filter=".$rest->get("filter")."&sub_cat_id=".$rest->get("sub_cat_id")."&post_id=".$db->lastid()."&page=1&action=edit&included=".$rest->get("included")."";
+
+
+$dnt->redirect($redirect);
+
+
+//index.php?src=content&filter=296&sub_cat_id=&post_id=13354&page=1&action=edit&included=post

@@ -9,6 +9,11 @@ if($rest->get("action") == "show_hide")
 	//default article view action add
 	include "show_hide.php";
 }
+elseif($rest->get("action") == "add")
+{
+	//default article view action add
+	include "upload.php";
+}
 else{
 	include "tpl.php";
 }

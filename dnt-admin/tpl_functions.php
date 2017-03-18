@@ -399,9 +399,9 @@ if($row['name_url'] == "content"){
                         <li class="border-top">
                            <a href="index.php?src=access&action=edit&post_id=<?php echo AdminUser::data("admin", "id")."";?>"><i class="fa fa-user"></i>Môj účet</a>
                         </li>
-                        <li>
+                        <?php /*<li>
                            <a href="index.php?src=content&add"><i class="fa fa-laptop"></i>Pridať post</a>
-                        </li>
+                        </li> */?>
                         <li >
                            <a href="index.php?src=settings&pa=1"><i class="fa fa-gears"></i>Nastavenia stránky</a>
                         </li>
@@ -413,7 +413,7 @@ if($row['name_url'] == "content"){
                         </li>
                         <li>
                            <a href="index.php?src=mailer">
-                              <i class="fa fa-inbox"></i>Napísať email<!--<span class="badge">3</span>-->
+                              <i class="fa fa-inbox"></i>Odoslať email<!--<span class="badge">3</span>-->
                            </a>
                         </li>
                         <li>

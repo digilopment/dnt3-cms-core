@@ -11,22 +11,13 @@
 	<ul>
 	
 		<li class="post_type" style="text-decoration: underline">
-			<a href="<?php echo Rest::setGet(array("action"=>"add")); ?>">
-				<span class="label label-primary bg-green" style="padding: 5px;"><big>PRIDAŤ TENTO POST</big></span>
-			</a>
+			<form enctype='multipart/form-data' action="index.php?src=files&action=add" method="POST" style="    display: flex;">
+				<input name="userfile[]" multiple="multipl" type="file" class="form-control">
+				<input type="submit" name="sent" value="Upload">
+			</form>
 		</li>
-		<li class="post_type">
-			<a href="index.php?src=obsah&amp;pridat=pages-podmenu">
-				<span class="label label-primary bg-green" style="padding: 5px;"><big>PRIDAŤ PODSTRÁNKU</big></span>
-			</a>
-		</li>
-		<br/>
-		<br/>
-		<li class="post_type">
-			<a href="index.php?src=obsah&amp;filtruj=1">
-				<span class="label label-primary bg-blue" style="padding: 5px;"><big>Pages</big></span>
-			</a>
-		</li>
+		
+	
 	</ul>
 </section>
 <div style="clear: both;"></div>
