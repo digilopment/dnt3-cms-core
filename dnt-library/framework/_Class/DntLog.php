@@ -154,7 +154,7 @@ class DntLog{
 		"HTTP_REFERER",
 		"HTTP_ACCEPT_ENCODING",
 		"HTTP_ACCEPT_LANGUAGE",
-		"HTTP_ACCEPT_CHARSET",
+		//"HTTP_ACCEPT_CHARSET",
 		"HTTP_COOKIE",
 		"PATH",
 		"SystemRoot",
@@ -182,7 +182,7 @@ class DntLog{
 	);
 	
 	foreach($serverVariables as $item){
-		$arrToInsert[$item] = @$_SERVER[$item];
+		$arrToInsert[$item] = isset($_SERVER[$item]) ? $_SERVER[$item] : false;
 	};
 	
 	//custom INPUTS

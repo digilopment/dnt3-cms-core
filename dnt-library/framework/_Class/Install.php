@@ -1,6 +1,6 @@
 <?php
 Class Install{
-	function db_exists(){
+	public static function db_exists(){
 		
 		//$conn = new mysqli(DB_HOST, DB_USER, DB_PASS);
 		
@@ -22,7 +22,7 @@ Class Install{
 		$stmt->close();
 	}
 
-	function getColumns($query){
+	public static function getColumns($query){
 		$db = new DB();
 		$i = 1;
 		if ($db->num_rows($query) > 0){
@@ -43,7 +43,7 @@ Class Install{
 		}
 	}
 	
-	function addVendor($tables, $VENDOR_NAME, $COPY_FROM){
+	public static function addVendor($tables, $VENDOR_NAME, $COPY_FROM){
 		$db 			= new Db;
 		//SETTINGS
 		$COPY_FROM 			= $COPY_FROM;
@@ -114,7 +114,7 @@ Class Install{
 
 	}
 
-	function delVendor($id, $tables){
+	public static function delVendor($id, $tables){
 		
 		$db = new Db;
 
@@ -131,7 +131,7 @@ Class Install{
 		echo "Deleted";
 	}
 	
-	function moveVendor($id, $move_to, $tables){
+	public static function moveVendor($id, $move_to, $tables){
 		
 		$db = new Db;
 
@@ -159,7 +159,7 @@ Class Install{
 		echo "Updated";
 	}
 
-	function installation(){
+	public static function installation(){
 		
 		//CREAT TABLE
 		$conn = new mysqli(DB_HOST, DB_USER, DB_PASS);

@@ -1,7 +1,7 @@
 <?php
 class Settings{
 	
-	public function get($key){
+	public static function get($key){
 		$db = new Db;
 		$query = "SELECT value FROM dnt_settings WHERE `key` = '".$key."' AND `vendor_id` = '".Vendor::getId()."'";
 		if ($db->num_rows($query) > 0){
@@ -13,7 +13,7 @@ class Settings{
 		}
 	}
 	
-	public function getImage($key){
+	public static function getImage($key){
 		
 		$db = new Db;
 		$imageId = Settings::get($key);
@@ -28,7 +28,7 @@ class Settings{
 		}
 	}
 	
-	public function showStatus(){
+	public static function showStatus(){
 		return array(
 			"0" => "Vymazať",
 			"1" => "Publikovať post",

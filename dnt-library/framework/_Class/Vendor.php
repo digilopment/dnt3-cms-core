@@ -6,7 +6,7 @@ class Vendor{
     var $vendor_id; //this vendor ID
 	
 	
-	public function getVendorUrl(){
+	public static function getVendorUrl(){
 		
 		$hosts = explode(".", @$_SERVER['HTTP_HOST']);
 		$host = $hosts[0];
@@ -26,7 +26,7 @@ class Vendor{
 	}
 	
 	
-	public function getId(){
+	public static function getId(){
 		$db 	= new Db;
 		$host = explode(".", $_SERVER["HTTP_HOST"]);
 		
@@ -60,7 +60,7 @@ class Vendor{
 		return $vendor_id;
 	}
 	
-	public function getLayout(){
+	public static function getLayout(){
 		$db 	= new Db;
 		
 		$query = "SELECT `layout` FROM `dnt_vendors` WHERE
