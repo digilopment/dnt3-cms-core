@@ -3,11 +3,11 @@
 class Dnt{
 
 
-public function cislo($link){
+public static function cislo($link){
   return preg_replace("/[^0-9]/","",$link);
 }
 
-public function showStatus($column){
+public static function showStatus($column){
 	$rest = new Rest;
 	if($rest->isAdmin()){
 		//return "`show` = '1' or `show` = '2'";
@@ -17,24 +17,24 @@ public function showStatus($column){
 	}
 }
 
-public function datetime(){
+public static function datetime(){
 	return date("Y-m-d H:i:s");
 }
-public function timestamp(){
+public static function timestamp(){
 	return time();
 }
-public function timeToDbFormat($separator, $time){
+public static function timeToDbFormat($separator, $time){
 	$dateAndTime = explode(" ", $time);
 	$data = explode($separator, $dateAndTime[0]);
 	return $data[2]."-".$data[1]."-".$data[0]." ".$dateAndTime[1].":00";
 }
 
-public function formatTime($time, $format){
+public static function formatTime($time, $format){
 	$date=date_create($time);
 	return date_format($date,$format);
 }
 
-public function dvojcifernyDatum($cislo){
+public static function dvojcifernyDatum($cislo){
 	if(strlen($cislo) > 2){
 		$return = $cislo;
 	}
@@ -49,21 +49,21 @@ public function dvojcifernyDatum($cislo){
 	return $return; 
 }
 
-public function in_string($pharse, $str){
+public static function in_string($pharse, $str){
 	return preg_match("/".$pharse."\b/i", "".$str."");
 }
 
-public function desatinne_cislo($link){
+public static function desatinne_cislo($link){
   $link = str_replace(",",".",$link);
   return preg_replace("/[^0-9\.]/","",$link);
 }
 
-public function generujHeslo($pocetZnakov){
+public static function generujHeslo($pocetZnakov){
 	$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     return substr(str_shuffle($chars),0,$pocetZnakov);
 }
 
-public function microtimeSec(){
+public static function microtimeSec(){
     list($usec, $sec) = explode(" ", microtime());
     $tmp = ((float)$usec + (float)$sec);
 	$tmp1 = explode(".", $tmp);
@@ -71,15 +71,15 @@ public function microtimeSec(){
 	return $tmp0;
 }
 
-public function is_mobile(){
+public static function is_mobile(){
 	return preg_match("/(android|iPhone|iPod|iPad|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
 }
 
-public function getPripona($file){
+public static function getPripona($file){
 	return pathinfo($file, PATHINFO_EXTENSION);
 }
 
-public function recurse_copy($src,$dst) { 
+public static function recurse_copy($src,$dst) { 
     $dir = opendir($src); 
     @mkdir($dst); 
     while(false !== ( $file = readdir($dir)) ) { 
@@ -95,27 +95,27 @@ public function recurse_copy($src,$dst) {
     closedir($dir); 
 } 
 
-public function get_datum(){
+public static function get_datum(){
 	return $get_datum = "".date("d").".".date("m").".".date("Y")."";
 }
 
-public function get_rok(){
+public static function get_rok(){
 	return $get_rok = date("Y");
 }
 
-public function get_mesiac(){
+public static function get_mesiac(){
 	return $get_mesiac = date("m");
 }
 
 
-public function get_den(){
+public static function get_den(){
 	return $get_den = date("d");
 }
-public function get_cas(){
+public static function get_cas(){
 	return $get_cas = date('H:i:s');
 	}
 
-public function get_os(){
+public static function get_os(){
 	$agent = $_SERVER['HTTP_USER_AGENT'];
 	if(preg_match('/Android/',$agent)) $os = 'Android';
 	elseif(preg_match('/Win/',$agent)) $os = 'Windows';
@@ -128,7 +128,7 @@ public function get_os(){
 	}	
 	
 	
-public function set_rand_string($dlzka = 10){
+public static function set_rand_string($dlzka = 10){
   $retazec = "";
   $nahodne = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
   for($i = 0; $i < $dlzka; $i++){
@@ -138,10 +138,10 @@ public function set_rand_string($dlzka = 10){
   return $retazec;
   //echo nahodny_retazec($dlzka = 10);
 	}
-public function set_four_one(){
+public static function set_four_one(){
 	return "".rand(1, 9)."".rand(1, 9)."".rand(1, 9)."".rand(1, 9)."";
 	}
-public function name_url($url_adresa){    
+public static function name_url($url_adresa){    
     # všetky znaky, ktoré v unicode nie sú písmená, čísla alebo podtržítka nahradíme pomlčkou
     $url_adresa = preg_replace('/[^\pL0-9_]+/u', '-', $url_adresa);
     # trimneme pomlčky
@@ -156,7 +156,7 @@ public function name_url($url_adresa){
     return $url_adresa;
   }
   
-public function is_external_url($name_url){
+public static function is_external_url($name_url){
 	if(self::in_string("http:\/\/", $name_url)){
 		$return = true;
 	}
@@ -171,7 +171,7 @@ public function is_external_url($name_url){
 		$return = false;
 	}
 }
-public function creat_name_url($name, $name_url){
+public static function creat_name_url($name, $name_url){
 	if(empty($name_url)){
 		return self::name_url($name);
 	}
@@ -187,7 +187,7 @@ public function creat_name_url($name, $name_url){
 	}
 }
   	
-public function redirect($presmeruj_url){
+public static function redirect($presmeruj_url){
     if (!headers_sent()){
         header('Location: '.$presmeruj_url);
       }
@@ -199,14 +199,14 @@ public function redirect($presmeruj_url){
     }
 }
 
-public function presmeruj_url_by_js($presmeruj_url){
+public static function presmeruj_url_by_js($presmeruj_url){
         echo '<script type="text/javascript">';
         echo 'window.location.href="'.$presmeruj_url.'"';
         echo '</script>';
         echo '<meta http-equiv="refresh" content="0;url='.$presmeruj_url.'" />';
 }
 
-public function safe($str) { 
+public static function safe($str) { 
     if(is_array($str)) 
         return array_map(__METHOD__, $str); 
 
@@ -218,7 +218,7 @@ public function safe($str) {
 
 }
 
-public function obsah_uvod($str, $zobraz_znakov) {
+public static function obsah_uvod($str, $zobraz_znakov) {
 	//return htmlspecialchars($str); 
 	if(strlen($str) > $zobraz_znakov)
 		return "".$str = substr($str, 0, $zobraz_znakov)."...";
@@ -228,7 +228,7 @@ public function obsah_uvod($str, $zobraz_znakov) {
 		return "Tento príspevok nemá žiaden náhľad článku, pretože sa jeho obsah pravdepodobne skladá z multymediálneho obsahu. Prosím kliknite na <b>čítať viac</b> a môžete prezerať vami vybraný obsah.";
 }
 
-public function get_perex($input, $maxWords, $maxChars)
+public static function get_perex($input, $maxWords, $maxChars)
 {
     $words = preg_split('/\s+/', $input);
     $words = array_slice($words, 0, $maxWords);
@@ -259,7 +259,7 @@ public function get_perex($input, $maxWords, $maxChars)
     }
 }
 
-public function perex($str, $maxPocetSlov){		 
+public static function perex($str, $maxPocetSlov){		 
 	$str = not_html($str);
 	$slova = explode(" ", $str);
 	$pocetSlov = count($slova);
@@ -272,14 +272,14 @@ public function perex($str, $maxPocetSlov){
 	
 }
 
-public function not_html($str) {
+public static function not_html($str) {
 	//return htmlspecialchars($str); 
 	$str = strip_tags($str);
 	$str = trim($str);
 	return $str;
 }
 
-public function is_email($email){
+public static function is_email($email){
 	if ($email == "")
 		return true;
   elseif(preg_match("/^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/",$email))
@@ -288,7 +288,7 @@ public function is_email($email){
     return false;
 	}
 	
-public function is_iban($iban){
+public static function is_iban($iban){
 			$iban = strtolower(str_replace(' ','',$iban));
 	    $Countries = array('al'=>28,'ad'=>24,'at'=>20,'az'=>28,'bh'=>22,'be'=>16,'ba'=>20,'br'=>29,'bg'=>22,'cr'=>21,'hr'=>21,'cy'=>28,'cz'=>24,'dk'=>18,'do'=>28,'ee'=>20,'fo'=>18,'fi'=>18,'fr'=>27,'ge'=>22,'de'=>22,'gi'=>23,'gr'=>27,'gl'=>18,'gt'=>28,'hu'=>28,'is'=>26,'ie'=>22,'il'=>23,'it'=>27,'jo'=>30,'kz'=>20,'kw'=>30,'lv'=>21,'lb'=>28,'li'=>21,'lt'=>20,'lu'=>20,'mk'=>19,'mt'=>31,'mr'=>27,'mu'=>30,'mc'=>27,'md'=>24,'me'=>22,'nl'=>18,'no'=>15,'pk'=>24,'ps'=>29,'pl'=>28,'pt'=>25,'qa'=>29,'ro'=>24,'sm'=>27,'sa'=>24,'rs'=>22,'sk'=>24,'si'=>19,'es'=>24,'se'=>24,'ch'=>21,'tn'=>24,'tr'=>26,'ae'=>23,'gb'=>22,'vg'=>24);
 	    $Chars = array('a'=>10,'b'=>11,'c'=>12,'d'=>13,'e'=>14,'f'=>15,'g'=>16,'h'=>17,'i'=>18,'j'=>19,'k'=>20,'l'=>21,'m'=>22,'n'=>23,'o'=>24,'p'=>25,'q'=>26,'r'=>27,'s'=>28,'t'=>29,'u'=>30,'v'=>31,'w'=>32,'x'=>33,'y'=>34,'z'=>35);
@@ -328,7 +328,7 @@ public function is_iban($iban){
 	}	
 	
 	
-public function is_facebook_profil($facebook_profil){		
+public static function is_facebook_profil($facebook_profil){		
 	list($facebook_url, $facebook_user) = explode(".com/", $facebook_profil);
 	if ($facebook_profil == ""){
 		return false; //empty filed
@@ -341,7 +341,7 @@ public function is_facebook_profil($facebook_profil){
 		}		
 	}
 	
-public function odstran_diakritiku($text){
+public static function odstran_diakritiku($text){
 $prevodni_tabulka = Array(
   'ä'=>'a',
   'Ä'=>'A',
@@ -434,12 +434,12 @@ return $text;
 }
 
 
-public function my_email($predmet, $komu, $od_meno, $od_email, $email_sprava){
+public static function my_email($predmet, $komu, $od_meno, $od_email, $email_sprava){
 
 		$od_email = "info@query.sk";
 		// carriage return type (we use a PHP end of line constant)
-		$predmet =  $this->odstran_diakritiku($predmet);
-		$od_meno =  $this->odstran_diakritiku($od_meno);
+		$predmet =  self::odstran_diakritiku($predmet);
+		$od_meno =  self::odstran_diakritiku($od_meno);
 		$to  = $komu; // note the comma
 		$subject = iconv('UTF-8', 'windows-1250',$predmet);
 		$title = 'Html Email';
@@ -456,16 +456,16 @@ public function my_email($predmet, $komu, $od_meno, $od_email, $email_sprava){
 		
 		}
 		
-	public function returnInput(){
+	public static function returnInput(){
 		echo "<input type='hidden' name='return' value='".WWW_FULL_PATH."' />";
 	}
 	
-	public function confirmMsg($msg){
+	public static function confirmMsg($msg){
 		return " onclick=\"return confirm('$msg');\" ";
 	}
 	
 	
-	public function getPostParam($table, $column, $post_id){
+	public static function getPostParam($table, $column, $post_id){
 		$db 	= new Db;
 		$rest 	= new Rest;
 		
@@ -480,7 +480,7 @@ public function my_email($predmet, $komu, $od_meno, $od_email, $email_sprava){
 		 
 	}
 	
-	public function db_current_id($table, $and_where){
+	public static function db_current_id($table, $and_where){
 		$db 	= new Db;
 		$rest 	= new Rest;
 		
@@ -496,7 +496,7 @@ public function my_email($predmet, $komu, $od_meno, $od_email, $email_sprava){
 	}
 
 	
-	public function db_next_id($table, $and_where, $currentId){
+	public static function db_next_id($table, $and_where, $currentId){
 		$db 	= new Db;
 		$rest 	= new Rest;
 		
