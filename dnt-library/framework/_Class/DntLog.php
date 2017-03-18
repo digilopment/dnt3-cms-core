@@ -194,7 +194,9 @@ class DntLog{
 	$arrToInsert['err_msg'] = $this->error_to_json();
 	$arrToInsert['THIS_URL'] = WWW_FULL_PATH;
 	
-	$db->insert( 'dnt_logs', $arrToInsert );
+	if(IS_LOGSYSTEM_ON){
+		$db->insert( 'dnt_logs', $arrToInsert );
+	}
 	
 	if($http_response >= 490){
 		$mailer = new Mailer;
