@@ -1,4 +1,5 @@
 <?php
+
 if(isset($_POST['sent'])){
 	
 	//echo "POST";
@@ -45,8 +46,12 @@ if(isset($_POST['sent'])){
 			'`vendor_id`' 	=> Vendor::getId())
 	);
 	
+	//DELETE HOME LANG CACHE FILES
+	foreach($cache->deteleAllLangs($name_url) as $langDel){
+		$cache->delete($langDel);
+	}
 	
-	$cache->delete($name_url);
+	
 	
 	//MULTYLANGUAGE BEGIN
 	//vymaze aktualne preklady
@@ -62,6 +67,11 @@ if(isset($_POST['sent'])){
 			$content	= $rest->post("name_content_".$row['slug']);
 			$perex		= $rest->post("name_perex_".$row['slug']);
 			$tags		= $rest->post("name_tags_".$row['slug']);
+			
+			//DELETE MULTYLANGUAGE CACHE FILES
+			foreach($cache->deteleAllLangs($name_url) as $langDel){
+				$cache->delete($langDel);
+			}
 			
 			//name
 			$insertedData = array(

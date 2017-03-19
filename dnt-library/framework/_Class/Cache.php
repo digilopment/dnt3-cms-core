@@ -74,23 +74,44 @@ class Cache {
             return false;
     }
 	
-	function delete($location){
-        $location = base64_encode($location);
+	public function deteleAllLangs($name_url){
+		$multylanguages 	= new MultyLanguage;
+		$db 	= new Db;
+		$query 	= $multylanguages->getLangs();
+		if($db->num_rows($query)>0){
+		   foreach($db->get_results($query) as $row){
+				$cacheFile[] = "/".$row['slug']."/".$name_url;
+		  }
+		  $cacheFile[] = "/".DEAFULT_LANG."/".$name_url;
+		}
+		$cacheFile[] = "/".$name_url;
 		
-		$dir = "dnt-cache/";
+		return $cacheFile;
+	}
+
+	public function delete($location){
+        $location = base64_encode(@$_SERVER['HTTP_HOST'].WWW_FOLDERS.$location);
+		//echo $location;
+		$dir = "../dnt-cache/";
 		if (is_dir($dir)){
 		  if ($dh = opendir($dir)){
 			while (($file = readdir($dh)) !== false){
+				
+				//echo base64_decode($file)."<br/>";
+				//echo $file."<br/><br/>";
+				//echo $location." => ".$file."<br/>";
 				if(preg_match('/'.$location.'/', $file)){
 					$fileName = $dir.$file;
 					unlink($fileName);
+					//echo base64_decode($file)."<br/>";
+					//echo $file."<br/><br/>";
 				}
 			}
 			closedir($dh);
 		  }
 		}
     }
-
+	
     function purge_all(){
         if(file_exists($this->cacheLogFile)){
             foreach($this->cacheLog as $key=>$value) $this->cacheLog[$key] = 0;
