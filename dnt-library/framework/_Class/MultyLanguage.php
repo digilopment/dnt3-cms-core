@@ -46,7 +46,6 @@ class MultyLanguage{
 	
 	
 	public function getTranslateLang($data){
-		
 		$translate_id 	= isset($data['translate_id']) ? $data['translate_id'] : false;
 		$type 			= isset($data['type']) ? $data['type'] : false;
 		$table 			= isset($data['table']) ? $data['table'] : false;
@@ -90,13 +89,32 @@ class MultyLanguage{
 	}*/
 	
 	public function getTranslate($data){
-		
+		//return "aa";
 		$translate_id 	= isset($data['translate_id']) ? $data['translate_id'] : false;
 		$type 			= isset($data['type']) ? $data['type'] : false;
 		$table 			= isset($data['table']) ? $data['table'] : false;
 		$default 		= isset($data['default']) ? $data['default'] : false;
 		
 		$db = new Db;
+		$return = false;
+
+		/*if(is_numeric($translate_id)){
+			$query = "SELECT * FROM `".$table."` as `a` 
+			LEFT JOIN `dnt_translates` as `b` 
+			ON (a.id = b.translate_id)
+			WHERE a.id = ".$translate_id." 
+			
+			AND a.`vendor_id` = '".Vendor::getId()."'
+			AND b.type = '".$type."'";
+			
+			//AND b.lang_id = '".$this->getLang()."'
+			
+			foreach($db->get_results($query) as $row){
+				$return = $row['name'];
+			}
+		}
+		return $return;
+		*/
 		
 		if($type == "static"){
 			$query = "SELECT `translate` FROM `dnt_translates` WHERE
@@ -116,20 +134,30 @@ class MultyLanguage{
 			`type` = '".$type."' AND
 			`table` = '".$table."'
 			";
-			$default = $this->getDefault($translate_id, $table, $type);
-		}
-		//return $default;
-		if($db->num_rows($query) > 0){
-			foreach($db->get_results($query) as $row){
-				if($row['translate'] == ""){
-					$return = $default;
-				}else{
-					$return = $row['translate'];
-				}
+			
+			if($default){
+				$default = $default;
+			}else{
+				$default = $this->getDefault($translate_id, $table, $type);
 			}
+		}
+		
+		if(($this->getLang() == DEAFULT_LANG) && ($default != false)){
+			return $default;
 		}else{
-			$return = $default;
+			if($db->num_rows($query) > 0){
+				foreach($db->get_results($query) as $row){
+					if($row['translate'] == ""){
+						$return = $default;
+					}else{
+						$return = $row['translate'];
+					}
+				}
+			}else{
+				$return = $default;
+			}
 		}
 		return $return;
+
 	}
 }

@@ -77,5 +77,17 @@ class Vendor{
 		return $layout;
 	}
 	
+	public function getAll(){
+		$db 	= new Db;
+		
+		$query = "SELECT * FROM `dnt_vendors`";
+		
+		if($db->num_rows($query)>0){
+			return $db->get_results($query);
+		}else{
+			return array();
+		}
+	}
+	
 }
 

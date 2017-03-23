@@ -347,10 +347,19 @@ class Polls{
 	}
 	
 	
-	
+	/*
+	 *
+	 * maximalny pocet bodov v jednej otazke
+	 * metoda sa pouzije na vypocet MAX points pre kazdu otazku
+	 *
+	*/
 	public function getMaxPointInQuestion($poll_id, $question_id){
 		$db = new Db;
-		$query = "SELECT MAX(points) FROM dnt_polls_composer WHERE vendor_id = '1' AND `key` LIKE '%ans%' AND poll_id = '".$poll_id."' AND question_id = '".$question_id."'";
+		$query = "SELECT MAX(points) FROM dnt_polls_composer WHERE 
+		vendor_id = '".Vendor::getId()."' AND 
+		`key` LIKE '%ans%' AND 
+		poll_id = '".$poll_id."' AND 
+		question_id = '".$question_id."'";
 		$max = $db->get_row($query);
 		return $max[0];
 	}

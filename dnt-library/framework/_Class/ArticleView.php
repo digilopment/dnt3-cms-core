@@ -81,7 +81,8 @@ class ArticleView extends AdminContent{
 		}
 	}
 	
-	public function getPostParam($column, $post_id, $full_url = false){
+	public function getPostParam($column, $post_id, $full_url = false, $default = false){
+		//return "aaa";
 		$db 	= new Db;
 		$query 	= "SELECT `$column` FROM dnt_posts WHERE id = '$post_id' AND vendor_id = '".Vendor::getId()."'";
 		
@@ -90,15 +91,30 @@ class ArticleView extends AdminContent{
 			   //return $row[$column];
 			   
 			   if(Dnt::is_external_url($this->getTranslate(array("type" => $column, "translate_id" => $post_id, "table" => "dnt_posts")))){
-				   return $this->getTranslate(array("type" => $column, "translate_id" => $post_id, "table" => "dnt_posts"));
+				   return $this->getTranslate(array(
+					"type" => $column, 
+					"translate_id" => $post_id, 
+					"table" => "dnt_posts",
+					"default" => $default,
+					));
 			   }
-			   elseif( $full_url == false){
+			   elseif($full_url == false && $column == "name_url"){
 				   return $this->getTranslate(array("type" => $column, "translate_id" => $post_id, "table" => "dnt_posts"));
 			   }else{
 				   if($column == "name_url"){
-					   return  Url::get("WWW_PATH").$this->getTranslate(array("type" => $column, "translate_id" => $post_id, "table" => "dnt_posts"));
+					   return  Url::get("WWW_PATH").$this->getTranslate(array(
+						"type" => $column, 
+						"translate_id" => $post_id, 
+						"table" => "dnt_posts",
+						"default" => $default,
+						));
 				   }else{
-					   return $this->getTranslate(array("type" => $column, "translate_id" => $post_id, "table" => "dnt_posts"));
+					   return $this->getTranslate(array(
+						"type" => $column, 
+						"translate_id" => $post_id, 
+						"table" => "dnt_posts",
+						"default" => $default,
+						));
 				   }
 			   }
 		   }

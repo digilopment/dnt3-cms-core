@@ -9,6 +9,7 @@ $dntLog 		= new DntLog;
 $XMLgenerator	= new XMLgenerator;
 $dnt 			= new Dnt;
 $dntCache 		= new Cache;
+$vendor 		= new Vendor;
 ?>
 User-agent: *
 #This service is powered by Designdnt3 as 3rd version - professionals for better internet.
@@ -23,8 +24,8 @@ User-agent: *
 #AuthorName: 	@Tomas Doubek
 #System: 		@Designdnt3
 
+Disallow: /old/
 Disallow: /dnt-admin/
-Disallow: /dnt-api/
 Disallow: /dnt-cache/
 Disallow: /dnt-install/
 Disallow: /dnt-jobs/
@@ -41,5 +42,7 @@ Disallow: composer.json
 Disallow: robots.php
 Disallow: config.dnt
 <?php
-
+//foreach($vendor->getAll() as $row){
+	echo "Sitemap: ". WWW_PATH."dnt-api/sitemap.php\n";
+//}
 ?>
