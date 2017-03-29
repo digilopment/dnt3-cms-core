@@ -1,73 +1,72 @@
 <?php include "tpl_functions.php"; ?>
 <?php get_top(); ?>
-<?php include "top.php"; ?>
-<?php 
-$rest = new Rest;
-$post_id = $rest->get("post_id");
-
-?>
+<?php include "top.php"; 
+   $rest = new Rest;
+   
+   if($rest->get('page')){
+	   $page = $rest->get('page');
+   }else{
+	   $page = 1;
+   }
+   ?>
 <section class="content">
    <div class="row">
-      <form enctype="multipart/form-data" action="index.php?src=access&action=update&post_id=<?php echo $post_id; ?>" method="POST">
-         <!-- BEGIN SEARCH RESULT -->
+      <section class="content-header">
+         <ul>
+            <li class="post_type" style="text-decoration: underline">
+               <a href="index.php?src=multylanguage&action=translates&page=<?php echo $page;?>">
+               <span class="label label-primary bg-green" style="padding: 5px;"><big>Späť na zoznam prekladov</big></span>
+               </a>
+            </li>
+         </ul>
+      </section>
+      <form enctype="multipart/form-data" action="<?php echo WWW_PATH_ADMIN."index.php?src=multylanguage&action=update&translate_id=".$rest->get('translate_id')."";?>" method="POST">
+         <!-- prava strana-->
          <div class="col-md-12">
-            <div class="grid search">
-               <div class="grid-body">
-                  <div class="row">
-                     <!-- BEGIN FILTERS -->
-                     <input type="hidden" name="src" value="pristupy">
-                     <div class="col-md-6">
-                        <h2 class="grid-title"><i class="fa fa-filter"></i>Administrátor</h2>
-                        <hr>
-                        <!-- BEGIN FILTER BY CATEGORY -->
-                        <span style="font-weight: bold;">
-                           <h5>Meno:</h5>
-                           <div class="checkbox">
-                              <input type="text" name="name" value="<?php echo AdminUser::dataById("admin", "name", $post_id);?>" class="form-control">
+            <div class="col">
+               <!-- tabs begin here! -->
+               <div class="tab-content" style="border: 0px solid; padding: 0px;">
+                  <?php
+                     /*$query = "SELECT * FROM dnt_translates WHERE 
+                     translate_id = '".$rest->get('translate_id')."' AND
+                     vendor_id = '".Vendor::getId()."' order by lang_id desc";*/
+					 $query = MultyLanguage::getLangs(true);
+                     if($db->num_rows($query) > 0){
+                     	foreach($db->get_results($query) as $row){
+							$data = array("translate_id"=>$rest->get('translate_id'),'lang_id'=>$row['slug'],'type'=>'static');
+                     ?>
+                  <div class="tab-pane active">
+                     <br>
+                     <div class="row">
+                        <div class="form-group">
+                           <div class="form-group">
+                              <label class="col-sm-2 control-label">
+                                 <p class="lead dnt_bold">
+                                    <span class="dnt_lang" style="float: left;">Preklad - <?php echo $row['slug']; ?>:</span>
+                                 </p>
+                              </label>
+                              <div class="col-sm-10">
+                                 <input type="text" value="<?php echo MultyLanguage::getTranslateLang($data);?>" name="translate_<?php echo $row['slug']; ?>" class="form-control" placeholder="Názov:">
+                                 <br>
+                              </div>
                            </div>
-                           <h5>Priezvisko:</h5>
-                           <div class="checkbox">
-                              <input type="text" name="surname" value="<?php echo AdminUser::dataById("admin", "surname", $post_id);?>" class="form-control">
-                           </div>
-                           <h5>Email:</h5>
-                           <div class="checkbox">
-                              <input type="text" name="email" value="<?php echo AdminUser::dataById("admin", "email", $post_id);?>" class="form-control">
-                           </div>
-                           <h5>Aktívny prístup?</h5>
-                           <div class="checkbox">
-                              <input type="radio" name="show" value="1" checked="">Áno
-                              <input type="radio" name="show" value="0">Nie										
-                           </div>
-                           <h5>Zadajte heslo na overenie totožnosti:</h5>
-                           <div class="checkbox">
-                              <input type="password" name="pass" value="" class="form-control">
-                           </div>
-                        </span>
-                     </div>
-                     <!-- END FILTERS -->
-                     <div class="col-md-6">
-                        <h2><i class="fa fa-file-o"></i> Fotografia</h2>
-                        <hr>
-                        <p class="lead">Vyberte si jedinečnú <b>fotografiu</b></p>
-                        <p>Ak máte eshop a vystavíte faktúru, vaše meno tam bude predvyplnené</p>
-                        <img src="<?php echo AdminUser::avatarById($post_id);?>" style="max-width: 200px; margin: 15px;" alt="">
-                        <input type="file" name="userfile" class="btn-default btn-lg btn-block">
-                        <div class="padding"></div>
-                        <div class="checkbox">
-							<?php echo Dnt::returnInput();?>
-							<input type="hidden" name="group" value="<?php echo AdminUser::dataById("admin", "type", $post_id);?>" class="form-control">
-                           <input type="submit" name="sent" value="Uložiť" class="btn btn-primary" style="width: 40%;">
                         </div>
                      </div>
-                     <!-- END TABLE RESULT -->
+                     <br>
                   </div>
+                  <?php
+                     }
+                     }
+                     ?>
                </div>
+               <!-- end here -->
+               <?php echo Dnt::returnInput();?>
+               <input type="submit" name="sent" class="btn btn-primary btn-lg btn-block" value="Upraviť">
             </div>
          </div>
-         <!-- END SEARCH RESULT -->
+         <!-- end prava strana -->
       </form>
    </div>
 </section>
-
 <?php include "bottom.php"; ?>
 <?php get_bottom(); ?>

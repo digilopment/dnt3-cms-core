@@ -1,44 +1,39 @@
 <?php
 if(isset($_POST['sent'])){
 	$session = new Sessions;
+	$db = new Db;
 	
-	$table 			= "dnt_users";
-	
-	$rest 			= new Rest;
-	$post_id		= $rest->get("post_id");
+	$table 			= "dnt_translates";
 	$return 		= $rest->post("return");
+	$translate_id	= $rest->get('translate_id');
 	
-	$name 			= $rest->post("name");
-	$surname 		= $rest->post("surname");
-	$email 			= $rest->post("email");
-	$pass 			= $rest->post("pass");
-	$group 			= $rest->post("group");
 	
+		
+	$query = MultyLanguage::getLangs(true);
+	if($db->num_rows($query)>0){
+		   foreach($db->get_results($query) as $row){
+				
+				$where = array( 'translate_id' => $translate_id, 'vendor_id' => Vendor::getId(), 'lang_id' => $row['slug'], );
+				$db->delete($table, $where);
+	
+				$insertedData = array(
+					'`translate`' 		=> $rest->post("translate_".$row['slug']),
+					'`lang_id`' 		=> $row['slug'], 
+					'`translate_id`' 	=> $translate_id, 
+					'`vendor_id`' 		=> Vendor::getId(),
+					'`type`' 			=> 'static',
+					'`table`' 			=> '',
+					'`show`' 			=> '1',
+					'`parent_id`' 		=> '0',
+					
+				);
+				$db->insert($table, $insertedData);
+		   }
+		 }else{
+			 
+		 }
 
-	if($adminUser->validProcessLogin("admin", $session->get("admin_id"), $pass)){
-		$db->update(
-		$table,	//table
-		array(	//set
-			'name' => $name,
-			'surname' => $surname,
-			'email' => $email,
-			'type' => $group,
-			'datetime_update' => Dnt::datetime(), //SELECT * FROM `dnt_posts` WHERE id = 10886
-			), 
-		array( 	//where
-			'id' 			=> $post_id, 
-			'`vendor_id`' 	=> Vendor::getId())
-		);
-	
-		$dntUpload = new DntUpload;
-		$dntUpload->addDefaultImage(
-						"userfile",								//input type file
-						$table, 								//update table
-						"img",	 								//update table column
-						"`id`", 								//where column
-						$post_id, 								//where value
-						"../dnt-view/data/".Vendor::getId() 	//path
-					);
+	if($return){
 		include "tpl_functions.php";
 		get_top();
 		include "top.php";
@@ -54,6 +49,7 @@ if(isset($_POST['sent'])){
 		include "bottom.php";
 		get_bottom();
 	}
+	
 }else{
 	$dnt->redirect(WWW_PATH_ADMIN."?src=".DEFAULT_MODUL_ADMIN);
 }

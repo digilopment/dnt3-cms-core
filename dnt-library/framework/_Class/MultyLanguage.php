@@ -1,6 +1,59 @@
 <?php
 class MultyLanguage{
 	
+	protected function prepare_query($is_limit){
+		$db = new Db();
+
+		
+		if(isset($_GET['search'])){
+			$typ = "AND `translate_id` LIKE '%".str_replace("-", "_", Dnt::name_url($_GET['search']))."%'";
+		}
+		else
+			$typ = "AND type = 'static'";
+		
+		if($is_limit == false)
+			$limit = false;
+		else
+			$limit = $is_limit;
+			
+			 $query = "SELECT * FROM dnt_translates WHERE 
+			 lang_id = '".DEAFULT_LANG."' AND
+			 vendor_id = '".Vendor::getId()."'
+			 ".$typ." ORDER BY `id` DESC ".$limit."";
+					 
+			return $query;
+   	}
+	
+	
+	public function query(){
+		$db = new Db;
+		
+		if(isset($_GET['page'])){
+			$returnPage =  "&page=".$_GET['page'];
+		}else{
+			$returnPage = false;
+		}
+	
+			$query = self::prepare_query(false);
+			$pocet = $db->num_rows($query);
+			$limit = 20;
+
+			if(isset($_GET['page']))
+				$strana = $_GET['page'];
+			else
+				$strana = 1;
+															
+			$stranok = $pocet / $limit;
+			$pociatok=($strana*$limit)-$limit;
+															
+			$prev_page = $strana - 1;
+			$next_page = $strana + 1;
+			$stranok_round = ceil($stranok);
+
+			$pager = "LIMIT ".$pociatok.", ".$limit."";
+			return array("query" => self::prepare_query($pager), "pages"=>$stranok_round);
+   	}
+	
 	public function getLang(){
 		$rest = new Rest;
 		return $rest->webhook(0);
