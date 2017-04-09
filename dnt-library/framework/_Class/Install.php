@@ -204,7 +204,7 @@ Class Install{
 
 		$addVendor = "INSERT INTO `dnt_vendors` (`id`, `name`, `name_url`, `layout`, `is_default`) VALUES
 		(1, 'Skeleton', 'skeleton', 'skeleton', 1);";
-		$conn->query($addVendor);
+		$db->query($addVendor);
 		
 		echo "Data imported, vendor created";
 	}
