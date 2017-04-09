@@ -1490,11 +1490,12 @@ CREATE TABLE `dnt_users` (
   `ip_adresa` varchar(300) NOT NULL,
   `parent_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_users VALUES
-("14","1","","admin","Tomáš","Doubek","osmos","","","","0","","","b69a84481c97f320c80020b01d5620b5","thomas.doubek@gmail.com","","","","0","0","0","0","0000-00-00 00:00:00","0000-00-00 00:00:00","0000-00-00 00:00:00","","","0","","","738","1","0","","0");
+("14","1","","admin","Tomáš","Doubek","osmos","","","","0","","","b69a84481c97f320c80020b01d5620b5","thomas.doubek@gmail.com","","","","0","0","0","0","0000-00-00 00:00:00","0000-00-00 00:00:00","0000-00-00 00:00:00","","","0","","","738","1","0","","0"),
+("20","1","","admin","Admin","Root","skeleton","","","","0","","","21232f297a57a5a743894a0e4a801fc3","admin@root.sk","","","","0","0","0","0","0000-00-00 00:00:00","0000-00-00 00:00:00","0000-00-00 00:00:00","","","0","","","738","1","0","","0");
 
 
 

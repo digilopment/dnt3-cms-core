@@ -6,8 +6,8 @@ $autoload->load($path);
 $install = new Install;
 
 if(Install::db_exists()){
-	$web = Url::get("WWW_PATH");
-	$adm = WWW_PATH_ADMIN;
+	$web = Url::get("WWW_PATH")."?t=".Dnt::timestamp();
+	$adm = WWW_PATH_ADMIN."?t=".Dnt::timestamp();;
 	echo 
 	'
 	<!DOCTYPE html>
@@ -29,8 +29,8 @@ if(Install::db_exists()){
 	';
 }else{
 	$install->installation();
-	$web = Url::get("WWW_PATH");
-	$adm = WWW_PATH_ADMIN;
+	$web = Url::get("WWW_PATH")."?t=".Dnt::timestamp();
+	$adm = WWW_PATH_ADMIN."?t=".Dnt::timestamp();
 	echo 
 	'
 	<!DOCTYPE html>
