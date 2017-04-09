@@ -6,7 +6,8 @@ Designdnt3 - Skeleton Aplication
 Ide o jednoduchú, skeleton aplikáciu používajúcu framework Dnt3. 
 Aplikácia je určená ako východiskový web pre demo účely, alebo pre programátorov programujúcich pod Dnt3.
 
-FEATURES INCLUDED IN SKELETON APP:
+Features:
+------------
 - Multyupload files
 - Sendgrid email client
 - Internal Mail Client
@@ -24,7 +25,7 @@ FEATURES INCLUDED IN SKELETON APP:
 Inštalácia cez git clone
 ------------
 V rootovskej zložke Vášho servera zavolajte príkaz
-- git clone https://github.com/designdnt/cms-designdnt3 dnt3
+- `git clone https://github.com/designdnt/cms-designdnt3 dnt3`
 - open http://localhost/dnt3/ alebo http://skeleton.localhost/dnt3/
 
 Inštalácia xampp -> Windows (localhost) do zložky
