@@ -202,7 +202,11 @@ Class Install{
 		}
 		}
 
-		echo "Data imported";
+		$addVendor = "INSERT INTO `dnt_vendors` (`id`, `name`, `name_url`, `layout`, `is_default`) VALUES
+		(1, 'Skeleton', 'skeleton', 'skeleton', 1);";
+		$conn->query($addVendor);
+		
+		echo "Data imported, vendor created";
 	}
 	
 	public static function Export_Database($host,$user,$pass,$name,  $tables=false, $backup_name=false, $vendor_id=false )
