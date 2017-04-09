@@ -28,7 +28,7 @@ class Polls{
 	}
 	
 	public function getPolls(){
-		return "SELECT * FROM dnt_polls WHERE `show` <> '0'";
+		return "SELECT * FROM dnt_polls WHERE `show` <> '0' AND `show` <> '3'";
 	}
 	
 	public function getPollsAdmin(){

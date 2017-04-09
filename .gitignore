@@ -1,6 +1,9 @@
 dnt-cache/*
 !dnt-cache/readme.txt
 
+dnt-api/dnt-backup/*
+!dnt-api/dnt-backup/readme.txt
+
 dnt-api/dnt-cache/*
 !dnt-api/dnt-cache/readme.txt
 
@@ -20,4 +23,4 @@ dnt-library/framework/_keys/secred.php
 #dnt-view/*
 #!dnt-view/data/1/*
 #!dnt-view/layouts/skeleton/*
-/nbproject/private/
+nbproject/

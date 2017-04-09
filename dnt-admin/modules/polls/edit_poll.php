@@ -3,6 +3,7 @@
 <?php include "top.php"; ?>
 <?php
    $poll_id = $rest->get("post_id");
+   $last_question_id = 1;
    ?>
 <form enctype='multipart/form-data' action="index.php?src=polls&action=edit_poll_action&post_id=<?php echo $poll_id; ?>" method="POST" >
    <section class="content">

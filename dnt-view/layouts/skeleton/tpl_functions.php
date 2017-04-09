@@ -74,8 +74,8 @@ function get_top($data){
 	<!-- CSS Customization -->
 	<link rel="stylesheet" href="<?php echo $data['media_path']; ?>css/custom.css?<?php echo rand(10, 1000)?>">
 	<link rel="stylesheet" href="<?php echo $data['media_path']; ?>css/green.css">
-	
 	<script src="<?php echo $data['media_path']; ?>js/jquery.min.js"></script>
+	<script src="<?php echo $data['media_path']; ?>js/jquery.validate.js"></script>
 </head>
 <?php } ?>
 <?php
@@ -97,6 +97,7 @@ function get_bottom($data){
 <script src="<?php echo $data['media_path']; ?>js/jquery.easing.min.js"></script>
 <script src="<?php echo $data['media_path']; ?>js/modernizr.js"></script>
 <script src="<?php echo $data['media_path']; ?>js/main.js"></script> <!-- Gem jQuery -->
+<script src="<?php echo $data['media_path']; ?>js/cookies.js"></script> <!-- Gem jQuery -->
 
 <!-- JS Customization -->
 <script src="<?php echo $data['media_path']; ?>js/custom.js"></script>
@@ -212,10 +213,10 @@ $translate['prihlasit'] = $multylanguage->getTranslate(array("type" => "static",
          <div class="res-container">
             <ul class="nav navbar-nav">
                <!-- Home -->
-               <?php 
+              <?php 
 				foreach(Navigation::getParents() as $row){ 
 				$name_url_1 = $article->getPostParam("name_url", $row['id'], false);
-				?>
+			?>
 				<li class="dropdown home <?php if($article->getPostParam("name_url", $row['id']) == $rest->webhook(1)){echo "active";}?> ">
                   <?php if($row['name_url'] == "no_url"){ ?>
                   <a><?php echo $article->getPostParam("name", $row['id']);?></a>
@@ -232,15 +233,8 @@ $translate['prihlasit'] = $multylanguage->getTranslate(array("type" => "static",
                      <?php } ?>
                   </ul>
                   <?php } ?>
-				</li>
-				<?php } ?>
-                  </ul>
-                  <?php } ?>
                </li>
-               <?php
-                  }
-                  }
-                  ?>
+			<?php } ?>
             </ul>
          </div>
          <!--/responsive container-->
@@ -342,6 +336,9 @@ $translate['dalsie_moznosti'] = $multylanguage->getTranslate(array("type" => "st
             
 			<!-- fakturacne udaje --> 
 			<li class=""><a href="<?php echo $article->getPostParam("name_url", 13093, true); ?>"><?php echo $article->getPostParam("name", 13093); ?></a></li>
+            
+			<!-- kontaktny form --> 
+			<li class=""><a href="<?php echo $article->getPostParam("name_url", 13337, true); ?>"><?php echo $article->getPostParam("name", 13337); ?></a></li>
             
 	     </ul>
       </div>

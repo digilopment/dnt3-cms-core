@@ -9,10 +9,10 @@ RewriteCond  $1 ^([^_][a-zA-Z0-9\ _/:\-%]+)
 RewriteRule  ^([^_][a-zA-Z0-9\ _/:\-%]+)$     index.php?src=$1   [L]
 
 #disable all php files
-<FilesMatch "\.php$">
-    Order Allow,Deny
-    Deny from all
-</FilesMatch>
+#<FilesMatch "\.php$">
+#    Order Allow,Deny
+#    Deny from all
+#</FilesMatch>
 <FilesMatch "index\.php$">
     Order Allow,Deny
     Allow from all

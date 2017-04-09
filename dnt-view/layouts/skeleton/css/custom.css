@@ -369,3 +369,33 @@ label.error{
     display: none;
 }
 
+/* polls */
+.dnt-poll.panel-primary {
+    border: 0px;
+}
+
+.dnt-poll .list-group-item {
+	border: 0px solid #111;
+}
+
+.dnt-poll label {
+    color: #111;
+	font-size: 14px;
+}
+
+.panel-primary>.panel-heading {
+    color: #fff;
+	background-color: #111111;
+    border-color: #111111;
+}
+
+.dnt-poll  .panel-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 18px;
+    color: inherit;
+    padding: 10px 0px;
+    font-weight: normal;
+}
+
+

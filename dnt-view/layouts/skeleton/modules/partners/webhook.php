@@ -1,6 +1,7 @@
 <?php
 //CUSTOM TEMPLATE FOR MODULE
 $article = new ArticleView;
+
 $custom_data = array(
 	"title" =>  $article->getPostParam("name",  $article->getStaticId())." | ".Settings::get("title") ,
 );

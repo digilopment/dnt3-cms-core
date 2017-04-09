@@ -213,6 +213,21 @@ class PollsFrontend extends Polls{
 		
 		return $points;
 	}
+	
+	public function getComposerDataById($column, $id){
+		$db 	= new Db;
+		$query 	= "SELECT `$column` FROM dnt_polls_composer WHERE 
+		`id` = '$id' AND
+		`vendor_id` = '".Vendor::getId()."'";
+		if($db->num_rows($query)>0){
+			foreach($db->get_results($query) as $row){
+				$return = $row[$column];
+			}
+		}else{
+			$return = false;
+		}
+		return $return;
+	}
 
 
 

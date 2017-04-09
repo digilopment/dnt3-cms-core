@@ -21,6 +21,15 @@ function custom_modules(){
 			"personal",
 			"staff",
 		),
+		"form" => array(
+			"formular",
+			"form",
+			"form-request",
+		),
+		"polls" => array(
+			"kvizy",
+			"polls",
+		),
 	);
 	return $custom_modules;
 }
