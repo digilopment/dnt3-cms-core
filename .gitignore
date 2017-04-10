@@ -1,8 +1,8 @@
 dnt-cache/*
 !dnt-cache/readme.txt
 
-dnt-api/dnt-backup/*
-!dnt-api/dnt-backup/readme.txt
+dnt-backup/*
+dnt-backup/readme.txt
 
 dnt-api/dnt-cache/*
 !dnt-api/dnt-cache/readme.txt
