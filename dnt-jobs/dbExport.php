@@ -11,8 +11,8 @@ error_reporting(0);
     $mysqlPassword      = DB_PASS;
     $mysqlHostName      = DB_HOST;
     $DbName             = DB_NAME;
-    $backup_name        = "../dnt-install/install.sql";
-    $tables             = "";
+    $backup_name        = false;
+    $tables             = false;
 	
 	if(isset($_GET['vendor_id']) && $_GET['vendor_id'] == 1){
 		$vendor_id 		= 1;
@@ -21,7 +21,7 @@ error_reporting(0);
 	}
 	elseif(isset($_GET['vendor_id'])){
 		$vendor_id 		= $rest->get("vendor_id");
-		$backup_name   = "../dnt-backup/".$rest->get("vendor_id")."-".Dnt::datetime()."-".$DbName.".sql";
+		$backup_name   = "../dnt-backup/".$rest->get("vendor_id")."-".Dnt::name_url(Dnt::datetime())."-".$DbName.".sql";
 		echo "Database was exported. - ".$backup_name;
 	}else{
 		$vendor_id = false;
@@ -29,6 +29,5 @@ error_reporting(0);
 		echo "Database was exported. - ".$backup_name;
 	}
 	
-    
 	Install::Export_Database($mysqlHostName,$mysqlUserName,$mysqlPassword,$DbName,  $tables=false, $backup_name, $vendor_id);
 ?>

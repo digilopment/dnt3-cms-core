@@ -50,7 +50,8 @@ public static function dvojcifernyDatum($cislo){
 }
 
 public static function in_string($pharse, $str){
-	return preg_match("/".$pharse."\b/i", "".$str."");
+	return preg_match('/'.$pharse.'/', $str);
+	//return preg_match("/".$pharse."\b/i", "".$str."");
 }
 
 public static function desatinne_cislo($link){
@@ -157,6 +158,7 @@ public static function name_url($url_adresa){
   }
   
 public static function is_external_url($name_url){
+	//$name_url = str_replace("/", "\/", $name_url);
 	if(self::in_string("http:\/\/", $name_url)){
 		$return = true;
 	}
@@ -170,8 +172,11 @@ public static function is_external_url($name_url){
 	}else{
 		$return = false;
 	}
+	return $return;
 }
 public static function creat_name_url($name, $name_url){
+	
+	
 	if(empty($name_url)){
 		return self::name_url($name);
 	}

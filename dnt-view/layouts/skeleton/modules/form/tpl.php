@@ -5,7 +5,6 @@
    
    $multylanguage 	= new MultyLanguage;
    
-   $translate['produkt'] = $multylanguage->getTranslate(array("type" => "static", "translate_id" => "produkt"));
    $translate['predmet'] = $multylanguage->getTranslate(array("type" => "static", "translate_id" => "predmet"));
    $translate['meno'] = $multylanguage->getTranslate(array("type" => "static", "translate_id" => "meno"));
    $translate['priezvisko'] = $multylanguage->getTranslate(array("type" => "static", "translate_id" => "priezvisko"));
@@ -95,10 +94,6 @@
                   				required: true,
                   				minlength: 1
                   			},
-                  			produkt: {
-                  				required: true,
-                  				minlength: 1
-                  			},
                   			email: {
                   				required: true,
                   				email: true
@@ -118,7 +113,6 @@
                   			c_domu:		"Nevyplnili ste adresa domu",
                   			psc:		"Nevyplnili ste PSČ",
                   			mesto:		"Nevyplnili ste mesto",
-                  			produkt:	"Prosím vyberte produkt",
                   			sprava:		"Nemôžete poslať prázdnu požiadavku",
                   
                   			},
@@ -159,16 +153,6 @@
                </script>
                <form action="" method="post" id="form-request" class="sky-form contact-style">
                   <fieldset class="no-padding">
-                     <label><?php echo  $translate["produkt"]; ?> <span class="color-red">*</span></label>
-                     <div class="row sky-space-20">
-                        <div class="col-md-7 col-md-offset-0">
-                           <div>
-                              <select name="produkt" id="produkt" class="form-control">
-                              <?php FormRequestTypes($rest->get('type')); ?>
-                              </select>
-                           </div>
-                        </div>
-                     </div>
                      <label><?php echo  $translate["predmet"]; ?> <span class="color-red">*</span></label>
                      <div class="row sky-space-20">
                         <div class="col-md-7 col-md-offset-0">

@@ -20,7 +20,7 @@ if($rest->post("sent_msg")){
 	$psc 		= "".$rest->post("psc");
 	$mesto 		= "".$rest->post("mesto");
 	$produkt 	= "".$rest->post("produkt");
-	$od_meno 	=  "Osmos - ".$predmet;
+	$od_meno 	= Settings::get("vendor_email")." - ".$predmet;
 	$sprava 	= $rest->post("sprava");
 	
 	
@@ -38,80 +38,9 @@ if($rest->post("sent_msg")){
 	<b>SPRÁVA</b>:
 	".$sprava."<br/><br/><b>Kontaktný email odosielateľa: <a href=\"mailto:".$email."\">".$email."</a></b>";
 	
-	/* if($produkt == 1){ //solidcam
-		$mailer->set_recipient(
-			array(
-				"ivan.uhliar@osmos.sk",
-				"lukas.korenko@osmos.sk",
-				"thomas.doubek@gmail.com",
-				)
-			);
-		}
-	elseif($produkt == 2){ //pdc
-		$mailer->set_recipient(
-			array(
-				"ivan.uhliar@osmos.sk",
-				"roman.furo@osmos.sk",
-				"thomas.doubek@gmail.com",
-				)
-			);
-		}
-	elseif($produkt == 3){ //vyskum a vzvoj
-		$mailer->set_recipient(
-			array(
-				"ivan.uhliar@osmos.sk",
-				"marian.zimmermann@osmos.sk",
-				"thomas.doubek@gmail.com",
-				)
-			);
-		}
-	elseif($produkt == 4){ //lisovanie plastov
-		$mailer->set_recipient(
-			array(
-				"ivan.uhliar@osmos.sk",
-				"marian.zimmermann@osmos.sk",
-				"jan.kollar@osmos.sk",
-				"thomas.doubek@gmail.com",
-				)
-			);
-		}
-	elseif($produkt == 5){ //nastrojaren
-		$mailer->set_recipient(
-			array(
-				"ivan.uhliar@osmos.sk",
-				"marian.zimmermann@osmos.sk",
-				"lukas.korenko@osmos.sk",
-				"thomas.doubek@gmail.com",
-				)
-			);
-		}
-	elseif($produkt == 6){ //kontakt
-		$mailer->set_recipient(
-			array(
-				"lukas.korenko@osmos.sk",
-				"thomas.doubek@gmail.com",
-				)
-			);
-		}
-	elseif($produkt == 7){ //vyroba
-		$mailer->set_recipient(
-			array(
-				"thomas.doubek@gmail.com",
-				)
-			);
-		}else{
-			$mailer->set_recipient(
-			array(
-				"thomas.doubek@gmail.com",
-				"lukas.korenko@osmos.sk",
-				)
-			);
-		}
-	*/
-	
 	$mailer->set_recipient(
 		array(
-			"thomas.doubek@gmail.com",
+			Settings::get("vendor_email"),
 			)
 		);
 				
@@ -120,12 +49,12 @@ if($rest->post("sent_msg")){
 	$mailer->set_sender_name($od_meno);
 	$mailer->sent_email();
 	
-	$name = $produkt. " - ".$predmet.", ".$meno." ".$priezvisko;
+	$name = $predmet.", ".$meno." ".$priezvisko;
 	//Zapíše dáta do postov
 	$insertedData = 
 	array(
 		'vendor_id' 		=> Vendor::getId(), 
-		'cat_id' 			=> "302", 
+		'cat_id' 			=> "306", 
 		'sub_cat_id' 		=> "", 
 		'`type`' 			=> "post", 
 		'datetime_creat' 	=> Dnt::datetime(),

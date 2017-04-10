@@ -5,6 +5,45 @@
 	$db 	= new Db;
 	$rest 	= new Rest;
 ?>
+
+<!-- MODAL NEW KAT -->
+<div class="modal fade" id="pridat_kat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel8" aria-hidden="true">
+   <div class="modal-wrapper">
+      <div class="modal-dialog">
+         <form action="index.php?src=content&action=add_cat" method="POST">
+            <div class="modal-content">
+               <div class="modal-header bg-blue">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title" id="myModalLabel8">Pridať novú kategóriu do zoznamu</h4>
+               </div>
+               <div class="modal-body">
+			    <select name="admin_cat" id="cname" class="form-control" minlength="2" required style="">
+				<?php 
+				   foreach(AdminContent::primaryCat() as $key => $value){
+					   if($key != "sitemap")
+						   echo '<option value="'.$key.'">'.$value.'</option>';
+					}
+			   ?>
+				</select>
+				<br/>
+                  <input type="text" name="name" class="form-control" placeholder="Názov postu:"/>
+                  <br/>
+				  <?php echo Dnt::returnInput();?>
+               </div>
+               <div class="modal-footer">
+                  <div class="btn-group">
+                     <button type="button" class="btn btn-default" data-dismiss="modal">Zavrieť</button>
+                     <input type="submit" name="sent" value="Pridať" class="btn btn-primary" />
+                  </div>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>
+<!-- END MODAL -->
+
+
 <!-- BEGIN CUSTOM TABLE -->
 <section class="row content-header">
 	<ul>
@@ -12,6 +51,9 @@
 		<li class="post_type" style="text-decoration: underline">
 			<a href="<?php echo Rest::setGet(array("action"=>"add")); ?>">
 				<span class="label label-primary bg-green" style="padding: 5px;"><big>PRIDAŤ TENTO POST</big></span>
+			</a>
+			<a href="#">
+				<span class="label label-primary bg-green" style="padding: 5px;" data-toggle="modal" data-target="#pridat_kat"><big>PRIDAŤ KATEGORIU</big></span>
 			</a>
 		</li>
 		<br/>

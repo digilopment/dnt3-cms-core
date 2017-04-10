@@ -39,6 +39,11 @@ elseif($rest->get("action") == "move_down")
 	//default article view action add
 	include "move_down.php";
 }
+elseif($rest->get("action") == "add_cat")
+{
+	//add category
+	include "add_cat.php";
+}
 else
 {
 	//default article list template
