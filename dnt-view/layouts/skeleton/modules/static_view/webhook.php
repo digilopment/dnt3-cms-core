@@ -6,6 +6,7 @@ $custom_data = array(
 	"title" =>  $article->getPostParam("name",  $article->getStaticId())." | ".Settings::get("title") ,
 	"artcile" => array(
 		"post_id" => $article->getStaticId(),
+		"img" => $article->getPostImage( $article->getStaticId()),
 	),
 	"meta" => array(
 		 '<meta name="keywords" content="'.$article->getPostParam("tags",  $article->getStaticId()).'" />',

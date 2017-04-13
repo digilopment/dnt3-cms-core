@@ -16,7 +16,7 @@ include "dnt-view/layouts/".Vendor::getLayout()."/top.php";
 </style>
 <div class="microslider-wrapper">
 	<div class="page-name-wrapper">
-		<span class="page-name"><span class="name"><?php echo $data['title']['name'];?></span></span>
+		<span class="page-name"><span class="name"><?php echo $data['title'];?></span></span>
 	</div>
 </div>
 <div class="margin-bottom-60"></div>
@@ -28,6 +28,7 @@ include "dnt-view/layouts/".Vendor::getLayout()."/top.php";
          <div class="blog-grid margin-bottom-30">
             <h2 class="title-v4"><?php echo $data['article']['name'];?></h2>
             <div class="overflow-h margin-bottom-10 article-view">
+             <?php echo $data['article']['perex'];?>
              <?php echo $data['article']['content'];?>
             </div>
          </div>

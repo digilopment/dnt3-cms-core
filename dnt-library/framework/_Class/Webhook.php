@@ -10,7 +10,8 @@ class Webhook {
 	public function getSitemapModules(){
 		$db = new Db;
 		$arr = array();
-		$query = "SELECT `name_url` FROM dnt_posts WHERE `type` = 'sitemap' AND `show` > '0' AND vendor_id = '".Vendor::getId()."'";
+		//$query = "SELECT `name_url` FROM dnt_posts WHERE `type` = 'sitemap' AND `show` > '0' AND vendor_id = '".Vendor::getId()."'";
+		$query = "SELECT `name_url` FROM dnt_posts WHERE `show` > '0' AND vendor_id = '".Vendor::getId()."'";
 		if ($db->num_rows($query) > 0){
 			foreach($db->get_results($query) as $row){
 				$arr[] = $row['name_url'];
