@@ -28,6 +28,13 @@ V rootovskej zložke Vášho servera zavolajte príkaz
 - `git clone https://github.com/designdnt/cms-designdnt3 dnt3`
 - open http://localhost/dnt3/ alebo http://skeleton.localhost/dnt3/
 
+Inštalácia cez git `install script`
+------------
+V rootovskej zložke Vášho servera zavolajte príkaz
+- uložiť do root-ovskej zložky tensto script `https://github.com/designdnt/cms-designdnt3/blob/master/dnt-install/dnt3InstallScript.php`
+- spustiť script buď z konzoly, alebo z prehliadaču
+- open http://localhost/dnt3/ alebo http://skeleton.localhost/dnt3/
+
 Inštalácia xampp -> Windows (localhost) do zložky
 ------------
 
