@@ -8,6 +8,7 @@ class Autoload{
 	include $path."config.dnt";
 	
 	//CLASS
+	include  $path."dnt-library/framework/_Class/dompdf/dompdf_config.inc.php";
 	include  $path."dnt-library/framework/_Class/Db.php";
 	include  $path."dnt-library/framework/_Class/MultyLanguage.php";
 	include  $path."dnt-library/framework/_Class/Webhook.php";
@@ -42,6 +43,7 @@ class Autoload{
 	include  $path."dnt-library/framework/_Class/Frontend.php";
 	include  $path."dnt-library/framework/_Class/Install.php";
 	include  $path."dnt-library/framework/_Class/FileAdmin.php";
+	include  $path."dnt-library/framework/_Class/Pdf.php";
 	
 	}
 
