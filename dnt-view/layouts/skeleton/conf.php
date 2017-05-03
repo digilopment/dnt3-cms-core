@@ -30,6 +30,13 @@ function custom_modules(){
 			"kvizy",
 			"polls",
 		),
+		"eshop" => array(
+			"obchod",
+			"produkty",
+		),
+		"microsites" => array(
+			"microsites",
+		),
 	);
 	return $custom_modules;
 }

@@ -23,7 +23,6 @@ if(!Install::db_exists()){
 }
 
 if($rest->getModul()){
-	
 	$dntLog->add(array(
 		"http_response" 	=> 200,
 		"system_status" 	=> "log",		

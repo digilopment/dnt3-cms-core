@@ -89,5 +89,22 @@ class Vendor{
 		}
 	}
 	
+	public function getColumn($column){	
+		$db 	= new Db;
+		$query = "SELECT `".$column."` FROM `dnt_vendors` WHERE 
+			`id` = '".Vendor::getId()."'
+			";
+		if($db->num_rows($query)>0){
+			foreach($db->get_results($query) as $row){
+				 $return = $row[$column];
+			}
+		}
+		else{
+			$return = false;
+		}
+
+		return $return;
+	}
+	
 }
 

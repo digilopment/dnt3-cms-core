@@ -1,0 +1,97 @@
+/* farebne kombinacie 
+ * MODRA V1
+ * 64b932 / rgba(100, 185, 50, 0.9) - modra svetla - template
+ * 64b932 - zelena tmava
+ * 30538e - modra
+*/
+
+hr {
+  border-color: #64b932;
+}
+
+a {
+  color: #64b932;
+}
+
+
+.bg-primary {
+  background-color: #64b932;
+}
+
+
+.navbar-default .navbar-header .navbar-brand {
+  color: #64b932;
+}
+
+.navbar-default .nav > li > a:hover,
+.navbar-default .nav > li > a:focus:hover {
+  color: #64b932;
+}
+.navbar-default .nav > li.active > a,
+.navbar-default .nav > li.active > a:focus {
+  color: #64b932 !important;
+}
+
+@media (min-width: 768px) {
+
+  .navbar-default.affix .navbar-header .navbar-brand {
+    color: #64b932;
+  }
+  .navbar-default.affix .nav > li > a:hover,
+  .navbar-default.affix .nav > li > a:focus:hover {
+    color: #64b932;
+  }
+  
+  header .header-content .header-content-inner p {
+		background-color: #466496;
+	}
+}
+
+.text-primary {
+  color: #64b932;
+}
+
+
+.dnt-form-control .btn-post{
+    background-color: #466496;
+    border-color: #466496;
+}
+
+.dnt-form-control input {
+    border: 1.5px solid #64b932;
+}
+
+.btn-primary {
+  background-color: #64b932;
+  border-color: #64b932;
+}
+
+
+.btn-primary.disabled,
+.btn-primary[disabled],
+fieldset[disabled] .btn-primary,
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled.focus,
+.btn-primary[disabled].focus,
+fieldset[disabled] .btn-primary.focus,
+.btn-primary.disabled:active,
+.btn-primary[disabled]:active,
+fieldset[disabled] .btn-primary:active,
+.btn-primary.disabled.active,
+.btn-primary[disabled].active,
+fieldset[disabled] .btn-primary.active {
+  background-color: #64b932;
+  border-color: #64b932;
+}
+.btn-primary .badge {
+  color: #64b932;
+}
+
+.portfolio-box .portfolio-box-caption {
+    background: rgba(70, 100, 150, 0.9);
+}

@@ -3,6 +3,24 @@
 class Dnt{
 
 
+public static function getLastId($table){
+        $db = new Db;
+        $query =  "SELECT MAX(id) FROM ".$table." WHERE 
+	vendor_id = '".Vendor::getId()."'";
+
+
+	 if ($db->num_rows($query) > 0) {
+             foreach ($db->get_results($query) as $row) {
+		$return = $row['MAX(id)'];
+		}
+	}
+	else{
+		$return = false;
+	}
+	return $return;
+
+}
+
 public static function cislo($link){
   return preg_replace("/[^0-9]/","",$link);
 }
@@ -108,6 +126,9 @@ public static function get_mesiac(){
 	return $get_mesiac = date("m");
 }
 
+public static function get_ip(){
+	return $_SERVER['REMOTE_ADDR'];
+}
 
 public static function get_den(){
 	return $get_den = date("d");

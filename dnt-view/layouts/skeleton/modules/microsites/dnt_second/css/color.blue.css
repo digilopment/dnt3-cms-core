@@ -1,0 +1,93 @@
+/* farebne kombinacie 
+ * MODRA V1
+ * 466496 / rgba(70, 100, 150, 0.9) - modra svetla - template
+ * 30538e - modra tmava
+ * 64b932 - zelena
+*/
+
+hr {
+  border-color: #466496;
+}
+
+a {
+  color: #466496;
+}
+
+
+.bg-primary {
+  background-color: #466496;
+}
+
+
+.navbar-default .navbar-header .navbar-brand {
+  color: #466496;
+}
+
+.navbar-default .nav > li > a:hover,
+.navbar-default .nav > li > a:focus:hover {
+  color: #466496;
+}
+.navbar-default .nav > li.active > a,
+.navbar-default .nav > li.active > a:focus {
+  color: #466496 !important;
+}
+
+@media (min-width: 768px) {
+
+  .navbar-default.affix .navbar-header .navbar-brand {
+    color: #466496;
+  }
+  .navbar-default.affix .nav > li > a:hover,
+  .navbar-default.affix .nav > li > a:focus:hover {
+    color: #466496;
+  }
+  
+  header .header-content .header-content-inner p {
+		background-color: #64b932;
+	}
+}
+
+.text-primary {
+  color: #466496;
+}
+
+
+.dnt-form-control .btn-post{
+    background-color: #64b932;
+    border-color: #64b932;
+}
+
+.btn-primary {
+  background-color: #466496;
+  border-color: #466496;
+}
+
+
+.btn-primary.disabled,
+.btn-primary[disabled],
+fieldset[disabled] .btn-primary,
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled.focus,
+.btn-primary[disabled].focus,
+fieldset[disabled] .btn-primary.focus,
+.btn-primary.disabled:active,
+.btn-primary[disabled]:active,
+fieldset[disabled] .btn-primary:active,
+.btn-primary.disabled.active,
+.btn-primary[disabled].active,
+fieldset[disabled] .btn-primary.active {
+  background-color: #466496;
+  border-color: #466496;
+}
+.btn-primary .badge {
+  color: #466496;
+}
+
+.portfolio-box .portfolio-box-caption {
+    background: rgba(70, 100, 150, 0.9);
+}

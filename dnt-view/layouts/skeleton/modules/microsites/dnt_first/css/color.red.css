@@ -1,0 +1,96 @@
+/* farebne kombinacie 
+ * CERVENA V1
+ * ed1c24 - cervena tmava
+ * d60e16 - cervena tmavsia
+*/
+
+hr {
+  border-color: #ed1c24;
+}
+
+a {
+  color: #ed1c24;
+}
+
+
+.bg-primary {
+  background-color: #ed1c24;
+}
+
+
+.navbar-default .navbar-header .navbar-brand {
+  color: #ed1c24;
+}
+
+.navbar-default .nav > li > a:hover,
+.navbar-default .nav > li > a:focus:hover {
+  color: #ed1c24;
+}
+.navbar-default .nav > li.active > a,
+.navbar-default .nav > li.active > a:focus {
+  color: #ed1c24 !important;
+}
+
+@media (min-width: 768px) {
+
+  .navbar-default.affix .navbar-header .navbar-brand {
+    color: #ed1c24;
+  }
+  .navbar-default.affix .nav > li > a:hover,
+  .navbar-default.affix .nav > li > a:focus:hover {
+    color: #ed1c24;
+  }
+  
+  header .header-content .header-content-inner p {
+		background-color: #d60e16;
+	}
+}
+
+.text-primary {
+  color: #ed1c24;
+}
+
+
+.dnt-form-control .btn-post{
+    background-color: #d60e16;
+    border-color: #d60e16;
+}
+
+.dnt-form-control input {
+    border: 1.5px solid #ed1c24;
+}
+
+.btn-primary {
+  background-color: #ed1c24;
+  border-color: #ed1c24;
+}
+
+
+.btn-primary.disabled,
+.btn-primary[disabled],
+fieldset[disabled] .btn-primary,
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled.focus,
+.btn-primary[disabled].focus,
+fieldset[disabled] .btn-primary.focus,
+.btn-primary.disabled:active,
+.btn-primary[disabled]:active,
+fieldset[disabled] .btn-primary:active,
+.btn-primary.disabled.active,
+.btn-primary[disabled].active,
+fieldset[disabled] .btn-primary.active {
+  background-color: #ed1c24;
+  border-color: #ed1c24;
+}
+.btn-primary .badge {
+  color: #ed1c24;
+}
+
+.portfolio-box .portfolio-box-caption {
+    background: rgba(70, 100, 150, 0.9);
+}
