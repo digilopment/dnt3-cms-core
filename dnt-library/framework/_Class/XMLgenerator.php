@@ -1,5 +1,11 @@
 <?php
-
+/**
+ *  class       XMLgenerator
+ *  author      Tomas Doubek
+ *  framework   Sessions
+ *  package     dnt3
+ *  date        2017
+ */
 class XMLgenerator {
 
     /**
