@@ -1,8 +1,17 @@
 <?php
-
+/**
+ *  class       Meta
+ *  author      Tomas Doubek
+ *  framework   DntLibrary
+ *  package     dnt3
+ *  date        2017
+ */
 Class Meta {
-    /* modul competition */
 
+    /**
+     * 
+     * @return type
+     */
     public static function getMapLocation() {
         $string = self::getCompetitionMeta('map_location');
         $string = explode("@", $string);
@@ -13,8 +22,12 @@ Class Meta {
         return $position;
     }
 
+    /**
+     * 
+     * @return boolean
+     */
     public static function getRealDomain() {
-		 $db = new Db;
+        $db = new Db;
         $query = "SELECT `real_url` FROM dnt_microsites WHERE 
 			`vendor_id` = '" . Vendor::getId() . "' AND active = 1
 			";
@@ -28,10 +41,16 @@ Class Meta {
         return $realUrlArr;
     }
 
+    /**
+     * 
+     * @param type $column
+     * @param type $domain
+     * @return boolean
+     */
     public static function getColumnByDomain($column, $domain) {
-		 $db = new Db;
-        $query = "SELECT `" . $column . "` FROM dnt_microsites WHERE `real_url` = '" . $domain . "' AND `vendor_id` = '".Vendor::getId()."' LIMIT 1";
-         if ($db->num_rows($query) > 0) {
+        $db = new Db;
+        $query = "SELECT `" . $column . "` FROM dnt_microsites WHERE `real_url` = '" . $domain . "' AND `vendor_id` = '" . Vendor::getId() . "' LIMIT 1";
+        if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 $return = $row[$column];
             }
@@ -41,106 +60,79 @@ Class Meta {
         return $return;
     }
 
-function competitionId(){	
-    
-    $rest 	= new Rest;
-    $db 	= new Db;
-	
-	//ADMIN
-    if($rest->isAdmin()){
-        return $rest->get("id");
-    }else{
-		//EXTERNALL URL
-		if(in_array(str_replace("www.", "", WWW_PATH), self::getRealDomain())){
-			$get = self::getColumnByDomain("url", WWW_PATH);
-		}
-		//INTERNAL URL
-		elseif($rest->getModul() == "microsites" && $rest->webhook(2)){
-			$get = $rest->webhook(2);
-		}
-		
-		$query = "SELECT `id` FROM dnt_microsites WHERE 
-		`vendor_id` = '".Vendor::getId()."' AND 
-		`url` = '".$rest->webhook(2)."'";
-		if ($db->num_rows($query) > 0) {
-			foreach ($db->get_results($query) as $row) {
-				$return = $row['id'];
-			}
-		}
-		else{
-			$return = false;
-		}
-		return $return;
-	}
-		//EXTERNALL URL
+    /**
+     * 
+     * @return boolean
+     */
+    function competitionId() {
 
-		
-		/*
-		//$addr = new Addr();
-		//$addr->getModuleUrl();
-		$WWW_PATH = str_replace("www.", "", WWW_PATH);
-		
-		if(in_array(str_replace("www.", "", $WWW_PATH), getRealDomain())){
-			$get = getColumnByDomain("url", $WWW_PATH);
-		}
-		elseif(isset($_GET['type'])){
-			$get = GET('type');
-		}
-		elseif(isset($_GET['src'])){
-			$get = $addr->module[0];
-		}
-		else{
-			$get = GET('type');
-		}
-		
-		if($get){
-			$query = mysql_query("SELECT `id` FROM dnt_microsites WHERE 
-				`vendor_id` = '".VENDOR_ID."' AND 
-				`url` = '".$get."'
-				");
-			if(mysql_num_rows($query)>0){
-				while($row = mysql_fetch_array($query)){
-					 $return = $row['id'];
-				}
-			}
-			else{
-				$return = false;
-			}
-		}
-		else{
-			$return = false;
-		}
-		return $return;
-		*/
-	}
-	
-	
-	public static function getCompetitionColumn($column){	
-	 $db = new Db;
-		$query = "SELECT `".$column."` FROM dnt_microsites WHERE 
-			`vendor_id` = '".Vendor::getId()."' AND 
-			`id` = '".self::competitionId()."'
-			";
-		 if ($db->num_rows($query) > 0) {
+        $rest = new Rest;
+        $db = new Db;
+
+        //ADMIN
+        if ($rest->isAdmin()) {
+            return $rest->get("id");
+        } else {
+            //EXTERNALL URL
+            if (in_array(str_replace("www.", "", WWW_PATH), self::getRealDomain())) {
+                $get = self::getColumnByDomain("url", WWW_PATH);
+            }
+            //INTERNAL URL
+            elseif ($rest->getModul() == "microsites" && $rest->webhook(2)) {
+                $get = $rest->webhook(2);
+            }
+
+            $query = "SELECT `id` FROM dnt_microsites WHERE 
+		`vendor_id` = '" . Vendor::getId() . "' AND 
+		`url` = '" . $rest->webhook(2) . "'";
+            if ($db->num_rows($query) > 0) {
                 foreach ($db->get_results($query) as $row) {
-				 $return = $row[$column];
-			}
-		}
-		else{
-			$return = false;
-		}
+                    $return = $row['id'];
+                }
+            } else {
+                $return = false;
+            }
+            return $return;
+        }
+        
+    }
 
-		return $return;
-	}
+    /**
+     * 
+     * @param type $column
+     * @return boolean
+     */
+    public static function getCompetitionColumn($column) {
+        $db = new Db;
+        $query = "SELECT `" . $column . "` FROM dnt_microsites WHERE 
+			`vendor_id` = '" . Vendor::getId() . "' AND 
+			`id` = '" . self::competitionId() . "'
+			";
+        if ($db->num_rows($query) > 0) {
+            foreach ($db->get_results($query) as $row) {
+                $return = $row[$column];
+            }
+        } else {
+            $return = false;
+        }
 
+        return $return;
+    }
+
+    /**
+     * 
+     * @param type $column
+     * @param type $competition_id
+     * @return boolean
+     */
     public static function getCompetitionColumnByInput($column, $competition_id) {
-		 $db = new Db;
+        $db = new Db;
         $query = "SELECT `" . $column . "` FROM dnt_microsites WHERE 
 			`vendor_id` = '" . Vendor::getId() . "' AND 
 			`id` = '" . $competition_id . "'
 			";
         if ($db->num_rows($query) > 0) {
-                foreach ($db->get_results($query) as $row) {
+            foreach ($db->get_results($query) as $row) {
                 $return = $row[$column];
             }
         } else {
@@ -150,14 +142,20 @@ function competitionId(){
         return $return;
     }
 
+    /**
+     * 
+     * @param type $column
+     * @param type $id
+     * @return boolean
+     */
     public static function getCompetitionColumnId($column, $id) {
-		 $db = new Db;
+        $db = new Db;
         $query = "SELECT `" . $column . "` FROM dnt_microsites WHERE 
 			`vendor_id` = '" . Vendor::getId() . "' AND 
 			`id` = '" . $id . "'
 			";
-         if ($db->num_rows($query) > 0) {
-                foreach ($db->get_results($query) as $row) {
+        if ($db->num_rows($query) > 0) {
+            foreach ($db->get_results($query) as $row) {
                 $return = $row[$column];
             }
         } else {
@@ -167,11 +165,16 @@ function competitionId(){
         return $return;
     }
 
+    /**
+     * 
+     * @param type $key
+     * @return boolean
+     */
     public static function getCompetitionMetaExists($key) {
         $db = new Db;
         $query = "SELECT `value` FROM `dnt_microsites_composer` WHERE 
 			`vendor_id` = '" . Vendor::getId() . "' AND 
-			`competition_id` = '".self::competitionId()."' AND
+			`competition_id` = '" . self::competitionId() . "' AND
 			`meta` = '" . $key . "' AND
 			`zobrazenie` = '1'
 			";
@@ -183,12 +186,17 @@ function competitionId(){
         return $return;
     }
 
+    /**
+     * 
+     * @param type $key
+     * @return boolean
+     */
     public static function getCompetitionMeta($key) {
         $db = new Db;
         if (self::getCompetitionMetaExists($key)) {
             $query = "SELECT `value` FROM `dnt_microsites_composer` WHERE 
 				`vendor_id` = '" . Vendor::getId() . "' AND 
-				`competition_id` = '".self::competitionId()."' AND
+				`competition_id` = '" . self::competitionId() . "' AND
 				`meta` = '" . $key . "'
 				";
             if ($db->num_rows($query) > 0) {
@@ -203,7 +211,7 @@ function competitionId(){
         }
         return $return;
     }
-    
+
     /**
      * 
      * @param type $key
@@ -213,7 +221,7 @@ function competitionId(){
         $db = new Db;
         $query = "SELECT `value` FROM `dnt_microsites_composer` WHERE 
 				`vendor_id` = '" . Vendor::getId() . "' AND 
-				`competition_id` = '".self::competitionId()."' AND
+				`competition_id` = '" . self::competitionId() . "' AND
 				`meta` = '" . $key . "'
 				";
         if ($db->num_rows($query) > 0) {
@@ -257,7 +265,7 @@ function competitionId(){
      * @return boolean
      */
     public static function getCompetitionMetaByInput($key, $competition_id) {
- $db = new Db;
+        $db = new Db;
         $query = "SELECT `value` FROM `dnt_microsites_composer` WHERE 
 				`vendor_id` = '" . Vendor::getId() . "' AND 
 				`competition_id` = '" . $competition_id . "' AND
@@ -272,7 +280,7 @@ function competitionId(){
         }
         return $return;
     }
-    
+
     /**
      * 
      * @param type $key
@@ -280,7 +288,7 @@ function competitionId(){
      * @return boolean
      */
     public static function getCompetitionMetaByInputExists($key, $competition_id) {
-		$db = new Db;
+        $db = new Db;
         $query = "SELECT `value` FROM `dnt_microsites_composer` WHERE 
 				`vendor_id` = '" . Vendor::getId() . "' AND 
 				`zobrazenie` = '1' AND 
@@ -306,7 +314,7 @@ function competitionId(){
         $query = "SELECT `value` FROM `dnt_microsites_composer` WHERE 
 			`vendor_id` = '" . Vendor::getId() . "' AND 
 			`zobrazenie` = '1' AND
-			`competition_id` = '".self::competitionId()."' AND
+			`competition_id` = '" . self::competitionId() . "' AND
 			`meta` LIKE '%_menu_name%' ORDER BY `poradie` ASC
 			";
         if ($db->num_rows($query) > 0) {
@@ -318,7 +326,7 @@ function competitionId(){
         }
         return $return;
     }
-    
+
     /**
      * 
      * @return boolean
@@ -329,7 +337,7 @@ function competitionId(){
 			`vendor_id` = '" . Vendor::getId() . "' AND 
 			`zobrazenie` = '0' AND
 			`meta` LIKE '%_menu_name%' AND
-			`competition_id` = '".self::competitionId()."'
+			`competition_id` = '" . self::competitionId() . "'
 			 ORDER BY `poradie` ASC
 			";
         if ($db->num_rows($query) > 0) {
@@ -342,7 +350,7 @@ function competitionId(){
         }
         return $return;
     }
-    
+
     /**
      * 
      * @param type $number
@@ -365,7 +373,7 @@ function competitionId(){
         }
         return $return;
     }
-    
+
     /**
      * 
      * @return boolean
@@ -374,7 +382,7 @@ function competitionId(){
         $db = new Db;
         $query = "SELECT * FROM `dnt_microsites_composer` WHERE 
 			`vendor_id` = '" . Vendor::getId() . "' AND 
-			`competition_id` = '".self::competitionId()."' AND
+			`competition_id` = '" . self::competitionId() . "' AND
 			`zobrazenie` = '1' AND
 			`meta` LIKE '%form_base%'
 			";
@@ -393,15 +401,31 @@ function competitionId(){
         return $return;
     }
 
+    /**
+     * 
+     * @param type $data
+     * @return type
+     */
     public static function creat_hash($data) {
         return md5($data);
     }
 
+    /**
+     * 
+     * @param type $data
+     * @return type
+     */
     public static function creat_key($data) {
-		$nasobic = 10 * $data;
+        $nasobic = 10 * $data;
         return md5($nasobic);
     }
 
+    /**
+     * 
+     * @param type $hash
+     * @param type $key
+     * @return boolean
+     */
     public static function is_form_valid($hash, $key) {
         $db = new Db;
         $query = "SELECT `id` FROM dnt_microsites WHERE 
@@ -423,7 +447,7 @@ function competitionId(){
         }
         return $return;
     }
-    
+
     /**
      * 
      * @param type $hash
@@ -444,19 +468,33 @@ function competitionId(){
         }
         return $return;
     }
-
+    
+    /**
+     * 
+     * @param type $catId
+     * @return string
+     */
     public static function competition_id_query($catId) {
         //$id = GET('id');
-        $query = "SELECT * FROM `dnt_microsites_composer` WHERE `cat_id` = '" . $catId . "' AND `vendor_id` = '" . Vendor::getId() . "' AND `competition_id` = '".self::competitionId()."'";
+        $query = "SELECT * FROM `dnt_microsites_composer` WHERE `cat_id` = '" . $catId . "' AND `vendor_id` = '" . Vendor::getId() . "' AND `competition_id` = '" . self::competitionId() . "'";
         return $query;
     }
 
+    /**
+     * 
+     * @return type
+     */
     public static function all_meta_competition() {
-		$rest = new Rest;
-       $id = $rest->get('id');
+        $rest = new Rest;
+        $id = $rest->get('id');
         return "SELECT * FROM `dnt_microsites_composer` WHERE `vendor_id` = '" . Vendor::getId() . "' AND  `competition_id` = '" . $id . "'";
     }
 
+    /**
+     * 
+     * @param type $value
+     * @param type $meta
+     */
     public static function setMetaStatus($value, $meta) {
         if ($value == 1) {
             $ano = 'selected';
@@ -473,14 +511,23 @@ function competitionId(){
 					</select>';
     }
 
+    /**
+     * 
+     * @param type $input
+     * @return type
+     */
     public static function link_format($input) {
         $input = str_replace("http://", "", $input);
         $input = str_replace("https://", "", $input);
         $input = str_replace("", "", $input);
         return $input;
     }
-
-    //LANGUAGES
+    
+    /**
+     * 
+     * @return type
+     * LANGUAGES
+     */
     public static function competition_languages() {
         return array(
             "sk_SK" => "Slovenský",
@@ -490,6 +537,10 @@ function competitionId(){
         );
     }
 
+    /**
+     * 
+     * @param type $layout
+     */
     public static function getCompetitionLanguage($layout) {
         $layouts = self::competition_languages();
         $selected = "";
@@ -506,8 +557,13 @@ function competitionId(){
         echo '</select>';
     }
 
-    //en_EN
     //LAYOUTS
+    /**
+     * 
+     * @return type
+     * LAYOUTS
+     * en_EN
+     */
     public static function competition_layout() {
         return array(
             "dnt_first" => "1.st theme",
@@ -515,6 +571,10 @@ function competitionId(){
         );
     }
 
+    /**
+     * 
+     * @param type $layout
+     */
     public static function getCompetitionLayout($layout) {
         $layouts = self::competition_layout();
         $selected = "";
@@ -530,8 +590,12 @@ function competitionId(){
         }
         echo '</select>';
     }
-
-    //FONTS
+    
+    /**
+     * 
+     * @return type
+     * FONTS
+     */
     public static function competition_fonts() {
         return array(
             "roboto" => "Roboto",
@@ -549,6 +613,10 @@ function competitionId(){
         );
     }
 
+    /**
+     * 
+     * @param type $font
+     */
     public static function getCompetitionFont($font) {
         $fonts = self::competition_fonts();
         $selected = "";
@@ -565,14 +633,21 @@ function competitionId(){
         echo '</select>';
     }
 
+    /**
+     * 
+     * @param type $data
+     * @return type
+     */
     public static function hyperlinkParser($data) {
 
         if (Dnt::in_string("|", $data)) {
             $dataArr = explode("|", $data);
-            if (count($dataArr) == 2)
+            if (count($dataArr) == 2){
                 return $dataArr;
-            else
+            }
+            else{
                 return array($data, $data);
+            }
         }else {
             return array($data, $data);
         }
