@@ -57,6 +57,9 @@ class Autoload {
         include $path . "dnt-library/framework/_Class/Pdf.php";
         include $path . "dnt-library/framework/_Class/Eshop.php";
         include $path . "dnt-library/framework/_Class/Meta.php";
+		
+		//messenger bot
+        include $path . "dnt-library/framework/_Class/MessengerBot.php";
     }
 
 }
