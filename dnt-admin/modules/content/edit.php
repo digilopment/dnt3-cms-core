@@ -74,10 +74,14 @@
                         </td>
                      </tr>
                   </table>
-                  <h5>Vzkonať akciu:<br/></h5>
+                  <h5>Vykonať akciu:<br/></h5>
                   <select name="show" id="cname" class="form-control" minlength="2" required style="">
                   <?php getZobrazenie($show);?>
                   </select>
+				  				  <br/>
+				  <a href="index.php?src=pdfgen&post_id=<?php echo $post_id; ?>" target="_blank">
+					<span class="btn btn-primary bg-orange btn-lg btn-block">Exportovať Content do PDF</span>
+				</a>
                </div>
             </div>
             <!-- prava strana-->
@@ -142,7 +146,9 @@
                   <!-- end here -->
 				  <?php echo Dnt::returnInput();?>
                   <input type="submit" name="sent" class="btn btn-primary btn-lg btn-block" value="Upraviť" />
+
                </div>
+			   
             </div>
             <!-- end prava strana -->
          </div>

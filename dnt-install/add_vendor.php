@@ -5,8 +5,8 @@ $path			= "../";
 $autoload->load($path);
 $install = new Install;
 
-$VENDOR_NAME 	= "Botor";
-$COPY_FROM 		= "8";
+$VENDOR_NAME 	= "hmh";
+$COPY_FROM 		= "1";
 $tables = array(
 	//VSETKY STLPCE
 	"dnt_admin_menu",

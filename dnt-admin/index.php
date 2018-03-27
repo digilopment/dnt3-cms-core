@@ -27,7 +27,8 @@ if($session->get("admin_logged")){
 	//add static modul to arrat
 	array_push($data, 
 		array("name_url" => "login"), 
-		array("name_url" => "logout")
+		array("name_url" => "logout"),
+		array("name_url" => "pdfgen")
 	);
 	if($rest->get('src')){
 		if ($db->num_rows($query) > 0){

@@ -45,7 +45,7 @@ define( 'GET_SYSTEM_COMPONENTS', 'DntJson, DntSoap, DntXml, DntRss, DntXSSLoader
  ************* CACHE SETTING ********************************************************************************
  *
 */
-define( 'IS_CACHING', true );
+define( 'IS_CACHING', false );
 define( 'IS_LOGSYSTEM_ON', true ); //anable or disable saving current logs to database
 define( 'CACHE_HTTP_STATUS', '201' );
 define( 'CACHE_TIME_SEC', '86400' );

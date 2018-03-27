@@ -20,6 +20,8 @@ class Autoload {
          * CLASS
          */
         include $path . "dnt-library/framework/_Class/dompdf/dompdf_config.inc.php";
+        include $path . "dnt-library/framework/_Class/xlsx/php-excel-reader/excel_reader2.php";
+        include $path . "dnt-library/framework/_Class/xlsx/SpreadsheetReader.php";
         include $path . "dnt-library/framework/_Class/Db.php";
         include $path . "dnt-library/framework/_Class/MultyLanguage.php";
         include $path . "dnt-library/framework/_Class/Webhook.php";
@@ -57,6 +59,7 @@ class Autoload {
         include $path . "dnt-library/framework/_Class/Pdf.php";
         include $path . "dnt-library/framework/_Class/Eshop.php";
         include $path . "dnt-library/framework/_Class/Meta.php";
+        include $path . "dnt-library/framework/_Class/Xlsx.php";
 		
 		//messenger bot
         include $path . "dnt-library/framework/_Class/MessengerBot.php";
