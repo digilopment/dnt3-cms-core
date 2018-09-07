@@ -140,8 +140,8 @@ $translate['prihlasit'] = $multylanguage->getTranslate(array("type" => "static",
 <div class="blog-topbar">
 	<div class="topbar-search-block">
 		<div class="container">
-			<form action="">
-				<input type="text" class="form-control" placeholder="<?php echo $translate['hladat'];?>">
+			<form action="<?php echo WWW_PATH."search" ?>">
+				<input type="text" name="q" class="form-control" placeholder="<?php echo $translate['hladat'];?>">
 				<div class="search-close"><i class="fa fa-times" aria-hidden="true"></i></div>
 			</form>
 		</div>

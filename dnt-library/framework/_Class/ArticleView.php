@@ -162,9 +162,7 @@ class ArticleView extends AdminContent {
      */
     public function getPostParam($column, $post_id, $full_url = false, $default = false){
 		
-		
-		
-				//return "aaa";
+		//return "aaa";
 		$db 	= new Db;
 		$lang 	= new MultyLanguage;
 		
@@ -180,31 +178,60 @@ class ArticleView extends AdminContent {
 				AND `dnt_posts`.vendor_id 	= '".Vendor::getId()."'
 			";
 		}else{
-			$Q_column = "l_translate";
+			if(
+				$column == "name" || 
+				$column == "name_url" || 
+				$column == "content" || 
+				$column == "perex" 
+			){
+				$Q_column = "l_translate";
+				$query = "
+					SELECT 
+						`dnt_posts`.`id` AS c_id, 
+						`dnt_posts`.`vendor_id` AS c_vendor_id , 
+						`dnt_posts`.`type` AS c_type, 
+						`dnt_posts`.`name_url` AS c_name_url,
+						`dnt_posts`.`name` AS c_name,
+						`dnt_posts`.`content` AS c_content,
+						`dnt_posts`.`perex` AS c_perex,
+
+						`dnt_translates`.`type` AS l_type,
+						`dnt_translates`.`translate` AS l_translate
+						
+					FROM `dnt_posts` 
+					LEFT JOIN `dnt_translates` 
+					ON `dnt_posts`.`id` = `dnt_translates`.`translate_id` 
+					WHERE `dnt_posts`.id = '".$post_id."' 
+					AND `dnt_translates`.`lang_id` 	= '".$lang->getLang()."' 
+					AND `dnt_translates`.`type` 	= '".$column."' 
+					AND `dnt_posts`.vendor_id 	= '".Vendor::getId()."'
+				";
+			}else{
+				$Q_column = $column;
+				$query = "
+				SELECT 
+					*
+				FROM `dnt_posts` 
+				WHERE `dnt_posts`.id = '".$post_id."' 
+				AND `dnt_posts`.vendor_id 	= '".Vendor::getId()."'";
+				
+			}
+		}
+		
+		/*
+		if($column != "name" || "name_url" || "perex" || "content"){
+			$Q_column = $column;
 			$query = "
 				SELECT 
-					`dnt_posts`.`id` AS c_id, 
-					`dnt_posts`.`vendor_id` AS c_vendor_id , 
-					`dnt_posts`.`type` AS c_type, 
-					`dnt_posts`.`name_url` AS c_name_url,
-					`dnt_posts`.`name` AS c_name,
-					`dnt_posts`.`content` AS c_content,
-					`dnt_posts`.`perex` AS c_perex,
-
-					`dnt_translates`.`type` AS l_type,
-					`dnt_translates`.`translate` AS l_translate
-					
+					*
 				FROM `dnt_posts` 
-				LEFT JOIN `dnt_translates` 
-				ON `dnt_posts`.`id` = `dnt_translates`.`translate_id` 
 				WHERE `dnt_posts`.id = '".$post_id."' 
-				AND `dnt_translates`.`lang_id` 	= '".$lang->getLang()."' 
-				AND `dnt_translates`.`type` 	= '".$column."' 
 				AND `dnt_posts`.vendor_id 	= '".Vendor::getId()."'
 			";
 		}
+		*/
 	
-
+		
 		if($db->num_rows($query)>0){
 		   foreach($db->get_results($query) as $row){
 			   

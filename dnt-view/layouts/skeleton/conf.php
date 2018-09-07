@@ -19,7 +19,10 @@ function custom_modules(){
 		"microsites" => array_merge(
 				array(), $webhook->getSitemapModules("microsites")
 		), 
-		
+		"search" => array(
+			"search",
+			"hladaj",
+		),
 		
 		//CUSTOM STATIC MODUL
 		/*"homepage" => array(

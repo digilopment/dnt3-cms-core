@@ -14,6 +14,7 @@ $articleView 		= new ArticleView;
 
 
 ?>
+
 <div style="margin-top: 60px;"></div>
 	<div class="container panel panel-primary dnt-poll">
 	   
