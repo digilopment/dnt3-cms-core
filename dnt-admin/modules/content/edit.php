@@ -3,6 +3,7 @@
 <?php include "top.php";?>
 <?php
    $rest 		= new Rest;
+   $webhook 	= new Webhook;
    $dnt  		= new Dnt;
    $post_id   		= $rest->get("post_id");
    $page 			= $rest->get("page");
@@ -21,6 +22,8 @@
    $content 		= AdminContent::getPostParam("content", $post_id);
    $embed 			= AdminContent::getPostParam("embed", $post_id);
    $tags 			= AdminContent::getPostParam("tags", $post_id);
+   $service 		= AdminContent::getPostParam("service", $post_id);
+   $service_id 		= AdminContent::getPostParam("service_id", $post_id);
    
    //osetrenie vstupov
    if($datetime_publish == "0000-00-00 00:00:00"){
@@ -41,6 +44,29 @@
                   <h3>Nastavenia postu pre defaultný jazyk</h3>
                   <hr/>
                   <?php get_typ_zaradenie($cat_id, $sub_cat_id, $type); ?>
+				  <div class="row">
+				  <div class="col-xs-8">
+				  	<h5>Typ služby:<br/></h5>
+					<select name="service" id="service" class="form-control">
+						<?php 
+						echo '<option value="">Default</option>';
+						foreach($webhook->services() as $key => $serviceIndex){
+							if($key == $service){
+								echo '<option selected value="'.$key.'">'.$serviceIndex['service_name'].'</option>';
+							}else{
+								echo '<option value="'.$key.'">'.$serviceIndex['service_name'].'</option>';
+					
+							}
+						}
+						?>
+					</select>
+					</div>
+					 <div class="col-xs-4">
+					
+					<h5>Id kategórie:<br/></h5>
+					<input type='text' name="service_id" value="<?php echo  $service_id; ?>" class="form-control" />
+					</div>
+				</div>
                   <br/>
 				  <input name="userfile" type="file" class="form-control">
 				  <br/>

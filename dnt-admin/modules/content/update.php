@@ -20,6 +20,8 @@ if(isset($_POST['sent'])){
 	$content 		= $rest->post("content");
 	$embed 			= $rest->post("embed");
 	$tags 			= $rest->post("tags");
+	$service 		= $rest->post("service");
+	$service_id 	= $rest->post("service_id");
 	
 	//echo $embed;
 	
@@ -40,6 +42,8 @@ if(isset($_POST['sent'])){
 			'tags' => $tags,
 			'datetime_update' => Dnt::datetime(), //SELECT * FROM `dnt_posts` WHERE id = 10886
 			'datetime_publish'=> $datetime_publish, //SELECT * FROM `dnt_posts` WHERE id = 10886
+			'service'	=>	$service, //SELECT * FROM `dnt_posts` WHERE id = 10886
+			'service_id'	=>	$service_id, //SELECT * FROM `dnt_posts` WHERE id = 10886
 			), 
 		array( 	//where
 			'id' 			=> $post_id, 
@@ -148,7 +152,7 @@ if(isset($_POST['sent'])){
 					"img",	 								//update table column
 					"`id`", 								//where column
 					$post_id, 								//where value
-					"../dnt-view/data/".Vendor::getId() 	//path
+					"../dnt-view/data/uploads" 				//path
 				);
 	
 	//show template

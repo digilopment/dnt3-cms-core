@@ -84,6 +84,7 @@
                   <th>#</th>
                   <th>post ID</th>
                   <th>Názov postu</th>
+                  <th>Typ služby</th>
                   <th>Typ postu</th>
                   <th>Dátum zverejnenia</th>
                   <th>Zobrazenie</th>
@@ -107,6 +108,9 @@
 					  <td><?php echo $i++; ?></td>
 					  <td><?php echo $row['id'] ?></td>
 					  <td style="max-width: 500px;"><b><a href="<?php echo AdminContent::url("edit", $cat_id, $sub_cat_id, false, $post_id, $page) ?>"><?php echo $row['name']; ?></a></b></td>
+					  <td><a href="index.php?src=content&included=sitemap&filter=<?php echo $row['cat_id'] ?>&post_id=<?php echo $row['id'] ?>&services=<?php echo $row['service'] ?>">
+						<?php echo $row['service'] ?>
+					</td>
 					  <td><a href="<?php echo AdminContent::url("filter", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>">
 						<!--<?php echo AdminContent::getPostParam("sub_cat_id", $row['id'])." -> ".AdminContent::getPostParam("cat_id", $row['id']); ?>-->
 						<?php echo AdminContent::getPostParam("type", $row['id']); ?>

@@ -86,7 +86,7 @@ elseif(isset($_POST['odoslat_logo'])){
 					"value", 								//update table column
 					"`key`", 								//where column
 					"logo_firmy", 							//where value
-					"../dnt-view/data/".Vendor::getId() 	//path
+					"../dnt-view/data/uploads"				//path
 				);
 }elseif(isset($_POST['odoslat_noimage'])){
 	$return	= $rest->post('return');
@@ -97,7 +97,7 @@ elseif(isset($_POST['odoslat_logo'])){
 					"value", 								//update table column
 					"`key`", 								//where column
 					"no_img", 								//where value
-					"../dnt-view/data/".Vendor::getId() 	//path
+					"../dnt-view/data/uploads" 				//path
 				);
 }
 

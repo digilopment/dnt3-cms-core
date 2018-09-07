@@ -35,13 +35,13 @@ class AdminContent extends MultyLanguage {
      */
     public function getCatId($type) {
         $db = new Db;
-        $query = "SELECT id FROM dnt_post_type WHERE name_url = '" . $type . "' AND `vendor_id` = '" . Vendor::getId() . "'";
+        $query = "SELECT id_entity FROM dnt_post_type WHERE name_url = '" . $type . "' AND `vendor_id` = '" . Vendor::getId() . "'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
-                return $row['id'];
+                return $row['id_entity'];
             }
         } else {
-            return false;
+            return array(false);
         }
     }
 

@@ -19,7 +19,7 @@ Class Xlsx {
      */
     public function read($path, $fileName) {
 		$vendor = new Vendor;
-		$filePath = $path."dnt-view/data/".$vendor->getId()."/".$fileName;
+		$filePath = $path."dnt-view/data/uploads/".$fileName;
 		$excel_data = false;
 		date_default_timezone_set('Europe/Paris');
 		$Spreadsheet = new SpreadsheetReader($filePath);

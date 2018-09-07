@@ -17,6 +17,7 @@ class Navigation {
         $query = "SELECT * FROM dnt_posts WHERE 
 		type = 'sitemap' AND 
 		cat_id = '" . AdminContent::getCatId("sitemap") . "' AND 
+		vendor_id = '" . Vendor::getId() . "' AND 
 		`show` = '1' ORDER BY `order` DESC";
         if ($db->num_rows($query) > 0) {
             return $db->get_results($query);

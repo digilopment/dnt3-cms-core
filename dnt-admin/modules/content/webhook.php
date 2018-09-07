@@ -44,8 +44,11 @@ elseif($rest->get("action") == "add_cat")
 	//add category
 	include "add_cat.php";
 }
-else
-{
-	//default article list template
-	include "tpl.php";
+else{
+	if($rest->get("services")){
+		include "modules/services/webhook.php";
+	}else{
+		//default article list template
+		include "tpl.php";
+	}
 }

@@ -216,7 +216,7 @@ $translate['prihlasit'] = $multylanguage->getTranslate(array("type" => "static",
               <?php 
 				foreach(Navigation::getParents() as $row){ 
 				$name_url_1 = $article->getPostParam("name_url", $row['id'], false);
-			?>
+				?>
 				<li class="dropdown home <?php if($article->getPostParam("name_url", $row['id']) == $rest->webhook(1)){echo "active";}?> ">
                   <?php if($row['name_url'] == "no_url"){ ?>
                   <a><?php echo $article->getPostParam("name", $row['id']);?></a>

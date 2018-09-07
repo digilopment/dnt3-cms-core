@@ -213,8 +213,8 @@ if($row['name_url'] == "content"){
             foreach($db->get_results($query2) as $row2){
             ?>
 			 <li>
-				<a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$row['name_url']."&included=".$row2['admin_cat']."&filter=".$row2['id'];?>">
-				<span><?php echo $row2['name'];?></span>
+				<a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$row['name_url']."&included=".$row2['admin_cat']."&filter=".$row2['id_entity'];?>">
+			<span><?php echo $row2['name'];?> - <small>(<?php echo $row2['id'];?>)</small></span>
 				&nbsp;&nbsp;<i style="text-align: right;" class="fa fa-laptop"></i>
 				</a>
 			 </li>
@@ -575,10 +575,10 @@ $db = new Db;
 	   
 	    if($db->num_rows($query)>0){
 		   foreach($db->get_results($query) as $row){
-			   if($row['id'] == $cat_id)
-				echo '<option value="'.$row['id'].'" selected>'.$value.' -> '.$row['name'].'</option>';
+			   if($row['id_entity'] == $cat_id)
+				echo '<option value="'.$row['id_entity'].'" selected>'.$value.' -> '.$row['name'].'</option>';
 			   else
-				echo '<option value="'.$row['id'].'">'.$value.' -> '.$row['name'].'</option>';
+				echo '<option value="'.$row['id_entity'].'">'.$value.' -> '.$row['name'].'</option>';
 			}
 	   }
 	   else{
@@ -617,10 +617,10 @@ $db = new Db;
 		   `admin_cat` = 'article'";
 		  if($db->num_rows($query)>0){
 		   foreach($db->get_results($query) as $row){
-			if($sub_cat_id == $row['id'])
-				echo '<option value="'.$row['id'].'" selected>'.$value.' -> '.$row['name'].'</option>';
+			if($sub_cat_id == $row['id_entity'])
+				echo '<option value="'.$row['id_entity'].'" selected>'.$value.' -> '.$row['name'].'</option>';
 			else
-				echo '<option value="'.$row['id'].'">'.$value.' -> '.$row['name'].'</option>';
+				echo '<option value="'.$row['id_entity'].'">'.$value.' -> '.$row['name'].'</option>';
 			}
 
 	   }else{

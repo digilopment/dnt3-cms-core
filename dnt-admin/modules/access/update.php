@@ -54,7 +54,7 @@ if(isset($_POST['sent'])){
 						"img",	 								//update table column
 						"`id`", 								//where column
 						$post_id, 								//where value
-						"../dnt-view/data/".Vendor::getId() 	//path
+						"../dnt-view/data/uploads" 				//path
 					);
 		include "tpl_functions.php";
 		get_top();

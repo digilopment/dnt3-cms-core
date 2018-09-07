@@ -45,7 +45,7 @@ Class Pdf {
         $dompdf = new Dompdf();
         $dompdf->load_html($html);
         $dompdf->render();
-        file_put_contents($path . 'dnt-view/data/' . Vendor::getId() . '/test.pdf', $dompdf->output());
+        file_put_contents($path . 'dnt-view/data/uploads/test.pdf', $dompdf->output());
     }
 
     /**
@@ -82,7 +82,7 @@ Class Pdf {
         $dompdf = new Dompdf();
         $dompdf->load_html($html);
         $dompdf->render();
-		file_put_contents($path . 'dnt-view/data/' . Vendor::getId() . '/'.$pdfName.'.pdf', $dompdf->output());
+		file_put_contents($path . 'dnt-view/data/uploads/'.$pdfName.'.pdf', $dompdf->output());
     }
 
 }

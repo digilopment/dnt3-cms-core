@@ -29,7 +29,7 @@ if($rest->post("sent")){
 		"img", 									//update table column
 		"`id`", 								//where column
 		$poll_id, 								//where value
-		"../dnt-view/data/".Vendor::getId() 	//path
+		"../dnt-view/data/uploads"				//path
 	);
 	
 	
@@ -58,7 +58,7 @@ if($rest->post("sent")){
 					"img", 									//update table column
 					"`id`", 								//where column
 					$meta_id, 								//where value
-					"../dnt-view/data/".Vendor::getId() 	//path
+					"../dnt-view/data/uploads" 	//path
 				);
 			}
 			 

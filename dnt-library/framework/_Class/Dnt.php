@@ -742,5 +742,23 @@ class Dnt {
             return false;
         }
     }
+	
+	public static function setMetaStatus($value, $meta){
+		if($value == 1){
+			$ano = 'selected';
+			$color = "3C763D";
+			$nie = false;
+			
+		}
+		else{
+			$nie = 'selected';
+			$color = "ff0000";
+			$ano = false;
+		}
+		echo '<select class="form-control" name="zobrazit_'.$meta.'" style="border: 2px #'.$color.' solid;">
+				<option value="1" '.$ano.'>Áno</option>
+				<option value="0" '.$nie.'>Nie</option>
+			</select>';
+	}
 
 }

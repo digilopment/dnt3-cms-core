@@ -9,7 +9,8 @@ $db = new Db;
 $session = new Sessions;
 $session->init();
 $adminUser = new AdminUser;
-
+//var_dump();
+//exit;
 
 
 
@@ -28,7 +29,8 @@ if($session->get("admin_logged")){
 	array_push($data, 
 		array("name_url" => "login"), 
 		array("name_url" => "logout"),
-		array("name_url" => "pdfgen")
+		array("name_url" => "pdfgen"),
+		array("name_url" => "vendor")
 	);
 	if($rest->get('src')){
 		if ($db->num_rows($query) > 0){

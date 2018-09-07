@@ -55,6 +55,8 @@ class Frontend {
                 "content" => $article->getPostParam("content", $post_id),
                 "datetime_publish" => $article->getPostParam("datetime_publish", $post_id),
                 "name" => $article->getPostParam("name", $post_id),
+                "service" => $article->getPostParam("service", $post_id),
+                "service_id" => $article->getPostParam("service_id", $post_id),
                 "tags" => $article->getPostTags($post_id),
                 "img" => $article->getPostImage($post_id),
             ),

@@ -89,6 +89,22 @@ class Vendor {
 
         return $layout;
     }
+	
+	public function getLayouts(){
+		$db = new Db;
+
+        $query = "SELECT DISTINCT `layout` FROM `dnt_vendors` ";
+
+        if ($db->num_rows($query) > 0) {
+            foreach ($db->get_results($query) as $row) {
+                $layouts[] = $row['layout'];
+            }
+        } else {
+            $layouts[] = array(false);
+        }
+
+        return $layouts;
+	}
 
     /**
      * 

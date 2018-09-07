@@ -24,6 +24,16 @@ class Settings {
             return false;
         }
     }
+	
+	public function customMeta() {
+        $db = new Db;
+        $query = "SELECT * FROM dnt_settings WHERE `type` = 'custom' AND `vendor_id` = '" . Vendor::getId() . "'";
+        if ($db->num_rows($query) > 0) {
+             return $db->get_results($query);
+        } else {
+            return false;
+        }
+    }
 
     /**
      * 
@@ -35,7 +45,7 @@ class Settings {
         $db = new Db;
         $imageId = Settings::get($key);
 
-        $query = "SELECT name FROM dnt_uploads WHERE `id` = '" . $imageId . "' AND `vendor_id` = '" . Vendor::getId() . "'";
+        $query = "SELECT name FROM dnt_uploads WHERE `id` = '" . $imageId . "'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 return Url::get("WWW_PATH_FILES") . "" . $row['name'];

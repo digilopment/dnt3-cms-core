@@ -2,7 +2,7 @@
 $dnt = new Dnt;
 if(isset($_POST['sent'])){
 	$dntUpload 	= new DntUpload;
-	$path 		= "../dnt-view/data/".Vendor::getId();
+	$path 		= "../dnt-view/data/uploads";
 	$files 		= $_FILES['userfile']; 
 	
 	$dntUpload->multypleUpload($files, $path);

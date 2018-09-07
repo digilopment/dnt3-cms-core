@@ -37,14 +37,13 @@ Class Image {
         //`show` = '0' or `show` = '1' or `show` = '2'";
         $query = "SELECT name FROM dnt_uploads WHERE 
 		`id` = '" . $imageId . "' AND 
-		`vendor_id` = '" . Vendor::getId() . "' AND 
 		" . Dnt::showStatus("show") . "";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
-                return WWW_PATH . "dnt-view/data/" . Vendor::getId() . "/" . $row['name'];
+                return WWW_PATH . "dnt-view/data/uploads/" . $row['name'];
             }
         } else {
-            return false;
+            return "aaa";
         }
     }
 

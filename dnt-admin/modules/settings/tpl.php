@@ -1,12 +1,15 @@
 <?php include "tpl_functions.php"; ?>
 <?php get_top(); ?>
-<?php include "top.php";?>
+<?php include "top.php";
+$settings = new Settings
+?>
 <!-- END CONTENT HEADER -->
 <section class="content">
    <div class="row">
       <div class="col-md-12">
          <ul class="nav nav-tabs">
             <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==1 or !isset($_GET[ 'pa'])){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=1">Nastavenia stránky</a></li>
+            <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==7 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=7">Custom nastavenia</a></li>
             <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==2 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=2">Nastavenia vlastníctva</a></li>
             <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==3 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=3">Nastavenia vlastníctva 2</a></li>
             <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==4 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=4">Nastavenie loga</a></li>
@@ -185,6 +188,55 @@
                   </div>
                </div>
             </div>
+			 <?php }elseif(isset($_GET[ 'pa']) && $_GET[ 'pa']==7 ){?>
+			 
+			 
+			 
+
+      <div class="row" style="background-color: #fff;padding: 5px;margin: 0px;">
+         <label class="col-sm-2 control-label"><b>Názov vstupu</b></label>
+         <label class="col-sm-3 control-label"><b>Zobraziť na webe?</b></label>
+         <label class="col-sm-7 control-label"><b>Nastavenie hodnoty</b></label>
+      </div>
+      <div class="row">
+         <form enctype="multipart/form-data" action="" method="POST">
+            <div class="col-md-12">
+               <ul class="nav nav-tabs">
+                  <li class="active"><a href="#sutaz" data-toggle="tab">Nastavenia</a></li>
+               </ul>
+               <div class=" tab-content">
+                  <!-- base settings -->
+                  <div class="tab-pane active" id="sutaz">
+       
+                      <?php
+                     foreach($settings->customMeta() as $row){
+                     ?>
+                  <div class="row form">
+                     <label class="col-sm-2 control-label"><b><?php echo $row['description'] ?></b></label>
+                     <label class="col-sm-2 control-label">
+                     <?php Dnt::setMetaStatus($row['show'], $row['key']); ?>
+                     </label>
+                     <div class="col-sm-8 text-left">
+                        
+                        <input type="text" name="<?php echo $row['key'] ?>" value='<?php echo $row['value'] ?>' class="form-control" placeholder="">
+
+                     </div>
+                  </div>
+                  <br/>
+                  <?php
+                     }
+                     ?>
+					 
+					 
+                  </div>
+               </div>
+            </div>
+         </form>
+      </div>
+
+
+			 
+			 
             <?php }else{ ?>
             <!-- Nastavenia stránky-->
             <div class="grid-body">

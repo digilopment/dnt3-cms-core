@@ -17,10 +17,10 @@ if($rest->get("type") == "square"){
 		$uploaded=$dntUpload->addFaceDetect(
 					"userfile",							//input type file
 					"dnt_settings", 					//update table
-					"dnt-view/data/".Vendor::getId(), //path
+					"dnt-view/data/uploads", //path
 					"300" 								//width
 				);
-		echo '<a target="_blank" href="dnt-view/data/'.Vendor::getId().'/'.$uploaded['file_dst_name'].'">'.$uploaded['file_dst_name'].'</a>';
+		echo '<a target="_blank" href="dnt-view/data/uploads/'.$uploaded['file_dst_name'].'">'.$uploaded['file_dst_name'].'</a>';
 	}else{
 		echo '
 			<form id="obchod" enctype="multipart/form-data" action="/dnt3/dt.php?type=upl&sent=true" method="post">

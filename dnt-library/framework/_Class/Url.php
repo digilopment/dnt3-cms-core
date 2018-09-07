@@ -43,7 +43,7 @@ class Url {
             }
             $r = WWW_PATH . "" . $lg;
         } elseif ($url == 'WWW_PATH_FILES') {
-            return WWW_CDN_PATH . "dnt-view/data/" . Vendor::getId() . "/";
+            return WWW_CDN_PATH . "dnt-view/data/uploads/";
         }
 
         return $r;

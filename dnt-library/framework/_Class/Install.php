@@ -62,13 +62,19 @@ Class Install {
      * @param type $VENDOR_NAME
      * @param type $COPY_FROM
      */
-    public static function addVendor($tables, $VENDOR_NAME, $COPY_FROM) {
+    public static function addVendor($tables, $VENDOR_NAME, $COPY_FROM, $VENDOR_LAYOUT = false, $DELETE_DATA = 1) {
         $db = new Db;
         //SETTINGS
         $COPY_FROM = $COPY_FROM;
         $vendor_name = $VENDOR_NAME;
         $vendor_name_url = Dnt::name_url($VENDOR_NAME);
-        $vendor_layout = Dnt::name_url($VENDOR_NAME);
+        
+		if($VENDOR_LAYOUT){
+			$vendor_layout = $VENDOR_LAYOUT;
+		}else{
+			$vendor_layout = Dnt::name_url($VENDOR_NAME);
+		}
+		
 
         $insertedData = array(
             'name' => $vendor_name,
@@ -90,10 +96,10 @@ Class Install {
                     foreach (self::getColumns($query) as $column) {
                         $data["`" . $column . "`"] = $row[$column];
                         $data["vendor_id"] = $NEW_VENDOR_ID;
-                        echo "OK" . $column . "<br/>";
+                        //echo "OK" . $column . "<br/>";
                     }
                     $db->insert($table, $data);
-                    var_dump($data);
+                    //var_dump($data);
                     //echo "OK <hr/>";
                 }
             }
@@ -102,17 +108,24 @@ Class Install {
         }
 
         //DELETE DATA FROM
-        $tables = array(
-            "dnt_logs",
-            "dnt_mailer_mails",
-            "dnt_mailer_type",
-            "dnt_polls",
-            "dnt_polls_composer",
-            "dnt_posts",
-            "dnt_posts_meta",
-            "dnt_post_type",
-            "dnt_uploads",
-        );
+		/*
+		if($DELETE_DATA == 1){
+			$tables = array(
+				"dnt_logs",
+				"dnt_mailer_mails",
+				"dnt_mailer_type",
+				"dnt_polls",
+				"dnt_polls_composer",
+				"dnt_posts",
+				"dnt_posts_meta",
+				"dnt_post_type",
+				"dnt_uploads",
+			);
+		}else{
+			$tables = array(
+				false
+			);
+		}
         foreach ($tables as $table) {
             $where = array('vendor_id' => $NEW_VENDOR_ID);
             $db->delete($table, $where);
@@ -128,6 +141,7 @@ Class Install {
 		(NULL, '2', '0', 'domace', 'article', 'Domáce', '1', '0', '$NEW_VENDOR_ID ', '0')
 		";
         $db->query($query);
+		*/
     }
 
     /**
@@ -307,5 +321,28 @@ Class Install {
         file_put_contents($backup_name, $content);
         //echo $content; exit;
     }
+	
+	public function importSql($file){
+		//INSERT DATA
+        $filename = $file;
+        // Temporary variable, used to store current query
+        $templine = '';
+        // Read in entire file
+        $lines = file($filename);
+        // Loop through each line
+        foreach ($lines as $line) {
+            // Skip it if it's a comment
+            if (substr($line, 0, 2) == '--' || $line == '')
+                continue;
+
+            // Add this line to the current segment
+            $templine .= $line;
+            // If it has a semicolon at the end, it's the end of the query
+            if (substr(trim($line), -1, 1) == ';') {
+                $db->query($templine);
+                $templine = '';
+            }
+        }
+	}
 
 }

@@ -13,28 +13,55 @@ class ArticleList extends AdminContent {
      * @param type $is_limit
      * @return string
      */
-    protected function prepare_query($is_limit) {
-        $db = new Db();
-
-        $UrlCatToId = "novinky";
-
-        if (isset($_GET['search'])) {
-            $typ = "AND `name_url` LIKE '%" . Dnt::name_url($_GET['search']) . "%'";
-        } else
-            $typ = false;
-
-        if ($is_limit == false)
-            $limit = false;
-        else
-            $limit = $is_limit;
-
-        $query = "SELECT * FROM `dnt_posts` WHERE  
-			`type` 			= 'article' AND
-			`vendor_id` 	= '" . Vendor::getId() . "' AND
-			`sub_cat_id` 	= '" . AdminContent::getCatId($UrlCatToId) . "'
-			" . $typ . " ORDER BY `order` DESC " . $limit . "";
-        return $query;
-    }
+    protected function prepare_query($is_limit){
+		
+		$servicesIDs = Frontend::get();
+		//var_dump($servicesIDs['article']['service_id']);
+		//var_dump("test");
+		$db = new Db();
+		$rest = new Rest();
+		
+		$servicesIDs = $servicesIDs['article']['service_id'];
+		$servicesIDs = str_replace(",", "', '", $servicesIDs);
+		
+		if(isset($_GET['search'])){
+			$typ = "AND `name_url` LIKE '%".Dnt::name_url($_GET['search'])."%'";
+		}elseif($rest->get("q")){
+			$typ = "AND `dnt_posts`.`name_url` LIKE '%".Dnt::name_url(urldecode($rest->get("q")))."%'";
+		}else{
+			$typ = "AND `dnt_post_type`.`id` IN('".$servicesIDs."')";
+		}
+		
+		if($is_limit == false)
+			$limit = false;
+		else
+			$limit = $is_limit;
+		
+			$query = "
+			SELECT 
+				`dnt_posts`.`id` AS id, 
+				`dnt_posts`.`vendor_id` AS vendor_id , 
+				`dnt_posts`.`type` AS type, 
+				`dnt_posts`.`name_url` AS name_url,
+				`dnt_posts`.`name` AS name,
+				`dnt_posts`.`content` AS content,
+				`dnt_posts`.`perex` AS perex,
+				`dnt_post_type`.`cat_id` AS cat_id,
+				`dnt_post_type`.`name_url` AS cat_name_url,
+				`dnt_post_type`.`id` AS dnt_post_type_id
+			FROM 
+				`dnt_posts` 
+			LEFT JOIN 
+				`dnt_post_type` 
+			ON 
+				`dnt_posts`.`cat_id` = `dnt_post_type`.`id` 
+			WHERE 
+				`dnt_posts`.`vendor_id` 	= '".Vendor::getId()."' 
+			AND
+				`dnt_posts`.`show` 			= '1'
+			".$typ." ORDER BY `dnt_posts`.`order` DESC ".$limit."";
+			return $query;
+   	}
 
     /**
      * 

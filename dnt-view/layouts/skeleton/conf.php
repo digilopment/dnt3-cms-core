@@ -1,13 +1,33 @@
 <?php
 function custom_modules(){
+	$webhook = new Webhook;
 	/*
 	custom modul listeners
 	*/
 	$custom_modules = array(
-		"homepage" => array(
+	
+	//PARTNERI
+		"partners" => array_merge(
+				array(), $webhook->getSitemapModules("partners")
+		),  
+		"contact" => array_merge(
+				array(), $webhook->getSitemapModules("contact")
+		),  
+		"eshop" => array_merge(
+				array(), $webhook->getSitemapModules("eshop")
+		), 
+		"microsites" => array_merge(
+				array(), $webhook->getSitemapModules("microsites")
+		), 
+		
+		
+		//CUSTOM STATIC MODUL
+		/*"homepage" => array(
 			"domov",
 			"home",
-		),
+		),*/
+		
+		/*
 		"contact" => array(
 			"kontakt",
 			"contact",
@@ -36,7 +56,7 @@ function custom_modules(){
 		),
 		"microsites" => array(
 			"microsites",
-		),
+		),*/
 	);
 	return $custom_modules;
 }

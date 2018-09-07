@@ -48,6 +48,7 @@ class Autoload {
         include $path . "dnt-library/framework/_Class/AdminContent.php";
         include $path . "dnt-library/framework/_Class/AdminMailer.php";
         include $path . "dnt-library/framework/_Class/Navigation.php";
+    
 
         include $path . "dnt-library/framework/_Class/Polls.php";
         include $path . "dnt-library/framework/_Class/PollsFrontend.php";
@@ -60,6 +61,7 @@ class Autoload {
         include $path . "dnt-library/framework/_Class/Eshop.php";
         include $path . "dnt-library/framework/_Class/Meta.php";
         include $path . "dnt-library/framework/_Class/Xlsx.php";
+		include $path . "dnt-library/framework/_Class/PostMeta.php";
 		
 		//messenger bot
         include $path . "dnt-library/framework/_Class/MessengerBot.php";
