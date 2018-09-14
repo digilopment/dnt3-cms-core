@@ -10,8 +10,13 @@ $insertedData = array(
 					'`show`' 			=> '0' 
 				);
 
+$db->dbTransaction();				
 $db->insert('dnt_posts', $insertedData);
-$redirect = WWW_PATH_ADMIN."index.php?src=content&filter=".$rest->get("filter")."&sub_cat_id=".$rest->get("sub_cat_id")."&post_id=".$db->lastid()."&page=1&action=edit&included=".$rest->get("included")."";
+$lastId = Dnt::getLastId('dnt_posts');
+$db->commit();	
+
+	
+$redirect = WWW_PATH_ADMIN."index.php?src=content&filter=".$rest->get("filter")."&sub_cat_id=".$rest->get("sub_cat_id")."&post_id=".$lastId."&page=1&action=edit&included=".$rest->get("included")."";
 
 
 $dnt->redirect($redirect);

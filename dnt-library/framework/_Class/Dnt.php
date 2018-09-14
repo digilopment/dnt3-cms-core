@@ -29,6 +29,32 @@ class Dnt {
         }
         return $return;
     }
+	
+	public static function getLastIdVendor() {
+        $db = new Db;
+        $query = "SELECT MAX(id) FROM dnt_vendors ";
+        if ($db->num_rows($query) > 0) {
+            foreach ($db->get_results($query) as $row) {
+                $return = $row['MAX(id)'];
+            }
+        } else {
+            $return = false;
+        }
+        return $return;
+    }
+	
+	public static function getIdEntity($lastId) {
+		$db = new Db;
+		$db->update(
+			'dnt_posts',	//table
+			array(	//set
+				'id_entity' => $lastId
+				), 
+			array( 	//where
+				'id' => $lastId
+			)
+		);
+	}
 
     /**
      * 
@@ -712,10 +738,10 @@ class Dnt {
         $db = new Db;
         $rest = new Rest;
 
-        $query = "SELECT `id` FROM `$table` WHERE vendor_id = '" . Vendor::getId() . "' $and_where ORDER BY id asc LIMIT 1";
+        $query = "SELECT `id_entity` FROM `$table` WHERE vendor_id = '" . Vendor::getId() . "' $and_where ORDER BY id_entity asc LIMIT 1";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
-                return $row['id'];
+                return $row['id_entity'];
             }
         } else {
             return false;
@@ -733,10 +759,10 @@ class Dnt {
         $db = new Db;
         $rest = new Rest;
 
-        $query = "SELECT `id` FROM `$table` WHERE `id` > '$currentId' AND `vendor_id` = '" . Vendor::getId() . "' $and_where LIMIT 1";
+        $query = "SELECT `id_entity` FROM `$table` WHERE `id_entity` > '$currentId' AND `vendor_id` = '" . Vendor::getId() . "' $and_where LIMIT 1";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
-                return $row['id'];
+                return $row['id_entity'];
             }
         } else {
             return false;

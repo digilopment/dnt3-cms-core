@@ -40,11 +40,11 @@
 							 foreach($db->get_results($query) as $row){
 						?>
                            <tr>
-                              <td><?php echo $row['id']?></td>
-                              <td style="max-width: 500px;"><b><a href="index.php?src=polls&action=edit_poll&post_id=<?php echo $row['id']?>"><?php echo $row['name']?></a></b></td>
+                              <td><?php echo $row['id_entity']?></td>
+                              <td style="max-width: 500px;"><b><a href="index.php?src=polls&action=edit_poll&post_id=<?php echo $row['id_entity']?>"><?php echo $row['name']?></a></b></td>
                               <td><?php echo Polls::currentTypeStr($row['type']);?></td>
                               <td style="text-align: center;">
-                                 <a href="index.php?src=polls&action=edit_poll&post_id=<?php echo $row['id']?>"><i class="fa fa-arrow-right bg-blue action"></i></a>
+                                 <a href="index.php?src=polls&action=edit_poll&post_id=<?php echo $row['id_entity']?>"><i class="fa fa-arrow-right bg-blue action"></i></a>
                               </td>
                                <td style="text-align: center;">
 							  <?php if($row['show'] == 2){ ?>
@@ -56,10 +56,10 @@
 							  <?php } ?> 
                               </td>
                                <td style="text-align: center;">
-                                 <a href="<?php echo WWW_PATH."ankety/".$row['id']."/".$row['name_url']."" ?>" target="_blank"><i class="fa fa-arrow-right bg-blue action"></i></a>
+                                 <a href="<?php echo WWW_PATH."ankety/".$row['id_entity']."/".$row['name_url']."" ?>" target="_blank"><i class="fa fa-arrow-right bg-blue action"></i></a>
                               </td>
                               <td style="text-align: center;">
-                                  <a href="<?php echo WWW_PATH."ankety/".$row['id']."/".$row['name_url']."" ?>" target="_blank"><i class="fa fa-arrow-right bg-blue action"></i></a>
+                                  <a href="<?php echo WWW_PATH."ankety/".$row['id_entity']."/".$row['name_url']."" ?>" target="_blank"><i class="fa fa-arrow-right bg-blue action"></i></a>
                               </td>
                               <td>
                               </td>

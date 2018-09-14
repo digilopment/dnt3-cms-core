@@ -206,7 +206,7 @@ class AdminContent extends MultyLanguage {
     public function getPostParam($column, $post_id) {
         $db = new Db;
 
-        $query = "SELECT `$column` FROM dnt_posts WHERE id = '$post_id' AND vendor_id = '" . Vendor::getId() . "'";
+        $query = "SELECT `$column` FROM dnt_posts WHERE id_entity = '$post_id' AND vendor_id = '" . Vendor::getId() . "'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 return $row[$column];

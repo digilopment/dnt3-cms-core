@@ -45,6 +45,8 @@ $articleView 		= new ArticleView;
          <hr>
 		 		<?php 
 			}
+	   }else{
+		   echo "ERR";
 	   }
 		?>
 

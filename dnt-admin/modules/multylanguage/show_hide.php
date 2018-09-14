@@ -1,6 +1,6 @@
 <?php
 $post_id = $rest->get("post_id");
-$query = "SELECT `show` FROM dnt_languages WHERE id = '".$post_id."'";
+$query = "SELECT `show` FROM dnt_languages WHERE id_entity = '".$post_id."'";
 if($db->num_rows($query)>0){
  foreach($db->get_results($query) as $row){
      $show = $row['show'];

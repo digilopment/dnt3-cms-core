@@ -485,7 +485,7 @@ class DB
      * @return bool
      *
      */
-    public function insert( $table, $variables = array() )
+    public function insert( $table, $variables = array(), $update = true)
     {
         self::$counter++;
         //Make sure the array isn't empty
@@ -508,6 +508,20 @@ class DB
         $sql .= $fields .' VALUES '. $values;
 
         $query = $this->link->query( $sql );
+		
+		$lastId = $this->lastid();
+		
+		if($update == true){
+			$this->update(
+				$table,	//table
+				array(	//set
+					'id_entity' => $lastId
+					), 
+				array( 	//where
+					'id' => $lastId
+				)
+			);
+		}
         
         if( $this->link->error )
         {
@@ -521,6 +535,7 @@ class DB
         }
     }
     
+	
     /**
     * Insert data KNOWN TO BE SECURE into database table
     * Ensure that this function is only used with safe data

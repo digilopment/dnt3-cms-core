@@ -14,6 +14,10 @@ elseif($rest->get("action") == "add")
 	//default article view action add
 	include "upload.php";
 }
+elseif($rest->get("action") == "del")
+{
+	include "del.php";
+}
 else{
 	include "tpl.php";
 }

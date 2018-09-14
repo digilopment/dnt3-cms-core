@@ -97,10 +97,10 @@ class MultyLanguage {
      * @param type $column
      * @return boolean
      */
-    public function getDefault($id, $table, $column) {
+    public function getDefault($id_entity, $table, $column) {
         $db = new Db;
 
-        $query = "SELECT `$column` FROM $table WHERE id = '$id' AND vendor_id = '" . Vendor::getId() . "'";
+        $query = "SELECT `$column` FROM $table WHERE id_entity = '$id_entity' AND vendor_id = '" . Vendor::getId() . "'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 return $row[$column];

@@ -24,7 +24,7 @@ if(isset($_POST['sent'])){
 			'datetime_update' => Dnt::datetime()
 			), 
 		array( 	//where
-			'id' 			=> $post_id, 
+			'id_entity' 			=> $post_id, 
 			'`vendor_id`' 	=> Vendor::getId())
 	);
 	$dnt->redirect($return);

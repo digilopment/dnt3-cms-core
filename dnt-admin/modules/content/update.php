@@ -46,7 +46,7 @@ if(isset($_POST['sent'])){
 			'service_id'	=>	$service_id, //SELECT * FROM `dnt_posts` WHERE id = 10886
 			), 
 		array( 	//where
-			'id' 			=> $post_id, 
+			'id_entity' 			=> $post_id, 
 			'`vendor_id`' 	=> Vendor::getId())
 	);
 	
@@ -150,7 +150,7 @@ if(isset($_POST['sent'])){
 					"userfile",								//input type file
 					"dnt_posts", 							//update table
 					"img",	 								//update table column
-					"`id`", 								//where column
+					"`id_entity`", 								//where column
 					$post_id, 								//where value
 					"../dnt-view/data/uploads" 				//path
 				);

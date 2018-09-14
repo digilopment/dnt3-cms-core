@@ -74,7 +74,7 @@ if (isset($_POST['odoslat']) && isset($_GET['id'])) {
 
 
 
-    $id = $rest->post("id");
+    $id_entity = $rest->post("id");
     $real_url = $rest->post("real_url");
     $real_url = str_replace("www.", "", $real_url);
     $url = $rest->post("url");
@@ -87,7 +87,7 @@ if (isset($_POST['odoslat']) && isset($_GET['id'])) {
 			SET 
 		nazov = '" . $nazov . "' 
 			WHERE 
-		id = '" . $id . "' AND 
+		id_entity = '" . $id_entity . "' AND 
 		vendor_id = '" . Vendor::getId() . "'");
 
 
@@ -95,7 +95,7 @@ if (isset($_POST['odoslat']) && isset($_GET['id'])) {
 			SET 
 		real_url = '" . $real_url . "' 
 			WHERE 
-		id = '" . $id . "' AND 
+		id_entity = '" . $id_entity . "' AND 
 		vendor_id = '" . Vendor::getId() . "'");
 
 
@@ -103,7 +103,7 @@ if (isset($_POST['odoslat']) && isset($_GET['id'])) {
 			SET 
 		url = '" . $url . "' 
 			WHERE 
-		id = '" . $id . "' AND 
+		id_entity = '" . $id_entity . "' AND 
 		vendor_id = '" . Vendor::getId() . "'");
 
 
@@ -111,21 +111,21 @@ if (isset($_POST['odoslat']) && isset($_GET['id'])) {
 			SET 
 		url = '" . $url . "' 
 			WHERE 
-		id = '" . $id . "' AND 
+		id_entity = '" . $id_entity . "' AND 
 		vendor_id = '" . Vendor::getId() . "'");
 
         $db->query("UPDATE `dnt_microsites` 
 			SET 
 		active = '" . $active . "' 
 			WHERE 
-		id = '" . $id . "' AND 
+		id_entity = '" . $id_entity . "' AND 
 		vendor_id = '" . Vendor::getId() . "'");
 
         $db->query("UPDATE `dnt_microsites` 
 			SET 
 		in_progress = '" . $in_progress . "' 
 			WHERE 
-		id = '" . $id . "' AND 
+		id_entity = '" . $id_entity . "' AND 
 		vendor_id = '" . Vendor::getId() . "'");
     }
 

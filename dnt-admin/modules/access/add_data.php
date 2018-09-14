@@ -28,7 +28,7 @@ if(isset($_POST['sent'])){
 				'datetime_publish' => Dnt::datetime(),
 				), 
 			array( 	//where
-				'id' => $post_id,
+				'id_entity' => $post_id,
 			)
 		);
 		$return = "index.php?src=access&action=edit&post_id=$post_id";
@@ -38,7 +38,7 @@ if(isset($_POST['sent'])){
 						"userfile",								//input type file
 						$table, 								//update table
 						"img",	 								//update table column
-						"`id`", 								//where column
+						"`id_entity`", 								//where column
 						$post_id, 								//where value
 						"../dnt-view/data/uploads" 	//path
 					);

@@ -20,7 +20,7 @@ if(isset($_POST['sent'])){
 		$table,	//table
 		$setData, //set 
 		array( 	//where
-			'id' 			=> $post_id, 
+			'id_entity' 	=> $post_id, 
 			'`vendor_id`' 	=> Vendor::getId())
 		);
 		

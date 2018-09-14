@@ -31,5 +31,6 @@ if($name != ""){
 	);
 
 	$db->insert('dnt_post_type', $insertedData);
+	
 }
 $dnt->redirect($redirect);

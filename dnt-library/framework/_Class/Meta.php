@@ -82,12 +82,12 @@ Class Meta {
                 $get = $rest->webhook(2);
             }
 
-            $query = "SELECT `id` FROM dnt_microsites WHERE 
+            $query = "SELECT `id_entity` FROM dnt_microsites WHERE 
 		`vendor_id` = '" . Vendor::getId() . "' AND 
 		`url` = '" . $rest->webhook(2) . "'";
             if ($db->num_rows($query) > 0) {
                 foreach ($db->get_results($query) as $row) {
-                    $return = $row['id'];
+                    $return = $row['id_entity'];
                 }
             } else {
                 $return = false;
@@ -106,7 +106,7 @@ Class Meta {
         $db = new Db;
         $query = "SELECT `" . $column . "` FROM dnt_microsites WHERE 
 			`vendor_id` = '" . Vendor::getId() . "' AND 
-			`id` = '" . self::competitionId() . "'
+			`id_entity` = '" . self::competitionId() . "'
 			";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
@@ -129,7 +129,7 @@ Class Meta {
         $db = new Db;
         $query = "SELECT `" . $column . "` FROM dnt_microsites WHERE 
 			`vendor_id` = '" . Vendor::getId() . "' AND 
-			`id` = '" . $competition_id . "'
+			`id_entity` = '" . $competition_id . "'
 			";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
@@ -148,11 +148,11 @@ Class Meta {
      * @param type $id
      * @return boolean
      */
-    public static function getCompetitionColumnId($column, $id) {
+    public static function getCompetitionColumnId($column, $id_entity) {
         $db = new Db;
         $query = "SELECT `" . $column . "` FROM dnt_microsites WHERE 
 			`vendor_id` = '" . Vendor::getId() . "' AND 
-			`id` = '" . $id . "'
+			`id_entity` = '" . $id_entity . "'
 			";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
@@ -240,11 +240,11 @@ Class Meta {
      * @param type $id
      * @return boolean
      */
-    public static function getCompetitionMetaById($key, $id) {
+    public static function getCompetitionMetaById($key, $id_entity) {
         $db = new Db;
         $query = "SELECT `value` FROM `dnt_microsites_composer` WHERE 
 				`vendor_id` = '" . Vendor::getId() . "' AND 
-				`competition_id` = '" . $id . "' AND
+				`competition_id` = '" . $id_entity . "' AND
 				
 				`meta` = '" . $key . "'
 				";

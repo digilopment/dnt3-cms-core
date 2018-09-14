@@ -11,6 +11,8 @@ $export 	= $article->getPostParam("content",  $post_id);
 $pdfName 	= $article->getPostParam("name_url",  $post_id);
 $fileName 	= $article->getPostParam("name",  $post_id);
 
+$pdfName = Dnt::name_url($pdfName);
+
 $html = '<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>

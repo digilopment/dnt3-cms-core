@@ -82,8 +82,10 @@ Class Install {
             'layout' => $vendor_layout,
             'is_default' => 0,
         );
+		//$db->dbTransaction();	
         $db->insert('dnt_vendors', $insertedData);
-        $NEW_VENDOR_ID = $db->lastid();
+        $NEW_VENDOR_ID = Dnt::getLastIdVendor();
+		//$db->dbCommit();
 
         foreach ($tables as $table) {
             //tabulka
@@ -98,13 +100,13 @@ Class Install {
                         $data["vendor_id"] = $NEW_VENDOR_ID;
                         //echo "OK" . $column . "<br/>";
                     }
-                    $db->insert($table, $data);
+                    $db->insert($table, $data, false);
                     //var_dump($data);
                     //echo "OK <hr/>";
                 }
             }
-            echo "<hr/>";
-            echo "<hr/>";
+            //echo "<hr/>";
+            //echo "<hr/>";
         }
 
         //DELETE DATA FROM
@@ -196,7 +198,40 @@ Class Install {
 
         echo "Updated";
     }
-
+	
+	public function updateIdEntity($tables){
+		$db = new Db;
+		 foreach ($tables as $table) {
+            //tabulka
+            $query = "SELECT * FROM $table WHERE 1";
+            if ($db->num_rows($query) > 0) {
+                $data = array();
+                foreach ($db->get_results($query) as $row) {
+					
+					$db->update(
+                    $table, //table
+					array(//set
+						'id_entity' => $row['id'],
+							), array(//where
+						'id_entity' => 0,
+						'id' => $row['id'],
+						)
+					);
+					
+					//$query = "UPDATE id_entity = '".$row['id']."' WHERE $table WHERE 1";
+					$qU = "UPDATE `$table` SET id_entity = '".$row['id']."' WHERE id_entity = 0 AND id = '".$row['id']."'";
+					$db->query($qU);
+					//echo $row['id'] . " - " . $table . "<br>";
+					
+                }
+            }
+            //echo "<hr/>";
+            //echo "<hr/>";
+        }
+		
+	}
+	
+	
     /**
      * installation
      */

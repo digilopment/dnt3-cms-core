@@ -45,7 +45,7 @@ class Settings {
         $db = new Db;
         $imageId = Settings::get($key);
 
-        $query = "SELECT name FROM dnt_uploads WHERE `id` = '" . $imageId . "'";
+        $query = "SELECT name FROM dnt_uploads WHERE `id_entity` = '" . $imageId . "'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 return Url::get("WWW_PATH_FILES") . "" . $row['name'];

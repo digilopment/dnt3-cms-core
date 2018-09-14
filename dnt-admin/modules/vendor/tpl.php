@@ -41,7 +41,7 @@ $vendor = new Vendor;
 							$adminUrl 	= $webUrl."/dnt-admin/index.php?src=login&action=2&domain_change=1";
                         ?>
                      <tr>
-                        <td><?php echo $row['id']; ?></td>
+                        <td><?php echo $row['id_entity']; ?></td>
                         <td style="max-width: 500px;"><b><a target="_blank" href="<?php echo $adminUrl; ?>"><?php echo $row['name']; ?></a></b></td>
                         <td><a href=""><i class="fa fa-pencil bg-blue action"></i></a></td>
                         <td>
@@ -64,12 +64,12 @@ $vendor = new Vendor;
                            </span>
                         </td>
                         <td>
-                           <button data-toggle="modal" data-target="#modalPrimary<?php echo $row['id']; ?>"><i class="fa fa-pencil bg-blue action"></i></button>
+                           <button data-toggle="modal" data-target="#modalPrimary<?php echo $row['id_entity']; ?>"><i class="fa fa-pencil bg-blue action"></i></button>
                            <!-- START MODAL -->								
-                           <div class="modal fade" id="modalPrimary<?php echo $row['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel8" aria-hidden="true">
+                           <div class="modal fade" id="modalPrimary<?php echo $row['id_entity']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel8" aria-hidden="true">
                               <div class="modal-wrapper">
                                  <div class="modal-dialog">
-                                    <form action="index.php?src=vendor&save&id=<?php echo $row['id']; ?>" method="POST">
+                                    <form action="index.php?src=vendor&save&id=<?php echo $row['id_entity']; ?>" method="POST">
                                        <div class="modal-content">
                                           <div class="col-md-12">
                                              <div class="modal-header bg-blue">
@@ -139,7 +139,7 @@ $vendor = new Vendor;
                                                    </div>
                                                 </div>
                                                 <!-- end here -->
-                                                <input type="hidden"  value="<?php echo $row['id']; ?>" name="id">
+                                                <input type="hidden"  value="<?php echo $row['id_entity']; ?>" name="id">
                                                 <input type="submit" name="odoslat_sutaz" class="btn btn-primary btn-lg btn-block" value="Upraviť" />
                                              </div>
                                           </div>

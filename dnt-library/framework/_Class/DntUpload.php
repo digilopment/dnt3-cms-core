@@ -34,10 +34,11 @@ class DntUpload {
                         'name' => $dntUpload->file_dst_name,
                         'type' => $dntUpload->file_src_mime
                     );
+					$db->dbTransaction();
                     $db->insert('dnt_uploads', $insertedData);
 
                     //get last ID of this file
-                    $imgId = $db->lastid();
+                    $imgId = Dnt::getLastId('dnt_uploads');
 
                     //update settings columns
                     $db->update(
@@ -45,6 +46,7 @@ class DntUpload {
                             array($setColumn => $imgId), //set
                             array($updateColumn => $updateValue, '`vendor_id`' => Vendor::getId())//where
                     );
+					$db->commit();
                 }
             }
         }
@@ -128,17 +130,46 @@ class DntUpload {
                         'type' => $dntUpload->file_src_mime
                     );
                     $db->insert('dnt_uploads', $insertedData);
-                    //get last ID of this file
-                    //$imgId = $db->lastid();
-                    //update settings columns
-                    /* $db->update(
-                      $table, //table
-                      array( $setColumn => $imgId), //set
-                      array( $updateColumn => $updateValue, '`vendor_id`' => Vendor::getId())//where
-                      ); */
                 }
             }
         } //end foreach
+    }
+	
+	public function multypleUploadFiles($files, $table, $setColumn, $updateColumn, $updateValue, $path) {
+        $db = new Db;
+        $files_arr = $this->arrayFiles($files);
+		$uploadedID = array();
+        foreach ($files_arr as $file) {
+            $dntUpload = new Upload($file);
+			
+			if ($dntUpload->uploaded) {
+				$dntUpload->Process($path);
+				if ($dntUpload->processed) {
+					//insert to files table of files
+					$insertedData = array(
+						'vendor_id' => Vendor::getId(),
+						'name' => $dntUpload->file_dst_name,
+						'type' => $dntUpload->file_src_mime
+					);
+					
+					$db->insert('dnt_uploads', $insertedData);
+					$uploadedID[] = Dnt::getLastId('dnt_uploads');
+				}
+			}
+				
+        } //end foreach
+		
+		 //get last ID of this file
+		if(count($uploadedID)>0){
+			$imgId = implode(",", $uploadedID);
+
+			//update settings columns
+			$db->update(
+					$table, //table 
+					array($setColumn => $imgId), //set
+					array($updateColumn => $updateValue, '`vendor_id`' => Vendor::getId())//where
+			);
+		}
     }
 
 }

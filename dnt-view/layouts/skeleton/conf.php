@@ -12,13 +12,16 @@ function custom_modules(){
 		),  
 		"contact" => array_merge(
 				array(), $webhook->getSitemapModules("contact")
-		),  
+		),
 		"eshop" => array_merge(
 				array(), $webhook->getSitemapModules("eshop")
 		), 
-		"microsites" => array_merge(
+		"wp_hotely" => array_merge(
+			array(), $webhook->getSitemapModules("wp_hotely")
+		),
+		/*"microsites" => array_merge(
 				array(), $webhook->getSitemapModules("microsites")
-		), 
+		), */
 		"search" => array(
 			"search",
 			"hladaj",

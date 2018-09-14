@@ -129,7 +129,7 @@ class PollsFrontend extends Polls {
         $query = "SELECT `is_correct` FROM dnt_polls_composer WHERE
 		vendor_id 	= " . Vendor::getId() . " AND
 		is_correct 	= '1' AND
-		id 	= '" . $vendor_ansewer_id . "'";
+		id_entity 	= '" . $vendor_ansewer_id . "'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 return $row['is_correct'];
@@ -177,7 +177,7 @@ class PollsFrontend extends Polls {
         $db = new Db;
         $query = "SELECT `points` FROM dnt_polls_composer WHERE
 		vendor_id 	= " . Vendor::getId() . " AND
-		id 	= '" . $vendor_ansewer_id . "'";
+		id_entity 	= '" . $vendor_ansewer_id . "'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 return $row['points'];
@@ -276,7 +276,7 @@ class PollsFrontend extends Polls {
     public function getComposerDataById($column, $id) {
         $db = new Db;
         $query = "SELECT `$column` FROM dnt_polls_composer WHERE 
-		`id` = '$id' AND
+		`id_entity` = '$id' AND
 		`vendor_id` = '" . Vendor::getId() . "'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {

@@ -14,9 +14,9 @@ Class Image {
      * @param type $table
      * @return boolean
      */
-    public function get($id, $table = null) {
+    public function get($id_entity, $table = null) {
         $db = new Db;
-        $query = "SELECT img FROM $table WHERE `id` = '" . $id . "'";
+        $query = "SELECT img FROM $table WHERE `id_entity` = '" . $id_entity . "' AND vendor_id = '".Vendor::getId()."'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 return $row['img'];
@@ -36,7 +36,8 @@ Class Image {
         $imageId = $id;
         //`show` = '0' or `show` = '1' or `show` = '2'";
         $query = "SELECT name FROM dnt_uploads WHERE 
-		`id` = '" . $imageId . "' AND 
+		`id_entity` = '" . $imageId . "' AND 
+		`vendor_id` = '" . Vendor::getId() . "' AND 
 		" . Dnt::showStatus("show") . "";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
@@ -45,6 +46,30 @@ Class Image {
         } else {
             return "aaa";
         }
+    }
+	
+	
+	public function getFileImages($ids) {
+        $db = new Db;
+        $ids = explode(",", $ids);
+		if(is_array($ids)){
+			foreach($ids as $imageId){
+				$query = "SELECT name FROM dnt_uploads WHERE 
+				`id_entity` = '" . $imageId . "' AND 
+				`vendor_id` = '" . Vendor::getId() . "' AND 
+				" . Dnt::showStatus("show") . "";
+				if ($db->num_rows($query) > 0) {
+					foreach ($db->get_results($query) as $row) {
+						$return[] = WWW_PATH . "dnt-view/data/uploads/" . $row['name'];
+					}
+				} else {
+					$return = array(false);
+				}
+			}
+		}else{
+			$return = array(false);
+		}
+		return $return;
     }
 
     /**

@@ -103,10 +103,10 @@
                         $query = Polls::getWinningCombinationData($poll_id);
                         if($db->num_rows($query)>0){
                          foreach($db->get_results($query) as $row){
-                         $poll_name_points 	= Polls::inputName("points", $row['id'], $row['key']);
-                         $poll_name_key    	= Polls::inputName("key", $row['id'], $row['key']);
-                         $poll_name_img   	= Polls::inputName("img", $row['id'], $row['img']);
-                         $poll_name_content = Polls::inputName("content", $row['id'], $row['key']);
+                         $poll_name_points 	= Polls::inputName("points", $row['id_entity'], $row['key']);
+                         $poll_name_key    	= Polls::inputName("key", $row['id_entity'], $row['key']);
+                         $poll_name_img   	= Polls::inputName("img", $row['id_entity'], $row['img']);
+                         $poll_name_content = Polls::inputName("content", $row['id_entity'], $row['key']);
 						 $poll_min  		= false;
                         ?>
                      <tr>
@@ -126,13 +126,13 @@
 						</td>
 						 <td style="width:200px">
 							
-							<img src="<?php echo Image::getPostImage($row['id'],"dnt_polls_composer");?>" style="height: 80px" />
+							<img src="<?php echo Image::getPostImage($row['id_entity'],"dnt_polls_composer");?>" style="height: 80px" />
 							<br/>
 							<br/>
 							<input type="file" name="<?php echo $poll_name_img; ?>"  class="btn-default btn-block" />
                         </td>
 						<td style="text-align: right;width: 50px;">
-							<?php echo "<a ".Dnt::confirmMsg("Naozaj chcete zmazať túto kombináciu?")." href='index.php?src=polls&action=del_winning_combination&post_id=".$poll_id."&composer_id=".$row['id']."'>";?>
+							<?php echo "<a ".Dnt::confirmMsg("Naozaj chcete zmazať túto kombináciu?")." href='index.php?src=polls&action=del_winning_combination&post_id=".$poll_id."&composer_id=".$row['id_entity']."'>";?>
 							<i class="fa fa-times bg-red action"></i>
 							</a>
 						</td>
@@ -188,10 +188,10 @@
 					  $j = 1;
                   foreach($db->get_results($query) as $row){
                   
-                  $poll_name_show 	= Polls::inputName("show", $row['id'], $row['show']);
-                  $poll_name_key 	= Polls::inputName("key", $row['id'], $row['key']);
-                  $poll_name_points = Polls::inputName("points", $row['id'], $row['key']);
-                  $poll_name_is_correct = Polls::inputName("is_correct", $row['id'], $row['is_correct']);
+                  $poll_name_show 	= Polls::inputName("show", $row['id_entity'], $row['show']);
+                  $poll_name_key 	= Polls::inputName("key", $row['id_entity'], $row['key']);
+                  $poll_name_points = Polls::inputName("points", $row['id_entity'], $row['key']);
+                  $poll_name_is_correct = Polls::inputName("is_correct", $row['id_entity'], $row['is_correct']);
                   $last_question_id = $row['question_id'];
                   ?>
 				  <div class="row form">

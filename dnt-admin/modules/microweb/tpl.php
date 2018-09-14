@@ -42,15 +42,15 @@ $image = new Image();
                             if ($db->num_rows($query) > 0) {
                                 foreach ($db->get_results($query) as $row) {
 
-                                    $editUrl = "index.php?src=" . $rest->get("src") . "&id=" . $row['id'] . "&action=edit";
+                                    $editUrl = "index.php?src=" . $rest->get("src") . "&id=" . $row['id_entity'] . "&action=edit";
                                     $develUrl = "";
                                     $webUrl = 	WWW_PATH."microsites/".$row['url'];
                                     $domainUrl = $row['real_url'];
                                    // $saveUrl = "index.php?src=" . $rest->get("src") . "&action=save";
-									$urlUpdate = "index.php?src=" . $rest->get('src') . "&id=" . $row['id'] . "&action=update";
+									$urlUpdate = "index.php?src=" . $rest->get('src') . "&id=" . $row['id_entity'] . "&action=update";
                                     ?>
                                     <tr>
-                                        <td><?php echo $row['id']; ?></td>
+                                        <td><?php echo $row['id_entity']; ?></td>
                                         <td style="max-width: 500px;"><b><a href="<?php echo $editUrl; ?>"><?php echo $row['nazov']; ?></a></b></td>
                                         <td><a href="<?php echo $editUrl; ?>"><i class="fa fa-pencil bg-blue action"></i></a></td>
                                         <td>
@@ -75,11 +75,11 @@ $image = new Image();
                                             </span>
                                         </td>
                                         <td>
-                                            <button data-toggle="modal" data-target="#modalPrimary<?php echo $row['id']; ?>"><i class="fa fa-pencil bg-blue action"></i></button>
+                                            <button data-toggle="modal" data-target="#modalPrimary<?php echo $row['id_entity']; ?>"><i class="fa fa-pencil bg-blue action"></i></button>
 
 
                                             <!-- START MODAL -->								
-                                            <div class="modal fade" id="modalPrimary<?php echo $row['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel8" aria-hidden="true">
+                                            <div class="modal fade" id="modalPrimary<?php echo $row['id_entity']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel8" aria-hidden="true">
                                                 <div class="modal-wrapper">
                                                     <div class="modal-dialog">
                                                         <form action="<?php echo $urlUpdate; ?>" method="POST">
@@ -149,7 +149,7 @@ $image = new Image();
                                                                             </div>
                                                                         </div>
                                                                         <!-- end here -->
-                                                                        <input type="hidden"  value="<?php echo $row['id']; ?>" name="id">
+                                                                        <input type="hidden"  value="<?php echo $row['id_entity']; ?>" name="id">
                                                                         <input type="submit" name="odoslat_sutaz" class="btn btn-primary btn-lg btn-block" value="Upraviť" />
                                                                     </div>
                                                                 </div>

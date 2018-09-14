@@ -31,13 +31,13 @@
                    $query = "SELECT * FROM `dnt_users` WHERE 
                    parent_id = '0' AND
                    type = 'admin' AND
-                   vendor_id = '".Vendor::getId()."' ORDER BY id desc"; 
+                   vendor_id = '".Vendor::getId()."' ORDER BY id_entity desc"; 
 				   $pocet_aktivne = $db->num_rows($query);
                     if($db->num_rows($query)>0){
                    	foreach($db->get_results($query) as $row){
                    ?>
                <tr>
-                  <td><?php echo $row['id']; ?></td>
+                  <td><?php echo $row['id_entity']; ?></td>
                   <td><?php echo $row['login']; ?></td>
                   <td><b><?php echo $row['name']." ".$row['surname']; ?></b></td>
                   <td>
@@ -49,7 +49,7 @@
                      <?php
                         if (($pocet_aktivne > 1) || ($row['status'] == 0)){
                         ?>
-                     <a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$rest->get('src')."&nastav_zobrazenie=".$row['status']."&id=".$row['id']; ?>">
+                     <a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$rest->get('src')."&nastav_zobrazenie=".$row['status']."&id=".$row['id_entity']; ?>">
                      <i class="<?php echo admin_zobrazenie_stav($row['status']);?>"></i>
                      </a>
                      <?php
@@ -60,11 +60,11 @@
                         	?>
                   </td>
                   <td>
-                     <a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$rest->get('src')."&action=edit&post_id=".$row['id']; ?>"><i class="fa fa-pencil bg-blue action"></i></a>
+                     <a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$rest->get('src')."&action=edit&post_id=".$row['id_entity']; ?>"><i class="fa fa-pencil bg-blue action"></i></a>
                      <?php
                         if (($pocet_aktivne > 1) || ($row['status'] == 0)){
                         ?>
-                     <a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$rest->get('src')."&vymazat&post_id=".$row['id']; ?>"><i class="fa fa-times bg-red action"></i></a>
+                     <a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$rest->get('src')."&vymazat&post_id=".$row['id_entity']; ?>"><i class="fa fa-times bg-red action"></i></a>
                      <?php
                         }
                         else{

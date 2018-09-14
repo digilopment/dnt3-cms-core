@@ -55,7 +55,7 @@ class Polls {
      * @return string
      */
     public function getPolls() {
-        return "SELECT * FROM dnt_polls WHERE `show` <> '0' AND `show` <> '3'";
+        return "SELECT * FROM dnt_polls WHERE `show` <> '0' AND `show` <> '3' AND vendor_id = '" . Vendor::getId() . "'";
     }
 
     /**
@@ -64,6 +64,22 @@ class Polls {
      */
     public function getPollsAdmin() {
         return "SELECT * FROM dnt_polls WHERE vendor_id = '" . Vendor::getId() . "'";
+    }
+	
+	public function __construct($poll_id) {
+        $db = new Db;
+        $query = "SELECT `id_entity` FROM dnt_polls WHERE
+		id 	= " . $poll_id . "";
+
+        if ($db->num_rows($query) > 0) {
+            foreach ($db->get_results($query) as $row) {
+                $id_entity = $row['id_entity'];
+            }
+        } else {
+            $id_entity =  false;
+        }
+		//var_dump($id_entity);
+        return $id_entity;
     }
 
     /**
@@ -89,8 +105,8 @@ class Polls {
         );
 
         $db->insert('dnt_polls', $insertedData);
-        $poll_id = $db->lastid();
-        return $poll_id;
+		$lastId = Dnt::getLastId('dnt_polls');
+        return $lastId;
     }
 
     /**
@@ -104,7 +120,7 @@ class Polls {
         $db = new Db;
         $query = "SELECT `$column` FROM dnt_polls WHERE
 		vendor_id 	= " . Vendor::getId() . " AND
-		id 	= " . $poll_id . "";
+		id_entity 	= " . $poll_id . "";
 
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
@@ -163,6 +179,7 @@ class Polls {
                 '`order`' => "$order",
             );
             $db->insert('dnt_polls_composer', $insertedData);
+			
         }
 
         for ($j = 1; $j <= $questions; $j++) {
@@ -179,6 +196,7 @@ class Polls {
                 '`order`' => "$order",
             );
             $db->insert('dnt_polls_composer', $insertedData);
+			
 
             //generovanie inputov pre typy odpovedí A,B,C,D...
             for ($i = 1; $i <= $count_questions; $i++) {
@@ -208,6 +226,7 @@ class Polls {
         $db = new Db;
         $count_questions = self::getParam("count_questions", $poll_id);
         $question_id = $question_id + 1;
+        $order = false;
 
         $insertedData = array(
             '`vendor_id`' => Vendor::getId(),
@@ -220,6 +239,8 @@ class Polls {
             '`order`' => "$order",
         );
         $db->insert('dnt_polls_composer', $insertedData);
+		
+		//Dnt::getIdEntity($lastId);
 
         for ($i = 1; $i <= $count_questions; $i++) {
             $insertedData = array(
@@ -233,6 +254,7 @@ class Polls {
                 '`show`' => "1",
             );
             $db->insert('dnt_polls_composer', $insertedData);
+			
         }
     }
 
@@ -243,7 +265,7 @@ class Polls {
      */
     public function AddWinningCombination($poll_id, $question_id = 0) {
         $db = new Db;
-
+		$order = false;
         $insertedData = array(
             '`vendor_id`' => Vendor::getId(),
             '`poll_id`' => $poll_id,
@@ -255,7 +277,8 @@ class Polls {
             '`order`' => "$order",
         );
         $db->insert('dnt_polls_composer', $insertedData);
-    }
+	}
+		
 
     /**
      * 
@@ -274,7 +297,7 @@ class Polls {
      */
     public function delComposerInput($id) {
         $db = new Db;
-        $where = array('id' => $id, 'vendor_id' => Vendor::getId());
+        $where = array('id_entity' => $id, 'vendor_id' => Vendor::getId());
         $db->delete('dnt_polls_composer', $where);
     }
     
@@ -307,13 +330,15 @@ class Polls {
                     '`is_correct`' => $row['is_correct'],
                     '`img`' => $row['img'],
                 );
+				
                 $db->insert('dnt_polls_composer', $insertedData);
+				
             }
         }
 
         $query = "SELECT * FROM dnt_polls WHERE
 		vendor_id 	= " . Vendor::getId() . " AND
-		id 	= " . $copy_poll_id . "";
+		id_entity 	= " . $copy_poll_id . "";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
 
@@ -328,7 +353,7 @@ class Polls {
                     'content' => $row['content'],
                     'count_questions' => $row['count_questions'],
                         ), array(//where
-                    'id' => $poll_id,
+                    'id_entity' => $poll_id,
                     '`vendor_id`' => Vendor::getId())
                 );
             }

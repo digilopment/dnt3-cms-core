@@ -48,18 +48,18 @@ class Vendor {
             $status = "default";
         }
 
-        $query = "SELECT `id` FROM `dnt_vendors` WHERE
+        $query = "SELECT `id_entity` FROM `dnt_vendors` WHERE
 		name_url = '" . $vendor_url . "'";
 
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
-                $vendor_id = $row['id'];
+                $vendor_id = $row['id_entity'];
             }
         } else {
-            $query2 = "SELECT `id` FROM `dnt_vendors` WHERE `is_default` = '1'";
+            $query2 = "SELECT `id_entity` FROM `dnt_vendors` WHERE `is_default` = '1'";
             if ($db->num_rows($query2) > 0) {
                 foreach ($db->get_results($query2) as $row2) {
-                    $vendor_id = $row2['id'];
+                    $vendor_id = $row2['id_entity'];
                 }
             } else {
                 $vendor_id = false;
@@ -130,7 +130,7 @@ class Vendor {
     public function getColumn($column) {
         $db = new Db;
         $query = "SELECT `" . $column . "` FROM `dnt_vendors` WHERE 
-			`id` = '" . Vendor::getId() . "'
+			`id_entity` = '" . Vendor::getId() . "'
 			";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {

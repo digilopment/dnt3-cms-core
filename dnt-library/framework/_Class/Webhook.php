@@ -22,7 +22,7 @@ class Webhook {
 		}
 		$query = "
 			SELECT * FROM `dnt_posts` 
-			LEFT JOIN `dnt_translates` ON `dnt_posts`.`id` = `dnt_translates`.`translate_id` 
+			LEFT JOIN `dnt_translates` ON `dnt_posts`.`id_entity` = `dnt_translates`.`translate_id` 
 			WHERE `dnt_posts`.`type` = 'sitemap' 
 			AND `dnt_translates`.`type` = 'name_url' 
 			AND `dnt_posts`.`show` > '0' 
@@ -31,7 +31,7 @@ class Webhook {
 			GROUP BY `dnt_posts`.`name_url`
 			";
 			
-		
+		//var_export($query);
 			if ($db->num_rows($query) > 0){
 				foreach($db->get_results($query) as $row){
 					$arr[] = $row['name_url'];
@@ -64,7 +64,7 @@ class Webhook {
 		if($config === true){
 			return array(
 			"config" => array(
-				"sql"	=> "INSERT INTO `dnt_posts_meta` (`id`, `id_entity`, `service`, `vendor_id`, `key`, `value`, `description`, `show`) VALUES",
+				"sql"	=> "INSERT INTO `dnt_posts_meta` (`id`, `id_entity`, `service`, `vendor_id`, `key`, `value`, `content_type`, `cat_id`, `description`, `show`) VALUES",
 				),
 			);
 		}
@@ -75,37 +75,37 @@ class Webhook {
 			"homepage" => array(
 				"service_name" => "Homepage",
 				"sql" => "
-					(null, $postId, 'homepage', '" . Vendor::getId() . "', 'name', 'uvod', 'Url adresa', 1),
-					(null, $postId, 'homepage', '" . Vendor::getId() . "', 'name_url', 'Úvod', 'Nazov sekcie', 1),
-					(null, $postId, 'homepage', '" . Vendor::getId() . "', 'info', 'Toto je info', 'Informácie', 1),
-					(null, $postId, 'homepage', '" . Vendor::getId() . "', 'add', 'Toto je info', 'Informácie', 1),
-					(null, $postId, 'homepage', '" . Vendor::getId() . "', 'test', 'Toto je test', 'Testovacia zóna', 0);
+					(null, $postId, 'homepage', '" . Vendor::getId() . "', 'name', 'uvod', 'content', '1', 'Url adresa', 1),
+					(null, $postId, 'homepage', '" . Vendor::getId() . "', 'name_url', 'Úvod', 'content', '1','Nazov sekcie', 1),
+					(null, $postId, 'homepage', '" . Vendor::getId() . "', 'info', 'Toto je info', 'content', '1','Informácie', 1),
+					(null, $postId, 'homepage', '" . Vendor::getId() . "', 'add', 'Toto je info', 'content', '1','Informácie', 1),
+					(null, $postId, 'homepage', '" . Vendor::getId() . "', 'test', 'Toto je test', 'content', '1','Testovacia zóna', 0);
 				"),
 				
 			//contact
 			"contact" => array(
 				"service_name" => "Kontakt",
 				"sql" => "
-					(null, $postId, 'contact', '" . Vendor::getId() . "', 'info', 'Toto je info', 'Informácie', 1),
-					(null, $postId, 'contact', '" . Vendor::getId() . "', 'info_url', 'Toto je info url', 'Informácie url', 1),
-					(null, $postId, 'contact', '" . Vendor::getId() . "', 'new', 'Toto je info url', 'Informácie url', 1),
-					(null, $postId, 'contact', '" . Vendor::getId() . "', 'test', 'Toto je test', 'Testovacia zóna', 0);
+					(null, $postId, 'contact', '" . Vendor::getId() . "', 'info', 'Toto je info', 'content', '1','Informácie', 1),
+					(null, $postId, 'contact', '" . Vendor::getId() . "', 'info_url', 'Toto je info url', 'content', '1','Informácie url', 1),
+					(null, $postId, 'contact', '" . Vendor::getId() . "', 'new', 'Toto je info url', 'content', '1','Informácie url', 1),
+					(null, $postId, 'contact', '" . Vendor::getId() . "', 'test', 'Toto je test', 'content', '1','Testovacia zóna', 0);
 				"),
 				
 			//about-us
 			"about-us" => array(
 				"service_name" => "O nás",
 				"sql" => "
-					(null, $postId, 'about-us', '" . Vendor::getId() . "', 'about-us', 'Toto je about-us', 'about-us', 1),
-					(null, $postId, 'about-us', '" . Vendor::getId() . "', 'test', 'Toto je about-us', 'about-us zóna', 0);
+					(null, $postId, 'about-us', '" . Vendor::getId() . "', 'about-us', 'Toto je about-us', 'content', '1','about-us', 1),
+					(null, $postId, 'about-us', '" . Vendor::getId() . "', 'test', 'Toto je about-us', 'content', '1','about-us zóna', 0);
 			"),
 			
 			//partneri
 			"partners" => array(
 				"service_name" => "Partnetri",
 				"sql" => "
-					(null, $postId, 'partners', '" . Vendor::getId() . "', 'partners', 'Toto je partnerss', 'partners', 1),
-					(null, $postId, 'partners', '" . Vendor::getId() . "', 'test', 'Toto je partners', 'partners zóna', 0);
+					(null, $postId, 'partners', '" . Vendor::getId() . "', 'partners', 'Toto je partnerss', 'content', '1', 'partners', 1),
+					(null, $postId, 'partners', '" . Vendor::getId() . "', 'test', 'Toto je partners', 'content', '1', 'partners zóna', 0);
 			"),
 			//partneri
 			"article_list" => array(
@@ -123,6 +123,14 @@ class Webhook {
 			"eshop" => array(
 				"service_name" => "Eshop List",
 				"sql" => ""
+			),
+			//ESHOP
+			"wp_hotely" => array(
+				"service_name" => "WP Hotely",
+				"sql" => "
+					(null, $postId, 'wp_hotely', '" . Vendor::getId() . "', 'hotel_', 'Toto je partnerss', 'content', '1', 'partners', 1),
+					(null, $postId, 'wp_hotely', '" . Vendor::getId() . "', 'test', 'Toto je partners', 'content', '1', 'partners zóna', 0);
+				"
 			),
 		);
 	}
@@ -218,6 +226,7 @@ class Webhook {
         //var_dump($modules);
         $modules = array_merge($custom_modules, $modules);
         //var_dump($modules);
+		//exit;
         return $modules;
     }
 

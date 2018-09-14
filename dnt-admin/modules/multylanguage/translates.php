@@ -69,7 +69,7 @@ $rest = new Rest;
 					?>
 					 
                         <tr>
-                           <td><?php echo $row['id']; ?></td>
+                           <td><?php echo $row['id_entity']; ?></td>
                            <td><b><?php echo $row['translate']; ?></b></td>
                            <td><b><?php echo $row['lang_id']; ?></b></td>
                            <td><span class="label label-warning"><?php echo $row['translate_id']; ?></span></td>

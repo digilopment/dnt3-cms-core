@@ -160,7 +160,7 @@ $settings = new Settings
                <div class="row">
                   <div class="col-md-6">
                      <form enctype='multipart/form-data' id="pristupy" action="<?php echo WWW_PATH_ADMIN."index.php?src=access&action=update&post_id=".AdminUser::data("admin", "id")."";?>" method="post">
-                        <input type="hidden" name="id" value="<?php echo AdminUser::data("admin", "id");?>" />
+                        <input type="hidden" name="id" value="<?php echo AdminUser::data("admin", "id_entity");?>" />
                         <p class="lead">Nastavte Vaše <b>meno</b></p>
                         <p>Ak máte eshop a vystavíte faktúru, vaše meno tam bude predvyplnené</p>
                         <input type="text" class="btn-default btn-lg btn-block" name="name" value="<?php echo AdminUser::data("admin", "name");?>" />

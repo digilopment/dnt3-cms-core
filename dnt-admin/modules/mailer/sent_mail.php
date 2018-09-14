@@ -27,7 +27,7 @@ if(isset($_GET['mail_id'])){
 	$next_id = dnt::db_next_id($table, "AND cat_id = '".$cat_id."'", $post_id);
 }
 
-$query = "SELECT * FROM dnt_mailer_mails WHERE cat_id = '".$cat_id."' AND vendor_id = '".Vendor::getId()."' AND id <= '$post_id'";
+$query = "SELECT * FROM dnt_mailer_mails WHERE cat_id = '".$cat_id."' AND vendor_id = '".Vendor::getId()."' AND id_entity <= '$post_id'";
 $sended_mails = $db->num_rows($query);
 
 if($next_id){

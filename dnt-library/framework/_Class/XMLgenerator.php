@@ -51,7 +51,7 @@ class XMLgenerator {
             $andWhere = false;
         }
 
-        $query = "SELECT id FROM $table WHERE parent_id = 0 $andWhere ";
+        $query = "SELECT id_entity FROM $table WHERE parent_id = 0 $andWhere ";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 $id[] = $row['id'];
@@ -70,9 +70,9 @@ class XMLgenerator {
      * @param type $id
      * @return boolean
      */
-    public function getTableRows($table, $columns, $id) {
+    public function getTableRows($table, $columns, $id_entity) {
         $db = new DB();
-        $query = "SELECT $columns FROM $table WHERE id = $id";
+        $query = "SELECT $columns FROM $table WHERE id_entity = $id_entity";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 foreach ($this->getTableColumns($table, $columns) as $index => $value) {
@@ -187,7 +187,7 @@ class XMLgenerator {
             $data .= str_replace(" ", ";", $columns);
             $data .= "\n";
             foreach ($db->get_results($query) as $row) {
-                $data .= $row['id'] . ";" . $row['competition_id'] . ";" . $row['meno'] . ";" . $row['priezvisko'] . ";" . $row['uniq_id'] . ";" . $row['mesto'] . ";" . $row['psc'] . ";" . $row['email'] . ";" . $row['odpoved'] . ";" . $row['news'] . ";" . $row['news_2'] . ";" . $row['custom_1'] . "\n";
+                $data .= $row['id_entity'] . ";" . $row['competition_id'] . ";" . $row['meno'] . ";" . $row['priezvisko'] . ";" . $row['uniq_id'] . ";" . $row['mesto'] . ";" . $row['psc'] . ";" . $row['email'] . ";" . $row['odpoved'] . ";" . $row['news'] . ";" . $row['news_2'] . ";" . $row['custom_1'] . "\n";
             }
         }
         file_put_contents($fileName, odstran_diakritiku($data));

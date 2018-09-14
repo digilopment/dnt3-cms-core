@@ -20,7 +20,7 @@ if(isset($_POST['sent'])){
 		$table,	//table
 		$setData, //set 
 		array( 	//where
-			'id' 			=> $post_id, 
+			'id_entity' 			=> $post_id, 
 			'`vendor_id`' 	=> Vendor::getId())
 		);
 		
@@ -52,7 +52,7 @@ if(isset($_POST['sent'])){
 						"userfile",								//input type file
 						$table, 								//update table
 						"img",	 								//update table column
-						"`id`", 								//where column
+						"`id_entity`", 								//where column
 						$post_id, 								//where value
 						"../dnt-view/data/".Vendor::getId() 	//path
 					);

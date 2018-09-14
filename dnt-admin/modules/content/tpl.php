@@ -99,21 +99,21 @@
                   if($db->num_rows($query)>0){
                   	foreach($db->get_results($query) as $row){
 					$cat_id 	= $row['cat_id'];
-					$post_id 	= $row['id'];
+					$post_id 	= $row['id_entity'];
 					$sub_cat_id 	= $row['sub_cat_id'];
 					$type 	= $row['type'];
 					$page 	= AdminContent::getPage("current");
                   ?>
 				   <tr>
 					  <td><?php echo $i++; ?></td>
-					  <td><?php echo $row['id'] ?></td>
+					  <td><?php echo $post_id ?></td>
 					  <td style="max-width: 500px;"><b><a href="<?php echo AdminContent::url("edit", $cat_id, $sub_cat_id, false, $post_id, $page) ?>"><?php echo $row['name']; ?></a></b></td>
-					  <td><a href="index.php?src=content&included=sitemap&filter=<?php echo $row['cat_id'] ?>&post_id=<?php echo $row['id'] ?>&services=<?php echo $row['service'] ?>">
+					  <td><a href="index.php?src=content&included=sitemap&filter=<?php echo $row['cat_id'] ?>&post_id=<?php echo $post_id ?>&services=<?php echo $row['service'] ?>">
 						<?php echo $row['service'] ?>
 					</td>
 					  <td><a href="<?php echo AdminContent::url("filter", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>">
-						<!--<?php echo AdminContent::getPostParam("sub_cat_id", $row['id'])." -> ".AdminContent::getPostParam("cat_id", $row['id']); ?>-->
-						<?php echo AdminContent::getPostParam("type", $row['id']); ?>
+						<!--<?php echo AdminContent::getPostParam("sub_cat_id", $post_id)." -> ".AdminContent::getPostParam("cat_id", $post_id); ?>-->
+						<?php echo AdminContent::getPostParam("type", $post_id); ?>
 						</a></td>
 					  <td><b><?php echo $row['datetime_creat']; ?></b></td>
 					  <td>

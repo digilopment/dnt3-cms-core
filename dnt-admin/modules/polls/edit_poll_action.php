@@ -20,7 +20,7 @@ if($rest->post("sent")){
 			'content' 		=> $poll_content,
 			), 
 		array( 	//where
-			'id' 			=> $poll_id, 
+			'id_entity' 			=> $poll_id, 
 			'`vendor_id`' 	=> Vendor::getId())
 	);
 	$dntUpload->addDefaultImage(
@@ -43,12 +43,12 @@ if($rest->post("sent")){
 	$query = Polls::getPollData($poll_id);
 	  if($db->num_rows($query)>0){
 		foreach($db->get_results($query) as $row){
-			 $poll_name_show 	= $rest->post(Polls::inputName("show", $row['id'], $row['show']));
-             $poll_name_key 	= $rest->post(Polls::inputName("key", $row['id'], $row['key']));
-             $poll_name_points 	= $rest->post(Polls::inputName("points", $row['id'], $row['key']));
-             $poll_name_content = $rest->post(Polls::inputName("content", $row['id'], $row['key']));
-			 $dnt_polls_meta_id = explode("_", Polls::inputName("key", $row['id'], $row['key']));
-			 $poll_name_img   	= Polls::inputName("img", $row['id'], $row['img']);
+			 $poll_name_show 	= $rest->post(Polls::inputName("show", $row['id_entity'], $row['show']));
+             $poll_name_key 	= $rest->post(Polls::inputName("key", $row['id_entity'], $row['key']));
+             $poll_name_points 	= $rest->post(Polls::inputName("points", $row['id_entity'], $row['key']));
+             $poll_name_content = $rest->post(Polls::inputName("content", $row['id_entity'], $row['key']));
+			 $dnt_polls_meta_id = explode("_", Polls::inputName("key", $row['id_entity'], $row['key']));
+			 $poll_name_img   	= Polls::inputName("img", $row['id_entity'], $row['img']);
 			 $meta_id = $dnt_polls_meta_id[0];
 			 
 			if($row['key'] == "winning_combination" && $k == 1 && Polls::getParam("type", $poll_id) == 2){
@@ -71,7 +71,7 @@ if($rest->post("sent")){
 					'description' 	=> $poll_name_content,
 					), 
 				array( 	//where
-					'id' 			=> $meta_id, 
+					'id_entity' 			=> $meta_id, 
 					//'poll_id' 		=> $poll_id, 
 					'`vendor_id`' 	=> Vendor::getId())
 			);
@@ -89,7 +89,7 @@ if($rest->post("sent")){
 					'is_correct' 	=> 1,
 					), 
 				array( 	//where
-					'id' 			=> $is_correct, 
+					'id_entity' 			=> $is_correct, 
 					'`vendor_id`' 	=> Vendor::getId())
 			);
 			

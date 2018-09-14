@@ -15,50 +15,26 @@ $idEntityCheck 	= $postId ;
 $serviceCheck 	= $services;
 
 
-/*
-$dbQuery = $webhook->services(0);
-$dbService = $webhook->services(0, true);
-$db->query($dbService['config']['sql']." ".$dbQuery[$services]['sql']);
+/** 
+	HOMOGEN POST META
+	VYPNUTE KVOLI VYKONU
+**/
+$serviceName = $services;
+//include "tpl.php";
 
-$query = "SELECT * FROM dnt_posts_meta WHERE 
-	`id_entity` = '0' AND 
-	`service` = '$serviceCheck' ORDER BY id asc";
-
-	$queryCheck = "SELECT * FROM dnt_posts_meta WHERE 
-				`id_entity` = '$idEntityCheck' AND 
-				`service` = '$serviceCheck' ORDER BY id asc";
-				
-foreach ($db->get_results($query) as $row) {
-	foreach ($db->get_results($queryCheck) as $rowCheck) {
-		if($row['id_entity'] == 0 && $row['key'] == $rowCheck['key']){
-			$arr[] = $row['id'];
-		}
-	}
+if($rest->get("action") == "update")
+{
+	include "update.php";
+}
+else{
+	include "tpl.php";
 }
 
-$IN = implode(",",$arr);
 
-$query = "SELECT * FROM dnt_posts_meta WHERE 
-	`id` NOT IN ($IN) AND
-	`id_entity` = '0' AND 
-	`service` = '$serviceCheck' ORDER BY id asc";
-foreach ($db->get_results($query) as $row) {
-	//echo $row['id'];
-	$insertedData = array(
-		'`id_entity`' 	=> $idEntityCheck,
-		'`service`' 		=> $row['service'],
-		'`vendor_id`' 	=> Vendor::getId(),
-		'`key`' 			=> $row['key'],
-		'`value`' 		=> $row['value'],
-		'`description`' 	=> $row['description'],
-		'`show`' 			=> $row['show'],
-	);
-	$db->insert('dnt_posts_meta', $insertedData);	
-}	
 
-$db->query("DELETE FROM dnt_posts_meta WHERE id_entity = '0'");
-*/
 
+
+exit;
 foreach($webhook->services() as $key=>$serviceIndex){
 	if($key == $services){
 		
@@ -70,12 +46,18 @@ foreach($webhook->services() as $key=>$serviceIndex){
 		`id_entity` = '".$postId."' AND 
 		`service` = '$services' AND 
 		`vendor_id` = '" . Vendor::getId() . "'";
-
+		
 		if (!$db->num_rows($query) > 0) {
+			
 			//INSERT DEFAULT MODULE META
 			$dbQuery = $webhook->services($postId);
 			$dbService = $webhook->services($postId, true);
-			$db->query($dbService['config']['sql']." ".$dbQuery[$services]['sql']);
+			
+			//var_dump($dbService['config']['sql']." ".$dbQuery[$services]['sql']);
+			//exit;
+			if($dbQuery[$serviceCheck]['sql']){
+				$db->query($dbService['config']['sql']." ".$dbQuery[$services]['sql']);
+			}
 			
 		}
 		//$postMeta->setApproval($idEntityCheck, $serviceCheck);
@@ -84,3 +66,4 @@ foreach($webhook->services() as $key=>$serviceIndex){
 		
 	}
 }
+

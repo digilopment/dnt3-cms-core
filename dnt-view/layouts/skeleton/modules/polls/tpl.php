@@ -31,7 +31,7 @@ $poll_input_name = "poll_".$poll_id."_".$question_id;
          <li class="list-group-item">
             <div class="radio">
                <label>
-               <input type="radio" name="<?php echo $poll_input_name; ?>" value="<?php echo $row['id']?>">
+               <input type="radio" name="<?php echo $poll_input_name; ?>" value="<?php echo $row['id_entity']?>">
                <?php echo $row['value']?>
                </label>
             </div>

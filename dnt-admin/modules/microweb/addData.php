@@ -25,17 +25,29 @@ if (isset($_POST['odoslat'])) {
 
         //creat competition 
         $db->query("INSERT INTO `dnt_microsites` 
-		(`id`, `vendor_id`, `url`, `nazov`, `active`, `in_progress`, `hash`, `datum_den`, `datum_mesiac`, `datum_rok`)
+		(`id`, `id_entity`,  `vendor_id`, `url`, `nazov`, `active`, `in_progress`, `hash`, `datum_den`, `datum_mesiac`, `datum_rok`)
 			VALUES
-		('" . $thisId . "', '" . Vendor::getId() . "',  '$url', '$nazov', '0', '1', '" . $hash . "', '" . $get_den . "', '" . $get_mesiac . "', '" . $get_rok . "')");
+		('" . $thisId . "', '" . $thisId . "', '" . Vendor::getId() . "',  '$url', '$nazov', '0', '1', '" . $hash . "', '" . $get_den . "', '" . $get_mesiac . "', '" . $get_rok . "')");
 
         $query = "SELECT * FROM dnt_microsites_composer WHERE vendor_id = '" . Vendor::getId() . "' AND competition_id = '" . $competition_id . "'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
-                $db->query("INSERT INTO `dnt_microsites_composer` 
+                $db->dbTransaction();
+				$db->query("INSERT INTO `dnt_microsites_composer` 
 				( `vendor_id`, `competition_id`, `cat_id`, `content_type`, `description`, `meta`, `value`, `zobrazenie`, `poradie`, `parent_id`)
 					VALUES
 				('" . Vendor::getId() . "',  '$thisId', '" . $row['cat_id'] . "', '" . $row['content_type'] . "', '" . $row['description'] . "', '" . $row['meta'] . "', '" . $row['value'] . "', '" . $row['zobrazenie'] . "', '" . $row['poradie'] . "', '0')");
+				$post_id = $db->lastid();
+				$db->update(
+					'dnt_microsites_composer',	//table
+					array(	//set
+						'id_entity' => $lastId
+						), 
+					array( 	//where
+						'id' => $lastId
+					)
+				);
+				$db->dbCommit();
             }
         }
 

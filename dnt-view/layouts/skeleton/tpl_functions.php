@@ -215,21 +215,21 @@ $translate['prihlasit'] = $multylanguage->getTranslate(array("type" => "static",
                <!-- Home -->
               <?php 
 				foreach(Navigation::getParents() as $row){ 
-				$name_url_1 = $article->getPostParam("name_url", $row['id'], false);
+				$name_url_1 = $article->getPostParam("name_url", $row['id_entity'], false);
 				?>
-				<li class="dropdown home <?php if($article->getPostParam("name_url", $row['id']) == $rest->webhook(1)){echo "active";}?> ">
+				<li class="dropdown home <?php if($article->getPostParam("name_url", $row['id_entity']) == $rest->webhook(1)){echo "active";}?> ">
                   <?php if($row['name_url'] == "no_url"){ ?>
-                  <a><?php echo $article->getPostParam("name", $row['id']);?></a>
+                  <a><?php echo $article->getPostParam("name", $row['id_entity']);?></a>
                   <?php }else{?>
-                  <a  href="<?php echo $name_url_1;?>"><?php echo  $article->getPostParam("name", $row['id']);?></a>
+                  <a  href="<?php echo $name_url_1;?>"><?php echo  $article->getPostParam("name", $row['id_entity']);?></a>
                   <?php } ?>
-                  <?php  if(Navigation::hasChild($row['id'])){ ?>
+                  <?php  if(Navigation::hasChild($row['id_entity'])){ ?>
                   <ul class="dropdown-menu">
                      <?php   
-						foreach(Navigation::getChildren($row['id']) as $row2){ 
-						$name_url_2 = $article->getPostParam("name_url", $row2['id'], false);
+						foreach(Navigation::getChildren($row['id_entity']) as $row2){ 
+						$name_url_2 = $article->getPostParam("name_url", $row2['id_entity'], false);
 					 ?>
-                     <li class="<?php if($article->getPostParam("name_url", $row['id']) == $rest->webhook(1)){echo "active";}?>"><a href="<?php echo $name_url_2;?>"><?php echo $article->getPostParam("name", $row2['id']);?></a></li>
+                     <li class="<?php if($article->getPostParam("name_url", $row['id_entity']) == $rest->webhook(1)){echo "active";}?>"><a href="<?php echo $name_url_2;?>"><?php echo $article->getPostParam("name", $row2['id_entity']);?></a></li>
                      <?php } ?>
                   </ul>
                   <?php } ?>
@@ -429,7 +429,7 @@ if($db->num_rows($query)>0){
 		<div class="master-slider ms-skin-default" id="masterslider">
 			<?php foreach($db->get_results($query) as $row){ ?>
 			<div class="ms-slide blog-slider">
-				<img src="/dnt-system/layouts/quy_osmos/images/blank.gif" data-src="<?php echo $article->getPostImage($row['id']); ?>" alt="lorem ipsum dolor sit"/>
+				<img src="/dnt-system/layouts/quy_osmos/images/blank.gif" data-src="<?php echo $article->getPostImage($row['id_entity']); ?>" alt="lorem ipsum dolor sit"/>
 				<span class="blog-slider-badge" onclick="location.href = '<?php echo "".$row['embed'];?>';"><?php echo $row['name'];?></span>
 				<div class="ms-info"></div>
 				<div class="blog-slider-title">

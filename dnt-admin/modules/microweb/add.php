@@ -33,7 +33,7 @@ $rest = new Rest;
                                 $query = "SELECT * FROM dnt_microsites WHERE vendor_id = '" . Vendor::getId() . "'";
                                 if ($db->num_rows($query) > 0) {
                                     foreach ($db->get_results($query) as $row) {
-                                        echo '<option value="' . $row['id'] . '">' . $row['id'] . ' - ' . $row['nazov'] . ' / ' . $row['real_url'] . '</option>';
+                                        echo '<option value="' . $row['id_entity'] . '">' . $row['id_entity'] . ' - ' . $row['nazov'] . ' / ' . $row['real_url'] . '</option>';
                                     }
                                 }
                                 ?>

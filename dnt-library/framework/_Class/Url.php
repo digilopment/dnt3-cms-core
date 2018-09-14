@@ -82,9 +82,9 @@ class Url {
         $dntDb = new DB();
 
         if ($type == false || "dnt_posts") {
-            $this->query = "SELECT " . $column . " FROM dnt_posts WHERE id = '" . $postId . "' LIMIT 1";
+            $this->query = "SELECT " . $column . " FROM dnt_posts WHERE id_entity = '" . $postId . "' LIMIT 1";
         } elseif ($type == "obchod_produkty") {
-            $this->query = "SELECT " . $column . " FROM obchod_produkty  WHERE id = '" . $postId . "' LIMIT 1";
+            $this->query = "SELECT " . $column . " FROM obchod_produkty  WHERE id_entity = '" . $postId . "' LIMIT 1";
         }
 
         return $this->query;
@@ -126,7 +126,7 @@ class Url {
     public function get_uploaded_image($postId) {
 
         $dntDb = new DB();
-        $query = "SELECT vendor, nazov, pripona FROM dnt_uploads WHERE id = '" . $postId . "' LIMIT 1";
+        $query = "SELECT vendor, nazov, pripona FROM dnt_uploads WHERE id_entity = '" . $postId . "' LIMIT 1";
         foreach ($dntDb->get_results($query) as $row) {
             $this->vendor = $row['vendor'];
             $this->nazov = $row['nazov'];
@@ -151,13 +151,13 @@ class Url {
 
         $vendorId = $dntSs->get_session_data("getVendorId");
         //SELECT LAYOUT ID
-        $query = "SELECT layout FROM dnt_vendors WHERE id = '" . $vendorId . "' LIMIT 1";
+        $query = "SELECT layout FROM dnt_vendors WHERE id_entity = '" . $vendorId . "' LIMIT 1";
         foreach ($dntDb->get_results($query) as $row) {
             $this->layoutId = $row['layout'];
         }
 
         //SELECT LAYOUT NAMR
-        $query = "SELECT url FROM dnt_layouts WHERE id = '" . $this->layoutId . "' LIMIT 1";
+        $query = "SELECT url FROM dnt_layouts WHERE id_entity = '" . $this->layoutId . "' LIMIT 1";
         foreach ($dntDb->get_results($query) as $row) {
             $this->layout = $row['url'];
         }

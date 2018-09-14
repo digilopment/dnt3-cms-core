@@ -45,7 +45,7 @@
 						   $query = Polls::getPollsAdmin();
 						   if($db->num_rows($query)>0){
 							 foreach($db->get_results($query) as $row){
-								 echo '<option value="'.$row['id'].'">'.$row['name'].'</option>';
+								 echo '<option value="'.$row['id_entity'].'">'.$row['name'].'</option>';
 							 }
 						   }
 						   ?>

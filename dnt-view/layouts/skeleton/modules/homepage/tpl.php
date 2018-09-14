@@ -21,11 +21,11 @@ include "dnt-view/layouts/".Vendor::getLayout()."/top.php";
                      	foreach($db->get_results($query) as $row){
                      ?>
 					  <div class="blog-grid masonry-box-in col-3">
-						 <h3><a href="<?php echo  $article->getPostParam("name_url", $row['id'], false, $row['name_url']); ?>">
-						 <?php echo $article->getPostParam("name", $row['id'], false, $row['name']); ?></a></h3>
+						 <h3><a href="<?php echo  $article->getPostParam("name_url", $row['id_entity'], false, $row['name_url']); ?>">
+						 <?php echo $article->getPostParam("name", $row['id_entity'], false, $row['name']); ?></a></h3>
 						 <hr>
-						 <p><?php echo $article->getPostParam("perex", $row['id'], false, $row['perex']); ?></p>
-						 <a class="r-more" href="<?php echo $article->getPostParam("name_url", $row['id'], false, $row['name_url']); ?>"><?php echo $translate['citat_viac'];?></a>
+						 <p><?php echo $article->getPostParam("perex", $row['id_entity'], false, $row['perex']); ?></p>
+						 <a class="r-more" href="<?php echo $article->getPostParam("name_url", $row['id_entity'], false, $row['name_url']); ?>"><?php echo $translate['citat_viac'];?></a>
 					  </div>
 					<?php
                      }

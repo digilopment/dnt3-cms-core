@@ -32,6 +32,7 @@
             <a data-widget="remove" title="Remove"><i class="fa fa-times"></i></a>
          </div>
       </div>
+      <form action="index.php?src=files&action=del" method="POST">
       <div class="grid-body">
          <table class="table table-hover">
             <thead>
@@ -53,18 +54,18 @@
                   if($db->num_rows($query)>0){
                   	foreach($db->get_results($query) as $row){
 					$cat_id 	= false;
-					$post_id 	= $row['id'];
+					$post_id 	= $row['id_entity'];
 					$sub_cat_id = false;
 					$type 	= $row['type'];
 					$page 	= FileAdmin::getPage("current");
                   ?>
 				   <tr>
 					  <td><?php echo $i++; ?></td>
-					  <td><?php echo $row['id'] ?></td>
+					  <td><?php echo $row['id_entity'] ?></td>
 					  <td style="max-width: 500px;"><b><a target="_blank" href="<?php echo $image->getFileImage($post_id);?>">
 					  <?php echo $row['name']; ?></a></b><br/><br/><input style="width: 250px" type="text" value="<?php echo $image->getFileImage($post_id);?>"></td>
 					  <td>
-						<?php echo FileAdmin::getPostParam("type", $row['id']); ?>
+						<?php echo FileAdmin::getPostParam("type", $row['id_entity']); ?>
 					 </td>
 					  <td><b><?php echo $row['datetime']; ?></b></td>
 					 
@@ -84,19 +85,34 @@
 						 </a>
 					  </td>
 					  <td>
-						<a href="<?php echo FileAdmin::url("del", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
+						<a href="<?php echo FileAdmin::url("del", $cat_id, $sub_cat_id, "image", $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
+						<input type="checkbox" name="del_<?php echo $post_id; ?>">
 					  </td>
 				   </tr>
+				   <thead>
+ 
+            </thead>
                <?php
                   }
 			  }
 			  else{
 				no_results();
 			  }
-			  ?>									
+			  ?>	
+			  <tr>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+				  <th></th>
+                  <th><input type="submit" value="Vymazať vybrané" name="sent"></th>
+               </tr>			  
             </tbody>
          </table>
       </div>
+      </form>
    </div>
    <ul class="pagination">
       <li class="">

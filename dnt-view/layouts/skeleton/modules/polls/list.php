@@ -38,10 +38,10 @@ $db 		= new Db;
 	   $query = Polls::getPolls();
 	   if($db->num_rows($query)>0){
 			foreach($db->get_results($query) as $row){
-				$url = Url::get("WWW_PATH").$rest->webhook(1)."/".$row['id']."/".$row['name_url']."";
+				$url = Url::get("WWW_PATH").$rest->webhook(1)."/".$row['id_entity']."/".$row['name_url']."";
 		?>
          <div class="row">
-            <div class="col-sm-4"><a href="<?php echo $url; ?>" class=""><img src="<?php echo Image::getPostImage($row['id'],"dnt_polls");?>" class="img-responsive"></a>
+            <div class="col-sm-4"><a href="<?php echo $url; ?>" class=""><img src="<?php echo Image::getPostImage($row['id_entity'],"dnt_polls");?>" class="img-responsive"></a>
             </div>
             <div class="col-sm-8">
                <h3 class="title"><a href="<?php echo $url; ?>"><?php echo $row['name']; ?></a></h3>

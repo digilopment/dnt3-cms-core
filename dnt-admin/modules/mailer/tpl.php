@@ -31,7 +31,7 @@
          	foreach($db->get_results($query) as $row){
                 	?>
       <li class="post_type">
-         <a href="<?php echo AdminMailer::url("filter", $row['id'], false, false, false, 1) ?>">
+         <a href="<?php echo AdminMailer::url("filter", $row['id_entity'], false, false, false, 1) ?>">
          <span class="label label-primary bg-blue" style="padding: 5px;"><big><?php echo $row['name'];?></big></span>
          </a>
       </li>
@@ -65,7 +65,7 @@
                         $pocet = $db->num_rows($query);
                         if($db->num_rows($query)>0){
                         foreach($db->get_results($query) as $row){
-                        echo"<option value='".$row['id']."'>".$row['name']."</option>";
+                        echo"<option value='".$row['id_entity']."'>".$row['name']."</option>";
                         	}
                         }
                         ?>
@@ -142,7 +142,7 @@
 			$pocet = $db->num_rows($query);
 			if($db->num_rows($query)>0){
 			foreach($db->get_results($query) as $row){
-			echo"<option value='".$row['id']."'>".$row['name']."</option>";
+			echo"<option value='".$row['id_entity']."'>".$row['name']."</option>";
 				}
 			}
 			?>
@@ -204,7 +204,7 @@
                      if($db->num_rows($query)>0){
                      	foreach($db->get_results($query) as $row){
                      $cat_id 		= $row['cat_id'];
-                     $post_id 		= $row['id'];
+                     $post_id 		= $row['id_entity'];
                      $cat_id 		= $row['cat_id'];
                      $page 			= AdminMailer::getPage("current");
                      ?>
@@ -222,10 +222,10 @@
                               $pocet = $db->num_rows($query);
                               if($db->num_rows($query)>0){
                               	foreach($db->get_results($query) as $row2){
-                              		if($row2['id'] == $row['cat_id'])
-                              			echo"<option value='".$row2['id']."' selected>".$row2['name']."</option>";
+                              		if($row2['id_entity'] == $row['cat_id'])
+                              			echo"<option value='".$row2['id_entity']."' selected>".$row2['name']."</option>";
                               		else
-                              			echo"<option value='".$row2['id']."'>".$row2['name']."</option>";
+                              			echo"<option value='".$row2['id_entity']."'>".$row2['name']."</option>";
                               		}
                               	}
                                                    ?>
@@ -302,7 +302,7 @@
                      if($db->num_rows($query)>0){
                      foreach($db->get_results($query) as $row){
                      ?>
-                  <form method="POST" action="index.php?src=mailer&upravit-akcia=<?php echo $row['id'];?>" >
+                  <form method="POST" action="index.php?src=mailer&upravit-akcia=<?php echo $row['id_entity'];?>" >
                      <tr>
                         <td><?php echo $i++; ?></td>
                         <td><b><input style="width: 60%;" type="text" name="nazov" value="<?php echo $row['name']; ?>" /></b></td>
