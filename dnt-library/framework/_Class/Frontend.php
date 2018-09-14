@@ -14,7 +14,8 @@ class Frontend {
      * @return type
      */
     public function get($custom_data = false) {
-
+		
+		//return false;
         $article = new ArticleView;
 
 

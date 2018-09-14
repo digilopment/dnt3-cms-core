@@ -20,7 +20,6 @@ class Rest {
      * this method creat a GET method of `default` and `rewrited` addr
      */
     public function get($get) {
-
         @$addr1 = explode($get . "=", WWW_FULL_PATH);
         @$addr = $addr1[1];
 
@@ -134,16 +133,12 @@ class Rest {
      * 
      */
     public function loadModul() {
-        if ($this->getModul()) {
             $function = "dnt-modules/" . $this->getModul() . "/functions.php";
             $template = "dnt-modules/" . $this->getModul() . "/webhook.php";
             if (file_exists($function))
                 include $function;
             if (file_exists($template))
                 include $template;
-
-            //include_once "dnt-view/layouts/".Vendor::getLayout()."/modules/".$this->getModul()."/webhook.php";
-        }
     }
 
     /**

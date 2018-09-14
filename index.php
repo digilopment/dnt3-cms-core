@@ -23,7 +23,9 @@ if (!Install::db_exists()) {
     Dnt::redirect("dnt-install/index.php");
 }
 
-if ($rest->getModul()) {
+$modul = $rest->getModul();
+
+if ($modul) {
     $dntLog->add(array(
         "http_response" => 200,
         "system_status" => "log",
@@ -37,10 +39,10 @@ if ($rest->getModul()) {
      */
     if (IS_CACHING && Settings::get("cachovanie") == 1) {
         $dntCache->start();
-        $rest->loadModul();
+        $rest->loadMyModul($modul);
         $dntCache->end();
     } else {
-        $rest->loadModul();
+        $rest->loadMyModul($modul);
     }
 } else {
     

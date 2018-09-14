@@ -59,7 +59,12 @@ class ArticleList extends AdminContent {
 				`dnt_posts`.`vendor_id` 	= '".Vendor::getId()."' 
 			AND
 				`dnt_posts`.`show` 			= '1'
-			".$typ." ORDER BY `dnt_posts`.`order` DESC ".$limit."";
+			".$typ." 
+			GROUP BY 
+				`dnt_posts`.`id_entity`
+			ORDER BY 
+				`dnt_posts`.`order` DESC ".$limit."";
+			//var_export( $query);
 			return $query;
    	}
 

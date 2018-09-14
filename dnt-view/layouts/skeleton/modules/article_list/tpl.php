@@ -30,7 +30,7 @@ $articleView 		= new ArticleView;
 	   $query = ArticleList::query();
 	   if($db->num_rows($query)>0){
 			foreach($db->get_results($query) as $row){
-				$url = Url::get("WWW_PATH").$row['cat_name_url']."/detail/".$row['id']."/".$row['name_url']."";
+				$url = $articleView->detailUrl($row['cat_name_url'], $row['id'], $row['name_url']);
 		?>
          <div class="row">
             <div class="col-sm-4"><a href="<?php echo $url; ?>" class=""><img src="<?php echo Image::getPostImage($row['id'],"dnt_posts");?>" class="img-responsive"></a>

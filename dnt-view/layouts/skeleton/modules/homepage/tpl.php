@@ -1,4 +1,6 @@
 <?php
+
+
 include "dnt-view/layouts/".Vendor::getLayout()."/tpl_functions.php";
 $data = Frontend::get();
 get_top($data);

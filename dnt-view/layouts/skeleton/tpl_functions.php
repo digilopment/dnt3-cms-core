@@ -425,22 +425,22 @@ $query = "SELECT * FROM dnt_posts WHERE type = 'post' AND cat_id = '".AdminConte
 if($db->num_rows($query)>0){
 ?>
 <!-- Master Slider -->
-	<div class="blog-ms-v1 content-sm bg-color-darker margin-bottom-60">
-		<div class="master-slider ms-skin-default" id="masterslider">
-			<?php foreach($db->get_results($query) as $row){ ?>
-			<div class="ms-slide blog-slider">
-				<img src="/dnt-system/layouts/quy_osmos/images/blank.gif" data-src="<?php echo $article->getPostImage($row['id_entity']); ?>" alt="lorem ipsum dolor sit"/>
-				<span class="blog-slider-badge" onclick="location.href = '<?php echo "".$row['embed'];?>';"><?php echo $row['name'];?></span>
-				<div class="ms-info"></div>
-				<div class="blog-slider-title">
-					<a href="<?php echo "".$row['embed'];?>">
-					<h2><?php echo $row['perex'];?></h2>
-					</a>
-				</div>
+<div class="blog-ms-v1 content-sm bg-color-darker margin-bottom-60">
+	<div class="master-slider ms-skin-default" id="masterslider">
+		<?php foreach($db->get_results($query) as $row){ ?>
+		<div class="ms-slide blog-slider">
+			<img src="/dnt-system/layouts/quy_osmos/images/blank.gif" data-src="<?php echo $article->getPostImage($row['id_entity']); ?>" alt="lorem ipsum dolor sit"/>
+			<span class="blog-slider-badge" onclick="location.href = '<?php echo "".$row['embed'];?>';"><?php echo $row['name'];?></span>
+			<div class="ms-info"></div>
+			<div class="blog-slider-title">
+				<a href="<?php echo "".$row['embed'];?>">
+				<h2><?php echo $row['perex'];?></h2>
+				</a>
 			</div>
-			<?php } ?>
 		</div>
+		<?php } ?>
 	</div>
+</div>
 <!-- END Master Slider -->
 <?php } ?>
 <?php } ?>
