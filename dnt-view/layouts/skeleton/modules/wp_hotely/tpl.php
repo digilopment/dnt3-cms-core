@@ -17,7 +17,7 @@ if($data['artcile']['meta_tree']['keys']['_menu_7_text_1']['show']){
 		  <div class="container">
 			 <div class="row">
 				<div class="col-sm-12">
-				   <h2 class="text-center">CrossCafe</h2>
+				   <h2 class="text-center"><?php echo $data['artcile']['meta_tree']['keys']['_menu_7_text_1']['value']?></h2>
 				</div>
 			 </div>
 		  </div>

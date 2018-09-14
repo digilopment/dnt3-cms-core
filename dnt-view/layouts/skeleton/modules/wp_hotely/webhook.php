@@ -9,7 +9,6 @@ if($rest->webhook(2)){ //o jeden vyssi webhook ako maximalnz mozny
 	$metaArr = array();
 	$id = $article->getStaticId();
 	$metaArr = $article->getMetaData($id);
-
 	$custom_data = array(
 		"title" =>  $article->getPostParam("name",  $id)." | ".Settings::get("title") ,
 		"artcile" => array(
@@ -23,7 +22,7 @@ if($rest->webhook(2)){ //o jeden vyssi webhook ako maximalnz mozny
 			 '<meta content="'.$metaArr['dnt_posts_name'].'" property="og:title" />',
 			 '<meta content="'.SERVER_NAME.'" property="og:site_name" />',
 			 '<meta content="article" property="og:type" />',
-			 '<meta content="'.$article->getPostImage( $id).'" property="og:image" />',
+			 '<meta content="'.$article->getPostImage($id).'" property="og:image" />',
 		),
 	);
 	include "tpl.php";

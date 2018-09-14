@@ -279,7 +279,7 @@ class ArticleView extends AdminContent {
 		JOIN
 			`dnt_posts_meta`
 		ON
-			`dnt_posts`.`id_entity` = `dnt_posts_meta`.`id_entity`  
+			`dnt_posts`.`id_entity` = `dnt_posts_meta`.`post_id`  
 		AND 
 			`dnt_posts`.`service` =  `dnt_posts_meta`.`service`  
 		WHERE 
@@ -309,7 +309,7 @@ class ArticleView extends AdminContent {
 		   }
 		   return $arr;
 		}
-		return array();
+		return array(false);
     }
 	
 	
