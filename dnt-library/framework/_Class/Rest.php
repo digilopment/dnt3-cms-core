@@ -70,32 +70,6 @@ class Rest {
      * 
      * @return type
      */
-   /* public function getModul() {
-        $file = "dnt-view/layouts/" . Vendor::getLayout() . "/conf.php";
-        if (file_exists($file)) {
-            include_once $file;
-            if (function_exists("custom_modules")) {
-                $custom_modules = custom_modules();
-            } else {
-                $custom_modules = false;
-            }
-        } else {
-            $custom_modules = false;
-        }
-
-        $webhook = new Webhook;
-        $this->webhook = $webhook->get($custom_modules);
-        foreach (array_keys($this->webhook) as $this->index) {
-            foreach ($this->webhook[$this->index] as $this->key => $this->value) {
-                if ($this->webhook(1) == "") {
-                    return DEAFULT_MODUL; //ak nie je nasetovana url adresa tak nastav defaultny webhook
-                }
-                if ($this->value == $this->webhook(1)) {
-                    return $this->index;
-                }
-            }
-        }
-    }*/
 	public function getModul(){
 		$file = "dnt-view/layouts/".Vendor::getLayout()."/conf.php";
 		if(file_exists($file)){
@@ -108,7 +82,6 @@ class Rest {
 		}else{
 			$custom_modules = false;
 		}
-		
 		$webhook = new Webhook;
 		$this->webhook = $webhook->get($custom_modules);
 		foreach(array_keys($this->webhook) as $this->index){

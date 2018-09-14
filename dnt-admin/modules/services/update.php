@@ -14,7 +14,7 @@ if(isset($_POST['sent'])){
 						$_FILES['userfile_' . $row['id_entity']],	//input type file
 						"dnt_posts_meta", 							//update table
 						"value",	 								//update table column
-						"`id`", 									//where column
+						"`id_entity`", 									//where column
 						$row['id_entity'], 							//where value
 						$path 										//path
 					);

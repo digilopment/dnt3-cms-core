@@ -168,20 +168,7 @@ class Webhook {
         } else {
             $custom_modules = $custom_modules;
         }
-
-        /*
-          $custom_modules = array(
-          "contact" => array(
-          "kontakt",
-          "contact",
-          ),
-          "sponsors" => array(
-          "sponzori",
-          "sponsors",
-          ),
-          );
-         */
-
+		
         $modules = array(
 		
             //CLANKY V KATEGORIACH			  
@@ -226,7 +213,6 @@ class Webhook {
         //var_dump($modules);
         $modules = array_merge($custom_modules, $modules);
         //var_dump($modules);
-		//exit;
         return $modules;
     }
 

@@ -13,10 +13,7 @@ $autoload       = new Autoload;
 $path           = "";
 $autoload->load($path);
 $rest           = new Rest;
-$config         = new Config;
 $dntLog         = new DntLog;
-$XMLgenerator   = new XMLgenerator;
-$dnt            = new Dnt;
 $dntCache       = new Cache;
 
 if (!Install::db_exists()) {
@@ -24,7 +21,6 @@ if (!Install::db_exists()) {
 }
 
 $modul = $rest->getModul();
-
 if ($modul) {
     $dntLog->add(array(
         "http_response" => 200,
