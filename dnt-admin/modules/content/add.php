@@ -13,8 +13,8 @@ $insertedData = array(
 $db->dbTransaction();				
 $db->insert('dnt_posts', $insertedData);
 $lastId = Dnt::getLastId('dnt_posts');
-$db->commit();	
-
+$db->dbcommit();	
+$lastId = Dnt::getLastId('dnt_posts');
 	
 $redirect = WWW_PATH_ADMIN."index.php?src=content&filter=".$rest->get("filter")."&sub_cat_id=".$rest->get("sub_cat_id")."&post_id=".$lastId."&page=1&action=edit&included=".$rest->get("included")."";
 

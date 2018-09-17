@@ -27,7 +27,18 @@ if($rest->get("action") == "update")
 	include "update.php";
 }
 else{
-	include "tpl.php";
+	if($article->getPostsMeta($postId, $rest->get("services"))){
+		include "tpl.php";
+	}else{
+		if(file_exists("../dnt-view/layouts/".Vendor::getLayout()."/modules/".$serviceName."/install/install.php")){
+			include "add_meta.php";
+		}include "tpl_functions.php";
+			get_top();
+			include "top.php";
+			error_message_default("Tento post nemá žiadne meta dáta. <br/>Pre vytvorenie nových meta dát prosím použite konfiguráciu v module.");
+			include "bottom.php";
+			get_bottom();
+	}
 }
 
 

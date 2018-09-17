@@ -6,8 +6,8 @@
  *  package     dnt3
  *  date        2017
  */
+ 
 class ArticleView extends AdminContent {
-    
     /**
      * 
      * @param type $post_type
@@ -40,9 +40,9 @@ class ArticleView extends AdminContent {
         $db = new Db;
         $query = "SELECT * FROM dnt_posts_meta WHERE 
             `post_id` = '".$postId."' AND 
-            `service` = '$m_service' AND 
-            `vendor_id` = '" . Vendor::getId() . "'";
-
+            `service` = '".$m_service."' AND 
+            `vendor_id` = '".Vendor::getId()."'";
+		
         if ($db->num_rows($query) > 0) {
 			return $db->get_results($query);
         } else {
@@ -55,6 +55,7 @@ class ArticleView extends AdminContent {
      * @param type $post_type
      * @return type
      */
+	 /*
     public function getPostMeta($postId, $key) {
         //$post_type = "personal";
         $db = new Db;
@@ -70,6 +71,7 @@ class ArticleView extends AdminContent {
             return false;
         }
     }
+	*/
 
     /**
      * 
@@ -268,7 +270,8 @@ class ArticleView extends AdminContent {
 			
 			`dnt_posts_meta`.`key` AS dnt_posts_meta_key,
 			`dnt_posts_meta`.`value` AS dnt_posts_meta_value,
-			`dnt_posts_meta`.`show` AS dnt_posts_meta_show
+			`dnt_posts_meta`.`show` AS dnt_posts_meta_show,
+			`dnt_posts_meta`.`vendor_id` AS dnt_posts_meta_vendor_id
 			
 		FROM 
 			`dnt_posts` 
@@ -285,11 +288,14 @@ class ArticleView extends AdminContent {
 		WHERE 
 			`dnt_posts`.`vendor_id` = '".Vendor::getId()."' 
 		AND
+			`dnt_posts_meta`.`vendor_id` = '".Vendor::getId()."'
+		AND
 			`dnt_posts`.`show` = '1'
 		AND 
 			`dnt_posts`.`id_entity` = '$id_entity'
 		GROUP BY 
-			`dnt_posts_meta`.`key` DESC"; 
+			`dnt_posts_meta`.`key` ASC"; 
+			
 			
 			
 		if($db->num_rows($query)>0){

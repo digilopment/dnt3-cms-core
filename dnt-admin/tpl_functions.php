@@ -481,6 +481,32 @@ function error_message($nazov_pola, $volitelne_pole){
 </div>
 <?php
 }
+function error_message_default($message){
+
+?>
+<div class="row" style="padding: 0px 30px;">
+	<div class="grid">
+		<div class="grid-header bg-red">
+			<i class="fa fa-laptop"></i>
+			<span class="grid-title">Hups, niečo je zle &nbsp;&nbsp;<i class="fa fa-meh-o"></i></span>
+			<div class="pull-right grid-tools">
+				<a data-widget="collapse" title="Collapse"><i class="fa fa-chevron-up"></i></a>
+				<a data-widget="remove" title="Remove"><i class="fa fa-times"></i></a>
+			</div>
+		</div>
+		<div class="grid-body">
+			<h3><b><?php echo $message;?></b>
+				<br/>
+				</h3>
+			<br/><br/>
+			<p>
+				<a href="javascript:history.back(1)"><span type="button" class="btn btn-danger">Naspäť</span></a>
+			</p>
+		</div>
+	</div>
+</div>
+<?php
+}
 function deleteMssage($presmeruj, $volitelne_pole){
 	if($volitelne_pole == false){
 		$volitelne_pole = false;

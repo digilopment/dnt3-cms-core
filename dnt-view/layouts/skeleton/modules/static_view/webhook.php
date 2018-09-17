@@ -1,20 +1,23 @@
 <?php
 $article = new ArticleView;
 $rest 		= new Rest;
+$id = $article->getStaticId();
+$articleName = $article->getPostParam("name",  $id);
+$articleImage = $article->getPostImage( $id);
 
 $custom_data = array(
-	"title" =>  $article->getPostParam("name",  $article->getStaticId())." | ".Settings::get("title") ,
+	"title" =>  $articleName ." | ".Settings::get("title") ,
 	"artcile" => array(
 		"post_id" => $article->getStaticId(),
-		"img" => $article->getPostImage( $article->getStaticId()),
-	),
+		"img" => $articleImage
+		),
 	"meta" => array(
-		 '<meta name="keywords" content="'.$article->getPostParam("tags",  $article->getStaticId()).'" />',
-		 '<meta name="description" content="'.$article->getPostParam("name",  $article->getStaticId()).'" />',
-		 '<meta content="'.$article->getPostParam("name",  $article->getStaticId()).'" property="og:title" />',
+		 '<meta name="keywords" content="'.$article->getPostParam("tags",  $id).'" />',
+		 '<meta name="description" content="'.$articleName.'" />',
+		 '<meta content="'.$articleName.'" property="og:title" />',
 		 '<meta content="'.SERVER_NAME.'" property="og:site_name" />',
 		 '<meta content="article" property="og:type" />',
-		 '<meta content="'.$article->getPostImage( $article->getStaticId()).'" property="og:image" />',
+		 '<meta content="'.$articleImage.'" property="og:image" />',
 	),
 );
 

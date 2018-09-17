@@ -9,7 +9,7 @@ $settings = new Settings
       <div class="col-md-12">
          <ul class="nav nav-tabs">
             <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==1 or !isset($_GET[ 'pa'])){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=1">Nastavenia stránky</a></li>
-            <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==7 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=7">Custom nastavenia</a></li>
+            <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==7 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=7">Rozšírené nastavenia</a></li>
             <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==2 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=2">Nastavenia vlastníctva</a></li>
             <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==3 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=3">Nastavenia vlastníctva 2</a></li>
             <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==4 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=4">Nastavenie loga</a></li>
@@ -227,7 +227,7 @@ $settings = new Settings
                      }
                      ?>
 					 
-					 
+					 <input type="color" value="#ff0000">
                   </div>
                </div>
             </div>

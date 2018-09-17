@@ -36,6 +36,7 @@ class Vendor {
      * @return boolean
      */
     public static function getId() {
+		
         $db = new Db;
         $host = explode(".", $_SERVER["HTTP_HOST"]);
 
