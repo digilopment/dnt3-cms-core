@@ -8,7 +8,7 @@ if(isset($_POST['sent'])){
 	foreach($article->getPostsMeta($postId, $rest->get("services")) as $row){
 		
 		
-		if($row['content_type'] == "image"){
+		if($row['content_type'] == "image" or $row['content_type'] == "file"){
 			//$files 	= 'userfile_'.$row['id_entity']; 
 				$dntUpload->multypleUploadFiles(
 						$_FILES['userfile_' . $row['id_entity']],	//input type file

@@ -6,10 +6,12 @@ include "dnt-view/layouts/".Vendor::getLayout()."/top.php";
 ?>
 
 <?php
-
-if($data['artcile']['meta_tree']['keys']['_menu_7_text_1']['show']){
-	echo $data['artcile']['meta_tree']['keys']['_menu_7_text_1']['value'];
+//meta
+if($data['meta_tree']['keys']['_menu_7_text_1']['show']){
+	echo $data['meta_tree']['keys']['_menu_7_text_1']['value'];
 }
+//settings
+//var_dump($data);
 //var_dump($data['artcile']['meta_tree']['keys']);
 ?>
 <div class="module" style="padding: 90px 0px;">
@@ -17,7 +19,7 @@ if($data['artcile']['meta_tree']['keys']['_menu_7_text_1']['show']){
 		  <div class="container">
 			 <div class="row">
 				<div class="col-sm-12">
-				   <h2 class="text-center"><?php echo $data['artcile']['meta_tree']['keys']['_menu_7_text_1']['value']?></h2>
+				   <h2 class="text-center"><?php echo $data['meta_tree']['keys']['_menu_7_text_1']['value']?></h2>
 				</div>
 			 </div>
 		  </div>

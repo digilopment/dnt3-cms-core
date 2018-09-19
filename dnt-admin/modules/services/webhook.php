@@ -28,6 +28,39 @@ if($rest->get("action") == "update")
 }
 else{
 	if($article->getPostsMeta($postId, $rest->get("services"))){
+		if(file_exists("../dnt-view/layouts/".Vendor::getLayout()."/modules/".$serviceName."/install/install.php")){
+			
+			include "../dnt-view/layouts/".Vendor::getLayout()."/modules/".$serviceName."/install/install.php";
+			
+			$SQL = "INSERT INTO `dnt_posts_meta` (
+				`id`, `id_entity`, `post_id`, `service`, `vendor_id`, `key`, `value`, `content_type`, `cat_id`, `description`, `show`
+			) VALUES ";
+			
+			/*** konfiguracne data v subore **/
+			$arrayOfDefaultMeta = $article->defaultMetaToArray($postId, $serviceName);
+			foreach($arrayOfDefaultMeta as $meta){
+				$array1[] = $meta['key'];
+			}
+			/*** realne data v databaze **/
+			foreach($article->getPostsMeta($postId, $rest->get("services")) as $row){
+				$array2[] = $row['key'];
+			}
+			
+			$arrayDiff = array_diff($array1, $array2);
+			foreach($arrayDiff as $key){
+				$db->dbTransaction();
+				$Insert = $article->defaultMetaToArray($postId, $serviceName, $key);
+				$Insert = str_replace(",", "','", $Insert);
+				$query 	= $SQL."('".$Insert."')";
+				$query 	= str_replace("'null'", "null", $query);
+				$db->query($query);
+				$db->query("UPDATE `dnt_posts_meta` SET `id_entity` = `id` WHERE id_entity = 0 AND vendor_id = '".Vendor::getId()."'");
+				$db->dbCommit();
+			}
+			
+			
+			
+		}
 		include "tpl.php";
 	}else{
 		if(file_exists("../dnt-view/layouts/".Vendor::getLayout()."/modules/".$serviceName."/install/install.php")){

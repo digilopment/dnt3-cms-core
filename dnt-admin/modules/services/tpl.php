@@ -46,10 +46,14 @@
 								foreach($image->getFileImages($row['value']) as $image){
 									echo '<img src="'.$image.'" style="height: 55px; margin-left:0px; margin:10px;">';
 								}
-							
-								?>
-							
-                       <?php }else{ ?>
+							}elseif($row['content_type'] == "file"){ ?>
+								<input name="userfile_<?php echo $row['id_entity']; ?>[]" multiple="multipl" type="file" class="form-control">
+								<?php 
+								$image = new Image;
+								foreach($image->getFileImages($row['value']) as $file){
+									echo  "<a target='_blank' href='".$file."'>".$file."</a><br/>";
+								}
+							}else{ ?>
 						<input type="text" name="key_<?php echo $row['id_entity'] ?>" value='<?php echo $row['value'] ?>' class="form-control" placeholder="">
 					   <?php } ?>
 					</div>

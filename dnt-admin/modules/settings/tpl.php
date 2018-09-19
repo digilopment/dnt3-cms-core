@@ -199,7 +199,7 @@ $settings = new Settings
          <label class="col-sm-7 control-label"><b>Nastavenie hodnoty</b></label>
       </div>
       <div class="row">
-         <form enctype="multipart/form-data" action="" method="POST">
+         <form enctype="multipart/form-data" action="index.php?src=settings&pa=7&action=update" method="POST">
             <div class="col-md-12">
                <ul class="nav nav-tabs">
                   <li class="active"><a href="#sutaz" data-toggle="tab">Nastavenia</a></li>
@@ -207,8 +207,7 @@ $settings = new Settings
                <div class=" tab-content">
                   <!-- base settings -->
                   <div class="tab-pane active" id="sutaz">
-       
-                      <?php
+				  <?php
                      foreach($settings->customMeta() as $row){
                      ?>
                   <div class="row form">
@@ -217,17 +216,41 @@ $settings = new Settings
                      <?php Dnt::setMetaStatus($row['show'], $row['key']); ?>
                      </label>
                      <div class="col-sm-8 text-left">
-                        
-                        <input type="text" name="<?php echo $row['key'] ?>" value='<?php echo $row['value'] ?>' class="form-control" placeholder="">
-
-                     </div>
+					 <!--
+                        <img class="img-thumb" src="" alt="" />
+                        <iframe src=""  scrolling="yes" frameBorder="0" id="info" class="iframe" name="info" width="1000px" height="30px" seamless=""></iframe>	
+                       -->
+					 <?php if($row['content_type'] == "image"){ ?>
+								<input name="userfile_<?php echo $row['id_entity']; ?>[]" multiple="multipl" type="file" class="form-control">
+								<?php 
+								$image = new Image;
+								foreach($image->getFileImages($row['value']) as $image){
+									echo '<img src="'.$image.'" style="height: 55px; margin-left:0px; margin:10px;">';
+								}
+							}elseif($row['content_type'] == "file"){ ?>
+								<input name="userfile_<?php echo $row['id_entity']; ?>[]" multiple="multipl" type="file" class="form-control">
+								<?php 
+								$image = new Image;
+								foreach($image->getFileImages($row['value']) as $file){
+									echo  "<a target='_blank' href='".$file."'>".$file."</a><br/>";
+								}
+							}elseif($row['content_type'] == "color"){ ?>
+								<input type="color" name="key_<?php echo $row['id_entity'] ?>" value="<?php echo $row['value'] ?>">
+								<?php 
+							}
+							else{ ?>
+								<input type="text" name="key_<?php echo $row['id_entity'] ?>" value='<?php echo $row['value'] ?>' class="form-control" placeholder="">
+					   <?php } ?>
+					</div>
                   </div>
                   <br/>
                   <?php
                      }
                      ?>
 					 
-					 <input type="color" value="#ff0000">
+					 <input type="hidden" name="return" value="<?php echo WWW_FULL_PATH; ?>">
+					 <input type="submit" name="sent_7" class="btn btn-primary btn-lg btn-block" value="Upraviť">
+               
                   </div>
                </div>
             </div>

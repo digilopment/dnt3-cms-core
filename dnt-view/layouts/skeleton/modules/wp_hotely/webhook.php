@@ -6,24 +6,20 @@ if($rest->webhook(2)){ //o jeden vyssi webhook ako maximalnz mozny
 	$rest->loadDefault();
 }else{
 	
-	$metaArr = array();
+	//$metaArr = array();
 	$id = $article->getStaticId();
-	$metaArr = $article->getMetaData($id);
+	//$metaArr = $article->getMetaData($id);
 	$custom_data = array(
 		"title" =>  $article->getPostParam("name",  $id)." | ".Settings::get("title") ,
-		"artcile" => array(
-			"post_id" => $article->getStaticId(),
-			"img" => $article->getPostImage( $id),
-			"meta_tree" => $metaArr,
-		),
 		"meta" => array(
 			 '<meta name="keywords" content="'.$article->getPostParam("tags",  $id).'" />',
-			 '<meta name="description" content="'.$metaArr['dnt_posts_name'].'" />',
-			 '<meta content="'.$metaArr['dnt_posts_name'].'" property="og:title" />',
+			 '<meta name="description" content="'.$article->getPostParam("name",  $id).'" />',
+			 '<meta content="'.$article->getPostParam("name",  $id).'" property="og:title" />',
 			 '<meta content="'.SERVER_NAME.'" property="og:site_name" />',
 			 '<meta content="article" property="og:type" />',
 			 '<meta content="'.$article->getPostImage($id).'" property="og:image" />',
 		),
+		
 	);
 	include "tpl.php";
 }

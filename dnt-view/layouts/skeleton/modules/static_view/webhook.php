@@ -7,10 +7,7 @@ $articleImage = $article->getPostImage( $id);
 
 $custom_data = array(
 	"title" =>  $articleName ." | ".Settings::get("title") ,
-	"artcile" => array(
-		"post_id" => $article->getStaticId(),
-		"img" => $articleImage
-		),
+	"post_id" => $article->getStaticId(),
 	"meta" => array(
 		 '<meta name="keywords" content="'.$article->getPostParam("tags",  $id).'" />',
 		 '<meta name="description" content="'.$articleName.'" />',

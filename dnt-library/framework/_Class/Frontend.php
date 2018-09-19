@@ -15,26 +15,35 @@ class Frontend {
      */
     public function get($custom_data = false) {
 		
-		//return false;
         $article = new ArticleView;
+        $settings = new Settings;
 
 
         if ($custom_data == false) {
             $custom_data = array(array(false));
         }
-
-        $post_id = isset($custom_data['artcile']['post_id']) ? $custom_data['artcile']['post_id'] : $article->getStaticId();
-
+		
+		
+        $post_id = isset($custom_data['post_id']) ? $custom_data['post_id'] : $article->getStaticId();
+		
+		$metaArr = array();
+		$metaArr = $article->getMetaData($post_id);
+		
+		$metaSettingsArr = array();
+		$metaSettingsArr = $settings->getMetaData();
+		
+		$articleName = $article->getPostParam("name", $post_id);
+		$articleImage = $article->getPostImage($post_id);
         $data = array(
             "media_path" => WWW_PATH . "dnt-view/layouts/" . Vendor::getLayout() . "/",
             "title" => Settings::get("title"),
             "meta" => array(
                 '<meta name="keywords" content="' . Settings::get("keywords") . '" />',
                 '<meta name="description" content="' . Settings::get("description") . '" />',
-                '<meta content="' . $article->getPostParam("name", $post_id) . '" property="og:title" />',
+                '<meta content="' . $articleName . '" property="og:title" />',
                 '<meta content="' . SERVER_NAME . '" property="og:site_name" />',
                 '<meta content="article" property="og:type" />',
-                '<meta content="' . $article->getPostImage($post_id) . '" property="og:image" />',
+                '<meta content="' . $articleImage . '" property="og:image" />',
             ),
             "settings" => array(
                 "vendor_company" => Settings::get("vendor_company"),
@@ -50,17 +59,20 @@ class Frontend {
                 "facebook_page" => Settings::get("facebook_page"),
             ),
             "article" => array(
-                "name" => $article->getPostParam("name", $post_id),
+                "name" => $articleName,
                 "name_url" => $article->getPostParam("name_url", $post_id),
                 "perex" => $article->getPostParam("perex", $post_id),
                 "content" => $article->getPostParam("content", $post_id),
                 "datetime_publish" => $article->getPostParam("datetime_publish", $post_id),
-                "name" => $article->getPostParam("name", $post_id),
+                "name" => $articleName,
                 "service" => $article->getPostParam("service", $post_id),
                 "service_id" => $article->getPostParam("service_id", $post_id),
                 "tags" => $article->getPostTags($post_id),
-                "img" => $article->getPostImage($post_id),
+                "img" => $articleImage,
+				
             ),
+			"meta_tree" => $metaArr,
+			"meta_settings" => $metaSettingsArr,
             "timestamp" => time(),
         );
         

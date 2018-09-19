@@ -50,6 +50,69 @@ class ArticleView extends AdminContent {
         }
     }
 	
+	/** 
+		return data from instalation modul
+	**/
+	function defaultMetaToArray($postId, $moduleName, $dbKey = false){
+		/*if( $dbKey){
+			return 55;
+		}*/
+		$pattern = '/\s*/m';
+		$replace = '';
+		$data = defaultModulMetaDataInstalation($postId, $moduleName);
+		$data = str_replace(");", ")", $data['sql']);
+		$data = str_replace("(", "", $data);
+		$data = str_replace("'", "", $data);
+		$data = preg_replace('/\t/', '', $data); //remove tabs
+		$data = preg_replace('/\n/', '', $data); //remove new line
+		$data = trim($data);
+		$data = preg_replace($pattern,$replace,$data);
+		$data = explode("),", $data);
+		
+		foreach($data as $id => $item){
+			foreach(explode(",",$item) as $id2 => $key){
+				
+				if($id2 == 0)
+					$myKey = "id";
+				elseif($id2 == 1)
+					$myKey = "id_entity";
+				elseif($id2 == 2)
+					$myKey = "post_id";
+				elseif($id2 == 3)
+					$myKey = "service";
+				elseif($id2 == 4)
+					$myKey = "vendor_id";
+				elseif($id2 == 5)
+					$myKey = "key";
+				elseif($id2 == 6)
+					$myKey = "value";
+				elseif($id2 == 7)
+					$myKey = "content_type";
+				elseif($id2 == 8)
+					$myKey = "cat_id";
+				elseif($id2 == 9)
+					$myKey = "description";
+				elseif($id2 == 10)
+					$myKey = "show";
+				
+				/** IF SINGL LINE **/
+				if($dbKey && $dbKey == $key){
+					return $item;
+					break;
+				}
+				
+				if($id2 == 6 or $id2 == 9){
+					$array[$id][$myKey] = $key;
+				}else{
+					$array[$id][$myKey] = preg_replace($pattern,$replace,str_replace(")", "", $key));
+				}
+			}
+		}
+		return $array;
+	}
+	
+	
+	
 	/**
      * 
      * @param type $post_type

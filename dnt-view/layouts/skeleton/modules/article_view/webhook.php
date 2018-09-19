@@ -4,10 +4,8 @@ $rest 		= new Rest;
 
 $id = $rest->webhook(3);
 $custom_data = array(
+	"post_id" => $id,
 	"title" =>  $article->getPostParam("name",  $id)." | ".Settings::get("title") ,
-	"artcile" => array(
-		"post_id" => $id,
-	),
 	"meta" => array(
 		 '<meta name="keywords" content="'.$article->getPostParam("tags",  $id).'" />',
 		 '<meta name="description" content="'.$article->getPostParam("name",  $id).'" />',

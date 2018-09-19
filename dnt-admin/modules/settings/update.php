@@ -99,6 +99,48 @@ elseif(isset($_POST['odoslat_logo'])){
 					"no_img", 								//where value
 					"../dnt-view/data/uploads" 				//path
 				);
+}elseif(isset($_POST['sent_7'])){
+	//echo "OK";
+	$settings = new Settings;
+	$dntUpload = new DntUpload;
+	$db = new Db;
+	
+	foreach($settings->customMeta() as $row){
+		var_dump($rest->post("key_" . $row['id_entity']));
+		if($row['content_type'] == "image" or $row['content_type'] == "file"){
+			//$files 	= 'userfile_'.$row['id_entity']; 
+				$dntUpload->multypleUploadFiles(
+						$_FILES['userfile_' . $row['id_entity']],	//input type file
+						"dnt_settings", 							//update table
+						"value",	 								//update table column
+						"`id_entity`", 								//where column
+						$row['id_entity'], 							//where value
+						"../dnt-view/data/uploads" 					//path
+					);
+		}else{
+			$db->update(
+				"dnt_settings",	//table
+			array(	//set
+				'value' => $rest->post("key_" . $row['id_entity'])
+				), 
+			array( 	//where
+					'id_entity' 	=> $row['id_entity'], 
+					'`vendor_id`' 	=> Vendor::getId())
+			);
+		}
+		
+		$db->update(
+			"dnt_settings",	//table
+			array(				//set
+				'show' => $rest->post("zobrazit_" . $row['id_entity'])
+				), 
+			array( 	//where
+					'id_entity' 	=> $row['id_entity'], 
+					'`vendor_id`' 	=> Vendor::getId())
+		);
+			
+	}
+	$return	= $rest->post('return');
 }
 
 //show template
