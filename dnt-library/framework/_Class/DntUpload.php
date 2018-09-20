@@ -46,7 +46,7 @@ class DntUpload {
                             array($setColumn => $imgId), //set
                             array($updateColumn => $updateValue, '`vendor_id`' => Vendor::getId())//where
                     );
-					$db->commit();
+					$db->dbCommit();
                 }
             }
         }

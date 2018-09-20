@@ -14,7 +14,7 @@ CREATE TABLE `dnt_admin_menu` (
   `show` int(11) NOT NULL DEFAULT '1',
   `parent_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1587 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1620 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_admin_menu VALUES
@@ -47,7 +47,6 @@ INSERT INTO dnt_admin_menu VALUES
 ("646","646","1","menu",""," fa-gears","20","Microweb","microweb","microweb","1","0"),
 ("647","647","1","submenu",""," fa-gears","20","Zoznam","microweb","microweb","1","0"),
 ("648","648","1","submenu",""," fa-gears","20","Pridať","microweb","microweb&action=add","1","0"),
-("702","702","1","menu",""," fa-gears","20","Messenger","messenger","messenger","1","0"),
 ("759","759","1","menu","","fa-globe","23","Zoznam webov","vendor","","1","0"),
 ("760","760","1","submenu","","","22","Zoznam","vendor","vendor","1","0"),
 ("761","761","1","submenu","","","22","Pridať web","vendor","vendor&action=add","1","0");
@@ -64,7 +63,7 @@ CREATE TABLE `dnt_api` (
   `query` varchar(300) NOT NULL,
   `parent_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1088 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1090 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_api VALUES
@@ -81,7 +80,7 @@ CREATE TABLE `dnt_config` (
   `key` varchar(1000) NOT NULL,
   `value` varchar(1000) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_config VALUES
@@ -102,7 +101,7 @@ CREATE TABLE `dnt_languages` (
   `img` varchar(300) NOT NULL,
   `parent_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=142 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_languages VALUES
@@ -159,7 +158,7 @@ CREATE TABLE `dnt_logs` (
   `REQUEST_TIME` varchar(300) NOT NULL,
   `parent_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=642 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
@@ -178,9 +177,12 @@ CREATE TABLE `dnt_mailer_mails` (
   `datetime_update` datetime NOT NULL,
   `parent_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 
+INSERT INTO dnt_mailer_mails VALUES
+("26","26","1","Tomáš","Doubek","NULL","thomas.doubek@gmail.com","2018-09-19 13:59:38","2018-09-19 13:59:38","0"),
+("27","27","1","Tomáš ","Cat Test","47","thomas.doubek@gmail.com","2018-09-19 14:08:01","2018-09-19 14:08:01","0");
 
 
 
@@ -196,9 +198,11 @@ CREATE TABLE `dnt_mailer_type` (
   `order` int(11) NOT NULL,
   `parent_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
 
 
+INSERT INTO dnt_mailer_type VALUES
+("47","47","1","","testovacia","Testovacia","1","1","0");
 
 
 
@@ -5113,12 +5117,12 @@ CREATE TABLE `dnt_polls` (
   `show` int(11) NOT NULL,
   `parent_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_polls VALUES
-("1","1","1","Objektovo orientované programovanie","objektovo-orientovane-programovanie","739","<p>OOP dok&aacute;že mnoho ľud&iacute; spoľahlivo odradiť hneď na začiatku v&yacute;razmi ako dedičnosť, polymorfizmus, zapuzdrenie, abstrakcia a in&yacute;mi veľmi m&uacute;dro znej&uacute;cimi slovami. My v&aacute;m norm&aacute;lnou ľudskou rečou veľmi r&yacute;chlo uk&aacute;žeme, že sa za t&yacute;m neskr&yacute;va skutočne nič zložit&eacute;.</p>\n","1","4","2017-02-04 10:50:17","2017-02-04 10:50:17","2017-02-04 10:50:17","1","0"),
-("9","9","1","Na ktorého obľúbeného Markízaka sa ponášate?","na-ktoreho-oblubeneho-markizaka-sa-ponasate","740","<p><span style=\"font-family:roboto,sans-serif,tahoma; font-size:15px\">Pripravili sme pre v&aacute;s hor&uacute;cu novinku - origin&aacute;lne interakt&iacute;vne kv&iacute;zy z na&scaron;ej dieľne.</span><strong>Telev&iacute;zia Mark&iacute;za&nbsp;</strong><span style=\"font-family:roboto,sans-serif,tahoma; font-size:15px\">je s&uacute;časťou v&aacute;&scaron;ho života už dvadsať rokov. Pozn&aacute;te jej moder&aacute;torov a redaktorov? Na ktor&eacute;ho z nich sa pon&aacute;&scaron;ate? Urobte si kv&iacute;z.&nbsp;&nbsp;</span></p>\n","2","5","2017-02-05 10:49:07","2017-02-05 10:49:07","2017-02-05 10:49:07","1","0");
+("1","1","1","Objektovo orientované programovanie","objektovo-orientovane-programovanie","1685","<p>OOP dok&aacute;že mnoho ľud&iacute; spoľahlivo odradiť hneď na začiatku v&yacute;razmi ako dedičnosť, polymorfizmus, zapuzdrenie, abstrakcia a in&yacute;mi veľmi m&uacute;dro znej&uacute;cimi slovami. My v&aacute;m norm&aacute;lnou ľudskou rečou veľmi r&yacute;chlo uk&aacute;žeme, že sa za t&yacute;m neskr&yacute;va skutočne nič zložit&eacute;.</p>\n","1","4","2017-02-04 10:50:17","2017-02-04 10:50:17","2017-02-04 10:50:17","1","0"),
+("9","9","1","Na ktorého obľúbeného Markízaka sa ponášate?","na-ktoreho-oblubeneho-markizaka-sa-ponasate","1686","<p><span style=\"font-family:roboto,sans-serif,tahoma; font-size:15px\">Pripravili sme pre v&aacute;s hor&uacute;cu novinku - origin&aacute;lne interakt&iacute;vne kv&iacute;zy z na&scaron;ej dieľne.</span><strong>Telev&iacute;zia Mark&iacute;za&nbsp;</strong><span style=\"font-family:roboto,sans-serif,tahoma; font-size:15px\">je s&uacute;časťou v&aacute;&scaron;ho života už dvadsať rokov. Pozn&aacute;te jej moder&aacute;torov a redaktorov? Na ktor&eacute;ho z nich sa pon&aacute;&scaron;ate? Urobte si kv&iacute;z.&nbsp;&nbsp;</span></p>\n","2","5","2017-02-05 10:49:07","2017-02-05 10:49:07","2017-02-05 10:49:07","1","0");
 
 
 
@@ -5138,7 +5142,7 @@ CREATE TABLE `dnt_polls_composer` (
   `show` int(11) NOT NULL,
   `vendor_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2421 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2499 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_polls_composer VALUES
@@ -5185,9 +5189,9 @@ INSERT INTO dnt_polls_composer VALUES
 ("41","41","1","8","","ans"," v danej triede","","0","0","0","0","1"),
 ("42","42","1","8","","ans"," len so zabezpečenými objektami","","0","0","0","0","1"),
 ("43","43","1","8","","ans"," len so zabezpečeným prístupom","","0","0","0","0","1"),
-("257","257","9","0","Ste štýlová osobnosť , ktorá má vo veciach jasno. Úspešne ste naštartovali svoju kariéru, ktorú zvládate rovnocenne kombinovať s rodinou. Hlučné večierky a masy ľudí nie sú nič pre vás, prednosť dávate rodinnému krbu, aj keď na to nevyzeráte. Na verejnosti sa totiž vždy objavíte dokonalo zladený a hýrite šarmom. Presne ako moderátorka Televíznych novín \n    <b>Zlatica Puškárová\n    </b>. ","winning_combination"," Zlatica Puškárová","741","0","4","5","0","1"),
-("258","258","9","0","Akcia, pohyb, výzva! To je váš svet, v ktorom sa cítite ako ryba vo vode. V kancelárii by ste neobsedeli, musíte neustále niečo robiť. Šplhať sa na vrcholky hôr, brodiť sa rozbúrenou riekou či bicyklovať desiatky kilometrov. Život je pre vás výzva a vy máte výzvy rád. Hodené rukavice prijímate a keď je toho na vás veľa, hlavu si prečistíte v prírode. Napríklad jazdou na koni ako redaktor \n    <b>Ján Tribula\n    </b>.","winning_combination"," Ján Tribula","742","0","8","5","0","1"),
-("259","259","9","0","Váš život je šport, aktivita a zdravý životný štýl. Snažíte sa však aj o súlad s duchom a preto sa neustále rozvíjate. Učíte sa cudzie jazyky, čítate a ste schopný zariadiť množstvo vecí. Pôsobíte nenápadne, nerád na seba strhávate pozornosť. V spoločnosti priateľov sa však meníte na parketového leva. Presne ako športový redaktor \n    <b>Peter Varinský\n    </b>.","winning_combination"," Peter Varinský","743","0","12","5","0","1"),
+("257","257","9","0","Ste štýlová osobnosť , ktorá má vo veciach jasno. Úspešne ste naštartovali svoju kariéru, ktorú zvládate rovnocenne kombinovať s rodinou. Hlučné večierky a masy ľudí nie sú nič pre vás, prednosť dávate rodinnému krbu, aj keď na to nevyzeráte. Na verejnosti sa totiž vždy objavíte dokonalo zladený a hýrite šarmom. Presne ako moderátorka Televíznych novín \n    <b>Zlatica Puškárová\n    </b>. ","winning_combination"," Zlatica Puškárová","1687","0","4","5","0","1"),
+("258","258","9","0","Akcia, pohyb, výzva! To je váš svet, v ktorom sa cítite ako ryba vo vode. V kancelárii by ste neobsedeli, musíte neustále niečo robiť. Šplhať sa na vrcholky hôr, brodiť sa rozbúrenou riekou či bicyklovať desiatky kilometrov. Život je pre vás výzva a vy máte výzvy rád. Hodené rukavice prijímate a keď je toho na vás veľa, hlavu si prečistíte v prírode. Napríklad jazdou na koni ako redaktor \n    <b>Ján Tribula\n    </b>.","winning_combination"," Ján Tribula","1688","0","8","5","0","1"),
+("259","259","9","0","Váš život je šport, aktivita a zdravý životný štýl. Snažíte sa však aj o súlad s duchom a preto sa neustále rozvíjate. Učíte sa cudzie jazyky, čítate a ste schopný zariadiť množstvo vecí. Pôsobíte nenápadne, nerád na seba strhávate pozornosť. V spoločnosti priateľov sa však meníte na parketového leva. Presne ako športový redaktor \n    <b>Peter Varinský\n    </b>.","winning_combination"," Peter Varinský","1689","0","12","5","0","1"),
 ("260","260","9","1","","question","Kráčate po ulici a zrazu vidíte sanitky, policajtov, masu ľudí a počujete krik. Čo urobíte?","","0","0","5","0","1"),
 ("261","261","9","1","","ans","Okamžite utekám priamo tam, musím vedieť čo sa stalo.","","0","1","0","0","1"),
 ("262","262","9","1","","ans","Všetko poctivo zdokumentujem a nezabudnem na selfie.","","0","2","0","0","1"),
@@ -5218,8 +5222,8 @@ INSERT INTO dnt_polls_composer VALUES
 ("287","287","9","5","","ans","Po niečom, čo spĺňa zásady zdravého stravovania.","","0","3","0","0","1"),
 ("288","288","9","5","","ans","Po rezni, omáčkach, knedlíkoch. Milujem dobré jedlo.","","0","4","0","0","1"),
 ("289","289","9","5","","ans","Vyberiem si jedlo bez mäsa, z presvedčenia.","","0","5","0","0","1"),
-("290","290","9","0","Máte veľké srdce a neustále myslíte na druhých. Preto často zabúdate na seba a na svoj život. Obetujete sa pre dobro veci a najradšej by ste vyriešili každý problém. Robíte zbierky, zúčastňujete sa na benefičných akciách a teší vás každý úsmev blížneho v núdzi. Na svojom chrbte máte naložených akosi priveľa povinností, no vy to zvládate v dobrej nálade. Tak ako moderátor \n    <b>Patrik Herman\n    </b>. ","winning_combination","Patrik Herman","744","0","16","0","0","1"),
-("291","291","9","0",">Ste príjemná osoba so srdcom na správnom mieste. Neúnavne veríte v dobro a každý dotyk s krutou realitou vás nepríjemne zaskočí. Všímate sa prírodu, životné prostredie a s ťažkosťou znášate nespravodlivosť okolo nás. Za jemnou fasádou sa však skrýva bojovník, ktorý si nenechá len tak ľahko skákať po hlave. Taká je aj moderátorka \n    <b>Janka Hospodárová\n    </b>.","winning_combination","Janka Hospodárová","745","0","20","0","0","1");
+("290","290","9","0","Máte veľké srdce a neustále myslíte na druhých. Preto často zabúdate na seba a na svoj život. Obetujete sa pre dobro veci a najradšej by ste vyriešili každý problém. Robíte zbierky, zúčastňujete sa na benefičných akciách a teší vás každý úsmev blížneho v núdzi. Na svojom chrbte máte naložených akosi priveľa povinností, no vy to zvládate v dobrej nálade. Tak ako moderátor \n    <b>Patrik Herman\n    </b>. ","winning_combination","Patrik Herman","1690","0","16","0","0","1"),
+("291","291","9","0",">Ste príjemná osoba so srdcom na správnom mieste. Neúnavne veríte v dobro a každý dotyk s krutou realitou vás nepríjemne zaskočí. Všímate sa prírodu, životné prostredie a s ťažkosťou znášate nespravodlivosť okolo nás. Za jemnou fasádou sa však skrýva bojovník, ktorý si nenechá len tak ľahko skákať po hlave. Taká je aj moderátorka \n    <b>Janka Hospodárová\n    </b>.","winning_combination","Janka Hospodárová","1691","0","20","0","0","1");
 
 
 
@@ -5237,7 +5241,7 @@ CREATE TABLE `dnt_post_type` (
   `vendor_id` int(11) NOT NULL,
   `parent_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=686 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=698 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_post_type VALUES
@@ -5287,25 +5291,25 @@ CREATE TABLE `dnt_posts` (
   `vendor_id` int(11) NOT NULL,
   `parent_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14124 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14154 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_posts VALUES
 ("13071","13071","","137","post","Výskum a vývoj","slider-vyskum-a-vyvoj","0","0","","","262","2017-03-01 17:24:45","2017-03-01 17:26:24","2017-03-01 17:24:00","0","<p><span style=\"font-size:14px\">Neust&aacute;le hľad&aacute;me lep&scaron;ie rie&scaron;enia...</span></p>\n","","","","","","0","1","","0","1","0"),
 ("13289","13289","","290","sitemap","Domov","domov","0","0","homepage","","976","2017-03-06 17:47:59","2018-09-13 16:19:23","2017-03-06 17:47:00","0","<p>xydcvysdvysv</p>\n","","","","","","6","1","","0","1","0"),
-("13349","13349","","290","sitemap","O nás","o-nas","0","0","","","750","2017-04-06 10:40:47","2018-09-07 17:47:57","2017-04-06 10:40:00","0","<p>sdfvsdf</p>\n","<p>Vo firme Design.dnt pracujeme s r&ocirc;znymi modern&yacute;mi technol&oacute;giami, ktor&eacute; s&uacute; použ&iacute;van&eacute; vo webovom priemysle. Za t&yacute;mto &uacute;čelom sme vyvinuli vlastn&yacute; redakčn&yacute; syst&eacute;m pod n&aacute;zvom <a href=\"/technologie/redakcny-system\">Designdnt</a>&nbsp;Z&aacute;kladom syst&eacute;mu bola použ&iacute;vateľsk&aacute; jednoduchosť, finančn&aacute; dostupnosť a v neposlednom rade intuit&iacute;vnosť. Vďaka dlhodob&eacute;mu v&yacute;voju sa n&aacute;m podarilo vypracovať presne to, čo je perfektn&yacute;m z&aacute;kladom pre bežn&eacute; weby za finančne nen&aacute;ročn&eacute; požiadavky. V roz&scaron;&iacute;ren&iacute; o moduly eshopu, alebo o moduly sprac&uacute;vaj&uacute;ce hromadn&eacute; d&aacute;ta, vieme poskytn&uacute;ť perfektn&eacute; z&aacute;zemie pre <strong>informačn&yacute; syst&eacute;m</strong>.</p>\n\n<ol>\n	<li>vysok&aacute; r&yacute;chlosť jadra <strong>dnt3</strong></li>\n	<li>&quot;inteligentn&eacute;&quot; URL adresy s chronologickou postupnosťou</li>\n	<li>multydom&eacute;nov&aacute;&nbsp;platforma</li>\n	<li>multyvendor platforma</li>\n	<li>facebook - messenger platforma</li>\n	<li>automatick&aacute; gener&aacute;cia robots.txt, google sitemaps</li>\n	<li>jednoduch&aacute; in&scaron;tal&aacute;cia a z&aacute;loha datab&aacute;zy</li>\n	<li>Prepracovan&yacute; cache engine</li>\n	<li>multylanguage podpora</li>\n	<li>Modul kv&iacute;zov pre kv&iacute;zy s percentu&aacute;lnou &uacute;spe&scaron;nosťou</li>\n	<li>Modul kv&iacute;zov s v&yacute;sledkom kategoriz&aacute;cie</li>\n	<li>Modul obsahu</li>\n	<li>Modul sitemapy</li>\n	<li>Modul emailov&eacute;ho klienta</li>\n	<li>Modul spr&aacute;vy s&uacute;borov</li>\n	<li>Modul eshopu a &uacute;čtovn&iacute;ctva</li>\n	<li>Modul ACL (users)</li>\n	<li>Modul restov&eacute;ho JSON / XML api pre zdielanie informacii s tret&iacute;mi stranami</li>\n</ol>\n\n<p>Za zmienku stoj&iacute; poznamenať, že redakčn&yacute; syst&eacute;m Design.dnt z&iacute;skal <strong>3. miesto</strong> v Celo&scaron;t&aacute;tnej prehliadke Stredo&scaron;kolskej odbornej činnosti, kde pod t&yacute;mto syst&eacute;mom bol naprogramovan&yacute; modul eshopu s fakturačn&yacute;m, objedn&aacute;vkov&yacute;m a registračn&yacute;m syst&eacute;mom.</p>\n\n<p>&nbsp;</p>\n\n<p>&nbsp;</p>\n","","","","","5","1","","0","1","0"),
-("13350","13350","","303","post","HP slider 1","hp-slider-1","0","0","","","734","2017-04-06 10:48:57","2017-04-06 10:54:15","2017-04-06 10:48:00","0","","","","","","","0","1","","0","1","0"),
-("13351","13351","","303","post","HP slider 2","hp-slider-2","0","0","","","736","2017-04-06 10:54:30","2017-04-06 10:54:44","2017-04-06 10:54:00","0","","","","","","","0","1","","0","1","0"),
-("13352","13352","","303","post","HP slider 3","hp-slider-3","0","0","","","737","2017-04-06 10:54:55","2017-04-06 10:55:08","2017-04-06 10:54:00","0","","","","","","","0","1","","0","1","0"),
+("13349","13349","","290","sitemap","O nás","o-nas","0","0","","","1684","2017-04-06 10:40:47","2018-09-20 13:57:07","2017-04-06 10:40:00","0","<p>sdfvsdf</p>\n","<p>Vo firme Design.dnt pracujeme s r&ocirc;znymi modern&yacute;mi technol&oacute;giami, ktor&eacute; s&uacute; použ&iacute;van&eacute; vo webovom priemysle. Za t&yacute;mto &uacute;čelom sme vyvinuli vlastn&yacute; redakčn&yacute; syst&eacute;m pod n&aacute;zvom <a href=\"/technologie/redakcny-system\">Designdnt</a>&nbsp;Z&aacute;kladom syst&eacute;mu bola použ&iacute;vateľsk&aacute; jednoduchosť, finančn&aacute; dostupnosť a v neposlednom rade intuit&iacute;vnosť. Vďaka dlhodob&eacute;mu v&yacute;voju sa n&aacute;m podarilo vypracovať presne to, čo je perfektn&yacute;m z&aacute;kladom pre bežn&eacute; weby za finančne nen&aacute;ročn&eacute; požiadavky. V roz&scaron;&iacute;ren&iacute; o moduly eshopu, alebo o moduly sprac&uacute;vaj&uacute;ce hromadn&eacute; d&aacute;ta, vieme poskytn&uacute;ť perfektn&eacute; z&aacute;zemie pre <strong>informačn&yacute; syst&eacute;m</strong>.</p>\n\n<ol>\n	<li>vysok&aacute; r&yacute;chlosť jadra <strong>dnt3</strong></li>\n	<li>&quot;inteligentn&eacute;&quot; URL adresy s chronologickou postupnosťou</li>\n	<li>multydom&eacute;nov&aacute;&nbsp;platforma</li>\n	<li>multyvendor platforma</li>\n	<li>facebook - messenger platforma</li>\n	<li>automatick&aacute; gener&aacute;cia robots.txt, google sitemaps</li>\n	<li>jednoduch&aacute; in&scaron;tal&aacute;cia a z&aacute;loha datab&aacute;zy</li>\n	<li>Prepracovan&yacute; cache engine</li>\n	<li>multylanguage podpora</li>\n	<li>Modul kv&iacute;zov pre kv&iacute;zy s percentu&aacute;lnou &uacute;spe&scaron;nosťou</li>\n	<li>Modul kv&iacute;zov s v&yacute;sledkom kategoriz&aacute;cie</li>\n	<li>Modul obsahu</li>\n	<li>Modul sitemapy</li>\n	<li>Modul emailov&eacute;ho klienta</li>\n	<li>Modul spr&aacute;vy s&uacute;borov</li>\n	<li>Modul eshopu a &uacute;čtovn&iacute;ctva</li>\n	<li>Modul ACL (users)</li>\n	<li>Modul restov&eacute;ho JSON / XML api pre zdielanie informacii s tret&iacute;mi stranami</li>\n</ol>\n\n<p>Za zmienku stoj&iacute; poznamenať, že redakčn&yacute; syst&eacute;m Design.dnt z&iacute;skal <strong>3. miesto</strong> v Celo&scaron;t&aacute;tnej prehliadke Stredo&scaron;kolskej odbornej činnosti, kde pod t&yacute;mto syst&eacute;mom bol naprogramovan&yacute; modul eshopu s fakturačn&yacute;m, objedn&aacute;vkov&yacute;m a registračn&yacute;m syst&eacute;mom.</p>\n\n<p>&nbsp;</p>\n\n<p>&nbsp;</p>\n","","","","","5","1","","0","1","0"),
+("13350","13350","","303","post","HP slider 1","hp-slider-1","0","0","","","1677","2017-04-06 10:48:57","2018-09-20 13:53:43","2017-04-06 10:48:00","0","","","","","","","0","1","","0","1","0"),
+("13351","13351","","303","post","HP slider 2","hp-slider-2","0","0","","","1678","2017-04-06 10:54:30","2018-09-20 13:54:16","2017-04-06 10:54:00","0","","","","","","","0","1","","0","1","0"),
+("13352","13352","","303","post","HP slider 3","hp-slider-3","0","0","","","1679","2017-04-06 10:54:55","2018-09-20 13:55:01","2017-04-06 10:54:00","0","","","","","","","0","1","","0","1","0"),
 ("13353","13353","","304","post","Dnt3 Library","dnt3-library","0","0","","","","2017-04-06 10:57:05","2018-09-07 18:45:14","2017-04-06 10:57:00","0","<p>Dnt3 - Library je Objektovo orientovan&yacute; MVC framework, ktor&yacute; je na mieru prisp&ocirc;soben&yacute; pre redakčn&yacute; syst&eacute;m Designdnt3.</p>\n","<p>Z&aacute;kladn&yacute; text</p>\n","","","","","0","1","","0","1","0"),
 ("13354","13354","","290","sitemap","Kvízy","kvizy","0","0","polls","","","2017-04-09 09:45:42","2018-09-07 12:42:02","2017-04-09 09:45:00","0","","","","","","","3","1","","0","1","0"),
 ("13355","13355","13355","290","sitemap","Kontakt","kontakt","0","0","contact","","","2017-04-10 11:25:19","2018-09-14 15:27:39","2017-04-10 11:25:00","0","","","","","","","1","1","","0","1","0"),
 ("13356","13356","","290","sitemap","Kontaktný formulár","form","0","0","partners","","","2017-04-10 11:27:16","2018-07-30 14:41:33","2017-04-10 11:27:00","0","","","","","","","2","1","","0","1","0"),
 ("13357","13357","","290","sitemap","partneri","partneri","0","0","partners","","","2017-04-10 11:29:31","2018-09-07 12:45:39","2017-04-10 11:29:00","0","","","","","","","4","1","","0","1","0"),
-("13359","13359","","305","post","Designdnt3","http://designdnt.query.sk/domov","0","0","","","746","2017-04-10 11:59:04","2017-04-10 12:23:43","2017-04-10 11:59:00","0","","","","","","","0","1","","0","1","0"),
-("13360","13360","","305","post","Markíza","http://www.markiza.sk/uvod","0","0","","","747","2017-04-10 12:24:53","2017-04-10 12:25:11","2017-04-10 12:24:00","0","","","","","","","0","1","","0","1","0"),
-("13361","13361","","305","post","Tvnoviny","http://www.tvnoviny.sk/","0","0","","","748","2017-04-10 12:26:00","2017-04-10 12:26:18","2017-04-10 12:26:00","0","","","","","","","0","1","","0","1","0"),
-("13362","13362","","305","post","Osmos","http://osmos.sk/","0","0","","","749","2017-04-10 12:26:53","2017-04-10 12:27:28","2017-04-10 12:26:00","0","","","","","","","0","1","","0","1","0"),
+("13359","13359","","305","post","Designdnt3","http://designdnt.query.sk/domov","0","0","","","1680","2017-04-10 11:59:04","2018-09-20 13:55:29","2017-04-10 11:59:00","0","","","","","","","0","1","","0","1","0"),
+("13360","13360","","305","post","Markíza","http://www.markiza.sk/uvod","0","0","","","1681","2017-04-10 12:24:53","2018-09-20 13:55:39","2017-04-10 12:24:00","0","","","","","","","0","1","","0","1","0"),
+("13361","13361","","305","post","Tvnoviny","http://www.tvnoviny.sk/","0","0","","","1682","2017-04-10 12:26:00","2018-09-20 13:55:49","2017-04-10 12:26:00","0","","","","","","","0","1","","0","1","0"),
+("13362","13362","","305","post","Osmos","http://osmos.sk/","0","0","","","1683","2017-04-10 12:26:53","2018-09-20 13:56:27","2017-04-10 12:26:00","0","","","","","","","0","1","","0","1","0"),
 ("13364","13364","","306","post","Test Message, Admin Root","test-message-admin-root","0","0","","","","2017-04-10 12:41:34","2017-04-10 12:41:34","2017-04-10 12:41:34","0","","\n	<h3>Test Message</h3><br/>\n	<b>Meno:</b>Admin Root<br/>\n	<b>Adresa:</b>Neznáma 24, 85101, Bratislava<br/>\n	<b>Telefón:</b>0912345678<br/>\n	<b>Email:</b>admon@root.sk<br/>\n	<b>Firma:</b>Designdnt<br/>\n	<b>Produkt:</b><br/><br/>\n	\n	\n	<b>SPRÁVA</b>:\n	Táto správa bola poslaná cez kontaktný formulár na webe skeletónu. A cez send grid bola odoslaná na mail príjmateľa nastaveného v nastaveniach webu.<br/><br/><b>Kontaktný email odosielateľa: <a href=\"mailto:admon@root.sk\">admon@root.sk</a></b>","","","","","0","0","","0","1","0"),
 ("13365","13365","","290","sitemap","Články","clanky","0","0","article_list","303,305","","2017-04-10 12:43:40","2018-09-07 17:01:25","2017-04-10 12:43:00","0","","","","","","","0","1","","0","1","0"),
 ("13366","13366","","304","post","Redakčný systém","redakcny-system","0","0","","","","2017-04-06 10:57:05","2017-04-13 16:38:27","2017-04-06 10:57:00","0","<p>Redakčn&yacute; syst&eacute;m je syst&eacute;m na spr&aacute;vu webovej str&aacute;nke. V tomto pr&iacute;pade sa jedn&aacute; o skelet&oacute;n aplik&aacute;ciu. Cez CMS Designdnt3 sa daj&uacute; vytv&aacute;rať&nbsp;webov&eacute; str&aacute;nky na platforme &quot;multydomain&quot;. Prvotn&yacute; v&yacute;voj začal v roku 2012, do značky <strong>Designdnt3&nbsp;</strong>sa dostal v roku 2014, odkedy je v&yacute;voj veden&yacute; v objektovo orientovanej platforme design patterne MVC.</p>\n","<p>Z&aacute;kladn&yacute; text</p>\n","","","","","0","1","","0","1","0"),
@@ -5318,7 +5322,7 @@ INSERT INTO dnt_posts VALUES
 ("13574","13574","","290","sitemap","Post Meta","post-meta","0","0","","","","2018-09-07 21:05:28","2018-09-07 21:05:41","2018-09-07 21:05:00","0","","","","","","","0","0","","0","1","0"),
 ("13575","13575","","290","sitemap","Hotely","hotely","0","0","wp_hotely","","977","2018-09-07 23:33:43","2018-09-07 23:54:56","2018-09-07 23:33:00","0","","","","","","","0","1","","0","1","0"),
 ("13663","13663","","483","post","Test 25","test-25","0","0","","","","2018-09-10 15:53:37","2018-09-10 15:53:44","2018-09-10 15:53:00","0","","","","","","","0","1","","0","1","0"),
-("14095","14095","","290","sitemap","Hotel 2","hotel-2","0","0","wp_hotely","","","2018-09-17 10:27:22","2018-09-17 10:55:32","2018-09-17 10:27:00","0","","","","","","","0","1","","0","1","0");
+("14124","14124","","293","post","Prázdna","prazdna","0","0","","","","2018-09-19 14:10:43","2018-09-19 14:10:53","2018-09-19 14:10:00","0","","","","","","","0","0","","0","1","0");
 
 
 
@@ -5336,67 +5340,20 @@ CREATE TABLE `dnt_posts_meta` (
   `description` varchar(1000) NOT NULL,
   `show` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1008 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_posts_meta VALUES
-("1","1","13575","wp_settings","1","layout","dnt_first","content","1","Template","1"),
-("2","2","13575","wp_regiony","1","link_region","http://www.saalfelden-leogang.com","content","3","Link regionu","1"),
-("3","3","13575","wp_settings","1","real_address","http://www.vyhrat.com/","content","1","Zobraziť na URL adrese","1"),
-("4","4","13575","wp_settings","1","social_fb","https://www.facebook.com/jlindebergofficial","content","1","Facebook","1"),
-("5","5","13575","wp_settings","1","social_twitter","https://twitter.com/saalf_leogang","content","1","Twitter","1"),
-("6","6","13575","wp_settings","1","social_linked_in","https://www.instagram.com/jlindebergofficial/","content","1","Instagram","1"),
-("7","7","13575","wp_settings","1","map_location","https://www.google.at/maps/place/Golfclub+Urslautal/@47.4278165,12.8107416,13z/data=!4m8!1m2!2m1!1sSaalfelden+Leogang++Golfclub+Urslautal!3m4!1s0x4776e397b105d2a7:0x8c2f1b5bb5d237c6!8m2!3d47.413951!4d12.885547","content","1","Mapa ","1"),
-("8","8","13575","wp_settings","1","favicon","57","image","1","Favicon","1"),
-("9","9","13575","wp_settings","1","_r","90","content","1","Model farby R","1"),
-("10","10","13575","wp_settings","1","_g","165","content","1","Model farby G","1"),
-("11","11","13575","wp_settings","1","_b","60","content","1","Model farby B","1"),
-("12","12","13575","wp_settings","1","_font","Arial","content","1","Font","1"),
-("13","13","13575","wp_hotely","1","info_hotel_name_1","Tomáš","content","2","Názov hotelu 1","1"),
-("14","14","13575","wp_hotely","1","info_hotel_addr_1","sdfsdf","content","2","Adresa Hotela 1","1"),
-("15","15","13575","wp_hotely","1","info_hotel_tel_c_1","sdfvsdf ","content","2","Telefón do hotela 1","1"),
-("16","16","13575","wp_hotely","1","info_hotel_email_1","sdfvsdfv","content","2","Email hotelu 1","1"),
-("17","17","13575","wp_regiony","1","info_region_name","Saalfelden Leogang Touristik","content","3","Názov regiónu","1"),
-("18","18","13575","wp_regiony","1","info_region_addr"," Mittergasse 21 <br/>  A-5760 Saalfelden","content","3","Adresa regiónu","1"),
-("19","19","13575","wp_regiony","1","info_region_tel_c","+43-6582-70660","content","3","Telefónne číslo regiónu","1"),
-("20","20","13575","wp_regiony","1","info_region_email","info@saalfelden-leogang.at","content","3","Email regiónu","1"),
-("21","21","13575","wp_settings","1","youtube_video","KSviwdweelg","content","1","Youtube video","1"),
-("22","22","13575","wp_regiony","1","region_logo","607","image","3","Logo regiónu","1"),
-("23","23","13575","wp_hotely","1","_menu_7_image_1_1","1522","image","2","Fotka k modulu UBYTOVANIE","1"),
-("24","24","13575","wp_hotely","1","_menu_7_text_1","Cross Caffe sdfsd","content","2","Text k modulu UBYTOVANIE 1","1"),
-("25","25","13575","wp_formular","1","form_base_name","First name","content","12","Input Meno","1"),
-("26","26","13575","wp_formular","1","form_base_surname","Sur name","content","12","Input Priezvisko","1"),
-("27","27","13575","wp_formular","1","form_base_psc","Zip Code","content","12","Input PSČ","1"),
-("28","28","13575","wp_formular","1","form_base_city","Town","content","12","Input Mesto","1"),
-("29","29","13575","wp_formular","1","form_base_email","eMail","content","12","Input Email","1"),
-("30","30","13575","wp_formular","1","form_extend_v1_doklad","","content","12","Input Doklad","1"),
-("31","31","13575","wp_formular","1","form_extend_v3_otazka","Saalfelden Leogang ?","content","12","Input Otázka + odpovede","1"),
-("32","32","13575","wp_formular","1","form_extend_v3_odpoved_a","aaa","content","12","Odpoveď A","1"),
-("33","33","13575","wp_formular","1","form_extend_v3_odpoved_b","bbb","content","12","Odpoveď B","1"),
-("34","34","13575","wp_formular","1","form_extend_v3_odpoved_c","ccc","content","12","Odpoveď C","1"),
-("35","35","13575","wp_settings","1","keywords","Saalfelden Leogang   J.Lindeberg","content","1","Kľúčové slová pre Google","1"),
-("36","36","13575","wp_settings","1","description","This competition has a first ID","content","1","Popis pre Google","1"),
-("37","37","13575","wp_formular","1","form_file_podmienky","613","image","12","Podmienky súťaže (PDF)","1"),
-("38","38","13575","wp_formular","1","form_file_newsletter","614","image","12","Newsletter (PDF)","1"),
-("39","39","13575","wp_formular","1","form_base_tel_c","Telephone number","content","12","Telefónne číslo","1"),
-("40","40","13575","wp_hotely","1","_menu_7_image_2_1","1580","image","2","Fotka loga k modulu UBYTOVANIE","1"),
-("41","41","13575","wp_hotely","1","link_hotel_1","ysdvsdfvcvxcv","content","2","Url adresa hotela 1","1"),
-("42","42","13575","wp_settings","1","_language","en_EN","content","1","Jazyková mutácia pre Facebook","1"),
-("43","43","13575","wp_formular","1","form_file_newsletter_2","615","image","12","Newsletter 2 (PDF)","1"),
-("44","44","13575","wp_settings","1","social_google_plus","https://www.instagram.com/saalfelden_leogang/","content","1","Google Plus","1"),
-("45","45","13575","wp_formular","1","form_extend_v2_otazka","frage2","content","12","Input Otázka","1"),
-("46","46","46","wp_formular","1","form_base_custom_1","Country","content","12","Voliteľný parameter 1","1"),
-("829","47","13575","wp_hotely","1","abcde","1585","image","2","Test","0"),
-("940","940","14095","wp_hotely","1","info_hotel_name_1","Test","content","2","Názov hotelu 1","1"),
-("941","941","14095","wp_hotely","1","info_hotel_addr_1","http","content","2","Url adresa hotelu 1","1"),
-("942","942","14095","wp_hotely","1","info_hotel_tel_c_1","dnt_settings","content","2","Telefón do hotela 1","1"),
-("943","943","14095","wp_hotely","1","info_hotel_email_1","Content","content","2","Email hotelu 1","1"),
-("944","944","14095","wp_hotely","1","_menu_7_image_1_1","1615","image","2","Fotka k modulu UBYTOVANIE","1"),
-("945","945","14095","wp_hotely","1","_menu_7_text_1","Tomáš Doubek gggg","content","2","Text k modulu UBYTOVANIE 1","1"),
-("946","946","14095","wp_hotely","1","_menu_7_image_2_1","Content","image","2","Fotka loga k modulu UBYTOVANIE","1"),
-("947","947","14095","wp_hotely","1","link_hotel_1","Content","content","2","Url adresa hotela 1","1"),
-("1006","1006","14095","wp_hotely","1","_menu_7_file1","Content","file","2","Súbor1default","1"),
-("1007","1007","14095","wp_hotely","1","_menu_7_file2","Content","file","2","Súbor2default","1");
+("1","1","13575","wp_hotely","1","info_hotel_name_1","Content","content","2","Názov hotelu 1","1"),
+("2","2","13575","wp_hotely","1","info_hotel_addr_1","Content","content","2","Url adresa hotelu 1","1"),
+("3","3","13575","wp_hotely","1","info_hotel_tel_c_1","Content","content","2","Telefón do hotela 1","1"),
+("4","4","13575","wp_hotely","1","info_hotel_email_1","Content","content","2","Email hotelu 1","1"),
+("5","5","13575","wp_hotely","1","_menu_7_image_1_1","Content","image","2","Fotka k modulu UBYTOVANIE","1"),
+("6","6","13575","wp_hotely","1","_menu_7_text_1","Content","content","2","Text k modulu UBYTOVANIE 1","1"),
+("7","7","13575","wp_hotely","1","_menu_7_image_2_1","Content","image","2","Fotka loga k modulu UBYTOVANIE","1"),
+("8","8","13575","wp_hotely","1","_menu_7_file1","Content","file","2","Súbor 1 default","1"),
+("9","9","13575","wp_hotely","1","_menu_7_file2","Content","file","2","Súbor 2 default","1"),
+("10","10","13575","wp_hotely","1","link_hotel_1","Content","content","2","Url adresa hotela 1","1");
 
 
 
@@ -5465,7 +5422,7 @@ CREATE TABLE `dnt_settings` (
   `vendor_id` int(11) NOT NULL,
   `show` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3022 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3082 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_settings VALUES
@@ -5474,8 +5431,8 @@ INSERT INTO dnt_settings VALUES
 ("1311","1311","","default_lang","","content","","1","0"),
 ("1312","1312","","default_stat_user","","content","","1","0"),
 ("1310","1310","","no_comment","no_comment.png","content","","1","0"),
-("1309","1309","","no_img","259","content","","1","0"),
-("1308","1308","","logo_firmy","733","content","","1","0"),
+("1309","1309","","no_img","1693","content","","1","0"),
+("1308","1308","","logo_firmy","1676","content","","1","0"),
 ("1307","1307","","vendor_currency_nazov","Eur","content","","1","0"),
 ("1306","1306","","platca_dph","1","content","","1","0"),
 ("1305","1305","","instagram","https://instagram.com/dnt-system/","content","","1","0"),
@@ -5510,25 +5467,25 @@ INSERT INTO dnt_settings VALUES
 ("1279","1279","","server","http://prvedentalnecentrum.sk/","content","","1","0"),
 ("1433","1433","","msg_access_token","EAAZAep9FZCRqUBANOenKZCRAUcyUOhbfKHOWJ5ci35AyGdIcUrQsHGZCZA9ycIASGmZCEwhjLqKyF98ViEErTtcrKn5GbB2UfLkBtJMLrbT5Cnzi3YFVsLV4g298yE1xoS1Lzq0FWmCmz234MboDFYKjcc2p1tYhmO2Oaokj44ZBAZDZD","content","","1","0"),
 ("1432","1432","","msg_hub_verify_token","TOKEN_dnt_bot_partak_2016_heroku","content","","1","0"),
-("1719","1719","custom","layout","sertsetr","content","Template","1","0"),
-("1720","1720","custom","real_address","gtrtrsdgtdt","content","Zobraziť na URL adrese","1","0"),
-("1721","1721","custom","social_fb","xdfgx","content","Facebook","1","0"),
-("1722","1722","custom","social_twitter","gfxd","content","Twitter","1","0"),
-("1723","1723","custom","social_linked_in","gfxdgxd","content","Instagram","1","0"),
-("1724","1724","custom","map_location","gfxdgf","content","Mapa ","1","0"),
-("1725","1725","custom","favicon","1647","image","Favicon","1","0"),
-("1726","1726","custom","color","#d5d4d3","color","Farba","1","0"),
-("1729","1729","custom","_font","dxgfxdg","font","Font","1","0"),
-("1730","1730","custom","youtube_video","gfxdgf","content","Youtube video","1","0"),
-("1731","1731","custom","keywords","xdgfxd","content","Kľúčové slová pre Google","1","0"),
-("1732","1732","custom","description","gfxdg","content","Popis pre Google","1","0"),
-("1733","1733","custom","_language","xdfgx","language","Jazyková mutácia pre Facebook","1","0"),
-("1734","1734","custom","social_google_plus","dgxd","content","Google Plus","1","0"),
-("1735","1735","custom","impressum","gxdgxdg","content","Impressum","1","0"),
-("1736","1736","custom","footer_color","#800040","color","Farba Footra","1","0"),
-("1739","1739","custom","pixel_retargeting","dtrg","content","Pixel Retargeting","1","0"),
-("1740","1740","custom","ga_key","drtzdr","content","Google Analytics key","1","0"),
-("1741","1741","custom","data_protection","t","content","Data Protection","1","0");
+("1719","1719","custom","layout","sertsetr","content","Template","1","1"),
+("1720","1720","custom","real_address","gtrtrsdgtdt","content","Zobraziť na URL adrese","1","1"),
+("1721","1721","custom","social_fb","xdfgx","content","Facebook","1","1"),
+("1722","1722","custom","social_twitter","gfxd","content","Twitter","1","1"),
+("1723","1723","custom","social_linked_in","gfxdgxd","content","Instagram","1","1"),
+("1724","1724","custom","map_location","gfxdgf","content","Mapa ","1","1"),
+("1725","1725","custom","favicon","1647","image","Favicon","1","1"),
+("1726","1726","custom","color","#d5d4d3","color","Farba","1","1"),
+("1729","1729","custom","_font","dxgfxdg","font","Font","1","1"),
+("1730","1730","custom","youtube_video","gfxdgf","content","Youtube video","1","1"),
+("1731","1731","custom","keywords","xdgfxd","content","Kľúčové slová pre Google","1","1"),
+("1732","1732","custom","description","gfxdg","content","Popis pre Google","1","1"),
+("1733","1733","custom","_language","xdfgx","language","Jazyková mutácia pre Facebook","1","1"),
+("1734","1734","custom","social_google_plus","dgxd","content","Google Plus","1","1"),
+("1735","1735","custom","impressum","gxdgxdg","content","Impressum","1","1"),
+("1736","1736","custom","footer_color","#800040","color","Farba Footra","1","1"),
+("1739","1739","custom","pixel_retargeting","dtrg","content","Pixel Retargeting","1","1"),
+("1740","1740","custom","ga_key","drtzdr","content","Google Analytics key","1","1"),
+("1741","1741","custom","data_protection","t","content","Data Protection","1","1");
 
 
 
@@ -5545,7 +5502,7 @@ CREATE TABLE `dnt_translates` (
   `show` int(11) NOT NULL DEFAULT '1',
   `parent_id` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=111558 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=112799 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_translates VALUES
@@ -5565,117 +5522,24 @@ INSERT INTO dnt_translates VALUES
 ("75446","75446","1","de","8972","perex","dnt_posts","<p>I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account</p>\n","1","0"),
 ("75447","75447","1","de","8972","content","dnt_posts","<p>I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account</p>\n","1","0"),
 ("75448","75448","1","de","8972","tags","dnt_posts","das auto, das test","1","0"),
-("75449","75449","1","en","10498","name","dnt_posts","","1","0"),
-("75450","75450","1","en","10498","name_url","dnt_posts","","1","0"),
-("75451","75451","1","en","10498","perex","dnt_posts","","1","0"),
-("75452","75452","1","en","10498","content","dnt_posts","","1","0"),
-("75453","75453","1","en","10498","tags","dnt_posts","","1","0"),
-("75454","75454","1","de","10498","name","dnt_posts","","1","0"),
-("75455","75455","1","de","10498","name_url","dnt_posts","","1","0"),
-("75456","75456","1","de","10498","perex","dnt_posts","","1","0"),
-("75457","75457","1","de","10498","content","dnt_posts","","1","0"),
-("75458","75458","1","de","10498","tags","dnt_posts","","1","0"),
-("75459","75459","1","en","13064","name","dnt_posts","","1","0"),
-("75460","75460","1","en","13064","name_url","dnt_posts","","1","0"),
-("75461","75461","1","en","13064","perex","dnt_posts","","1","0"),
-("75462","75462","1","en","13064","content","dnt_posts","","1","0"),
-("75463","75463","1","en","13064","tags","dnt_posts","","1","0"),
-("75464","75464","1","de","13064","name","dnt_posts","","1","0"),
-("75465","75465","1","de","13064","name_url","dnt_posts","","1","0"),
-("75466","75466","1","de","13064","perex","dnt_posts","","1","0"),
-("75467","75467","1","de","13064","content","dnt_posts","","1","0"),
-("75468","75468","1","de","13064","tags","dnt_posts","","1","0"),
 ("75469","75469","1","en","13065","name","dnt_posts","cfhfghg","1","0"),
-("75470","75470","1","en","13065","name_url","dnt_posts","","1","0"),
-("75471","75471","1","en","13065","perex","dnt_posts","","1","0"),
-("75472","75472","1","en","13065","content","dnt_posts","","1","0"),
-("75473","75473","1","en","13065","tags","dnt_posts","","1","0"),
-("75474","75474","1","de","13065","name","dnt_posts","","1","0"),
-("75475","75475","1","de","13065","name_url","dnt_posts","","1","0"),
-("75476","75476","1","de","13065","perex","dnt_posts","","1","0"),
-("75477","75477","1","de","13065","content","dnt_posts","","1","0"),
-("75478","75478","1","de","13065","tags","dnt_posts","","1","0"),
-("75479","75479","1","en","13066","name","dnt_posts","","1","0"),
-("75480","75480","1","en","13066","name_url","dnt_posts","","1","0"),
-("75481","75481","1","en","13066","perex","dnt_posts","","1","0"),
-("75482","75482","1","en","13066","content","dnt_posts","","1","0"),
-("75483","75483","1","en","13066","tags","dnt_posts","","1","0"),
-("75484","75484","1","de","13066","name","dnt_posts","","1","0"),
-("75485","75485","1","de","13066","name_url","dnt_posts","","1","0"),
-("75486","75486","1","de","13066","perex","dnt_posts","","1","0"),
-("75487","75487","1","de","13066","content","dnt_posts","","1","0"),
-("75488","75488","1","de","13066","tags","dnt_posts","","1","0"),
-("75489","75489","1","en","13063","name","dnt_posts","","1","0"),
-("75490","75490","1","en","13063","name_url","dnt_posts","","1","0"),
-("75491","75491","1","en","13063","perex","dnt_posts","","1","0"),
-("75492","75492","1","en","13063","content","dnt_posts","","1","0"),
-("75493","75493","1","en","13063","tags","dnt_posts","","1","0"),
-("75494","75494","1","de","13063","name","dnt_posts","","1","0"),
-("75495","75495","1","de","13063","name_url","dnt_posts","","1","0"),
-("75496","75496","1","de","13063","perex","dnt_posts","","1","0"),
-("75497","75497","1","de","13063","content","dnt_posts","","1","0"),
-("75498","75498","1","de","13063","tags","dnt_posts","","1","0"),
 ("75499","75499","1","en","13067","name","dnt_posts","Tooling & Molding<br/> ","1","0"),
-("75500","75500","1","en","13067","name_url","dnt_posts","","1","0"),
 ("75501","75501","1","en","13067","perex","dnt_posts","<p>In 2016 we decided to expand the scope of the company in Bytča, we opened a new technology center for the production and treatment of injection molds for plastics.</p>\n","1","0"),
-("75502","75502","1","en","13067","content","dnt_posts","","1","0"),
-("75503","75503","1","en","13067","tags","dnt_posts","","1","0"),
 ("75504","75504","1","de","13067","name","dnt_posts","Werkzeug- und Vorrichtungsbau","1","0"),
-("75505","75505","1","de","13067","name_url","dnt_posts","","1","0"),
 ("75506","75506","1","de","13067","perex","dnt_posts","<p>Dieser Beitrag hat keine Vorschau Artikel, weil ihr Inhalt ist wahrscheinlich von multymedi&aacute;lneho Inhalt bestehen. Bitte klicken um mehr zu lesen und Sie k&ouml;nnen den gew&auml;hlten Inhalt zu sehen.</p>\n","1","0"),
-("75507","75507","1","de","13067","content","dnt_posts","","1","0"),
-("75508","75508","1","de","13067","tags","dnt_posts","","1","0"),
-("75509","75509","1","en","13068","name","dnt_posts","","1","0"),
-("75510","75510","1","en","13068","name_url","dnt_posts","","1","0"),
-("75511","75511","1","en","13068","perex","dnt_posts","","1","0"),
-("75512","75512","1","en","13068","content","dnt_posts","","1","0"),
-("75513","75513","1","en","13068","tags","dnt_posts","","1","0"),
-("75514","75514","1","de","13068","name","dnt_posts","","1","0"),
-("75515","75515","1","de","13068","name_url","dnt_posts","","1","0"),
-("75516","75516","1","de","13068","perex","dnt_posts","","1","0"),
-("75517","75517","1","de","13068","content","dnt_posts","","1","0"),
-("75518","75518","1","de","13068","tags","dnt_posts","","1","0"),
 ("75519","75519","1","en","13069","name","dnt_posts","Research & Development<br/> ","1","0"),
-("75520","75520","1","en","13069","name_url","dnt_posts","","1","0"),
 ("75521","75521","1","en","13069","perex","dnt_posts","<p>Today s full-time startups and new technologies have increasingly higher demands on the functionality and efficiency of the solutions available on the market.</p>\n","1","0"),
-("75522","75522","1","en","13069","content","dnt_posts","","1","0"),
-("75523","75523","1","en","13069","tags","dnt_posts","","1","0"),
 ("75524","75524","1","de","13069","name","dnt_posts","Forschung und Entwicklung","1","0"),
-("75525","75525","1","de","13069","name_url","dnt_posts","","1","0"),
 ("75526","75526","1","de","13069","perex","dnt_posts","<p>Die heutige Vollzeit Start-ups und neue Technologien haben immer h&ouml;here Anforderungen an die Funktionalit&auml;t und Effizienz der verf&uuml;gbaren L&ouml;sungen auf dem Markt.</p>\n","1","0"),
-("75527","75527","1","de","13069","content","dnt_posts","","1","0"),
-("75528","75528","1","de","13069","tags","dnt_posts","","1","0"),
 ("75529","75529","1","en","13071","name","dnt_posts","Research & Development","1","0"),
-("75530","75530","1","en","13071","name_url","dnt_posts","","1","0"),
 ("75531","75531","1","en","13071","perex","dnt_posts","<p>We are constantly looking for better solutions...</p>\n","1","0"),
-("75532","75532","1","en","13071","content","dnt_posts","","1","0");
-INSERT INTO dnt_translates VALUES
-("75533","75533","1","en","13071","tags","dnt_posts","","1","0"),
 ("75534","75534","1","de","13071","name","dnt_posts","Forschung und Entwicklung","1","0"),
-("75535","75535","1","de","13071","name_url","dnt_posts","","1","0"),
 ("75536","75536","1","de","13071","perex","dnt_posts","<p>Wir sind st&auml;ndig auf der Suche nach besseren L&ouml;sungen...</p>\n","1","0"),
-("75537","75537","1","de","13071","content","dnt_posts","","1","0"),
-("75538","75538","1","de","13071","tags","dnt_posts","","1","0"),
 ("75539","75539","1","en","13072","name","dnt_posts","PDC","1","0"),
-("75540","75540","1","en","13072","name_url","dnt_posts","","1","0"),
 ("75541","75541","1","en","13072","perex","dnt_posts","<p><strong>Plan-de-Campagne</strong><span style=\"font-family:tahoma,geneva,sans-serif; font-size:15.4px\">&nbsp;</span><strong>(PdC)</strong><span style=\"font-family:tahoma,geneva,sans-serif; font-size:15.4px\">&nbsp;is&nbsp;....</span></p>\n","1","0"),
-("75542","75542","1","en","13072","content","dnt_posts","","1","0"),
-("75543","75543","1","en","13072","tags","dnt_posts","","1","0"),
 ("75544","75544","1","de","13072","name","dnt_posts","PDC","1","0"),
-("75545","75545","1","de","13072","name_url","dnt_posts","","1","0"),
-("75546","75546","1","de","13072","perex","dnt_posts","","1","0"),
-("75547","75547","1","de","13072","content","dnt_posts","","1","0"),
-("75548","75548","1","de","13072","tags","dnt_posts","","1","0"),
 ("75549","75549","1","en","13073","name","dnt_posts","Free production capacities","1","0"),
-("75550","75550","1","en","13073","name_url","dnt_posts","","1","0"),
 ("75551","75551","1","en","13073","perex","dnt_posts","<p>Free production capacities for continuouse 5 axis milling</p>\n","1","0"),
-("75552","75552","1","en","13073","content","dnt_posts","","1","0"),
-("75553","75553","1","en","13073","tags","dnt_posts","","1","0"),
-("75554","75554","1","de","13073","name","dnt_posts","","1","0"),
-("75555","75555","1","de","13073","name_url","dnt_posts","","1","0"),
-("75556","75556","1","de","13073","perex","dnt_posts","","1","0"),
-("75557","75557","1","de","13073","content","dnt_posts","","1","0"),
-("75558","75558","1","de","13073","tags","dnt_posts","","1","0"),
 ("75559","75559","1","en","header_top_vitajte_1","static","","Welcome visitor can you","1","0"),
 ("75560","75560","1","en","alebo","static","","or","1","0"),
 ("75561","75561","1","sk","header_top_vitajte_1","static","","Vitajte zákazník! Chcete sa","1","0"),
@@ -5741,7 +5605,8 @@ INSERT INTO dnt_translates VALUES
 ("75621","75621","1","en","dph","static","","VAT","1","0"),
 ("75622","75622","1","sk","dph","static","","DPH","1","0"),
 ("75623","75623","1","en","dodacie_udaje","static","","Shipping information","1","0"),
-("75624","75624","1","sk","dodacie_udaje","static","","Dodacie údaje","1","0"),
+("75624","75624","1","sk","dodacie_udaje","static","","Dodacie údaje","1","0");
+INSERT INTO dnt_translates VALUES
 ("75625","75625","1","en","prosim_vyplnte_dodacie_udaje","static","","Please fill shipping information","1","0"),
 ("75626","75626","1","sk","prosim_vyplnte_dodacie_udaje","static","","Prosím vyplnte dodacie údaje","1","0"),
 ("75627","75627","1","en","meno","static","","Name","1","0"),
@@ -5749,8 +5614,7 @@ INSERT INTO dnt_translates VALUES
 ("75629","75629","1","en","priezvisko","static","","Surname","1","0"),
 ("75630","75630","1","sk","priezvisko","static","","Priezvisko","1","0"),
 ("75631","75631","1","en","email","static","","Email","1","0"),
-("75632","75632","1","sk","email","static","","Email","1","0");
-INSERT INTO dnt_translates VALUES
+("75632","75632","1","sk","email","static","","Email","1","0"),
 ("75633","75633","1","en","tel_c","static","","Telephone number","1","0"),
 ("75634","75634","1","sk","tel_c","static","","Telefónne číslo","1","0"),
 ("75635","75635","1","en","ulica","static","","Street","1","0"),
@@ -5842,7 +5706,8 @@ INSERT INTO dnt_translates VALUES
 ("75721","75721","1","en","komentarov","static","","Comments","1","0"),
 ("75722","75722","1","sk","komentarov","static","","Komentárov","1","0"),
 ("75723","75723","1","en","priemerna_cena_za_nakup","static","","Average price <br/>per shopping","1","0"),
-("75724","75724","1","sk","priemerna_cena_za_nakup","static","","Priemerná cena <br/>za nákup","1","0"),
+("75724","75724","1","sk","priemerna_cena_za_nakup","static","","Priemerná cena <br/>za nákup","1","0");
+INSERT INTO dnt_translates VALUES
 ("75725","75725","1","en","informacie","static","","Informations","1","0"),
 ("75726","75726","1","sk","informacie","static","","Informácie","1","0"),
 ("75727","75727","1","en","moj_profil","static","","My profile ","1","0"),
@@ -5850,8 +5715,7 @@ INSERT INTO dnt_translates VALUES
 ("75729","75729","1","en","moje_udaje","static","","My data ","1","0"),
 ("75730","75730","1","sk","moje_udaje","static","","Moje údaje","1","0"),
 ("75731","75731","1","en","upravit_udaje","static","","Edit my data","1","0"),
-("75732","75732","1","sk","upravit_udaje","static","","Upraviť údaje","1","0");
-INSERT INTO dnt_translates VALUES
+("75732","75732","1","sk","upravit_udaje","static","","Upraviť údaje","1","0"),
 ("75733","75733","1","en","moje_objednavky","static","","My orders","1","0"),
 ("75734","75734","1","sk","moje_objednavky","static","","Moje objednávky","1","0"),
 ("75735","75735","1","en","zmenit_heslo","static","","Change password","1","0"),
@@ -5943,7 +5807,8 @@ INSERT INTO dnt_translates VALUES
 ("75821","75821","1","en","pridajte_sa_facebook","static","","Join Us on Facebook","1","0"),
 ("75822","75822","1","sk","pridajte_sa_facebook","static","","Pridajte sa na Facebooku","1","0"),
 ("75823","75823","1","en","kontaktujte_nas_hlaska","static","","For more information please contact us","1","0"),
-("75824","75824","1","sk","kontaktujte_nas_hlaska","static","","Pre získanie viac informacii nás prosím kontaktujte","1","0"),
+("75824","75824","1","sk","kontaktujte_nas_hlaska","static","","Pre získanie viac informacii nás prosím kontaktujte","1","0");
+INSERT INTO dnt_translates VALUES
 ("75825","75825","1","en","najnovsie_produkty","static","","News products","1","0"),
 ("75826","75826","1","sk","najnovsie_produkty","static","","Najnovšie produkty","1","0"),
 ("75827","75827","1","en","znacky","static","","Brands","1","0"),
@@ -5951,8 +5816,7 @@ INSERT INTO dnt_translates VALUES
 ("75829","75829","1","en","najpredavanejsie","static","","Bestsellers","1","0"),
 ("75830","75830","1","sk","najpredavanejsie","static","","Najpredávanejšie","1","0"),
 ("75831","75831","1","en","produkty_v_zlave","static","","In discount","1","0"),
-("75832","75832","1","sk","produkty_v_zlave","static","","V zľave","1","0");
-INSERT INTO dnt_translates VALUES
+("75832","75832","1","sk","produkty_v_zlave","static","","V zľave","1","0"),
 ("75833","75833","1","en","obsah_kosika","static","","Your cart","1","0"),
 ("75834","75834","1","sk","obsah_kosika","static","","Váš obsah košíka","1","0"),
 ("75835","75835","1","en","zobrazit_kosik","static","","View cart","1","0"),
@@ -6044,7 +5908,8 @@ INSERT INTO dnt_translates VALUES
 ("75921","75921","1","en","nazov","static","","Name","1","0"),
 ("75922","75922","1","sk","nazov","static","","Meno","1","0"),
 ("75923","75923","1","en","zoznam_nehnutelnosti","static","","List of properties","1","0"),
-("75924","75924","1","sk","zoznam_nehnutelnosti","static","","Zoznam nehnuteľností","1","0"),
+("75924","75924","1","sk","zoznam_nehnutelnosti","static","","Zoznam nehnuteľností","1","0");
+INSERT INTO dnt_translates VALUES
 ("75925","75925","1","en","no_content","static","","Please try using top navigation OR search for what you are looking for.","1","0"),
 ("75926","75926","1","sk","no_content","static","","Ľutujeme, ale pre tento výber neexistuje žiaden obsah","1","0"),
 ("75927","75927","1","en","go_back","static","","Go back","1","0"),
@@ -6052,8 +5917,7 @@ INSERT INTO dnt_translates VALUES
 ("75929","75929","1","en","vybrane_nehnutelnosti","static","","Featured Properties","1","0"),
 ("75930","75930","1","sk","vybrane_nehnutelnosti","static","","Vybrané nehnuteľnosti","1","0"),
 ("75931","75931","1","en","najnovsie_ponuky_hlaska","static","","Latest offers property","1","0"),
-("75932","75932","1","sk","najnovsie_ponuky_hlaska","static","","Najnovšie ponuky nehnuteľností","1","0");
-INSERT INTO dnt_translates VALUES
+("75932","75932","1","sk","najnovsie_ponuky_hlaska","static","","Najnovšie ponuky nehnuteľností","1","0"),
 ("75933","75933","1","en","about_us_footer","static","","Our company operates in the real estate market. We offer a broad spectrum range of activities related to the negotiation of purchase, sale and rental nehnuteľností.Pre most of you, our clients, the sale, purchase, or rental property important step, which made only a few times in my life. Our real estate agents will gladly help you with the implementation of your requirements and provide complete service with our offer.","1","0"),
 ("75934","75934","1","sk","about_us_footer","static","","Naša spoločnosť pôsobí v oblasti realitného trhu. Ponúkame širokospektrálny záber činností spojených so sprostredkovaním kúpy, predaja a prenájmu nehnuteľností.Pre väčšinu Vás, našich klientov je predaj, kúpa, alebo prenájom nehnuteľnosti dôležitý krok, ktorý realizujete len niekoľkokrát v živote. Naši realitní makléri Vám ochotne a radi poradia pri realizácii Vašich požiadaviek a zabezpečia kompletný servis spojený s našou ponukou.","1","0"),
 ("75935","75935","1","en","about","static","","About company","1","0"),
@@ -6145,7 +6009,8 @@ INSERT INTO dnt_translates VALUES
 ("76024","76024","1","de","psc","static","","Postleitzahl","1","0"),
 ("76025","76025","1","de","mesto","static","","Stadt","1","0"),
 ("76026","76026","1","de","sprava","static","","Management","1","0"),
-("76027","76027","1","de","odoslat","static","","Einreichen","1","0"),
+("76027","76027","1","de","odoslat","static","","Einreichen","1","0");
+INSERT INTO dnt_translates VALUES
 ("76028","76028","1","de","heslo","static","","Kennwort","1","0"),
 ("76029","76029","1","de","kontakt","static","","Kontakt","1","0"),
 ("76030","76030","1","de","socialne_siete","static","","Soziales Netzwerk","1","0"),
@@ -6153,554 +6018,146 @@ INSERT INTO dnt_translates VALUES
 ("76032","76032","1","en","sidlo","static","","Headquarters.","1","0"),
 ("76033","76033","1","de","sidlo","static","","Hauptsitz.","1","0"),
 ("76034","76034","1","sk","pobocka","static","","Pobočka.","1","0"),
-("76035","76035","1","en","pobocka","static","","Branch office.","1","0");
-INSERT INTO dnt_translates VALUES
+("76035","76035","1","en","pobocka","static","","Branch office.","1","0"),
 ("76036","76036","1","de","pobocka","static","","Zweigstelle.","1","0"),
-("76037","76037","1","en","13074","name","dnt_posts","","1","0"),
-("76038","76038","1","en","13074","name_url","dnt_posts","","1","0"),
-("76039","76039","1","en","13074","perex","dnt_posts","","1","0"),
-("76040","76040","1","en","13074","content","dnt_posts","","1","0"),
-("76041","76041","1","en","13074","tags","dnt_posts","","1","0"),
-("76042","76042","1","de","13074","name","dnt_posts","","1","0"),
-("76043","76043","1","de","13074","name_url","dnt_posts","","1","0"),
-("76044","76044","1","de","13074","perex","dnt_posts","","1","0"),
-("76045","76045","1","de","13074","content","dnt_posts","","1","0"),
-("76046","76046","1","de","13074","tags","dnt_posts","","1","0"),
 ("76047","76047","1","en","13056","name","dnt_posts","Partners","1","0"),
 ("76048","76048","1","en","13056","name_url","dnt_posts","partners","1","0"),
-("76049","76049","1","en","13056","perex","dnt_posts","","1","0"),
-("76050","76050","1","en","13056","content","dnt_posts","","1","0"),
-("76051","76051","1","en","13056","tags","dnt_posts","","1","0"),
 ("76052","76052","1","de","13056","name","dnt_posts","Partner","1","0"),
 ("76053","76053","1","de","13056","name_url","dnt_posts","partner","1","0"),
-("76054","76054","1","de","13056","perex","dnt_posts","","1","0"),
-("76055","76055","1","de","13056","content","dnt_posts","","1","0"),
-("76056","76056","1","de","13056","tags","dnt_posts","","1","0"),
 ("76057","76057","1","en","13058","name","dnt_posts","Contact","1","0"),
 ("76058","76058","1","en","13058","name_url","dnt_posts","contact","1","0"),
-("76059","76059","1","en","13058","perex","dnt_posts","","1","0"),
-("76060","76060","1","en","13058","content","dnt_posts","","1","0"),
-("76061","76061","1","en","13058","tags","dnt_posts","","1","0"),
 ("76062","76062","1","de","13058","name","dnt_posts","Kontakt","1","0"),
 ("76063","76063","1","de","13058","name_url","dnt_posts","kontakt","1","0"),
-("76064","76064","1","de","13058","perex","dnt_posts","","1","0"),
-("76065","76065","1","de","13058","content","dnt_posts","","1","0"),
-("76066","76066","1","de","13058","tags","dnt_posts","","1","0"),
 ("76077","76077","1","en","13055","name","dnt_posts","Research and development","1","0"),
 ("76078","76078","1","en","13055","name_url","dnt_posts","research-and-development","1","0"),
-("76079","76079","1","en","13055","perex","dnt_posts","","1","0"),
-("76080","76080","1","en","13055","content","dnt_posts","","1","0"),
-("76081","76081","1","en","13055","tags","dnt_posts","","1","0"),
 ("76082","76082","1","de","13055","name","dnt_posts","Forschung und Entwicklung","1","0"),
 ("76083","76083","1","de","13055","name_url","dnt_posts","forschung-und-entwicklung","1","0"),
-("76084","76084","1","de","13055","perex","dnt_posts","","1","0"),
-("76085","76085","1","de","13055","content","dnt_posts","","1","0"),
-("76086","76086","1","de","13055","tags","dnt_posts","","1","0"),
 ("76087","76087","1","en","13054","name","dnt_posts","Products","1","0"),
-("76088","76088","1","en","13054","name_url","dnt_posts","","1","0"),
-("76089","76089","1","en","13054","perex","dnt_posts","","1","0"),
-("76090","76090","1","en","13054","content","dnt_posts","","1","0"),
-("76091","76091","1","en","13054","tags","dnt_posts","","1","0"),
 ("76092","76092","1","de","13054","name","dnt_posts","Produkte","1","0"),
-("76093","76093","1","de","13054","name_url","dnt_posts","","1","0"),
-("76094","76094","1","de","13054","perex","dnt_posts","","1","0"),
-("76095","76095","1","de","13054","content","dnt_posts","","1","0"),
-("76096","76096","1","de","13054","tags","dnt_posts","","1","0"),
 ("76097","76097","1","en","13059","name","dnt_posts","Staff","1","0"),
 ("76098","76098","1","en","13059","name_url","dnt_posts","staff","1","0"),
-("76099","76099","1","en","13059","perex","dnt_posts","","1","0"),
-("76100","76100","1","en","13059","content","dnt_posts","","1","0"),
-("76101","76101","1","en","13059","tags","dnt_posts","","1","0"),
 ("76102","76102","1","de","13059","name","dnt_posts","Personal","1","0"),
 ("76103","76103","1","de","13059","name_url","dnt_posts","personal","1","0"),
-("76104","76104","1","de","13059","perex","dnt_posts","","1","0"),
-("76105","76105","1","de","13059","content","dnt_posts","","1","0"),
-("76106","76106","1","de","13059","tags","dnt_posts","","1","0"),
 ("76107","76107","1","en","13060","name","dnt_posts","Software for planning of production","1","0"),
-("76108","76108","1","en","13060","name_url","dnt_posts","","1","0"),
-("76109","76109","1","en","13060","perex","dnt_posts","","1","0"),
-("76110","76110","1","en","13060","content","dnt_posts","","1","0"),
-("76111","76111","1","en","13060","tags","dnt_posts","","1","0"),
 ("76112","76112","1","de","13060","name","dnt_posts","Software für die Planung der Produktion","1","0"),
-("76113","76113","1","de","13060","name_url","dnt_posts","","1","0"),
-("76114","76114","1","de","13060","perex","dnt_posts","","1","0"),
-("76115","76115","1","de","13060","content","dnt_posts","","1","0"),
-("76116","76116","1","de","13060","tags","dnt_posts","","1","0"),
 ("76117","76117","1","en","13075","name","dnt_posts","Tooling & Molding","1","0"),
-("76118","76118","1","en","13075","name_url","dnt_posts","","1","0"),
-("76119","76119","1","en","13075","perex","dnt_posts","","1","0"),
-("76120","76120","1","en","13075","content","dnt_posts","","1","0"),
-("76121","76121","1","en","13075","tags","dnt_posts","","1","0"),
 ("76122","76122","1","de","13075","name","dnt_posts","Werkzeug- und Vorrichtungsbau","1","0"),
-("76123","76123","1","de","13075","name_url","dnt_posts","","1","0"),
-("76124","76124","1","de","13075","perex","dnt_posts","","1","0"),
-("76125","76125","1","de","13075","content","dnt_posts","","1","0"),
-("76126","76126","1","de","13075","tags","dnt_posts","","1","0"),
 ("76127","76127","1","en","13076","name","dnt_posts","Why choose CAM","1","0"),
 ("76128","76128","1","en","13076","name_url","dnt_posts","why-choose-cam","1","0"),
-("76129","76129","1","en","13076","perex","dnt_posts","","1","0"),
-("76130","76130","1","en","13076","content","dnt_posts","","1","0"),
-("76131","76131","1","en","13076","tags","dnt_posts","","1","0"),
-("76132","76132","1","de","13076","name","dnt_posts","","1","0"),
-("76133","76133","1","de","13076","name_url","dnt_posts","","1","0"),
-("76134","76134","1","de","13076","perex","dnt_posts","","1","0"),
-("76135","76135","1","de","13076","content","dnt_posts","","1","0"),
-("76136","76136","1","de","13076","tags","dnt_posts","","1","0"),
 ("76137","76137","1","en","13077","name","dnt_posts","Services","1","0"),
 ("76138","76138","1","en","13077","name_url","dnt_posts","services","1","0"),
-("76139","76139","1","en","13077","perex","dnt_posts","","1","0"),
-("76140","76140","1","en","13077","content","dnt_posts","","1","0"),
-("76141","76141","1","en","13077","tags","dnt_posts","","1","0"),
 ("76142","76142","1","de","13077","name","dnt_posts","Service","1","0"),
 ("76143","76143","1","de","13077","name_url","dnt_posts","service","1","0"),
-("76144","76144","1","de","13077","perex","dnt_posts","","1","0"),
-("76145","76145","1","de","13077","content","dnt_posts","","1","0");
-INSERT INTO dnt_translates VALUES
-("76146","76146","1","de","13077","tags","dnt_posts","","1","0"),
 ("76147","76147","1","en","13078","name","dnt_posts","Why choose CAM","1","0"),
 ("76148","76148","1","en","13078","name_url","dnt_posts","why-choose-cam","1","0"),
-("76149","76149","1","en","13078","perex","dnt_posts","","1","0"),
-("76150","76150","1","en","13078","content","dnt_posts","","1","0"),
-("76151","76151","1","en","13078","tags","dnt_posts","","1","0"),
-("76152","76152","1","de","13078","name","dnt_posts","","1","0"),
-("76153","76153","1","de","13078","name_url","dnt_posts","","1","0"),
-("76154","76154","1","de","13078","perex","dnt_posts","","1","0"),
-("76155","76155","1","de","13078","content","dnt_posts","","1","0"),
-("76156","76156","1","de","13078","tags","dnt_posts","","1","0"),
-("76157","76157","1","en","13079","name","dnt_posts","","1","0"),
-("76158","76158","1","en","13079","name_url","dnt_posts","","1","0"),
-("76159","76159","1","en","13079","perex","dnt_posts","","1","0"),
-("76160","76160","1","en","13079","content","dnt_posts","","1","0"),
-("76161","76161","1","en","13079","tags","dnt_posts","","1","0"),
-("76162","76162","1","de","13079","name","dnt_posts","","1","0"),
-("76163","76163","1","de","13079","name_url","dnt_posts","","1","0"),
-("76164","76164","1","de","13079","perex","dnt_posts","","1","0"),
-("76165","76165","1","de","13079","content","dnt_posts","","1","0"),
-("76166","76166","1","de","13079","tags","dnt_posts","","1","0"),
-("76167","76167","1","en","13080","name","dnt_posts","","1","0"),
-("76168","76168","1","en","13080","name_url","dnt_posts","","1","0"),
-("76169","76169","1","en","13080","perex","dnt_posts","","1","0"),
-("76170","76170","1","en","13080","content","dnt_posts","","1","0"),
-("76171","76171","1","en","13080","tags","dnt_posts","","1","0"),
-("76172","76172","1","de","13080","name","dnt_posts","","1","0"),
-("76173","76173","1","de","13080","name_url","dnt_posts","","1","0"),
-("76174","76174","1","de","13080","perex","dnt_posts","","1","0"),
-("76175","76175","1","de","13080","content","dnt_posts","","1","0"),
-("76176","76176","1","de","13080","tags","dnt_posts","","1","0"),
-("76177","76177","1","en","13081","name","dnt_posts","","1","0"),
-("76178","76178","1","en","13081","name_url","dnt_posts","","1","0"),
-("76179","76179","1","en","13081","perex","dnt_posts","","1","0"),
-("76180","76180","1","en","13081","content","dnt_posts","","1","0"),
-("76181","76181","1","en","13081","tags","dnt_posts","","1","0"),
-("76182","76182","1","de","13081","name","dnt_posts","","1","0"),
-("76183","76183","1","de","13081","name_url","dnt_posts","","1","0"),
-("76184","76184","1","de","13081","perex","dnt_posts","","1","0"),
-("76185","76185","1","de","13081","content","dnt_posts","","1","0"),
-("76186","76186","1","de","13081","tags","dnt_posts","","1","0"),
-("76187","76187","1","en","13082","name","dnt_posts","","1","0"),
-("76188","76188","1","en","13082","name_url","dnt_posts","","1","0"),
-("76189","76189","1","en","13082","perex","dnt_posts","","1","0"),
-("76190","76190","1","en","13082","content","dnt_posts","","1","0"),
-("76191","76191","1","en","13082","tags","dnt_posts","","1","0"),
-("76192","76192","1","de","13082","name","dnt_posts","","1","0"),
-("76193","76193","1","de","13082","name_url","dnt_posts","","1","0"),
-("76194","76194","1","de","13082","perex","dnt_posts","","1","0"),
-("76195","76195","1","de","13082","content","dnt_posts","","1","0"),
-("76196","76196","1","de","13082","tags","dnt_posts","","1","0"),
-("76197","76197","1","en","13083","name","dnt_posts","","1","0"),
-("76198","76198","1","en","13083","name_url","dnt_posts","","1","0"),
-("76199","76199","1","en","13083","perex","dnt_posts","","1","0"),
-("76200","76200","1","en","13083","content","dnt_posts","","1","0"),
-("76201","76201","1","en","13083","tags","dnt_posts","","1","0"),
-("76202","76202","1","de","13083","name","dnt_posts","","1","0"),
-("76203","76203","1","de","13083","name_url","dnt_posts","","1","0"),
-("76204","76204","1","de","13083","perex","dnt_posts","","1","0"),
-("76205","76205","1","de","13083","content","dnt_posts","","1","0"),
-("76206","76206","1","de","13083","tags","dnt_posts","","1","0"),
-("76207","76207","1","en","13084","name","dnt_posts","","1","0"),
-("76208","76208","1","en","13084","name_url","dnt_posts","","1","0"),
-("76209","76209","1","en","13084","perex","dnt_posts","","1","0"),
-("76210","76210","1","en","13084","content","dnt_posts","","1","0"),
-("76211","76211","1","en","13084","tags","dnt_posts","","1","0"),
-("76212","76212","1","de","13084","name","dnt_posts","","1","0"),
-("76213","76213","1","de","13084","name_url","dnt_posts","","1","0"),
-("76214","76214","1","de","13084","perex","dnt_posts","","1","0"),
-("76215","76215","1","de","13084","content","dnt_posts","","1","0"),
-("76216","76216","1","de","13084","tags","dnt_posts","","1","0"),
-("76217","76217","1","en","13085","name","dnt_posts","","1","0"),
-("76218","76218","1","en","13085","name_url","dnt_posts","","1","0"),
-("76219","76219","1","en","13085","perex","dnt_posts","","1","0"),
-("76220","76220","1","en","13085","content","dnt_posts","","1","0"),
-("76221","76221","1","en","13085","tags","dnt_posts","","1","0"),
-("76222","76222","1","de","13085","name","dnt_posts","","1","0"),
-("76223","76223","1","de","13085","name_url","dnt_posts","","1","0"),
-("76224","76224","1","de","13085","perex","dnt_posts","","1","0"),
-("76225","76225","1","de","13085","content","dnt_posts","","1","0"),
-("76226","76226","1","de","13085","tags","dnt_posts","","1","0"),
-("76237","76237","1","en","13086","name","dnt_posts","","1","0"),
-("76238","76238","1","en","13086","name_url","dnt_posts","","1","0"),
-("76239","76239","1","en","13086","perex","dnt_posts","","1","0"),
-("76240","76240","1","en","13086","content","dnt_posts","","1","0"),
-("76241","76241","1","en","13086","tags","dnt_posts","","1","0"),
-("76242","76242","1","de","13086","name","dnt_posts","","1","0"),
-("76243","76243","1","de","13086","name_url","dnt_posts","","1","0"),
-("76244","76244","1","de","13086","perex","dnt_posts","","1","0"),
-("76245","76245","1","de","13086","content","dnt_posts","","1","0"),
-("76246","76246","1","de","13086","tags","dnt_posts","","1","0"),
-("76247","76247","1","en","13087","name","dnt_posts","","1","0"),
-("76248","76248","1","en","13087","name_url","dnt_posts","","1","0"),
-("76249","76249","1","en","13087","perex","dnt_posts","","1","0"),
-("76250","76250","1","en","13087","content","dnt_posts","","1","0"),
-("76251","76251","1","en","13087","tags","dnt_posts","","1","0"),
-("76252","76252","1","de","13087","name","dnt_posts","","1","0"),
-("76253","76253","1","de","13087","name_url","dnt_posts","","1","0"),
-("76254","76254","1","de","13087","perex","dnt_posts","","1","0"),
-("76255","76255","1","de","13087","content","dnt_posts","","1","0");
-INSERT INTO dnt_translates VALUES
-("76256","76256","1","de","13087","tags","dnt_posts","","1","0"),
-("76257","76257","1","en","13088","name","dnt_posts","","1","0"),
-("76258","76258","1","en","13088","name_url","dnt_posts","","1","0"),
-("76259","76259","1","en","13088","perex","dnt_posts","","1","0"),
-("76260","76260","1","en","13088","content","dnt_posts","","1","0"),
-("76261","76261","1","en","13088","tags","dnt_posts","","1","0"),
-("76262","76262","1","de","13088","name","dnt_posts","","1","0"),
-("76263","76263","1","de","13088","name_url","dnt_posts","","1","0"),
-("76264","76264","1","de","13088","perex","dnt_posts","","1","0"),
-("76265","76265","1","de","13088","content","dnt_posts","","1","0"),
-("76266","76266","1","de","13088","tags","dnt_posts","","1","0"),
-("76267","76267","1","en","13089","name","dnt_posts","","1","0"),
-("76268","76268","1","en","13089","name_url","dnt_posts","","1","0"),
-("76269","76269","1","en","13089","perex","dnt_posts","","1","0"),
-("76270","76270","1","en","13089","content","dnt_posts","","1","0"),
-("76271","76271","1","en","13089","tags","dnt_posts","","1","0"),
-("76272","76272","1","de","13089","name","dnt_posts","","1","0"),
-("76273","76273","1","de","13089","name_url","dnt_posts","","1","0"),
-("76274","76274","1","de","13089","perex","dnt_posts","","1","0"),
-("76275","76275","1","de","13089","content","dnt_posts","","1","0"),
-("76276","76276","1","de","13089","tags","dnt_posts","","1","0"),
-("76277","76277","1","en","13090","name","dnt_posts","","1","0"),
-("76278","76278","1","en","13090","name_url","dnt_posts","","1","0"),
-("76279","76279","1","en","13090","perex","dnt_posts","","1","0"),
-("76280","76280","1","en","13090","content","dnt_posts","","1","0"),
-("76281","76281","1","en","13090","tags","dnt_posts","","1","0"),
-("76282","76282","1","de","13090","name","dnt_posts","","1","0"),
-("76283","76283","1","de","13090","name_url","dnt_posts","","1","0"),
-("76284","76284","1","de","13090","perex","dnt_posts","","1","0"),
-("76285","76285","1","de","13090","content","dnt_posts","","1","0"),
-("76286","76286","1","de","13090","tags","dnt_posts","","1","0"),
-("76287","76287","1","en","13091","name","dnt_posts","","1","0"),
-("76288","76288","1","en","13091","name_url","dnt_posts","","1","0"),
-("76289","76289","1","en","13091","perex","dnt_posts","","1","0"),
-("76290","76290","1","en","13091","content","dnt_posts","","1","0"),
-("76291","76291","1","en","13091","tags","dnt_posts","","1","0"),
-("76292","76292","1","de","13091","name","dnt_posts","","1","0"),
-("76293","76293","1","de","13091","name_url","dnt_posts","","1","0"),
-("76294","76294","1","de","13091","perex","dnt_posts","","1","0"),
-("76295","76295","1","de","13091","content","dnt_posts","","1","0"),
-("76296","76296","1","de","13091","tags","dnt_posts","","1","0"),
-("76297","76297","1","en","13092","name","dnt_posts","","1","0"),
-("76298","76298","1","en","13092","name_url","dnt_posts","","1","0"),
-("76299","76299","1","en","13092","perex","dnt_posts","","1","0"),
-("76300","76300","1","en","13092","content","dnt_posts","","1","0"),
-("76301","76301","1","en","13092","tags","dnt_posts","","1","0"),
-("76302","76302","1","de","13092","name","dnt_posts","","1","0"),
-("76303","76303","1","de","13092","name_url","dnt_posts","","1","0"),
-("76304","76304","1","de","13092","perex","dnt_posts","","1","0"),
-("76305","76305","1","de","13092","content","dnt_posts","","1","0"),
-("76306","76306","1","de","13092","tags","dnt_posts","","1","0"),
 ("76307","76307","1","en","13093","name","dnt_posts","Billing information","1","0"),
-("76308","76308","1","en","13093","name_url","dnt_posts","","1","0"),
-("76309","76309","1","en","13093","perex","dnt_posts","","1","0"),
-("76310","76310","1","en","13093","content","dnt_posts","","1","0"),
-("76311","76311","1","en","13093","tags","dnt_posts","","1","0"),
 ("76312","76312","1","de","13093","name","dnt_posts","Abrechnungsinformationen","1","0"),
-("76313","76313","1","de","13093","name_url","dnt_posts","","1","0"),
-("76314","76314","1","de","13093","perex","dnt_posts","","1","0"),
-("76315","76315","1","de","13093","content","dnt_posts","","1","0"),
-("76316","76316","1","de","13093","tags","dnt_posts","","1","0"),
 ("76317","76317","1","en","13094","name","dnt_posts","Free production capacities","1","0"),
-("76318","76318","1","en","13094","name_url","dnt_posts","","1","0"),
-("76319","76319","1","en","13094","perex","dnt_posts","","1","0"),
 ("76320","76320","1","en","13094","content","dnt_posts","<p>Free production capacities for continuouse 5 axis milling</p>\n","1","0"),
-("76321","76321","1","en","13094","tags","dnt_posts","","1","0"),
-("76322","76322","1","de","13094","name","dnt_posts","","1","0"),
-("76323","76323","1","de","13094","name_url","dnt_posts","","1","0"),
-("76324","76324","1","de","13094","perex","dnt_posts","","1","0"),
-("76325","76325","1","de","13094","content","dnt_posts","","1","0"),
-("76326","76326","1","de","13094","tags","dnt_posts","","1","0"),
-("77643","77643","1","en","13350","name","dnt_posts","","1","0"),
-("77644","77644","1","en","13350","name_url","dnt_posts","","1","0"),
-("77645","77645","1","en","13350","perex","dnt_posts","","1","0"),
-("77646","77646","1","en","13350","content","dnt_posts","","1","0"),
-("77647","77647","1","en","13350","tags","dnt_posts","","1","0"),
-("77648","77648","1","de","13350","name","dnt_posts","","1","0"),
-("77649","77649","1","de","13350","name_url","dnt_posts","","1","0"),
-("77650","77650","1","de","13350","perex","dnt_posts","","1","0"),
-("77651","77651","1","de","13350","content","dnt_posts","","1","0"),
-("77652","77652","1","de","13350","tags","dnt_posts","","1","0"),
-("77663","77663","1","en","13351","name","dnt_posts","","1","0"),
-("77664","77664","1","en","13351","name_url","dnt_posts","","1","0"),
-("77665","77665","1","en","13351","perex","dnt_posts","","1","0"),
-("77666","77666","1","en","13351","content","dnt_posts","","1","0"),
-("77667","77667","1","en","13351","tags","dnt_posts","","1","0"),
-("77668","77668","1","de","13351","name","dnt_posts","","1","0"),
-("77669","77669","1","de","13351","name_url","dnt_posts","","1","0"),
-("77670","77670","1","de","13351","perex","dnt_posts","","1","0"),
-("77671","77671","1","de","13351","content","dnt_posts","","1","0"),
-("77672","77672","1","de","13351","tags","dnt_posts","","1","0"),
-("77673","77673","1","en","13352","name","dnt_posts","","1","0"),
-("77674","77674","1","en","13352","name_url","dnt_posts","","1","0"),
-("77675","77675","1","en","13352","perex","dnt_posts","","1","0"),
-("77676","77676","1","en","13352","content","dnt_posts","","1","0"),
-("77677","77677","1","en","13352","tags","dnt_posts","","1","0"),
-("77678","77678","1","de","13352","name","dnt_posts","","1","0"),
-("77679","77679","1","de","13352","name_url","dnt_posts","","1","0"),
-("77680","77680","1","de","13352","perex","dnt_posts","","1","0"),
-("77681","77681","1","de","13352","content","dnt_posts","","1","0");
-INSERT INTO dnt_translates VALUES
-("77682","77682","1","de","13352","tags","dnt_posts","","1","0"),
-("77913","77913","1","en","13359","name","dnt_posts","","1","0"),
-("77914","77914","1","en","13359","name_url","dnt_posts","","1","0"),
-("77915","77915","1","en","13359","perex","dnt_posts","","1","0"),
-("77916","77916","1","en","13359","content","dnt_posts","","1","0"),
-("77917","77917","1","en","13359","tags","dnt_posts","","1","0"),
-("77918","77918","1","de","13359","name","dnt_posts","","1","0"),
-("77919","77919","1","de","13359","name_url","dnt_posts","","1","0"),
-("77920","77920","1","de","13359","perex","dnt_posts","","1","0"),
-("77921","77921","1","de","13359","content","dnt_posts","","1","0"),
-("77922","77922","1","de","13359","tags","dnt_posts","","1","0"),
-("77923","77923","1","en","13360","name","dnt_posts","","1","0"),
-("77924","77924","1","en","13360","name_url","dnt_posts","","1","0"),
-("77925","77925","1","en","13360","perex","dnt_posts","","1","0"),
-("77926","77926","1","en","13360","content","dnt_posts","","1","0"),
-("77927","77927","1","en","13360","tags","dnt_posts","","1","0"),
-("77928","77928","1","de","13360","name","dnt_posts","","1","0"),
-("77929","77929","1","de","13360","name_url","dnt_posts","","1","0"),
-("77930","77930","1","de","13360","perex","dnt_posts","","1","0"),
-("77931","77931","1","de","13360","content","dnt_posts","","1","0"),
-("77932","77932","1","de","13360","tags","dnt_posts","","1","0"),
-("77933","77933","1","en","13361","name","dnt_posts","","1","0"),
-("77934","77934","1","en","13361","name_url","dnt_posts","","1","0"),
-("77935","77935","1","en","13361","perex","dnt_posts","","1","0"),
-("77936","77936","1","en","13361","content","dnt_posts","","1","0"),
-("77937","77937","1","en","13361","tags","dnt_posts","","1","0"),
-("77938","77938","1","de","13361","name","dnt_posts","","1","0"),
-("77939","77939","1","de","13361","name_url","dnt_posts","","1","0"),
-("77940","77940","1","de","13361","perex","dnt_posts","","1","0"),
-("77941","77941","1","de","13361","content","dnt_posts","","1","0"),
-("77942","77942","1","de","13361","tags","dnt_posts","","1","0"),
-("77953","77953","1","en","13362","name","dnt_posts","","1","0"),
-("77954","77954","1","en","13362","name_url","dnt_posts","","1","0"),
-("77955","77955","1","en","13362","perex","dnt_posts","","1","0"),
-("77956","77956","1","en","13362","content","dnt_posts","","1","0"),
-("77957","77957","1","en","13362","tags","dnt_posts","","1","0"),
-("77958","77958","1","de","13362","name","dnt_posts","","1","0"),
-("77959","77959","1","de","13362","name_url","dnt_posts","","1","0"),
-("77960","77960","1","de","13362","perex","dnt_posts","","1","0"),
-("77961","77961","1","de","13362","content","dnt_posts","","1","0"),
-("77962","77962","1","de","13362","tags","dnt_posts","","1","0"),
-("78013","78013","1","en","13367","name","dnt_posts","","1","0"),
-("78014","78014","1","en","13367","name_url","dnt_posts","","1","0"),
-("78015","78015","1","en","13367","perex","dnt_posts","","1","0"),
-("78016","78016","1","en","13367","content","dnt_posts","","1","0"),
-("78017","78017","1","en","13367","tags","dnt_posts","","1","0"),
-("78018","78018","1","de","13367","name","dnt_posts","","1","0"),
-("78019","78019","1","de","13367","name_url","dnt_posts","","1","0"),
-("78020","78020","1","de","13367","perex","dnt_posts","","1","0"),
-("78021","78021","1","de","13367","content","dnt_posts","","1","0"),
-("78022","78022","1","de","13367","tags","dnt_posts","","1","0"),
-("78043","78043","1","en","13366","name","dnt_posts","","1","0"),
-("78044","78044","1","en","13366","name_url","dnt_posts","","1","0"),
-("78045","78045","1","en","13366","perex","dnt_posts","","1","0"),
-("78046","78046","1","en","13366","content","dnt_posts","","1","0"),
-("78047","78047","1","en","13366","tags","dnt_posts","","1","0"),
-("78048","78048","1","de","13366","name","dnt_posts","","1","0"),
-("78049","78049","1","de","13366","name_url","dnt_posts","","1","0"),
-("78050","78050","1","de","13366","perex","dnt_posts","","1","0"),
-("78051","78051","1","de","13366","content","dnt_posts","","1","0"),
-("78052","78052","1","de","13366","tags","dnt_posts","","1","0"),
-("78073","78073","1","en","13370","name","dnt_posts","","1","0"),
-("78074","78074","1","en","13370","name_url","dnt_posts","","1","0"),
-("78075","78075","1","en","13370","perex","dnt_posts","","1","0"),
-("78076","78076","1","en","13370","content","dnt_posts","","1","0"),
-("78077","78077","1","en","13370","tags","dnt_posts","","1","0"),
-("78078","78078","1","de","13370","name","dnt_posts","","1","0"),
-("78079","78079","1","de","13370","name_url","dnt_posts","","1","0"),
-("78080","78080","1","de","13370","perex","dnt_posts","","1","0"),
-("78081","78081","1","de","13370","content","dnt_posts","","1","0"),
-("78082","78082","1","de","13370","tags","dnt_posts","","1","0"),
 ("88588","88588","1","en","13356","name","dnt_posts","Contact form","1","0"),
 ("88589","88589","1","en","13356","name_url","dnt_posts","form","1","0"),
-("88590","88590","1","en","13356","perex","dnt_posts","","1","0"),
-("88591","88591","1","en","13356","content","dnt_posts","","1","0"),
-("88592","88592","1","en","13356","tags","dnt_posts","","1","0"),
 ("88593","88593","1","de","13356","name","dnt_posts","Kontact form","1","0"),
 ("88594","88594","1","de","13356","name_url","dnt_posts","kontakt-form","1","0"),
-("88595","88595","1","de","13356","perex","dnt_posts","","1","0"),
-("88596","88596","1","de","13356","content","dnt_posts","","1","0"),
-("88597","88597","1","de","13356","tags","dnt_posts","","1","0"),
-("88678","88678","1","en","13572","name","dnt_posts","","1","0"),
-("88679","88679","1","en","13572","name_url","dnt_posts","","1","0"),
-("88680","88680","1","en","13572","perex","dnt_posts","","1","0"),
-("88681","88681","1","en","13572","content","dnt_posts","","1","0"),
-("88682","88682","1","en","13572","tags","dnt_posts","","1","0"),
-("88683","88683","1","de","13572","name","dnt_posts","","1","0"),
-("88684","88684","1","de","13572","name_url","dnt_posts","","1","0"),
-("88685","88685","1","de","13572","perex","dnt_posts","","1","0"),
-("88686","88686","1","de","13572","content","dnt_posts","","1","0"),
-("88687","88687","1","de","13572","tags","dnt_posts","","1","0"),
 ("88688","88688","1","en","13354","name","dnt_posts","Polls","1","0"),
 ("88689","88689","1","en","13354","name_url","dnt_posts","polls","1","0"),
-("88690","88690","1","en","13354","perex","dnt_posts","","1","0"),
-("88691","88691","1","en","13354","content","dnt_posts","","1","0"),
-("88692","88692","1","en","13354","tags","dnt_posts","","1","0"),
 ("88693","88693","1","de","13354","name","dnt_posts","Polls","1","0"),
 ("88694","88694","1","de","13354","name_url","dnt_posts","polls","1","0"),
-("88695","88695","1","de","13354","perex","dnt_posts","","1","0"),
-("88696","88696","1","de","13354","content","dnt_posts","","1","0");
-INSERT INTO dnt_translates VALUES
-("88697","88697","1","de","13354","tags","dnt_posts","","1","0"),
 ("88708","88708","1","en","13357","name","dnt_posts","Partners","1","0"),
 ("88709","88709","1","en","13357","name_url","dnt_posts","partners","1","0"),
-("88710","88710","1","en","13357","perex","dnt_posts","","1","0"),
-("88711","88711","1","en","13357","content","dnt_posts","","1","0"),
-("88712","88712","1","en","13357","tags","dnt_posts","","1","0"),
-("88713","88713","1","de","13357","name","dnt_posts","","1","0"),
-("88714","88714","1","de","13357","name_url","dnt_posts","","1","0"),
-("88715","88715","1","de","13357","perex","dnt_posts","","1","0"),
-("88716","88716","1","de","13357","content","dnt_posts","","1","0"),
-("88717","88717","1","de","13357","tags","dnt_posts","","1","0"),
-("88718","88718","1","en","13368","name","dnt_posts","","1","0"),
-("88719","88719","1","en","13368","name_url","dnt_posts","","1","0"),
-("88720","88720","1","en","13368","perex","dnt_posts","","1","0"),
-("88721","88721","1","en","13368","content","dnt_posts","","1","0"),
-("88722","88722","1","en","13368","tags","dnt_posts","","1","0"),
-("88723","88723","1","de","13368","name","dnt_posts","","1","0"),
-("88724","88724","1","de","13368","name_url","dnt_posts","","1","0"),
-("88725","88725","1","de","13368","perex","dnt_posts","","1","0"),
-("88726","88726","1","de","13368","content","dnt_posts","","1","0"),
-("88727","88727","1","de","13368","tags","dnt_posts","","1","0"),
-("88728","88728","1","en","13392","name","dnt_posts","","1","0"),
-("88729","88729","1","en","13392","name_url","dnt_posts","","1","0"),
-("88730","88730","1","en","13392","perex","dnt_posts","","1","0"),
-("88731","88731","1","en","13392","content","dnt_posts","","1","0"),
-("88732","88732","1","en","13392","tags","dnt_posts","","1","0"),
-("88733","88733","1","de","13392","name","dnt_posts","","1","0"),
-("88734","88734","1","de","13392","name_url","dnt_posts","","1","0"),
-("88735","88735","1","de","13392","perex","dnt_posts","","1","0"),
-("88736","88736","1","de","13392","content","dnt_posts","","1","0"),
-("88737","88737","1","de","13392","tags","dnt_posts","","1","0"),
-("88738","88738","1","en","13573","name","dnt_posts","","1","0"),
-("88739","88739","1","en","13573","name_url","dnt_posts","","1","0"),
-("88740","88740","1","en","13573","perex","dnt_posts","","1","0"),
-("88741","88741","1","en","13573","content","dnt_posts","","1","0"),
-("88742","88742","1","en","13573","tags","dnt_posts","","1","0"),
-("88743","88743","1","de","13573","name","dnt_posts","","1","0"),
-("88744","88744","1","de","13573","name_url","dnt_posts","","1","0"),
-("88745","88745","1","de","13573","perex","dnt_posts","","1","0"),
-("88746","88746","1","de","13573","content","dnt_posts","","1","0"),
-("88747","88747","1","de","13573","tags","dnt_posts","","1","0"),
 ("88838","88838","1","en","13365","name","dnt_posts","Posts","1","0"),
 ("88839","88839","1","en","13365","name_url","dnt_posts","posts","1","0"),
-("88840","88840","1","en","13365","perex","dnt_posts","","1","0"),
-("88841","88841","1","en","13365","content","dnt_posts","","1","0"),
-("88842","88842","1","en","13365","tags","dnt_posts","","1","0"),
 ("88843","88843","1","de","13365","name","dnt_posts","Posts","1","0"),
 ("88844","88844","1","de","13365","name_url","dnt_posts","posts","1","0"),
-("88845","88845","1","de","13365","perex","dnt_posts","","1","0"),
-("88846","88846","1","de","13365","content","dnt_posts","","1","0"),
-("88847","88847","1","de","13365","tags","dnt_posts","","1","0"),
-("88848","88848","1","en","13349","name","dnt_posts","About us","1","0"),
-("88849","88849","1","en","13349","name_url","dnt_posts","about-us","1","0"),
-("88850","88850","1","en","13349","perex","dnt_posts","","1","0"),
-("88851","88851","1","en","13349","content","dnt_posts","","1","0"),
-("88852","88852","1","en","13349","tags","dnt_posts","","1","0"),
-("88853","88853","1","de","13349","name","dnt_posts","über uns","1","0"),
-("88854","88854","1","de","13349","name_url","dnt_posts","uber-uns","1","0"),
-("88855","88855","1","de","13349","perex","dnt_posts","","1","0"),
-("88856","88856","1","de","13349","content","dnt_posts","","1","0"),
-("88857","88857","1","de","13349","tags","dnt_posts","","1","0"),
 ("88858","88858","1","en","13353","name","dnt_posts","Default text","1","0"),
-("88859","88859","1","en","13353","name_url","dnt_posts","","1","0"),
 ("88860","88860","1","en","13353","perex","dnt_posts","<p>Default text is best</p>\n","1","0"),
 ("88861","88861","1","en","13353","content","dnt_posts","<p>Default text</p>\n","1","0"),
-("88862","88862","1","en","13353","tags","dnt_posts","","1","0"),
-("88863","88863","1","de","13353","name","dnt_posts","","1","0"),
-("88864","88864","1","de","13353","name_url","dnt_posts","","1","0"),
-("88865","88865","1","de","13353","perex","dnt_posts","","1","0"),
-("88866","88866","1","de","13353","content","dnt_posts","","1","0"),
-("88867","88867","1","de","13353","tags","dnt_posts","","1","0"),
-("88868","88868","1","en","13574","name","dnt_posts","","1","0"),
-("88869","88869","1","en","13574","name_url","dnt_posts","","1","0"),
-("88870","88870","1","en","13574","perex","dnt_posts","","1","0"),
-("88871","88871","1","en","13574","content","dnt_posts","","1","0"),
-("88872","88872","1","en","13574","tags","dnt_posts","","1","0"),
-("88873","88873","1","de","13574","name","dnt_posts","","1","0"),
-("88874","88874","1","de","13574","name_url","dnt_posts","","1","0"),
-("88875","88875","1","de","13574","perex","dnt_posts","","1","0"),
-("88876","88876","1","de","13574","content","dnt_posts","","1","0"),
-("88877","88877","1","de","13574","tags","dnt_posts","","1","0"),
 ("88988","88988","1","en","13575","name","dnt_posts","Hotels","1","0"),
 ("88989","88989","1","en","13575","name_url","dnt_posts","hotels","1","0"),
-("88990","88990","1","en","13575","perex","dnt_posts","","1","0"),
-("88991","88991","1","en","13575","content","dnt_posts","","1","0"),
-("88992","88992","1","en","13575","tags","dnt_posts","","1","0"),
-("88993","88993","1","de","13575","name","dnt_posts","","1","0"),
-("88994","88994","1","de","13575","name_url","dnt_posts","","1","0"),
-("88995","88995","1","de","13575","perex","dnt_posts","","1","0"),
-("88996","88996","1","de","13575","content","dnt_posts","","1","0"),
-("88997","88997","1","de","13575","tags","dnt_posts","","1","0"),
-("92331","92331","1","en","13654","name","dnt_posts","","1","0"),
-("92332","92332","1","en","13654","name_url","dnt_posts","","1","0"),
-("92333","92333","1","en","13654","perex","dnt_posts","","1","0"),
-("92334","92334","1","en","13654","content","dnt_posts","","1","0"),
-("92335","92335","1","en","13654","tags","dnt_posts","","1","0"),
-("92336","92336","1","de","13654","name","dnt_posts","","1","0"),
-("92337","92337","1","de","13654","name_url","dnt_posts","","1","0"),
-("92338","92338","1","de","13654","perex","dnt_posts","","1","0"),
-("92339","92339","1","de","13654","content","dnt_posts","","1","0");
-INSERT INTO dnt_translates VALUES
-("92340","92340","1","de","13654","tags","dnt_posts","","1","0"),
-("92341","92341","1","en","13663","name","dnt_posts","","1","0"),
-("92342","92342","1","en","13663","name_url","dnt_posts","","1","0"),
-("92343","92343","1","en","13663","perex","dnt_posts","","1","0"),
-("92344","92344","1","en","13663","content","dnt_posts","","1","0"),
-("92345","92345","1","en","13663","tags","dnt_posts","","1","0"),
-("92346","92346","1","de","13663","name","dnt_posts","","1","0"),
-("92347","92347","1","de","13663","name_url","dnt_posts","","1","0"),
-("92348","92348","1","de","13663","perex","dnt_posts","","1","0"),
-("92349","92349","1","de","13663","content","dnt_posts","","1","0"),
-("92350","92350","1","de","13663","tags","dnt_posts","","1","0"),
 ("106984","106984","1","en","13289","name","dnt_posts","Home","1","0"),
 ("106985","106985","1","en","13289","name_url","dnt_posts","home","1","0"),
-("106986","106986","1","en","13289","perex","dnt_posts","","1","0"),
-("106987","106987","1","en","13289","content","dnt_posts","","1","0"),
-("106988","106988","1","en","13289","tags","dnt_posts","","1","0"),
 ("106989","106989","1","de","13289","name","dnt_posts","Home","1","0"),
 ("106990","106990","1","de","13289","name_url","dnt_posts","home","1","0"),
-("106991","106991","1","de","13289","perex","dnt_posts","","1","0"),
-("106992","106992","1","de","13289","content","dnt_posts","","1","0"),
-("106993","106993","1","de","13289","tags","dnt_posts","","1","0"),
-("109246","109246","1","en","13355","name","dnt_posts","","1","0"),
-("109247","109247","1","en","13355","name_url","dnt_posts","","1","0"),
-("109248","109248","1","en","13355","perex","dnt_posts","","1","0"),
-("109249","109249","1","en","13355","content","dnt_posts","","1","0"),
-("109250","109250","1","en","13355","tags","dnt_posts","","1","0"),
-("109251","109251","1","de","13355","name","dnt_posts","","1","0"),
-("109252","109252","1","de","13355","name_url","dnt_posts","","1","0"),
-("109253","109253","1","de","13355","perex","dnt_posts","","1","0"),
-("109254","109254","1","de","13355","content","dnt_posts","","1","0"),
-("109255","109255","1","de","13355","tags","dnt_posts","","1","0"),
-("110407","110407","1","en","14095","name","dnt_posts","","1","0"),
-("110408","110408","1","en","14095","name_url","dnt_posts","","1","0"),
-("110409","110409","1","en","14095","perex","dnt_posts","","1","0"),
-("110410","110410","1","en","14095","content","dnt_posts","","1","0"),
-("110411","110411","1","en","14095","tags","dnt_posts","","1","0"),
-("110412","110412","1","de","14095","name","dnt_posts","","1","0"),
-("110413","110413","1","de","14095","name_url","dnt_posts","","1","0"),
-("110414","110414","1","de","14095","perex","dnt_posts","","1","0"),
-("110415","110415","1","de","14095","content","dnt_posts","","1","0"),
-("110416","110416","1","de","14095","tags","dnt_posts","","1","0");
+("112719","112719","1","en","13350","name","dnt_posts","","1","0"),
+("112720","112720","1","en","13350","name_url","dnt_posts","","1","0"),
+("112721","112721","1","en","13350","perex","dnt_posts","","1","0"),
+("112722","112722","1","en","13350","content","dnt_posts","","1","0"),
+("112723","112723","1","en","13350","tags","dnt_posts","","1","0"),
+("112724","112724","1","de","13350","name","dnt_posts","","1","0"),
+("112725","112725","1","de","13350","name_url","dnt_posts","","1","0"),
+("112726","112726","1","de","13350","perex","dnt_posts","","1","0"),
+("112727","112727","1","de","13350","content","dnt_posts","","1","0"),
+("112728","112728","1","de","13350","tags","dnt_posts","","1","0"),
+("112729","112729","1","en","13351","name","dnt_posts","","1","0"),
+("112730","112730","1","en","13351","name_url","dnt_posts","","1","0"),
+("112731","112731","1","en","13351","perex","dnt_posts","","1","0"),
+("112732","112732","1","en","13351","content","dnt_posts","","1","0"),
+("112733","112733","1","en","13351","tags","dnt_posts","","1","0"),
+("112734","112734","1","de","13351","name","dnt_posts","","1","0"),
+("112735","112735","1","de","13351","name_url","dnt_posts","","1","0"),
+("112736","112736","1","de","13351","perex","dnt_posts","","1","0"),
+("112737","112737","1","de","13351","content","dnt_posts","","1","0"),
+("112738","112738","1","de","13351","tags","dnt_posts","","1","0"),
+("112739","112739","1","en","13352","name","dnt_posts","","1","0"),
+("112740","112740","1","en","13352","name_url","dnt_posts","","1","0"),
+("112741","112741","1","en","13352","perex","dnt_posts","","1","0"),
+("112742","112742","1","en","13352","content","dnt_posts","","1","0"),
+("112743","112743","1","en","13352","tags","dnt_posts","","1","0"),
+("112744","112744","1","de","13352","name","dnt_posts","","1","0"),
+("112745","112745","1","de","13352","name_url","dnt_posts","","1","0"),
+("112746","112746","1","de","13352","perex","dnt_posts","","1","0"),
+("112747","112747","1","de","13352","content","dnt_posts","","1","0"),
+("112748","112748","1","de","13352","tags","dnt_posts","","1","0"),
+("112749","112749","1","en","13359","name","dnt_posts","","1","0"),
+("112750","112750","1","en","13359","name_url","dnt_posts","","1","0"),
+("112751","112751","1","en","13359","perex","dnt_posts","","1","0"),
+("112752","112752","1","en","13359","content","dnt_posts","","1","0");
+INSERT INTO dnt_translates VALUES
+("112753","112753","1","en","13359","tags","dnt_posts","","1","0"),
+("112754","112754","1","de","13359","name","dnt_posts","","1","0"),
+("112755","112755","1","de","13359","name_url","dnt_posts","","1","0"),
+("112756","112756","1","de","13359","perex","dnt_posts","","1","0"),
+("112757","112757","1","de","13359","content","dnt_posts","","1","0"),
+("112758","112758","1","de","13359","tags","dnt_posts","","1","0"),
+("112759","112759","1","en","13360","name","dnt_posts","","1","0"),
+("112760","112760","1","en","13360","name_url","dnt_posts","","1","0"),
+("112761","112761","1","en","13360","perex","dnt_posts","","1","0"),
+("112762","112762","1","en","13360","content","dnt_posts","","1","0"),
+("112763","112763","1","en","13360","tags","dnt_posts","","1","0"),
+("112764","112764","1","de","13360","name","dnt_posts","","1","0"),
+("112765","112765","1","de","13360","name_url","dnt_posts","","1","0"),
+("112766","112766","1","de","13360","perex","dnt_posts","","1","0"),
+("112767","112767","1","de","13360","content","dnt_posts","","1","0"),
+("112768","112768","1","de","13360","tags","dnt_posts","","1","0"),
+("112769","112769","1","en","13361","name","dnt_posts","","1","0"),
+("112770","112770","1","en","13361","name_url","dnt_posts","","1","0"),
+("112771","112771","1","en","13361","perex","dnt_posts","","1","0"),
+("112772","112772","1","en","13361","content","dnt_posts","","1","0"),
+("112773","112773","1","en","13361","tags","dnt_posts","","1","0"),
+("112774","112774","1","de","13361","name","dnt_posts","","1","0"),
+("112775","112775","1","de","13361","name_url","dnt_posts","","1","0"),
+("112776","112776","1","de","13361","perex","dnt_posts","","1","0"),
+("112777","112777","1","de","13361","content","dnt_posts","","1","0"),
+("112778","112778","1","de","13361","tags","dnt_posts","","1","0"),
+("112779","112779","1","en","13362","name","dnt_posts","","1","0"),
+("112780","112780","1","en","13362","name_url","dnt_posts","","1","0"),
+("112781","112781","1","en","13362","perex","dnt_posts","","1","0"),
+("112782","112782","1","en","13362","content","dnt_posts","","1","0"),
+("112783","112783","1","en","13362","tags","dnt_posts","","1","0"),
+("112784","112784","1","de","13362","name","dnt_posts","","1","0"),
+("112785","112785","1","de","13362","name_url","dnt_posts","","1","0"),
+("112786","112786","1","de","13362","perex","dnt_posts","","1","0"),
+("112787","112787","1","de","13362","content","dnt_posts","","1","0"),
+("112788","112788","1","de","13362","tags","dnt_posts","","1","0"),
+("112789","112789","1","en","13349","name","dnt_posts","About us","1","0"),
+("112790","112790","1","en","13349","name_url","dnt_posts","about-us","1","0"),
+("112791","112791","1","en","13349","perex","dnt_posts","","1","0"),
+("112792","112792","1","en","13349","content","dnt_posts","","1","0"),
+("112793","112793","1","en","13349","tags","dnt_posts","","1","0"),
+("112794","112794","1","de","13349","name","dnt_posts","über uns","1","0"),
+("112795","112795","1","de","13349","name_url","dnt_posts","uber-uns","1","0"),
+("112796","112796","1","de","13349","perex","dnt_posts","","1","0"),
+("112797","112797","1","de","13349","content","dnt_posts","","1","0"),
+("112798","112798","1","de","13349","tags","dnt_posts","","1","0");
 
 
 
@@ -6715,41 +6172,29 @@ CREATE TABLE `dnt_uploads` (
   `show` int(11) NOT NULL DEFAULT '1',
   `parent_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1648 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=1695 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
 INSERT INTO dnt_uploads VALUES
-("731","731","1","logo.png","2018-09-13 13:42:05","image/png","1","0"),
-("732","732","1","tomandjarry.png","2018-09-13 13:42:05","image/png","1","0"),
-("733","733","1","logo-1.png","2018-09-13 13:42:05","image/png","1","0"),
-("734","734","1","29-awesome-black-themed-abstract-wallpapers-1dut.com-28-1024x576.jpg","2018-09-13 13:42:05","image/jpeg","1","0"),
-("735","735","1","abstract-1011_4.jpg","2018-09-13 13:42:05","image/jpeg","1","0"),
-("736","736","1","abstract-1011_4_1.jpg","2018-09-13 13:42:05","image/jpeg","1","0"),
-("737","737","1","logo-1.jpg","2018-09-13 13:42:05","image/jpeg","1","0"),
-("738","738","1","f83920aff7155a9eccf31262549f6d3b.jpg","2018-09-13 13:42:05","image/jpeg","1","0"),
-("739","739","1","dnt3-oop.jpg","2018-09-13 13:42:05","image/jpeg","1","0"),
-("740","740","1","x1B8.janka_hospodarova_zlatica_puskarova_patrik_herman_jan_tribula_alebo_peter_varinsky.jpg","2018-09-13 13:42:05","image/jpeg","1","0"),
-("741","741","1","7mUF.zlatica_puskarova.jpg","2018-09-13 13:42:05","image/jpeg","1","0"),
-("742","742","1","dqNx.jan_tribula.jpg","2018-09-13 13:42:05","image/jpeg","1","0"),
-("743","743","1","bq3q.peter_varinsky.jpg","2018-09-13 13:42:05","image/jpeg","1","0"),
-("744","744","1","ZpjH.patrik_herman_tabor.jpg","2018-09-13 13:42:05","image/jpeg","1","0"),
-("745","745","1","3qHu.janka_hospodarova.jpg","2018-09-13 13:42:05","image/jpeg","1","0"),
-("746","746","1","1d9b904.png","2018-09-13 13:42:05","image/png","1","0"),
-("747","747","1","markiza.gif","2018-09-13 13:42:05","image/gif","1","0"),
-("748","748","1","tvn_logo.png","2018-09-13 13:42:05","image/png","1","0"),
-("749","749","1","osmos_logo_1.jpg","2018-09-13 13:42:05","image/jpeg","1","0"),
-("750","750","1","dnt3-about.jpg","2018-09-13 13:42:05","image/jpeg","1","0"),
-("776","776","1","Pompo-logo-obrys.png","2018-09-13 13:42:05","image/png","1","0"),
-("976","976","1","28f6e6c6eee81a6d4014d894541a875a.jpg","2018-09-13 13:42:05","image/jpeg","1","0"),
-("1647","1647","1","40259634_551092102017056_2954614191689826304_n.jpg","2018-09-19 13:07:35","image/jpeg","1","0"),
-("1579","1579","1","39931627_1151918578279697_5655172615325614080_n.jpg","2018-09-14 19:31:46","image/jpeg","1","0"),
-("1615","1615","1","40039794_10205224452807253_5432892037529600000_n.jpg","2018-09-17 10:53:20","image/jpeg","1","0"),
-("1112","0","1","01_4.jpg","2018-09-13 14:17:01","image/jpeg","1","0"),
-("1580","1580","1","39931627_1151918578279697_5655172615325614080_n_1.jpg","2018-09-14 19:32:03","image/jpeg","1","0"),
-("1581","1581","1","39931627_1151918578279697_5655172615325614080_n_2.jpg","2018-09-14 19:32:03","image/jpeg","1","0"),
-("1582","1582","1","01.jpg","2018-09-14 19:41:49","image/jpeg","1","0"),
-("1583","1583","1","test.jpg","2018-09-14 19:42:22","image/jpeg","1","0"),
-("1585","1585","1","40479114_1966425363379235_5792896045956464640_n.jpg","2018-09-14 19:44:54","image/jpeg","1","0");
+("1692","1692","1","40056624_2128252747185991_4397570555713159168_n.jpg","2018-09-20 14:02:54","image/jpeg","1","0"),
+("1675","1675","1","logo-1.png","2018-09-20 13:52:14","image/png","1","0"),
+("1676","1676","1","logo-1_1.png","2018-09-20 13:53:04","image/png","1","0"),
+("1677","1677","1","29-awesome-black-themed-abstract-wallpapers-1dut.com-28-1024x576.jpg","2018-09-20 13:53:43","image/jpeg","1","0"),
+("1694","1694","1","admin_1.png","2018-09-20 14:17:42","image/png","1","0"),
+("1691","1691","1","3qHu.janka_hospodarova.jpg","2018-09-20 13:59:28","image/jpeg","1","0"),
+("1690","1690","1","ZpjH.patrik_herman_tabor.jpg","2018-09-20 13:59:28","image/jpeg","1","0"),
+("1689","1689","1","bq3q.peter_varinsky.jpg","2018-09-20 13:59:28","image/jpeg","1","0"),
+("1688","1688","1","dqNx.jan_tribula.jpg","2018-09-20 13:59:28","image/jpeg","1","0"),
+("1687","1687","1","7mUF.zlatica_puskarova.jpg","2018-09-20 13:59:28","image/jpeg","1","0"),
+("1686","1686","1","x1B8.janka_hospodarova_zlatica_puskarova_patrik_herman_jan_tribula_alebo_peter_varinsky.jpg","2018-09-20 13:59:28","image/jpeg","1","0"),
+("1685","1685","1","dnt3-oop.jpg","2018-09-20 13:58:11","image/jpeg","1","0"),
+("1684","1684","1","564343_395442117160705_203518898_n_2.jpg","2018-09-20 13:57:08","image/jpeg","1","0"),
+("1682","1682","1","tvn_logo.png","2018-09-20 13:55:49","image/png","1","0"),
+("1683","1683","1","osmos_logo.jpg","2018-09-20 13:56:28","image/jpeg","1","0"),
+("1681","1681","1","markiza.gif","2018-09-20 13:55:39","image/gif","1","0"),
+("1679","1679","1","logo-1.jpg","2018-09-20 13:55:01","image/jpeg","1","0"),
+("1680","1680","1","1d9b904.png","2018-09-20 13:55:30","image/png","1","0"),
+("1678","1678","1","abstract-1011_4.jpg","2018-09-20 13:54:16","image/jpeg","1","0");
 
 
 
@@ -6792,12 +6237,12 @@ CREATE TABLE `dnt_users` (
   `ip_adresa` varchar(300) NOT NULL,
   `parent_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=78 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=80 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_users VALUES
-("14","14","1","","admin","Tomáš","Doubek","osmos","","","","0","","","b69a84481c97f320c80020b01d5620b5","thomas.doubek@gmail.com","","","","0","0","0","0","0000-00-00 00:00:00","0000-00-00 00:00:00","0000-00-00 00:00:00","","","0","","","738","1","0","","0"),
-("20","20","1","","admin","Admin","Root","skeleton","","","","0","","","21232f297a57a5a743894a0e4a801fc3","admin@root.sk","","","","0","0","0","0","0000-00-00 00:00:00","0000-00-00 00:00:00","0000-00-00 00:00:00","","","0","","","738","1","0","","0");
+("14","14","1","","admin","Tomáš","Doubek","osmos","","","","0","","","b69a84481c97f320c80020b01d5620b5","thomas.doubek@gmail.com","","","","0","0","0","0","0000-00-00 00:00:00","0000-00-00 00:00:00","0000-00-00 00:00:00","","","0","","","1692","1","0","","0"),
+("20","20","1","","admin","Admin","Root","skeleton","","","","0","","","21232f297a57a5a743894a0e4a801fc3","admin@root.sk","","","","0","0","0","0","0000-00-00 00:00:00","0000-00-00 00:00:00","0000-00-00 00:00:00","","","0","","","1694","1","0","","0");
 
 
 
@@ -6814,7 +6259,7 @@ CREATE TABLE `dnt_vendors` (
   `show` int(11) NOT NULL,
   `in_progress` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
 
 

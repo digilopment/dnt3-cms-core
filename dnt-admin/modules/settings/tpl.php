@@ -213,7 +213,7 @@ $settings = new Settings
                   <div class="row form">
                      <label class="col-sm-2 control-label"><b><?php echo $row['description'] ?></b></label>
                      <label class="col-sm-2 control-label">
-                     <?php Dnt::setMetaStatus($row['show'], $row['key']); ?>
+                     <?php Dnt::setMetaStatus($row['show'], $row['id_entity']); ?>
                      </label>
                      <div class="col-sm-8 text-left">
 					 <!--

@@ -106,7 +106,7 @@ elseif(isset($_POST['odoslat_logo'])){
 	$db = new Db;
 	
 	foreach($settings->customMeta() as $row){
-		var_dump($rest->post("key_" . $row['id_entity']));
+		
 		if($row['content_type'] == "image" or $row['content_type'] == "file"){
 			//$files 	= 'userfile_'.$row['id_entity']; 
 				$dntUpload->multypleUploadFiles(

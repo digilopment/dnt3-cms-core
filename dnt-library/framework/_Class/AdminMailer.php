@@ -63,7 +63,7 @@ class AdminMailer {
     protected function prepare_query($is_limit) {
         $db = new Db();
         
-        if (isset($_GET['filter']))
+        if (isset($_GET['filter']) && $_GET['filter'] != "")
             $typ = "AND cat_id = '" . $_GET['filter'] . "'";
         elseif (isset($_GET['search'])) {
             $typ = "AND `name_url` LIKE '%" . Dnt::name_url($_GET['search']) . "%'";

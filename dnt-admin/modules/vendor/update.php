@@ -1,4 +1,44 @@
 <?php
+
+$db = new Db;
+if(isset($_POST['sent'])){
+	
+	$vendor_id = $rest->post("vendor_id");
+	$name = $rest->post("name");
+	$url = $rest->post("url");
+	$layout = $rest->post("layout");
+	$zobrazit_show_real_url = $rest->post("zobrazit_show_real_url");
+	$zobrazit_in_progress = $rest->post("zobrazit_in_progress");
+	$real_url = $rest->post("real_url");
+	$return = $rest->post("return");
+	
+	
+	$db->update(
+		"dnt_vendors",	//table
+		array(	//set
+			'name' => $name,
+			'name_url' => $url,
+			'layout' => $layout,
+			'show_real_url' => $zobrazit_show_real_url,
+			'in_progress' => $zobrazit_in_progress,
+			'real_url' => $real_url,
+			), 
+		array( 	//where
+			'`id`' 	=> $vendor_id)
+		);
+		
+		include "tpl_functions.php";
+		get_top();
+		include "top.php";
+		getConfirmMessage($return, "<br/>Údaje sa úspešne uložili ");
+		include "bottom.php";
+		get_bottom();
+		
+
+	
+}
+
+exit;
 if(isset($_POST['sent'])){
 	$session = new Sessions;
 	

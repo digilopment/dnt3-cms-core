@@ -5,7 +5,7 @@ $path			= "../";
 $autoload->load($path);
 $install = new Install;
 
-$vendor_id 	= "37";
+$vendor_id 	= "2";
 $tables = array(
 	//VSETKY STLPCE
 	"dnt_admin_menu",
@@ -22,7 +22,7 @@ $tables = array(
 	"dnt_posts",
 	"dnt_posts_meta",
 	"dnt_post_type",
-	//"dnt_registred_users",
+	"dnt_registred_users",
 	"dnt_settings",
 	"dnt_translates",
 	"dnt_uploads",

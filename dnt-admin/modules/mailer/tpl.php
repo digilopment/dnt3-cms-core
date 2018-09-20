@@ -15,8 +15,8 @@
          <button class="btn btn-primary bg-green" data-toggle="modal" data-target="#pridat_kat">PRIDAŤ KATEGÓRIU</button>
       </li>
       <li class="post_type" >
-         <a href="index.php?src=obsah&filtruj=newsletters">
-         <span class="btn btn-primary bg-green" >VYTVORIŤ ŠABLONU</span>
+         <a href="index.php?src=content&included=post&filter=293">
+			<span class="btn btn-primary bg-green" >VYTVORIŤ ŠABLONU</span>
          </a>
       </li>
       <li class="post_type" style="text-decoration: underline">
@@ -24,6 +24,14 @@
          <button class="btn btn-primary bg-green" data-toggle="modal" data-target="#modalPrimary3">ODOSLAŤ HROMADNÝ MAIL</button>
       </li>
       <br/><br/><br/>
+	  
+	  
+	   <li class="post_type">
+         <a href="index.php?src=mailer">
+         <span class="label label-primary bg-blue" style="padding: 5px;"><big>Všetky</big></span>
+         </a>
+      </li>
+	  
       <?php
          $query = AdminMailer::catQuery();
          $pocet = $db->num_rows($query);
@@ -126,7 +134,7 @@
       <select name="template" id="cname" class="form-control" minlength="2" required="">
          <option value="NULL">(vyberte šablonu)</option>
          <?php
-			$query = "SELECT * FROM dnt_posts WHERE cat_id = '76' AND vendor_id = '".Vendor::getId()."'";
+			$query = "SELECT * FROM dnt_posts WHERE cat_id = '293' AND vendor_id = '".Vendor::getId()."'";
 			if($db->num_rows($query)>0){
 				foreach($db->get_results($query) as $row){
 					echo"<option value='".$row['cat_id']."'>".$row['name']."</option>";
