@@ -173,7 +173,13 @@ class Webhook {
 		
             //CLANKY V KATEGORIACH			  
 			 "article_list" => array_merge(
-                    array(), $this->getSitemapModules("article_list")
+                    array(""), $this->getSitemapModules("article_list")
+			),
+			
+			//redirect na article_list 
+			 "auto_redirect" => array(
+                "a",
+                "article",
 			),
 			
 			//HOMEPAGE

@@ -13,7 +13,7 @@ class ArticleList extends AdminContent {
      * @param type $is_limit
      * @return string
      */
-    protected function prepare_query($is_limit){
+    protected function prepare_query($is_limit, $postId = false){
 		
 		$servicesIDs = Frontend::get();
 		//var_dump($servicesIDs['article']['service_id']);
@@ -37,6 +37,14 @@ class ArticleList extends AdminContent {
 		else
 			$limit = $is_limit;
 		
+		//AUTOREDIRECT URL
+		if($postId == false)
+			$typArticle = false;
+		else{
+			$typArticle = " AND `dnt_posts`.`id_entity` IN('".$postId."') ";
+			$typ = false;
+		}
+		
 			$query = "
 			SELECT 
 				`dnt_posts`.`id_entity` AS id, 
@@ -59,6 +67,7 @@ class ArticleList extends AdminContent {
 				`dnt_posts`.`vendor_id` 	= '".Vendor::getId()."' 
 			AND
 				`dnt_posts`.`show` 			= '1'
+			".$typArticle." 
 			".$typ." 
 			GROUP BY 
 				`dnt_posts`.`id_entity`
@@ -72,7 +81,7 @@ class ArticleList extends AdminContent {
      * 
      * @return type
      */
-    public function query() {
+    public function query($postId = false) {
         $db = new Db;
 
         if (isset($_GET['page'])) {
@@ -80,6 +89,11 @@ class ArticleList extends AdminContent {
         } else {
             $returnPage = false;
         }
+		
+		if($postId){
+			 $query = self::prepare_query(false, $postId);
+			 return $query;
+		}
 
         $query = self::prepare_query(false);
         $pocet = $db->num_rows($query);
@@ -100,14 +114,32 @@ class ArticleList extends AdminContent {
         $pager = "LIMIT " . $pociatok . ", " . $limit . "";
         return self::prepare_query($pager);
     }
+	
+	/** AUTOREDIRECT QUERY **/
+	public function getArticleUrl($postId){
+		
+		$db = new Db;
+		$articleView = new ArticleView;
+
+		$query = self::query($postId);
+		if($db->num_rows($query)>0){
+			foreach($db->get_results($query) as $row){
+				$url = $articleView->detailUrl($row['cat_name_url'], $row['id'], $row['name_url']);
+			}
+		}else{
+			$url = false;
+		}
+		return $url;
+	} 
     
     /**
      * 
      * @param type $id
      * @return type
      */
-    public function getArticleUrl($id) {
+    /*public function getArticleUrl($id) {
         return Url::get("WWW_PATH") . "clanok/" . $id . "/" . $this->getTranslate(array("type" => "name_url", "translate_id" => $id, "table" => "dnt_posts"));
     }
+	*/
 
 }
