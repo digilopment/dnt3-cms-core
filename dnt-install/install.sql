@@ -22,12 +22,11 @@ INSERT INTO dnt_admin_menu VALUES
 ("567","567","1","menu","post","fa-laptop","30","Obsah","content","content&incuded=post","1","0"),
 ("568","568","1","submenu","","fa-plus","1","Pridať post","content","content&add","1","0"),
 ("569","569","1","submenu","","","6","Bleskovky","content&filter=bleskovky","content","1","0"),
-("570","570","1","menu","","fa-user","40","Prístupy","access","access","1","0"),
-("571","571","1","submenu","","","5","Články","content","content&filter=articles","1","0"),
+("570","570","1","menu","","fa-user","80","Prístupy","access","access","1","0"),
 ("572","572","1","submenu","","","3","Stránky","content","content&filter=pages","1","0"),
 ("573","573","1","menu","","fa fa-home","10","Domov","home","","1","0"),
 ("574","574","1","menu","","","70","Faktúry","faktura","","0","0"),
-("575","575","1","menu","","fa-envelope","80","Mailer","mailer","mailer","1","0"),
+("575","575","1","menu","","fa-envelope","90","Mailer","mailer","mailer","1","0"),
 ("576","576","1","submenu","","","5","Všetky prístupy","pristupy","pristupy","1","0"),
 ("577","577","1","submenu","","fa-plus","0","Pridať prístup","pristupy","pristupy&pridat","1","0"),
 ("578","578","1","submenu","","","4","Podstránky","content","content&filter=pages-sub","1","0"),
@@ -35,19 +34,18 @@ INSERT INTO dnt_admin_menu VALUES
 ("580","580","1","submenu","","","7","Statický obsah","content","content&filter=static","1","0"),
 ("582","582","1","submenu","","","7","Sponzori","content","content&filter=sponzori","1","0"),
 ("583","583","1","submenu","","","8","Partneri","content","content&filter=partneri","1","0"),
-("584","584","1","menu","","fa-user","23","Multylanguage","multylanguage","","1","0"),
+("584","584","1","menu","","fa-user","60","Multylanguage","multylanguage","","1","0"),
 ("585","585","1","submenu","","","23","Aktívne jazyky","multylanguage","multylanguage&add","1","0"),
 ("586","586","1","submenu","","","22","Zoznam prekladov","multylanguage","multylanguage&action=translates","1","0"),
-("587","587","1","menu","sitemap"," fa-gears","30","Sitemap","content","content&incuded=sitemap","1","0"),
-("588","588","1","menu","article","fa-laptop","30","Články","content","content&incuded=article","1","0"),
-("589","589","1","menu","","fa-user","23","Kvízy","polls","polls","1","0"),
+("587","587","1","menu","sitemap"," fa-gears","40","Sitemap","content","content&incuded=sitemap","1","0"),
+("589","589","1","menu","","fa-user","70","Kvízy","polls","polls","1","0"),
 ("590","590","1","submenu","","","23","Pridať kvíz","polls","polls&action=add_poll","1","0"),
 ("591","591","1","submenu","","","23","Zoznam kvízov","polls","polls","1","0"),
-("592","592","1","menu",""," fa-gears","20","Súbory","files","files","1","0"),
-("646","646","1","menu",""," fa-gears","20","Microweb","microweb","microweb","1","0"),
+("592","592","1","menu",""," fa-gears","50","Súbory","files","files","1","0"),
+("646","646","1","menu",""," fa-gears","100","Microweb","microweb","microweb","1","0"),
 ("647","647","1","submenu",""," fa-gears","20","Zoznam","microweb","microweb","1","0"),
 ("648","648","1","submenu",""," fa-gears","20","Pridať","microweb","microweb&action=add","1","0"),
-("759","759","1","menu","","fa-globe","23","Zoznam webov","vendor","","1","0"),
+("759","759","1","menu","","fa-globe","110","Zoznam webov","vendor","","1","0"),
 ("760","760","1","submenu","","","22","Zoznam","vendor","vendor","1","0"),
 ("761","761","1","submenu","","","22","Pridať web","vendor","vendor&action=add","1","0");
 
@@ -5241,20 +5239,17 @@ CREATE TABLE `dnt_post_type` (
   `vendor_id` int(11) NOT NULL,
   `parent_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=698 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=699 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_post_type VALUES
 ("290","290","1","0","sitemap","sitemap","Stránky","1","0","1","0"),
 ("291","291","1","0","sitemap-sub","sitemap","Podstránky","1","0","1","0"),
-("292","292","1","0","article","sitemap","Články","1","0","1","0"),
 ("293","293","3","0","newsletter","post","Newslettre","1","0","1","0"),
-("294","294","2","0","domace","article","Domáce","1","0","1","0"),
 ("303","303","3","0","sliders","post","Sliders","1","0","1","0"),
 ("304","304","3","0","texty-na-homepage","post","Texty na homepage","1","0","1","0"),
 ("305","305","3","0","partneri","post","Partneri","1","0","1","0"),
 ("306","306","3","0","kontaktny-formular","post","Správy z kontaktného formulára","1","0","1","0"),
-("307","307","2","0","zaujimavosti","article","Zaujímavosti","1","0","1","0"),
 ("308","308","0","0","eshop-product","product","Eshop Product","1","0","1","0"),
 ("483","483","3","0","testovacka","post","Testovačka","1","0","1","0");
 
@@ -5291,38 +5286,37 @@ CREATE TABLE `dnt_posts` (
   `vendor_id` int(11) NOT NULL,
   `parent_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14154 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14156 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_posts VALUES
 ("13071","13071","","137","post","Výskum a vývoj","slider-vyskum-a-vyvoj","0","0","","","262","2017-03-01 17:24:45","2017-03-01 17:26:24","2017-03-01 17:24:00","0","<p><span style=\"font-size:14px\">Neust&aacute;le hľad&aacute;me lep&scaron;ie rie&scaron;enia...</span></p>\n","","","","","","0","1","","0","1","0"),
-("13289","13289","","290","sitemap","Domov","domov","0","0","homepage","","976","2017-03-06 17:47:59","2018-09-13 16:19:23","2017-03-06 17:47:00","0","<p>xydcvysdvysv</p>\n","","","","","","6","1","","0","1","0"),
-("13349","13349","","290","sitemap","O nás","o-nas","0","0","","","1684","2017-04-06 10:40:47","2018-09-20 13:57:07","2017-04-06 10:40:00","0","<p>sdfvsdf</p>\n","<p>Vo firme Design.dnt pracujeme s r&ocirc;znymi modern&yacute;mi technol&oacute;giami, ktor&eacute; s&uacute; použ&iacute;van&eacute; vo webovom priemysle. Za t&yacute;mto &uacute;čelom sme vyvinuli vlastn&yacute; redakčn&yacute; syst&eacute;m pod n&aacute;zvom <a href=\"/technologie/redakcny-system\">Designdnt</a>&nbsp;Z&aacute;kladom syst&eacute;mu bola použ&iacute;vateľsk&aacute; jednoduchosť, finančn&aacute; dostupnosť a v neposlednom rade intuit&iacute;vnosť. Vďaka dlhodob&eacute;mu v&yacute;voju sa n&aacute;m podarilo vypracovať presne to, čo je perfektn&yacute;m z&aacute;kladom pre bežn&eacute; weby za finančne nen&aacute;ročn&eacute; požiadavky. V roz&scaron;&iacute;ren&iacute; o moduly eshopu, alebo o moduly sprac&uacute;vaj&uacute;ce hromadn&eacute; d&aacute;ta, vieme poskytn&uacute;ť perfektn&eacute; z&aacute;zemie pre <strong>informačn&yacute; syst&eacute;m</strong>.</p>\n\n<ol>\n	<li>vysok&aacute; r&yacute;chlosť jadra <strong>dnt3</strong></li>\n	<li>&quot;inteligentn&eacute;&quot; URL adresy s chronologickou postupnosťou</li>\n	<li>multydom&eacute;nov&aacute;&nbsp;platforma</li>\n	<li>multyvendor platforma</li>\n	<li>facebook - messenger platforma</li>\n	<li>automatick&aacute; gener&aacute;cia robots.txt, google sitemaps</li>\n	<li>jednoduch&aacute; in&scaron;tal&aacute;cia a z&aacute;loha datab&aacute;zy</li>\n	<li>Prepracovan&yacute; cache engine</li>\n	<li>multylanguage podpora</li>\n	<li>Modul kv&iacute;zov pre kv&iacute;zy s percentu&aacute;lnou &uacute;spe&scaron;nosťou</li>\n	<li>Modul kv&iacute;zov s v&yacute;sledkom kategoriz&aacute;cie</li>\n	<li>Modul obsahu</li>\n	<li>Modul sitemapy</li>\n	<li>Modul emailov&eacute;ho klienta</li>\n	<li>Modul spr&aacute;vy s&uacute;borov</li>\n	<li>Modul eshopu a &uacute;čtovn&iacute;ctva</li>\n	<li>Modul ACL (users)</li>\n	<li>Modul restov&eacute;ho JSON / XML api pre zdielanie informacii s tret&iacute;mi stranami</li>\n</ol>\n\n<p>Za zmienku stoj&iacute; poznamenať, že redakčn&yacute; syst&eacute;m Design.dnt z&iacute;skal <strong>3. miesto</strong> v Celo&scaron;t&aacute;tnej prehliadke Stredo&scaron;kolskej odbornej činnosti, kde pod t&yacute;mto syst&eacute;mom bol naprogramovan&yacute; modul eshopu s fakturačn&yacute;m, objedn&aacute;vkov&yacute;m a registračn&yacute;m syst&eacute;mom.</p>\n\n<p>&nbsp;</p>\n\n<p>&nbsp;</p>\n","","","","","5","1","","0","1","0"),
+("13289","13289","","290","sitemap","Domov","domov","0","0","homepage","","976","2017-03-06 17:47:59","2018-09-13 16:19:23","2017-03-06 17:47:00","0","<p>xydcvysdvysv</p>\n","","","","","","8","1","","0","1","0"),
+("13349","13349","","290","sitemap","O nás","o-nas","0","0","","","1684","2017-04-06 10:40:47","2018-09-20 13:57:07","2017-04-06 10:40:00","0","<p>sdfvsdf</p>\n","<p>Vo firme Design.dnt pracujeme s r&ocirc;znymi modern&yacute;mi technol&oacute;giami, ktor&eacute; s&uacute; použ&iacute;van&eacute; vo webovom priemysle. Za t&yacute;mto &uacute;čelom sme vyvinuli vlastn&yacute; redakčn&yacute; syst&eacute;m pod n&aacute;zvom <a href=\"/technologie/redakcny-system\">Designdnt</a>&nbsp;Z&aacute;kladom syst&eacute;mu bola použ&iacute;vateľsk&aacute; jednoduchosť, finančn&aacute; dostupnosť a v neposlednom rade intuit&iacute;vnosť. Vďaka dlhodob&eacute;mu v&yacute;voju sa n&aacute;m podarilo vypracovať presne to, čo je perfektn&yacute;m z&aacute;kladom pre bežn&eacute; weby za finančne nen&aacute;ročn&eacute; požiadavky. V roz&scaron;&iacute;ren&iacute; o moduly eshopu, alebo o moduly sprac&uacute;vaj&uacute;ce hromadn&eacute; d&aacute;ta, vieme poskytn&uacute;ť perfektn&eacute; z&aacute;zemie pre <strong>informačn&yacute; syst&eacute;m</strong>.</p>\n\n<ol>\n	<li>vysok&aacute; r&yacute;chlosť jadra <strong>dnt3</strong></li>\n	<li>&quot;inteligentn&eacute;&quot; URL adresy s chronologickou postupnosťou</li>\n	<li>multydom&eacute;nov&aacute;&nbsp;platforma</li>\n	<li>multyvendor platforma</li>\n	<li>facebook - messenger platforma</li>\n	<li>automatick&aacute; gener&aacute;cia robots.txt, google sitemaps</li>\n	<li>jednoduch&aacute; in&scaron;tal&aacute;cia a z&aacute;loha datab&aacute;zy</li>\n	<li>Prepracovan&yacute; cache engine</li>\n	<li>multylanguage podpora</li>\n	<li>Modul kv&iacute;zov pre kv&iacute;zy s percentu&aacute;lnou &uacute;spe&scaron;nosťou</li>\n	<li>Modul kv&iacute;zov s v&yacute;sledkom kategoriz&aacute;cie</li>\n	<li>Modul obsahu</li>\n	<li>Modul sitemapy</li>\n	<li>Modul emailov&eacute;ho klienta</li>\n	<li>Modul spr&aacute;vy s&uacute;borov</li>\n	<li>Modul eshopu a &uacute;čtovn&iacute;ctva</li>\n	<li>Modul ACL (users)</li>\n	<li>Modul restov&eacute;ho JSON / XML api pre zdielanie informacii s tret&iacute;mi stranami</li>\n</ol>\n\n<p>Za zmienku stoj&iacute; poznamenať, že redakčn&yacute; syst&eacute;m Design.dnt z&iacute;skal <strong>3. miesto</strong> v Celo&scaron;t&aacute;tnej prehliadke Stredo&scaron;kolskej odbornej činnosti, kde pod t&yacute;mto syst&eacute;mom bol naprogramovan&yacute; modul eshopu s fakturačn&yacute;m, objedn&aacute;vkov&yacute;m a registračn&yacute;m syst&eacute;mom.</p>\n\n<p>&nbsp;</p>\n\n<p>&nbsp;</p>\n","","","","","7","1","","0","1","0"),
 ("13350","13350","","303","post","HP slider 1","hp-slider-1","0","0","","","1677","2017-04-06 10:48:57","2018-09-20 13:53:43","2017-04-06 10:48:00","0","","","","","","","0","1","","0","1","0"),
 ("13351","13351","","303","post","HP slider 2","hp-slider-2","0","0","","","1678","2017-04-06 10:54:30","2018-09-20 13:54:16","2017-04-06 10:54:00","0","","","","","","","0","1","","0","1","0"),
 ("13352","13352","","303","post","HP slider 3","hp-slider-3","0","0","","","1679","2017-04-06 10:54:55","2018-09-20 13:55:01","2017-04-06 10:54:00","0","","","","","","","0","1","","0","1","0"),
 ("13353","13353","","304","post","Dnt3 Library","dnt3-library","0","0","","","","2017-04-06 10:57:05","2018-09-07 18:45:14","2017-04-06 10:57:00","0","<p>Dnt3 - Library je Objektovo orientovan&yacute; MVC framework, ktor&yacute; je na mieru prisp&ocirc;soben&yacute; pre redakčn&yacute; syst&eacute;m Designdnt3.</p>\n","<p>Z&aacute;kladn&yacute; text</p>\n","","","","","0","1","","0","1","0"),
-("13354","13354","","290","sitemap","Kvízy","kvizy","0","0","polls","","","2017-04-09 09:45:42","2018-09-07 12:42:02","2017-04-09 09:45:00","0","","","","","","","3","1","","0","1","0"),
-("13355","13355","13355","290","sitemap","Kontakt","kontakt","0","0","contact","","","2017-04-10 11:25:19","2018-09-14 15:27:39","2017-04-10 11:25:00","0","","","","","","","1","1","","0","1","0"),
-("13356","13356","","290","sitemap","Kontaktný formulár","form","0","0","partners","","","2017-04-10 11:27:16","2018-07-30 14:41:33","2017-04-10 11:27:00","0","","","","","","","2","1","","0","1","0"),
-("13357","13357","","290","sitemap","partneri","partneri","0","0","partners","","","2017-04-10 11:29:31","2018-09-07 12:45:39","2017-04-10 11:29:00","0","","","","","","","4","1","","0","1","0"),
+("13354","13354","","290","sitemap","Kvízy","kvizy","0","0","polls","","","2017-04-09 09:45:42","2018-09-07 12:42:02","2017-04-09 09:45:00","0","","","","","","","5","1","","0","1","0"),
+("13357","13357","","290","sitemap","partneri","partneri","0","0","partners","","","2017-04-10 11:29:31","2018-09-07 12:45:39","2017-04-10 11:29:00","0","","","","","","","6","1","","0","1","0"),
 ("13359","13359","","305","post","Designdnt3","http://designdnt.query.sk/domov","0","0","","","1680","2017-04-10 11:59:04","2018-09-20 13:55:29","2017-04-10 11:59:00","0","","","","","","","0","1","","0","1","0"),
 ("13360","13360","","305","post","Markíza","http://www.markiza.sk/uvod","0","0","","","1681","2017-04-10 12:24:53","2018-09-20 13:55:39","2017-04-10 12:24:00","0","","","","","","","0","1","","0","1","0"),
 ("13361","13361","","305","post","Tvnoviny","http://www.tvnoviny.sk/","0","0","","","1682","2017-04-10 12:26:00","2018-09-20 13:55:49","2017-04-10 12:26:00","0","","","","","","","0","1","","0","1","0"),
 ("13362","13362","","305","post","Osmos","http://osmos.sk/","0","0","","","1683","2017-04-10 12:26:53","2018-09-20 13:56:27","2017-04-10 12:26:00","0","","","","","","","0","1","","0","1","0"),
 ("13364","13364","","306","post","Test Message, Admin Root","test-message-admin-root","0","0","","","","2017-04-10 12:41:34","2017-04-10 12:41:34","2017-04-10 12:41:34","0","","\n	<h3>Test Message</h3><br/>\n	<b>Meno:</b>Admin Root<br/>\n	<b>Adresa:</b>Neznáma 24, 85101, Bratislava<br/>\n	<b>Telefón:</b>0912345678<br/>\n	<b>Email:</b>admon@root.sk<br/>\n	<b>Firma:</b>Designdnt<br/>\n	<b>Produkt:</b><br/><br/>\n	\n	\n	<b>SPRÁVA</b>:\n	Táto správa bola poslaná cez kontaktný formulár na webe skeletónu. A cez send grid bola odoslaná na mail príjmateľa nastaveného v nastaveniach webu.<br/><br/><b>Kontaktný email odosielateľa: <a href=\"mailto:admon@root.sk\">admon@root.sk</a></b>","","","","","0","0","","0","1","0"),
-("13365","13365","","290","sitemap","Články","clanky","0","0","article_list","303,305","","2017-04-10 12:43:40","2018-09-07 17:01:25","2017-04-10 12:43:00","0","","","","","","","0","1","","0","1","0"),
+("13365","13365","","290","sitemap","Články","clanky","0","0","article_list","303,305","","2017-04-10 12:43:40","2018-09-07 17:01:25","2017-04-10 12:43:00","0","","","","","","","3","1","","0","1","0"),
 ("13366","13366","","304","post","Redakčný systém","redakcny-system","0","0","","","","2017-04-06 10:57:05","2017-04-13 16:38:27","2017-04-06 10:57:00","0","<p>Redakčn&yacute; syst&eacute;m je syst&eacute;m na spr&aacute;vu webovej str&aacute;nke. V tomto pr&iacute;pade sa jedn&aacute; o skelet&oacute;n aplik&aacute;ciu. Cez CMS Designdnt3 sa daj&uacute; vytv&aacute;rať&nbsp;webov&eacute; str&aacute;nky na platforme &quot;multydomain&quot;. Prvotn&yacute; v&yacute;voj začal v roku 2012, do značky <strong>Designdnt3&nbsp;</strong>sa dostal v roku 2014, odkedy je v&yacute;voj veden&yacute; v objektovo orientovanej platforme design patterne MVC.</p>\n","<p>Z&aacute;kladn&yacute; text</p>\n","","","","","0","1","","0","1","0"),
 ("13367","13367","","304","post","Skeletón web","skeleton-web","0","0","","","","2017-04-06 10:57:05","2017-04-13 16:25:13","2017-04-06 10:57:00","0","<p>Skelet&oacute;n web je jednoduch&yacute; web, ktor&yacute; sa spust&iacute; po nain&scaron;talovan&iacute; frameworku dnt3. <a href=\"https://github.com/designdnt/cms-designdnt3\" target=\"_blank\">https://github.com/designdnt/cms-designdnt3&nbsp;</a></p>\n","<p>Z&aacute;kladn&yacute; text</p>\n","","","","","0","1","","0","1","0"),
-("13368","13368","","290","sitemap","Eshop","produkty","0","0","eshop","","","2017-04-25 09:39:04","2018-09-07 12:49:33","2017-04-25 09:39:00","0","","","","","","","0","1","","0","1","0"),
+("13368","13368","","290","sitemap","Eshop","produkty","0","0","eshop","","","2017-04-25 09:39:04","2018-09-07 12:49:33","2017-04-25 09:39:00","0","","","","","","","2","1","","0","1","0"),
 ("13369","13369","","294","article","","","0","0","","","","2017-04-25 09:49:05","2017-04-25 09:49:05","2017-04-25 09:49:05","0","","","","","","","0","0","","0","1","0"),
 ("13370","13370","","308","product","Iphone 5 SE","iphone-5-se","0","0","","","","2017-04-25 09:49:42","2017-04-25 09:50:00","2017-04-25 09:49:00","0","","","","","","","0","1","","0","1","0"),
 ("13392","13392","","290","sitemap","Microsites","microsites","0","0","microsites","","","2017-05-01 11:44:03","2018-09-07 12:51:24","2017-05-01 11:44:00","0","","","","","","","0","0","","0","1","0"),
-("13573","13573","","291","sitemap","Domáce","domace","0","0","article_list","","","2018-09-07 13:17:09","2018-09-07 13:17:23","2018-09-07 13:17:00","0","","","","","","","0","1","","0","1","0"),
-("13574","13574","","290","sitemap","Post Meta","post-meta","0","0","","","","2018-09-07 21:05:28","2018-09-07 21:05:41","2018-09-07 21:05:00","0","","","","","","","0","0","","0","1","0"),
-("13575","13575","","290","sitemap","Hotely","hotely","0","0","wp_hotely","","977","2018-09-07 23:33:43","2018-09-07 23:54:56","2018-09-07 23:33:00","0","","","","","","","0","1","","0","1","0"),
+("13573","13573","13289","291","sitemap","Domáce","domace","0","0","polls","","","2018-09-07 13:17:09","2018-09-22 09:49:23","2018-09-07 13:17:00","0","","","","","","","0","0","","0","1","0"),
+("13575","13575","","290","sitemap","Hotely","hotely","0","0","wp_hotely","","977","2018-09-07 23:33:43","2018-09-07 23:54:56","2018-09-07 23:33:00","0","","","","","","","4","1","","0","1","0"),
 ("13663","13663","","483","post","Test 25","test-25","0","0","","","","2018-09-10 15:53:37","2018-09-10 15:53:44","2018-09-10 15:53:00","0","","","","","","","0","1","","0","1","0"),
-("14124","14124","","293","post","Prázdna","prazdna","0","0","","","","2018-09-19 14:10:43","2018-09-19 14:10:53","2018-09-19 14:10:00","0","","","","","","","0","0","","0","1","0");
+("14124","14124","","293","post","Prázdna","prazdna","0","0","","","","2018-09-19 14:10:43","2018-09-19 14:10:53","2018-09-19 14:10:00","0","","","","","","","0","1","","0","1","0"),
+("14154","14154","","294","article","Článok Domáce","clanok-domace","0","0","","","","2018-09-22 08:57:04","2018-09-22 08:57:23","2018-09-22 08:57:00","0","","","","","","","0","0","","0","1","0"),
+("14155","14155","","290","sitemap","Kontakt","kontakt","0","0","contact","","","2018-09-22 09:51:19","2018-09-22 09:51:32","2018-09-22 09:51:00","0","","","","","","","1","1","","0","1","0");
 
 
 
@@ -5502,7 +5496,7 @@ CREATE TABLE `dnt_translates` (
   `show` int(11) NOT NULL DEFAULT '1',
   `parent_id` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=112799 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=112849 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_translates VALUES
@@ -6157,7 +6151,47 @@ INSERT INTO dnt_translates VALUES
 ("112795","112795","1","de","13349","name_url","dnt_posts","uber-uns","1","0"),
 ("112796","112796","1","de","13349","perex","dnt_posts","","1","0"),
 ("112797","112797","1","de","13349","content","dnt_posts","","1","0"),
-("112798","112798","1","de","13349","tags","dnt_posts","","1","0");
+("112798","112798","1","de","13349","tags","dnt_posts","","1","0"),
+("112799","112799","1","en","14154","name","dnt_posts","","1","0"),
+("112800","112800","1","en","14154","name_url","dnt_posts","","1","0"),
+("112801","112801","1","en","14154","perex","dnt_posts","","1","0"),
+("112802","112802","1","en","14154","content","dnt_posts","","1","0"),
+("112803","112803","1","en","14154","tags","dnt_posts","","1","0"),
+("112804","112804","1","de","14154","name","dnt_posts","","1","0"),
+("112805","112805","1","de","14154","name_url","dnt_posts","","1","0"),
+("112806","112806","1","de","14154","perex","dnt_posts","","1","0"),
+("112807","112807","1","de","14154","content","dnt_posts","","1","0"),
+("112808","112808","1","de","14154","tags","dnt_posts","","1","0"),
+("112809","112809","1","en","13355","name","dnt_posts","","1","0"),
+("112810","112810","1","en","13355","name_url","dnt_posts","","1","0"),
+("112811","112811","1","en","13355","perex","dnt_posts","","1","0"),
+("112812","112812","1","en","13355","content","dnt_posts","","1","0"),
+("112813","112813","1","en","13355","tags","dnt_posts","","1","0"),
+("112814","112814","1","de","13355","name","dnt_posts","","1","0"),
+("112815","112815","1","de","13355","name_url","dnt_posts","","1","0"),
+("112816","112816","1","de","13355","perex","dnt_posts","","1","0"),
+("112817","112817","1","de","13355","content","dnt_posts","","1","0"),
+("112818","112818","1","de","13355","tags","dnt_posts","","1","0"),
+("112829","112829","1","en","13573","name","dnt_posts","","1","0"),
+("112830","112830","1","en","13573","name_url","dnt_posts","","1","0"),
+("112831","112831","1","en","13573","perex","dnt_posts","","1","0"),
+("112832","112832","1","en","13573","content","dnt_posts","","1","0"),
+("112833","112833","1","en","13573","tags","dnt_posts","","1","0"),
+("112834","112834","1","de","13573","name","dnt_posts","","1","0"),
+("112835","112835","1","de","13573","name_url","dnt_posts","","1","0"),
+("112836","112836","1","de","13573","perex","dnt_posts","","1","0"),
+("112837","112837","1","de","13573","content","dnt_posts","","1","0"),
+("112838","112838","1","de","13573","tags","dnt_posts","","1","0"),
+("112839","112839","1","en","14155","name","dnt_posts","Contact","1","0"),
+("112840","112840","1","en","14155","name_url","dnt_posts","","1","0"),
+("112841","112841","1","en","14155","perex","dnt_posts","","1","0"),
+("112842","112842","1","en","14155","content","dnt_posts","","1","0"),
+("112843","112843","1","en","14155","tags","dnt_posts","","1","0"),
+("112844","112844","1","de","14155","name","dnt_posts","","1","0"),
+("112845","112845","1","de","14155","name_url","dnt_posts","","1","0"),
+("112846","112846","1","de","14155","perex","dnt_posts","","1","0"),
+("112847","112847","1","de","14155","content","dnt_posts","","1","0"),
+("112848","112848","1","de","14155","tags","dnt_posts","","1","0");
 
 
 
