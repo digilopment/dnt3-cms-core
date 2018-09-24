@@ -24,7 +24,7 @@
       <!-- BEGIN CSS PLUGIN -->
       <link rel="stylesheet" href="<?php echo WWW_PATH_ADMIN; ?>css/pace-theme-minimal.css">
       <link rel="stylesheet" href="<?php echo WWW_PATH_ADMIN; ?>css/jquery.gritter.css">
-      <link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+      <link rel="stylesheet" href="<?php echo WWW_PATH_ADMIN; ?>css/bootstrap-datetimepicker.css">
       <link rel="stylesheet" href="<?php echo WWW_PATH_ADMIN; ?>css/jquery-jvectormap-1.2.2.css">
       <link rel="stylesheet" href="<?php echo WWW_PATH_ADMIN; ?>css/blue.css">
       <!-- END CSS PLUGIN -->
@@ -49,7 +49,7 @@
       <script src="<?php echo WWW_PATH_ADMIN; ?>js/jquery.gritter.min.js"></script>
       <script src="<?php echo WWW_PATH_ADMIN; ?>js/jquery.sparkline.min.js"></script>
       <script src="<?php echo WWW_PATH_ADMIN; ?>js/icheck.min.js"></script>
-      <script src="<?php echo WWW_PATH_ADMIN; ?>summernote.min.js"></script>
+      <!--<script src="<?php echo WWW_PATH_ADMIN; ?>summernote.min.js"></script>-->
       <script src="<?php echo WWW_PATH_ADMIN; ?>js/dnt_custom.js"></script>
       <!--[if lte IE 8]>
       <script language="javascript" type="text/javascript" src="<?php echo WWW_PATH_ADMIN; ?>js/excanvas.min.js"></script>
@@ -59,8 +59,8 @@
       <script src="<?php echo WWW_PATH_ADMIN; ?>js/main_system.js"></script>
       <script src="<?php echo WWW_PATH_ADMIN; ?>js/skin-selector.js"></script>
 	  
-	  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
-  <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
+	  <script src="<?php echo WWW_PATH_ADMIN; ?>js/moment-with-locales.js"></script>
+	  <script src="<?php echo WWW_PATH_ADMIN; ?>js/bootstrap-datetimepicker.js"></script>
 	
       <!-- END CK EDITOR -->
    </head>
@@ -80,9 +80,6 @@
 	?>
  </ul>
 <?php } ?>
-
-
-
 <?php function contentLanguagesVariations(){ ?>
  <?php 
    $db 		= new Db;
