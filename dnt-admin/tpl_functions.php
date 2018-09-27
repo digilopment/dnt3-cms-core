@@ -20,6 +20,7 @@
       <!-- BEGIN CSS FRAMEWORK -->
       <link rel="stylesheet" href="<?php echo WWW_PATH_ADMIN; ?>css/bootstrap.min.css">
       <link rel="stylesheet" href="<?php echo WWW_PATH_ADMIN; ?>css/font-awesome.min.css">
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <!-- END CSS FRAMEWORK -->
       <!-- BEGIN CSS PLUGIN -->
       <link rel="stylesheet" href="<?php echo WWW_PATH_ADMIN; ?>css/pace-theme-minimal.css">
@@ -61,7 +62,6 @@
 	  
 	  <script src="<?php echo WWW_PATH_ADMIN; ?>js/moment-with-locales.js"></script>
 	  <script src="<?php echo WWW_PATH_ADMIN; ?>js/bootstrap-datetimepicker.js"></script>
-	
       <!-- END CK EDITOR -->
    </head>
 <?php } ?>
@@ -244,7 +244,7 @@ if($row['name_url'] == "content"){
             &nbsp;&nbsp;<i style="text-align: right;" class="fa "></i>
             </a>
          </li>
-         <?php
+         <!--<?php
             //$admin->getUserColumns();
             foreach($admin->getUserTypes() as $row2){
             ?>
@@ -256,12 +256,14 @@ if($row['name_url'] == "content"){
 			 </li>
          <?php
             }
-            ?>
+            ?>-->
       </ul>
    </li>
 	<?php		
 	  //getUserColumns()
 	  }
+	  
+
       else{
       ?>
    <?php
