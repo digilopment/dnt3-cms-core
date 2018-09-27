@@ -6,14 +6,14 @@ if(isset($_POST['sent'])){
 
 	$session = new Sessions;
 	
-	$table 			= "dnt_users";
+	$table 			= "dnt_registred_users";
 	$user 			= new Api;
 	$rest 			= new Rest;
 	$post_id		= $rest->get("post_id");
 	$return 		= $rest->post("return");
 	$pass 			= $rest->post("pass");
 	//var_dump($user->getColumns($query));
-	$query = $query = "SELECT * FROM dnt_users";
+	$query = "SELECT * FROM dnt_registred_users";
 	foreach($user->getColumns($query) as $key => $value){
 		if(
 			$value != "id" &&  
@@ -26,7 +26,8 @@ if(isset($_POST['sent'])){
 			$value != "login" && 
 			$value != "img"
 		){
-			$setData["".$value.""] = $rest->post($value);
+			$setData["".$value.""] 	= $rest->post($value);
+			$setData["status"] 		= 1;
 		}
 	}
 	
@@ -40,7 +41,8 @@ if(isset($_POST['sent'])){
 		$setData, //set 
 		array( 	//where
 			'id_entity' 	=> $post_id, 
-			'`vendor_id`' 	=> Vendor::getId())
+			'`vendor_id`' 	=> Vendor::getId(),
+			)
 		);
 	
 	$dntUpload = new DntUpload;

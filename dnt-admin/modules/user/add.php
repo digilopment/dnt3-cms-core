@@ -7,7 +7,6 @@ $api = new Api;
 $admin = new AdminUser;
 $user = new User;
 $post_id = $rest->get("post_id");
-$query = "SELECT * FROM dnt_users";
 //var_dump($user->getColumns($query));
 ?>
 <section class="content">

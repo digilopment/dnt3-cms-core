@@ -2,6 +2,7 @@
 <?php get_top(); ?>
 <?php include "top.php"; 
   $user = new User;
+  $type = $rest->get("type");
 ?>
 <div class="row">
 <!-- BEGIN CUSTOM TABLE -->
@@ -80,6 +81,30 @@
          </table>
       </div>
    </div>
+   
+   <ul class="pagination">
+      <li class="">
+         <a href="<?php echo User::paginator($type, "prev");?>">
+         &laquo;
+         </a>
+      </li>
+      <li>
+         <a href="<?php echo User::paginator($type, "first");?>">
+         <?php echo User::getPage($type, "first");?>
+         </a>
+      </li>
+      <li>
+         <a href="<?php echo User::paginator($type, "last");?>">
+         <?php echo User::getPage($type, "last");?>
+         </a>
+      </li>
+      <li>
+         <a href="<?php echo User::paginator($type, "next");?>">
+         &raquo;
+         </a>
+      </li>
+   </ul>
+   
 </div>
 <!-- END CUSTOM TABLE -->
 <?php include "bottom.php"; ?>

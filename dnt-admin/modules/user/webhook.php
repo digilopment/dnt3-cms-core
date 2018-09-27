@@ -14,6 +14,12 @@ elseif($rest->get("action") == "edit")
 }
 elseif($rest->get("action") == "add")
 {
+	$query = "SELECT * FROM dnt_registred_users";
+	if($db->num_rows($query) == 0){
+		$insertedData["`vendor_id`"] = Vendor::getId();
+		$insertedData["`type`"] = "user";
+		$db->insert("dnt_registred_users", $insertedData);
+	}
 	include "add.php";
 }
 elseif($rest->get("action") == "add_data")

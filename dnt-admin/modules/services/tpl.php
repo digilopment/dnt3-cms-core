@@ -53,6 +53,10 @@
 								foreach($image->getFileImages($row['value']) as $file){
 									echo  "<a target='_blank' href='".$file."'>".$file."</a><br/>";
 								}
+							}
+							elseif($row['content_type'] == "content"){ ?>
+								<textarea name="key_<?php echo $row['id_entity'] ?>" class="ckeditor" style="min-height: 195px;"><?php echo $row['value'] ?></textarea>
+								<?php
 							}else{ ?>
 						<input type="text" name="key_<?php echo $row['id_entity'] ?>" value='<?php echo $row['value'] ?>' class="form-control" placeholder="">
 					   <?php } ?>

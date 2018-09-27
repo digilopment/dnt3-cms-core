@@ -59,7 +59,6 @@ class XMLgenerator {
         } else {
             $id = false;
         }
-
         return $id;
     }
 
@@ -76,10 +75,9 @@ class XMLgenerator {
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 foreach ($this->getTableColumns($table, $columns) as $index => $value) {
-                    $arr[] = odstran_diakritiku($row[$index]);
+					$arr[] = Dnt::odstran_diakritiku($row[$index]);					
                 }
             }
-            return $arr;
         } else {
             return false;
         }
@@ -148,18 +146,36 @@ class XMLgenerator {
      * @param type $where
      * @param type $fileName
      */
-    public function creatCsvFile($table, $columns, $where, $fileName) {
+    public function creatCsvFile($table, $columns, $where, $fileName, $columnsName = false) {
         $db = new DB();
+        $image = new Image();
         $data = false;
+        $data = chr(0xEF) . chr(0xBB) . chr(0xBF); //diakritika pod UTF 8
         $query = "SELECT $columns FROM $table WHERE parent_id = 0 $where";
         if ($db->num_rows($query) > 0) {
 
             $pocetStlpcov = count($this->getTableColumns($table, $columns));
-            $data .= implode(";", $this->getTableColumns($table, $columns)) . "\n";
-            foreach ($db->get_results($query) as $row) {
+			
+			if($columnsName){
+				$data .= str_replace(",",";",$columnsName) . "\n";
+			}else{
+				$data .= implode(";", $this->getTableColumns($table, $columns)) . "\n";
+			}
+           
+		   foreach ($db->get_results($query) as $row) {
                 $i = 1;
                 foreach ($this->getTableColumns($table, $columns) as $column) {
-                    $data .= $row[$column];
+                    //$data .= $row[$column];
+					
+					/*
+					if($column == "img"){
+						$data .= $image->getFileImage($row['img']);
+					}else{
+						$data .= $row[$column];
+					}
+					*/
+					$data .= $row[$column];
+					
                     if ($i == $pocetStlpcov) {
                         $data .= "\n";
                     } else {
@@ -169,7 +185,11 @@ class XMLgenerator {
                 }
             }
         }
-        file_put_contents($fileName, $data);
+		
+		if(!file_exists($fileName)){
+			@mkdir(dirname($fileName), 0700, true);
+		}
+        file_put_contents($fileName,  $data);
     }
 
     /**
@@ -179,18 +199,26 @@ class XMLgenerator {
      * @param type $where
      * @param type $fileName
      */
-    public function creatCsvFileVyhrat($table, $columns, $where, $fileName) {
+    public function creatCsvFileStatic($table, $columns, $where, $fileName, $columnsName = false) {
         $db = new DB();
         $data = false;
+		$data = chr(0xEF) . chr(0xBB) . chr(0xBF); //diakritika pod UTF 8
         $query = "SELECT $columns FROM $table WHERE parent_id = 0 $where";
         if ($db->num_rows($query) > 0) {
             $data .= str_replace(" ", ";", $columns);
+			
+			if($columnsName){
+				$data .= str_replace(",",";",$columnsName) . "\n";
+			}else{
+				$data .= str_replace(" ", ";", $columns);
+			}
+			
             $data .= "\n";
             foreach ($db->get_results($query) as $row) {
-                $data .= $row['id_entity'] . ";" . $row['competition_id'] . ";" . $row['meno'] . ";" . $row['priezvisko'] . ";" . $row['uniq_id'] . ";" . $row['mesto'] . ";" . $row['psc'] . ";" . $row['email'] . ";" . $row['odpoved'] . ";" . $row['news'] . ";" . $row['news_2'] . ";" . $row['custom_1'] . "\n";
+                $data .= $row['id_entity'] . ";" . $row['vendor_id'] . ";" . $row['name'] . ";" . $row['surname'] . ";" . $row['session_id'] . ";" . $row['mesto'] . ";" . $row['psc'] . ";" . $row['email'] . ";" . $row['content'] . ";" . $row['news'] . ";" . $row['news_2'] . ";" . $row['perex'] . ";" . $row['podmienky']. "\n";
             }
         }
-        file_put_contents($fileName, odstran_diakritiku($data));
+        file_put_contents($fileName, Dnt::odstran_diakritiku($data));
     }
 
     /**
