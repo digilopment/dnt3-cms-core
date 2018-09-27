@@ -44,7 +44,7 @@ Class Image {
                 return WWW_PATH . "dnt-view/data/uploads/" . $row['name'];
             }
         } else {
-            return "aaa";
+            return false;
         }
     }
 	

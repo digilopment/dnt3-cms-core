@@ -43,6 +43,7 @@ class Autoload {
         include $path . "dnt-library/framework/_Class/XMLgenerator.php";
         include $path . "dnt-library/framework/_Class/Image.php";
         include $path . "dnt-library/framework/_Class/AdminUser.php";
+        include $path . "dnt-library/framework/_Class/User.php";
         include $path . "dnt-library/framework/_Class/Settings.php";
         include $path . "dnt-library/framework/_Class/Api.php";
         include $path . "dnt-library/framework/_Class/AdminContent.php";
