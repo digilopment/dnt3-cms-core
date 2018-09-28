@@ -25,7 +25,11 @@ function creatCsvFileStatic($table, $columns, $where, $fileName, $columnsName = 
 			$data .= $row['id_entity'] . ";" . $row['vendor_id'] . ";" . $row['name'] . ";" . $row['surname'] . ";" . $row['session_id'] . ";" . $row['mesto'] . ";" . $row['psc'] . ";" . $row['email'] . ";" . $row['content'] . ";" . $row['news'] . ";" . $row['news_2'] . ";" . $row['perex'] . ";" . $row['podmienky']. "\n";
 		}
 	}
-	file_put_contents($fileName, Dnt::odstran_diakritiku($data));
+	
+	if(!is_readable(dirname($fileName))){
+		Dnt::rmkdir(dirname($fileName));
+	}
+	file_put_contents($fileName, $data);
 }
 
 $date_time_format = date("d")."-".date("m")."-".date("Y");

@@ -186,8 +186,11 @@ class XMLgenerator {
             }
         }
 		
-		if(!file_exists($fileName)){
-			@mkdir(dirname($fileName), 0700, true);
+		/*if(!file_exists($fileName)){
+			@mkdir(dirname($fileName), 7777, true);
+		}*/
+		if(!is_readable(dirname($fileName))){
+			mkdir(dirname($fileName));
 		}
         file_put_contents($fileName,  $data);
     }
@@ -218,7 +221,10 @@ class XMLgenerator {
                 $data .= $row['id_entity'] . ";" . $row['vendor_id'] . ";" . $row['name'] . ";" . $row['surname'] . ";" . $row['session_id'] . ";" . $row['mesto'] . ";" . $row['psc'] . ";" . $row['email'] . ";" . $row['content'] . ";" . $row['news'] . ";" . $row['news_2'] . ";" . $row['perex'] . ";" . $row['podmienky']. "\n";
             }
         }
-        file_put_contents($fileName, Dnt::odstran_diakritiku($data));
+		if(!is_readable(dirname($fileName))){
+			mkdir(dirname($fileName));
+		}
+        file_put_contents($fileName, $data);
     }
 
     /**

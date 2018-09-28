@@ -8,12 +8,21 @@ $dntCache 		= new Cache;
 $dntLog 		= new DntLog;
 $api 			= new Api;
 
-
+	
+//error_reporting(E_ALL & ~E_NOTICE);
 $query = $api->getQuery(
 						$rest->webhook(2), 
 						$rest->webhook(3), 
 						$rest->get("query")
 						);
+						
+$dntLog->add(
+array(
+		"http_response" 	=> 200,
+		"system_status" 	=> "log",		
+		"msg"				=> "Api log $query", 
+	)
+);
 
 if($query){
 	if($rest->webhook(1) == "xml"){
@@ -35,11 +44,6 @@ if($query){
 	$type = "no query";
 }
 
-//ADD LOG
-$dntLog->add(
-	array(
-			"http_response" 	=> 200,
-			"system_status" 	=> "log",		
-			"msg"				=> "Api log $type - $query", 
-		)
-	);
+//http://skeleton.localhost/dnt3/dnt-api/xml/JajsZ5s4/1028
+//http://skeleton.localhost/dnt3/dnt-api/json/?query=SELECT%20*%20FROM%20dnt_users
+

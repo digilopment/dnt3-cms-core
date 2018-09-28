@@ -50,6 +50,28 @@ if ($modul) {
     $rest->loadMyModul("default");
 }
 
+
+if(DEBUG_QUERY == 1){
+	$path = "dnt-view/data/uploads/sql_logs/".$modul."_query.csv";
+	if(!file_exists($path)){
+		foreach($_SESSION as $key => $value){
+			$serverVariables = array(
+				"HTTP_HOST",
+				"REQUEST_TIME",
+			);
+			
+			$value = str_replace("\n", "", $value);
+			$value = str_replace("\t", "", $value);
+			$value = str_replace("\r", "", $value);
+			$arrToInsert = array(
+				"key" => $key,
+				"query" => $value,
+			);
+			Dnt::writeLogByPutContent($path, $arrToInsert, $serverVariables);
+		}
+	}
+}
+
 if (isset($_GET['dnt_debug_mod_show_log'])) {
     $dntLog->show("last");
 }

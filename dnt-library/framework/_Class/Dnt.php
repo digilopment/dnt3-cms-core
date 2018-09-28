@@ -825,5 +825,59 @@ class Dnt {
 			//Return rgb(a) color string
 			return $output;
 	}
+	
+	public static function rmkdir($path){
+		if(@mkdir($path) or file_exists($path)) return true;
+		return (rmkdir(dirname($path)) and mkdir($path));
+	}
+	
+/*	
+ *
+ * writeLog()
+ * metoda zapisuje logy do suboru csv
+ * kazdy novy zaznam sa zapisuje do noveho riadku
+ * kazdy den sa vytvori novy subor s prefixxom Y_m_d
+ * logy je mozne ukladat do vlastného súboru (suborov)
+ *  
+ *
+**/
+	public function writeLogByPutContent($fileName, $arrToInsert = array(), $serverVariables = false){
+		
+		//VYTVOR FOLDER AK NIE JE
+		self::rmkdir(dirname($fileName));
+		
+		//NACITANIE STARYCH DAT ZO SUBORU
+		$data = @file_get_contents($fileName);
+		
+		//AK SU SERVER VARIABLES
+		if(!is_array($serverVariables))
+		$serverVariables = array();
+		
+		//PRIRADENIE ZOZNAM SERVEROVYCH METOD DO SUPERGLOBALNEJ PREMENNEJ SERVER  A ZISKANIE JEJ HODNOTY
+		foreach ($serverVariables as $item) {
+			$arrToInsert[$item] = isset($_SERVER[$item]) ? $_SERVER[$item] : false;
+		};
+		
+		//NAZVY STLPCOV
+		foreach($arrToInsert as $key => $value){
+			$columnName[] = $key;
+		}
+		
+		//ZAPIS NAZVY STLPCOV, LEN AK SA JEDNA O NOVOVYTVORENZ SUBOR
+		$columnsName = empty($data) ? implode(";", $columnName)."\n" : "";
+		
+		//IMPLODE DO RETAZCA
+		$newData = implode(";", $arrToInsert);
+
+		//OSETRENIE (PRIODANIE) NOVEHO RIADKU, LEN V PRIPADE AK SU V SUBORE DATA
+		$newLine = !empty($data) ? "\n" : "";
+		
+		//SPOJENIE STARYCH DAT, RIADKU A NOVYCH DAT DO PREMENY putData
+		$putData = $columnsName . $data . $newLine . $newData;
+		
+		//ZAPIS VSETKYCH DAT DO SUBORU
+		file_put_contents($fileName, $putData);
+		
+	}
 
 }

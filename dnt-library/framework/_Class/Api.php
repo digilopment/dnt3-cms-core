@@ -43,7 +43,7 @@ class Api {
             return urldecode($getQuery);
         } else {
             $db = new DB();
-            $query = "SELECT query FROM dnt_api WHERE `id` = '$id' AND `name_url` = '$name_url'";
+            $query = "SELECT query FROM dnt_api WHERE `id_entity` = '$id' AND `name_url` = '$name_url' AND vendor_id = '".Vendor::getId()."'";
             if ($db->num_rows($query) > 0) {
                 foreach ($db->get_results($query) as $row) {
                     return $row['query'];
@@ -87,13 +87,13 @@ class Api {
             foreach ($db->get_results($query) as $row) {
                 echo '{';
                 foreach ($this->getColumns($query) as $column) {
-                    if ($column === end($this->getColumns($query))) {
+                    if ($column == @end($this->getColumns($query))) {
                         echo '"' . $column . '":"' . $row[$column] . '"';
                     } else {
                         echo '"' . $column . '":"' . $row[$column] . '",';
                     }
                 }
-                if ($row === end($db->get_results($query))) {
+                if ($row === @end($db->get_results($query))) {
                     echo '}';
                 } else {
                     echo '},';
