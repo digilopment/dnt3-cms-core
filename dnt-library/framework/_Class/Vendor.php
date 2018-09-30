@@ -101,7 +101,7 @@ class Vendor {
                 $layouts[] = $row['layout'];
             }
         } else {
-            $layouts[] = array(false);
+            $layouts[] = array();
         }
 
         return $layouts;

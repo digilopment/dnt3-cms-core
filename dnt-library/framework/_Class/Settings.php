@@ -57,7 +57,11 @@ class Settings {
     public static function getImage($key) {
 
         $db = new Db;
-        $imageId = Settings::get($key);
+		if(is_numeric ($key)){
+			$imageId = $key;
+		}else{
+			$imageId = Settings::get($key);	
+		}
 
         $query = "SELECT name FROM dnt_uploads WHERE `id_entity` = '" . $imageId . "'";
         if ($db->num_rows($query) > 0) {

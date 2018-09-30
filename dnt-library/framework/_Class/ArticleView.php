@@ -25,7 +25,7 @@ class ArticleView extends AdminContent {
         if ($db->num_rows($query) > 0) {
             return $db->get_results($query);
         } else {
-            return array(false);
+            return array();
         }
     }
 	
@@ -151,7 +151,7 @@ class ArticleView extends AdminContent {
         if ($db->num_rows($query) > 0) {
             return $db->get_results($query);
         } else {
-            return array(false);
+            return array();
         }
     }
     
@@ -378,7 +378,7 @@ class ArticleView extends AdminContent {
 		   }
 		   return $arr;
 		}
-		return array(false);
+		return array();
     }
 	
 	

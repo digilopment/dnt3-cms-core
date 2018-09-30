@@ -73,30 +73,6 @@ class User extends Image {
 			}else{
 				return array();
 			}
-		/*
-		if($type == "admin"){
-			return array();
-		}
-		
-		$db = new Db;
-		if($type){
-			$SQL_type = " type = '".$type."' AND ";
-		}else{
-			$SQL_type = " type <> 'admin' AND ";
-		}
-		
-		
-		$query = "SELECT * FROM `dnt_registred_users` WHERE 
-			parent_id = '0' AND
-			status > 0 AND
-			$SQL_type
-			vendor_id = '".Vendor::getId()."' ORDER BY id_entity desc LIMIT 0 20 "; 
-			if($db->num_rows($query)>0){
-                   	return $db->get_results($query);
-			}else{
-				return array();
-			}
-			*/
 	}
 	
 	public function getUser($id_entity){

@@ -25,10 +25,13 @@ if(isset($_POST['sent_1'])){
 	$notifikacny_email 	= $rest->post('notifikacny_email');
 	$facebook_page 		= $rest->post('facebook_page');
 	$twitter 			= $rest->post('twitter');
-	$youtube 			= $rest->post('youtube');
+	$youtube 			= $rest->post('youtube_channel');
+	$instagram 			= $rest->post('instagram');
 	$flickr 			= $rest->post('flickr');
 	$google_map 		= $rest->post('google_map');
 	$return 			= $rest->post('return');
+	$linked_in 			= $rest->post('linked_in');
+	$google_plus 		= $rest->post('google_plus');
 	
 	$db->update('dnt_settings', array( 'value' => $notifikacny_email), array( '`key`' => 'notifikacny_email', '`vendor_id`' => Vendor::getId()));
 	$db->update('dnt_settings', array( 'value' => $facebook_page), array( '`key`' => 'facebook_page', '`vendor_id`' => Vendor::getId()));
@@ -36,6 +39,9 @@ if(isset($_POST['sent_1'])){
 	$db->update('dnt_settings', array( 'value' => $youtube), array( '`key`' => 'youtube', '`vendor_id`' => Vendor::getId()));
 	$db->update('dnt_settings', array( 'value' => $flickr), array( '`key`' => 'flickr', '`vendor_id`' => Vendor::getId()));
 	$db->update('dnt_settings', array( 'value' => $google_map), array( '`key`' => 'google_map', '`vendor_id`' => Vendor::getId()));
+	$db->update('dnt_settings', array( 'value' => $instagram), array( '`key`' => 'instagram', '`vendor_id`' => Vendor::getId()));
+	$db->update('dnt_settings', array( 'value' => $linked_in), array( '`key`' => 'linked_in', '`vendor_id`' => Vendor::getId()));
+	$db->update('dnt_settings', array( 'value' => $google_plus), array( '`key`' => 'google_plus', '`vendor_id`' => Vendor::getId()));
 	
 	
 }elseif(isset($_POST['sent_3'])){
@@ -68,7 +74,7 @@ if(isset($_POST['sent_1'])){
 }elseif(isset($_POST['sent_4'])){
 	$platca_dph 		= $rest->post('platca_dph');
 	$znak_meny 			= $rest->post('znak_meny');
-	$nazov_meny 		= $rest->post('nazov_meny');;
+	$nazov_meny 		= $rest->post('nazov_meny');
 	$dph 				= $rest->post('dph');
 	$return 			= $rest->post('return');
 	
@@ -79,8 +85,8 @@ if(isset($_POST['sent_1'])){
 }
 elseif(isset($_POST['odoslat_logo'])){
 	$return	= $rest->post('return');
-	$dntUpload = new DntUpload;
-	$dntUpload->addDefaultImage(
+	$dntUpload1 = new DntUpload;
+	$dntUpload1->addDefaultImage(
 					"userfile",								//input type file
 					"dnt_settings", 						//update table
 					"value", 								//update table column
@@ -88,6 +94,36 @@ elseif(isset($_POST['odoslat_logo'])){
 					"logo_firmy", 							//where value
 					"../dnt-view/data/uploads"				//path
 				);
+	$dntUpload2 = new DntUpload;
+	$dntUpload2->addDefaultImage(
+					"userfile_logo_2",						//input type file
+					"dnt_settings", 						//update table
+					"value", 								//update table column
+					"`key`", 								//where column
+					"logo_firmy_2", 							//where value
+					"../dnt-view/data/uploads"				//path
+				);
+	$dntUpload3 = new DntUpload;
+	$dntUpload3->addDefaultImage(
+					"userfile_logo_3",								//input type file
+					"dnt_settings", 						//update table
+					"value", 								//update table column
+					"`key`", 								//where column
+					"logo_firmy_3", 							//where value
+					"../dnt-view/data/uploads"				//path
+				);
+				
+				
+	$logo_url 		= $rest->post('logo_url');
+	$logo_url_2 			= $rest->post('logo_url_2');
+	$logo_url_3 		= $rest->post('logo_url_3');
+	
+	$db->update('dnt_settings', array( 'value' => $logo_url), array( '`key`' => 'logo_url', '`vendor_id`' => Vendor::getId()));
+	$db->update('dnt_settings', array( 'value' => $logo_url_2), array( '`key`' => 'logo_url_2', '`vendor_id`' => Vendor::getId()));
+	$db->update('dnt_settings', array( 'value' => $logo_url_3), array( '`key`' => 'logo_url_3', '`vendor_id`' => Vendor::getId()));
+	
+	
+	
 }elseif(isset($_POST['odoslat_noimage'])){
 	$return	= $rest->post('return');
 	$dntUpload = new DntUpload;

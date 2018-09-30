@@ -841,7 +841,7 @@ class Dnt {
  *  
  *
 **/
-	public function writeLogByPutContent($fileName, $arrToInsert = array(), $serverVariables = false){
+	public function writeToFile($fileName, $arrToInsert = array(), $serverVariables = false){
 		
 		//VYTVOR FOLDER AK NIE JE
 		self::rmkdir(dirname($fileName));

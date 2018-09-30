@@ -2466,6 +2466,7 @@ class Upload {
             'gif' => 'image/gif',
             'png' => 'image/png',
             'bmp' => 'image/bmp',
+            'ico' => 'image/x-icon',
             'flv' => 'video/x-flv',
             'js' => 'application/x-javascript',
             'json' => 'application/json',

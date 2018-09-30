@@ -41,7 +41,6 @@ if ($modul) {
         $rest->loadMyModul($modul);
     }
 } else {
-    
     $dntLog->add(array(
         "http_response" => 404,
         "system_status" => "log",
@@ -67,7 +66,7 @@ if(DEBUG_QUERY == 1){
 				"key" => $key,
 				"query" => $value,
 			);
-			Dnt::writeLogByPutContent($path, $arrToInsert, $serverVariables);
+			Dnt::writeToFile($path, $arrToInsert, $serverVariables);
 		}
 	}
 }

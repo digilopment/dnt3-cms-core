@@ -13,7 +13,7 @@ class ArticleList extends AdminContent {
      * @param type $is_limit
      * @return string
      */
-    protected function prepare_query($is_limit, $postId = false){
+    protected function prepare_query($is_limit, $postId = false, $servicesIDsStatic = false){
 		
 		$servicesIDs = Frontend::get();
 		//var_dump($servicesIDs['article']['service_id']);
@@ -23,6 +23,9 @@ class ArticleList extends AdminContent {
 		
 		$servicesIDs = $servicesIDs['article']['service_id'];
 		$servicesIDs = str_replace(",", "', '", $servicesIDs);
+		if($servicesIDsStatic){
+			$servicesIDs = $servicesIDsStatic;
+		}
 		
 		if(isset($_GET['search'])){
 			$typ = "AND `name_url` LIKE '%".Dnt::name_url($_GET['search'])."%'";
@@ -81,7 +84,7 @@ class ArticleList extends AdminContent {
      * 
      * @return type
      */
-    public function query($postId = false) {
+    public function query($postId = false, $servicesIDsStatic = false) {
         $db = new Db;
 
         if (isset($_GET['page'])) {
@@ -91,11 +94,11 @@ class ArticleList extends AdminContent {
         }
 		
 		if($postId){
-			 $query = self::prepare_query(false, $postId);
+			 $query = self::prepare_query(false, $postId, $servicesIDsStatic);
 			 return $query;
 		}
 
-        $query = self::prepare_query(false);
+        $query = self::prepare_query(false, $postId, $servicesIDsStatic);
         $pocet = $db->num_rows($query);
         $limit = self::limit();
 
@@ -112,7 +115,7 @@ class ArticleList extends AdminContent {
         $stranok_round = ceil($stranok);
 
         $pager = "LIMIT " . $pociatok . ", " . $limit . "";
-        return self::prepare_query($pager);
+        return self::prepare_query($pager, $postId, $servicesIDsStatic);
     }
 	
 	/** AUTOREDIRECT QUERY **/
@@ -131,6 +134,16 @@ class ArticleList extends AdminContent {
 		}
 		return $url;
 	} 
+	
+	public function data($postId, $servicesIDsStatic){
+		$db = new Db;
+		$query = self::query($postId, $servicesIDsStatic);
+		if($db->num_rows($query)>0){
+			return $db->get_results($query);
+		}else{
+			return array();
+		}
+	}
     
     /**
      * 

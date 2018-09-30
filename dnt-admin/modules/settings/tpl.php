@@ -9,11 +9,11 @@ $settings = new Settings
       <div class="col-md-12">
          <ul class="nav nav-tabs">
             <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==1 or !isset($_GET[ 'pa'])){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=1">Nastavenia stránky</a></li>
-            <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==7 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=7">Rozšírené nastavenia</a></li>
-            <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==2 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=2">Nastavenia vlastníctva</a></li>
-            <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==3 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=3">Nastavenia vlastníctva 2</a></li>
             <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==4 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=4">Nastavenie loga</a></li>
             <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==5 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=5">Nastavenia social. siet</a></li>
+			<li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==7 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=7">Rozšírené nastavenia a zhrnutie</a></li>
+			<li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==2 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=2">Nastavenia vlastníctva</a></li>
+            <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==3 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=3">Nastavenia vlastníctva 2</a></li>
             <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==6 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=6">Nastavenia účtu (krátke)</a></li>
          </ul>
          <div class="tab-content">
@@ -103,8 +103,26 @@ $settings = new Settings
                      <p>Ak máte eshop a vystavíte faktúru, vaše logo bude v hlavičke faktúry</p>
                      <img src="<?php echo Settings::getImage("logo_firmy");?>" style="max-width: 200px; margin: 15px;" alt="" />
                      <input type="file" name="userfile"  class="btn-default btn-lg btn-block" />
+                     <input type="text" name="logo_url" value="<?php echo Settings::get("logo_url");?>" class="btn-default btn-lg btn-block" />
                      <div class="padding"></div>
-                     <?php echo Dnt::returnInput();?>
+                     <hr/>
+					 
+					 <p class="lead">Nastavte druhé logo <b>vašej firmy</b></p>
+                     <img src="<?php echo Settings::getImage("logo_firmy_2");?>" style="max-width: 200px; margin: 15px;" alt="" />
+                     <input type="file" name="userfile_logo_2"  class="btn-default btn-lg btn-block" />
+                     <input type="text" name="logo_url_2" value="<?php echo Settings::get("logo_url_2");?>" class="btn-default btn-lg btn-block" />
+					 <div class="padding"></div>
+					 
+					 <hr/>
+					 <p class="lead">Nastavte tretie logo <b>vašej firmy</b></p>
+                     <img src="<?php echo Settings::getImage("logo_firmy_3");?>" style="max-width: 200px; margin: 15px;" alt="" />
+                     <input type="file" name="userfile_logo_3"  class="btn-default btn-lg btn-block" />
+                     <input type="text" name="logo_url_3"  value="<?php echo Settings::get("logo_url_3");?>" class="btn-default btn-lg btn-block" />
+					 <div class="padding"></div>
+					 
+					 
+					 
+					 <?php echo Dnt::returnInput();?>
                      <input type="submit" name="odoslat_logo" class="btn btn-warning btn-radius" value="Upraviť nastavenia" />
                   </form>
                </div>
@@ -130,22 +148,42 @@ $settings = new Settings
                   </p>
                   <input type="text" class="btn-default btn-lg btn-block" name="notifikacny_email" value="<?php echo Settings::get("notifikacny_email"); ?>" />
                   <div class="padding"></div>
-                  <p class="lead">Máte vlastnú Facebook Stránku? Nastavte si ju</p>
+                  <p class="lead">Máte vlastnú Facebook Stránku? Nastavte si ho</p>
                   <p>Na Vašej stránke sa budeme vždy odvolávať na Vašu zadanú adresu</p>
                   <input type="text" class="btn-default btn-lg btn-block" name="facebook_page" value="<?php echo Settings::get("facebook_page"); ?>" />
                   <div class="padding"></div>
-                  <p class="lead">Máte vlastnú Twitter Stránku? Nastavte si ju</p>
+	
+                  <p class="lead">Máte vlastnú Twitter Stránku? Nastavte si ho</p>
                   <p>Na Vašej stránke sa budeme vždy odvolávať na Vašu zadanú adresu</p>
                   <input type="text" class="btn-default btn-lg btn-block" name="twitter" value="<?php echo Settings::get("twitter"); ?>" />
-                  <div class="padding"></div>
-                  <p class="lead">Máte vlastnú Youtube Stránku? Nastavte si ju</p>
+				  <div class="padding"></div>
+                 
+		
+                  <p class="lead">Máte vlastnú Youtube Stránku? Nastavte si ho</p>
                   <p>Na Vašej stránke sa budeme vždy odvolávať na Vašu zadanú adresu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="youtube" value="<?php echo Settings::get("youtube"); ?>" />
-                  <div class="padding"></div>
-                  <p class="lead">Máte vlastnú Flickr Stránku? Nastavte si ju</p>
+                  <input type="text" class="btn-default btn-lg btn-block" name="youtube_channel" value="<?php echo Settings::get("youtube_channel"); ?>" />
+				  <div class="padding"></div>
+				  
+				  <p class="lead">Máte vlastný Instagram? Nastavte si ho</p>
+                  <p>Na Vašej stránke sa budeme vždy odvolávať na Vašu zadanú adresu</p>
+                  <input type="text" class="btn-default btn-lg btn-block" name="instagram" value="<?php echo Settings::get("instagram"); ?>" />
+				  <div class="padding"></div>
+				  
+				  <p class="lead">Máte vlastný Linked In? Nastavte si ho</p>
+                  <p>Na Vašej stránke sa budeme vždy odvolávať na Vašu zadanú adresu</p>
+                  <input type="text" class="btn-default btn-lg btn-block" name="linked_in" value="<?php echo Settings::get("linked_in"); ?>" />
+				  <div class="padding"></div>
+				  
+                  <p class="lead">Máte vlastnú Flickr Stránku? Nastavte si ho</p>
                   <p>Na Vašej stránke sa budeme vždy odvolávať na Vašu zadanú adresu</p>
                   <input type="text" class="btn-default btn-lg btn-block" name="flickr" value="<?php echo Settings::get("flickr"); ?>" />
                   <div class="padding"></div>
+				  
+				   <p class="lead">Máte vlastný Google Plus účet? Nastavte si ho</p>
+                  <p>Na Vašej stránke sa budeme vždy odvolávať na Vašu zadanú adresu</p>
+                  <input type="text" class="btn-default btn-lg btn-block" name="google_plus" value="<?php echo Settings::get("google_plus"); ?>" />
+                  <div class="padding"></div>
+				  
                   <p class="lead">Používate Google mapy? Nastavte si ich</p>
                   <p>Vložením URL adresy z google sa Vám automaticky vygeneruje mapa</p>
                   <input type="text" class="btn-default btn-lg btn-block" name="google_map" value="<?php echo Settings::get("google_map"); ?>" />

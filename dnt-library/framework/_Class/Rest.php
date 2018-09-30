@@ -106,8 +106,9 @@ class Rest {
      * 
      */
     public function loadModul() {
-            $function = "dnt-modules/" . $this->getModul() . "/functions.php";
-            $template = "dnt-modules/" . $this->getModul() . "/webhook.php";
+			$module = $this->getModul();
+            $function = "dnt-modules/" . $module . "/functions.php";
+            $template = "dnt-modules/" . $module . "/webhook.php";
             if (file_exists($function))
                 include $function;
             if (file_exists($template))

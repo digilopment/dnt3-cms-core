@@ -1,0 +1,34 @@
+key;query;HTTP_HOST;REQUEST_TIME
+02b434dd410e3f1b367cb8b192fdb75b;SELECT `id_entity` FROM `dnt_vendors` WHEREname_url = 'zsk-pompocz';zsk-pompocz.localhost;1538155290
+200966e0cff4b7bb3c5267def35f33ac;SELECT `layout` FROM `dnt_vendors` WHEREid = '39';zsk-pompocz.localhost;1538155290
+41e04f0e27910b03d829a360823e4cda;SELECT * FROM `dnt_posts` LEFT JOIN `dnt_translates` ON `dnt_posts`.`id_entity` = `dnt_translates`.`translate_id` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_translates`.`type` = 'name_url' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'article_list'AND `dnt_posts`.`vendor_id` = '39'GROUP BY `dnt_posts`.`name_url`;zsk-pompocz.localhost;1538155290
+c105eb2001b9ccff8a1c07b86830c805;SELECT * FROM `dnt_posts` LEFT JOIN `dnt_translates` ON `dnt_posts`.`id_entity` = `dnt_translates`.`translate_id` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_translates`.`type` = 'name_url' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`vendor_id` = '39'GROUP BY `dnt_posts`.`name_url`;zsk-pompocz.localhost;1538155290
+page_id;4hk7eO1DAt;zsk-pompocz.localhost;1538155290
+session_id;YXLLtLVRjK;zsk-pompocz.localhost;1538155290
+b0fc5e1b0ff2a6713c0230d64fe5268a;SELECT `id_entity` FROM dnt_posts WHERE `name_url` = 'zell-am-see-kaprun' AND vendor_id = '39';zsk-pompocz.localhost;1538155290
+74d84591488ec14c186552eb9f6c5201;SELECT *FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14157' AND `dnt_posts`.vendor_id = '39';zsk-pompocz.localhost;1538155290
+4a8f3d9e87f7768bfa724fbc29ab5468;SELECT img FROM dnt_posts WHERE `id_entity` = '14157' AND vendor_id = '39';zsk-pompocz.localhost;1538155290
+f48df6189d59c6f9f9d6b32560d40f44;SELECT value FROM dnt_settings WHERE `key` = 'title' AND `vendor_id` = '39';zsk-pompocz.localhost;1538155290
+a2eb283dd57597f6ec3cd0349939ddf7;SELECT * FROM dnt_settings WHERE `type` = 'custom' AND `vendor_id` = '39';zsk-pompocz.localhost;1538155290
+7ecec35570e40efcd0abbfe5034e8ae2;SELECT value FROM dnt_settings WHERE `key` = 'keywords' AND `vendor_id` = '39';zsk-pompocz.localhost;1538155290
+0ebb9fadd2c3437a6ff35df88a36cd44;SELECT value FROM dnt_settings WHERE `key` = 'description' AND `vendor_id` = '39';zsk-pompocz.localhost;1538155290
+0d4802e2420d658842d78bc1f2d442b0;SELECT value FROM dnt_settings WHERE `key` = 'vendor_company' AND `vendor_id` = '39';zsk-pompocz.localhost;1538155290
+c84b5e809ffd5a37ca8140622da8d72f;SELECT value FROM dnt_settings WHERE `key` = 'vendor_street' AND `vendor_id` = '39';zsk-pompocz.localhost;1538155290
+e759cb23472d23bb5a0271f237d41077;SELECT value FROM dnt_settings WHERE `key` = 'vendor_psc' AND `vendor_id` = '39';zsk-pompocz.localhost;1538155290
+68fce375f283745d390712304e9badb2;SELECT value FROM dnt_settings WHERE `key` = 'vendor_city' AND `vendor_id` = '39';zsk-pompocz.localhost;1538155290
+48ff8c071c2b1f5bfd7004dbb715b68f;SELECT value FROM dnt_settings WHERE `key` = 'vendor_tel' AND `vendor_id` = '39';zsk-pompocz.localhost;1538155290
+854db68ffa9f1b454dc0f5b824629906;SELECT value FROM dnt_settings WHERE `key` = 'vendor_fax' AND `vendor_id` = '39';zsk-pompocz.localhost;1538155290
+6f42dc6dd9aafbd764730186ec12a703;SELECT value FROM dnt_settings WHERE `key` = 'vendor_email' AND `vendor_id` = '39';zsk-pompocz.localhost;1538155290
+3e611117bfd150ef7523b098f6e214b4;SELECT value FROM dnt_settings WHERE `key` = 'vendor_ico' AND `vendor_id` = '39';zsk-pompocz.localhost;1538155290
+074944fc3c63e9f9df3beb187745b4da;SELECT value FROM dnt_settings WHERE `key` = 'vendor_dic' AND `vendor_id` = '39';zsk-pompocz.localhost;1538155290
+d3e4c54210055e243bf61f57490628d4;SELECT value FROM dnt_settings WHERE `key` = 'vendor_iban' AND `vendor_id` = '39';zsk-pompocz.localhost;1538155290
+b456bd975db2a2734d9b27dbb79d2994;SELECT value FROM dnt_settings WHERE `key` = 'facebook_page' AND `vendor_id` = '39';zsk-pompocz.localhost;1538155290
+2aeb7596de2750c7d6ed67b0aa8b429c;SELECT id_entity FROM dnt_post_type WHERE name_url = 'sitemap' AND `vendor_id` = '39';zsk-pompocz.localhost;1538155290
+60dc91b58f7d730748bd9ebf618bf375;SELECT * FROM dnt_posts WHERE type = 'sitemap' AND cat_id = '290' AND vendor_id = '39' AND `show` = '1' ORDER BY `order` DESC;zsk-pompocz.localhost;1538155290
+b0c044c13bbc47abefd6d962fc193d0c;SELECT *FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14156' AND `dnt_posts`.vendor_id = '39';zsk-pompocz.localhost;1538155290
+1d63885dc0a5f0d694c4abc75f7d8284;SELECT * FROM `dnt_posts` WHERE type = 'sitemap' AND `show` = '1' AND sub_cat_id = '14156' AND vendor_id = '39'  ORDER BY `order` DESC;zsk-pompocz.localhost;1538155290
+370170e60308ffc8322857e35374f55f;SELECT *FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13573' AND `dnt_posts`.vendor_id = '39';zsk-pompocz.localhost;1538155290
+33cc6c516a308b86b5c502d066ff419f;SELECT *FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14158' AND `dnt_posts`.vendor_id = '39';zsk-pompocz.localhost;1538155290
+6def684e95b76ca0053fe3580c9f6728;SELECT *FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14159' AND `dnt_posts`.vendor_id = '39';zsk-pompocz.localhost;1538155290
+1b0b2fb576182c670bb2e4dbf29eae42;SELECT *FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14160' AND `dnt_posts`.vendor_id = '39';zsk-pompocz.localhost;1538155290
+887e93776bf8125e9c286dcd548c5120;SELECT id_entity FROM dnt_post_type WHERE name_url = 'sliders' AND `vendor_id` = '39';zsk-pompocz.localhost;1538155290
