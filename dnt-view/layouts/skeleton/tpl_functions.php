@@ -269,12 +269,12 @@ $translate['socialne_siete'] = $multylanguage->getTranslate(array("type" => "sta
                   </div>
                   <div class="col-md-3">
                      <span><?php echo $translate['tel_c']; ?>:</span>
-                     <p><?php echo $data['settings']['vendor_tel']; ?></p>
+                     <p><?php echo $data['meta_settings']['keys']['vendor_tel']['value']; ?></p>
                      <hr/>
                   </div>
                   <div class="col-md-3">
                      <span><?php echo $translate['email']; ?>:</span>
-                     <a href="mailto:<?php echo $data['settings']['vendor_email']; ?>"><?php echo $data['settings']['vendor_email']; ?></a>
+                     <a href="mailto:<?php echo $data['meta_settings']['keys']['vendor_email']['value']; ?>"><?php echo $data['meta_settings']['keys']['vendor_email']['value']; ?></a>
                      <hr/>
                   </div>
                </div>
@@ -283,7 +283,7 @@ $translate['socialne_siete'] = $multylanguage->getTranslate(array("type" => "sta
                <h2><?php echo $translate['socialne_siete'];?></h2>
                <!-- Social Icons -->
                <ul class="social-icon-list margin-bottom-20">
-                  <li><a target="_blank" href="<?php echo  $data['settings']['facebook_page']; ?>"><i class="rounded-x fa fa-facebook"></i></a></li>
+                  <li><a target="_blank" href="<?php echo  $data['meta_settings']['keys']['facebook_page']['value']; ?>"><i class="rounded-x fa fa-facebook"></i></a></li>
                   <li><a target="_blank" href="#"><i class="rounded-x fa fa-linkedin"></i></a></li>
                </ul>
                <!-- End Social Icons -->
@@ -392,8 +392,6 @@ $translate['dalsie_moznosti'] = $multylanguage->getTranslate(array("type" => "st
 			<!--<li class=""><a href="<?php echo $article->getPostParam("name_url", 13059, true); ?>"><?php echo $article->getPostParam("name", 13059); ?></a></li>-->
            
 		   </ul> 
-
-		 
       </div>
       <hr class="hr-xs">
    </div>
