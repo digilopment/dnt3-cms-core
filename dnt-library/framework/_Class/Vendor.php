@@ -35,8 +35,11 @@ class Vendor {
      * 
      * @return boolean
      */
+	 
     public static function getId() {
-		
+		if($GLOBALS['VENDOR_ID']){
+			return $GLOBALS['VENDOR_ID'];
+		}
         $db = new Db;
         $host = explode(".", $_SERVER["HTTP_HOST"]);
 
@@ -66,7 +69,7 @@ class Vendor {
                 $vendor_id = false;
             }
         }
-
+		$GLOBALS['VENDOR_ID'] = $vendor_id;
         return $vendor_id;
     }
 

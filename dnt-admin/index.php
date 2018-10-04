@@ -1,4 +1,6 @@
 <?php
+$VENDOR_ID = false;
+$GET_MODUL = false;
 include "../dnt-library/framework/_Class/Autoload.php";
 $autoload		= new Autoload;
 $path			= "../";

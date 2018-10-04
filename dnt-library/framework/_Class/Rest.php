@@ -71,6 +71,10 @@ class Rest {
      * @return type
      */
 	public function getModul(){
+		if($GLOBALS['GET_MODUL']){
+			return $GLOBALS['GET_MODUL'];
+		}
+		$return = false;
 		$file = "dnt-view/layouts/".Vendor::getLayout()."/conf.php";
 		if(file_exists($file)){
 			include_once $file;
@@ -86,20 +90,21 @@ class Rest {
 		$this->webhook = $webhook->get($custom_modules);
 		foreach(array_keys($this->webhook) as $this->index){
 			foreach($this->webhook[$this->index] as $this->key=>$this->value){
-				
+				//var_dump($this->value);
 				if($this->webhook(2) == "detail"){
-					return "article_view";
+					$return = "article_view";
 				}
 				if($this->webhook(1) == ""){
-					return DEAFULT_MODUL; //ak nie je nasetovana url adresa tak nastav defaultny webhook
+					$return = DEAFULT_MODUL; //ak nie je nasetovana url adresa tak nastav defaultny webhook
 				}
 				if($this->value == $this->webhook(1)){
-					return $this->index;
+					$return = $this->index;
 				}
-				
-				
 			}
 		}
+		$GLOBALS['GET_MODUL'] = $return;
+		
+		return $return;
 	}
 
     /**

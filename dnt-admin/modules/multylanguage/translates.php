@@ -12,7 +12,7 @@ $rest = new Rest;
          <section class="content-header">
             <ul>
                <li class="post_type" style="text-decoration: underline">
-                  <a href="index.php?src=obsah&amp;pridat">
+                  <a href="index.php?src=multylanguage&amp;action=pridat">
                   <span class="label label-primary bg-green" style="padding: 5px;"><big>PRIDAŤ PREKLAD</big></span>
                   </a>
                </li>
@@ -36,9 +36,8 @@ $rest = new Rest;
                         <tr>
                            <th>#</th>
                            <th>Názov prekladu</th>
-                           <th>Definícia</th>
-                           <th>Typ postu</th>
                            <th>Jazyk</th>
+                           <th>Kľúč</th>
                            <th>Zmazať</th>
                            <th>Akcia</th>
                         </tr>
@@ -71,8 +70,8 @@ $rest = new Rest;
                         <tr>
                            <td><?php echo $row['id_entity']; ?></td>
                            <td><b><?php echo $row['translate']; ?></b></td>
+                           <td><b><?php echo $row['translate']; ?></b></td>
                            <td><b><?php echo $row['lang_id']; ?></b></td>
-                           <td><span class="label label-warning"><?php echo $row['translate_id']; ?></span></td>
                            <td><b><?php echo $row['translate_id']; ?></b></td>
                            <td>
                               <a <?php echo Dnt::confirmMsg("Naozaj chcete zmazať tento preklad?"); ?> href="<?php echo WWW_PATH_ADMIN."index.php?src=multylanguage&action=del&translate_id=".$row['translate_id']."";?>">

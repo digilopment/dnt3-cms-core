@@ -48,6 +48,22 @@ class Settings {
 		}
 		return array(false);
     }
+	
+	
+	public function getAllSettings()
+	{
+		$db = new Db;
+        $query = "SELECT * FROM dnt_settings WHERE `vendor_id` = '" . Vendor::getId() . "'";
+		
+		if($db->num_rows($query)>0){
+		   foreach($db->get_results($query) as $row){
+			   $arr['keys'][$row['key']]['show'] = $row['show'];
+			   $arr['keys'][$row['key']]['value'] = $row['value'];			   
+		   }
+		   return $arr;
+		}
+		return array(false);
+    }
 
     /**
      * 

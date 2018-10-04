@@ -6,6 +6,7 @@ if(isset($_POST['sent'])){
 	$table 			= "dnt_translates";
 	$return 		= $rest->post("return");
 	$translate_id	= $rest->get('translate_id');
+	$translate_idUpdate	= $rest->post('translate_id');
 	
 	
 		
@@ -19,7 +20,7 @@ if(isset($_POST['sent'])){
 				$insertedData = array(
 					'`translate`' 		=> $rest->post("translate_".$row['slug']),
 					'`lang_id`' 		=> $row['slug'], 
-					'`translate_id`' 	=> $translate_id, 
+					'`translate_id`' 	=> $translate_idUpdate, 
 					'`vendor_id`' 		=> Vendor::getId(),
 					'`type`' 			=> 'static',
 					'`table`' 			=> '',
@@ -37,7 +38,7 @@ if(isset($_POST['sent'])){
 		include "tpl_functions.php";
 		get_top();
 		include "top.php";
-		getConfirmMessage($return, "<br/>Údaje sa úspešne uložili ");
+		getConfirmMessage("index.php?src=multylanguage&action=translates", "<br/>Údaje sa úspešne uložili ");
 		include "bottom.php";
 		get_bottom();
 	}

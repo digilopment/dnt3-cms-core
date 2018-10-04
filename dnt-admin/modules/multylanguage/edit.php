@@ -34,6 +34,7 @@
                      if($db->num_rows($query) > 0){
                      	foreach($db->get_results($query) as $row){
 							$data = array("translate_id"=>$rest->get('translate_id'),'lang_id'=>$row['slug'],'type'=>'static');
+							$data2 = array("translate_id"=>$rest->get('translate_id'),'lang_id'=>$row['slug'],'type'=>'static');
                      ?>
                   <div class="tab-pane active">
                      <br>
@@ -45,10 +46,11 @@
                                     <span class="dnt_lang" style="float: left;">Preklad - <?php echo $row['slug']; ?>:</span>
                                  </p>
                               </label>
-                              <div class="col-sm-10">
+                              <div class="col-sm-4">
                                  <input type="text" value="<?php echo MultyLanguage::getTranslateLang($data);?>" name="translate_<?php echo $row['slug']; ?>" class="form-control" placeholder="Názov:">
                                  <br>
                               </div>
+							  
                            </div>
                         </div>
                      </div>
@@ -59,6 +61,16 @@
                      }
                      ?>
                </div>
+			   <hr/>
+			   <label class="col-sm-2 control-label">
+				 <p class="lead dnt_bold">
+					<span class="dnt_lang" style="float: left;">Kľúč:</span>
+				 </p>
+			  </label>
+			   <div class="col-sm-4">
+				 <input type="text" value="<?php echo MultyLanguage::getTranslateLang($data, "translate_id");?>" name="translate_id" class="form-control" placeholder="Názov:">
+				 <br>
+			  </div>
                <!-- end here -->
                <?php echo Dnt::returnInput();?>
                <input type="submit" name="sent" class="btn btn-primary btn-lg btn-block" value="Upraviť">

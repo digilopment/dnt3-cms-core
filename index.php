@@ -7,7 +7,8 @@
  *  author: thomas.doubek@gmail.com
  * Thanks for using!
  */
-
+$VENDOR_ID = false;
+$GET_MODUL = false;
 include "dnt-library/framework/_Class/Autoload.php";
 $autoload       = new Autoload;
 $path           = "";

@@ -448,7 +448,7 @@ class DB
     {
         self::$counter++;
 		if(DEBUG_QUERY == 1){
-			$_SESSION[md5($query)] = $query;
+			$_SESSION[rand(0,9999)."_".md5($query)] = $query;
 		}
         
 		//Overwrite the $row var to null

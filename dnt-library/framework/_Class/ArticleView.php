@@ -236,7 +236,7 @@ class ArticleView extends AdminContent {
 			$Q_column = $column;
 			$query = "
 				SELECT 
-					*
+					$Q_column
 				FROM `dnt_posts` 
 				WHERE `dnt_posts`.id_entity = '".$post_id."' 
 				AND `dnt_posts`.vendor_id 	= '".Vendor::getId()."'

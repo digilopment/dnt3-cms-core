@@ -826,6 +826,34 @@ class Dnt {
 			return $output;
 	}
 	
+	public static function colorInverse($color){
+		$color = str_replace('#', '', $color);
+		if (strlen($color) != 6){ return '000000'; }
+		$rgb = '';
+		for ($x=0;$x<3;$x++){
+			$c = 255 - hexdec(substr($color,(2*$x),2));
+			$c = ($c < 0) ? 0 : dechex($c);
+			$rgb .= (strlen($c) < 2) ? '0'.$c : $c;
+		}
+		return '#'.$rgb;
+	}
+	
+	function darkenColor($rgb, $darker=2) {
+
+		$hash = (strpos($rgb, '#') !== false) ? '#' : '';
+		$rgb = (strlen($rgb) == 7) ? str_replace('#', '', $rgb) : ((strlen($rgb) == 6) ? $rgb : false);
+		if(strlen($rgb) != 6) return $hash.'000000';
+		$darker = ($darker > 1) ? $darker : 1;
+
+		list($R16,$G16,$B16) = str_split($rgb,2);
+
+		$R = sprintf("%02X", floor(hexdec($R16)/$darker));
+		$G = sprintf("%02X", floor(hexdec($G16)/$darker));
+		$B = sprintf("%02X", floor(hexdec($B16)/$darker));
+
+		return $hash.$R.$G.$B;
+	}
+	
 	public static function rmkdir($path){
 		if(@mkdir($path) or file_exists($path)) return true;
 		return (rmkdir(dirname($path)) and mkdir($path));

@@ -14,12 +14,18 @@ class Webhook {
      */
     public function getSitemapModules($type = false) {
         $db = new Db;
+        $ml = new MultyLanguage;
 		
-		if($type){
-			$eQ = "AND `dnt_posts`.`service` = '".$type."'";
+		if($type == "static_view"){
+			$eQ = "AND `dnt_posts`.`service` = ''";
 		}else{
-			$eQ = false;
+			if($type){
+				$eQ = "AND `dnt_posts`.`service` = '".$type."'";
+			}else{
+				$eQ = false;
+			}
 		}
+		
 		$query = "
 			SELECT * FROM `dnt_posts` 
 			LEFT JOIN `dnt_translates` ON `dnt_posts`.`id_entity` = `dnt_translates`.`translate_id` 
@@ -31,7 +37,17 @@ class Webhook {
 			GROUP BY `dnt_posts`.`name_url`
 			";
 			
+		$query2 = "
+			SELECT * FROM `dnt_posts` 
+			WHERE `dnt_posts`.`type` = 'sitemap' 
+			AND `dnt_posts`.`show` > '0' 
+			".$eQ."
+			AND `dnt_posts`.`vendor_id` = '".Vendor::getId()."'
+			GROUP BY `dnt_posts`.`name_url`
+			";
+			
 		//var_export($query);
+		if($ml->countActiveLangs>1){
 			if ($db->num_rows($query) > 0){
 				foreach($db->get_results($query) as $row){
 					$arr[] = $row['name_url'];
@@ -40,8 +56,18 @@ class Webhook {
 					}
 				}
 			}else{
-				$arr = array(false);
+				$arr = array();
 			}
+		}else{
+			if ($db->num_rows($query2) > 0){
+				$arr = array();
+				foreach($db->get_results($query2) as $row2){
+					$arr[] = $row2['name_url'];
+				}
+			}else{
+				$arr = array();
+			}
+		}
 		return $arr;
 		
 		/*//return $arr;
@@ -212,11 +238,11 @@ class Webhook {
 			
 			//STATIC VIEW
 			 "static_view" => array_merge(
-				array(), $this->getSitemapModules()
+				array(), $this->getSitemapModules("static_view")
 			),
 		);
         //var_dump($getCustomSitemapModule);
-        //var_dump($modules);
+       //var_dump($custom_modules);
         $modules = array_merge($custom_modules, $modules);
         //var_dump($modules);
         return $modules;

@@ -13,6 +13,8 @@ class MultyLanguage {
      * @param type $is_limit
      * @return string
      */
+	public $countActiveLangs = "";
+	
     protected function prepare_query($is_limit) {
         $db = new Db();
 
@@ -76,6 +78,28 @@ class MultyLanguage {
         $rest = new Rest;
         return $rest->webhook(0);
     }
+	
+	public function getTranslates(){
+		$db = new Db;
+        $query = "SELECT * FROM dnt_translates WHERE type = 'static' AND vendor_id = '" . Vendor::getId() . "'";
+        if ($db->num_rows($query) > 0) {
+			return $db->get_results($query);
+        } else {
+            return false;
+        }
+	}
+	
+	public static function translate($data, $key, $value){
+		$return = false;
+		foreach($data['translates'] as $translate){
+			if(
+				$translate['translate_id'] == $key && 
+				$translate['lang_id'] == self::getLang()){
+				$return = $translate[$value];
+			}
+		}
+		return $return;
+	}
 
     /**
      * 
@@ -88,6 +112,13 @@ class MultyLanguage {
         } else {
             return "SELECT * FROM dnt_languages WHERE `home_lang` = '0' AND `show` = '1' AND vendor_id = '" . Vendor::getId() . "'";
         }
+    }
+	
+	/*** count active langs **/
+	public function countActiveLangs() {
+       $db = new Db;
+	   $query =  self::getLangs($frontend);
+	   $this->countActiveLangs = $db->num_rows($query);
     }
 
     /**
@@ -138,7 +169,7 @@ class MultyLanguage {
      * @param type $data
      * @return boolean
      */
-    public function getTranslateLang($data) {
+    public function getTranslateLang($data, $column = false) {
         $translate_id = isset($data['translate_id']) ? $data['translate_id'] : false;
         $type = isset($data['type']) ? $data['type'] : false;
         $table = isset($data['table']) ? $data['table'] : false;
@@ -146,8 +177,13 @@ class MultyLanguage {
         $lang_id = isset($data['lang_id']) ? $data['lang_id'] : false;
         
         $db = new Db;
-
-        $query = "SELECT `translate` FROM `dnt_translates` WHERE
+		
+		if($column){
+			$dbColumn = $column;
+		}else{
+			$dbColumn = 'translate';
+		}
+        $query = "SELECT `$dbColumn` FROM `dnt_translates` WHERE
 			`parent_id` = '0' AND
 			`vendor_id` = '" . Vendor::getId() . "' AND
 			`lang_id` = '" . $lang_id . "' AND
@@ -158,7 +194,7 @@ class MultyLanguage {
         //$default = $this->getDefault($translate_id, $table, $type);
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
-                $return = $row['translate'];
+                $return = $row[$dbColumn];
             }
         } else {
             $return = false;

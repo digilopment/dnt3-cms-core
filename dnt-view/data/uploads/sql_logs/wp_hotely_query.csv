@@ -1,0 +1,80 @@
+key;query;HTTP_HOST;REQUEST_TIME
+2644_795de5d4d401c3aa2acb33479ced6f9a;SELECT `id_entity` FROM `dnt_vendors` WHEREname_url = 'skeleton';skeleton.localhost;1538599445
+5339_097a24c57520d933a5fb3f3b7a516b42;SELECT `layout` FROM `dnt_vendors` WHEREid = '1';skeleton.localhost;1538599445
+4451_14c711dc8422de10de72817fff5c62d1;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'partners'AND `dnt_posts`.`vendor_id` = '1'GROUP BY `dnt_posts`.`name_url`;skeleton.localhost;1538599445
+4832_d0c392c8fc686ab64e8ff4c911b1d019;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'contact'AND `dnt_posts`.`vendor_id` = '1'GROUP BY `dnt_posts`.`name_url`;skeleton.localhost;1538599445
+1882_ec5fa293cf5e1c77d61a3ddca454c7fa;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'eshop'AND `dnt_posts`.`vendor_id` = '1'GROUP BY `dnt_posts`.`name_url`;skeleton.localhost;1538599445
+4567_dd62564f9f277898f3c6bb6999857f24;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'wp_hotely'AND `dnt_posts`.`vendor_id` = '1'GROUP BY `dnt_posts`.`name_url`;skeleton.localhost;1538599445
+3238_504d85f8bca90b69d3aa4a85cfd2eeac;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'article_list'AND `dnt_posts`.`vendor_id` = '1'GROUP BY `dnt_posts`.`name_url`;skeleton.localhost;1538599445
+7462_3d79ce9f18c2cba0a59040c2b2dbab6e;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'homepage'AND `dnt_posts`.`vendor_id` = '1'GROUP BY `dnt_posts`.`name_url`;skeleton.localhost;1538599445
+3224_0926f186c3cd413267433448c9343a11;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'polls'AND `dnt_posts`.`vendor_id` = '1'GROUP BY `dnt_posts`.`name_url`;skeleton.localhost;1538599445
+8254_874953bef30958affed99f0587e104ee;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = ''AND `dnt_posts`.`vendor_id` = '1'GROUP BY `dnt_posts`.`name_url`;skeleton.localhost;1538599445
+page_id;blUeIzuULS;skeleton.localhost;1538599445
+session_id;OJDbEdDxFe;skeleton.localhost;1538599445
+64_097a24c57520d933a5fb3f3b7a516b42;SELECT `layout` FROM `dnt_vendors` WHEREid = '1';skeleton.localhost;1538599445
+652_e975e07a33a18aaffef2e77d9a2bc32b;SELECT `id_entity` FROM dnt_posts WHERE `name_url` = 'hotely' AND vendor_id = '1';skeleton.localhost;1538599445
+6482_b23652d5726481ba635719fd904d6e04;SELECT nameFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13575' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+1084_c3e4674936a9a77b2354470154b383dc;SELECT value FROM dnt_settings WHERE `key` = 'title' AND `vendor_id` = '1';skeleton.localhost;1538599445
+4266_3c6b90d7bed19ff9fcb8b080b7989ab3;SELECT tagsFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13575' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+6182_b23652d5726481ba635719fd904d6e04;SELECT nameFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13575' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+7405_b23652d5726481ba635719fd904d6e04;SELECT nameFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13575' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+2200_ac972185ca224161bd92cc21b750e1f4;SELECT img FROM dnt_posts WHERE `id_entity` = '13575' AND vendor_id = '1';skeleton.localhost;1538599445
+8337_097a24c57520d933a5fb3f3b7a516b42;SELECT `layout` FROM `dnt_vendors` WHEREid = '1';skeleton.localhost;1538599445
+6471_e975e07a33a18aaffef2e77d9a2bc32b;SELECT `id_entity` FROM dnt_posts WHERE `name_url` = 'hotely' AND vendor_id = '1';skeleton.localhost;1538599445
+6645_abaacf8ac27f3bb47b9ae5b45394ae94;SELECT `dnt_posts`.`id_entity` AS dnt_posts_id, `dnt_posts`.`vendor_id` AS dnt_posts_vendor_id , `dnt_posts`.`type` AS dnt_posts_type, `dnt_posts`.`name_url` AS dnt_posts_name_url,`dnt_posts`.`name` AS dnt_posts_name,`dnt_posts`.`content` AS dnt_posts_content,`dnt_posts`.`perex` AS dnt_posts_perex,`dnt_posts`.`service` AS dnt_posts_service,`dnt_post_type`.`cat_id` AS dnt_post_type_cat_id,`dnt_post_type`.`name_url` AS dnt_post_type_name_url,`dnt_post_type`.`id_entity` AS dnt_post_type_id_entity,`dnt_posts_meta`.`key` AS dnt_posts_meta_key,`dnt_posts_meta`.`value` AS dnt_posts_meta_value,`dnt_posts_meta`.`show` AS dnt_posts_meta_show,`dnt_posts_meta`.`vendor_id` AS dnt_posts_meta_vendor_idFROM `dnt_posts` JOIN `dnt_post_type` ON `dnt_posts`.`cat_id` = `dnt_post_type`.`id_entity` JOIN`dnt_posts_meta`ON`dnt_posts`.`id_entity` = `dnt_posts_meta`.`post_id`  AND `dnt_posts`.`service` =  `dnt_posts_meta`.`service`  WHERE `dnt_posts`.`vendor_id` = '1' AND`dnt_posts_meta`.`vendor_id` = '1'AND`dnt_posts`.`show` = '1'AND `dnt_posts`.`id_entity` = '13575'GROUP BY `dnt_posts_meta`.`key` ASC;skeleton.localhost;1538599445
+7816_28d6c8cfd092b73c15716d46ec8f176c;SELECT id_entity FROM dnt_post_type WHERE name_url = 'sitemap' AND `vendor_id` = '1';skeleton.localhost;1538599445
+6344_c521319dae0a56e866dc1173d59aa650;SELECT * FROM dnt_posts WHERE type = 'sitemap' AND cat_id = '290' AND vendor_id = '1' AND `show` = '1' ORDER BY `order` DESC;skeleton.localhost;1538599445
+6374_eec42e0b25ea92a1fbee2c27fad557f3;SELECT * FROM dnt_translates WHERE type = 'static' AND vendor_id = '1';skeleton.localhost;1538599445
+1094_22c73c29a4f69411dfdc8129b9508b31;SELECT * FROM dnt_settings WHERE `vendor_id` = '1';skeleton.localhost;1538599445
+7840_b23652d5726481ba635719fd904d6e04;SELECT nameFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13575' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+140_ac972185ca224161bd92cc21b750e1f4;SELECT img FROM dnt_posts WHERE `id_entity` = '13575' AND vendor_id = '1';skeleton.localhost;1538599445
+4668_097a24c57520d933a5fb3f3b7a516b42;SELECT `layout` FROM `dnt_vendors` WHEREid = '1';skeleton.localhost;1538599445
+8297_c3e4674936a9a77b2354470154b383dc;SELECT value FROM dnt_settings WHERE `key` = 'title' AND `vendor_id` = '1';skeleton.localhost;1538599445
+4420_a31b1f2a274c00e360764a924d54eaa5;SELECT value FROM dnt_settings WHERE `key` = 'keywords' AND `vendor_id` = '1';skeleton.localhost;1538599445
+9097_dbbf2e44ebe994fed8d03fa43129ba94;SELECT value FROM dnt_settings WHERE `key` = 'description' AND `vendor_id` = '1';skeleton.localhost;1538599445
+9539_b03929ff7f7abe04b97ec25634078f83;SELECT name_urlFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13575' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+9896_16552f18913b95e478b212c62cdd0c3d;SELECT perexFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13575' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+1642_ffcab307d4f2b0630cb7f4b3850d8e15;SELECT contentFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13575' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+2991_ec9e603e49945a8d5d6da660c2287dc0;SELECT datetime_publishFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13575' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+739_14e2ea5c41ffa09be029befa5613862b;SELECT serviceFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13575' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+6743_5bbe6da88a82ad96884a5ee2d168b840;SELECT service_idFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13575' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+9860_3c6b90d7bed19ff9fcb8b080b7989ab3;SELECT tagsFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13575' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+7232_3c6b90d7bed19ff9fcb8b080b7989ab3;SELECT tagsFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13575' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+7525_097a24c57520d933a5fb3f3b7a516b42;SELECT `layout` FROM `dnt_vendors` WHEREid = '1';skeleton.localhost;1538599445
+2600_c370595262b1d455578d49461430b6f2;SELECT `translate` FROM `dnt_translates` WHERE`parent_id` = '0' AND`vendor_id` = '1' AND`lang_id` = 'sk' AND`translate_id` = 'home' AND`type` = 'static';skeleton.localhost;1538599445
+8492_f5a661fa218d85ad96cbc264f118fdff;SELECT `translate` FROM `dnt_translates` WHERE`parent_id` = '0' AND`vendor_id` = '1' AND`lang_id` = 'sk' AND`translate_id` = 'hladat' AND`type` = 'static';skeleton.localhost;1538599445
+3780_2134aef7460d0a6cbba03944f7ec016e;SELECT `translate` FROM `dnt_translates` WHERE`parent_id` = '0' AND`vendor_id` = '1' AND`lang_id` = 'sk' AND`translate_id` = 'prihlasit' AND`type` = 'static';skeleton.localhost;1538599445
+6802_ca224e1c17ea94f37ae73bd2fc955b80;SELECT * FROM dnt_languages WHERE `show` = '1' AND vendor_id = '1';skeleton.localhost;1538599445
+4944_923e8493295cd19f96d00a0ca46882dc;SELECT value FROM dnt_settings WHERE `key` = 'logo_firmy' AND `vendor_id` = '1';skeleton.localhost;1538599445
+5870_9de2dcd188fc1933979b4e777df52a38;SELECT name FROM dnt_uploads WHERE `id_entity` = '1676';skeleton.localhost;1538599445
+9326_28d6c8cfd092b73c15716d46ec8f176c;SELECT id_entity FROM dnt_post_type WHERE name_url = 'sitemap' AND `vendor_id` = '1';skeleton.localhost;1538599445
+2566_c521319dae0a56e866dc1173d59aa650;SELECT * FROM dnt_posts WHERE type = 'sitemap' AND cat_id = '290' AND vendor_id = '1' AND `show` = '1' ORDER BY `order` DESC;skeleton.localhost;1538599445
+7577_ebeb17bf7bfd5c226c12b5e3b6e4b2f7;SELECT name_urlFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13289' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+3719_ebeb17bf7bfd5c226c12b5e3b6e4b2f7;SELECT name_urlFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13289' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+7167_f21ac736b066c1c243737267049af923;SELECT nameFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13289' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+8717_8248cb3e6b3d884590d5eaf1cf42243f;SELECT name_urlFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13349' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+7450_8248cb3e6b3d884590d5eaf1cf42243f;SELECT name_urlFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13349' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+2001_a7e9013a1d16bb90a2148de7abdbe0cb;SELECT nameFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13349' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+3213_afa84a4e3ccbf56fa7c6dbcc834f5aaf;SELECT name_urlFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13357' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+4570_afa84a4e3ccbf56fa7c6dbcc834f5aaf;SELECT name_urlFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13357' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+9929_5cb06ea8be898e1eb22e7ffc83308b7e;SELECT nameFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13357' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+8199_4c71b61fe5a59323dcd8ec8efbf67feb;SELECT name_urlFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13354' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+6794_4c71b61fe5a59323dcd8ec8efbf67feb;SELECT name_urlFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13354' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+8885_e7c3671b807ae28690b3ff903dded13f;SELECT nameFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13354' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+4880_b03929ff7f7abe04b97ec25634078f83;SELECT name_urlFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13575' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+7902_b03929ff7f7abe04b97ec25634078f83;SELECT name_urlFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13575' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+8708_b23652d5726481ba635719fd904d6e04;SELECT nameFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13575' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+6312_42e6c5068e3fbe94edb541c3cc296a15;SELECT name_urlFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13365' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+1128_42e6c5068e3fbe94edb541c3cc296a15;SELECT name_urlFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13365' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+9280_2dbb8051e9df4e64712189431697b9fc;SELECT nameFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13365' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+5649_575c214502df0b102c580eaa132a3ce3;SELECT name_urlFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13368' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+6259_575c214502df0b102c580eaa132a3ce3;SELECT name_urlFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13368' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+3711_1ee155b6f771dc1eed4ad4e5d5c1aa2c;SELECT nameFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '13368' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+3812_8ac3ccfd3ee877eb337d821656b72cd8;SELECT name_urlFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14155' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+7324_8ac3ccfd3ee877eb337d821656b72cd8;SELECT name_urlFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14155' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+4547_9eb7a73ddf073327dd5b5494f85b8e26;SELECT nameFROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14155' AND `dnt_posts`.vendor_id = '1';skeleton.localhost;1538599445
+2359_6d2f846435b29037033aca8df8749a66;SELECT `translate` FROM `dnt_translates` WHERE`parent_id` = '0' AND`vendor_id` = '1' AND`lang_id` = 'sk' AND`translate_id` = 'kontakt' AND`type` = 'static';skeleton.localhost;1538599445
+1683_5b05ea1254347049ca0013dee802ac99;SELECT `translate` FROM `dnt_translates` WHERE`parent_id` = '0' AND`vendor_id` = '1' AND`lang_id` = 'sk' AND`translate_id` = 'ustredie' AND`type` = 'static';skeleton.localhost;1538599445
+104_7e3513b135f587ab7956320b1fddf24b;SELECT `translate` FROM `dnt_translates` WHERE`parent_id` = '0' AND`vendor_id` = '1' AND`lang_id` = 'sk' AND`translate_id` = 'tel_c' AND`type` = 'static';skeleton.localhost;1538599445
+5985_0458950e172b1c13f64663a60217b4f0;SELECT `translate` FROM `dnt_translates` WHERE`parent_id` = '0' AND`vendor_id` = '1' AND`lang_id` = 'sk' AND`translate_id` = 'email' AND`type` = 'static';skeleton.localhost;1538599445
+7034_d97499d8af88749a8a7cf92827603f1b;SELECT `translate` FROM `dnt_translates` WHERE`parent_id` = '0' AND`vendor_id` = '1' AND`lang_id` = 'sk' AND`translate_id` = 'socialne_siete' AND`type` = 'static';skeleton.localhost;1538599445

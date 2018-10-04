@@ -27,10 +27,14 @@ class Frontend {
         $post_id = isset($custom_data['post_id']) ? $custom_data['post_id'] : $article->getStaticId();
 		
 		$metaArr = array();
+		$menuItems = array();
+		
 		$metaArr = $article->getMetaData($post_id);
+		$menuItems = Navigation::getParents();
+		$translates = MultyLanguage::getTranslates();
 		
 		$metaSettingsArr = array();
-		$metaSettingsArr = $settings->getMetaData();
+		$metaSettingsArr = $settings->getAllSettings();
 		
 		$articleName = $article->getPostParam("name", $post_id);
 		$articleImage = $article->getPostImage($post_id);
@@ -45,7 +49,7 @@ class Frontend {
                 '<meta content="article" property="og:type" />',
                 '<meta content="' . $articleImage . '" property="og:image" />',
             ),
-            "settings" => array(
+            /*"settings" => array(
                 "vendor_company" => Settings::get("vendor_company"),
                 "vendor_street" => Settings::get("vendor_street"),
                 "vendor_psc" => Settings::get("vendor_psc"),
@@ -57,7 +61,7 @@ class Frontend {
                 "vendor_dic" => Settings::get("vendor_dic"),
                 "vendor_iban" => Settings::get("vendor_iban"),
                 "facebook_page" => Settings::get("facebook_page"),
-            ),
+            ),*/
             "article" => array(
                 "name" => $articleName,
                 "name_url" => $article->getPostParam("name_url", $post_id),
@@ -72,6 +76,8 @@ class Frontend {
 				
             ),
 			"meta_tree" => $metaArr,
+			"menu_items" => $menuItems,
+			"translates" => $translates,
 			"meta_settings" => $metaSettingsArr,
             "timestamp" => time(),
         );
