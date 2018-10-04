@@ -6,63 +6,25 @@ function custom_modules(){
 	*/
 	$custom_modules = array(
 	
-	//PARTNERI
+		"homepage" => array_merge(
+			array(), $webhook->getSitemapModules("homepage")
+		),
 		"partners" => array_merge(
-				array(), $webhook->getSitemapModules("partners")
+			array(), $webhook->getSitemapModules("partners")
 		),  
 		"contact" => array_merge(
-				array(), $webhook->getSitemapModules("contact")
+			array(), $webhook->getSitemapModules("contact")
 		),
 		"eshop" => array_merge(
-				array(), $webhook->getSitemapModules("eshop")
+			array(), $webhook->getSitemapModules("eshop")
 		), 
 		"wp_hotely" => array_merge(
 			array(), $webhook->getSitemapModules("wp_hotely")
 		),
-		/*"microsites" => array_merge(
-				array(), $webhook->getSitemapModules("microsites")
-		), */
-		"search" => array(
-			"search",
-			"hladaj",
-		),
+		"polls" => array_merge(
+			array(), $webhook->getSitemapModules("polls")
+		), 
 		
-		//CUSTOM STATIC MODUL
-		/*"homepage" => array(
-			"domov",
-			"home",
-		),*/
-		
-		/*
-		"contact" => array(
-			"kontakt",
-			"contact",
-		),
-		"partners" => array(
-			"partneri",
-			"partners",
-			"partner",
-		),
-		"personal" => array(
-			"personal",
-			"staff",
-		),
-		"form" => array(
-			"formular",
-			"form",
-			"form-request",
-		),
-		"polls" => array(
-			"kvizy",
-			"polls",
-		),
-		"eshop" => array(
-			"obchod",
-			"produkty",
-		),
-		"microsites" => array(
-			"microsites",
-		),*/
 	);
 	return $custom_modules;
 }

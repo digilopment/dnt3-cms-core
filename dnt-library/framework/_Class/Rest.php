@@ -95,7 +95,15 @@ class Rest {
 					$return = "article_view";
 				}
 				if($this->webhook(1) == ""){
-					$return = DEAFULT_MODUL; //ak nie je nasetovana url adresa tak nastav defaultny webhook
+					$default = Settings::get("startovaci_modul");
+					if($default){
+						$redirect = $webhook->getSitemapModules($default);
+						Dnt::redirect($redirect[0]);
+						exit;
+						$return = $default;
+					}else{
+						$return = DEAFULT_MODUL;
+					}
 				}
 				if($this->value == $this->webhook(1)){
 					$return = $this->index;

@@ -1,7 +1,8 @@
 <?php include "tpl_functions.php"; ?>
 <?php get_top(); ?>
 <?php include "top.php";
-$settings = new Settings
+$settings = new Settings;
+$webhook = new Webhook;
 ?>
 <!-- END CONTENT HEADER -->
 <section class="content">
@@ -391,19 +392,20 @@ $settings = new Settings
                  
                   <p class="lead">Štartovací modul</p>
                   <p>Vyberte modul, ktorý sa ako prvý zobrazí pri načítaní Vašej stránky</p>
-                  <?php /*<select name="startovaci_modul" class="btn-default btn-lg btn-block" type="text" size="1">
-                     <?php
-                        $query = dnt_query("SELECT * FROM `dnt_posts` WHERE vendor = '".getVendorId($dntDb)."' ORDER BY `poradie` asc", $dntDb);
-                        if (mysql_num_rows($query) > 0) {
-                        	while ($row = mysql_fetch_array($query)) {
-                        		if ($row['url'] == getStartovaciModul($dntDb))
-                        			echo "<option value='".$row['url']."' selected>".$row['nazov']."</option>";
-                        		else
-                        			echo "<option value='".$row['url']."'>".$row['nazov']."</option>";
-                        		}
-                        	}
-                        ?>
-                  </select> */?>
+                  <select name="startovaci_modul" class="btn-default btn-lg btn-block" type="text" size="1">
+						<?php 
+						$service = Settings::get("startovaci_modul");
+						echo '<option selected value="">Default (z konfigu)</option>';
+						foreach($webhook->services() as $key => $serviceIndex){
+							if($key == $service){
+								echo '<option selected value="'.$key.'">'.$serviceIndex['service_name'].'</option>';
+							}else{
+								echo '<option value="'.$key.'">'.$serviceIndex['service_name'].'</option>';
+					
+							}
+						}
+						?>
+                  </select>
                   <div class="padding"></div>
                   <p class="lead">Targett</p>
                   <p>Nastavte otváranie odkazov netýkajucích sa Vašej stránky</p>

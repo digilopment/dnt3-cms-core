@@ -36,6 +36,7 @@ $rest = new Rest;
                         <tr>
                            <th>#</th>
                            <th>Názov prekladu</th>
+                           <th>Názov prekladu</th>
                            <th>Jazyk</th>
                            <th>Kľúč</th>
                            <th>Zmazať</th>
