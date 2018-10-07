@@ -12,17 +12,17 @@ function creatCsvFileStatic($table, $columns, $where, $fileName, $columnsName = 
 	$data = chr(0xEF) . chr(0xBB) . chr(0xBF); //diakritika pod UTF 8
 	$query = "SELECT $columns FROM $table WHERE parent_id = 0 $where";
 	if ($db->num_rows($query) > 0) {
-		$data .= str_replace(" ", ";", $columns);
+		//$data .= str_replace(" ", ";", $columns);
 		
 		if($columnsName){
-			$data .= str_replace(",",";",$columnsName) . "\n";
+			$data .= str_replace(",",";",$columnsName);
 		}else{
 			$data .= str_replace(" ", ";", $columns);
 		}
 		
 		$data .= "\n";
 		foreach ($db->get_results($query) as $row) {
-			$data .= $row['id_entity'] . ";" . $row['vendor_id'] . ";" . $row['name'] . ";" . $row['surname'] . ";" . $row['session_id'] . ";" . $row['mesto'] . ";" . $row['psc'] . ";" . $row['email'] . ";" . $row['content'] . ";" . $row['news'] . ";" . $row['news_2'] . ";" . $row['perex'] . ";" . $row['podmienky']. "\n";
+			$data .= $row['id_entity'] . ";" . $row['vendor_id'] . ";" . $row['name'] . ";" . $row['surname'] . ";" . $row['session_id'] . ";" . $row['mesto'] . ";" . $row['psc'] . ";" . $row['email'] . ";" . $row['content'] . ";" . $row['news'] . ";" . $row['news_2'] . ";" . $row['img'] . ";" . $row['podmienky']."\n";
 		}
 	}
 	
@@ -35,7 +35,7 @@ function creatCsvFileStatic($table, $columns, $where, $fileName, $columnsName = 
 $date_time_format = date("d")."-".date("m")."-".date("Y");
 
 //DEFAULT CONFIG
-$columns 		= "id_entity, vendor_id, name, surname, session_id, mesto, psc, email, content, news, news_2, perex, podmienky";
+$columns 		= "id_entity, vendor_id, name, surname, session_id, mesto, psc, email, content, news, news_2, img, podmienky";
 $columnsName 	= "id, competition_id, meno, priezvisko, unique_id, mesto, psc, email, odpoved, news, news_2, fotka, podmienky";
 $table 			= "dnt_registred_users";
 

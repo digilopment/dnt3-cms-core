@@ -41,6 +41,7 @@ else{
 			foreach($arrayOfDefaultMeta as $meta){
 				$array1[] = $meta['key'];
 			}
+			//var_dump($arrayOfDefaultMeta);
 			/*** realne data v databaze **/
 			foreach($article->getPostsMeta($postId, $rest->get("services")) as $row){
 				$array2[] = $row['key'];
@@ -53,6 +54,7 @@ else{
 				$Insert = str_replace(",", "','", $Insert);
 				$query 	= $SQL."('".$Insert."')";
 				$query 	= str_replace("'null'", "null", $query);
+				//var_dump($query);
 				$db->query($query);
 				$db->query("UPDATE `dnt_posts_meta` SET `id_entity` = `id` WHERE id_entity = 0 AND vendor_id = '".Vendor::getId()."'");
 				$db->dbCommit();

@@ -13,7 +13,7 @@ class Frontend {
      * @param array $custom_data
      * @return type
      */
-    public function get($custom_data = false) {
+    public function get($custom_data = false, $id = false) {
 		
         $article = new ArticleView;
         $settings = new Settings;
@@ -23,8 +23,11 @@ class Frontend {
             $custom_data = array(array(false));
         }
 		
-		
-        $post_id = isset($custom_data['post_id']) ? $custom_data['post_id'] : $article->getStaticId();
+		if($id == false){
+			$post_id = isset($custom_data['post_id']) ? $custom_data['post_id'] : $article->getStaticId();
+		}else{
+			$post_id = $id;
+		}
 		
 		$metaArr = array();
 		$menuItems = array();
@@ -41,6 +44,7 @@ class Frontend {
         $data = array(
             "media_path" => WWW_PATH . "dnt-view/layouts/" . Vendor::getLayout() . "/",
             "title" => Settings::get("title"),
+            "post_id" => $post_id,
             "meta" => array(
                 '<meta name="keywords" content="' . Settings::get("keywords") . '" />',
                 '<meta name="description" content="' . Settings::get("description") . '" />',

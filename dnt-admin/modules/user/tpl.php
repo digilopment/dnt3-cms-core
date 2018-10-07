@@ -3,12 +3,15 @@
 <?php include "top.php"; 
   $user = new User;
   $type = $rest->get("type");
+  $date_time_format		= date("d")."-".date("m")."-".date("Y");
 ?>
 <div class="row">
 <!-- BEGIN CUSTOM TABLE -->
 <div class="col-md-12">
    <div class="grid no-border">
       <div class="grid-header">
+		 <i class="fa fa-file-excel-o"></i>
+		  <h5><a href="../dnt-view/data/uploads/generated-files/<?php echo $date_time_format; ?>/competition_<?php echo Vendor::getId(); ?>_competitors.csv?8169">Vygenerovať štatistiku do XLS</a></h5>
          <i class="fa fa-table"></i>
          <span class="grid-title">Používatelia</span>
          <div class="pull-right grid-tools">
@@ -70,7 +73,7 @@
 					<td><b><?php if($image){echo '<a href="'.$image.'" target="_blank"><i class="fa fa-picture-o bg-green action"></i>';}?></td>
 					<td>
 						<a href="index.php?src=user&action=edit&post_id=<?php echo $row['id_entity'] ?>"><i class="fa fa-pencil bg-blue action"></i></a>
-						<a href="index.php?src=user&vymazat&post_id=<?php echo $row['id_entity'] ?>"><i class="fa fa-times bg-red action"></i></a>
+						<a href="index.php?src=user&action=del&post_id=<?php echo $row['id_entity'] ?>"><i class="fa fa-times bg-red action"></i></a>
 					</td>
 				</tr>
                <?php

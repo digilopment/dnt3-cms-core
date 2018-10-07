@@ -60,14 +60,36 @@ class ArticleView extends AdminContent {
 		$pattern = '/\s*/m';
 		$replace = '';
 		$data = defaultModulMetaDataInstalation($postId, $moduleName);
+		//$data = trim($data);
+		
+		$data = preg_replace('/\t/', '', $data); //remove tabs
+		$data = preg_replace('/\r/', '', $data); //remove tabs
+		$data = preg_replace('/\n/', '', $data); //remove new line
+		$data = preg_replace('/\s{3,}/',' ', $data);
+		$data = preg_replace($pattern,$replace,$data);
+		//$data = trim($data);
+		
 		$data = str_replace(");", ")", $data['sql']);
 		$data = str_replace("(", "", $data);
 		$data = str_replace("'", "", $data);
-		$data = preg_replace('/\t/', '', $data); //remove tabs
-		$data = preg_replace('/\n/', '', $data); //remove new line
-		$data = trim($data);
-		$data = preg_replace($pattern,$replace,$data);
 		$data = explode("),", $data);
+		
+		
+		/*
+				$data = preg_replace('/\t/', '', $data); //remove tabs
+		$data = preg_replace('/\r/', '', $data); //remove tabs
+		$data = preg_replace('/\n/', '', $data); //remove new line
+		//$data = preg_replace($pattern,$replace,$data);
+		$data = preg_replace('/\s\s+/', ' ', $data);
+		//$data = trim($data);
+		
+		$data = str_replace(");", ")", $data['sql']);
+		$data = str_replace("(null", "null", $data);
+		$data = str_replace("''", "<TMP>/<TMP>", $data);
+		$data = str_replace("'", "", $data);
+		$data = str_replace("<TMP>/<TMP>", "0", $data);
+		$data = explode("),", $data);
+		*/
 		
 		foreach($data as $id => $item){
 			foreach(explode(",",$item) as $id2 => $key){
@@ -357,7 +379,9 @@ class ArticleView extends AdminContent {
 		AND 
 			`dnt_posts`.`id_entity` = '$id_entity'
 		GROUP BY 
-			`dnt_posts_meta`.`key` ASC"; 
+			`dnt_posts_meta`.`key`
+		ORDER BY 
+			`dnt_posts_meta`.`id_entity` ASC"; 
 			
 			
 			

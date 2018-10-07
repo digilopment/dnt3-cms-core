@@ -23,6 +23,7 @@ class Autoload {
         include $path . "dnt-library/framework/_Class/xlsx/php-excel-reader/excel_reader2.php";
         include $path . "dnt-library/framework/_Class/xlsx/SpreadsheetReader.php";
         include $path . "dnt-library/framework/_Class/Db.php";
+        include $path . "dnt-library/framework/_Class/GoogleCaptcha.php";
         include $path . "dnt-library/framework/_Class/MultyLanguage.php";
         include $path . "dnt-library/framework/_Class/Webhook.php";
         include $path . "dnt-library/framework/_Class/Config.php";

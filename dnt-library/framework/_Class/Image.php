@@ -31,9 +31,14 @@ Class Image {
      * @param type $id
      * @return boolean
      */
-    public function getFileImage($id) {
-        $db = new Db;
-        $imageId = $id;
+    public function getFileImage($input) {
+		if(!is_numeric($input)){
+			return $input;
+		}
+        
+		$db = new Db;
+        
+		$imageId = $input;
         //`show` = '0' or `show` = '1' or `show` = '2'";
         $query = "SELECT name FROM dnt_uploads WHERE 
 		`id_entity` = '" . $imageId . "' AND 

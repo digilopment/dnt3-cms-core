@@ -856,7 +856,7 @@ class Dnt {
 	
 	public static function rmkdir($path){
 		if(@mkdir($path) or file_exists($path)) return true;
-		return (rmkdir(dirname($path)) and mkdir($path));
+		return (self::rmkdir(dirname($path)) and mkdir($path));
 	}
 	
 /*	
