@@ -1,4 +1,5 @@
 <?php
+include "../globals.php";
 include "../dnt-library/framework/_Class/Autoload.php";
 $path			= "../";
 Autoload::load($path);

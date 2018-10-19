@@ -907,5 +907,21 @@ class Dnt {
 		file_put_contents($fileName, $putData);
 		
 	}
+	
+	/**
+	 * static function to embed video
+	 *
+	 *
+	 **/
+	public static function youtubeVideoToEmbed($video){
+		 if (count(explode('?v=', $video)) > 1) {
+            $video = explode("?v=", $video);
+            $youtube_hash = "https://www.youtube.com/embed/".$video[1];
+        } else {
+            $youtube_hash = $video;
+        }
+		return $youtube_hash;
+	} 
+	
 
 }

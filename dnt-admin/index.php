@@ -1,7 +1,7 @@
 <?php
-$VENDOR_ID = false;
-$GET_MODUL = false;
+include "../globals.php";
 include "../dnt-library/framework/_Class/Autoload.php";
+include "helpers.php";
 $autoload		= new Autoload;
 $path			= "../";
 $autoload->load($path);

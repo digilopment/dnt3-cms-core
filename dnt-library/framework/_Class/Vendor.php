@@ -41,6 +41,53 @@ class Vendor {
 			return $GLOBALS['VENDOR_ID'];
 		}
         $db = new Db;
+        $rest = new Rest;
+		
+		
+		if($rest->get("dnt3_get_vendor_id")){
+			$vendor_id = $rest->get("dnt3_get_vendor_id");
+			$GLOBALS['VENDOR_ID'] = $vendor_id;
+			return $vendor_id;
+		}
+		
+
+		$query = "SELECT `id_entity`,`real_url`, `show_real_url` FROM `dnt_vendors`";
+		if ($db->num_rows($query) > 0) {
+			$data = WWW_PATH;
+			$data = str_replace("www.", "", $data);
+			$data = explode("://", $data);
+			$ORIGIN_PROTOCOL = "".$data[0]."://";
+			$data = explode("/", $data[1]);
+			$ORIGIN_DOMAIN = $data[0];
+		
+            foreach ($db->get_results($query) as $row) {
+				if($row['show_real_url'] == 1){
+					$data = $row['real_url'];
+					$data = str_replace("www.", "", $data);
+					$data = explode("://", $data);
+					$DB_PROTOCOL = "".$data[0]."://";
+					$data = explode("/", $data[1]);
+					$DB_DOMAIN = $data[0];
+					
+					if($ORIGIN_DOMAIN == $DB_DOMAIN){
+						$vendor_id = $row['id_entity'];
+						$GLOBALS['VENDOR_ID'] = $vendor_id;
+						$GLOBALS['ORIGIN_DOMAIN'] = $ORIGIN_DOMAIN;
+						$GLOBALS['DB_DOMAIN'] = $DB_DOMAIN;
+						$GLOBALS['ORIGIN_PROTOCOL'] = $ORIGIN_PROTOCOL;
+						$GLOBALS['DB_PROTOCOL'] = $DB_PROTOCOL;
+						return $vendor_id;
+					}else{
+						$GLOBALS['ORIGIN_DOMAIN'] = $ORIGIN_DOMAIN;
+						$GLOBALS['DB_DOMAIN'] = $DB_DOMAIN;
+						$GLOBALS['ORIGIN_PROTOCOL'] = $ORIGIN_PROTOCOL;
+						$GLOBALS['DB_PROTOCOL'] = $DB_PROTOCOL;
+					}
+					
+				}
+			}
+		}
+			
         $host = explode(".", $_SERVER["HTTP_HOST"]);
 
         //ak je host[1] existuje subdomena
@@ -79,7 +126,12 @@ class Vendor {
      */
     public static function getLayout() {
         $db = new Db;
-
+        $rest = new Rest;
+		
+		if($rest->get("dnt3_get_layout")){
+			return $rest->get("dnt3_get_layout");
+		}
+		
         $query = "SELECT `layout` FROM `dnt_vendors` WHERE
 		id = '" . self::getId() . "'";
 

@@ -7,8 +7,7 @@
  *  author: thomas.doubek@gmail.com
  * Thanks for using!
  */
-$VENDOR_ID = false;
-$GET_MODUL = false;
+include "globals.php";
 include "dnt-library/framework/_Class/Autoload.php";
 $autoload       = new Autoload;
 $path           = "";
@@ -16,12 +15,17 @@ $autoload->load($path);
 $rest           = new Rest;
 $dntLog         = new DntLog;
 $dntCache       = new Cache;
+$db       		= new Db;
 
 if (!Install::db_exists()) {
     Dnt::redirect("dnt-install/index.php");
 }
 
+
+
 $modul = $rest->getModul();
+$rest->redirectToDomain(Settings::get("still_redirect_to_domain"));
+
 if ($modul) {
     $dntLog->add(array(
         "http_response" => 200,
@@ -60,15 +64,31 @@ if(DEBUG_QUERY == 1){
 				"REQUEST_TIME",
 			);
 			
+			$serverVariables = array();
 			$value = str_replace("\n", "", $value);
 			$value = str_replace("\t", "", $value);
 			$value = str_replace("\r", "", $value);
 			$arrToInsert = array(
-				"key" => $key,
+				"id" => 'null',
+				"id_entity" => 0,
+				"vendor_id" => Vendor::getId(),
+				"name" => "Modul query ".$modul,
+				"name_url" => md5($value),
 				"query" => $value,
+				"parent_id" => 0,
 			);
 			Dnt::writeToFile($path, $arrToInsert, $serverVariables);
+			
+			/*$insertedData = array(
+				'vendor_id' 		=> Vendor::getId(), 
+				'name' 				=> "Modul Query - $modul", 
+				'name_url' 			=> md5($value), 
+				'query' 			=> $value,
+			);			
+			$db->insert('dnt_api', $insertedData);*/
 		}
+		
+	
 	}
 }
 

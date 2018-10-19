@@ -13,11 +13,9 @@
       <label class="col-sm-1 control-label"><b>Nastavenie hodnoty</b></label>
    </div>
    <div class="row">
-   
    <?php 
 		$actionUrl = "index.php?src=content&included=".$rest->get("services")."&filter=".$rest->get("filter")."&post_id=".$postId."&services=".$rest->get("services")."&action=update";
 	?>
-	
    <form enctype='multipart/form-data'action="<?php echo $actionUrl; ?>" method="POST">
          <div class="col-md-12">
             <ul class="nav nav-tabs">
@@ -35,12 +33,9 @@
                      <?php Dnt::setMetaStatus($row['show'], $row['id_entity']); ?>
                      </label>
                      <div class="col-sm-8 text-left">
-					 <!--
-                        <img class="img-thumb" src="" alt="" />
-                        <iframe src=""  scrolling="yes" frameBorder="0" id="info" class="iframe" name="info" width="1000px" height="30px" seamless=""></iframe>	
-                       -->
 					 <?php if($row['content_type'] == "image"){ ?>
 								<input name="userfile_<?php echo $row['id_entity']; ?>[]" multiple="multipl" type="file" class="form-control">
+								<?php galleryChooser($row['id_entity']); ?>
 								<?php 
 								$image = new Image;
 								foreach($image->getFileImages($row['value']) as $image){

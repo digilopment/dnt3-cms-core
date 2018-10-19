@@ -14,7 +14,7 @@ CREATE TABLE `dnt_admin_menu` (
   `show` int(11) NOT NULL DEFAULT '1',
   `parent_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1625 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1759 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_admin_menu VALUES
@@ -64,7 +64,7 @@ CREATE TABLE `dnt_api` (
   `query` varchar(300) NOT NULL,
   `parent_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1100 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1214 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_api VALUES
@@ -83,12 +83,27 @@ CREATE TABLE `dnt_config` (
   `key` varchar(1000) NOT NULL,
   `value` varchar(1000) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_config VALUES
 ("25","25","1","default_lang","sk"),
 ("26","26","1","default_modul","homepage");
+
+
+
+
+CREATE TABLE `dnt_gallery` (
+  `id` int(11) NOT NULL,
+  `id_entity` int(11) NOT NULL,
+  `vendor_id` int(11) NOT NULL,
+  `name` varchar(300) NOT NULL,
+  `nam_url` varchar(300) NOT NULL,
+  `content` varchar(300) NOT NULL,
+  `images` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 
 
 
@@ -104,7 +119,7 @@ CREATE TABLE `dnt_languages` (
   `img` varchar(300) NOT NULL,
   `parent_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=142 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=154 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_languages VALUES
@@ -180,7 +195,7 @@ CREATE TABLE `dnt_mailer_mails` (
   `datetime_update` datetime NOT NULL,
   `parent_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_mailer_mails VALUES
@@ -202,7 +217,7 @@ CREATE TABLE `dnt_mailer_type` (
   `order` int(11) NOT NULL,
   `parent_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_mailer_type VALUES
@@ -5121,7 +5136,7 @@ CREATE TABLE `dnt_polls` (
   `show` int(11) NOT NULL,
   `parent_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_polls VALUES
@@ -5146,7 +5161,7 @@ CREATE TABLE `dnt_polls_composer` (
   `show` int(11) NOT NULL,
   `vendor_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2499 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2811 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_polls_composer VALUES
@@ -5245,7 +5260,7 @@ CREATE TABLE `dnt_post_type` (
   `vendor_id` int(11) NOT NULL,
   `parent_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=698 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=734 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_post_type VALUES
@@ -5287,12 +5302,12 @@ CREATE TABLE `dnt_posts` (
   `prilohy` text NOT NULL,
   `order` int(11) NOT NULL,
   `show` int(11) NOT NULL DEFAULT '1',
-  `search` varchar(1000) NOT NULL,
+  `search` longtext NOT NULL,
   `protected` int(11) NOT NULL DEFAULT '0',
   `vendor_id` int(11) NOT NULL,
   `parent_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14156 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14252 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_posts VALUES
@@ -5338,22 +5353,23 @@ CREATE TABLE `dnt_posts_meta` (
   `content_type` varchar(300) NOT NULL,
   `cat_id` int(11) NOT NULL,
   `description` varchar(1000) NOT NULL,
+  `order` int(11) NOT NULL,
   `show` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=455 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_posts_meta VALUES
-("1","1","13575","wp_hotely","1","info_hotel_name_1","Content","text","2","Názov hotelu 1","1"),
-("2","2","13575","wp_hotely","1","info_hotel_addr_1","Content","text","2","Url adresa hotelu 1","1"),
-("3","3","13575","wp_hotely","1","info_hotel_tel_c_1","Content","text","2","Telefón do hotela 1","1"),
-("4","4","13575","wp_hotely","1","info_hotel_email_1","Content","text","2","Email hotelu 1","1"),
-("5","5","13575","wp_hotely","1","_menu_7_image_1_1","Content","image","2","Fotka k modulu UBYTOVANIE","1"),
-("6","6","13575","wp_hotely","1","_menu_7_text_1","<p>Content</p>\n","content","2","Text k modulu UBYTOVANIE 1","1"),
-("7","7","13575","wp_hotely","1","_menu_7_image_2_1","Content","image","2","Fotka loga k modulu UBYTOVANIE","1"),
-("8","8","13575","wp_hotely","1","_menu_7_file1","Content","file","2","Súbor 1 default","1"),
-("9","9","13575","wp_hotely","1","_menu_7_file2","Content","file","2","Súbor 2 default","1"),
-("10","10","13575","wp_hotely","1","link_hotel_1","Content","text","2","Url adresa hotela 1","1");
+("1","1","13575","wp_hotely","1","info_hotel_name_1","Content","text","2","Názov hotelu 1","0","1"),
+("2","2","13575","wp_hotely","1","info_hotel_addr_1","Content","text","2","Url adresa hotelu 1","0","1"),
+("3","3","13575","wp_hotely","1","info_hotel_tel_c_1","Content","text","2","Telefón do hotela 1","0","1"),
+("4","4","13575","wp_hotely","1","info_hotel_email_1","Content","text","2","Email hotelu 1","0","1"),
+("5","5","13575","wp_hotely","1","_menu_7_image_1_1","Content","image","2","Fotka k modulu UBYTOVANIE","0","1"),
+("6","6","13575","wp_hotely","1","_menu_7_text_1","<p>Content</p>\n","content","2","Text k modulu UBYTOVANIE 1","0","1"),
+("7","7","13575","wp_hotely","1","_menu_7_image_2_1","Content","image","2","Fotka loga k modulu UBYTOVANIE","0","1"),
+("8","8","13575","wp_hotely","1","_menu_7_file1","Content","file","2","Súbor 1 default","0","1"),
+("9","9","13575","wp_hotely","1","_menu_7_file2","Content","file","2","Súbor 2 default","0","1"),
+("10","10","13575","wp_hotely","1","link_hotel_1","Content","text","2","Url adresa hotela 1","0","1");
 
 
 
@@ -5396,7 +5412,7 @@ CREATE TABLE `dnt_registred_users` (
   `ip_adresa` varchar(300) NOT NULL,
   `parent_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=72075 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=72107 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_registred_users VALUES
@@ -12373,7 +12389,7 @@ INSERT INTO dnt_registred_users VALUES
 ("65175","65175","1","57fd5026ae814","user","Leopoldine","Kellerer","","","","","0","","","","poldi.kellerer@aon.at","","","","0","0","0","0","0000-00-00 00:00:00","0000-00-00 00:00:00","0000-00-00 00:00:00","","","0","","","","1","0","","0"),
 ("65176","65176","1","57fd5078b6b47","user","Rudolf","Kellerer","","","","","0","","","","rudi.kellerer@aon.at","","","","0","0","0","0","0000-00-00 00:00:00","0000-00-00 00:00:00","0000-00-00 00:00:00","","","0","","","","1","0","","0"),
 ("69846","69846","1","580f6c651ef5b","user","Agnes","Nemeth","","","","","0","","","","gika47@gmail.com","","","","0","0","0","0","0000-00-00 00:00:00","0000-00-00 00:00:00","0000-00-00 00:00:00","","","0","","","","1","0","","0"),
-("70944","70944","1","58172d9197596","user","Eva","Parzer","","","","","0","","","","a","","","","0","0","0","0","0000-00-00 00:00:00","0000-00-00 00:00:00","0000-00-00 00:00:00","","","0","","","","1","0","","0"),
+("70944","70944","1","","user","Tester","testovič","","","","","0","","","","admin@root.sk","","","","0","2","0","0","0000-00-00 00:00:00","0000-00-00 00:00:00","0000-00-00 00:00:00","","","","","","","1","0","","0"),
 ("71224","71224","1","5818f61e30e2d","user","georg","galneder","","","","","0","","","","blackdranser@gmx.at","","","","0","0","0","0","0000-00-00 00:00:00","0000-00-00 00:00:00","0000-00-00 00:00:00","","","0","","","","1","0","","0"),
 ("72074","72074","1","582db724e1212","user","Sandra","Kundig","","","","","0","","","","sandrakundig@yahoo.de","","","","0","0","0","0","0000-00-00 00:00:00","0000-00-00 00:00:00","0000-00-00 00:00:00","","","0","","","","1","0","","0");
 
@@ -12389,70 +12405,74 @@ CREATE TABLE `dnt_settings` (
   `content_type` varchar(300) NOT NULL,
   `description` varchar(300) NOT NULL,
   `vendor_id` int(11) NOT NULL,
+  `order` int(11) NOT NULL,
   `show` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3082 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3318 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_settings VALUES
-("1314","1314","","description","Designdnt corporation","content","","1","0"),
-("1313","1313","","google_map","https://www.google.sk/maps/@48.2091661,17.0034239,13z?hl=sk","content","","1","0"),
-("1311","1311","","default_lang","","content","","1","0"),
-("1312","1312","","default_stat_user","","content","","1","0"),
-("1310","1310","","no_comment","no_comment.png","content","","1","0"),
-("1309","1309","","no_img","1693","content","","1","0"),
-("1308","1308","","logo_firmy","1676","content","","1","0"),
-("1307","1307","","vendor_currency_nazov","Eur","content","","1","0"),
-("1306","1306","","platca_dph","1","content","","1","0"),
-("1305","1305","","instagram","https://instagram.com/dnt-system/","content","","1","0"),
-("1304","1304","","facebook","https://www.facebook.com","content","","1","0"),
-("1303","1303","","vendor_currency","€","content","","1","0"),
-("1300","1300","","vendor_dic","","content","","1","0"),
-("1301","1301","","vendor_iban","","content","","1","0"),
-("1302","1302","","vendor_dph","20","content","","1","0"),
-("1299","1299","","vendor_ico","","content","","1","0"),
-("1295","1295","","vendor_city","Bratislava","content","","1","0"),
-("1296","1296","","vendor_tel","","content","","1","0"),
-("1297","1297","","vendor_fax","","content","","1","0"),
-("1298","1298","","vendor_email","thomas.doubek@gmail.com","content","","1","0"),
-("1294","1294","","vendor_psc","","content","","1","0"),
-("1291","1291","","blokvane_ip","","content","","1","0"),
-("1292","1292","","vendor_street","Koprivnická 13","content","","1","0"),
-("1293","1293","","vendor_company","Skeleton","content","","1","0"),
-("1290","1290","","notifikacny_email","info@query.sk","content","","1","0"),
-("1289","1289","","sirka_fotky_sponzori_modul","200","content","","1","0"),
-("1287","1287","","web","","content","","1","0"),
-("1288","1288","","google_plus","https://plus.google.com/","content","","1","0"),
-("1286","1286","","linked_in","https://www.linkedin.com/","content","","1","0"),
-("1285","1285","","flickr","","content","","1","0"),
-("1284","1284","","youtube","https://www.youtube.com/watch?v=Hlq5gMC-1is","content","","1","0"),
-("1283","1283","","twitter","","content","","1","0"),
-("1282","1282","","facebook_page","https://www.facebook.com/designdnt","content","","1","0"),
-("1280","1280","","startovaci_modul","","content","","1","0"),
-("1281","1281","","target","","content","","1","0"),
-("1276","1276","","title","Skeletón","content","","1","0"),
-("1277","1277","","keywords","skeleton, dnt3, designdnt, application","content","","1","0"),
-("1278","1278","","cachovanie","1","content","","1","0"),
-("1279","1279","","server","http://prvedentalnecentrum.sk/","content","","1","0"),
-("1433","1433","","msg_access_token","EAAZAep9FZCRqUBANOenKZCRAUcyUOhbfKHOWJ5ci35AyGdIcUrQsHGZCZA9ycIASGmZCEwhjLqKyF98ViEErTtcrKn5GbB2UfLkBtJMLrbT5Cnzi3YFVsLV4g298yE1xoS1Lzq0FWmCmz234MboDFYKjcc2p1tYhmO2Oaokj44ZBAZDZD","content","","1","0"),
-("1432","1432","","msg_hub_verify_token","TOKEN_dnt_bot_partak_2016_heroku","content","","1","0"),
-("1721","1721","custom","social_fb","xdfgx","content","Facebook","1","1"),
-("1722","1722","custom","social_twitter","gfxd","content","Twitter","1","1"),
-("1723","1723","custom","social_linked_in","gfxdgxd","content","Instagram","1","1"),
-("1724","1724","custom","map_location","gfxdgf","content","Mapa ","1","1"),
-("1725","1725","custom","favicon","1647","image","Favicon","1","1"),
-("1726","1726","custom","color","#d5d4d3","color","Farba","1","1"),
-("1729","1729","custom","_font","dxgfxdg","font","Font","1","1"),
-("1730","1730","custom","youtube_video","gfxdgf","content","Youtube video","1","1"),
-("1731","1731","custom","keywords","xdgfxd","content","Kľúčové slová pre Google","1","1"),
-("1732","1732","custom","description","gfxdg","content","Popis pre Google","1","1"),
-("1733","1733","custom","_language","xdfgx","language","Jazyková mutácia pre Facebook","1","1"),
-("1734","1734","custom","social_google_plus","dgxd","content","Google Plus","1","1"),
-("1735","1735","custom","impressum","gxdgxdg","content","Impressum","1","1"),
-("1736","1736","custom","footer_color","#800040","color","Farba Footra","1","1"),
-("1739","1739","custom","pixel_retargeting","dtrg","content","Pixel Retargeting","1","1"),
-("1740","1740","custom","ga_key","drtzdr","content","Google Analytics key","1","1"),
-("1741","1741","custom","data_protection","t","content","Data Protection","1","1");
+("3084","3084","","logo_firmy_3","1713","content","","1","31","0"),
+("3085","3084","","logo_firmy_2","1727","content","","1","0","0"),
+("3096","3096","keys","gc_secret_key","","text","Google Captcha Secret key","1","0","1"),
+("1314","1314","","description","Designdnt corporation","content","","1","0","0"),
+("1313","1313","social","google_map","https://www.google.sk/maps/@48.2091661,17.0034239,13z?hl=sk","content","Google Mapy","1","0","0"),
+("1311","1311","","default_lang","","content","Jayzk","1","0","0"),
+("1312","1312","","default_stat_user","","content","","1","0","0"),
+("1310","1310","","no_comment","no_comment.png","content","","1","0","0"),
+("1309","1309","","no_img","1693","content","","1","0","0"),
+("1308","1308","","logo_firmy","1676","content","","1","0","0"),
+("1307","1307","","vendor_currency_nazov","Eur","content","","1","0","0"),
+("1306","1306","","platca_dph","1","content","","1","0","0"),
+("1305","1305","social","instagram","https://www.instagram.com/gczellamsee/?hl=de","content","Instagram","1","0","0"),
+("1303","1303","","vendor_currency","€","content","","1","0","0"),
+("1300","1300","","vendor_dic","","content","","1","0","0"),
+("1301","1301","","vendor_iban","","content","","1","0","0"),
+("1302","1302","","vendor_dph","20","content","","1","0","0"),
+("1299","1299","","vendor_ico","","content","","1","0","0"),
+("1295","1295","","vendor_city","Bratislava","content","","1","0","0"),
+("1296","1296","","vendor_tel","","content","","1","0","0"),
+("1297","1297","","vendor_fax","","content","","1","0","0"),
+("1298","1298","","vendor_email","thomas.doubek@gmail.com","content","","1","0","0"),
+("1294","1294","","vendor_psc","","content","","1","0","0"),
+("1291","1291","","blokvane_ip","","content","","1","0","0"),
+("1292","1292","","vendor_street","Koprivnická 13","content","","1","0","0"),
+("1293","1293","","vendor_company","Skeleton","content","","1","0","0"),
+("1290","1290","","notifikacny_email","info@query.sk","content","","1","0","0"),
+("1289","1289","","sirka_fotky_sponzori_modul","200","content","","1","0","0"),
+("1287","1287","","web","","content","","1","0","0"),
+("1286","1286","custom","linked_in","https://www.linkedin.com/","content","Linked In","1","0","0"),
+("1285","1285","custom","flickr","","content","Flickr","1","0","0"),
+("1284","1284","custom","youtube_channel","https://www.youtube.com/watch?v=Hlq5gMC-1is","content","Youtube Kanál","1","0","0"),
+("1283","1283","custom","twitter","","content","Twitter","1","0","0"),
+("1282","1282","custom","facebook_page","https://www.facebook.com/designdnt","content","Facebook Page","1","0","0"),
+("1280","1280","","startovaci_modul","","content","","1","0","0"),
+("1281","1281","","target","","content","","1","0","0"),
+("1276","1276","","title","Skeletón","content","","1","0","0"),
+("1277","1277","","keywords","skeleton, dnt3, designdnt, application","content","","1","0","0"),
+("1278","1278","","cachovanie","1","content","","1","70","0"),
+("1279","1279","","server","http://prvedentalnecentrum.sk/","content","","1","0","0"),
+("1433","1433","","msg_access_token","EAAZAep9FZCRqUBANOenKZCRAUcyUOhbfKHOWJ5ci35AyGdIcUrQsHGZCZA9ycIASGmZCEwhjLqKyF98ViEErTtcrKn5GbB2UfLkBtJMLrbT5Cnzi3YFVsLV4g298yE1xoS1Lzq0FWmCmz234MboDFYKjcc2p1tYhmO2Oaokj44ZBAZDZD","content","","1","0","0"),
+("1432","1432","","msg_hub_verify_token","TOKEN_dnt_bot_partak_2016_heroku","content","","1","0","0"),
+("3087","3084","","logo_url","","content","","1","0","0"),
+("3089","3089","","logo_url_2","","content","","1","0","0"),
+("3091","3091","","logo_url_3","","content","","1","0","0"),
+("1725","1725","custom","favicon","1647","image","Favicon","1","0","1"),
+("1726","1726","custom","color","#d5d4d3","color","Farba","1","0","1"),
+("1729","1729","custom","font","dxgfxdg","font","Font","1","0","1"),
+("1730","1730","custom","youtube_video","gfxdgf","content","Youtube video","1","0","1"),
+("1731","1731","custom","keywords","xdgfxd","content","Kľúčové slová pre Google","1","0","1"),
+("1732","1732","custom","description","gfxdg","content","Popis pre Google","1","0","1"),
+("1733","1733","custom","_language","xdfgx","language","Jazyková mutácia pre Facebook","1","0","1"),
+("1734","1734","custom","google_plus","dgxd","content","Google Plus","1","0","1"),
+("1735","1735","custom","impressum","gxdgxdg","content","Impressum","1","0","1"),
+("1736","1736","custom","footer_color","#800040","color","Farba Footra","1","0","1"),
+("1739","1739","custom","pixel_retargeting","dtrg","content","Pixel Retargeting","1","0","1"),
+("1740","1740","custom","ga_key","drtzdr","content","Google Analytics key","1","0","1"),
+("1741","1741","custom","data_protection","t","content","Data Protection","1","0","1"),
+("3098","3098","custom","language","sk","content","Jayzková mutácia na webe","1","0","1"),
+("3094","3094","custom","gc_site_key","","text","Google Captcha Site key","1","0","1"),
+("3261","3261","","still_redirect_to_domain","","bool","Vždy presmerovať web na reálnu url adresu, a to aj vtedy, ak sa nachádza v testovacom móde.","1","0","1");
 
 
 
@@ -12469,7 +12489,7 @@ CREATE TABLE `dnt_translates` (
   `show` int(11) NOT NULL DEFAULT '1',
   `parent_id` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=112849 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=113305 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_translates VALUES
@@ -13044,41 +13064,10 @@ INSERT INTO dnt_translates VALUES
 ("106985","106985","1","en","13289","name_url","dnt_posts","home","1","0"),
 ("106989","106989","1","de","13289","name","dnt_posts","Home","1","0"),
 ("106990","106990","1","de","13289","name_url","dnt_posts","home","1","0"),
-("112719","112719","1","en","13350","name","dnt_posts","","1","0"),
-("112720","112720","1","en","13350","name_url","dnt_posts","","1","0"),
-("112721","112721","1","en","13350","perex","dnt_posts","","1","0"),
-("112722","112722","1","en","13350","content","dnt_posts","","1","0"),
-("112723","112723","1","en","13350","tags","dnt_posts","","1","0"),
-("112724","112724","1","de","13350","name","dnt_posts","","1","0"),
-("112725","112725","1","de","13350","name_url","dnt_posts","","1","0"),
-("112726","112726","1","de","13350","perex","dnt_posts","","1","0"),
-("112727","112727","1","de","13350","content","dnt_posts","","1","0"),
-("112728","112728","1","de","13350","tags","dnt_posts","","1","0"),
-("112729","112729","1","en","13351","name","dnt_posts","","1","0"),
-("112730","112730","1","en","13351","name_url","dnt_posts","","1","0"),
-("112731","112731","1","en","13351","perex","dnt_posts","","1","0"),
-("112732","112732","1","en","13351","content","dnt_posts","","1","0"),
-("112733","112733","1","en","13351","tags","dnt_posts","","1","0"),
-("112734","112734","1","de","13351","name","dnt_posts","","1","0"),
-("112735","112735","1","de","13351","name_url","dnt_posts","","1","0"),
-("112736","112736","1","de","13351","perex","dnt_posts","","1","0"),
-("112737","112737","1","de","13351","content","dnt_posts","","1","0"),
-("112738","112738","1","de","13351","tags","dnt_posts","","1","0"),
-("112739","112739","1","en","13352","name","dnt_posts","","1","0"),
-("112740","112740","1","en","13352","name_url","dnt_posts","","1","0"),
-("112741","112741","1","en","13352","perex","dnt_posts","","1","0"),
-("112742","112742","1","en","13352","content","dnt_posts","","1","0"),
-("112743","112743","1","en","13352","tags","dnt_posts","","1","0"),
-("112744","112744","1","de","13352","name","dnt_posts","","1","0"),
-("112745","112745","1","de","13352","name_url","dnt_posts","","1","0"),
-("112746","112746","1","de","13352","perex","dnt_posts","","1","0"),
-("112747","112747","1","de","13352","content","dnt_posts","","1","0"),
-("112748","112748","1","de","13352","tags","dnt_posts","","1","0"),
 ("112749","112749","1","en","13359","name","dnt_posts","","1","0"),
 ("112750","112750","1","en","13359","name_url","dnt_posts","","1","0"),
 ("112751","112751","1","en","13359","perex","dnt_posts","","1","0"),
-("112752","112752","1","en","13359","content","dnt_posts","","1","0");
-INSERT INTO dnt_translates VALUES
+("112752","112752","1","en","13359","content","dnt_posts","","1","0"),
 ("112753","112753","1","en","13359","tags","dnt_posts","","1","0"),
 ("112754","112754","1","de","13359","name","dnt_posts","","1","0"),
 ("112755","112755","1","de","13359","name_url","dnt_posts","","1","0"),
@@ -13108,7 +13097,8 @@ INSERT INTO dnt_translates VALUES
 ("112779","112779","1","en","13362","name","dnt_posts","","1","0"),
 ("112780","112780","1","en","13362","name_url","dnt_posts","","1","0"),
 ("112781","112781","1","en","13362","perex","dnt_posts","","1","0"),
-("112782","112782","1","en","13362","content","dnt_posts","","1","0"),
+("112782","112782","1","en","13362","content","dnt_posts","","1","0");
+INSERT INTO dnt_translates VALUES
 ("112783","112783","1","en","13362","tags","dnt_posts","","1","0"),
 ("112784","112784","1","de","13362","name","dnt_posts","","1","0"),
 ("112785","112785","1","de","13362","name_url","dnt_posts","","1","0"),
@@ -13145,16 +13135,6 @@ INSERT INTO dnt_translates VALUES
 ("112816","112816","1","de","13355","perex","dnt_posts","","1","0"),
 ("112817","112817","1","de","13355","content","dnt_posts","","1","0"),
 ("112818","112818","1","de","13355","tags","dnt_posts","","1","0"),
-("112829","112829","1","en","13573","name","dnt_posts","","1","0"),
-("112830","112830","1","en","13573","name_url","dnt_posts","","1","0"),
-("112831","112831","1","en","13573","perex","dnt_posts","","1","0"),
-("112832","112832","1","en","13573","content","dnt_posts","","1","0"),
-("112833","112833","1","en","13573","tags","dnt_posts","","1","0"),
-("112834","112834","1","de","13573","name","dnt_posts","","1","0"),
-("112835","112835","1","de","13573","name_url","dnt_posts","","1","0"),
-("112836","112836","1","de","13573","perex","dnt_posts","","1","0"),
-("112837","112837","1","de","13573","content","dnt_posts","","1","0"),
-("112838","112838","1","de","13573","tags","dnt_posts","","1","0"),
 ("112839","112839","1","en","14155","name","dnt_posts","Contact","1","0"),
 ("112840","112840","1","en","14155","name_url","dnt_posts","","1","0"),
 ("112841","112841","1","en","14155","perex","dnt_posts","","1","0"),
@@ -13164,7 +13144,8 @@ INSERT INTO dnt_translates VALUES
 ("112845","112845","1","de","14155","name_url","dnt_posts","","1","0"),
 ("112846","112846","1","de","14155","perex","dnt_posts","","1","0"),
 ("112847","112847","1","de","14155","content","dnt_posts","","1","0"),
-("112848","112848","1","de","14155","tags","dnt_posts","","1","0");
+("112848","112848","1","de","14155","tags","dnt_posts","","1","0"),
+("113304","113304","1","sk","text_to_search","static","","Zadajte text pre vyhľadávanie","1","0");
 
 
 
@@ -13179,7 +13160,7 @@ CREATE TABLE `dnt_uploads` (
   `show` int(11) NOT NULL DEFAULT '1',
   `parent_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1708 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=1855 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
 INSERT INTO dnt_uploads VALUES
@@ -13244,7 +13225,7 @@ CREATE TABLE `dnt_users` (
   `ip_adresa` varchar(300) NOT NULL,
   `parent_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=98 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=106 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_users VALUES
@@ -13266,7 +13247,7 @@ CREATE TABLE `dnt_vendors` (
   `show` int(11) NOT NULL,
   `in_progress` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
 
 
 

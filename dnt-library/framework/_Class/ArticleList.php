@@ -30,7 +30,12 @@ class ArticleList extends AdminContent {
 		if(isset($_GET['search'])){
 			$typ = "AND `name_url` LIKE '%".Dnt::name_url($_GET['search'])."%'";
 		}elseif($rest->get("q")){
-			$typ = "AND `dnt_posts`.`name_url` LIKE '%".Dnt::name_url(urldecode($rest->get("q")))."%'";
+			$pharse = str_replace("-", "", Dnt::name_url(urldecode($rest->get("q"))));
+			/*$typ = "AND LTRIM(RTRIM(REPLACE(`dnt_posts`.`name_url`,'-',''))) LIKE '%".$pharse."%'
+			OR LTRIM(RTRIM(REPLACE(`dnt_posts`.`content`,' ',''))) LIKE '%".$pharse."%'
+			OR LTRIM(RTRIM(REPLACE(`dnt_posts`.`perex`,' ',''))) LIKE '%".$pharse."%'*/
+			$typ = "AND `dnt_posts`.`search` LIKE '%".$pharse."%'
+			";
 		}else{
 			$typ = "AND `dnt_post_type`.`id_entity` IN('".$servicesIDs."')";
 		}
@@ -51,12 +56,14 @@ class ArticleList extends AdminContent {
 			$query = "
 			SELECT 
 				`dnt_posts`.`id_entity` AS id, 
+				`dnt_posts`.`search` AS search, 
 				`dnt_posts`.`vendor_id` AS vendor_id , 
 				`dnt_posts`.`type` AS type, 
 				`dnt_posts`.`name_url` AS name_url,
 				`dnt_posts`.`name` AS name,
 				`dnt_posts`.`content` AS content,
 				`dnt_posts`.`perex` AS perex,
+				`dnt_posts`.`service` AS service,
 				`dnt_post_type`.`cat_id` AS cat_id,
 				`dnt_post_type`.`name_url` AS cat_name_url,
 				`dnt_post_type`.`id_entity` AS dnt_post_type_id

@@ -11,7 +11,7 @@
       <div class="grid no-border">
          <div class="grid-header">
             <i class="fa fa-table"></i>
-            <span class="grid-title">Súťaže</span>
+            <span class="grid-title">Zoznam webov pod platformou</span>
             <div class="pull-right grid-tools">
                <a data-widget="collapse" title="Collapse"><i class="fa fa-chevron-up"></i></a>
                <a data-widget="reload" title="Reload"><i class="fa fa-refresh"></i></a>
@@ -24,11 +24,11 @@
                   <tr>
                      <th>#id</th>
                      <th>Názov postu</th>
-                     <th>Editovať vlastnosti súťaže</th>
+                     <th>Editovať vlastnosti webu</th>
                      <th>Zobrazenie na pracovnej adrese</th>
                      <th>Zobrazenie na developerskom serveri</th>
                      <th>Zobrazenie na vlastnej doméne</th>
-                     <th>Globálne vlastnosti súťaže</th>
+                     <th>Globálne vlastnosti webu</th>
                   </tr>
                </thead>
                <tbody>
@@ -45,16 +45,16 @@
                      <td style="max-width: 500px;"><b><a target="_blank" href="<?php echo $adminUrl; ?>"><?php echo $row['name']; ?></a></b></td>
                      <td><a href=""><i class="fa fa-pencil bg-blue action"></i></a></td>
                      <td>
-                        <i class="fa fa-arrow-right bg-green action"></i> - <a href="<?php echo $webUrl; ?>" target="_blank"><?php $row['name_url']; ?></a>
+                        <i class="fa fa-arrow-right bg-green action"></i> <a href="<?php echo $webUrl; ?>" target="_blank"><?php echo $webUrl; ?></a>
                      </td>
                      <td>
-                        <i class="fa fa-arrow-right bg-green action"></i> - <a href="<?php echo $develUrl; ?>" target="_blank"><?php $develUrl; ?></a>
+                        <i class="fa fa-arrow-right bg-green action"></i> <a href="<?php echo $develUrl; ?>" target="_blank"><?php echo $develUrl; ?></a>
                      </td>
                      <td>
-                        <?php if($row['show'] == 1){?>
-                        <i class="fa fa-arrow-right bg-green action"></i> - <a href="<?php echo $realUrl; ?>" target="_blank"><?php echo $realUrl; ?></a>
+                        <?php if($row['show_real_url'] == 1){?>
+                        <i class="fa fa-arrow-right bg-green action"></i> <a href="<?php echo $realUrl; ?>" target="_blank"><?php echo $realUrl; ?></a>
                         <?php } else {?>
-                        <i class="fa fa-times bg-red action"></i> - K tejto súťaži nie je priradená žiadna doména
+                        <i class="fa fa-times bg-red action"></i> - K tomuto webu nie je priradená žiadna doména
                         <?php } ?>
                      </td>
                      <td style="display: none;">

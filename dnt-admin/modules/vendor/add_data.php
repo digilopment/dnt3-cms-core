@@ -28,18 +28,18 @@ if(isset($_POST['name'])){
 		);
 		//var_dump($VENDOR_NAME, $COPY_FROM);
 		$install->addVendor($tables, $VENDOR_NAME, $COPY_FROM, $LAYOUT, $DELETE_DATA);
-		echo "done";
-		//include "tpl_functions.php";
-		//get_top();
-		//include "top.php";
-		//getConfirmMessage($return, "<br/>Web bol úspešne uložený");
-		//include "bottom.php";
-		//get_bottom();
+		$return = WWW_PATH_ADMIN."index.php?src=vendor";
+		include "tpl_functions.php";
+		get_top();
+		include "top.php";
+		getConfirmMessage($return, "<br/>Web bol úspešne vytvorený");
+		include "bottom.php";
+		get_bottom();
 	}else{
 		include "tpl_functions.php";
 		get_top();
 		include "top.php";
-		error_message("Názov súťaže", "<b>Nezadali ste názov webu</b>");
+		error_message("Názov webu", "<b>Nezadali ste názov webu</b>");
 		include "bottom.php";
 		get_bottom();
 	}

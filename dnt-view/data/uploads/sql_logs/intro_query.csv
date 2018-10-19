@@ -1,8 +1,0 @@
-key;query;HTTP_HOST;REQUEST_TIME
-3479_02b434dd410e3f1b367cb8b192fdb75b;SELECT `id_entity` FROM `dnt_vendors` WHEREname_url = 'zsk-pompocz';zsk-pompocz.localhost;1538653596
-692_200966e0cff4b7bb3c5267def35f33ac;SELECT `layout` FROM `dnt_vendors` WHEREid = '39';zsk-pompocz.localhost;1538653596
-1851_4eb6301d3dc3cb8e71b390e862a795bf;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'intro'AND `dnt_posts`.`vendor_id` = '39'GROUP BY `dnt_posts`.`name_url`;zsk-pompocz.localhost;1538653596
-8252_63a28ae10019bf230bffd6ab1fec7a75;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'article_list'AND `dnt_posts`.`vendor_id` = '39'GROUP BY `dnt_posts`.`name_url`;zsk-pompocz.localhost;1538653596
-5630_5d112cc66d380e90d2193fd2793228cc;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = ''AND `dnt_posts`.`vendor_id` = '39'GROUP BY `dnt_posts`.`name_url`;zsk-pompocz.localhost;1538653596
-page_id;YKvNA64wbL;zsk-pompocz.localhost;1538653596
-session_id;ipMEjqKYyA;zsk-pompocz.localhost;1538653596

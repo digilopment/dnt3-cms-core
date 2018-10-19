@@ -43,3 +43,25 @@ margin: 0px 40px 10px -22px;
     margin-left: -20px;
     overflow: hidden;
 }
+
+.dnt-gallery-chooser.modal.in .modal-dialog {
+	width:100%
+}
+.dnt-gallery-chooser .thumbnail>img, .thumbnail a>img {
+    margin-right: auto;
+    height: 80px;
+    margin-left: auto;
+}
+.dnt-gallery-chooser.modal.in .modal-dialog {
+    width: 100%;
+    padding: 60px;
+    /* min-height: 1000px; */
+}
+.dnt-gallery-chooser .modal-content {
+	border: 1px solid #c1c1c1;
+}
+.dnt-gallery-chooser .modal-content .modal-title{
+    font-size: 22px;
+    color: #111;
+    font-weight: bold;
+}

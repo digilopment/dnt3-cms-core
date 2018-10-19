@@ -2,6 +2,7 @@
 
 if(isset($_POST['sent'])){
 	
+	$article = new ArticleView;
 	//echo "POST";
 	$cache 			= new Cache;
 	$post_id		= $rest->get("post_id");
@@ -23,6 +24,24 @@ if(isset($_POST['sent'])){
 	$service 		= $rest->post("service");
 	$service_id 	= $rest->post("service_id");
 	
+	
+	
+	$searchMeta = array();
+	if($service){
+		foreach($article->getPostsMeta($post_id, $service) as $meta){
+			if($meta['content_type'] == "text" || "content"){
+				$searchMeta[] = $meta['value'];
+			}
+		}
+	}
+	$searchMeta = implode("",$searchMeta);
+	
+	$search = $name.$name_url.$content.$perex.$searchMeta;
+	$search = html_entity_decode($search);
+	$search = Dnt::not_html($search);
+	$search = Dnt::name_url($search);
+	$search = str_replace("-", "", $search);
+
 	//echo $embed;
 	
 	 $db->update(
@@ -38,6 +57,7 @@ if(isset($_POST['sent'])){
 			'datetime_publish' => $datetime_publish,
 			'perex' => $perex,
 			'content' => $content,
+			'search' => $search,
 			'embed' => $embed,
 			'tags' => $tags,
 			'datetime_update' => Dnt::datetime(), //SELECT * FROM `dnt_posts` WHERE id = 10886
@@ -49,6 +69,7 @@ if(isset($_POST['sent'])){
 			'id_entity' 			=> $post_id, 
 			'`vendor_id`' 	=> Vendor::getId())
 	);
+	
 	
 	//DELETE HOME LANG CACHE FILES
 	foreach($cache->deteleAllLangs($name_url) as $langDel){
@@ -145,6 +166,17 @@ if(isset($_POST['sent'])){
 	}
 	
 	
+	if($rest->post("gallery_key_".$post_id)){
+		$db->update(
+		$table,	//table
+		array(	//set
+			'img' => $rest->post("gallery_key_".$post_id),
+			), 
+		array( 	//where
+			'id_entity' 			=> $post_id, 
+			'`vendor_id`' 	=> Vendor::getId())
+		);
+	}else{
 	$dntUpload = new DntUpload;
 	$dntUpload->addDefaultImage(
 					"userfile",								//input type file
@@ -154,6 +186,7 @@ if(isset($_POST['sent'])){
 					$post_id, 								//where value
 					"../dnt-view/data/uploads" 				//path
 				);
+	}
 	
 	//show template
 	//echo $datetime_publish;

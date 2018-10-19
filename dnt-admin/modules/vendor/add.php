@@ -15,13 +15,13 @@ $query = "SELECT * FROM dnt_users";
       <div class="col">
          <div class="row form-group text-left ">
             <div class="col-sm-8">
-               <h3>Po zadaní názvu vytvoríte novú súťaž, ktorú v ďalšom kroku prispôsobíte.</h3>
+               <h3>Po zadaní názvu vytvoríte nový web, ktorý v ďalšom kroku prispôsobíte.</h3>
                <br>
             </div>
          </div>
          <form enctype='multipart/form-data' action="index.php?src=vendor&action=add_data" method="POST">
             <div class="row form-group ">
-               <label class="col-sm-2 control-label"><b>Názov súťaže</b></label>
+               <label class="col-sm-2 control-label"><b>Názov webu</b></label>
                <div class="col-sm-6">
                   <input type="text" name="name" value="" class="form-control" placeholder="názov">
                   <br>
@@ -40,7 +40,7 @@ $query = "SELECT * FROM dnt_users";
                </div>
             </div>
             <div class="row form-group ">
-               <label class="col-sm-2 control-label"><b>Vytvoriť kópiu súťaže:</b></label>
+               <label class="col-sm-2 control-label"><b>Vytvoriť kópiu webu:</b></label>
                <div class="col-sm-6"><select class="form-control" name="vendor_id">
                   <?php 
                      foreach($vendor->getAll() as $row){

@@ -736,3 +736,82 @@ get_top();
 get_bottom();
 }
 ?>
+<?php function galleryChooser($keyId){ 
+	$rest 	= new Rest;
+	$db 	= new Db;
+	$image 	= new Image;
+	?>   
+	
+<link rel="stylesheet" type="text/css" href="<?php echo WWW_PATH_ADMIN; ?>css/image-picker.css">
+
+<script src="<?php echo WWW_PATH_ADMIN; ?>js/prettify.js" type="text/javascript"></script>
+<script src="<?php echo WWW_PATH_ADMIN; ?>js/jquery.masonry.min.js" type="text/javascript"></script>
+<script src="<?php echo WWW_PATH_ADMIN; ?>js/image-picker.js" type="text/javascript"></script>
+
+<div class="modal fade dnt-gallery-chooser" id="image_picker_<?php echo $keyId; ?>" tabindex="-1" role="dialog" aria-labelledby="modalLabelSmall" aria-hidden="true">
+   <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="modalLabelSmall">Media Library</h4>
+         </div>
+         <div class="modal-body">
+          <div class="picker">
+               <select name="gallery" id="gallery_key_<?php echo $keyId; ?>_s" class="image-picker show-html" data-limit="10" multiple="multiple" 
+			   style="display:nones;" >
+				<?php
+				  $query = FileAdmin::query();
+                  if($db->num_rows($query)>0){
+                  	foreach($db->get_results($query) as $row){
+						
+						if(Dnt::in_string("image", $row['type'])){ 
+							echo '<option data-img-src="'.$image->getFileImage($row['id_entity']).'" value="'.$row['id_entity'].'">Cute Kitten 1</option>';
+						}
+					}
+				  }
+				  ?>
+               </select>
+			   <input type="hidden" name="gallery_key_<?php echo $keyId; ?>" id="gallery_key_<?php echo $keyId; ?>">
+            </div>
+			<span id="save_<?php echo $keyId; ?>" data-dismiss="modal" aria-label="Close" class="btn center-block clode btn-success" style="width:150px;">Uložiť</span>
+            <script type="text/javascript">
+               $("#image_picker_<?php echo $keyId; ?> select.image-picker").imagepicker({
+                 hide_select:  true,
+               });
+               
+              /* $("select.image-picker.show-labels").imagepicker({
+                 hide_select:  true,
+                 show_label:   true,
+               });
+               
+               $("#image_picker_<?php echo $keyId; ?> select.image-picker.limit_callback").imagepicker({
+                 limit_reached:  function(){alert('We are full!')},
+                 hide_select:    false
+               });*/
+               
+               var container = $("#image_picker_<?php echo $keyId; ?> select.image-picker.masonry").next("ul.thumbnails");
+               container.imagesLoaded(function(){
+                 container.masonry({
+                   itemSelector:   "li",
+                 });
+               });
+			   
+			   $( document ).ready(function() {
+				   $( "#gallery_key_<?php echo $keyId; ?>_s" ).change(function() {
+					var selectedValues = $('#gallery_key_<?php echo $keyId; ?>_s').val();
+					$( "#save_<?php echo $keyId; ?>" ).click(function() {
+						$( "#gallery_key_<?php echo $keyId; ?>" ).val(selectedValues);
+					});
+					});
+				});
+            </script>
+         </div>
+      </div>
+   </div>
+</div>
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#image_picker_<?php echo $keyId; ?>">
+Vybrať súbory z galérie
+</button>
+<?php } ?>

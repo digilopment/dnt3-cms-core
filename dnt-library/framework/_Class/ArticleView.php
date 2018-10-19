@@ -41,12 +41,13 @@ class ArticleView extends AdminContent {
         $query = "SELECT * FROM dnt_posts_meta WHERE 
             `post_id` = '".$postId."' AND 
             `service` = '".$m_service."' AND 
-            `vendor_id` = '".Vendor::getId()."'";
+            `vendor_id` = '".Vendor::getId()."'
+			ORDER by `order` asc";
 		
         if ($db->num_rows($query) > 0) {
 			return $db->get_results($query);
         } else {
-            return false;
+            return array();
         }
     }
 	

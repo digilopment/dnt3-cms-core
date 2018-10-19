@@ -10,191 +10,23 @@ $webhook = new Webhook;
       <div class="col-md-12">
          <ul class="nav nav-tabs">
             <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==1 or !isset($_GET[ 'pa'])){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=1">Nastavenia stránky</a></li>
-            <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==4 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=4">Nastavenie loga</a></li>
-            <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==5 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=5">Nastavenia social. siet</a></li>
-			<li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==7 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=7">Rozšírené nastavenia a zhrnutie</a></li>
-			<li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==2 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=2">Nastavenia vlastníctva</a></li>
-            <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==3 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=3">Nastavenia vlastníctva 2</a></li>
-            <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==6 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=6">Nastavenia účtu (krátke)</a></li>
+            
+			<li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==7 && $_GET[ 'category']== "default"){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=7&category=default">Základné nastavenia</a></li>
+            
+			<li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==7 && $_GET[ 'category']== "logo"){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=7&category=logo">Nastavenie loga</a></li>
+            
+			<li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==7 && $_GET[ 'category']== "default_images"){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=7&category=default_images">Nastavenie defaultných obrázkov</a></li>
+			
+			<li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==7 && $_GET[ 'category']== "social"){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=7&category=social">Nastavenia social. siet</a></li>
+			<li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==7 && $_GET[ 'category']== "keys"){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=7&category=keys">Nastavenia kľúčov</a></li>
+			<li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==7 && $_GET[ 'category']== "extends"){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=7&category=extends">Rozšírené nastavenia</a></li>
+			<li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==7 && $_GET[ 'category']== "vendor"){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=7&category=vendor">Nastavenia firmy</a></li>
+            
+
+			 <li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==6 ){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=6">Nastavenia účtu (krátke)</a></li>
          </ul>
          <div class="tab-content">
-            <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==2 ){?>
-            <!-- Nastavenia vlastníctva-->
-            <p class="lead">Nastavenia vlastníctva</p>
-            <div class="grid-body">
-               <form id="obchod" action="<?php echo WWW_PATH_ADMIN."index.php?src=settings&pa=2&action=update ";?>" method="post">
-                  <p class="lead">Nastavte <b>meno </b> Vašej firmy</p>
-                  <p>Tento údaj sa bude zobrazovať všade tam, kde budete prezentovať Vašu firmu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_company" value="<?php echo Settings::get("vendor_company"); ?>" />
-                  <div class="padding"></div>
-                  <p class="lead">Nastavte <b>sídlo</b> Vašej firmy</p>
-                  <p>Tento údaj sa bude zobrazovať všade tam, kde budete prezentovať Vašu firmu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_street" value="<?php echo  Settings::get("vendor_street"); ?>" />
-                  <div class="padding"></div>
-                  <p class="lead">Nastavte <b>psč</b> firmy</p>
-                  <p>Tento údaj sa bude zobrazovať všade tam, kde budete prezentovať Vašu firmu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_psc" value="<?php echo  Settings::get("vendor_psc"); ?>" />
-                  <div class="padding"></div>
-                  <p class="lead">Nastavte <b>mesto</b> firmy</p>
-                  <p>Tento údaj sa bude zobrazovať všade tam, kde budete prezentovať Vašu firmu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_city" value="<?php echo  Settings::get("vendor_city"); ?>" />
-                  <div class="padding"></div>
-                  <p class="lead">Nastavte <b>telefón</b> firmy</p>
-                  <p>Tento údaj sa bude zobrazovať všade tam, kde budete prezentovať Vašu firmu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_tel" value="<?php echo  Settings::get("vendor_tel"); ?>" />
-                  <div class="padding"></div>
-                  <p class="lead">Nastavte <b>fax</b> firmy</p>
-                  <p>Tento údaj sa bude zobrazovať všade tam, kde budete prezentovať Vašu firmu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_fax" value="<?php echo  Settings::get("vendor_fax"); ?>" />
-                  <div class="padding"></div>
-                  <p class="lead">Nastavte <b>email</b> firmy</p>
-                  <p>Sem budú chodiť všetky notifikácie ohľadom firmy</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_email" value="<?php echo  Settings::get("vendor_email"); ?>" />
-                  <div class="padding"></div>
-                  <p class="lead">Nastavte <b>ičo</b> firmy</p>
-                  <p>Tento údaj sa bude zobrazovať všade tam, kde budete prezentovať Vašu firmu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_ico" value="<?php echo  Settings::get("vendor_ico"); ?>" />
-                  <div class="padding"></div>
-                  <p class="lead">Nastavte <b>dič</b> firmy</p>
-                  <p>Tento údaj sa bude zobrazovať všade tam, kde budete prezentovať Vašu firmu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_dic" value="<?php echo  Settings::get("vendor_dic"); ?>" />
-                  <div class="padding"></div>
-                  <p class="lead">Nastavte <b>iban</b> firmy</p>
-                  <p>Tento údaj sa bude zobrazovať všade tam, kde budete prezentovať Vašu firmu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_iban" value="<?php echo  Settings::get("vendor_iban"); ?>" />
-                  <div class="padding"></div>
-                  <?php echo Dnt::returnInput();?>
-                  <input type="submit" name="sent_3" class="btn btn-danger btn-radius" value="Upraviť nastavenia" />
-                  <div class="padding"></div>
-               </form>
-            </div>
-            <!-- Rozšírené nastavenia vlastníctva-->
-            <?php }elseif(isset($_GET[ 'pa']) && $_GET[ 'pa']==3 ){?>
-            <p class="lead">Rozšírené nastavenia vlastníctva</p>
-            <!-- begin is here!-->
-            <form id="obchod" action="<?php echo WWW_PATH_ADMIN."index.php?src=settings&update ";?>" method="post">
-               <p class="lead">Ste platcom <b>DPH</b>?</p>
-               <p>Tento údaj sa bude zobrazovať všade tam, kde budete prezentovať Vašu firmu</p>
-               <input type="text" class="btn-default btn-lg btn-block" name="platca_dph">
-               <div class="padding"></div>
-               <p class="lead">Vyberte znak platobnej <b>meny</b></p>
-               <p>Vyberte znak Vašej meny, ktorou sa bude v eshope platiť</p>
-              <input type="text"  class="btn-default btn-lg btn-block" name="znak_meny">
-               <div class="padding"></div>
-               <p class="lead">Vyberte názov platobnej <b>meny</b></p>
-               <p>Vyberte názov Vašej meny, ktorou sa bude v eshope platiť</p>
-              <input type="text"  class="btn-default btn-lg btn-block" name="nazov_meny">
-           
-               <div class="padding"></div>
-               <p class="lead">Nastavte hodnotu <b>DPH</b></p>
-               <p>Aktuálna cena DPH sa bude prepočítavať podľa aktuálnej hodnoty DPH</p>
-               <input type="text" name="dph" class="btn-default btn-lg btn-block" value="<?php echo Settings::get("vendor_dph"); ?>" />
-               <div class="padding"></div>
-               <?php echo Dnt::returnInput();?>
-               <input type="submit" name="sent_4" class="btn btn-warning btn-radius" value="Upraviť nastavenia" />
-            </form>
-            <!-- end is here! -->
-            <!-- Rozšírené nastavenia vlastníctva-->
-            <?php }elseif(isset($_GET[ 'pa']) && $_GET[ 'pa']==4 ){?>
-            <!-- begin is here!-->
-            <div class="row">
-               <div class="col-md-6">
-                  <form id="obchod" enctype='multipart/form-data' action="<?php echo WWW_PATH_ADMIN."index.php?src=settings&pa=4&action=update ";?>" method="post">
-                     <p class="lead">Nastavte logo <b>vašej firmy</b></p>
-                     <p>Ak máte eshop a vystavíte faktúru, vaše logo bude v hlavičke faktúry</p>
-                     <img src="<?php echo Settings::getImage("logo_firmy");?>" style="max-width: 200px; margin: 15px;" alt="" />
-                     <input type="file" name="userfile"  class="btn-default btn-lg btn-block" />
-                     <input type="text" name="logo_url" value="<?php echo Settings::get("logo_url");?>" class="btn-default btn-lg btn-block" />
-                     <div class="padding"></div>
-                     <hr/>
-					 
-					 <p class="lead">Nastavte druhé logo <b>vašej firmy</b></p>
-                     <img src="<?php echo Settings::getImage("logo_firmy_2");?>" style="max-width: 200px; margin: 15px;" alt="" />
-                     <input type="file" name="userfile_logo_2"  class="btn-default btn-lg btn-block" />
-                     <input type="text" name="logo_url_2" value="<?php echo Settings::get("logo_url_2");?>" class="btn-default btn-lg btn-block" />
-					 <div class="padding"></div>
-					 
-					 <hr/>
-					 <p class="lead">Nastavte tretie logo <b>vašej firmy</b></p>
-                     <img src="<?php echo Settings::getImage("logo_firmy_3");?>" style="max-width: 200px; margin: 15px;" alt="" />
-                     <input type="file" name="userfile_logo_3"  class="btn-default btn-lg btn-block" />
-                     <input type="text" name="logo_url_3"  value="<?php echo Settings::get("logo_url_3");?>" class="btn-default btn-lg btn-block" />
-					 <div class="padding"></div>
-					 
-					 
-					 
-					 <?php echo Dnt::returnInput();?>
-                     <input type="submit" name="odoslat_logo" class="btn btn-warning btn-radius" value="Upraviť nastavenia" />
-                  </form>
-               </div>
-               <div class="col-md-6">
-                  <form id="obchod" enctype='multipart/form-data' action="<?php echo WWW_PATH_ADMIN."index.php?src=settings&pa=4&action=update";?>" method="post">
-                     <p class="lead">Nastavte defaultný <b>obrázok</b></p>
-                     <p>Tento obrázok sa zobrazí všade tam, kde nenastavíte vlastný obrázok</p>
-                     <img src="<?php echo Settings::getImage("no_img");?>" style="max-width: 200px; margin: 15px;" alt="" />
-                     <input type="file" name="userfile"  class="btn-default btn-lg btn-block" />
-                     <div class="padding"></div>
-                     <?php echo Dnt::returnInput();?>
-                     <input type="submit" name="odoslat_noimage" class="btn btn-warning btn-radius" value="Upraviť nastavenia" />
-                  </form>
-               </div>
-            </div>
-            <!-- end is here! -->
-            <?php }elseif(isset($_GET[ 'pa']) && $_GET[ 'pa']==5 ){?>
-            <div class="grid-body">
-               <form  id="socialne-siete" action="<?php echo WWW_PATH_ADMIN."index.php?src=settings&pa=5&action=update";?>" method="post">
-                  <p class="lead">Nastavte si Váš email</p>
-                  <p>Nastavenie emailu: 
-                     <b>Tento email bude fungovať ako <br/> notifakčný email a bude Vás kontaktovať, ak to bude potrebné</b>
-                  </p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="notifikacny_email" value="<?php echo Settings::get("notifikacny_email"); ?>" />
-                  <div class="padding"></div>
-                  <p class="lead">Máte vlastnú Facebook Stránku? Nastavte si ho</p>
-                  <p>Na Vašej stránke sa budeme vždy odvolávať na Vašu zadanú adresu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="facebook_page" value="<?php echo Settings::get("facebook_page"); ?>" />
-                  <div class="padding"></div>
-	
-                  <p class="lead">Máte vlastnú Twitter Stránku? Nastavte si ho</p>
-                  <p>Na Vašej stránke sa budeme vždy odvolávať na Vašu zadanú adresu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="twitter" value="<?php echo Settings::get("twitter"); ?>" />
-				  <div class="padding"></div>
-                 
-		
-                  <p class="lead">Máte vlastnú Youtube Stránku? Nastavte si ho</p>
-                  <p>Na Vašej stránke sa budeme vždy odvolávať na Vašu zadanú adresu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="youtube_channel" value="<?php echo Settings::get("youtube_channel"); ?>" />
-				  <div class="padding"></div>
-				  
-				  <p class="lead">Máte vlastný Instagram? Nastavte si ho</p>
-                  <p>Na Vašej stránke sa budeme vždy odvolávať na Vašu zadanú adresu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="instagram" value="<?php echo Settings::get("instagram"); ?>" />
-				  <div class="padding"></div>
-				  
-				  <p class="lead">Máte vlastný Linked In? Nastavte si ho</p>
-                  <p>Na Vašej stránke sa budeme vždy odvolávať na Vašu zadanú adresu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="linked_in" value="<?php echo Settings::get("linked_in"); ?>" />
-				  <div class="padding"></div>
-				  
-                  <p class="lead">Máte vlastnú Flickr Stránku? Nastavte si ho</p>
-                  <p>Na Vašej stránke sa budeme vždy odvolávať na Vašu zadanú adresu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="flickr" value="<?php echo Settings::get("flickr"); ?>" />
-                  <div class="padding"></div>
-				  
-				   <p class="lead">Máte vlastný Google Plus účet? Nastavte si ho</p>
-                  <p>Na Vašej stránke sa budeme vždy odvolávať na Vašu zadanú adresu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="google_plus" value="<?php echo Settings::get("google_plus"); ?>" />
-                  <div class="padding"></div>
-				  
-                  <p class="lead">Používate Google mapy? Nastavte si ich</p>
-                  <p>Vložením URL adresy z google sa Vám automaticky vygeneruje mapa</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="google_map" value="<?php echo Settings::get("google_map"); ?>" />
-                  <div class="padding"></div>
-                  <?php echo Dnt::returnInput();?>
-                  <input type="submit" name="sent_2" class="btn btn-warning btn-radius" value="Upraviť nastavenia" />
-                  <div class="padding"></div>
-               </form>
-            </div>
-            <?php }elseif(isset($_GET[ 'pa']) && $_GET[ 'pa']==6 ){?>
+            <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==6 ){?>
             <div class="grid-body">
                <div class="row">
                   <div class="col-md-6">
@@ -227,18 +59,16 @@ $webhook = new Webhook;
                   </div>
                </div>
             </div>
-			 <?php }elseif(isset($_GET[ 'pa']) && $_GET[ 'pa']==7 ){?>
-			 
-			 
-			 
-
+			<?php }elseif(isset($_GET[ 'pa']) && $_GET[ 'pa']==7 ){
+				 $type = $rest->get("category");
+			?>
       <div class="row" style="background-color: #fff;padding: 5px;margin: 0px;">
          <label class="col-sm-2 control-label"><b>Názov vstupu</b></label>
          <label class="col-sm-3 control-label"><b>Zobraziť na webe?</b></label>
          <label class="col-sm-7 control-label"><b>Nastavenie hodnoty</b></label>
       </div>
       <div class="row">
-         <form enctype="multipart/form-data" action="index.php?src=settings&pa=7&action=update" method="POST">
+         <form enctype="multipart/form-data" action="index.php?src=settings&pa=7&category=<?php echo  $type; ?>&action=update" method="POST">
             <div class="col-md-12">
                <ul class="nav nav-tabs">
                   <li class="active"><a href="#sutaz" data-toggle="tab">Nastavenia</a></li>
@@ -247,7 +77,8 @@ $webhook = new Webhook;
                   <!-- base settings -->
                   <div class="tab-pane active" id="sutaz">
 				  <?php
-                     foreach($settings->customMeta() as $row){
+					
+                     foreach($settings->customMeta($type) as $row){
                      ?>
                   <div class="row form">
                      <label class="col-sm-2 control-label"><b><?php echo $row['description'] ?></b></label>
@@ -275,6 +106,23 @@ $webhook = new Webhook;
 								}
 							}elseif($row['content_type'] == "color"){ ?>
 								<input type="color" name="key_<?php echo $row['id_entity'] ?>" value="<?php echo $row['value'] ?>">
+								<?php 
+							}elseif($row['content_type'] == "font"){ ?>
+								<select name="key_<?php echo $row['id_entity'] ?>" class="btn-default btn-lg btn-block" type="text" size="1">
+									<?php
+									$myFonts = fonts();
+									echo  '<option value="" >Vyberte font</option>';
+									foreach($myFonts as $key => $font){
+										if($font == $row['value']){
+											echo  '<option value="'.$font.'" selected >'.$font.'</option>';
+										}else{
+											echo  '<option value="'.$font.'">'.$font.'</option>';
+										}
+										
+									}
+									?>
+
+								</select>
 								<?php 
 							}
 							else{ ?>
@@ -355,24 +203,7 @@ $webhook = new Webhook;
 					</div>
 				  
 				  
-                  <p class="lead">Cachovanie</p>
-                  <p>Zapnite, alebo vypnite cachovanie vašej stránky. <br/>
-                     Pri vytvorení novej udalosti v administrácii sa cache automaticky premaže.
-                     <br/>Doačasné zrušenie cache je možné vykonať getovým parametrom <b>_rc=-2</b>
-                  </p>
-                  <select name="cachovanie" class="btn-default btn-lg btn-block" type="text" size="1">
-                  <?php
-                     if(Settings::get("cachovanie") == "0"){
-                     	echo "<option value='0' selected>Cachovanie zapnuté</option>";
-                     	echo "<option value='1'>Cachovanie nastavené</option>";
-                     }
-                     else{
-                     	echo "<option value='1' selected>Cachovanie zapnuté</option>";
-                     	echo "<option value='0' >Cachovanie vypnuté</option>";
-                     	}
-                     ?>
-                  </select>
-                  <div class="padding"></div>
+                 
 				  
 				  <p class="lead">Nadpis stránky</p>
                   <p>Nadpis sa zobrazí v hlavičke vygenerovaného HTML dokumentu</p>
@@ -407,21 +238,71 @@ $webhook = new Webhook;
 						?>
                   </select>
                   <div class="padding"></div>
-                  <p class="lead">Targett</p>
-                  <p>Nastavte otváranie odkazov netýkajucích sa Vašej stránky</p>
-                  <select name="target" class="btn-default btn-lg btn-block" type="text" size="1">
+                  <p class="lead">Jazyková mutácia</p>
+                  <p>Nastavená jazyková mutácia sa zobrazí v zdrojom kóde. Pri načítavaní externých pluginov alebo pri indexacii napríklad Google bude jasné, o aku lokalizíciu sa jedná.</p>
+                  <select name="language" class="btn-default btn-lg btn-block" type="text" size="1">
+                  <?php 
+				  $currentLang = Settings::get("language");
+				  $LANGUAGES = array(
+					  "sk",
+					  "cz",
+					  "en",
+					  "de",
+				  );
+					foreach($LANGUAGES as $key => $value){
+						if($currentLang == $value){
+							echo '<option selected value="'.$value.'">'.$value.'</option>';
+						}else{
+							echo '<option value="'.$value.'">'.$value.'</option>';
+				
+						}
+					}
+						
+						?>
+                  </select>
+                  <div class="padding"></div>
+				  
+				  <p class="lead">Cachovanie</p>
+                  <p>Zapnite, alebo vypnite cachovanie vašej stránky. <br/>
+                     Pri vytvorení novej udalosti v administrácii sa cache automaticky premaže.
+                     <br/>Doačasné zrušenie cache je možné vykonať getovým parametrom <b>_rc=-2</b>
+                  </p>
+                  <select name="cachovanie" class="btn-default btn-lg btn-block" type="text" size="1">
                   <?php
-                     if(Settings::get("target") == "_blank"){
-                     	echo "<option value='_blank' selected>Otvárať v novom okne</option>";
-                     	echo "<option value='_blank'>Otvárať v tom istom okne</option>";
+                     if(Settings::get("cachovanie") == "0"){
+                     	echo "<option value='0' selected>Cachovanie vypnuté</option>";
+                     	echo "<option value='1'>Cachovanie zapnuté</option>";
                      }
                      else{
-                     	echo "<option value='_blank' selected>Otvárať v tom istom okne</option>";
-                     	echo "<option value='_blank' >Otvárať v novom okne</option>";
+                     	echo "<option value='1' selected>Cachovanie zapnuté</option>";
+                     	echo "<option value='0' >Cachovanie vypnuté</option>";
                      	}
                      ?>
                   </select>
                   <div class="padding"></div>
+				  
+				  
+				  <p class="lead">Presmerovať, prepísať doménu, na reálnu</p>
+                  <p>Vždy presmerovať web na reálnu doménu (ktorá je nastavená v sekcii 
+				  <b>(Zoznam webov</b> / <b>Zoznam</b> / <b>Globálne vlastnosti</b> / <b>Vlastná URL adresa</b>), a to aj vtedy, ak sa url nachádza v testovacom móde.
+				  <br/>
+				  <b>Príklad:</b> Klientovi pošlete testovaciu url adresu ale on ju vyzdiela na socialnych sieťach. On aj vy potrebujete, aby skončil na doméne, ktorú si zaplatil. V tomto prípade viete použiť túto funkcionalitu.
+                  </p>
+                  <select name="still_redirect_to_domain" class="btn-default btn-lg btn-block" type="text" size="1">
+                  <?php
+                     if(Settings::get("still_redirect_to_domain") == "0"){
+                     	echo "<option value='0' selected>Nepresmerovať</option>";
+                     	echo "<option value='1'>Presmerovať</option>";
+                     }
+                     else{
+                     	echo "<option value='1' selected>Presmerovať</option>";
+                     	echo "<option value='0' >Nepresmerovať</option>";
+                     	}
+                     ?>
+                  </select>
+                  <div class="padding"></div>
+				  
+				  
                   <?php echo Dnt::returnInput();?>
                   <input type="submit" name="sent_1" class="btn btn-success btn-radius" value="Upraviť nastavenia" />
                   <div class="padding"></div>

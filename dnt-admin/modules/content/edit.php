@@ -68,7 +68,9 @@
 					</div>
 				</div>
                   <br/>
+				  <?php galleryChooser($post_id); ?>
 				  <input name="userfile" type="file" class="form-control">
+				  <br/>
 				  <br/>
                   <h5>Current image</h5>
                   <img src="<?php echo Image::getPostImage($post_id);?>" style="width: 100%" />

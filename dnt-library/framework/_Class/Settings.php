@@ -25,9 +25,13 @@ class Settings {
         }
     }
 	
-	public function customMeta() {
+	public function customMeta($catId = false) {
         $db = new Db;
-        $query = "SELECT * FROM dnt_settings WHERE `type` = 'custom' AND `vendor_id` = '" . Vendor::getId() . "'";
+		if($catId){
+			$query = "SELECT * FROM dnt_settings WHERE `type` = '$catId' AND `vendor_id` = '" . Vendor::getId() . "' ORDER BY `order`";
+		}else{
+			$query = "SELECT * FROM dnt_settings WHERE `type` = 'custom' AND `vendor_id` = '" . Vendor::getId() . "' ORDER BY `order`";
+		}
         if ($db->num_rows($query) > 0) {
              return $db->get_results($query);
         } else {

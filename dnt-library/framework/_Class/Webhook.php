@@ -80,7 +80,7 @@ class Webhook {
 				),
 			);
 		}
-		$file = "../dnt-view/layouts/wp_tpl_1/conf.php";
+		$file = "../dnt-view/layouts/".Vendor::getLayout()."/conf.php";
 		
 		if(file_exists($file)){
 			include $file;
@@ -219,10 +219,10 @@ class Webhook {
             ),
 			
 			//SEARCH
-			"search" => array(
+			/*"search" => array(
 				"search",
 				"hladaj",
-			),
+			),*/
 			
 			//STATIC VIEW
 			 "static_view" => array_merge(

@@ -31,6 +31,35 @@ class Rest {
         }
         return $this->get;
     }
+	
+	
+	/** domain redirector **/
+	public function redirectToDomain($stillRedirect = false){
+		if($stillRedirect == true ){
+			if($GLOBALS['DB_PROTOCOL']){
+				if(($GLOBALS['ORIGIN_DOMAIN'] != $GLOBALS['DB_DOMAIN']) || ($GLOBALS['ORIGIN_PROTOCOL'] != $GLOBALS['DB_PROTOCOL'])){
+					$db_domain = $GLOBALS['DB_PROTOCOL'].$GLOBALS['DB_DOMAIN'];
+					$origin_domain = $GLOBALS['ORIGIN_PROTOCOL'].$GLOBALS['ORIGIN_DOMAIN'];
+					$request = explode($origin_domain, WWW_FULL_PATH);
+					$request = $request[1];
+					$return = $db_domain.$request;
+					Dnt::redirect($return);
+					exit;
+				}	
+			}
+		}else{
+			if(($GLOBALS['ORIGIN_DOMAIN'] == $GLOBALS['DB_DOMAIN']) && ($GLOBALS['ORIGIN_PROTOCOL'] != $GLOBALS['DB_PROTOCOL'])){
+				$db_domain = $GLOBALS['DB_PROTOCOL'].$GLOBALS['DB_DOMAIN'];
+				$origin_domain = $GLOBALS['ORIGIN_PROTOCOL'].$GLOBALS['ORIGIN_DOMAIN'];
+				$request = explode($origin_domain, WWW_FULL_PATH);
+				$request = $request[1];
+				$return = $db_domain.$request;
+				Dnt::redirect($return);
+				exit;
+			}
+		}
+	}
+
 
     /**
      * 
@@ -66,6 +95,14 @@ class Rest {
         }
     }
 
+	
+		
+	public static function getModulUrl($module){
+		$webhook = new Webhook();
+		$url = $webhook->getSitemapModules($module);
+		return WWW_PATH.$url[0];
+	}
+	
     /**
      * 
      * @return type

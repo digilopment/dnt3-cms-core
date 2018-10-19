@@ -4,23 +4,21 @@ if(isset($_POST['sent_1'])){
 	$keywords 			= $rest->post('keywords');
 	$description 		= $rest->post('description');
 	$nadpis_stranky 	= $rest->post('title');
-	$startovaci_modul 	= $rest->post('startovaci_modul');
-	$target 			= $rest->post('startovaci_modul');
 	$default_lang 		= $rest->post('default_lang');
 	$return 			= $rest->post('return');
 	$startovaci_modul 	= $rest->post('startovaci_modul');
-	//$default_stat_user 	= $rest->post('default_stat_user');
 	$cachovanie 		= $rest->post('cachovanie');
+	$language 			= $rest->post('language');
+	$still_redirect_to_domain 			= $rest->post('still_redirect_to_domain');
 	
 	$db->update('dnt_settings', array( 'value' => $default_lang), array( '`key`' => 'default_lang', '`vendor_id`' => Vendor::getId()));
 	$db->update('dnt_settings', array( 'value' => $description), array( '`key`' => 'description', '`vendor_id`' => Vendor::getId()));
 	$db->update('dnt_settings', array( 'value' => $keywords), array( '`key`' => 'keywords', '`vendor_id`' => Vendor::getId()));
 	$db->update('dnt_settings', array( 'value' => $nadpis_stranky), array( '`key`' => 'title', '`vendor_id`' => Vendor::getId()));
 	$db->update('dnt_settings', array( 'value' => $startovaci_modul), array( '`key`' => 'startovaci_modul', '`vendor_id`' => Vendor::getId()));
-	$db->update('dnt_settings', array( 'value' => $target), array( '`key`' => 'target', '`vendor_id`' => Vendor::getId()));
-	//$db->update('dnt_settings', array( 'value' => $default_stat_userz), array( '`key`' => 'default_stat_user', '`vendor_id`' => Vendor::getId()));
 	$db->update('dnt_settings', array( 'value' => $cachovanie), array( '`key`' => 'cachovanie', '`vendor_id`' => Vendor::getId()));
-	$db->update('dnt_settings', array( 'value' => $startovaci_modul), array( '`key`' => 'startovaci_modul', '`vendor_id`' => Vendor::getId()));
+	$db->update('dnt_settings', array( 'value' => $language), array( '`key`' => 'language', '`vendor_id`' => Vendor::getId()));
+	$db->update('dnt_settings', array( 'value' => $still_redirect_to_domain), array( '`key`' => 'still_redirect_to_domain', '`vendor_id`' => Vendor::getId()));
 
 }elseif(isset($_POST['sent_2'])){
 	
@@ -142,8 +140,8 @@ elseif(isset($_POST['odoslat_logo'])){
 	$settings = new Settings;
 	$dntUpload = new DntUpload;
 	$db = new Db;
-	
-	foreach($settings->customMeta() as $row){
+	$type = $rest->get("category");
+	foreach($settings->customMeta($type) as $row){
 		
 		if($row['content_type'] == "image" or $row['content_type'] == "file"){
 			//$files 	= 'userfile_'.$row['id_entity']; 

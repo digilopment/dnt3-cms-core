@@ -7,28 +7,11 @@ dnt-backup/readme.txt
 dnt-api/dnt-cache/*
 !dnt-api/dnt-cache/readme.txt
 
-dnt-view/layouts/designdnt/
-dnt-view/layouts/osmos/
-dnt-view/layouts/nastrojaren/
-dnt-view/layouts/pdc/
-dnt-view/layouts/markiza/
-dnt-view/layouts/vyhrat/
-dnt-view/layouts/dnt3/
-dnt-view/layouts/hmh/
 dnt-view/layouts/wp_tpl_1/
-dnt-view/layouts/wp_tpl_1-copy/
+dnt-view/layouts/wp_tpl_2/
 
-dnt-view/data/2/
-dnt-view/data/3/
-dnt-view/data/8/
-dnt-view/data/10/
-dnt-view/data/11/
-dnt-view/data/12/
-dnt-view/data/14/
 
 dnt-library/framework/_keys/secred.php
 
 #dnt-view/*
-#!dnt-view/data/1/*
-#!dnt-view/layouts/skeleton/*
 nbproject/
