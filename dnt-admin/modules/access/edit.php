@@ -52,6 +52,7 @@ $post_id = $rest->get("post_id");
                         <p>Ak máte eshop a vystavíte faktúru, vaše meno tam bude predvyplnené</p>
                         <img src="<?php echo AdminUser::avatarById($post_id);?>" style="max-width: 200px; margin: 15px;" alt="">
                         <input type="file" name="userfile" class="btn-default btn-lg btn-block">
+						<?php galleryChooser("user_avatar"); ?>
                         <div class="padding"></div>
                         <div class="checkbox">
 							<?php echo Dnt::returnInput();?>

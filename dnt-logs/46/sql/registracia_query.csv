@@ -1,0 +1,82 @@
+id;id_entity;vendor_id;name;name_url;query;parent_id
+null;0;46;registracia Modul Query ;fec69d211c6b38395952521f88e40f8f;SELECT `id_entity`,`real_url`, `show_real_url` FROM `dnt_vendors`;0
+null;0;46;registracia Modul Query ;6e4562e6ce223b89e1efd354983bc1f4;SELECT `id_entity` FROM `dnt_vendors` WHERE name_url = 'skischule';0
+null;0;46;registracia Modul Query ;f15233c6a431c86ddfa560215057ea01;SELECT `layout` FROM `dnt_vendors` WHERE id = '46';0
+null;0;46;registracia Modul Query ;232f07d53fa3bc78db2e5be95973ef2f;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'homepage' AND `dnt_posts`.`vendor_id` = '46' GROUP BY `dnt_posts`.`name_url`;0
+null;0;46;registracia Modul Query ;3747180db91e0d80da109a93f85be91d;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'article_list' AND `dnt_posts`.`vendor_id` = '46' GROUP BY `dnt_posts`.`name_url`;0
+null;0;46;registracia Modul Query ;9a76c86d81388c43abcad889cea19151;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'about' AND `dnt_posts`.`vendor_id` = '46' GROUP BY `dnt_posts`.`name_url`;0
+null;0;46;registracia Modul Query ;6cbdd4e2adddfa89e5aef61f88ebb7f0;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'region' AND `dnt_posts`.`vendor_id` = '46' GROUP BY `dnt_posts`.`name_url`;0
+null;0;46;registracia Modul Query ;224bad48a315baed8a71b06dc0e9c46e;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'hotely' AND `dnt_posts`.`vendor_id` = '46' GROUP BY `dnt_posts`.`name_url`;0
+null;0;46;registracia Modul Query ;b980bfe3214a8041b4e2ae1194781092;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'partneri' AND `dnt_posts`.`vendor_id` = '46' GROUP BY `dnt_posts`.`name_url`;0
+null;0;46;registracia Modul Query ;cfa2562bae1b26ae58462a9653e63ee8;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'registracia' AND `dnt_posts`.`vendor_id` = '46' GROUP BY `dnt_posts`.`name_url`;0
+null;0;46;registracia Modul Query ;abde8cee4c9bbe62d8a7a9711614ad7b;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'search' AND `dnt_posts`.`vendor_id` = '46' GROUP BY `dnt_posts`.`name_url`;0
+null;0;46;registracia Modul Query ;3747180db91e0d80da109a93f85be91d;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'article_list' AND `dnt_posts`.`vendor_id` = '46' GROUP BY `dnt_posts`.`name_url`;0
+null;0;46;registracia Modul Query ;919e53c18c91196b86fb10cc17296749;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = '' AND `dnt_posts`.`vendor_id` = '46' GROUP BY `dnt_posts`.`name_url`;0
+null;0;46;registracia Modul Query ;330d072521db04ed9cbe67c2901bd825;SELECT value FROM dnt_settings WHERE `key` = 'still_redirect_to_domain' AND `vendor_id` = '46';0
+null;0;46;registracia Modul Query ;f15233c6a431c86ddfa560215057ea01;SELECT `layout` FROM `dnt_vendors` WHERE id = '46';0
+null;0;46;registracia Modul Query ;f15233c6a431c86ddfa560215057ea01;SELECT `layout` FROM `dnt_vendors` WHERE id = '46';0
+null;0;46;registracia Modul Query ;06634d44b3848bd63203fb5caa68de68;SELECT `id_entity` FROM dnt_posts WHERE `name_url` = 'registration' AND vendor_id = '46';0
+null;0;46;registracia Modul Query ;5ed25163c4810fe4678cd208f53ae39f;SELECT `dnt_posts`.`id_entity` AS dnt_posts_id, `dnt_posts`.`vendor_id` AS dnt_posts_vendor_id , `dnt_posts`.`type` AS dnt_posts_type, `dnt_posts`.`name_url` AS dnt_posts_name_url, `dnt_posts`.`name` AS dnt_posts_name, `dnt_posts`.`content` AS dnt_posts_content, `dnt_posts`.`perex` AS dnt_posts_perex, `dnt_posts`.`service` AS dnt_posts_service, `dnt_post_type`.`cat_id` AS dnt_post_type_cat_id, `dnt_post_type`.`name_url` AS dnt_post_type_name_url, `dnt_post_type`.`id_entity` AS dnt_post_type_id_entity, `dnt_posts_meta`.`key` AS dnt_posts_meta_key, `dnt_posts_meta`.`value` AS dnt_posts_meta_value, `dnt_posts_meta`.`show` AS dnt_posts_meta_show, `dnt_posts_meta`.`vendor_id` AS dnt_posts_meta_vendor_id FROM `dnt_posts` JOIN `dnt_post_type` ON `dnt_posts`.`cat_id` = `dnt_post_type`.`id_entity` JOIN `dnt_posts_meta` ON `dnt_posts`.`id_entity` = `dnt_posts_meta`.`post_id` AND `dnt_posts`.`service` = `dnt_posts_meta`.`service` WHERE `dnt_posts`.`vendor_id` = '46' AND `dnt_posts_meta`.`vendor_id` = '46' AND `dnt_posts`.`show` = '1' AND `dnt_posts`.`id_entity` = '14289' GROUP BY `dnt_posts_meta`.`key` ORDER BY `dnt_posts_meta`.`id_entity` ASC;0
+null;0;46;registracia Modul Query ;81b1561be300edd943ed612e34a0a808;SELECT id_entity FROM dnt_post_type WHERE name_url = 'sitemap' AND `vendor_id` = '46';0
+null;0;46;registracia Modul Query ;c024e9bc8a10940115aca6fd7b8190c0;SELECT * FROM dnt_posts WHERE type = 'sitemap' AND cat_id = '290' AND vendor_id = '46' AND `show` = '1' ORDER BY `order` DESC;0
+null;0;46;registracia Modul Query ;8adee0aa2f022059353dbe942741767d;SELECT * FROM dnt_translates WHERE type = 'static' AND vendor_id = '46';0
+null;0;46;registracia Modul Query ;cf37240325669f890bd871d4dd72be24;SELECT * FROM dnt_settings WHERE `vendor_id` = '46';0
+null;0;46;registracia Modul Query ;f67f51a7a7c26d5f7fdd942457d23ae3;SELECT name FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14289' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;f5ece30a3997e08906f4e909874661ca;SELECT img FROM dnt_posts WHERE `id_entity` = '14289' AND vendor_id = '46';0
+null;0;46;registracia Modul Query ;f15233c6a431c86ddfa560215057ea01;SELECT `layout` FROM `dnt_vendors` WHERE id = '46';0
+null;0;46;registracia Modul Query ;54f098222eaf4e35fe4ae6325065ce25;SELECT value FROM dnt_settings WHERE `key` = 'title' AND `vendor_id` = '46';0
+null;0;46;registracia Modul Query ;b544adea6eb9c63e56ce37f904612939;SELECT value FROM dnt_settings WHERE `key` = 'keywords' AND `vendor_id` = '46';0
+null;0;46;registracia Modul Query ;59c64ead940db0136a8e4b2cbdb763d8;SELECT value FROM dnt_settings WHERE `key` = 'description' AND `vendor_id` = '46';0
+null;0;46;registracia Modul Query ;3419df5f2609117700c6f20164fb171d;SELECT name_url FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14289' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;f4c509931c64e3575f1fe26342bab013;SELECT perex FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14289' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;ab55958d25cae448b0d17da2bfd929a0;SELECT content FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14289' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;87e45de6f0d47a5d1570b66d2a068568;SELECT datetime_publish FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14289' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;8c8d341242b97f093b420713f41bd0b1;SELECT service FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14289' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;0706a94e7e878addd944fb87a4fda551;SELECT service_id FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14289' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;e0b421d4042f27bcaac9098a16467b6b;SELECT tags FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14289' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;e0b421d4042f27bcaac9098a16467b6b;SELECT tags FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14289' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;724fc92531af1af5903cc809101dab9f;SELECT name FROM dnt_uploads WHERE `id_entity` = '1715';0
+null;0;46;registracia Modul Query ;abde8cee4c9bbe62d8a7a9711614ad7b;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'search' AND `dnt_posts`.`vendor_id` = '46' GROUP BY `dnt_posts`.`name_url`;0
+null;0;46;registracia Modul Query ;dd9668039ac2dc72df0e60276889bf90;SELECT name FROM dnt_uploads WHERE `id_entity` = '1928';0
+null;0;46;registracia Modul Query ;33708dee158c3c015fe81aa7698ecfcf;SELECT name FROM dnt_uploads WHERE `id_entity` = '1734';0
+null;0;46;registracia Modul Query ;66e12dac0f2c1b39befa252914b8325c;SELECT name FROM dnt_uploads WHERE `id_entity` = '1860';0
+null;0;46;registracia Modul Query ;81b1561be300edd943ed612e34a0a808;SELECT id_entity FROM dnt_post_type WHERE name_url = 'sitemap' AND `vendor_id` = '46';0
+null;0;46;registracia Modul Query ;c024e9bc8a10940115aca6fd7b8190c0;SELECT * FROM dnt_posts WHERE type = 'sitemap' AND cat_id = '290' AND vendor_id = '46' AND `show` = '1' ORDER BY `order` DESC;0
+null;0;46;registracia Modul Query ;aa126d18c52897a853a02a522f599dea;SELECT name_url FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14280' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;aa126d18c52897a853a02a522f599dea;SELECT name_url FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14280' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;b3994f7274bac25eb678693b2366910d;SELECT name FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14280' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;8a57a6b89c9df13227f7482f4d3cdf35;SELECT name_url FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14281' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;8a57a6b89c9df13227f7482f4d3cdf35;SELECT name_url FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14281' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;0cd80e6e64f633c65bf9fcb5877aee2e;SELECT name FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14281' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;9fbd6c7ee95b431bab926ff1f5e7dedf;SELECT name_url FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14282' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;9fbd6c7ee95b431bab926ff1f5e7dedf;SELECT name_url FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14282' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;4eeaa1c7ee41fdfb1fe58bfd94cee2f9;SELECT name FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14282' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;36e762b330c4faadc94884ff7b86dea7;SELECT name_url FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14283' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;36e762b330c4faadc94884ff7b86dea7;SELECT name_url FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14283' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;c8f3fdfe762f12e02c4c1a997b7dad69;SELECT name FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14283' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;e88d122581a8cd0fcff0f8143415cf68;SELECT * FROM `dnt_posts` WHERE type = 'sitemap' AND `show` = '1' AND sub_cat_id = '14283' AND vendor_id = '46' ORDER BY `order` DESC;0
+null;0;46;registracia Modul Query ;af025046d59ebb6854c6b01d6cf53634;SELECT name_url FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14284' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;36e762b330c4faadc94884ff7b86dea7;SELECT name_url FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14283' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;f42c80e57dc72a81d70c0fb43b513841;SELECT name FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14284' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;99e763441b3eafdf05a412d5c4764cc3;SELECT name_url FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14285' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;36e762b330c4faadc94884ff7b86dea7;SELECT name_url FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14283' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;fad8cc5009011c73fb91f302d936da97;SELECT name FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14285' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;13af93e91981d85a4f872194f1c9a85d;SELECT name_url FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14288' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;36e762b330c4faadc94884ff7b86dea7;SELECT name_url FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14283' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;980d9e522c2410f78d839a73125b3daa;SELECT name FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14288' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;3419df5f2609117700c6f20164fb171d;SELECT name_url FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14289' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;3419df5f2609117700c6f20164fb171d;SELECT name_url FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14289' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;f67f51a7a7c26d5f7fdd942457d23ae3;SELECT name FROM `dnt_posts` WHERE `dnt_posts`.id_entity = '14289' AND `dnt_posts`.vendor_id = '46';0
+null;0;46;registracia Modul Query ;1f5fe7a4f507155556f615a5b2035e31;SELECT id_entity FROM dnt_post_type WHERE name_url = 'sliders' AND `vendor_id` = '46';0
+null;0;46;registracia Modul Query ;d203658f5e1c42108130c0d0667143c1;SELECT * FROM dnt_posts WHERE type = 'post' AND cat_id = '303' AND vendor_id = '46';0
+null;0;46;registracia Modul Query ;e9785c2310df2958abc626d0f982b4fe;SELECT img FROM dnt_posts WHERE `id_entity` = '13350' AND vendor_id = '46';0
+null;0;46;registracia Modul Query ;bae9f352c0a2c09e4a2d2ed081a1b6bf;SELECT name FROM dnt_uploads WHERE `id_entity` = '1931' AND `vendor_id` = '46' AND `show` = '1' or `show` = '2';0
+null;0;46;registracia Modul Query ;9c528360ddc2770f5e0342706325802c;SELECT img FROM dnt_posts WHERE `id_entity` = '13351' AND vendor_id = '46';0
+null;0;46;registracia Modul Query ;64ba394b33b5df81f2a6c0b46cdee457;SELECT name FROM dnt_uploads WHERE `id_entity` = '1929' AND `vendor_id` = '46' AND `show` = '1' or `show` = '2';0
+null;0;46;registracia Modul Query ;3639d8bc4245b745c6c56389c2f497e4;SELECT img FROM dnt_posts WHERE `id_entity` = '14228' AND vendor_id = '46';0
+null;0;46;registracia Modul Query ;5e1076109423f89c897d71cc1d692169;SELECT name FROM dnt_uploads WHERE `id_entity` = '1933' AND `vendor_id` = '46' AND `show` = '1' or `show` = '2';0
+null;0;46;registracia Modul Query ;cfa2562bae1b26ae58462a9653e63ee8;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'registracia' AND `dnt_posts`.`vendor_id` = '46' GROUP BY `dnt_posts`.`name_url`;0
+null;0;46;registracia Modul Query ;dd9668039ac2dc72df0e60276889bf90;SELECT name FROM dnt_uploads WHERE `id_entity` = '1928';0
+null;0;46;registracia Modul Query ;33708dee158c3c015fe81aa7698ecfcf;SELECT name FROM dnt_uploads WHERE `id_entity` = '1734';0
+null;0;46;registracia Modul Query ;66e12dac0f2c1b39befa252914b8325c;SELECT name FROM dnt_uploads WHERE `id_entity` = '1860';0
+null;0;46;registracia Modul Query ;cfa2562bae1b26ae58462a9653e63ee8;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'registracia' AND `dnt_posts`.`vendor_id` = '46' GROUP BY `dnt_posts`.`name_url`;0

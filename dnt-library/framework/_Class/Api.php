@@ -8,6 +8,18 @@
  */
 class Api {
     
+	
+	
+	public function getAll(){
+		$db = new DB();
+		 $query = "SELECT * FROM dnt_api WHERE vendor_id = '".Vendor::getId()."'";
+            if ($db->num_rows($query) > 0) {
+                return $db->get_results($query);
+            } else {
+                return array();
+          }
+	}
+	
     /**
      * 
      * @param type $query
@@ -66,7 +78,7 @@ class Api {
             foreach ($db->get_results($query) as $row) {
                 $track = $xml->addChild('item');
                 foreach ($this->getColumns($query) as $column) {
-                    $track->addChild($column, $row[$column]);
+                    $track->addChild($column, html_entity_decode($row[$column]));
                 }
             }
             //Header('Content-type: text/xml');
@@ -88,9 +100,9 @@ class Api {
                 echo '{';
                 foreach ($this->getColumns($query) as $column) {
                     if ($column == @end($this->getColumns($query))) {
-                        echo '"' . $column . '":"' . $row[$column] . '"';
+                        echo '"' . $column . '":"' . html_entity_decode($row[$column]) . '"';
                     } else {
-                        echo '"' . $column . '":"' . $row[$column] . '",';
+                        echo '"' . $column . '":"' . html_entity_decode($row[$column]) . '",';
                     }
                 }
                 if ($row === @end($db->get_results($query))) {

@@ -25,9 +25,9 @@ class DntUpload {
         if (is_file($_FILES[$file]['tmp_name'])) {
 
             if ($dntUpload->uploaded) {
+				$dntUpload->file_new_name_body = "".md5(time())."_o";
                 $dntUpload->Process($path);
                 if ($dntUpload->processed) {
-
                     //insert to files table of files
                     $insertedData = array(
                         'vendor_id' => Vendor::getId(),
@@ -121,6 +121,7 @@ class DntUpload {
             $dntUpload = new Upload($file);
 
             if ($dntUpload->uploaded) {
+				$dntUpload->file_new_name_body = "".md5(time())."_o";
                 $dntUpload->Process($path);
                 if ($dntUpload->processed) {
                     //insert to files table of files
@@ -143,6 +144,7 @@ class DntUpload {
             $dntUpload = new Upload($file);
 			
 			if ($dntUpload->uploaded) {
+				$dntUpload->file_new_name_body = "".md5(time())."_o";
 				$dntUpload->Process($path);
 				if ($dntUpload->processed) {
 					//insert to files table of files

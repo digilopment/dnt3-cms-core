@@ -5,12 +5,13 @@ $path			= "../";
 $autoload->load($path);
 $install = new Install;
 
-$vendor_id 	= "44";
+$vendor_id 	= "45";
 $tables = array(
 	//VSETKY STLPCE
 	"dnt_admin_menu",
 	"dnt_api",
 	"dnt_config",
+	"dnt_gallery",
 	"dnt_languages",
 	"dnt_logs",
 	"dnt_mailer_mails",

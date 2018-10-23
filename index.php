@@ -3,7 +3,6 @@
  *  Designdnt3 Application
  *  Framework Dnt3
  *  CMS Designdnt3
- *  keleton template
  *  author: thomas.doubek@gmail.com
  * Thanks for using!
  */
@@ -56,7 +55,7 @@ if ($modul) {
 
 
 if(DEBUG_QUERY == 1){
-	$path = "dnt-view/data/uploads/sql_logs/".$modul."_query.csv";
+	$path = "dnt-logs/".Vendor::getId()."/sql/".$modul."_query.csv";
 	if(!file_exists($path)){
 		foreach($_SESSION as $key => $value){
 			$serverVariables = array(
@@ -64,28 +63,25 @@ if(DEBUG_QUERY == 1){
 				"REQUEST_TIME",
 			);
 			
-			$serverVariables = array();
-			$value = str_replace("\n", "", $value);
-			$value = str_replace("\t", "", $value);
-			$value = str_replace("\r", "", $value);
-			$arrToInsert = array(
-				"id" => 'null',
-				"id_entity" => 0,
-				"vendor_id" => Vendor::getId(),
-				"name" => "Modul query ".$modul,
-				"name_url" => md5($value),
-				"query" => $value,
-				"parent_id" => 0,
-			);
-			Dnt::writeToFile($path, $arrToInsert, $serverVariables);
+			if(Dnt::in_string("debug_query", $key)){
+				$serverVariables = array();
+				$value = str_replace("\n", " ", $value);
+				$value = str_replace("\t", " ", $value);
+				$value = str_replace("\r", " ", $value);
+				$value = preg_replace('/\s\s+/', ' ', $value);
+				$value = trim($value);
+				$arrToInsert = array(
+					"id" => 'null',
+					"id_entity" => 0,
+					"vendor_id" => Vendor::getId(),
+					"name" => $modul." Modul Query ",
+					"name_url" => md5($value),
+					"query" => $value,
+					"parent_id" => 0,
+				);
+				Dnt::writeToFile($path, $arrToInsert, $serverVariables);
+			}
 			
-			/*$insertedData = array(
-				'vendor_id' 		=> Vendor::getId(), 
-				'name' 				=> "Modul Query - $modul", 
-				'name_url' 			=> md5($value), 
-				'query' 			=> $value,
-			);			
-			$db->insert('dnt_api', $insertedData);*/
 		}
 		
 	

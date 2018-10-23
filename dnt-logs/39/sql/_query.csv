@@ -1,0 +1,11 @@
+id;id_entity;vendor_id;name;name_url;query;parent_id
+null;0;39; Modul Query ;fec69d211c6b38395952521f88e40f8f;SELECT `id_entity`,`real_url`, `show_real_url` FROM `dnt_vendors`;0
+null;0;39; Modul Query ;fe12c8ce305d738d9dbfbc2774ce4a39;SELECT `layout` FROM `dnt_vendors` WHERE id = '39';0
+null;0;39; Modul Query ;bd6a6b344a17cdd71f7b009ad44d8a89;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'intro' AND `dnt_posts`.`vendor_id` = '39' GROUP BY `dnt_posts`.`name_url`;0
+null;0;39; Modul Query ;4dd05975267e8b51118ea9ab18571678;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'region' AND `dnt_posts`.`vendor_id` = '39' GROUP BY `dnt_posts`.`name_url`;0
+null;0;39; Modul Query ;16a497efaa598e8d69451a631b435c9a;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'hotely' AND `dnt_posts`.`vendor_id` = '39' GROUP BY `dnt_posts`.`name_url`;0
+null;0;39; Modul Query ;eb2b3e2a241e0ac8b2074cf70a8bed05;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'partneri' AND `dnt_posts`.`vendor_id` = '39' GROUP BY `dnt_posts`.`name_url`;0
+null;0;39; Modul Query ;bd2e6711b85ea246c14a19859c56a88a;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'registracia' AND `dnt_posts`.`vendor_id` = '39' GROUP BY `dnt_posts`.`name_url`;0
+null;0;39; Modul Query ;bf8e6a0f1039df3d5297dcdef6858371;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'article_list' AND `dnt_posts`.`vendor_id` = '39' GROUP BY `dnt_posts`.`name_url`;0
+null;0;39; Modul Query ;935bf649f35744f75a9b7707c5e2a39a;SELECT value FROM dnt_settings WHERE `key` = 'still_redirect_to_domain' AND `vendor_id` = '39';0
+null;0;39; Modul Query ;fe12c8ce305d738d9dbfbc2774ce4a39;SELECT `layout` FROM `dnt_vendors` WHERE id = '39';0

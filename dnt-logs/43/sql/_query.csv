@@ -1,0 +1,12 @@
+id;id_entity;vendor_id;name;name_url;query;parent_id
+null;0;43; Modul Query ;fec69d211c6b38395952521f88e40f8f;SELECT `id_entity`,`real_url`, `show_real_url` FROM `dnt_vendors`;0
+null;0;43; Modul Query ;3572f841fca2943211f0d2c4446f3f0f;SELECT `id_entity` FROM `dnt_vendors` WHERE name_url = 'skeletonis';0
+null;0;43; Modul Query ;c1abc07b359f5eacff2eefb3f831321c;SELECT `layout` FROM `dnt_vendors` WHERE id = '43';0
+null;0;43; Modul Query ;0452e3a058056cfd5a882e769bf6ee4b;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'intro' AND `dnt_posts`.`vendor_id` = '43' GROUP BY `dnt_posts`.`name_url`;0
+null;0;43; Modul Query ;e1f60372a1448dae452e9c682911af22;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'region' AND `dnt_posts`.`vendor_id` = '43' GROUP BY `dnt_posts`.`name_url`;0
+null;0;43; Modul Query ;cfa2eb9820db4c8a0a049ef1b0ad8bea;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'hotely' AND `dnt_posts`.`vendor_id` = '43' GROUP BY `dnt_posts`.`name_url`;0
+null;0;43; Modul Query ;37c79f7b9f532429e8002818c0781f03;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'partneri' AND `dnt_posts`.`vendor_id` = '43' GROUP BY `dnt_posts`.`name_url`;0
+null;0;43; Modul Query ;5aaf8626beecde859766e0bee9b8794c;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'registracia' AND `dnt_posts`.`vendor_id` = '43' GROUP BY `dnt_posts`.`name_url`;0
+null;0;43; Modul Query ;e3b6e3d1b9e61e4efdbfed789a282b7c;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'search' AND `dnt_posts`.`vendor_id` = '43' GROUP BY `dnt_posts`.`name_url`;0
+null;0;43; Modul Query ;94667f30c57f682ce0b24928ff239979;SELECT value FROM dnt_settings WHERE `key` = 'still_redirect_to_domain' AND `vendor_id` = '43';0
+null;0;43; Modul Query ;c1abc07b359f5eacff2eefb3f831321c;SELECT `layout` FROM `dnt_vendors` WHERE id = '43';0

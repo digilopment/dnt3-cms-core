@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       AdminMailer
  *  author      Tomas Doubek
@@ -7,7 +8,7 @@
  *  date        2017
  */
 class AdminMailer {
-    
+
     /**
      * 
      * @return int
@@ -15,7 +16,7 @@ class AdminMailer {
     public function limit() {
         return 20;
     }
-    
+
     /**
      * 
      * @return type
@@ -32,7 +33,7 @@ class AdminMailer {
     public function sent_next_mail($next_id) {
         return WWW_PATH_ADMIN . "?src=mailer&action=sent_mail&post_id=&mail_id=" . $next_id . "";
     }
-    
+
     /**
      * 
      * @param type $action
@@ -62,7 +63,7 @@ class AdminMailer {
      */
     protected function prepare_query($is_limit) {
         $db = new Db();
-        
+
         if (isset($_GET['filter']) && $_GET['filter'] != "")
             $typ = "AND cat_id = '" . $_GET['filter'] . "'";
         elseif (isset($_GET['search'])) {
@@ -78,7 +79,7 @@ class AdminMailer {
         $query = "SELECT * FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . Vendor::getId() . "' " . $typ . " ORDER BY `id` DESC " . $limit . "";
         return $query;
     }
-    
+
     /**
      * 
      * @return type
@@ -111,7 +112,7 @@ class AdminMailer {
         $pager = "LIMIT " . $pociatok . ", " . $limit . "";
         return self::prepare_query($pager);
     }
-    
+
     /**
      * 
      * @param type $index
@@ -156,7 +157,7 @@ class AdminMailer {
             return $strana;
         }
     }
-    
+
     /**
      * 
      * @param type $index

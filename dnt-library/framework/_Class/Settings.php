@@ -2,7 +2,7 @@
 /**
  *  class       Settings
  *  author      Tomas Doubek
- *  framework   Sessions
+ *  framework   DntLibrary
  *  package     dnt3
  *  date        2017
  */

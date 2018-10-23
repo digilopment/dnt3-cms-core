@@ -30,7 +30,7 @@ $webhook = new Webhook;
             <div class="grid-body">
                <div class="row">
                   <div class="col-md-6">
-                     <form enctype='multipart/form-data' id="pristupy" action="<?php echo WWW_PATH_ADMIN."index.php?src=access&action=update&post_id=".AdminUser::data("admin", "id")."";?>" method="post">
+                     <form enctype='multipart/form-data' id="pristupy" action="<?php echo WWW_PATH_ADMIN."index.php?src=access&action=update&post_id=".AdminUser::data("admin", "id_entity")."";?>" method="post">
                         <input type="hidden" name="id" value="<?php echo AdminUser::data("admin", "id_entity");?>" />
                         <p class="lead">Nastavte Vaše <b>meno</b></p>
                         <p>Ak máte eshop a vystavíte faktúru, vaše meno tam bude predvyplnené</p>
@@ -49,6 +49,7 @@ $webhook = new Webhook;
                   <p>Ak máte eshop a vystavíte faktúru, vaše meno tam bude predvyplnené</p>
                   <img src="<?php echo AdminUser::avatar();?>" style="max-width: 200px; margin: 15px;" alt="" />
                   <input type="file" name="userfile"  class="btn-default btn-lg btn-block" />
+				  <?php galleryChooser("user_avatar"); ?>
                   <div class="padding"></div>
                   
 				  <?php echo Dnt::returnInput();?>
@@ -93,8 +94,10 @@ $webhook = new Webhook;
 					 <?php if($row['content_type'] == "image"){ ?>
 								<input name="userfile_<?php echo $row['id_entity']; ?>[]" multiple="multipl" type="file" class="form-control">
 								<?php 
+								galleryChooser($row['id_entity']);
 								$image = new Image;
 								foreach($image->getFileImages($row['value']) as $image){
+									
 									echo '<img src="'.$image.'" style="height: 55px; margin-left:0px; margin:10px;">';
 								}
 							}elseif($row['content_type'] == "file"){ ?>

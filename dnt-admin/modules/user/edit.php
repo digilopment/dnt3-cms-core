@@ -141,6 +141,8 @@ foreach($user->getUser($id_entity) as $row){
                   <h5>Fotka:</h5>
                   <img class="img-responsive" src="<?php echo $img;?>" alt="" />
 				  <input name="userfile" type="file" class="form-control">
+					<br/>
+				   <?php galleryChooser("user_avatar_".$id_entity); ?>
 				  <?php echo Dnt::returnInput();?>
 				   <br/><br/>
 

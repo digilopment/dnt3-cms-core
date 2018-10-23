@@ -1,0 +1,15 @@
+id;id_entity;vendor_id;name;name_url;query;parent_id
+null;0;46; Modul Query ;fec69d211c6b38395952521f88e40f8f;SELECT `id_entity`,`real_url`, `show_real_url` FROM `dnt_vendors`;0
+null;0;46; Modul Query ;6e4562e6ce223b89e1efd354983bc1f4;SELECT `id_entity` FROM `dnt_vendors` WHERE name_url = 'skischule';0
+null;0;46; Modul Query ;f15233c6a431c86ddfa560215057ea01;SELECT `layout` FROM `dnt_vendors` WHERE id = '46';0
+null;0;46; Modul Query ;232f07d53fa3bc78db2e5be95973ef2f;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'homepage' AND `dnt_posts`.`vendor_id` = '46' GROUP BY `dnt_posts`.`name_url`;0
+null;0;46; Modul Query ;3747180db91e0d80da109a93f85be91d;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'article_list' AND `dnt_posts`.`vendor_id` = '46' GROUP BY `dnt_posts`.`name_url`;0
+null;0;46; Modul Query ;9a76c86d81388c43abcad889cea19151;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'about' AND `dnt_posts`.`vendor_id` = '46' GROUP BY `dnt_posts`.`name_url`;0
+null;0;46; Modul Query ;6cbdd4e2adddfa89e5aef61f88ebb7f0;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'region' AND `dnt_posts`.`vendor_id` = '46' GROUP BY `dnt_posts`.`name_url`;0
+null;0;46; Modul Query ;224bad48a315baed8a71b06dc0e9c46e;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'hotely' AND `dnt_posts`.`vendor_id` = '46' GROUP BY `dnt_posts`.`name_url`;0
+null;0;46; Modul Query ;b980bfe3214a8041b4e2ae1194781092;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'partneri' AND `dnt_posts`.`vendor_id` = '46' GROUP BY `dnt_posts`.`name_url`;0
+null;0;46; Modul Query ;cfa2562bae1b26ae58462a9653e63ee8;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'registracia' AND `dnt_posts`.`vendor_id` = '46' GROUP BY `dnt_posts`.`name_url`;0
+null;0;46; Modul Query ;abde8cee4c9bbe62d8a7a9711614ad7b;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'search' AND `dnt_posts`.`vendor_id` = '46' GROUP BY `dnt_posts`.`name_url`;0
+null;0;46; Modul Query ;3747180db91e0d80da109a93f85be91d;SELECT * FROM `dnt_posts` WHERE `dnt_posts`.`type` = 'sitemap' AND `dnt_posts`.`show` > '0' AND `dnt_posts`.`service` = 'article_list' AND `dnt_posts`.`vendor_id` = '46' GROUP BY `dnt_posts`.`name_url`;0
+null;0;46; Modul Query ;330d072521db04ed9cbe67c2901bd825;SELECT value FROM dnt_settings WHERE `key` = 'still_redirect_to_domain' AND `vendor_id` = '46';0
+null;0;46; Modul Query ;f15233c6a431c86ddfa560215057ea01;SELECT `layout` FROM `dnt_vendors` WHERE id = '46';0

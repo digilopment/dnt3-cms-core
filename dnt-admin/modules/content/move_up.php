@@ -16,7 +16,8 @@ $db->update(
         'order' => $order,
         ), 
     array(     //where
-        'id' => $post_id,
+        'id_entity' => $post_id,
+        'vendor_id' => Vendor::getId(),
         )
     );
 $dnt->redirect(WWW_PATH_ADMIN."index.php?src=".$rest->get("src")."&included=".$rest->get("included")."&filter=".$rest->get("filter")."");

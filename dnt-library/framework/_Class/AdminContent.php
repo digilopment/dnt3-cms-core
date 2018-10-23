@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       AdminContent
  *  author      Tomas Doubek
@@ -7,7 +8,7 @@
  *  date        2017
  */
 class AdminContent extends MultyLanguage {
-    
+
     /**
      * 
      * @return int
@@ -15,7 +16,7 @@ class AdminContent extends MultyLanguage {
     public function limit() {
         return 20;
     }
-    
+
     /**
      * 
      * @return type
@@ -27,7 +28,7 @@ class AdminContent extends MultyLanguage {
             "article" => "Články"
         );
     }
-    
+
     /**
      * 
      * @param type $type
@@ -76,7 +77,7 @@ class AdminContent extends MultyLanguage {
         $query = "SELECT * FROM `dnt_posts` WHERE  `vendor_id` = '" . Vendor::getId() . "' " . $typ . " ORDER BY `order` DESC " . $limit . "";
         return $query;
     }
-    
+
     /**
      * 
      * @return type
@@ -109,7 +110,7 @@ class AdminContent extends MultyLanguage {
         $pager = "LIMIT " . $pociatok . ", " . $limit . "";
         return self::prepare_query($pager);
     }
-    
+
     /**
      * 
      * @param type $index
@@ -155,7 +156,7 @@ class AdminContent extends MultyLanguage {
             return $strana;
         }
     }
-    
+
     /**
      * 
      * @param type $index
@@ -172,7 +173,7 @@ class AdminContent extends MultyLanguage {
 
         return WWW_PATH_ADMIN . "index.php?" . $return . "&page=" . self::getPage($index);
     }
-    
+
     /**
      * 
      * @param type $action
@@ -196,7 +197,7 @@ class AdminContent extends MultyLanguage {
             }
         }
     }
-    
+
     /**
      * 
      * @param type $column
@@ -215,7 +216,7 @@ class AdminContent extends MultyLanguage {
             return false;
         }
     }
-    
+
     /**
      * 
      * @return type
@@ -237,7 +238,7 @@ class AdminContent extends MultyLanguage {
         $tags = str_replace(" ", "-", $tags);
         return $tags;
     }
-    
+
     /**
      * 
      * @param type $data
@@ -246,7 +247,7 @@ class AdminContent extends MultyLanguage {
     public function showTags($data) {
         return explode(",", $data);
     }
-    
+
     /**
      * 
      * @param type $data

@@ -45,15 +45,27 @@ if(isset($_POST['sent'])){
 			)
 		);
 	
-	$dntUpload = new DntUpload;
-	$dntUpload->addDefaultImage(
-		"userfile",								//input type file
-		$table, 								//update table
-		"img",	 								//update table column
-		"`id`", 								//where column
-		$post_id, 								//where value
-		"../dnt-view/data/uploads" 				//path
-	);
+	if($rest->post("gallery_key_user_avatar_".$post_id)){
+		$db->update(
+		"dnt_registred_users",	//table
+		array(	//set
+			'img' => $rest->post("gallery_key_user_avatar_".$post_id),
+			), 
+		array( 	//where
+			'id_entity' 	=> $post_id, 
+			'`vendor_id`' 	=> Vendor::getId())
+		);
+	}else{
+		$dntUpload = new DntUpload;
+		$dntUpload->addDefaultImage(
+			"userfile",								//input type file
+			$table, 								//update table
+			"img",	 								//update table column
+			"`id`", 								//where column
+			$post_id, 								//where value
+			"../dnt-view/data/uploads" 				//path
+		);
+	}
 		
 	include "tpl_functions.php";
 	get_top();
