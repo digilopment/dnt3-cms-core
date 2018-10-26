@@ -207,6 +207,7 @@ class Vendor {
         } else {
             $return = false;
         }
+
         return $return;
     }
 

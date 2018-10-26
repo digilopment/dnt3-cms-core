@@ -27,13 +27,14 @@ if($rest->get("action") == "update")
 	include "update.php";
 }
 else{
-	if($article->getPostsMeta($postId, $rest->get("services"))){
+	$metas = $article->getPostsMeta($postId, $rest->get("services"));
+	if($metas or count($metas)>0){
 		if(file_exists("../dnt-view/layouts/".Vendor::getLayout()."/modules/".$serviceName."/install/install.php")){
 			
 			include "../dnt-view/layouts/".Vendor::getLayout()."/modules/".$serviceName."/install/install.php";
 			
 			$SQL = "INSERT INTO `dnt_posts_meta` (
-				`id`, `id_entity`, `post_id`, `service`, `vendor_id`, `key`, `value`, `content_type`, `cat_id`, `description`, `show`
+				`id`, `id_entity`, `post_id`, `service`, `vendor_id`, `key`, `value`, `content_type`, `cat_id`, `description`, `order`, `show`
 			) VALUES ";
 			
 			/*** konfiguracne data v subore **/

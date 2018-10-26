@@ -76,7 +76,7 @@ class Webhook {
 		if($config === true){
 			return array(
 			"config" => array(
-				"sql"	=> "INSERT INTO `dnt_posts_meta` (`id`, `id_entity`, `service`, `vendor_id`, `key`, `value`, `content_type`, `cat_id`, `description`, `show`) VALUES",
+				"sql"	=> "INSERT INTO `dnt_posts_meta` (`id`, `id_entity`, `service`, `vendor_id`, `key`, `value`, `content_type`, `cat_id`, `description`, `order`, `show`) VALUES",
 				),
 			);
 		}

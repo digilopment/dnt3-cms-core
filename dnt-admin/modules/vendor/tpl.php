@@ -38,7 +38,7 @@
                      $webUrl 	= HTTP_PROTOCOL.$row['name_url'].".".DOMAIN.WWW_FOLDERS;
                      $develUrl 	= HTTP_PROTOCOL."devel.".$row['name_url'].".".DOMAIN.WWW_FOLDERS;
                      $realUrl 	= $row['real_url'];
-                     $email     = AdminUser::data("admin", "email");
+					 $email     = AdminUser::data("admin", "email");
                      $adminUrl 	= $webUrl."/dnt-admin/index.php?src=login&action=2&domain_change=1&admin_id=".$email;
                      ?>
                   <tr>

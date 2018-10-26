@@ -5,7 +5,7 @@ if(file_exists("../dnt-view/layouts/".Vendor::getLayout()."/modules/".$serviceNa
 	include "../dnt-view/layouts/".Vendor::getLayout()."/modules/".$serviceName."/install/install.php";
 	
 	$SQL = "INSERT INTO `dnt_posts_meta` (
-	`id`, `id_entity`, `post_id`, `service`, `vendor_id`, `key`, `value`, `content_type`, `cat_id`, `description`, `show`
+	`id`, `id_entity`, `post_id`, `service`, `vendor_id`, `key`, `value`, `content_type`, `cat_id`, `description`, `show`, `order`
 	) VALUES";
 	
 	
@@ -15,6 +15,9 @@ if(file_exists("../dnt-view/layouts/".Vendor::getLayout()."/modules/".$serviceNa
 	$db->query($query);
 	$db->query("UPDATE `dnt_posts_meta` SET `id_entity` = `id` WHERE id_entity = 0 AND vendor_id = '".Vendor::getId()."'");
 	$db->dbCommit();
+	
+	//var_dump($query);
+	//exit;
 	
 	Dnt::redirect("index.php?src=content&included=".$rest->get("included")."&filter=".$rest->get("filter")."&post_id=".$postId."&services=".$serviceName."");
 	
