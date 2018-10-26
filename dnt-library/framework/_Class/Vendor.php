@@ -147,9 +147,21 @@ class Vendor {
     }
 	
 	public function getLayouts(){
-		$db = new Db;
+		$layouts = array();
+		$files = scandir('../dnt-view/layouts/');
+		foreach($files as $file) {
+		  if($file == "." || $file == ".."){
+			  continue;
+		  }else{
+			  $layouts[] = $file;
+		  }
+		}
+		
+		return $layouts;
 
-        $query = "SELECT DISTINCT `layout` FROM `dnt_vendors` ";
+       /* 
+	   $db = new Db;
+	   $query = "SELECT DISTINCT `layout` FROM `dnt_vendors` ";
 
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
@@ -158,8 +170,8 @@ class Vendor {
         } else {
             $layouts[] = array();
         }
-
         return $layouts;
+		*/
 	}
 
     /**
@@ -195,7 +207,6 @@ class Vendor {
         } else {
             $return = false;
         }
-
         return $return;
     }
 

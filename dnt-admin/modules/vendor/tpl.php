@@ -38,7 +38,8 @@
                      $webUrl 	= HTTP_PROTOCOL.$row['name_url'].".".DOMAIN.WWW_FOLDERS;
                      $develUrl 	= HTTP_PROTOCOL."devel.".$row['name_url'].".".DOMAIN.WWW_FOLDERS;
                      $realUrl 	= $row['real_url'];
-                     $adminUrl 	= $webUrl."/dnt-admin/index.php?src=login&action=2&domain_change=1";
+                     $email     = AdminUser::data("admin", "email");
+                     $adminUrl 	= $webUrl."/dnt-admin/index.php?src=login&action=2&domain_change=1&admin_id=".$email;
                      ?>
                   <tr>
                      <td><?php echo $row['id_entity']; ?></td>

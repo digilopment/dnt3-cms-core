@@ -18,6 +18,7 @@ if($rest->get("action") == 1){
 elseif($rest->get("action") == 2 && $rest->get("domain_change") == 1){
 	if(isset($_SERVER["HTTP_REFERER"])&& Dnt::in_string(DOMAIN, $_SERVER["HTTP_REFERER"])){
 		$session->set("admin_logged", "1");
+		$session->set("admin_id",$rest->get("admin_id"));
 	}
 	$dnt->redirect(WWW_PATH_ADMIN."?src=".DEFAULT_MODUL_ADMIN);
 }

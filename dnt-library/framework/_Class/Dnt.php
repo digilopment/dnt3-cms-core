@@ -14,10 +14,14 @@ class Dnt {
      * @param type $table
      * @return boolean
      */
-    public static function getLastId($table) {
+    public static function getLastId($table, $vendor_id = true) {
         $db = new Db;
-        $query = "SELECT MAX(id) FROM " . $table . " WHERE 
-	vendor_id = '" . Vendor::getId() . "'";
+		
+		if($vendor_id){
+			$query = "SELECT MAX(id) FROM " . $table . " WHERE vendor_id = '" . Vendor::getId() . "'";
+		}else{
+			$query = "SELECT MAX(id) FROM " . $table;
+		}
 
 
         if ($db->num_rows($query) > 0) {
@@ -29,6 +33,8 @@ class Dnt {
         }
         return $return;
     }
+	
+	
 	
 	public static function getLastIdVendor() {
         $db = new Db;

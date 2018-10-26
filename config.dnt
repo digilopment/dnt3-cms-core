@@ -104,8 +104,12 @@ define( 'SERVER_NAME', $_SERVER['SERVER_NAME'] ); //server path too root file us
 define( 'WWW_PATH', HTTP_PROTOCOL.@$_SERVER['SERVER_NAME'].WWW_FOLDERS."/" ); //server path too root file usualy index.php or home.php
 define( 'WWW_PATH_ADMIN', HTTP_PROTOCOL."".@$_SERVER['SERVER_NAME'].WWW_FOLDERS."/dnt-admin/" ); //server path too root file usualy index.php or home.php
 
-define( 'DOMAIN', @end(explode(".", SERVER_NAME)) ); //server path too root file usualy index.php or home.php
-
+define( 'DOMAIN', explode(".", SERVER_NAME)[0]); //server path too root file usualy index.php or home.php
+/*
+$parts 	= explode(".", SERVER_NAME);
+$pathCount = count($parts);
+define( 'DOMAIN', $parts[$pathCount-2].".".$parts[$pathCount-1]);
+*/
 //CDN PATH
 define( 'WWW_CDN_PATH', HTTP_PROTOCOL."".@$_SERVER['SERVER_NAME'].WWW_FOLDERS."/" ); //server path too root file usualy index.php
 

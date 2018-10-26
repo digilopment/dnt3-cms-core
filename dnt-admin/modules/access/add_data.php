@@ -10,25 +10,32 @@ if(isset($_POST['sent'])){
 	
 	if($pass == $re_pass && ($pass != "")){
 		
-		$pass = md5($pass);
 		foreach($user->getColumns($query) as $key => $value){
-			if($value != "id"){
+			if($value != "id" && "id_entity" && "vendor_id" && "pass"){
 				$insertedData["`".$value."`"] = $rest->post($value);
+				if($rest->post("type") == ""){
+					$insertedData["`type`"] = "admin";
+				}
+				if($rest->post("login") == ""){
+					$insertedData["`login`"] = Vendor::getColumn("name_url");
+				}
 			}
 		}
 		$db->insert($table, $insertedData);
-		$post_id = $db->lastid();
+		$post_id = Dnt::getLastId($table, false);
+
 		$db->update(
 			$table,	//table
 			array(	//set
-				'vendor_id' => Vendor::getId(),
-				'pass' 		=> $pass,
-				'datetime_creat' => Dnt::datetime(),
-				'datetime_update' => Dnt::datetime(),
-				'datetime_publish' => Dnt::datetime(),
+				'vendor_id' 		=> Vendor::getId(),
+				'status' 			=> 1,
+				'pass' 				=> md5($pass),
+				'datetime_creat' 	=> Dnt::datetime(),
+				'datetime_update' 	=> Dnt::datetime(),
+				'datetime_publish' 	=> Dnt::datetime(),
 				), 
 			array( 	//where
-				'id_entity' => $post_id,
+				'id_entity' => $post_id, 
 			)
 		);
 		$return = "index.php?src=access&action=edit&post_id=$post_id";
