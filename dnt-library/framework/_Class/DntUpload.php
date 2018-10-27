@@ -8,6 +8,16 @@
  */
 class DntUpload {
 
+
+	/** 
+	*
+	* image name
+	*
+	*/
+	protected function imageName(){
+		return Vendor::getId()."_".md5(time())."_o"; 
+	}
+
     /**
      * 
      * @param type $file
@@ -17,15 +27,17 @@ class DntUpload {
      * @param type $updateValue
      * @param type $path
      */
+	 	
     public function addDefaultImage($file, $table, $setColumn, $updateColumn, $updateValue, $path) {
 
         $dntUpload = new Upload(@$_FILES[$file]);
         $db = new Db;
+	
 
         if (is_file($_FILES[$file]['tmp_name'])) {
 
             if ($dntUpload->uploaded) {
-				$dntUpload->file_new_name_body = "".md5(time())."_o";
+				$dntUpload->file_new_name_body = $this->imageName();
                 $dntUpload->Process($path);
                 if ($dntUpload->processed) {
                     //insert to files table of files
@@ -121,7 +133,7 @@ class DntUpload {
             $dntUpload = new Upload($file);
 
             if ($dntUpload->uploaded) {
-				$dntUpload->file_new_name_body = "".md5(time())."_o";
+				$dntUpload->file_new_name_body = $this->imageName();
                 $dntUpload->Process($path);
                 if ($dntUpload->processed) {
                     //insert to files table of files
@@ -144,7 +156,7 @@ class DntUpload {
             $dntUpload = new Upload($file);
 			
 			if ($dntUpload->uploaded) {
-				$dntUpload->file_new_name_body = "".md5(time())."_o";
+				$dntUpload->file_new_name_body = $this->imageName();
 				$dntUpload->Process($path);
 				if ($dntUpload->processed) {
 					//insert to files table of files
