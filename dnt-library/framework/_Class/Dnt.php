@@ -724,7 +724,7 @@ class Dnt {
         $db = new Db;
         $rest = new Rest;
 
-        $query = "SELECT `$column` FROM `$table` WHERE id = $post_id";
+        $query = "SELECT `$column` FROM `$table` WHERE id_entity = $post_id AND  vendor_id = '" . Vendor::getId() . "'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 return $row[$column];

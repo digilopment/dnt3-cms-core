@@ -30,7 +30,7 @@ if(isset($_GET['mail_id'])){
 $query = "SELECT * FROM dnt_mailer_mails WHERE cat_id = '".$cat_id."' AND vendor_id = '".Vendor::getId()."' AND id_entity <= '$post_id'";
 $sended_mails = $db->num_rows($query);
 
-if($next_id){
+if($post_id){
 	include "tpl_functions.php";
 	$dntMailer		= new Mailer;
 	$sender_email	= dnt::getPostParam("dnt_mailer_mails", "email", $post_id);
@@ -50,5 +50,5 @@ if($next_id){
 	$session->remove("subject");
 	$session->remove("template");
 	$session->remove("message");
-	tpl_sending_finish($sending_mail );
+	tpl_sending_finish($sending_mail);
 }
