@@ -23,12 +23,12 @@ if($rest->webhook(3) == "base64"){
 		$rest->get("query")
 		);
 }
-						
+					
 $dntLog->add(
 array(
 		"http_response" 	=> 200,
 		"system_status" 	=> "log",		
-		"msg"				=> "Api log $query", 
+		"msg"				=> "Api log", 
 	)
 );
 
