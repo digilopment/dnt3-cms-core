@@ -8,7 +8,11 @@
  */
 class DntLog {
 
-    /**
+
+
+	public $results;
+    
+	/**
      * 
      * @return boolean
      */
@@ -200,7 +204,7 @@ class DntLog {
         };
 
         //custom INPUTS
-        $arrToInsert['vendor_id'] = $session->get("getVendorId");
+        $arrToInsert['vendor_id'] = Vendor::getId();
         $arrToInsert['http_response'] = $http_response;
         $arrToInsert['system_status'] = $system_status;
         $arrToInsert['log_id'] = $session->get("page_id");
@@ -263,5 +267,72 @@ class DntLog {
             }
         }
     }
+	
+	
+	public function getAll(){
+		$db = new DB();
+		$query = "SELECT * FROM `dnt_logs` WHERE vendor_id = ".Vendor::getId();
+		 if ($db->num_rows($query) > 0){
+			$this->results = $db->get_results($query);
+		 }else{
+			$this->results = "25";
+		 }
+			//return false;
+	}
+	
+	public function getAllAccess($andWhere){
+		
+		$db = new DB();
+		$query = "SELECT id FROM `dnt_logs` WHERE vendor_id = ".Vendor::getId()." $andWhere";
+		return $db->num_rows($query);
+		
+		
+	}
+	
+	public function getUniqueAccess($andWhere){
+		
+		$db = new DB();
+		$query = "SELECT DISTINCT `REMOTE_ADDR` FROM `dnt_logs` WHERE vendor_id = ".Vendor::getId()." $andWhere";
+		return $db->num_rows($query);
+	}
+	
+	public function getallUsers($andWhere){
+		
+		$db = new DB();
+		$query = "SELECT `id` FROM `dnt_registred_users` WHERE vendor_id = ".Vendor::getId()." $andWhere";
+		return $db->num_rows($query);
+	}
+	
+	public function getUniqueUsers($andWhere){
+		
+		$db = new DB();
+		$query = "SELECT DISTINCT `email` FROM `dnt_registred_users` WHERE vendor_id = ".Vendor::getId()." $andWhere";
+		return $db->num_rows($query);
+	}
+
+	public function getCountOs($andWhere){
+		
+		$db = new DB();
+		
+		$android = 0;
+		$win = 0;
+		$mac = 0;
+		$black = 0;
+		$linux = 0;
+		$iOS = 0;
+		$other = 0;
+		
+		$agent = array();
+		$query = "SELECT * FROM `dnt_logs` WHERE vendor_id = ".Vendor::getId()." $andWhere";
+		if ($db->num_rows($query) > 0){
+			foreach ($db->get_results($query) as $row) {
+				
+				$agent['os'][] = Dnt::getOS($row['HTTP_USER_AGENT']);
+				$agent['browser'][] = Dnt::getBrowser($row['HTTP_USER_AGENT']);
+			}
+		}
+		
+		return $agent;
+	}
 
 }
