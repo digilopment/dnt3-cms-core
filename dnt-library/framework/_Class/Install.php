@@ -308,8 +308,45 @@ Class Install {
         }
         if ($vendor_id == false) {
             $vendor_where = false;
+            $contentVendor = false;
         } else {
             $vendor_where = "WHERE `vendor_id` = '$vendor_id'";
+			
+			$contentVendor = false;
+			 $result = $mysqli->query("SELECT * FROM dnt_vendors WHERE id = $vendor_id");
+			 $fields_amount = $result->field_count;
+			 $rows_num = $mysqli->affected_rows;
+			  for ($i = 0, $st_counter = 0; $i < $fields_amount; $i++, $st_counter = 0) {
+                while ($row = $result->fetch_row()) { //when started (and every after 100 command cycle):
+				if ($st_counter % 100 == 0 || $st_counter == 0) {
+                        $contentVendor .= "\nINSERT INTO dnt_vendors VALUES";
+                    }
+                    $contentVendor .= "\n(";
+                    for ($j = 0; $j < $fields_amount; $j++) {
+                        $row[$j] = str_replace("\n", "\\n", addslashes($row[$j]));
+                        if (isset($row[$j])) {
+							if($j == 0){
+								$contentVendor .= $vendor_id;
+							}else{
+								$contentVendor .= '"' . $row[$j] . '"';
+							}
+                        } else {
+                            $contentVendor .= '""';
+                        }
+                        if ($j < ($fields_amount - 1)) {
+                            $contentVendor .= ',';
+                        }
+                    }
+                    $contentVendor .= ")";
+					 if ((($st_counter + 1) % 100 == 0 && $st_counter != 0) || $st_counter + 1 == $rows_num) {
+                        $contentVendor .= ";";
+                    } else {
+                        $contentVendor .= ",";
+                    }
+                    $st_counter = $st_counter + 1;
+				 }
+				}
+			//$contentVendor = "";
         }
         foreach ($target_tables as $table) {
             $result = $mysqli->query("SELECT * FROM " . $table . " $vendor_where");
@@ -328,7 +365,11 @@ Class Install {
                     for ($j = 0; $j < $fields_amount; $j++) {
                         $row[$j] = str_replace("\n", "\\n", addslashes($row[$j]));
                         if (isset($row[$j])) {
-                            $content .= '"' . $row[$j] . '"';
+							if($j == 0){
+								$content .= 'null';
+							}else{
+								$content .= '"' . $row[$j] . '"';
+							}
                         } else {
                             $content .= '""';
                         }
@@ -346,14 +387,18 @@ Class Install {
                     $st_counter = $st_counter + 1;
                 }
             } $content .= "\n\n\n";
+			
+			
         }
+		
+		$content = str_replace("CREATE TABLE", "CREATE TABLE IF NOT EXISTS", $content);
         //$backup_name = $backup_name ? $backup_name : $name."___(".date('H-i-s')."_".date('d-m-Y').")__rand".rand(1,11111111).".sql";
         $backup_name = $backup_name ? $backup_name : $name . ".sql";
         /* header('Content-Type: application/octet-stream');   
           header("Content-Transfer-Encoding: Binary");
           header("Content-disposition: attachment; filename=\"".$backup_name."\"");
          */
-        file_put_contents($backup_name, $content);
+        file_put_contents($backup_name, $content.$contentVendor);
         //echo $content; exit;
     }
 	
