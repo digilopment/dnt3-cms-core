@@ -7,6 +7,8 @@ dnt-backup/readme.txt
 dnt-api/dnt-cache/*
 !dnt-api/dnt-cache/readme.txt
 
+dnt-logs/
+
 dnt-view/layouts/wp_tpl_1/
 dnt-view/layouts/wp_tpl_2/
 dnt-view/layouts/skischule/
