@@ -194,11 +194,20 @@ $webhook = new Webhook;
 					  <div class="padding"></div>
 					</div>
 					
-					<div class="col-md-4">
+					<?php /*<div class="col-md-4">
 					  <p class="lead">Exportovať skeleton dáta</p>
 					  <p>Exportujú sa všetky aktuálne dáta pre skeleton aplikáciu <b><br/><br/></b></p>
 					  <a  target="_blank"  href="<?php echo WWW_PATH;?>dnt-jobs/dbExport.php?vendor_id=1&time=<?php echo Dnt::timestamp();?>">
 						<span type="submit" name="sent_4" class="btn btn-danger btn-radius" >Exportovať skeletón dáta</span>
+					  </a>
+					  <div class="padding"></div>
+					</div>*/?>
+					
+					<div class="col-md-4">
+					  <p class="lead">Exportovať tento web</p>
+					  <p>Exportujú sa všetky dáta s databázou pre web: <br/><b><?php echo WWW_PATH; ?></b></p>
+					  <a target="_blank" href="<?php echo WWW_PATH;?>dnt-jobs/webExport.php?vendor_id=<?php echo Vendor::getId();?>&time=<?php echo Dnt::timestamp();?>">
+						<span type="submit" name="sent_4" class="btn btn-danger btn-radius" >Exportovať moje dáta</span>
 					  </a>
 					  <div class="padding"></div>
 					</div>
