@@ -1,4 +1,4 @@
-Designdnt3 - Skeleton Aplication
+﻿Designdnt3 - Skeleton Aplication
 =======================
 
 Úvod
@@ -63,4 +63,3 @@ Inštalácia xampp -> Windows (localhost) do rootu
 - Nájdite riadok 31
 - Nahraďte frázu: define( 'WWW_FOLDERS', "/dnt3" ); frázou: define( 'WWW_FOLDERS', "" );
 - Spustite adresu: http://localhost/
-
