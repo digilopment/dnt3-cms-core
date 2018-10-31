@@ -16,3 +16,5 @@ dnt-library/framework/_keys/secred.php
 
 #dnt-view/*
 nbproject/
+
+push.sh
