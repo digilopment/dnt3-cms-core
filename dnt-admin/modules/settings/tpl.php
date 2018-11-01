@@ -18,6 +18,9 @@ $webhook = new Webhook;
 			<li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==7 && $_GET[ 'category']== "default_images"){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=7&category=default_images">Nastavenie defaultných obrázkov</a></li>
 			
 			<li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==7 && $_GET[ 'category']== "social"){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=7&category=social">Nastavenia social. siet</a></li>
+			
+			<li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==7 && $_GET[ 'category']== "social_wall"){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=7&category=social_wall">Social Wall</a></li>
+			
 			<li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==7 && $_GET[ 'category']== "keys"){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=7&category=keys">Nastavenia kľúčov</a></li>
 			<li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==7 && $_GET[ 'category']== "extends"){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=7&category=extends">Rozšírené nastavenia</a></li>
 			<li <?php if(isset($_GET[ 'pa']) && $_GET[ 'pa']==7 && $_GET[ 'category']== "vendor"){ echo 'class="active"';}?>><a href="index.php?src=settings&pa=7&category=vendor">Nastavenia firmy</a></li>

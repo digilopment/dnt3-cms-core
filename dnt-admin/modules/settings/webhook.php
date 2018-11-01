@@ -13,5 +13,6 @@ elseif($rest->get("action") == "add")
 	//empty
 }
 else{
+	Settings::loadNewSettingsFromConf();
 	include "tpl.php";
 }
