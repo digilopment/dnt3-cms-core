@@ -51,7 +51,10 @@ if ($modul) {
     $rest->loadMyModul("default");
 }
 
-
+/**
+ *if debug mod, then logs to csv
+ *
+**/
 if(DEBUG_QUERY == 1){
 	$path = "dnt-logs/".Vendor::getId()."/sql/".$modul."_query.csv";
 	if(!file_exists($path)){
@@ -82,10 +85,13 @@ if(DEBUG_QUERY == 1){
 			
 		}
 		
-	
 	}
 }
 
+/**
+ *show logs
+ *
+**/
 if (isset($_GET['dnt_debug_mod_show_log'])) {
     $dntLog->show("last");
 }
