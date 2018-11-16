@@ -47,7 +47,7 @@ foreach($translates as $translate){
 					'`parent_id`' 		=> '0',
 					
 				);
-				//$db->insert($table, $insertedData);
+				$db->insert($table, $insertedData);
 				print ("<span style='color:green'>Vendor: ".$vendor['id']." - translate <b>".$translate['translate']."</b> was added<br/></span>");
 		   }else{
 			   print ("<span style='color:red'>Vendor: ".$vendor['id']." - translate <b>".$translate['translate']."</b> exists<br/></span>");
