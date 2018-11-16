@@ -27,6 +27,22 @@ if($rest->get("action") == "update")
 	include "update.php";
 }
 else{
+	
+
+	
+	if(file_exists("../dnt-view/layouts/".Vendor::getLayout()."/modules/".$serviceName."/install/install.php")){
+		PostMeta::loadNewPostMetaFromConf($postId, $services);
+		include "tpl.php";
+	}else{
+		include "tpl_functions.php";
+		get_top();
+		include "top.php";
+		error_message_default("Tento post nemá žiadne meta dáta. <br/>Pre vytvorenie nových meta dát prosím použite konfiguráciu v module.");
+		include "bottom.php";
+		get_bottom();
+	}
+
+	/*
 	$metas = $article->getPostsMeta($postId, $rest->get("services"));
 	if($metas or count($metas)>0){
 		if(file_exists("../dnt-view/layouts/".Vendor::getLayout()."/modules/".$serviceName."/install/install.php")){
@@ -37,13 +53,13 @@ else{
 				`id`, `id_entity`, `post_id`, `service`, `vendor_id`, `key`, `value`, `content_type`, `cat_id`, `description`, `order`, `show`
 			) VALUES ";
 			
-			/*** konfiguracne data v subore **/
+			///konfiguracne data v subore
 			$arrayOfDefaultMeta = $article->defaultMetaToArray($postId, $serviceName);
 			foreach($arrayOfDefaultMeta as $meta){
 				$array1[] = $meta['key'];
 			}
 			//var_dump($arrayOfDefaultMeta);
-			/*** realne data v databaze **/
+			///realne data v databaze
 			foreach($article->getPostsMeta($postId, $rest->get("services")) as $row){
 				$array2[] = $row['key'];
 			}
@@ -75,6 +91,7 @@ else{
 			include "bottom.php";
 			get_bottom();
 	}
+	*/
 }
 
 

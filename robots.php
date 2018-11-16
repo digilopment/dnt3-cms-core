@@ -24,17 +24,13 @@ User-agent: *
 #AuthorName: 	@Tomas Doubek
 #System: 		@Designdnt3
 
-Disallow: /old/
 Disallow: /dnt-admin/
 Disallow: /dnt-cache/
 Disallow: /dnt-install/
 Disallow: /dnt-jobs/
 Disallow: /dnt-library/
 Disallow: /dnt-modules/
-Disallow: /dnt-modules/
 Disallow: /dnt-system/
-Disallow: /dnt-system/
-Disallow: /dnt-test/
 Disallow: /dnt-test/
 Disallow: /dnt-view/
 Disallow: .gitignore

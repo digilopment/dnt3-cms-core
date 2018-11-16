@@ -50,7 +50,7 @@ class Settings {
 		   }
 		   return $arr;
 		}
-		return array(false);
+		return array();
     }
 	
 	
@@ -66,7 +66,7 @@ class Settings {
 		   }
 		   return $arr;
 		}
-		return array(false);
+		return array();
     }
 
     /**
@@ -113,6 +113,7 @@ class Settings {
 			include $conf;
 			if(function_exists("websettings")){
 				$result = array();
+				$existingKey = array();
 				$settingsData = websettings();
 				foreach($settingsData as $key=>$value){
 					$configKeys[] = $value['`key`'];
