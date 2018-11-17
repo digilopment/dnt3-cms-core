@@ -12,7 +12,7 @@ class Webhook {
      * 
      * @return type
      */
-    public function getSitemapModules($type = false) {
+    public function getSitemapModules($type = false, $vendorId = false) {
         $db = new Db;
         $ml = new MultyLanguage;
 		
@@ -26,6 +26,12 @@ class Webhook {
 			}
 		}
 		
+		if($vendorId){
+			$vendorId = $vendorId;
+		}else{
+			$vendorId = Vendor::getId();
+		}
+		
 		$query = "
 			SELECT * FROM `dnt_posts` 
 			LEFT JOIN `dnt_translates` ON `dnt_posts`.`id_entity` = `dnt_translates`.`translate_id` 
@@ -33,7 +39,7 @@ class Webhook {
 			AND `dnt_translates`.`type` = 'name_url' 
 			AND `dnt_posts`.`show` > '0' 
 			".$eQ."
-			AND `dnt_posts`.`vendor_id` = '".Vendor::getId()."'
+			AND `dnt_posts`.`vendor_id` = '".$vendorId."'
 			GROUP BY `dnt_posts`.`name_url`
 			";
 			
@@ -42,7 +48,7 @@ class Webhook {
 			WHERE `dnt_posts`.`type` = 'sitemap' 
 			AND `dnt_posts`.`show` > '0' 
 			".$eQ."
-			AND `dnt_posts`.`vendor_id` = '".Vendor::getId()."'
+			AND `dnt_posts`.`vendor_id` = '".$vendorId."'
 			GROUP BY `dnt_posts`.`name_url`
 			";
 			
