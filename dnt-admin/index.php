@@ -50,11 +50,15 @@ if($session->get("admin_logged")){
 		include_once "modules/".DEFAULT_MODUL_ADMIN."/webhook.php";
 	}
 }else{
-	$ip = $_SERVER['REMOTE_ADDR'];
-	$countryCode = Dnt::getCountryCode($ip);
-	if($countryCode == "sk"){
-		include "modules/login/webhook.php";
+	if(ENABLE_BACKEND_GEO_IP_SERVICE == true){
+		$ip = $_SERVER['REMOTE_ADDR'];
+		$countryCode = Dnt::getCountryCode($ip);
+		if($countryCode == "sk"){
+			include "modules/login/webhook.php";
+		}else{
+			include "modules/error/webhook.php";
+		}
 	}else{
-		include "modules/error/webhook.php";
+		include "modules/login/webhook.php";
 	}
 }

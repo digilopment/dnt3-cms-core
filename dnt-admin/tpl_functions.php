@@ -81,6 +81,10 @@
    <style>
    .login .account-wall {font-size: 17px;}
    .login .login-title {font-size: 24px;}
+   .login .inner {width:800px;}
+   @media screen and (max-width: 992px) {
+	 .login .inner {width:100%;}
+	}
    </style>
 	<body class="login">
 	<div class="outer">

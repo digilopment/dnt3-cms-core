@@ -98,6 +98,7 @@ define("ACCESS_TOKEN", "$YOUR_MESSNGER_ACCESS_TOKEN	");
  *
 */
 define("GEO_IP_SERVICE", "$YOUR_GEO_IP_SERVICE");
+define("ENABLE_BACKEND_GEO_IP_SERVICE", true);
 
 /* 
  *
