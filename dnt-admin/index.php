@@ -17,7 +17,6 @@ $adminUser = new AdminUser;
 
 
 //$session->set("logged", "1");
-
 if($session->get("admin_logged")){
 	
 	
@@ -51,5 +50,11 @@ if($session->get("admin_logged")){
 		include_once "modules/".DEFAULT_MODUL_ADMIN."/webhook.php";
 	}
 }else{
-	include "modules/login/webhook.php";
+	$ip = $_SERVER['REMOTE_ADDR'];
+	$countryCode = Dnt::getCountryCode($ip);
+	if($countryCode == "sk"){
+		include "modules/login/webhook.php";
+	}else{
+		include "modules/error/webhook.php";
+	}
 }

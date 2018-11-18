@@ -91,6 +91,13 @@ define("HUB_VERIFY_TOKEN", "$YOUR_MESSNGER_HUB_VERIFY_TOKEN");
 define("ACCESS_TOKEN", "$YOUR_MESSNGER_ACCESS_TOKEN	");
 
 
+/* 
+ *
+ *
+ *************GEO IP *************
+ *
+*/
+define("GEO_IP_SERVICE", "$YOUR_GEO_IP_SERVICE");
 
 /* 
  *

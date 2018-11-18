@@ -65,6 +65,42 @@
       <!-- END CK EDITOR -->
    </head>
 <?php } ?>
+<?php function errorAccess(){ ?>
+<!DOCTYPE html>
+<html lang="sk">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="">
+      <meta name="author" content="designdnt">
+      <title>Systém | Designdnt</title>
+      <link rel="icon" href="<?php echo WWW_PATH_ADMIN; ?>img/favicon.ico">
+      <link rel="stylesheet" href="<?php echo WWW_PATH_ADMIN; ?>css/bootstrap.min.css">
+      <link rel="stylesheet" href="<?php echo WWW_PATH_ADMIN; ?>css/main.css">
+   </head>
+   <style>
+   .login .account-wall {font-size: 17px;}
+   .login .login-title {font-size: 24px;}
+   </style>
+	<body class="login">
+	<div class="outer">
+		<div class="middle">
+			<div class="inner" style="width:800px">
+				<div class="row">
+					<div class="col-lg-12">
+						<h3 class="text-center login-title">Access error / <strong>licence error</strong></h3>
+						<div class="account-wall text-center">
+							<img class="profile-img" src="<?php echo WWW_PATH_ADMIN; ?>img/designdnt_singl_dark.png" alt="">
+							<strong>Sorry, you do not have a licence to access and use this application in other country.</strong> <br/>This application was built for slovak usage. Please contact slovak support.
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+   </body>
+</html>
+<?php } ?>
 <?php function getLangNavigation(){ ?>
  <ul class="nav nav-tabs">
    <li class="active"><a href="#home-lang" data-toggle="tab">Defaultný jazyk</a></li>
