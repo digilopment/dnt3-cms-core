@@ -292,8 +292,8 @@ class DntLog {
 		
 	}
 	
+	/** return distinct ip **/
 	public function getUniqueAccess($andWhere){
-		
 		$db = new DB();
 		$query = "SELECT DISTINCT `REMOTE_ADDR` FROM `dnt_logs` WHERE vendor_id = ".Vendor::getId()." $andWhere";
 		return $db->num_rows($query);
@@ -307,7 +307,6 @@ class DntLog {
 	}
 	
 	public function getUniqueUsers($andWhere){
-		
 		$db = new DB();
 		$query = "SELECT DISTINCT `email` FROM `dnt_registred_users` WHERE vendor_id = ".Vendor::getId()." $andWhere";
 		return $db->num_rows($query);

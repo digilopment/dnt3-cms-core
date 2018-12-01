@@ -90,6 +90,13 @@ define("IS_INIT", false);
 define("HUB_VERIFY_TOKEN", "$YOUR_MESSNGER_HUB_VERIFY_TOKEN");
 define("ACCESS_TOKEN", "$YOUR_MESSNGER_ACCESS_TOKEN	");
 
+/* 
+ *
+ *
+ *************GEO IP *************
+ *
+*/
+define("ENABLE_COOKIES_STRIP", false);
 
 /* 
  *
@@ -98,7 +105,7 @@ define("ACCESS_TOKEN", "$YOUR_MESSNGER_ACCESS_TOKEN	");
  *
 */
 define("GEO_IP_SERVICE", "$YOUR_GEO_IP_SERVICE");
-define("ENABLE_BACKEND_GEO_IP_SERVICE", true);
+define("ENABLE_BACKEND_GEO_IP_SERVICE", false);
 
 /* 
  *

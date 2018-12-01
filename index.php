@@ -26,8 +26,8 @@ $rest->redirectToDomain(Settings::get("still_redirect_to_domain"));
 if ($modul) {
     $dntLog->add(array(
         "http_response" => 200,
-        "system_status" => "log",
-        "msg"           => "Default Log",
+        "system_status" => "web_log",
+        "msg"           => "Web Log 200",
     ));
 
     /**
@@ -45,8 +45,8 @@ if ($modul) {
 } else {
     $dntLog->add(array(
         "http_response" => 404,
-        "system_status" => "log",
-        "msg"           => "Default Log",
+        "system_status" => "web_log",
+        "msg"           => "Web Log 404",
     ));
     $rest->loadMyModul("default");
 }

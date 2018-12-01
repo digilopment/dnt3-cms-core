@@ -6,11 +6,13 @@ if(isset($_POST['sent'])){
 	$template 	= $rest->post("template");
 	$cat_id 	= $rest->post("users");
 	$message 	= $rest->post("message");
+	$url_external= $rest->post("url_external");
 	
 	$session->set("subject", $subject);
 	$session->set("template", $template);
 	$session->set("cat_id", $cat_id);
 	$session->set("message", $message);
+	$session->set("url_external", $url_external);
 }
 
 $table 	= "dnt_mailer_mails";
@@ -35,11 +37,22 @@ if($post_id){
 	$dntMailer		= new Mailer;
 	$sender_email	= dnt::getPostParam("dnt_mailer_mails", "email", $post_id);
 	$msg 			= $session->get("message");
+	$template 		= $session->get("template");
 	$heading 		= $session->get("subject");
 	$to_finish		= $sending_mail - $sended_mails;
 
 	$dntMailer->set_recipient(array($sender_email));
-	$dntMailer->set_msg($msg);
+	
+	if($session->get("message") != "NULL"){
+		$content =  $session->get("message")."";
+	}
+	if($session->get("url_external") != "NULL"){
+		$content =  file_get_contents($session->get("url_external"));
+	}
+	if($session->get("template") != "NULL"){
+		$content =  $session->get("template")."";
+	}
+	$dntMailer->set_msg($content);
 	$dntMailer->set_subject($heading);
 	$dntMailer->set_sender_name($heading);
 	$dntMailer->sent_email();

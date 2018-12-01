@@ -143,6 +143,8 @@
             ?>
       </select>
       <br/>
+	  <input type="text" name="url_external" class="form-control" placeholder="Url: vzdialenej šablony"/>
+      <br/>
       <select name="users" id="cname" class="form-control" minlength="2" required="">
          <option value="NULL">(vyberte kategóriu prijmateľov)</option>
 		  <?php
