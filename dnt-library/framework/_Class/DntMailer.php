@@ -114,14 +114,21 @@ class Mailer {
         $headers .= 'Content-type: text/html; charset=windows-1250' . "\r\n";
         $headers .= 'To:  <' . $to . '>' . "\r\n"; // dalsi mail sa oddeluje ciarkou
         $headers .= 'From: ' . $od_meno . ' <' . $od_email . '>' . "\r\n";
-
-
+		
+		if(Settings::show("send_grid_api_key") == true && Settings::show("send_grid_api_template_id") == true){
+			$SEND_GRID_API_KEY = Settings::get("send_grid_api_key");
+			$SEND_GRID_API_TEMPLATE_ID = Settings::get("send_grid_api_template_id");
+		}else{
+			$SEND_GRID_API_KEY = SEND_GRID_API_KEY;
+			$SEND_GRID_API_TEMPLATE_ID = SEND_GRID_API_TEMPLATE_ID;
+		}
+		
         if (SEND_EMAIL_VIA == "internal") {
             @mail($to, $subject, $message, $headers);
         } elseif (SEND_EMAIL_VIA == "send_grid") {
             $js = array(
                 'sub' => array(':name' => array('Elmer')),
-                'filters' => array('templates' => array('settings' => array('enable' => 1, 'template_id' => SEND_GRID_API_TEMPLATE_ID)))
+                'filters' => array('templates' => array('settings' => array('enable' => 1, 'template_id' => $SEND_GRID_API_TEMPLATE_ID)))
             );
 
             $params = array(
@@ -140,7 +147,7 @@ class Mailer {
             // Tell PHP not to use SSLv3 (instead opting for TLS)
             //curl_setopt($session, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
             curl_setopt($session, CURLOPT_SSL_VERIFYPEER, false);
-            curl_setopt($session, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . SEND_GRID_API_KEY));
+            curl_setopt($session, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $SEND_GRID_API_KEY));
             // Tell curl to use HTTP POST
             curl_setopt($session, CURLOPT_POST, true);
             // Tell curl that this is the body of the POST

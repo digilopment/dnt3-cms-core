@@ -832,7 +832,7 @@ class Dnt {
         $db = new Db;
         $rest = new Rest;
 
-        $query = "SELECT `id_entity` FROM `$table` WHERE `id_entity` > '$currentId' AND `vendor_id` = '" . Vendor::getId() . "' $and_where LIMIT 1";
+        $query = "SELECT `id_entity` FROM `$table` WHERE `id_entity` > '$currentId' AND `vendor_id` = '" . Vendor::getId() . "' $and_where ORDER BY id_entity asc LIMIT 1";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 return $row['id_entity'];

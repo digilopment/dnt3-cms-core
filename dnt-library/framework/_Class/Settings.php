@@ -25,6 +25,16 @@ class Settings {
         }
     }
 	
+	 public static function show($key) {
+        $db = new Db;
+        $query = "SELECT * FROM dnt_settings WHERE `key` = '" . $key . "' AND `vendor_id` = '" . Vendor::getId() . "' AND `show` = '1'";
+        if ($db->num_rows($query) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+	
 	public function customMeta($catId = false) {
         $db = new Db;
 		if($catId){
