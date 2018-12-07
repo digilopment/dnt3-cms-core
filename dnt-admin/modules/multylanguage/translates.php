@@ -16,6 +16,11 @@ $rest = new Rest;
                   <span class="label label-primary bg-green" style="padding: 5px;"><big>PRIDAŤ PREKLAD</big></span>
                   </a>
                </li>
+			   <?php /*<li class="post_type" style="text-decoration: underline">
+                  <a href="index.php?src=multylanguage&action=translate-all">
+                  <span class="label label-primary bg-green" style="padding: 5px;"><big>Preložiť všetko</big></span>
+                  </a>
+               </li>*/?>
             </ul>
          </section>
          <!-- BEGIN CUSTOM TABLE -->
