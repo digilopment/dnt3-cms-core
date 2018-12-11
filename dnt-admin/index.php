@@ -50,15 +50,15 @@ if($session->get("admin_logged")){
 		include_once "modules/".DEFAULT_MODUL_ADMIN."/webhook.php";
 	}
 }else{
-	if(ENABLE_BACKEND_GEO_IP_SERVICE == true){
-		$ip = $_SERVER['REMOTE_ADDR'];
-		$countryCode = Dnt::getCountryCode($ip);
-		if($countryCode == "sk"){
-			include "modules/login/webhook.php";
+	$ip = $_SERVER['REMOTE_ADDR'];
+	$countryCode = Dnt::getCountryCode($ip);
+	if(ENABLE_BACKEND_GEO_IP_SERVICE != true || $countryCode == "sk"){
+		if($rest->get('src') == "forgotten-password"){
+			include "modules/forgotten-password/webhook.php";
 		}else{
-			include "modules/error/webhook.php";
+			include "modules/login/webhook.php";
 		}
 	}else{
-		include "modules/login/webhook.php";
+		include "modules/error/webhook.php";
 	}
 }

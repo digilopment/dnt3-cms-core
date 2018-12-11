@@ -65,7 +65,7 @@
       <!-- END CK EDITOR -->
    </head>
 <?php } ?>
-<?php function errorAccess(){ ?>
+<?php function errorAccess($errTitle, $errContent){ ?>
 <!DOCTYPE html>
 <html lang="sk">
    <head>
@@ -92,10 +92,10 @@
 			<div class="inner" style="width:800px">
 				<div class="row">
 					<div class="col-lg-12">
-						<h3 class="text-center login-title">Access error / <strong>licence error</strong></h3>
+						<h3 class="text-center login-title"><?php echo $errTitle;?></h3>
 						<div class="account-wall text-center">
 							<img class="profile-img" src="<?php echo WWW_PATH_ADMIN; ?>img/designdnt_singl_dark.png" alt="">
-							<strong>Sorry, you do not have a licence to access and use this application in other country.</strong> <br/>This application was built for slovak usage. Please contact slovak support.
+							<?php echo $errContent;?>
 						</div>
 					</div>
 				</div>

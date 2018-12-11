@@ -31,6 +31,32 @@ class AdminUser extends Image {
             return false;
         }
     }
+	
+	 public function emailExists($email, $vendor_id) {
+        $db = new Db;
+        $query = "SELECT email FROM dnt_users WHERE email = '" . $email . "' AND vendor_id = '" . $vendor_id . "'";
+        if ($db->num_rows($query) > 0) {
+			return true;
+        } else {
+            return false;
+        }
+    }
+	
+	
+	public function updatePassword($vendor_id, $email, $pass) {
+        $db = new Db;
+		
+	    $db->update(
+			"dnt_users",	//table
+			array(	//set
+				'pass' => md5($pass)
+				), 
+			array( 	//where
+				'vendor_id' 	=> $vendor_id, 
+				'email' 		=> $email
+			)
+		);
+    }
     
     /**
      * 
