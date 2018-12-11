@@ -28,6 +28,10 @@ elseif($rest->get("action") == "sent_mail") //edit and update email
 {
 	include "sent_mail.php";
 }
+elseif($rest->get("action") == "show_hide") //edit and update email
+{
+	include "show_hide.php";
+}
 else
 {
 	include "tpl.php"; //default template

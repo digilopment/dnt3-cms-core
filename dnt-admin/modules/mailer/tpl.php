@@ -199,12 +199,13 @@
                   <tr>
                      <th>#</th>
                      <th>Meno</th>
-                     <th>Priezvisko</th>
-                     <th style="width: 30%;">Email</th>
+                     <th tyle="width: 25%;">Priezvisko</th>
+                     <th style="width: 25%;">Email</th>
                      <!--<th>Dátum pridania</th>-->
                      <th>Kategória</th>
                      <th></th>
-                     <th>Akcia</th>
+                     <th>Show</th>
+                     <th>Vymazať</th>
                   </tr>
                </thead>
                <tbody>
@@ -244,6 +245,11 @@
                         <td>
                            <?php echo Dnt::returnInput();?>
                            <input type="submit" name="sent" value="Upraviť" class="label-primary bg-green" />
+                        </td>
+						<td>
+							<a href="<?php echo AdminMailer::url("show_hide", $cat_id, false, false, $post_id, $page) ?>">
+							<i class="<?php echo admin_zobrazenie_stav($row['show']);?>"></i>
+						 </a>
                         </td>
                         <td>
                            <a href="<?php echo AdminMailer::url("del_mail", $cat_id, false, false, $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
