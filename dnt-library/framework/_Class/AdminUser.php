@@ -32,6 +32,21 @@ class AdminUser extends Image {
         }
     }
 	
+	 public function updateDatetime($vendor_id, $email){
+		$db = new Db;
+		
+	    $db->update(
+			"dnt_users",	//table
+			array(	//set
+				'datetime_update' => Dnt::datetime()
+				), 
+			array( 	//where
+				'vendor_id' 	=> $vendor_id, 
+				'email' 		=> $email
+			)
+		);
+	}
+	
 	 public function emailExists($email, $vendor_id) {
         $db = new Db;
         $query = "SELECT email FROM dnt_users WHERE email = '" . $email . "' AND vendor_id = '" . $vendor_id . "'";
@@ -118,10 +133,10 @@ class AdminUser extends Image {
      * @param type $id
      * @return boolean
      */
-    public function dataById($type, $column, $id) {
+    public function dataById($type, $column, $email) {
         $db = new Db;
         $session = new Sessions();
-        $query = "SELECT $column FROM dnt_users WHERE type = '$type' AND id = '" . $id . "' AND vendor_id = '" . Vendor::getId() . "'";
+        $query = "SELECT $column FROM dnt_users WHERE type = '$type' AND email = '" . $email . "' AND vendor_id = '" . Vendor::getId() . "'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 return $row[$column];

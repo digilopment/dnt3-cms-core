@@ -4,7 +4,7 @@ if(isset($_POST['sent'])){
 	$email 		= $rest->post("email");
 	$vendorId 	= Vendor::getId();
 	if(AdminUser::emailExists($email, $vendorId)){
-		$changePasswordUrl = WWW_PATH."dnt-admin/index.php?src=forgotten-password&action=confirm&email=".urlencode(base64_encode($email))."&vendor=".urlencode(base64_encode($vendorId));
+		$changePasswordUrl = WWW_PATH."dnt-admin/index.php?src=forgotten-password&action=confirm&email=".urlencode(base64_encode($email))."&vendor=".urlencode(base64_encode($vendorId))."&datetime=".urlencode(base64_encode(Dnt::datetime()));
 		
 		//echo base64_decode(urldecode(    urlencode(base64_encode($email))    ));
 		//echo $changePasswordUrl;
