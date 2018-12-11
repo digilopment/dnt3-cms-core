@@ -18,12 +18,19 @@
 	
 	
 	$agentUniq = $logs->getCountOs("GROUP BY REMOTE_ADDR");
-	$osArrUniq 		= $agentUniq['os'];
-	$browserArrUniq = $agentUniq['browser'];
-	
-	$agent = $logs->getCountOs();
-	$osArr 		= $agent['os'];
-	$browserArr = $agent['browser'];
+	if(isset($agentUniq['os'])){
+		$osArrUniq 		= $agentUniq['os'];
+		$browserArrUniq = $agentUniq['browser'];
+		
+		$agent = $logs->getCountOs();
+		$osArr 		= $agent['os'];
+		$browserArr = $agent['browser'];
+	}else{
+		$osArrUniq 		= array();
+		$browserArrUniq = array();
+		$osArr 		= array();
+		$browserArr = array();
+	}
 	
 ?>
 <section class="content">
