@@ -165,16 +165,19 @@ class Rest {
     public function loadModul() {
 			$module = $this->getModul();
             //$function = "dnt-modules/" . $module . "/functions.php";
-            //$template = "dnt-modules/" . $module . "/webhook.php";
 			
 			$layout = Vendor::getLayout();
 			$function = "dnt-view/layouts/" . $layout . "/modules/".$module."/functions.php";
+			$webhookModule = "dnt-modules/" . $module . "/webhook.php";
 			$template = "dnt-view/layouts/" . $layout . "/modules/".$module."/webhook.php";
             
 			if (file_exists($function))
                 include $function;
-            if (file_exists($template))
-                include $template;
+			if(file_exists($webhookModule)){
+				include $webhookModule;
+			}elseif(file_exists($template)){
+				 include $webhookModule;
+			}
     }
 
     /**
@@ -195,10 +198,14 @@ class Rest {
 		$layout = Vendor::getLayout();
 		$function = "dnt-view/layouts/" . $layout . "/modules/".$module."/functions.php";
 		$template = "dnt-view/layouts/" . $layout . "/modules/".$module."/webhook.php";
-        if (file_exists($function))
-            include $function;
-        if (file_exists($template))
-            include $template;
+		$webhookModule = "dnt-modules/" . $module . "/webhook.php";
+		if (file_exists($function))
+			include $function;
+		if(file_exists($webhookModule)){
+			include $webhookModule;
+		}elseif(file_exists($template)){
+			 include $template;
+		}
     }
 
     /**

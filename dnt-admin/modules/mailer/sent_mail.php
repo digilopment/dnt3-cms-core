@@ -70,7 +70,7 @@ if($post_id){
 	$dntMailer->set_msg($content);
 	$dntMailer->set_subject($heading);
 	$dntMailer->set_sender_name(false);
-	//$dntMailer->sent_email();
+	$dntMailer->sent_email();
 	tpl_sending_mails($to_finish, $sender_email, $next_id);
 }else{
 	include "tpl_functions.php";
