@@ -26,7 +26,6 @@
                      <th>Názov postu</th>
                      <th>Editovať vlastnosti webu</th>
                      <th>Zobrazenie na pracovnej adrese</th>
-                     <th>Zobrazenie na developerskom serveri</th>
                      <th>Zobrazenie na vlastnej doméne</th>
                      <th>Globálne vlastnosti webu</th>
                   </tr>
@@ -44,12 +43,9 @@
                   <tr>
                      <td><?php echo $row['id_entity']; ?></td>
                      <td style="max-width: 500px;"><b><a target="_blank" href="<?php echo $adminUrl; ?>"><?php echo $row['name']; ?></a></b></td>
-                     <td><a href=""><i class="fa fa-pencil bg-blue action"></i></a></td>
+                     <td><a href="<?php echo $adminUrl; ?>"><i class="fa fa-pencil bg-blue action"></i></a></td>
                      <td>
                         <i class="fa fa-arrow-right bg-green action"></i> <a href="<?php echo $webUrl; ?>" target="_blank"><?php echo $webUrl; ?></a>
-                     </td>
-                     <td>
-                        <i class="fa fa-arrow-right bg-green action"></i> <a href="<?php echo $develUrl; ?>" target="_blank"><?php echo $develUrl; ?></a>
                      </td>
                      <td>
                         <?php if($row['show_real_url'] == 1){?>

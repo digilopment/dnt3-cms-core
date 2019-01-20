@@ -167,15 +167,29 @@ elseif(isset($_POST['odoslat_logo'])){
 				);
 			}
 		}else{
-			$db->update(
+			
+			if($row['key'] == "youtube_sw"){
+			//$files 	= 'userfile_'.$row['id_entity']; 
+				$db->update(
 				"dnt_settings",	//table
-			array(	//set
-				'value' => $rest->post("key_" . $row['id_entity'])
-				), 
-			array( 	//where
-					'id_entity' 	=> $row['id_entity'], 
-					'`vendor_id`' 	=> Vendor::getId())
-			);
+					array(	//set
+						'value' => Dnt::youtubeVideoToEmbed($rest->post("key_" . $row['id_entity'])),
+						), 
+					array( 	//where
+							'id_entity' 	=> $row['id_entity'], 
+							'`vendor_id`' 	=> Vendor::getId())
+					);
+			}else{
+				$db->update(
+					"dnt_settings",	//table
+				array(	//set
+					'value' => $rest->post("key_" . $row['id_entity'])
+					), 
+				array( 	//where
+						'id_entity' 	=> $row['id_entity'], 
+						'`vendor_id`' 	=> Vendor::getId())
+				);
+			}
 		}
 		
 		$db->update(
