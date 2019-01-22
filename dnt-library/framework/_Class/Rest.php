@@ -74,23 +74,38 @@ class Rest {
      * @return boolean
      */
     public function webhook($thisArg) {
-        if (isset($_GET[SRC])) {
+		if(MULTY_LANGUAGE){
+			$defLang = DEAFULT_LANG;
+			$langArray = array("sk", "cz", "pl", "en", "de", "at", "nl", "dk");
+		}
+		else{
+			$defLang = "0";
+			if($thisArg == 1){
+				$langArray = MultyLanguage::activeVendorLangs();
+			}else{
+				$langArray = array("sk", "cz", "pl", "en", "de", "at", "nl", "dk");
+			}
+			//var_dump($langArray);
+		}
+		if (isset($_GET[SRC])) {
             $arr = array();
             $src = $_GET[SRC];
             $arr = explode("/", $src);
-            if ($arr[0] == "sk" || $arr[0] == "en" || $arr[0] == "de" || $arr[0] == "cz") {
-                if (isset($arr[$thisArg])) {
-                    return $arr[$thisArg];
-                } else {
-                    return false;
-                }
-            } else {
-                $arr = explode("/", "sk/" . $src);
-                if (isset($arr[$thisArg])) {
-                    return $arr[$thisArg];
-                } else {
-                    return false;
-                }
+			if(is_array($langArray)){
+				if(in_array($arr[0], $langArray)){
+					if (isset($arr[$thisArg])) {
+						return $arr[$thisArg];
+					} else {
+						return false;
+					}
+				} else {
+					$arr = explode("/", $defLang."/" . $src);
+					if (isset($arr[$thisArg])) {
+						return $arr[$thisArg];
+					} else {
+						return false;
+					}
+				}
             }
         } else {
             if ($thisArg == 0) {
@@ -101,8 +116,6 @@ class Rest {
             }
         }
     }
-
-	
 		
 	public static function getModulUrl($module){
 		$webhook = new Webhook();

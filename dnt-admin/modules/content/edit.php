@@ -117,7 +117,7 @@
                <div class="col">
 			   
 			   
-				<?php echo getLangNavigation(); ?>
+				<?php if(MULTY_LANGUAGE != false) getLangNavigation(); ?>
    
                   <!-- tabs begin here! -->
                   <?php /*navBarLang($dntDb);*/?>
@@ -169,7 +169,7 @@
                         <br/>
                      </div>
 					 
-                     <?php contentLanguagesVariations(); /*getTabLanguages(true, true, true, $post['id'], "dnt_posts", $dntDb);*/?>
+                     <?php if(MULTY_LANGUAGE != false) contentLanguagesVariations(); /*getTabLanguages(true, true, true, $post['id'], "dnt_posts", $dntDb);*/?>
                   </div>
                   <!-- end here -->
 				  <?php echo Dnt::returnInput();?>

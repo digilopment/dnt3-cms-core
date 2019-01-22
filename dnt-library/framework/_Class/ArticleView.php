@@ -255,7 +255,7 @@ class ArticleView extends AdminContent {
 		$lang 	= new MultyLanguage;
 		
 		//$Q_column = "l_translate";
-		if(DEAFULT_LANG == $lang->getLang()){
+		if(DEAFULT_LANG == $lang->getLang() || MULTY_LANGUAGE == false){
 			$Q_column = $column;
 			$query = "
 				SELECT 

@@ -53,23 +53,35 @@ class Vendor {
 
 		$query = "SELECT `id_entity`,`real_url`, `show_real_url` FROM `dnt_vendors`";
 		if ($db->num_rows($query) > 0) {
+			
+			//ORIGIN DOMAIN PARSER
 			$data = WWW_PATH;
 			$data = str_replace("www.", "", $data);
 			$data = explode("://", $data);
 			$ORIGIN_PROTOCOL = "".$data[0]."://";
 			$data = explode("/", $data[1]);
-			$ORIGIN_DOMAIN = $data[0];
-		
+			$ORIGIN_DOMAIN = $data[0]."".WWW_FOLDERS."/".$rest->webhook(0);
+			$ORIGIN_DOMAIN_LNG = $rest->webhook(0);
+			
             foreach ($db->get_results($query) as $row) {
 				if($row['show_real_url'] == 1){
+					//DB DOMAIN PARSER
 					$data = $row['real_url'];
 					$data = str_replace("www.", "", $data);
 					$data = explode("://", $data);
+					$fd   = $data[1];
 					$DB_PROTOCOL = "".$data[0]."://";
 					$data = explode("/", $data[1]);
-					$DB_DOMAIN = $data[0];
+					$DB_DOMAIN = $data[0]."".WWW_FOLDERS;
+					$DB_DOMAIN_FULL = $fd;
 					
-					if($ORIGIN_DOMAIN == $DB_DOMAIN){
+						
+						//var_dump("OR => ".$ORIGIN_DOMAIN);
+						//var_dump("DB => ".$DB_DOMAIN_FULL);
+					
+					
+					
+					if($ORIGIN_DOMAIN == $DB_DOMAIN_FULL){					
 						$vendor_id = $row['id_entity'];
 						$GLOBALS['VENDOR_ID'] = $vendor_id;
 						$GLOBALS['ORIGIN_DOMAIN'] = $ORIGIN_DOMAIN;

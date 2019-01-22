@@ -2,13 +2,13 @@
 $post_id = $rest->get("post_id");
  $query = "SELECT * FROM `dnt_languages` WHERE 
                    parent_id = '0' AND
+				   id_entity = '".$post_id."' AND
                    vendor_id = '".Vendor::getId()."' ORDER BY id_entity asc"; 
 if($db->num_rows($query)>0){
  foreach($db->get_results($query) as $row){
      $show = $row['show'];
  }
 }
-
 if($show == 0){
     $set_show = 1;
 }

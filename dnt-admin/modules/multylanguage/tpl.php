@@ -51,13 +51,16 @@
 						 </span>
 					  </td>
 					  <td>
-					  <?php if($row['slug'] == DEAFULT_LANG){ ?>
+					   <a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$rest->get('src')."&action=show_hide&post_id=".$row['id_entity']; ?>">
+						 <i class="<?php echo admin_zobrazenie_stav($row['show']);?>"></i>
+					  <?php /*<?php if($row['slug'] == DEAFULT_LANG){ ?>
 						<i title="" class="fa fa-arrow-right bg-blue action"></i></a>
 					  <?php }else{ ?>
 						 <a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$rest->get('src')."&action=show_hide&post_id=".$row['id_entity']; ?>">
 						 <i class="<?php echo admin_zobrazenie_stav($row['show']);?>"></i>
 						 </a>
 					  <?php } ?>
+					  */?>
 					  </td>
 				   </tr>
                <?php

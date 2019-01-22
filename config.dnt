@@ -12,6 +12,7 @@ define( 'DB_NAME', 'dnt3' ); 		// set database name
 
 
 
+
 /* 
  *
  *
@@ -60,6 +61,7 @@ define( 'CACHE_URL', '0' );
  ************* DEVELOPERS SETTINGS ********************************************************************************
  *
 */
+define( 'MULTY_LANGUAGE', false ); //NEX LANGUAGE WORKS AS NEXT WEBPAGE
 define( 'DEAFULT_LANG', 'sk' ); // set system lang
 define( 'SRC', 'src' ); // ser $_GET['{eny}']
 define( 'SEND_ERRORS_TO', '' ); //set email notification email address

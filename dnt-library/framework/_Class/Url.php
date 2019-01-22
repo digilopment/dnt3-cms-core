@@ -36,7 +36,7 @@ class Url {
     public function get($url) {
         if ($url == "WWW_PATH") {
             $lang = MultyLanguage::getLang();
-            if ($lang == DEAFULT_LANG) {
+            if ($lang == DEAFULT_LANG || MULTY_LANGUAGE == false) {
                 $lg = false;
             } else {
                 $lg = $lang . "/";

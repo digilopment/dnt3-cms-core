@@ -15,6 +15,32 @@ class MultyLanguage {
      */
 	public $countActiveLangs = "";
 	
+	public function activeVendorLangsQuery(){
+		$db = new Db;
+		if(count($GLOBALS['ACTIVE_LANGS_ARR'])>0){
+			return $GLOBALS['ACTIVE_LANGS_ARR'];
+		}else{
+			
+			//$q = "SELECTs * FROMs dnt_languages WHEREs `show` = '1' AND vendor_id = '" . Vendor::getId() . "'";
+			$q = "SELECT * FROM dnt_languages WHERE `show` = '1' AND vendor_id = '" . Vendor::getId() . "'";
+			if ($db->num_rows($q) > 0) {
+				foreach ($db->get_results($q) as $row) {
+					$data[] = $row['slug'];
+				}
+			} else {
+				$data[] = array();
+			}
+			
+			$GLOBALS['ACTIVE_LANGS_ARR'] = $data;
+			return $data;
+		}
+	}
+	
+	public function activeVendorLangs(){
+		//return array("sk", "de");
+		//return $GLOBALS['ACTIVE_LANGS_ARR'];
+		return self::activeVendorLangsQuery();
+	}
     protected function prepare_query($is_limit) {
         $db = new Db();
 
