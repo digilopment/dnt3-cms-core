@@ -37,13 +37,15 @@
                    ?>
 				   <tr>
 					  <td><?php echo $row['id_entity']; ?></td>
-					  <td><img src="<?php echo WWW_PATH_ADMIN?>img/flags/<?php echo $row['img']; ?>"></td>
+					  <td><img src="<?php echo WWW_PATH_ADMIN?>img/flags/<?php echo $row['img']; ?>.png"></td>
 					  <td><b>
-					   <?php if($row['slug'] == DEAFULT_LANG){ ?>
+					   <?php /*<?php if($row['slug'] == DEAFULT_LANG){ ?>
 					   Defaultný jazyk - <?php echo DEAFULT_LANG; ?>
 					   <?php }else{ ?>
 					   <?php echo $row['name']?>
 					   <?php } ?>
+					   */?>
+					   <?php echo $row['name']?>
 					   </b></td>
 					  <td>
 						 <span class="">

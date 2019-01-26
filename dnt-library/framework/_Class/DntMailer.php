@@ -124,13 +124,15 @@ class Mailer {
 		}
 		
         if (SEND_EMAIL_VIA == "internal") {
+			$to = str_replace(" ", "", $to);
             @mail($to, $subject, $message, $headers);
         } elseif (SEND_EMAIL_VIA == "send_grid") {
             $js = array(
                 'sub' => array(':name' => array('Elmer')),
                 'filters' => array('templates' => array('settings' => array('enable' => 1, 'template_id' => $SEND_GRID_API_TEMPLATE_ID)))
             );
-
+			$to = str_replace(" ", "", $to);
+			$od_email = str_replace(" ", "", $od_email);
             $params = array(
                 'to' => $to,
                 'toname' => $to,

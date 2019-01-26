@@ -6,7 +6,8 @@ if(isset($_POST['sent'])){
 	$post_id	= $rest->get("post_id");
 	$name		= $rest->post("name");
 	$surname 	= $rest->post("surname");
-	$email 		= $rest->post("email");
+	$email 		= str_replace(" ", "", $rest->post("email"));
+	$title 		= $rest->post("title");
 	$cat_id 	= $rest->post("cat_id");
 	$return 	= $rest->post("return");
 	$table 		= "dnt_mailer_mails";
@@ -17,6 +18,7 @@ if(isset($_POST['sent'])){
 	 $db->update(
 		$table,	//table
 		array(	//set
+			'title' => $title,
 			'name' => $name,
 			'surname' => $surname,
 			'email' => $email,

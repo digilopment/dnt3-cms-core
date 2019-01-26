@@ -66,6 +66,8 @@ class AdminMailer {
 
         if (isset($_GET['filter']) && $_GET['filter'] != "")
             $typ = "AND cat_id = '" . $_GET['filter'] . "'";
+		elseif (isset($_GET['search']) && $_GET['src'] == "mailer")
+			$typ = "AND `email` LIKE '%" . Dnt::name_url($_GET['search']) . "%'";
         elseif (isset($_GET['search'])) {
             $typ = "AND `name_url` LIKE '%" . Dnt::name_url($_GET['search']) . "%'";
         } else
