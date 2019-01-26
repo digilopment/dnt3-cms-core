@@ -85,38 +85,37 @@ class DntLog {
         if (isset($arr['http_response'])) {
             if ($http_request == $httpCacheStatus) {
                 header('Cache-Control: cache');
-                header('Cache-Control: cache');
                 header("Expires: wait-time " . CACHE_TIME_SEC . "sec");
                 header("Pragma: cache");
-                header('Dnt-Cache-Time: ' . CACHE_TIME_SEC . "sec");
+                header('X-Dnt-Cache-Time: ' . CACHE_TIME_SEC . "sec");
             }
             //header('Content-Type: text/html');
             http_response_code($arr['http_response']);
-            header('Dnt-Request-System: ' . GET_SYSTEM_NAME);
-            header('Dnt-Request-Url: ' . WWW_FULL_PATH);
-            header('Dnt-Framework: ' . GET_SYSTEM_VERSION);
-            header('Dnt-Version: ' . GET_SYSTEM_VERSION);
+            header('X-Dnt-Request-System: ' . GET_SYSTEM_NAME);
+            header('X-Dnt-Request-Url: ' . WWW_FULL_PATH);
+            header('X-Dnt-Framework: ' . GET_SYSTEM_VERSION);
+            header('X-Dnt-Version: ' . GET_SYSTEM_VERSION);
 
-            header('Dnt-Log: ' . $_SESSION['page_id']);
+            header('X-Dnt-dnt3-Log: ' . $_SESSION['page_id']);
             //header('Dnt-Vendor: '.$dntVendor->getVendorUrl());
             //header('Dnt-Vendor-Id: '.$dntVendor->getVendorId());
 
-            header('Dnt-Server-Frontend: tom_F::brick-01');
-            header('Dnt-Server-Backend: tom_B::brick-01');
-            header('Dnt-Server-CDN: tom_C::brick-01');
-            header('Dnt-Server-Varnish: tom_V::brick-01 @path/dnt-cache');
-            //header('Dnt-Database-Model: Claster');
+            header('X-Dnt-Server-Frontend: tom_F::brick-01');
+            header('X-Dnt-Server-Backend: tom_B::brick-01');
+            header('X-Dnt-Server-CDN: tom_C::brick-01');
+            header('X-Dnt-Server-Cache-Static: tom_S::brick-01 @path/dnt-cache');
+            header('X-Dnt-Platform: MultiDomain Application Platform');
             //header('Dnt-Composer: '.GET_SYSTEM_COMPOSER);
             //header('Dnt-Engine-Pattern: '.GET_SYSTEM_ENGINE_PATTERN);
             //header('Dnt-Search-Engine: '.GET_SYSTEM_SEARCH_ENGINE);
             //header('Dnt-Components: '.GET_SYSTEM_COMPONENTS);
             //header('Dnt-Varnish: no-varnish');
-            header('Dnt-Cache: ' . $headerMsgCache);
+            header('X-Dnt-Cache: ' . $headerMsgCache);
             //header('Dnt-Admin: Open');
 
 
-            header('Dnt-Subsystem-Packages: dnt_logs(c), dnt_cache(c) ');
-            header('Dnt-Author: Designdnt(c) ');
+            header('X-Dnt-Subsystem-Packages: dnt_logs(c), dnt_cache(c) ');
+            header('X-Dnt-Author: Tomas Doubek, Dnt3.ltd ');
             //header('Server: Designdnt3 ');
         }
     }

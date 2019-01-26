@@ -32,10 +32,10 @@ define( 'DEFAULT_MODUL_ADMIN', 'settings' ); // set system name
  *
 */
 define( 'GET_SYSTEM_NAME', 'Designdnt 3' );
-define( 'GET_SYSTEM_VERSION', 'dnt_5.20, Marec 2017' );
-define( 'GET_SYSTEM_COMPOSER', 'dnt_1.13' );
+define( 'GET_SYSTEM_VERSION', '7.1.4, January 2019' );
+define( 'GET_SYSTEM_COMPOSER', '7.1.4' );
 define( 'GET_SYSTEM_ENGINE_PATTERN', 'Model-View-Controller (MVC)' );
-define( 'GET_SYSTEM_SEARCH_ENGINE', 'Dnt-SE-keys, zostava 1200' );
+define( 'GET_SYSTEM_SEARCH_ENGINE', 'Dnt-SE-keys, zostava 7140' );
 define( 'GET_SYSTEM_COMPONENTS', 'DntJson, DntSoap, DntXml, DntRss, DntXSSLoader' );
 
 
