@@ -242,6 +242,7 @@ $webhook = new Webhook;
 						<?php 
 						$service = Settings::get("startovaci_modul");
 						echo '<option selected value="">Default (z konfigu)</option>';
+						
 						foreach($webhook->services() as $key => $serviceIndex){
 							if($key == $service){
 								echo '<option selected value="'.$key.'">'.$serviceIndex['service_name'].'</option>';

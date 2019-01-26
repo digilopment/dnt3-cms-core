@@ -119,35 +119,39 @@ class Settings {
 	public function loadNewSettingsFromConf(){
 		
 		$conf = "../dnt-view/layouts/".Vendor::getLayout()."/conf.php"; 
+		//include $conf;
+		if(!function_exists("websettings")){
+			if(file_exists($conf)){
+				include $conf;
+			}
+		}
+		
 		if(file_exists($conf)){
-			include $conf;
-			if(function_exists("websettings")){
-				$result = array();
-				$existingKey = array();
-				$settingsData = websettings();
-				foreach($settingsData as $key=>$value){
-					$configKeys[] = $value['`key`'];
-				}
-				$settings = new Settings;
-				foreach($settings->getAllSettings() as $key=>$value){
-					$existingKey = array_keys($value);
-				}
+			$result = array();
+			$existingKey = array();
+			$settingsData = websettings();
+			foreach($settingsData as $key=>$value){
+				$configKeys[] = $value['`key`'];
+			}
+			$settings = new Settings;
+			foreach($settings->getAllSettings() as $key=>$value){
+				$existingKey = array_keys($value);
+			}
 
-				$diffedArray = array_diff($configKeys, $existingKey);
+			$diffedArray = array_diff($configKeys, $existingKey);
 
-				//get configKeys of diffed ararys
-				$arrOfConfigKeys = array();
-				foreach($configKeys as $key=>$value){
-					if(in_array($value, $diffedArray)){
-						$arrOfConfigKeys[] = $key;
-						continue;
-					}
+			//get configKeys of diffed ararys
+			$arrOfConfigKeys = array();
+			foreach($configKeys as $key=>$value){
+				if(in_array($value, $diffedArray)){
+					$arrOfConfigKeys[] = $key;
+					continue;
 				}
+			}
 
-				$db = new Db;
-				foreach($arrOfConfigKeys as $key){
-					$db->insert('dnt_settings', $settingsData[$key]);
-				}
+			$db = new Db;
+			foreach($arrOfConfigKeys as $key){
+				$db->insert('dnt_settings', $settingsData[$key]);
 			}
 		}
 	}
