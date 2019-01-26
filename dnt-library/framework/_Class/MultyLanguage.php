@@ -120,7 +120,7 @@ class MultyLanguage {
 		$return = false;
 		foreach($data['translates'] as $translate){
 			if($lang == 0){
-				if($translate['translate_id'] == $key && $translate['translate_id'] != ""){
+				if($translate['translate_id'] == $key && $translate['lang_id'] == DEAFULT_LANG){
 					return $translate[$value];
 				}
 			}else{
