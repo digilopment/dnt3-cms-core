@@ -9,26 +9,18 @@ if(isset($_POST['sent'])){
 	$message 	= $rest->post("message");
 	$url_external= $rest->post("url_external");
 	
-	
-	/*$session->set("subject", $subject);
-	$session->set("template", $template);
-	$session->set("cat_id", $cat_id);
-	$session->set("message", $message);
-	$session->set("url_external", $url_external);
-	*/
-	if($rest->post("template") != ""){
+	if($rest->post("template") != ){
 		$content = $rest->post("template");
 	}
-	if($rest->post("message") != ""){
-		$content = $rest->post("message");
+	if($rest->post("subject") != ){
+		$content = $rest->post("subject");
 	}
-	if($rest->post("url_external") != ""){
-		$content = file_get_contents($rest->post("url_external"));
+	if($rest->post("url_external") != ){
+		$content = $rest->post("url_external");
 	}
 	
 	$session->set("subject", $subject);
 	$session->set("cat_id", $cat_id);
-	$session->set("content", $content);
 	
 	
 	//$session->set("template", $template);
@@ -58,7 +50,7 @@ $sended_mails = $db->num_rows($query);
 if($post_id){
 	include "tpl_functions.php";
 	$dntMailer		= new Mailer;
-	$sender_email	= str_replace(" ", "", dnt::getPostParam("dnt_mailer_mails", "email", $post_id));
+	$sender_email	= dnt::getPostParam("dnt_mailer_mails", "email", $post_id);
 	$msg 			= $session->get("message");
 	$template 		= $session->get("template");
 	$heading 		= $session->get("subject");
@@ -66,7 +58,7 @@ if($post_id){
 
 	$dntMailer->set_recipient(array($sender_email));
 	
-	/*if($session->get("message") != "NULL"){
+	if($session->get("message") != "NULL"){
 		$content =  $session->get("message")."";
 	}
 	if($session->get("url_external") != "NULL"){
@@ -74,18 +66,7 @@ if($post_id){
 	}
 	if($session->get("template") != "NULL"){
 		$content =  $session->get("template")."";
-	}*/
-	
-	//KLIENTI MARKIZA JAR 2019
-	$title = dnt::getPostParam("dnt_mailer_mails", "title", $post_id) ." ".dnt::getPostParam("dnt_mailer_mails", "name", $post_id)." ".dnt::getPostParam("dnt_mailer_mails", "surname", $post_id);
-	$title = str_replace("Pán", "Vážený Pán", $title);
-	$title = str_replace("Pani", "Vážená Pani", $title);
-	$content = str_replace("Vážení klienti, milí priatelia", $title, $content);
-	
-	$title = str_replace("Vážený Pán", "Dear Mr", $title);
-	$title = str_replace("Vážená Pani", "Dear Mrs", $title);
-	$content = str_replace("Dear clients and business partners, dear friends", $title, $content);
-	
+	}
 	$dntMailer->set_msg($content);
 	$dntMailer->set_subject($heading);
 	$dntMailer->set_sender_name(false);

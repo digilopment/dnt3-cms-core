@@ -198,9 +198,8 @@
                <thead>
                   <tr>
                      <th>#</th>
-                     <th syle="width: 10%;">Titul</th>
-                     <th syle="width: 25%;">Meno</th>
-                     <th style="width: 25%;">Priezvisko</th>
+                     <th>Meno</th>
+                     <th tyle="width: 25%;">Priezvisko</th>
                      <th style="width: 25%;">Email</th>
                      <!--<th>Dátum pridania</th>-->
                      <th>Kategória</th>
@@ -223,9 +222,8 @@
                   <form method="POST" action="<?php echo AdminMailer::url("edit_mail", $cat_id, false, false, $post_id, $page) ?>" >
                      <tr>
                         <td><?php echo $i++; ?></td>
-                        <td><b><input style="width: 80%;" type="text" name="title" value="<?php echo $row['title']; ?>" /></b></td>
-                        <td><b><input style="width: 80%;" type="text" name="name" value="<?php echo $row['name']; ?>" /></b></td>
-                        <td><b><input style="width: 80%;" type="text" name="surname" value="<?php echo $row['surname']; ?>" /></b></td>
+                        <td><b><input style="width: 60%;" type="text" name="name" value="<?php echo $row['name']; ?>" /></b></td>
+                        <td><b><input style="width: 60%;" type="text" name="surname" value="<?php echo $row['surname']; ?>" /></b></td>
                         <td><b><input style="width: 100%;" type="email" name="email" value="<?php echo $row['email']; ?>" /></b></td>
                         <!--<td><?php echo $row['date_update']; ?></td>-->
                         <td>

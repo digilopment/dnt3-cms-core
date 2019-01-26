@@ -43,7 +43,7 @@
                            <div class="form-group">
                               <label class="col-sm-2 control-label">
                                  <p class="lead dnt_bold">
-                                    <span class="dnt_lang" style="float: left;">Preklad - <?php echo $row['slug']; ?>:</span>
+                                    <span class="dnt_lang" style="float: left;"><?php if(MULTY_LANGUAGE == false) echo "Preklad"; else echo "Preklad - " . $row['slug']; ?>:</span>
                                  </p>
                               </label>
                               <div class="col-sm-4">

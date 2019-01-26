@@ -77,7 +77,7 @@ $rest = new Rest;
                            <td><?php echo $row['id_entity']; ?></td>
                            <td><b><?php echo $row['translate']; ?></b></td>
                            <td><b><?php echo $row['translate']; ?></b></td>
-                           <td><b><?php echo $row['lang_id']; ?></b></td>
+                           <td><b><?php if(MULTY_LANGUAGE == false) echo ""; else echo $row['lang_id']; ?></b></td>
                            <td><b><?php echo $row['translate_id']; ?></b></td>
                            <td>
                               <a <?php echo Dnt::confirmMsg("Naozaj chcete zmazať tento preklad?"); ?> href="<?php echo WWW_PATH_ADMIN."index.php?src=multylanguage&action=del&translate_id=".$row['translate_id']."";?>">

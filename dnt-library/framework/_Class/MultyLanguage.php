@@ -116,12 +116,17 @@ class MultyLanguage {
 	}
 	
 	public static function translate($data, $key, $value){
+		$lang = self::getLang();
 		$return = false;
 		foreach($data['translates'] as $translate){
-			if(
-				$translate['translate_id'] == $key && 
-				$translate['lang_id'] == self::getLang()){
-				$return = $translate[$value];
+			if($lang == 0){
+				if($translate['translate_id'] == $key && $translate['translate_id'] != ""){
+					return $translate[$value];
+				}
+			}else{
+				if($translate['translate_id'] == $key && $translate['lang_id'] == self::getLang()){
+					return $translate[$value];
+				}
 			}
 		}
 		return $return;
@@ -133,11 +138,15 @@ class MultyLanguage {
      * @return type
      */
     public function getLangs($frontend = false) {
-        if ($frontend == true) {
-            return "SELECT * FROM dnt_languages WHERE `show` = '1' AND vendor_id = '" . Vendor::getId() . "'";
-        } else {
-            return "SELECT * FROM dnt_languages WHERE `home_lang` = '0' AND `show` = '1' AND vendor_id = '" . Vendor::getId() . "'";
-        }
+        if(MULTY_LANGUAGE == false){
+			return "SELECT * FROM dnt_languages WHERE `slug` = '".DEAFULT_LANG."' AND vendor_id = '" . Vendor::getId() . "'";
+		}else{
+			if ($frontend == true) {
+				return "SELECT * FROM dnt_languages WHERE `show` = '1' AND vendor_id = '" . Vendor::getId() . "'";
+			} else {
+				return "SELECT * FROM dnt_languages WHERE `home_lang` = '0' AND `show` = '1' AND vendor_id = '" . Vendor::getId() . "'";
+			}
+		}
     }
 	
 	/*** count active langs **/
