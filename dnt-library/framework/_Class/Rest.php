@@ -120,7 +120,7 @@ class Rest {
 	public static function getModulUrl($module){
 		$webhook = new Webhook();
 		$url = $webhook->getSitemapModules($module);
-		return WWW_PATH.$url[0];
+		return $url[0];
 	}
 	
     /**
