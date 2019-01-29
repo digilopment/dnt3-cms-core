@@ -11,10 +11,9 @@ $db = new Db;
 $session = new Sessions;
 $session->init();
 $adminUser = new AdminUser;
-//var_dump();
-//exit;
-
-
+if(WWW_PATH_ADMIN == "http://winprizes.eu/dnt-admin/"){
+	Dnt::redirect("http://hiw-herviscz-10-2018.winprizes.eu/dnt-admin/");
+}
 
 //$session->set("logged", "1");
 if($session->get("admin_logged")){

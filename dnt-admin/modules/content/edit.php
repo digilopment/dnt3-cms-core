@@ -2,9 +2,9 @@
 <?php get_top(); ?>
 <?php include "top.php";?>
 <?php
-   $rest 		= new Rest;
-   $webhook 	= new Webhook;
-   $dnt  		= new Dnt;
+   $rest 			= new Rest();
+   $webhook 		= new Webhook();
+   $dnt  			= new Dnt;
    $post_id   		= $rest->get("post_id");
    $page 			= $rest->get("page");
    

@@ -49,6 +49,16 @@ class Dnt {
         return $return;
     }
 	
+	function getMapLocation($googleMapsUrl){
+		$string = $googleMapsUrl;
+		$string = explode("@", $string);
+		$position = $string[1];
+		$position = explode("z/data", $position);
+		$position = $position[0];
+		$position = explode(",", $position);
+		return $position;
+	}
+	
 	public static function getIdEntity($lastId) {
 		$db = new Db;
 		$db->update(
