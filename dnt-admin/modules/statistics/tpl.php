@@ -22,7 +22,7 @@
 		$osArrUniq 		= $agentUniq['os'];
 		$browserArrUniq = $agentUniq['browser'];
 		
-		$agent = $logs->getCountOs();
+		$agent = $logs->getCountOs(false);
 		$osArr 		= $agent['os'];
 		$browserArr = $agent['browser'];
 	}else{

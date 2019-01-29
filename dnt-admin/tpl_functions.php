@@ -1,6 +1,6 @@
 <?php function get_top(){ ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
    <head>
       <meta charset="utf-8">
       <!--[if IE]>
