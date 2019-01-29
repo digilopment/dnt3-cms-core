@@ -11,8 +11,13 @@ $db = new Db;
 $session = new Sessions;
 $session->init();
 $adminUser = new AdminUser;
-if(WWW_PATH_ADMIN == "http://winprizes.eu/dnt-admin/"){
-	Dnt::redirect("http://hiw-herviscz-10-2018.winprizes.eu/dnt-admin/");
+
+if(WWW_PATH_ADMIN == HTTP_PROTOCOL.DOMAIN.WWW_FOLDERS."/dnt-admin/"){
+	$vendors = Vendor::getAll();
+	$lastVendor = end($vendors);
+	$url = HTTP_PROTOCOL.$lastVendor['name_url'].".".DOMAIN.WWW_FOLDERS."/dnt-admin/";
+	//var_dump($url);
+	Dnt::redirect($url);
 }
 
 //$session->set("logged", "1");
