@@ -12,17 +12,28 @@ if($rest->get("action") == 1){
 			$session->set("admin_logged", "1");
 			$session->set("admin_id",$email);
 			AdminUser::updateDatetime(Vendor::getId(), $email);
+			$dnt->redirect(WWW_PATH_ADMIN."?src=".DEFAULT_MODUL_ADMIN);
+		}else{
+			include "err_default.php";
 		}
 	}
-	$dnt->redirect(WWW_PATH_ADMIN."?src=".DEFAULT_MODUL_ADMIN);
+	//$dnt->redirect(WWW_PATH_ADMIN."?src=".DEFAULT_MODUL_ADMIN);
 }
 elseif($rest->get("action") == 2 && $rest->get("domain_change") == 1){
 	if(isset($_SERVER["HTTP_REFERER"])&& Dnt::in_string(DOMAIN, $_SERVER["HTTP_REFERER"])){
-		$session->set("admin_logged", "1");
-		$session->set("admin_id",$rest->get("admin_id"));
-		AdminUser::updateDatetime(Vendor::getId(), $rest->get("admin_id"));
+		$vendor_id = $rest->get("id_entity");
+		$email = $rest->get("admin_id");
+		if(AdminUser::emailExists($email, $vendor_id)){
+			$session->set("admin_logged", "1");
+			$session->set("admin_id",$rest->get("admin_id"));
+			AdminUser::updateDatetime(Vendor::getId(), $rest->get("admin_id"));
+			$dnt->redirect(WWW_PATH_ADMIN."?src=".DEFAULT_MODUL_ADMIN);
+		}else{
+			include "err_change_domain.php";
+		}
+	}else{
+		$dnt->redirect("index.?src=".DEFAULT_MODUL_ADMIN);
 	}
-	$dnt->redirect(WWW_PATH_ADMIN."?src=".DEFAULT_MODUL_ADMIN);
 }
 else{
 	if($session->get("admin_logged")){

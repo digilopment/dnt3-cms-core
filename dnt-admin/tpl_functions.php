@@ -77,6 +77,11 @@
       <link rel="icon" href="<?php echo WWW_PATH_ADMIN; ?>img/favicon.ico">
       <link rel="stylesheet" href="<?php echo WWW_PATH_ADMIN; ?>css/bootstrap.min.css">
       <link rel="stylesheet" href="<?php echo WWW_PATH_ADMIN; ?>css/main.css">
+	  <script>
+		function goBack() {
+		  window.history.back()
+		}
+		</script>
    </head>
    <style>
    .login .account-wall {font-size: 17px;}
