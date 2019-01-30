@@ -12,6 +12,10 @@ elseif($rest->get("action") == "update")
 {
 	include "update.php";
 }
+elseif($rest->get("action") == "del")
+{
+	include "del.php";
+}
 elseif($rest->get("action") == "add")
 {
 	include "add.php";

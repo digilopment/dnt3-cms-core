@@ -62,15 +62,16 @@
                   <td>
                      <a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$rest->get('src')."&action=edit&post_id=".$row['id_entity']; ?>"><i class="fa fa-pencil bg-blue action"></i></a>
                      <?php
-                        if (($pocet_aktivne > 1) || ($row['status'] == 0)){
+						//var_dump($row['id_entity'], AdminUser::data("admin", "id_entity"));
+                        if (AdminUser::data("admin", "id_entity") != $row['id_entity']){
                         ?>
-                     <a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$rest->get('src')."&vymazat&post_id=".$row['id_entity']; ?>"><i class="fa fa-times bg-red action"></i></a>
+						<a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$rest->get('src')."&action=del&post_id=".$row['id_entity']; ?>"><i class="fa fa-times bg-red action"></i></a>
                      <?php
                         }
                         else{
-                        	echo '<a href="#" title="PAP - Posledný Aktívny Prístup (Toto je posledný aktívny prístup a tento prístup nie je možné deaktivovať)"><i class="fa fa-minus-square bg-green action"></i></a>';
+                        	echo '<a href="#" title="Nie je možné vymazať aktívny účet, pod ktorým ste prihlásený"><i class="fa fa-minus-square bg-red action"></i></a>';
                         	}
-                        	?>
+                        ?>
                   </td>
                </tr>
                <?php

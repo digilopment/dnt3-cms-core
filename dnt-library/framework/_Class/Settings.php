@@ -126,7 +126,7 @@ class Settings {
 			}
 		}
 		
-		if(file_exists($conf)){
+		if(file_exists($conf) && function_exists("websettings")){
 			$result = array();
 			$existingKey = array();
 			$settingsData = websettings();
