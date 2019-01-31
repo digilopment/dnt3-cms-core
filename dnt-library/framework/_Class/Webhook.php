@@ -89,11 +89,10 @@ class Webhook {
 		$file = "../dnt-view/layouts/".Vendor::getLayout()."/conf.php";
 		
 		if(!function_exists("modulesConfig")){
-			if(file_exists($conf)){
-				include $conf;
+			if(file_exists($file)){
+				include $file;
 			}
 		}
-		
 		if(file_exists($file)){
 			if(function_exists("modulesConfig")){
 				return modulesConfig();
