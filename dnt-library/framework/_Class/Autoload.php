@@ -64,6 +64,7 @@ class Autoload {
         include $path . "dnt-library/framework/_Class/Meta.php";
         include $path . "dnt-library/framework/_Class/Xlsx.php";
 		include $path . "dnt-library/framework/_Class/PostMeta.php";
+		include $path . "dnt-library/framework/_Class/Voucher.php";
 		
 		//messenger bot
         include $path . "dnt-library/framework/_Class/MessengerBot.php";

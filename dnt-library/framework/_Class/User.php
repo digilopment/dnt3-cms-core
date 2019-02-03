@@ -26,7 +26,7 @@ class User extends Image {
 		if($type){
 			$SQL_type = " type = '".$type."' AND ";
 		}else{
-			$SQL_type = " type <> 'admin' AND ";
+			$SQL_type = "";
 		}
 		
 		if($is_limit == false)
@@ -47,7 +47,6 @@ class User extends Image {
 	public function getUserByType($type = false){
 		
 			$db = new Db;
-
 
 			$query = self::prepare_query($type, false);
 			$pocet = $db->num_rows($query);

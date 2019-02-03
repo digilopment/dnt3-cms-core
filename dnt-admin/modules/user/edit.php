@@ -129,6 +129,10 @@ foreach($user->getUser($id_entity) as $row){
                   <div class="checkbox">
                      <input type="number" name="vaha" value="<?php echo $row['vaha']; ?>" class="form-control">
                   </div>
+				   <h5>Voucher:</h5>
+                  <div class="checkbox">
+                     <input type="text" name="voucher" value="<?php echo $row['voucher']; ?>" class="form-control">
+                  </div>
                   <h5>Info:</h5>
 				  <br/><small>Ak sa jedná o url adresy, pridávajte ich pod seba. Automaticky sa zobrazia v novom odkaze.</small>
                   <div class="checkbox">

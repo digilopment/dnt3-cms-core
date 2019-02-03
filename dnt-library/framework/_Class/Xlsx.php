@@ -37,6 +37,33 @@ Class Xlsx {
 		}
 		return $excel_data;
     }
+	
+	 /**
+     * 
+     * @param type $path
+     * @param type $fileName
+     * @param type $fullPath
+     */
+    public function toArray($path, $fileName, $fullPath = false) {
+		$vendor = new Vendor;
+		if($fullPath != false){
+			$filePath = $fullPath;
+		}else{
+			$filePath = $path."dnt-view/data/uploads/".$fileName;
+		}
+		$excel_data = false;
+		date_default_timezone_set('Europe/Paris');
+		$Spreadsheet = new SpreadsheetReader($filePath);
+		$Sheets = $Spreadsheet->Sheets();
+		foreach ($Sheets as $Index => $Name) {
+			foreach ($Spreadsheet as $Key => $Row) {
+				foreach ($Row as $value) {
+					$excel_data[] = $value;
+				}
+			}
+		}
+		return $excel_data;
+    }
 
    
 }

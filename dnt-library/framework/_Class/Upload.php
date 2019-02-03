@@ -2543,6 +2543,7 @@ class Upload {
             'onetoc2' => 'application/onenote',
             'onetmp' => 'application/onenote',
             'onepkg' => 'application/onenote',
+            'csv' => 'application/octet-stream',
         );
 
     }

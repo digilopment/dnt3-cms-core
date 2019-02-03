@@ -43,7 +43,7 @@
                   <th>Typ postu</th>
                   <th>Datetime</th>
                   <th>File</th>
-				   <th>Zobrazenie</th>
+				  <th>Zobrazenie</th>
                   <th>Vymazať</th>
                </tr>
             </thead>
@@ -85,7 +85,7 @@
 						 </a>
 					  </td>
 					  <td>
-						<a href="<?php echo FileAdmin::url("del", $cat_id, $sub_cat_id, "image", $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
+						<a <?php echo Dnt::confirmMsg("Naozaj chcete vymazať tento post?"); ?> href="<?php echo FileAdmin::url("del", $cat_id, $sub_cat_id, "image", $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
 						<input type="checkbox" name="del_<?php echo $post_id; ?>">
 					  </td>
 				   </tr>

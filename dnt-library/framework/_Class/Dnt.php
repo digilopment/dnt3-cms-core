@@ -34,6 +34,26 @@ class Dnt {
         return $return;
     }
 	
+	public static function getMaxValueFromColumn($table, $column, $vendor_id=true) {
+        $db = new Db;
+		
+		if($vendor_id){
+			$query = "SELECT MAX($column) FROM " . $table . " WHERE vendor_id = '" . Vendor::getId() . "'";
+		}else{
+			$query = "SELECT MAX($column) FROM " . $table;
+		}
+
+
+        if ($db->num_rows($query) > 0) {
+            foreach ($db->get_results($query) as $row) {
+                $return = $row["MAX($column)"];
+            }
+        } else {
+            $return = false;
+        }
+        return $return;
+    }
+	
 	
 	
 	public static function getLastIdVendor() {

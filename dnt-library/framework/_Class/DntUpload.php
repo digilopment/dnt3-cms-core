@@ -59,6 +59,7 @@ class DntUpload {
                             array($updateColumn => $updateValue, '`vendor_id`' => Vendor::getId())//where
                     );
 					$db->dbCommit();
+					return $insertedData;
                 }
             }
         }
@@ -143,6 +144,7 @@ class DntUpload {
                         'type' => $dntUpload->file_src_mime
                     );
                     $db->insert('dnt_uploads', $insertedData);
+					return $insertedData;
                 }
             }
         } //end foreach

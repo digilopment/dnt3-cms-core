@@ -2,6 +2,7 @@
 <?php get_top(); ?>
 <?php include "top.php"; 
   $user = new User;
+  $rest = new Rest;
   $type = $rest->get("type");
   $date_time_format		= date("d")."-".date("m")."-".date("Y");
 ?>
@@ -46,34 +47,39 @@
                   <th>#</th>
                   <th>Meno, priezvisko</th>
                   <th>Email</th>
-                  <th>Unique</th>
-                  <th>Dátum vytvorenia</th>
-                  <th>Súhlas s pravidlami</th>
-                  <th>Súhlas s news</th>
-                  <th>Súhlas s news 2</th>
+                  <th>Voucher</th>
+                  <th>Dátum vytvorenia<br/>Dátum aktualizácie</th>
                   <th>img</th>
+				  <th>Voucher</th>
                   <th>Akcia</th>
                </tr>
             </thead>
             <tbody>
                <?php
-			 
 			   foreach($user->getUserByType($rest->get("type")) as $row){
-				   $image = $user->getImage($row['img']);
+				   $image 		= $user->getImage($row['img']);
+				   $voucherId 	= $row['voucher'];
+				   $postId 		= $row['id_entity'];
+				   $voucherAssigneUrl = "index.php?src=user&type=".$rest->get("type")."&action=assign-voucher&post_id=$postId";
 				?>
 				<tr>
-					<td><b><?php echo $row['id_entity'] ?></b></td>
+					<td><b><?php echo $postId ?></b></td>
 					<td><b><?php echo $row['name']." ".$row['surname']; ?></b></td>
 					<td><?php echo $row['email']; ?></td>
-					<td><?php echo $row['session_id']; ?></td>
-					<td><b><?php echo $row['datetime_creat']; ?></b></td>
-					<td><b><?php echo $row['podmienky']; ?></b></td>
-					<td><b><?php echo $row['news']; ?></b></td>
-					<td><b><?php echo $row['news_2']; ?></b></td>
+					<td><?php echo $row['voucher']; ?></td>
+					<td><?php echo $row['datetime_creat']; ?><br/><b><?php echo $row['datetime_update']; ?></b></td>
+					
 					<td><b><?php if($image){echo '<a href="'.$image.'" target="_blank"><i class="fa fa-picture-o bg-green action"></i>';}?></td>
 					<td>
-						<a href="index.php?src=user&action=edit&post_id=<?php echo $row['id_entity'] ?>"><i class="fa fa-pencil bg-blue action"></i></a>
-						<a href="index.php?src=user&action=del&post_id=<?php echo $row['id_entity'] ?>"><i class="fa fa-times bg-red action"></i></a>
+						<?php if($voucherId){?>
+							<i title="Voucher je priradený" class="fa fa-check bg-green action"></i></td>
+						<?php }else{?>
+							<a href="<?php echo $voucherAssigneUrl; ?>"><i title="Voucher čaká na priradenie, kliknutím priradíte." class="fa fa-times bg-blue action"></i></a>
+						<?php } ?>
+					</td>
+					<td>
+						<a title="Editovať používateľa" href="index.php?src=user&action=edit&post_id=<?php echo $row['id_entity'] ?>"><i class="fa fa-pencil bg-blue action"></i></a>
+						<a <?php echo Dnt::confirmMsg("Naozaj chcete vymazať tohoto používateľa?"); ?> title="Zmazať používateľa" href="index.php?src=user&action=del&post_id=<?php echo $row['id_entity'] ?>"><i class="fa fa-times bg-red action"></i></a>
 					</td>
 				</tr>
                <?php

@@ -254,7 +254,7 @@
 						 </a>
                         </td>
                         <td>
-                           <a href="<?php echo AdminMailer::url("del_mail", $cat_id, false, false, $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
+                           <a <?php echo Dnt::confirmMsg("Naozaj chcete zmazať tento email?"); ?> href="<?php echo AdminMailer::url("del_mail", $cat_id, false, false, $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
                         </td>
                      </tr>
                   </form>

@@ -12,6 +12,10 @@ elseif($rest->get("action") == "edit")
 {
 	include "edit.php";
 }
+elseif($rest->get("action") == "assign-voucher")
+{
+	include "assign-voucher.php";
+}
 elseif($rest->get("action") == "del")
 {
 	include "del.php";

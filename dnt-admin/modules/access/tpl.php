@@ -65,7 +65,7 @@
 						//var_dump($row['id_entity'], AdminUser::data("admin", "id_entity"));
                         if (AdminUser::data("admin", "id_entity") != $row['id_entity']){
                         ?>
-						<a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$rest->get('src')."&action=del&post_id=".$row['id_entity']; ?>"><i class="fa fa-times bg-red action"></i></a>
+						<a <?php echo Dnt::confirmMsg("Naozaj chcete zmazať tohoto používateľa?"); ?> href="<?php echo WWW_PATH_ADMIN."index.php?src=".$rest->get('src')."&action=del&post_id=".$row['id_entity']; ?>"><i class="fa fa-times bg-red action"></i></a>
                      <?php
                         }
                         else{
