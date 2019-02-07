@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       Rest
  *  author      Tomas Doubek
@@ -6,67 +7,69 @@
  *  package     dnt3
  *  date        2017
  */
-
 class Rest {
 
     var $get; //variable of get result
     var $post; //variable of get post
     var $escape; //variable of get escape
-    
+
     /**
      * 
      * @param type $get
      * @return type
      * this method creat a GET method of `default` and `rewrited` addr
      */
+
     public function get($get) {
         $addr1 = explode($get . "=", WWW_FULL_PATH);
-        
-		if(isset( $addr1[1])){
-			$addr = $addr1[1];
-			if(isset($addr1[1])){
-				if (explode("&", @$addr1[1]) == true) {
-					
-					if(isset($addr1[1])){
-						@$addr2 = explode("&", @$addr1[1]);
-						$this->get = @$addr2[0];
-					}
-				} else {
-					$this->get = $addr;
-				}
-			}
-		}
+
+        if (isset($addr1[1])) {
+            $addr = $addr1[1];
+            if (isset($addr1[1])) {
+                if (explode("&", @$addr1[1]) == true) {
+
+                    if (isset($addr1[1])) {
+                        @$addr2 = explode("&", @$addr1[1]);
+                        $this->get = @$addr2[0];
+                    }
+                } else {
+                    $this->get = $addr;
+                }
+            }
+        }
         return $this->get;
     }
-	
-	
-	/** domain redirector **/
-	public function redirectToDomain($stillRedirect = false){
-		if($stillRedirect == true ){
-			if($GLOBALS['DB_PROTOCOL']){
-				if(($GLOBALS['ORIGIN_DOMAIN'] != $GLOBALS['DB_DOMAIN']) || ($GLOBALS['ORIGIN_PROTOCOL'] != $GLOBALS['DB_PROTOCOL'])){
-					$db_domain = $GLOBALS['DB_PROTOCOL'].$GLOBALS['DB_DOMAIN'];
-					$origin_domain = $GLOBALS['ORIGIN_PROTOCOL'].$GLOBALS['ORIGIN_DOMAIN'];
-					$request = explode($origin_domain, WWW_FULL_PATH);
-					$request = $request[1];
-					$return = $db_domain.$request;
-					Dnt::redirect($return);
-					exit;
-				}	
-			}
-		}else{
-			if(($GLOBALS['ORIGIN_DOMAIN'] == $GLOBALS['DB_DOMAIN']) && ($GLOBALS['ORIGIN_PROTOCOL'] != $GLOBALS['DB_PROTOCOL'])){
-				$db_domain = $GLOBALS['DB_PROTOCOL'].$GLOBALS['DB_DOMAIN'];
-				$origin_domain = $GLOBALS['ORIGIN_PROTOCOL'].$GLOBALS['ORIGIN_DOMAIN'];
-				$request = explode($origin_domain, WWW_FULL_PATH);
-				$request = $request[1];
-				$return = $db_domain.$request;
-				Dnt::redirect($return);
-				exit;
-			}
-		}
-	}
 
+    /**
+     * 
+     * domain redirector 
+     * @param type $stillRedirect
+     */
+    public function redirectToDomain($stillRedirect = false) {
+        if ($stillRedirect == true) {
+            if ($GLOBALS['DB_PROTOCOL']) {
+                if (($GLOBALS['ORIGIN_DOMAIN'] != $GLOBALS['DB_DOMAIN']) || ($GLOBALS['ORIGIN_PROTOCOL'] != $GLOBALS['DB_PROTOCOL'])) {
+                    $db_domain = $GLOBALS['DB_PROTOCOL'] . $GLOBALS['DB_DOMAIN'];
+                    $origin_domain = $GLOBALS['ORIGIN_PROTOCOL'] . $GLOBALS['ORIGIN_DOMAIN'];
+                    $request = explode($origin_domain, WWW_FULL_PATH);
+                    $request = $request[1];
+                    $return = $db_domain . $request;
+                    Dnt::redirect($return);
+                    exit;
+                }
+            }
+        } else {
+            if (($GLOBALS['ORIGIN_DOMAIN'] == $GLOBALS['DB_DOMAIN']) && ($GLOBALS['ORIGIN_PROTOCOL'] != $GLOBALS['DB_PROTOCOL'])) {
+                $db_domain = $GLOBALS['DB_PROTOCOL'] . $GLOBALS['DB_DOMAIN'];
+                $origin_domain = $GLOBALS['ORIGIN_PROTOCOL'] . $GLOBALS['ORIGIN_DOMAIN'];
+                $request = explode($origin_domain, WWW_FULL_PATH);
+                $request = $request[1];
+                $return = $db_domain . $request;
+                Dnt::redirect($return);
+                exit;
+            }
+        }
+    }
 
     /**
      * 
@@ -74,130 +77,138 @@ class Rest {
      * @return boolean
      */
     public function webhook($thisArg) {
-		if(MULTY_LANGUAGE){
-			$defLang = DEAFULT_LANG;
-			$langArray = array("sk", "cz", "pl", "en", "de", "at", "nl", "dk");
-		}
-		else{
-			$defLang = "0";
-			if($thisArg == 1){
-				$langArray = MultyLanguage::activeVendorLangs();
-			}else{
-				$langArray = array("sk", "cz", "pl", "en", "de", "at", "nl", "dk");
-			}
-			//var_dump($langArray);
-		}
-		if (isset($_GET[SRC])) {
+        if (MULTY_LANGUAGE) {
+            $defLang = DEAFULT_LANG;
+            $langArray = array("sk", "cz", "pl", "en", "de", "at", "nl", "dk");
+        } else {
+            $defLang = "0";
+            if ($thisArg == 1) {
+                $langArray = MultyLanguage::activeVendorLangs();
+            } else {
+                $langArray = array("sk", "cz", "pl", "en", "de", "at", "nl", "dk");
+            }
+        }
+        if (isset($_GET[SRC])) {
             $arr = array();
             $src = $_GET[SRC];
             $arr = explode("/", $src);
-			if(is_array($langArray)){
-				if(in_array($arr[0], $langArray)){
-					if (isset($arr[$thisArg])) {
-						return $arr[$thisArg];
-					} else {
-						return false;
-					}
-				} else {
-					$arr = explode("/", $defLang."/" . $src);
-					if (isset($arr[$thisArg])) {
-						return $arr[$thisArg];
-					} else {
-						return false;
-					}
-				}
+            if (is_array($langArray)) {
+                if (in_array($arr[0], $langArray)) {
+                    if (isset($arr[$thisArg])) {
+                        return $arr[$thisArg];
+                    } else {
+                        return false;
+                    }
+                } else {
+                    $arr = explode("/", $defLang . "/" . $src);
+                    if (isset($arr[$thisArg])) {
+                        return $arr[$thisArg];
+                    } else {
+                        return false;
+                    }
+                }
             }
         } else {
+            /* if ($thisArg == 0) {
+              return DEAFULT_LANG;
+              }
+              if ($thisArg == 0) {
+              return DEAFULT_MODUL;
+              } */
             if ($thisArg == 0) {
-                return DEAFULT_LANG;
-            }
-            if ($thisArg == 0) {
-                return DEAFULT_MODUL;
+                return false;
             }
         }
     }
-		
-	public static function getModulUrl($module){
-		$webhook = new Webhook();
-		$url = $webhook->getSitemapModules($module);
-		return $url[0];
-	}
-	
+
+    public static function getModulUrl($module) {
+        $webhook = new Webhook();
+        $url = $webhook->getSitemapModules($module);
+        return $url[0];
+    }
+
     /**
      * 
      * @return type
      */
-	public function getModul(){
-		if($GLOBALS['GET_MODUL']){
-			return $GLOBALS['GET_MODUL'];
-		}
-		$return = false;
-		$file = "dnt-view/layouts/".Vendor::getLayout()."/conf.php";
-		if(file_exists($file)){
-			include_once $file;
-			if(function_exists("custom_modules")){
-				$custom_modules = custom_modules();
-			}else{
-				$custom_modules = false;
-			}
-		}else{
-			$custom_modules = false;
-		}
-		$webhook = new Webhook;
-		$this->webhook = $webhook->get($custom_modules);
-		foreach(array_keys($this->webhook) as $this->index){
-			foreach($this->webhook[$this->index] as $this->key=>$this->value){
-				//var_dump($this->value);
-				if($this->webhook(2) == "detail"){
-					$return = "article_view";
-				}
-				if($this->webhook(1) == ""){
-					$default = Settings::get("startovaci_modul");
-					if($default){
-						$redirect = $webhook->getSitemapModules($default);
-						Dnt::redirect($redirect[0]);
-						exit;
-						$return = $default;
-					}else{
-						$return = DEAFULT_MODUL;
-					}
-				}
-				if($this->value == $this->webhook(1)){
-					$return = $this->index;
-				}
-			}
-		}
-		$GLOBALS['GET_MODUL'] = $return;
-		
-		return $return;
-	}
+    public function getModul() {
+        if ($GLOBALS['GET_MODUL']) {
+            return $GLOBALS['GET_MODUL'];
+        }
+        $return = false;
+        $file = "dnt-view/layouts/" . Vendor::getLayout() . "/conf.php";
+        if (file_exists($file)) {
+            include_once $file;
+            if (function_exists("custom_modules")) {
+                $custom_modules = custom_modules();
+            } else {
+                $custom_modules = false;
+            }
+        } else {
+            $custom_modules = false;
+        }
+        $webhook = new Webhook;
+        $this->webhook = $webhook->get($custom_modules);
+        foreach (array_keys($this->webhook) as $this->index) {
+            foreach ($this->webhook[$this->index] as $this->key => $this->value) {
+                if ($this->webhook(2) == "detail") {
+                    $return = "article_view";
+                }
+                if ($this->webhook(1) == "") {
+                    $default = Settings::get("startovaci_modul");
+                    if ($default) {
+                        $redirect = $webhook->getSitemapModules($default);
+                        $domain = $GLOBALS['ORIGIN_DOMAIN_LNG'] . "/";
+                        //var_dump($domain.$redirect[0]);
+                        //exit;
+                        Dnt::redirect($domain . $redirect[0]);
+                        exit;
+                        $return = $default;
+                    } else {
+                        $return = DEAFULT_MODUL;
+                    }
+                }
+                if ($this->value == $this->webhook(1)) {
+                    $return = $this->index;
+                }
+            }
+        }
+        $GLOBALS['GET_MODUL'] = $return;
+
+        return $return;
+    }
 
     /**
      * 
      */
     public function loadModul() {
-			$module = $this->getModul();
-            //$function = "dnt-modules/" . $module . "/functions.php";
-			
-			$layout = Vendor::getLayout();
-			$function = "dnt-view/layouts/" . $layout . "/modules/".$module."/functions.php";
-			$webhookModule = "dnt-modules/" . $module . "/webhook.php";
-			$template = "dnt-view/layouts/" . $layout . "/modules/".$module."/webhook.php";
-            
-			if (file_exists($function))
-                include $function;
-			if(file_exists($webhookModule)){
-				include $webhookModule;
-			}elseif(file_exists($template)){
-				 include $webhookModule;
-			}
+        $module = $this->getModul();
+        //$function = "dnt-modules/" . $module . "/functions.php";
+
+        $layout = Vendor::getLayout();
+        $function = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/functions.php";
+        $webhookModule = "dnt-modules/" . $module . "/webhook.php";
+        $template = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/webhook.php";
+
+        if (file_exists($function))
+            include $function;
+        if (file_exists($webhookModule)) {
+            include $webhookModule;
+        } elseif (file_exists($template)) {
+            include $webhookModule;
+        }
     }
 
     /**
      * 
      */
     public function loadDefault() {
-        include "dnt-view/layouts/" . Vendor::getLayout() . "/modules/default/webhook.php";
+        $layout = Vendor::getLayout();
+        if ($layout) {
+            include "dnt-view/layouts/" . Vendor::getLayout() . "/modules/default/webhook.php";
+        } else {
+            include "dnt-view/layouts/default/modules/default/webhook.php";
+        }
     }
 
     /**
@@ -205,20 +216,17 @@ class Rest {
      * @param type $module
      */
     public function loadMyModul($module) {
-        //$function = "dnt-modules/" . $module . "/functions.php";
-        //$template = "dnt-modules/" . $module . "/webhook.php";
-		
-		$layout = Vendor::getLayout();
-		$function = "dnt-view/layouts/" . $layout . "/modules/".$module."/functions.php";
-		$template = "dnt-view/layouts/" . $layout . "/modules/".$module."/webhook.php";
-		$webhookModule = "dnt-modules/" . $module . "/webhook.php";
-		if (file_exists($function))
-			include $function;
-		if(file_exists($webhookModule)){
-			include $webhookModule;
-		}elseif(file_exists($template)){
-			 include $template;
-		}
+        $layout = Vendor::getLayout();
+        $function = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/functions.php";
+        $template = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/webhook.php";
+        $webhookModule = "dnt-modules/" . $module . "/webhook.php";
+        if (file_exists($function))
+            include $function;
+        if (file_exists($webhookModule)) {
+            include $webhookModule;
+        } elseif (file_exists($template)) {
+            include $template;
+        }
     }
 
     /**
@@ -242,17 +250,7 @@ class Rest {
      * @return type
      */
     public function setGet($arr) {
-
-
         foreach ($arr as $key => $value) {
-            /* $explodedArr = explode("?$key", WWW_FULL_PATH);
-              if(count($explodedArr)>1){
-              $get_s[] = "a=b";
-              }elseif(count($explodedArr)>1){
-              $get_s[] = "a=b";
-              }else{
-              $get_s[] = "$key=$value";
-              } */
             $get_s[] = "$key=$value";
         }
 

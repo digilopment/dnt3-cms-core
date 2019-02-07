@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       DntUpload
  *  author      Tomas Doubek
@@ -8,15 +9,14 @@
  */
 class DntUpload {
 
-
-	/** 
-	*
-	* image name
-	*
-	*/
-	protected function imageName(){
-		return Vendor::getId()."_".md5(time())."_o"; 
-	}
+    /**
+     *
+     * image name
+     *
+     */
+    protected function imageName() {
+        return Vendor::getId() . "_" . md5(time()) . "_o";
+    }
 
     /**
      * 
@@ -27,17 +27,16 @@ class DntUpload {
      * @param type $updateValue
      * @param type $path
      */
-	 	
     public function addDefaultImage($file, $table, $setColumn, $updateColumn, $updateValue, $path) {
 
         $dntUpload = new Upload(@$_FILES[$file]);
         $db = new Db;
-	
+
 
         if (is_file($_FILES[$file]['tmp_name'])) {
 
             if ($dntUpload->uploaded) {
-				$dntUpload->file_new_name_body = $this->imageName();
+                $dntUpload->file_new_name_body = $this->imageName();
                 $dntUpload->Process($path);
                 if ($dntUpload->processed) {
                     //insert to files table of files
@@ -46,7 +45,7 @@ class DntUpload {
                         'name' => $dntUpload->file_dst_name,
                         'type' => $dntUpload->file_src_mime
                     );
-					$db->dbTransaction();
+                    $db->dbTransaction();
                     $db->insert('dnt_uploads', $insertedData);
 
                     //get last ID of this file
@@ -58,8 +57,8 @@ class DntUpload {
                             array($setColumn => $imgId), //set
                             array($updateColumn => $updateValue, '`vendor_id`' => Vendor::getId())//where
                     );
-					$db->dbCommit();
-					return $insertedData;
+                    $db->dbCommit();
+                    return $insertedData;
                 }
             }
         }
@@ -134,7 +133,7 @@ class DntUpload {
             $dntUpload = new Upload($file);
 
             if ($dntUpload->uploaded) {
-				$dntUpload->file_new_name_body = $this->imageName();
+                $dntUpload->file_new_name_body = $this->imageName();
                 $dntUpload->Process($path);
                 if ($dntUpload->processed) {
                     //insert to files table of files
@@ -144,48 +143,55 @@ class DntUpload {
                         'type' => $dntUpload->file_src_mime
                     );
                     $db->insert('dnt_uploads', $insertedData);
-					return $insertedData;
+                    return $insertedData;
                 }
             }
         } //end foreach
     }
-	
-	public function multypleUploadFiles($files, $table, $setColumn, $updateColumn, $updateValue, $path) {
+
+    /**
+     * 
+     * @param type $files
+     * @param type $table
+     * @param type $setColumn
+     * @param type $updateColumn
+     * @param type $updateValue
+     * @param type $path
+     */
+    public function multypleUploadFiles($files, $table, $setColumn, $updateColumn, $updateValue, $path) {
         $db = new Db;
         $files_arr = $this->arrayFiles($files);
-		$uploadedID = array();
+        $uploadedID = array();
         foreach ($files_arr as $file) {
             $dntUpload = new Upload($file);
-			
-			if ($dntUpload->uploaded) {
-				$dntUpload->file_new_name_body = $this->imageName();
-				$dntUpload->Process($path);
-				if ($dntUpload->processed) {
-					//insert to files table of files
-					$insertedData = array(
-						'vendor_id' => Vendor::getId(),
-						'name' => $dntUpload->file_dst_name,
-						'type' => $dntUpload->file_src_mime
-					);
-					
-					$db->insert('dnt_uploads', $insertedData);
-					$uploadedID[] = Dnt::getLastId('dnt_uploads');
-				}
-			}
-				
-        } //end foreach
-		
-		 //get last ID of this file
-		if(count($uploadedID)>0){
-			$imgId = implode(",", $uploadedID);
 
-			//update settings columns
-			$db->update(
-					$table, //table 
-					array($setColumn => $imgId), //set
-					array($updateColumn => $updateValue, '`vendor_id`' => Vendor::getId())//where
-			);
-		}
+            if ($dntUpload->uploaded) {
+                $dntUpload->file_new_name_body = $this->imageName();
+                $dntUpload->Process($path);
+                if ($dntUpload->processed) {
+                    //insert to files table of files
+                    $insertedData = array(
+                        'vendor_id' => Vendor::getId(),
+                        'name' => $dntUpload->file_dst_name,
+                        'type' => $dntUpload->file_src_mime
+                    );
+
+                    $db->insert('dnt_uploads', $insertedData);
+                    $uploadedID[] = Dnt::getLastId('dnt_uploads');
+                }
+            }
+        } //end foreach
+        //get last ID of this file
+        if (count($uploadedID) > 0) {
+            $imgId = implode(",", $uploadedID);
+
+            //update settings columns
+            $db->update(
+                    $table, //table 
+                    array($setColumn => $imgId), //set
+                    array($updateColumn => $updateValue, '`vendor_id`' => Vendor::getId())//where
+            );
+        }
     }
 
 }

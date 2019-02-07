@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       DntLog
  *  author      Tomas Doubek
@@ -8,11 +9,9 @@
  */
 class DntLog {
 
+    public $results;
 
-
-	public $results;
-    
-	/**
+    /**
      * 
      * @return boolean
      */
@@ -65,23 +64,16 @@ class DntLog {
         } else {
             $http_request_info = false;
         }
-
-
-
+        
         if ($http_request == $httpCacheStatus) {
             $headerMsgCache = "content-cache";
         } else {
             $headerMsgCache = "no-cache";
         }
-
-
-        //get instance
+        
         $dntVendor = new Vendor();
         $session = new Sessions();
         $session->init();
-        //header('Dnt-Log: '.$session->get_session_data( "page_id" ));
-        //header($_SERVER["SERVER_PROTOCOL"]." ".$http_request." ".$http_request_info." ");
-        //headers
         if (isset($arr['http_response'])) {
             if ($http_request == $httpCacheStatus) {
                 header('Cache-Control: cache');
@@ -89,34 +81,20 @@ class DntLog {
                 header("Pragma: cache");
                 header('X-Dnt-Cache-Time: ' . CACHE_TIME_SEC . "sec");
             }
-            //header('Content-Type: text/html');
             http_response_code($arr['http_response']);
             header('X-Dnt-Request-System: ' . GET_SYSTEM_NAME);
             header('X-Dnt-Request-Url: ' . WWW_FULL_PATH);
             header('X-Dnt-Framework: ' . GET_SYSTEM_VERSION);
             header('X-Dnt-Version: ' . GET_SYSTEM_VERSION);
-
             header('X-Dnt-dnt3-Log: ' . $_SESSION['page_id']);
-            //header('Dnt-Vendor: '.$dntVendor->getVendorUrl());
-            //header('Dnt-Vendor-Id: '.$dntVendor->getVendorId());
-
             header('X-Dnt-Server-Frontend: tom_F::brick-01');
             header('X-Dnt-Server-Backend: tom_B::brick-01');
             header('X-Dnt-Server-CDN: tom_C::brick-01');
             header('X-Dnt-Server-Cache-Static: tom_S::brick-01 @path/dnt-cache');
             header('X-Dnt-Platform: MultiDomain Application Platform');
-            //header('Dnt-Composer: '.GET_SYSTEM_COMPOSER);
-            //header('Dnt-Engine-Pattern: '.GET_SYSTEM_ENGINE_PATTERN);
-            //header('Dnt-Search-Engine: '.GET_SYSTEM_SEARCH_ENGINE);
-            //header('Dnt-Components: '.GET_SYSTEM_COMPONENTS);
-            //header('Dnt-Varnish: no-varnish');
             header('X-Dnt-Cache: ' . $headerMsgCache);
-            //header('Dnt-Admin: Open');
-
-
             header('X-Dnt-Subsystem-Packages: dnt_logs(c), dnt_cache(c) ');
             header('X-Dnt-Author: Tomas Doubek, Dnt3.ltd ');
-            //header('Server: Designdnt3 ');
         }
     }
 
@@ -160,9 +138,7 @@ class DntLog {
         } else {
             $system_status = false;
         }
-
-        //header($_SERVER["SERVER_PROTOCOL"]." ".$http_response." ");
-        //this array included ar variables of global variable SERVER
+        
         $serverVariables = array(
             "HTTP_HOST",
             "HTTP_CONNECTION",
@@ -213,8 +189,8 @@ class DntLog {
 
         if (IS_LOGSYSTEM_ON) {
             $db->insert('dnt_logs', $arrToInsert);
-			
-			$where = array( 'HTTP_ACCEPT' => '*/*');
+
+            $where = array('HTTP_ACCEPT' => '*/*');
             $db->delete('dnt_logs', $where);
         }
 
@@ -225,18 +201,15 @@ class DntLog {
                         "thomas.doubek@gmail.com",
                     )
             );
-            $mailer->set_msg("
-				<h2>Designdnt 3 reguest Error, eCatch " . $http_response . "</h2> 
-				<table>
-					<tr><td><b>STATUS:</b></td><td> " . $msg . "</td></tr>
-					<tr><td><b>LOG:</b></td><td> " . $session->get("page_id") . "</td></tr>
-					<tr><td><b>VISITED:</b></td><td> " . $arrToInsert['THIS_URL'] . "</td></tr>
-					<tr><td><b>VENDOR ID:</b></td><td> " . $arrToInsert['vendor_id'] . "</td></tr>
-					<tr><td><b>VENDOR URL:</b></td><td> " . $dntVendor->getVendorUrl() . "</td></tr>
-					<tr><td><br/><b>INFO:</b></td><td><br/> This is service email sent by Designdnt3 CMS. Please do not reply to this email.</td></tr>
-				</table>
-			"
-            );
+            $mailer->set_msg("<h2>Designdnt 3 reguest Error, eCatch " . $http_response . "</h2> 
+                <table>
+                    <tr><td><b>STATUS:</b></td><td> " . $msg . "</td></tr>
+                    <tr><td><b>LOG:</b></td><td> " . $session->get("page_id") . "</td></tr>
+                    <tr><td><b>VISITED:</b></td><td> " . $arrToInsert['THIS_URL'] . "</td></tr>
+                    <tr><td><b>VENDOR ID:</b></td><td> " . $arrToInsert['vendor_id'] . "</td></tr>
+                    <tr><td><b>VENDOR URL:</b></td><td> " . $dntVendor->getVendorUrl() . "</td></tr>
+                    <tr><td><br/><b>INFO:</b></td><td><br/> This is service email sent by Designdnt3 CMS. Please do not reply to this email.</td></tr>
+                </table>");
             $mailer->set_subject("Designdnt3 request " . $http_response . " - " . $dntVendor->getVendorUrl());
             $mailer->set_sender_name("Designdnt 3");
             $mailer->sent_email();
@@ -250,17 +223,14 @@ class DntLog {
     public function show($log_id) {
         $db = new DB();
         $columnsData = new XMLgenerator;
-        //HTTP_COOKIE,PATH,SystemRoot,COMSPEC,PATHEXT,WINDIR,SERVER_SIGNATURE,SERVER_SOFTWARE,SERVER_NAME,SERVER_ADDR,SERVER_PORT,REMOTE_ADDR,DOCUMENT_ROOT,SERVER_ADMIN,SCRIPT_FILENAME,REMOTE_PORT,GATEWAY_INTERFACE,SERVER_PROTOCOL,REQUEST_METHOD,GET,QUERY_STRING,REQUEST_URI,SCRIPT_NAME,PHP_SELF,REQUEST_TIME"; 
-        //$columns = "id, http_response, system_status, log_id, timestamp, vendor_id, msg, msg, THIS_URL";
         $columns = "id,http_response,system_status,log_id,timestamp,vendor_id,msg,err_msg,THIS_URL,HTTP_REFERER,HTTP_HOST,HTTP_USER_AGENT,HTTP_ACCEPT,HTTP_ACCEPT_ENCODING,HTTP_ACCEPT_LANGUAGE,HTTP_ACCEPT_CHARSET,HTTP_COOKIE";
-
-
+        
         if ($log_id == "last") {
             $query = "SELECT * FROM `dnt_logs` WHERE id=(SELECT max(id) FROM dnt_logs)";
         } else {
             $query = "SELECT * FROM `dnt_logs` WHERE `log_id` = '" . $log_id . "'";
         }
-
+        
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 foreach ($columnsData->getTableColumns("dnt_logs", $columns) as $key => $value) {
@@ -269,71 +239,96 @@ class DntLog {
             }
         }
     }
-	
-	
-	public function getAll(){
-		$db = new DB();
-		$query = "SELECT * FROM `dnt_logs` WHERE vendor_id = ".Vendor::getId();
-		 if ($db->num_rows($query) > 0){
-			$this->results = $db->get_results($query);
-		 }else{
-			$this->results = "25";
-		 }
-			//return false;
-	}
-	
-	public function getAllAccess($andWhere){
-		
-		$db = new DB();
-		$query = "SELECT id FROM `dnt_logs` WHERE vendor_id = ".Vendor::getId()." $andWhere";
-		return $db->num_rows($query);
-		
-		
-	}
-	
-	/** return distinct ip **/
-	public function getUniqueAccess($andWhere){
-		$db = new DB();
-		$query = "SELECT DISTINCT `REMOTE_ADDR` FROM `dnt_logs` WHERE vendor_id = ".Vendor::getId()." $andWhere";
-		return $db->num_rows($query);
-	}
-	
-	public function getallUsers($andWhere){
-		
-		$db = new DB();
-		$query = "SELECT `id` FROM `dnt_registred_users` WHERE vendor_id = ".Vendor::getId()." $andWhere";
-		return $db->num_rows($query);
-	}
-	
-	public function getUniqueUsers($andWhere){
-		$db = new DB();
-		$query = "SELECT DISTINCT `email` FROM `dnt_registred_users` WHERE vendor_id = ".Vendor::getId()." $andWhere";
-		return $db->num_rows($query);
-	}
 
-	public function getCountOs($andWhere){
-		
-		$db = new DB();
-		
-		$android = 0;
-		$win = 0;
-		$mac = 0;
-		$black = 0;
-		$linux = 0;
-		$iOS = 0;
-		$other = 0;
-		
-		$agent = array();
-		$query = "SELECT * FROM `dnt_logs` WHERE vendor_id = ".Vendor::getId()." $andWhere";
-		if ($db->num_rows($query) > 0){
-			foreach ($db->get_results($query) as $row) {
-				
-				$agent['os'][] = Dnt::getOS($row['HTTP_USER_AGENT']);
-				$agent['browser'][] = Dnt::getBrowser($row['HTTP_USER_AGENT']);
-			}
-		}
-		
-		return $agent;
-	}
+    /**
+     * 
+     */
+    public function getAll() {
+        $db = new DB();
+        $query = "SELECT * FROM `dnt_logs` WHERE vendor_id = " . Vendor::getId();
+        if ($db->num_rows($query) > 0) {
+            $this->results = $db->get_results($query);
+        } else {
+            $this->results = "25";
+        }
+        //return false;
+    }
+
+    /**
+     * 
+     * @param type $andWhere
+     * @return type
+     */
+    public function getAllAccess($andWhere) {
+
+        $db = new DB();
+        $query = "SELECT id FROM `dnt_logs` WHERE vendor_id = " . Vendor::getId() . " $andWhere";
+        return $db->num_rows($query);
+    }
+
+    /**
+     * 
+     * return distinct ip
+     * @param type $andWhere
+     * @return type
+     */
+    public function getUniqueAccess($andWhere) {
+        $db = new DB();
+        $query = "SELECT DISTINCT `REMOTE_ADDR` FROM `dnt_logs` WHERE vendor_id = " . Vendor::getId() . " $andWhere";
+        return $db->num_rows($query);
+    }
+
+    /**
+     * 
+     * @param type $andWhere
+     * @return type
+     */
+    public function getallUsers($andWhere) {
+
+        $db = new DB();
+        $query = "SELECT `id` FROM `dnt_registred_users` WHERE vendor_id = " . Vendor::getId() . " $andWhere";
+        return $db->num_rows($query);
+    }
+
+    /**
+     * 
+     * @param type $andWhere
+     * @return type
+     */
+    public function getUniqueUsers($andWhere) {
+        $db = new DB();
+        $query = "SELECT DISTINCT `email` FROM `dnt_registred_users` WHERE vendor_id = " . Vendor::getId() . " $andWhere";
+        return $db->num_rows($query);
+    }
+
+    /**
+     * 
+     * @param type $andWhere
+     * @return type
+     */
+    public function getCountOs($andWhere) {
+
+        $db = new DB();
+
+        $android = 0;
+        $win = 0;
+        $mac = 0;
+        $black = 0;
+        $linux = 0;
+        $iOS = 0;
+        $other = 0;
+
+        $agent = array();
+        $query = "SELECT * FROM `dnt_logs` WHERE vendor_id = " . Vendor::getId() . " $andWhere";
+        if ($db->num_rows($query) > 0) {
+            foreach ($db->get_results($query) as $row) {
+
+                $agent['os'][] = Dnt::getOS($row['HTTP_USER_AGENT']);
+                $agent['browser'][] = Dnt::getBrowser($row['HTTP_USER_AGENT']);
+            }
+        }
+
+        return $agent;
+    }
 
 }

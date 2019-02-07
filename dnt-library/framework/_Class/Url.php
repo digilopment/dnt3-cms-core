@@ -1,12 +1,26 @@
 <?php
+
 /**
- *  class       Settings
+ *  class       Url
  *  author      Tomas Doubek
  *  framework   Sessions
  *  package     dnt3
  *  date        2017
  */
 class Url {
+
+    /** OLD * */
+    var $url;
+    var $modul_name;
+    var $modul_img;
+    var $photo;
+    var $photo_pripona;
+    var $vendor;
+    var $query;
+    var $nazov;
+    var $pripona;
+    var $layoutId;
+    var $layout;
 
     /**
      * 
@@ -48,20 +62,6 @@ class Url {
 
         return $r;
     }
-
-    /** OLD **/
-
-    var $url;
-    var $modul_name;
-    var $modul_img;
-    var $photo;
-    var $photo_pripona;
-    var $vendor;
-    var $query;
-    var $nazov;
-    var $pripona;
-    var $layoutId;
-    var $layout;
 
     /**
      * 

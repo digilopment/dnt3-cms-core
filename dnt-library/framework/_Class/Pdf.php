@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       Pdf
  *  author      Tomas Doubek
@@ -62,9 +63,9 @@ Class Pdf {
         }
         $dompdf = new DOMPDF();
         $dompdf->load_html($html);
-		$dompdf->set_paper('A4');
+        $dompdf->set_paper('A4');
         $dompdf->render();
-        $dompdf->stream($pdfName.'.pdf', array("Attachment" => 1));
+        $dompdf->stream($pdfName . '.pdf', array("Attachment" => 1));
     }
 
     /**
@@ -77,12 +78,12 @@ Class Pdf {
     public function downloadPdf($path, $fileName, $pdfName, $html) {
         $images = $this->findImagesInHtml($html);
         foreach ($images as $img) {
-           $html = str_replace($img, $this->imageToBase64($img), $html);
-		}
+            $html = str_replace($img, $this->imageToBase64($img), $html);
+        }
         $dompdf = new Dompdf();
         $dompdf->load_html($html);
         $dompdf->render();
-		file_put_contents($path . 'dnt-view/data/uploads/'.$pdfName.'.pdf', $dompdf->output());
+        file_put_contents($path . 'dnt-view/data/uploads/' . $pdfName . '.pdf', $dompdf->output());
     }
 
 }

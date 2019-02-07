@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       Install
  *  author      Tomas Doubek
@@ -64,17 +65,16 @@ Class Install {
      */
     public static function addVendor($tables, $VENDOR_NAME, $COPY_FROM, $VENDOR_LAYOUT = false, $DELETE_DATA = 1) {
         $db = new Db;
-        //SETTINGS
         $COPY_FROM = $COPY_FROM;
         $vendor_name = $VENDOR_NAME;
         $vendor_name_url = Dnt::name_url($VENDOR_NAME);
-        
-		if($VENDOR_LAYOUT){
-			$vendor_layout = $VENDOR_LAYOUT;
-		}else{
-			$vendor_layout = Dnt::name_url($VENDOR_NAME);
-		}
-		
+
+        if ($VENDOR_LAYOUT) {
+            $vendor_layout = $VENDOR_LAYOUT;
+        } else {
+            $vendor_layout = Dnt::name_url($VENDOR_NAME);
+        }
+
 
         $insertedData = array(
             'name' => $vendor_name,
@@ -82,68 +82,23 @@ Class Install {
             'layout' => $vendor_layout,
             'is_default' => 0,
         );
-		//$db->dbTransaction();	
+        
         $db->insert('dnt_vendors', $insertedData);
         $NEW_VENDOR_ID = Dnt::getLastIdVendor();
-		//$db->dbCommit();
-
+        
         foreach ($tables as $table) {
-            //tabulka
             $query = "SELECT * FROM $table WHERE vendor_id = '$COPY_FROM'";
             if ($db->num_rows($query) > 0) {
                 $data = array();
                 foreach ($db->get_results($query) as $row) {
-
-                    //stlpce
                     foreach (self::getColumns($query) as $column) {
                         $data["`" . $column . "`"] = $row[$column];
                         $data["vendor_id"] = $NEW_VENDOR_ID;
-                        //echo "OK" . $column . "<br/>";
                     }
                     $db->insert($table, $data, false);
-                    //var_dump($data);
-                    //echo "OK <hr/>";
                 }
             }
-            //echo "<hr/>";
-            //echo "<hr/>";
         }
-
-        //DELETE DATA FROM
-		/*
-		if($DELETE_DATA == 1){
-			$tables = array(
-				"dnt_logs",
-				"dnt_mailer_mails",
-				"dnt_mailer_type",
-				"dnt_polls",
-				"dnt_polls_composer",
-				"dnt_posts",
-				"dnt_posts_meta",
-				"dnt_post_type",
-				"dnt_uploads",
-			);
-		}else{
-			$tables = array(
-				false
-			);
-		}
-        foreach ($tables as $table) {
-            $where = array('vendor_id' => $NEW_VENDOR_ID);
-            $db->delete($table, $where);
-        }
-
-        //INSERT POST_TYPE FROM
-        $query = "
-		INSERT INTO `dnt_post_type` (`id`, `cat_id`, `sub_cat_id`, `name_url`, `admin_cat`, `name`, `show`, `order`, `vendor_id`, `parent_id`) VALUES 
-		(NULL, '1', '0', 'sitemap', 'sitemap', 'Stránky', '1', '0', '$NEW_VENDOR_ID ', '0'),
-		(NULL, '1', '0', 'sitemap-sub', 'sitemap', 'Podstránky', '1', '0', '$NEW_VENDOR_ID ', '0'),
-		(NULL, '1', '0', 'article', 'sitemap', 'Články', '1', '0', '$NEW_VENDOR_ID ', '0'),
-		(NULL, '3', '0', 'newsletter', 'post', 'Newslettre', '1', '0', '$NEW_VENDOR_ID ', '0'),
-		(NULL, '2', '0', 'domace', 'article', 'Domáce', '1', '0', '$NEW_VENDOR_ID ', '0')
-		";
-        $db->query($query);
-		*/
     }
 
     /**
@@ -188,50 +143,38 @@ Class Install {
                 'vendor_id' => $id)
             );
         }
-
-
-
-        $query = "
-		UPDATE `dnt_vendors` SET `id` = '" . $move_to . "' WHERE `dnt_vendors`.`id` = $id
-		";
+        
+        $query = "UPDATE `dnt_vendors` SET `id` = '" . $move_to . "' WHERE `dnt_vendors`.`id` = $id";
         $db->query($query);
-
+        
         echo "Updated";
     }
-	
-	public function updateIdEntity($tables){
-		$db = new Db;
-		 foreach ($tables as $table) {
-            //tabulka
+
+    public function updateIdEntity($tables) {
+        $db = new Db;
+        foreach ($tables as $table) {
             $query = "SELECT * FROM $table WHERE 1";
             if ($db->num_rows($query) > 0) {
                 $data = array();
                 foreach ($db->get_results($query) as $row) {
-					
-					$db->update(
-                    $table, //table
-					array(//set
-						'id_entity' => $row['id'],
-							), array(//where
-						'id_entity' => 0,
-						'id' => $row['id'],
-						)
-					);
-					
-					//$query = "UPDATE id_entity = '".$row['id']."' WHERE $table WHERE 1";
-					$qU = "UPDATE `$table` SET id_entity = '".$row['id']."' WHERE id_entity = 0 AND id = '".$row['id']."'";
-					$db->query($qU);
-					//echo $row['id'] . " - " . $table . "<br>";
-					
+
+                    $db->update(
+                            $table, //table
+                            array(//set
+                        'id_entity' => $row['id'],
+                            ), array(//where
+                        'id_entity' => 0,
+                        'id' => $row['id'],
+                            )
+                    );
+                    
+                    $qU = "UPDATE `$table` SET id_entity = '" . $row['id'] . "' WHERE id_entity = 0 AND id = '" . $row['id'] . "'";
+                    $db->query($qU);
                 }
             }
-            //echo "<hr/>";
-            //echo "<hr/>";
         }
-		
-	}
-	
-	
+    }
+
     /**
      * installation
      */
@@ -311,25 +254,25 @@ Class Install {
             $contentVendor = false;
         } else {
             $vendor_where = "WHERE `vendor_id` = '$vendor_id'";
-			
-			$contentVendor = false;
-			 $result = $mysqli->query("SELECT * FROM dnt_vendors WHERE id = $vendor_id");
-			 $fields_amount = $result->field_count;
-			 $rows_num = $mysqli->affected_rows;
-			  for ($i = 0, $st_counter = 0; $i < $fields_amount; $i++, $st_counter = 0) {
+
+            $contentVendor = false;
+            $result = $mysqli->query("SELECT * FROM dnt_vendors WHERE id = $vendor_id");
+            $fields_amount = $result->field_count;
+            $rows_num = $mysqli->affected_rows;
+            for ($i = 0, $st_counter = 0; $i < $fields_amount; $i++, $st_counter = 0) {
                 while ($row = $result->fetch_row()) { //when started (and every after 100 command cycle):
-				if ($st_counter % 100 == 0 || $st_counter == 0) {
+                    if ($st_counter % 100 == 0 || $st_counter == 0) {
                         $contentVendor .= "\nINSERT INTO dnt_vendors VALUES";
                     }
                     $contentVendor .= "\n(";
                     for ($j = 0; $j < $fields_amount; $j++) {
                         $row[$j] = str_replace("\n", "\\n", addslashes($row[$j]));
                         if (isset($row[$j])) {
-							if($j == 0){
-								$contentVendor .= $vendor_id;
-							}else{
-								$contentVendor .= '"' . $row[$j] . '"';
-							}
+                            if ($j == 0) {
+                                $contentVendor .= $vendor_id;
+                            } else {
+                                $contentVendor .= '"' . $row[$j] . '"';
+                            }
                         } else {
                             $contentVendor .= '""';
                         }
@@ -338,15 +281,14 @@ Class Install {
                         }
                     }
                     $contentVendor .= ")";
-					 if ((($st_counter + 1) % 100 == 0 && $st_counter != 0) || $st_counter + 1 == $rows_num) {
+                    if ((($st_counter + 1) % 100 == 0 && $st_counter != 0) || $st_counter + 1 == $rows_num) {
                         $contentVendor .= ";";
                     } else {
                         $contentVendor .= ",";
                     }
                     $st_counter = $st_counter + 1;
-				 }
-				}
-			//$contentVendor = "";
+                }
+            }
         }
         foreach ($target_tables as $table) {
             $result = $mysqli->query("SELECT * FROM " . $table . " $vendor_where");
@@ -365,11 +307,11 @@ Class Install {
                     for ($j = 0; $j < $fields_amount; $j++) {
                         $row[$j] = str_replace("\n", "\\n", addslashes($row[$j]));
                         if (isset($row[$j])) {
-							if($j == 0){
-								$content .= 'null';
-							}else{
-								$content .= '"' . $row[$j] . '"';
-							}
+                            if ($j == 0) {
+                                $content .= 'null';
+                            } else {
+                                $content .= '"' . $row[$j] . '"';
+                            }
                         } else {
                             $content .= '""';
                         }
@@ -387,23 +329,21 @@ Class Install {
                     $st_counter = $st_counter + 1;
                 }
             } $content .= "\n\n\n";
-			
-			
         }
-		
-		$content = str_replace("CREATE TABLE", "CREATE TABLE IF NOT EXISTS", $content);
+
+        $content = str_replace("CREATE TABLE", "CREATE TABLE IF NOT EXISTS", $content);
         //$backup_name = $backup_name ? $backup_name : $name."___(".date('H-i-s')."_".date('d-m-Y').")__rand".rand(1,11111111).".sql";
         $backup_name = $backup_name ? $backup_name : $name . ".sql";
         /* header('Content-Type: application/octet-stream');   
           header("Content-Transfer-Encoding: Binary");
           header("Content-disposition: attachment; filename=\"".$backup_name."\"");
          */
-        file_put_contents($backup_name, $content.$contentVendor);
+        file_put_contents($backup_name, $content . $contentVendor);
         //echo $content; exit;
     }
-	
-	public function importSql($file){
-		//INSERT DATA
+
+    public function importSql($file) {
+        //INSERT DATA
         $filename = $file;
         // Temporary variable, used to store current query
         $templine = '';
@@ -423,6 +363,6 @@ Class Install {
                 $templine = '';
             }
         }
-	}
+    }
 
 }

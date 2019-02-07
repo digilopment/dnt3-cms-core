@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       PollsFrontend
  *  author      Tomas Doubek
@@ -117,7 +118,7 @@ class PollsFrontend extends Polls {
         }
         return $arr;
     }
-    
+
     /**
      * 
      * @param type $vendor_ansewer_id
@@ -138,7 +139,7 @@ class PollsFrontend extends Polls {
             return 0;
         }
     }
-    
+
     /**
      * 
      * @param type $poll_id
@@ -166,7 +167,7 @@ class PollsFrontend extends Polls {
     public function getResultPercent($poll_id) {
         return (100 * self::getCorrectAnsewers($poll_id)) / self::getNumberOfQuestions($poll_id);
     }
-    
+
     /**
      * 
      * @param type $vendor_ansewer_id

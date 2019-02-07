@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       Navigation
  *  author      Tomas Doubek

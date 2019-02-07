@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       Image
  *  author      Tomas Doubek
@@ -16,7 +17,7 @@ Class Image {
      */
     public function get($id_entity, $table = null) {
         $db = new Db;
-        $query = "SELECT img FROM $table WHERE `id_entity` = '" . $id_entity . "' AND vendor_id = '".Vendor::getId()."'";
+        $query = "SELECT img FROM $table WHERE `id_entity` = '" . $id_entity . "' AND vendor_id = '" . Vendor::getId() . "'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 return $row['img'];
@@ -32,13 +33,13 @@ Class Image {
      * @return boolean
      */
     public function getFileImage($input) {
-		if(!is_numeric($input)){
-			return $input;
-		}
-        
-		$db = new Db;
-        
-		$imageId = $input;
+        if (!is_numeric($input)) {
+            return $input;
+        }
+
+        $db = new Db;
+
+        $imageId = $input;
         //`show` = '0' or `show` = '1' or `show` = '2'";
         $query = "SELECT name FROM dnt_uploads WHERE 
 		`id_entity` = '" . $imageId . "' AND 
@@ -52,29 +53,33 @@ Class Image {
             return false;
         }
     }
-	
-	
-	public function getFileImages($ids) {
+
+    /**
+     * 
+     * @param type $ids
+     * @return boolean
+     */
+    public function getFileImages($ids) {
         $db = new Db;
         $ids = explode(",", $ids);
-		if(is_array($ids)){
-			foreach($ids as $imageId){
-				$query = "SELECT name FROM dnt_uploads WHERE 
+        if (is_array($ids)) {
+            foreach ($ids as $imageId) {
+                $query = "SELECT name FROM dnt_uploads WHERE 
 				`id_entity` = '" . $imageId . "' AND 
 				`vendor_id` = '" . Vendor::getId() . "' AND 
 				" . Dnt::showStatus("show") . "";
-				if ($db->num_rows($query) > 0) {
-					foreach ($db->get_results($query) as $row) {
-						$return[] = WWW_PATH . "dnt-view/data/uploads/" . $row['name'];
-					}
-				} else {
-					$return = array(false);
-				}
-			}
-		}else{
-			$return = array(false);
-		}
-		return $return;
+                if ($db->num_rows($query) > 0) {
+                    foreach ($db->get_results($query) as $row) {
+                        $return[] = WWW_PATH . "dnt-view/data/uploads/" . $row['name'];
+                    }
+                } else {
+                    $return = array(false);
+                }
+            }
+        } else {
+            $return = array(false);
+        }
+        return $return;
     }
 
     /**

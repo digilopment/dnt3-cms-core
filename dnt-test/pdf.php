@@ -6,6 +6,12 @@ $autoload->load($path);
 $rest = new Rest;
 $dntUpload = new DntUpload;
 
+/** 
+ *
+ *EXPORT TO PDF
+ *
+ *
+**/
 $fileName 	= 'test.pdf';
 $pdfName 	= 'Test Pdf';
 $html =

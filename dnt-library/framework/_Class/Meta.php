@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       Meta
  *  author      Tomas Doubek
@@ -94,7 +95,6 @@ Class Meta {
             }
             return $return;
         }
-        
     }
 
     /**
@@ -468,7 +468,7 @@ Class Meta {
         }
         return $return;
     }
-    
+
     /**
      * 
      * @param type $catId
@@ -506,9 +506,9 @@ Class Meta {
             $ano = false;
         }
         echo '<select class="form-control" name="zobrazit_' . $meta . '" style="border: 2px #' . $color . ' solid;">
-						<option value="1" ' . $ano . '>Áno</option>
-						<option value="0" ' . $nie . '>Nie</option>
-					</select>';
+            <option value="1" ' . $ano . '>Áno</option>
+            <option value="0" ' . $nie . '>Nie</option>
+        </select>';
     }
 
     /**
@@ -522,7 +522,7 @@ Class Meta {
         $input = str_replace("", "", $input);
         return $input;
     }
-    
+
     /**
      * 
      * @return type
@@ -590,7 +590,7 @@ Class Meta {
         }
         echo '</select>';
     }
-    
+
     /**
      * 
      * @return type
@@ -642,13 +642,12 @@ Class Meta {
 
         if (Dnt::in_string("|", $data)) {
             $dataArr = explode("|", $data);
-            if (count($dataArr) == 2){
+            if (count($dataArr) == 2) {
                 return $dataArr;
-            }
-            else{
+            } else {
                 return array($data, $data);
             }
-        }else {
+        } else {
             return array($data, $data);
         }
     }

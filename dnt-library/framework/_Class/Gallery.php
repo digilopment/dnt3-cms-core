@@ -1,7 +1,7 @@
 <?php
 
 /**
- *  class       AdminContent
+ *  class       Gallery
  *  author      Tomas Doubek
  *  framework   DntLibrary
  *  package     dnt3

@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       MultyLanguage
  *  author      Tomas Doubek
@@ -13,34 +14,46 @@ class MultyLanguage {
      * @param type $is_limit
      * @return string
      */
-	public $countActiveLangs = "";
-	
-	public function activeVendorLangsQuery(){
-		$db = new Db;
-		if(count($GLOBALS['ACTIVE_LANGS_ARR'])>0){
-			return $GLOBALS['ACTIVE_LANGS_ARR'];
-		}else{
-			
-			//$q = "SELECTs * FROMs dnt_languages WHEREs `show` = '1' AND vendor_id = '" . Vendor::getId() . "'";
-			$q = "SELECT * FROM dnt_languages WHERE `show` = '1' AND vendor_id = '" . Vendor::getId() . "'";
-			if ($db->num_rows($q) > 0) {
-				foreach ($db->get_results($q) as $row) {
-					$data[] = $row['slug'];
-				}
-			} else {
-				$data[] = array();
-			}
-			
-			$GLOBALS['ACTIVE_LANGS_ARR'] = $data;
-			return $data;
-		}
-	}
-	
-	public function activeVendorLangs(){
-		//return array("sk", "de");
-		//return $GLOBALS['ACTIVE_LANGS_ARR'];
-		return self::activeVendorLangsQuery();
-	}
+    public $countActiveLangs = "";
+
+    /**
+     * 
+     * @return array
+     */
+    public function activeVendorLangsQuery() {
+        $db = new Db;
+        if (count($GLOBALS['ACTIVE_LANGS_ARR']) > 0) {
+            return $GLOBALS['ACTIVE_LANGS_ARR'];
+        } else {
+
+            //$q = "SELECTs * FROMs dnt_languages WHEREs `show` = '1' AND vendor_id = '" . Vendor::getId() . "'";
+            $q = "SELECT * FROM dnt_languages WHERE `show` = '1' AND vendor_id = '" . Vendor::getId() . "'";
+            if ($db->num_rows($q) > 0) {
+                foreach ($db->get_results($q) as $row) {
+                    $data[] = $row['slug'];
+                }
+            } else {
+                $data[] = array();
+            }
+
+            $GLOBALS['ACTIVE_LANGS_ARR'] = $data;
+            return $data;
+        }
+    }
+
+    /**
+     * 
+     * @return type
+     */
+    public function activeVendorLangs() {
+        return self::activeVendorLangsQuery();
+    }
+
+    /**
+     * 
+     * @param type $is_limit
+     * @return string
+     */
     protected function prepare_query($is_limit) {
         $db = new Db();
 
@@ -104,33 +117,44 @@ class MultyLanguage {
         $rest = new Rest;
         return $rest->webhook(0);
     }
-	
-	public function getTranslates(){
-		$db = new Db;
+
+    /**
+     * 
+     * @return boolean
+     */
+    public function getTranslates() {
+        $db = new Db;
         $query = "SELECT * FROM dnt_translates WHERE type = 'static' AND vendor_id = '" . Vendor::getId() . "'";
         if ($db->num_rows($query) > 0) {
-			return $db->get_results($query);
+            return $db->get_results($query);
         } else {
             return false;
         }
-	}
-	
-	public static function translate($data, $key, $value){
-		$lang = self::getLang();
-		$return = false;
-		foreach($data['translates'] as $translate){
-			if($lang == 0){
-				if($translate['translate_id'] == $key && $translate['lang_id'] == DEAFULT_LANG){
-					return $translate[$value];
-				}
-			}else{
-				if($translate['translate_id'] == $key && $translate['lang_id'] == self::getLang()){
-					return $translate[$value];
-				}
-			}
-		}
-		return $return;
-	}
+    }
+
+    /**
+     * 
+     * @param type $data
+     * @param type $key
+     * @param type $value
+     * @return boolean
+     */
+    public static function translate($data, $key, $value) {
+        $lang = self::getLang();
+        $return = false;
+        foreach ($data['translates'] as $translate) {
+            if ($lang == 0) {
+                if ($translate['translate_id'] == $key && $translate['lang_id'] == DEAFULT_LANG) {
+                    return $translate[$value];
+                }
+            } else {
+                if ($translate['translate_id'] == $key && $translate['lang_id'] == self::getLang()) {
+                    return $translate[$value];
+                }
+            }
+        }
+        return $return;
+    }
 
     /**
      * 
@@ -138,22 +162,24 @@ class MultyLanguage {
      * @return type
      */
     public function getLangs($frontend = false) {
-        if(MULTY_LANGUAGE == false){
-			return "SELECT * FROM dnt_languages WHERE `slug` = '".DEAFULT_LANG."' AND vendor_id = '" . Vendor::getId() . "'";
-		}else{
-			if ($frontend == true) {
-				return "SELECT * FROM dnt_languages WHERE `show` = '1' AND vendor_id = '" . Vendor::getId() . "'";
-			} else {
-				return "SELECT * FROM dnt_languages WHERE `home_lang` = '0' AND `show` = '1' AND vendor_id = '" . Vendor::getId() . "'";
-			}
-		}
+        if (MULTY_LANGUAGE == false) {
+            return "SELECT * FROM dnt_languages WHERE `slug` = '" . DEAFULT_LANG . "' AND vendor_id = '" . Vendor::getId() . "'";
+        } else {
+            if ($frontend == true) {
+                return "SELECT * FROM dnt_languages WHERE `show` = '1' AND vendor_id = '" . Vendor::getId() . "'";
+            } else {
+                return "SELECT * FROM dnt_languages WHERE `home_lang` = '0' AND `show` = '1' AND vendor_id = '" . Vendor::getId() . "'";
+            }
+        }
     }
-	
-	/*** count active langs **/
-	public function countActiveLangs() {
-       $db = new Db;
-	   $query =  self::getLangs($frontend);
-	   $this->countActiveLangs = $db->num_rows($query);
+    
+    /**
+     * 
+     */
+    public function countActiveLangs() {
+        $db = new Db;
+        $query = self::getLangs($frontend);
+        $this->countActiveLangs = $db->num_rows($query);
     }
 
     /**
@@ -210,14 +236,14 @@ class MultyLanguage {
         $table = isset($data['table']) ? $data['table'] : false;
         //$default 		= isset($data['default']) ? $data['default'] : false;
         $lang_id = isset($data['lang_id']) ? $data['lang_id'] : false;
-        
+
         $db = new Db;
-		
-		if($column){
-			$dbColumn = $column;
-		}else{
-			$dbColumn = 'translate';
-		}
+
+        if ($column) {
+            $dbColumn = $column;
+        } else {
+            $dbColumn = 'translate';
+        }
         $query = "SELECT `$dbColumn` FROM `dnt_translates` WHERE
 			`parent_id` = '0' AND
 			`vendor_id` = '" . Vendor::getId() . "' AND
@@ -226,7 +252,6 @@ class MultyLanguage {
 			`type` = '" . $type . "' AND
 			`table` = '" . $table . "'
 			";
-        //$default = $this->getDefault($translate_id, $table, $type);
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 $return = $row[$dbColumn];
@@ -236,13 +261,13 @@ class MultyLanguage {
         }
         return $return;
     }
+
     /**
      * 
      * @param type $data
      * @return type
      */
     public function getTranslate($data) {
-        //return "aa";
         $translate_id = isset($data['translate_id']) ? $data['translate_id'] : false;
         $type = isset($data['type']) ? $data['type'] : false;
         $table = isset($data['table']) ? $data['table'] : false;

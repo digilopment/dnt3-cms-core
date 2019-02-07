@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       Frontend
  *  author      Tomas Doubek
@@ -14,7 +15,7 @@ class Frontend {
      * @return type
      */
     public function get($custom_data = false, $id = false) {
-		
+
         $article = new ArticleView;
         $settings = new Settings;
 
@@ -22,25 +23,25 @@ class Frontend {
         if ($custom_data == false) {
             $custom_data = array(array(false));
         }
-		
-		if($id == false){
-			$post_id = isset($custom_data['post_id']) ? $custom_data['post_id'] : $article->getStaticId();
-		}else{
-			$post_id = $id;
-		}
-		
-		$metaArr = array();
-		$menuItems = array();
-		
-		$metaArr = $article->getMetaData($post_id);
-		$menuItems = Navigation::getParents();
-		$translates = MultyLanguage::getTranslates();
-		
-		$metaSettingsArr = array();
-		$metaSettingsArr = $settings->getAllSettings();
-		
-		$articleName = $article->getPostParam("name", $post_id);
-		$articleImage = $article->getPostImage($post_id);
+
+        if ($id == false) {
+            $post_id = isset($custom_data['post_id']) ? $custom_data['post_id'] : $article->getStaticId();
+        } else {
+            $post_id = $id;
+        }
+
+        $metaArr = array();
+        $menuItems = array();
+
+        $metaArr = $article->getMetaData($post_id);
+        $menuItems = Navigation::getParents();
+        $translates = MultyLanguage::getTranslates();
+
+        $metaSettingsArr = array();
+        $metaSettingsArr = $settings->getAllSettings();
+
+        $articleName = $article->getPostParam("name", $post_id);
+        $articleImage = $article->getPostImage($post_id);
         $data = array(
             "media_path" => WWW_PATH . "dnt-view/layouts/" . Vendor::getLayout() . "/",
             "title" => Settings::get("title"),
@@ -53,19 +54,6 @@ class Frontend {
                 '<meta content="article" property="og:type" />',
                 '<meta content="' . $articleImage . '" property="og:image" />',
             ),
-            /*"settings" => array(
-                "vendor_company" => Settings::get("vendor_company"),
-                "vendor_street" => Settings::get("vendor_street"),
-                "vendor_psc" => Settings::get("vendor_psc"),
-                "vendor_city" => Settings::get("vendor_city"),
-                "vendor_tel" => Settings::get("vendor_tel"),
-                "vendor_fax" => Settings::get("vendor_fax"),
-                "vendor_email" => Settings::get("vendor_email"),
-                "vendor_ico" => Settings::get("vendor_ico"),
-                "vendor_dic" => Settings::get("vendor_dic"),
-                "vendor_iban" => Settings::get("vendor_iban"),
-                "facebook_page" => Settings::get("facebook_page"),
-            ),*/
             "article" => array(
                 "name" => $articleName,
                 "name_url" => $article->getPostParam("name_url", $post_id),
@@ -77,18 +65,44 @@ class Frontend {
                 "service_id" => $article->getPostParam("service_id", $post_id),
                 "tags" => $article->getPostTags($post_id),
                 "img" => $articleImage,
-				
             ),
-			"meta_tree" => $metaArr,
-			"menu_items" => $menuItems,
-			"translates" => $translates,
-			"meta_settings" => $metaSettingsArr,
+            "meta_tree" => $metaArr,
+            "menu_items" => $menuItems,
+            "translates" => $translates,
+            "meta_settings" => $metaSettingsArr,
             "timestamp" => time(),
         );
-        
+
         $data = array_merge($data, $custom_data);
-        //var_dump($data);
         return $data;
+    }
+
+    /**
+     * 
+     * @param type $data
+     * @param type $key
+     * @return boolean
+     */
+    public static function getMetaSetting($data, $key) {
+        if (isset($data['meta_settings']['keys'][$key]['value']) && $data['meta_settings']['keys'][$key]['show'] == 1) {
+            return $data['meta_settings']['keys'][$key]['value'];
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 
+     * @param type $data
+     * @param type $key
+     * @return boolean
+     */
+    public static function getMetaTree($data, $key) {
+        if (isset($data['meta_tree']['keys'][$key]['value']) && $data['meta_tree']['keys'][$key]['show'] == 1) {
+            return $data['meta_tree']['keys'][$key]['value'];
+        } else {
+            return false;
+        }
     }
 
 }

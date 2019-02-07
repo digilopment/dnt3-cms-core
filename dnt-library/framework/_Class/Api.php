@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       Api
  *  author      Tomas Doubek
@@ -7,19 +8,21 @@
  *  date        2017
  */
 class Api {
-    
-	
-	
-	public function getAll(){
-		$db = new DB();
-		 $query = "SELECT * FROM dnt_api WHERE vendor_id = '".Vendor::getId()."'";
-            if ($db->num_rows($query) > 0) {
-                return $db->get_results($query);
-            } else {
-                return array();
-          }
-	}
-	
+
+    /**
+     * 
+     * @return type
+     */
+    public function getAll() {
+        $db = new DB();
+        $query = "SELECT * FROM dnt_api WHERE vendor_id = '" . Vendor::getId() . "'";
+        if ($db->num_rows($query) > 0) {
+            return $db->get_results($query);
+        } else {
+            return array();
+        }
+    }
+
     /**
      * 
      * @param type $query
@@ -42,7 +45,7 @@ class Api {
             return false;
         }
     }
-    
+
     /**
      * 
      * @param type $name_url
@@ -55,7 +58,7 @@ class Api {
             return urldecode($getQuery);
         } else {
             $db = new DB();
-            $query = "SELECT query FROM dnt_api WHERE `id_entity` = '$id' AND `name_url` = '$name_url' AND vendor_id = '".Vendor::getId()."'";
+            $query = "SELECT query FROM dnt_api WHERE `id_entity` = '$id' AND `name_url` = '$name_url' AND vendor_id = '" . Vendor::getId() . "'";
             if ($db->num_rows($query) > 0) {
                 foreach ($db->get_results($query) as $row) {
                     return $row['query'];
@@ -65,7 +68,7 @@ class Api {
             }
         }
     }
-    
+
     /**
      * 
      * @param type $query
@@ -81,11 +84,10 @@ class Api {
                     $track->addChild($column, html_entity_decode($row[$column]));
                 }
             }
-            //Header('Content-type: text/xml');
             print($xml->asXML());
         }
     }
-    
+
     /**
      * 
      * @param type $query

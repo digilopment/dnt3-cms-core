@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       Polls
  *  author      Tomas Doubek
@@ -65,8 +66,13 @@ class Polls {
     public function getPollsAdmin() {
         return "SELECT * FROM dnt_polls WHERE vendor_id = '" . Vendor::getId() . "'";
     }
-	
-	public function __construct($poll_id) {
+
+    /**
+     * 
+     * @param type $poll_id
+     * @return boolean
+     */
+    public function __construct($poll_id) {
         $db = new Db;
         $query = "SELECT `id_entity` FROM dnt_polls WHERE
 		id 	= " . $poll_id . "";
@@ -76,9 +82,8 @@ class Polls {
                 $id_entity = $row['id_entity'];
             }
         } else {
-            $id_entity =  false;
+            $id_entity = false;
         }
-		//var_dump($id_entity);
         return $id_entity;
     }
 
@@ -105,7 +110,7 @@ class Polls {
         );
 
         $db->insert('dnt_polls', $insertedData);
-		$lastId = Dnt::getLastId('dnt_polls');
+        $lastId = Dnt::getLastId('dnt_polls');
         return $lastId;
     }
 
@@ -146,7 +151,7 @@ class Polls {
 		`key`       = 'question'";
         return $db->num_rows($query);
     }
-    
+
     /**
      * 
      * @param type $poll_id
@@ -179,7 +184,6 @@ class Polls {
                 '`order`' => "$order",
             );
             $db->insert('dnt_polls_composer', $insertedData);
-			
         }
 
         for ($j = 1; $j <= $questions; $j++) {
@@ -196,7 +200,7 @@ class Polls {
                 '`order`' => "$order",
             );
             $db->insert('dnt_polls_composer', $insertedData);
-			
+
 
             //generovanie inputov pre typy odpovedí A,B,C,D...
             for ($i = 1; $i <= $count_questions; $i++) {
@@ -239,8 +243,8 @@ class Polls {
             '`order`' => "$order",
         );
         $db->insert('dnt_polls_composer', $insertedData);
-		
-		//Dnt::getIdEntity($lastId);
+
+        //Dnt::getIdEntity($lastId);
 
         for ($i = 1; $i <= $count_questions; $i++) {
             $insertedData = array(
@@ -254,7 +258,6 @@ class Polls {
                 '`show`' => "1",
             );
             $db->insert('dnt_polls_composer', $insertedData);
-			
         }
     }
 
@@ -265,7 +268,7 @@ class Polls {
      */
     public function AddWinningCombination($poll_id, $question_id = 0) {
         $db = new Db;
-		$order = false;
+        $order = false;
         $insertedData = array(
             '`vendor_id`' => Vendor::getId(),
             '`poll_id`' => $poll_id,
@@ -277,8 +280,7 @@ class Polls {
             '`order`' => "$order",
         );
         $db->insert('dnt_polls_composer', $insertedData);
-	}
-		
+    }
 
     /**
      * 
@@ -300,7 +302,7 @@ class Polls {
         $where = array('id_entity' => $id, 'vendor_id' => Vendor::getId());
         $db->delete('dnt_polls_composer', $where);
     }
-    
+
     /**
      * 
      * @param type $poll_id
@@ -330,9 +332,8 @@ class Polls {
                     '`is_correct`' => $row['is_correct'],
                     '`img`' => $row['img'],
                 );
-				
+
                 $db->insert('dnt_polls_composer', $insertedData);
-				
             }
         }
 
@@ -359,7 +360,7 @@ class Polls {
             }
         }
     }
-    
+
     /**
      * 
      * @param type $poll_id
@@ -396,6 +397,7 @@ class Polls {
      * this function returs query included 2 arguments: $poll_id and $question_id
      *
      */
+
     public function getWinningCombinationData($poll_id) {
         return "SELECT * FROM dnt_polls_composer WHERE
 		vendor_id 	= " . Vendor::getId() . " AND
@@ -426,7 +428,7 @@ class Polls {
     public function inputName($prefix, $id, $column) {
         return $id . "_" . $prefix . "_" . $column;
     }
-    
+
     /**
      * 
      * @param type $poll_id
@@ -445,7 +447,7 @@ class Polls {
         $max = $db->get_row($query);
         return $max[0];
     }
-    
+
     /**
      * 
      * @param type $poll_id

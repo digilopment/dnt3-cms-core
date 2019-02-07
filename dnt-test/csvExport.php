@@ -6,6 +6,13 @@ $path			= "../";
 $autoload->load($path);
 $vendor 		= new Vendor;
 
+/** 
+ *
+ *EXPORT DATA TO CSV
+ *
+ *
+**/
+
 function creatCsvFileStatic($table, $columns, $where, $fileName, $columnsName = false) {
 	$db = new DB();
 	$data = false;

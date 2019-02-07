@@ -53,7 +53,6 @@ class AdminContent extends MultyLanguage {
      */
     protected function prepare_query($is_limit) {
         $db = new Db();
-        //default cat
         if (isset($_GET['included']) && $_GET['included'] == "article") {
             $typ = "AND sub_cat_id = '" . $_GET['filter'] . "'";
         } elseif (isset($_GET['included']) && $_GET['included'] == "sitemap-sub") {

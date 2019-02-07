@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       MessengerBot
  *  author      Tomas Doubek
@@ -15,13 +16,15 @@ class MessengerBot {
     public $bot_param;
     public $param;
     public $result;
-	
-	
-	
-	public function __construct(){
-		$HUB_VERIFY_TOKEN 	= Settings::get("msg_hub_verify_token");
-		$ACCESS_TOKEN			= Settings::get("msg_access_token");
-	}
+
+    /**
+     * 
+     */
+    public function __construct() {
+        $HUB_VERIFY_TOKEN = Settings::get("msg_hub_verify_token");
+        $ACCESS_TOKEN = Settings::get("msg_access_token");
+    }
+
     /**
      * 
      */
@@ -102,7 +105,7 @@ class MessengerBot {
      */
     public function getUserParam($param) {
         $userId = $this->getSenderId();
-        
+
         $this->bot_param = curl_init();
         curl_setopt($this->bot_param, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($this->bot_param, CURLOPT_RETURNTRANSFER, true);
@@ -147,7 +150,7 @@ class MessengerBot {
      */
     public function addUI($answer) {
         //return $this->mainUI($answer);
-		return "Ahoj";
+        return "Ahoj";
     }
 
     /**

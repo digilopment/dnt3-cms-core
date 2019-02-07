@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       Cookie
  *  author      Tomas Doubek
@@ -22,7 +23,6 @@ class Cookie {
      * @param string $name
      * @return bool
      */
-
     static public function Exists($name) {
         return isset($_COOKIE[$name]);
     }

@@ -10,6 +10,7 @@ if(isset($_POST['sent'])){
 	$zobrazit_show_real_url = $rest->post("zobrazit_show_real_url");
 	$zobrazit_in_progress = $rest->post("zobrazit_in_progress");
 	$real_url = $rest->post("real_url");
+        $real_url = preg_replace('/\s+/', '', $real_url);
 	$return = $rest->post("return");
 	
 	

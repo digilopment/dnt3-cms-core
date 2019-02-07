@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       Mailer
  *  author      Tomas Doubek
@@ -19,6 +20,7 @@ class Mailer {
      * 
      * @return boolean
      */
+
     public function __construct() {
         return false;
     }
@@ -114,25 +116,25 @@ class Mailer {
         $headers .= 'Content-type: text/html; charset=windows-1250' . "\r\n";
         $headers .= 'To:  <' . $to . '>' . "\r\n"; // dalsi mail sa oddeluje ciarkou
         $headers .= 'From: ' . $od_meno . ' <' . $od_email . '>' . "\r\n";
-		
-		if(Settings::show("send_grid_api_key") == true && Settings::show("send_grid_api_template_id") == true){
-			$SEND_GRID_API_KEY = Settings::get("send_grid_api_key");
-			$SEND_GRID_API_TEMPLATE_ID = Settings::get("send_grid_api_template_id");
-		}else{
-			$SEND_GRID_API_KEY = SEND_GRID_API_KEY;
-			$SEND_GRID_API_TEMPLATE_ID = SEND_GRID_API_TEMPLATE_ID;
-		}
-		
+
+        if (Settings::show("send_grid_api_key") == true && Settings::show("send_grid_api_template_id") == true) {
+            $SEND_GRID_API_KEY = Settings::get("send_grid_api_key");
+            $SEND_GRID_API_TEMPLATE_ID = Settings::get("send_grid_api_template_id");
+        } else {
+            $SEND_GRID_API_KEY = SEND_GRID_API_KEY;
+            $SEND_GRID_API_TEMPLATE_ID = SEND_GRID_API_TEMPLATE_ID;
+        }
+
         if (SEND_EMAIL_VIA == "internal") {
-			$to = str_replace(" ", "", $to);
+            $to = str_replace(" ", "", $to);
             @mail($to, $subject, $message, $headers);
         } elseif (SEND_EMAIL_VIA == "send_grid") {
             $js = array(
                 'sub' => array(':name' => array('Elmer')),
                 'filters' => array('templates' => array('settings' => array('enable' => 1, 'template_id' => $SEND_GRID_API_TEMPLATE_ID)))
             );
-			$to = str_replace(" ", "", $to);
-			$od_email = str_replace(" ", "", $od_email);
+            $to = str_replace(" ", "", $to);
+            $od_email = str_replace(" ", "", $od_email);
             $params = array(
                 'to' => $to,
                 'toname' => $to,

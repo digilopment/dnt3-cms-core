@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       XMLgenerator
  *  author      Tomas Doubek
@@ -75,7 +76,7 @@ class XMLgenerator {
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 foreach ($this->getTableColumns($table, $columns) as $index => $value) {
-					$arr[] = Dnt::odstran_diakritiku($row[$index]);					
+                    $arr[] = Dnt::odstran_diakritiku($row[$index]);
                 }
             }
         } else {
@@ -155,27 +156,18 @@ class XMLgenerator {
         if ($db->num_rows($query) > 0) {
 
             $pocetStlpcov = count($this->getTableColumns($table, $columns));
-			
-			if($columnsName){
-				$data .= str_replace(",",";",$columnsName) . "\n";
-			}else{
-				$data .= implode(";", $this->getTableColumns($table, $columns)) . "\n";
-			}
-           
-		   foreach ($db->get_results($query) as $row) {
+
+            if ($columnsName) {
+                $data .= str_replace(",", ";", $columnsName) . "\n";
+            } else {
+                $data .= implode(";", $this->getTableColumns($table, $columns)) . "\n";
+            }
+
+            foreach ($db->get_results($query) as $row) {
                 $i = 1;
                 foreach ($this->getTableColumns($table, $columns) as $column) {
-                    //$data .= $row[$column];
-					
-					/*
-					if($column == "img"){
-						$data .= $image->getFileImage($row['img']);
-					}else{
-						$data .= $row[$column];
-					}
-					*/
-					$data .= $row[$column];
-					
+                    $data .= $row[$column];
+
                     if ($i == $pocetStlpcov) {
                         $data .= "\n";
                     } else {
@@ -185,14 +177,11 @@ class XMLgenerator {
                 }
             }
         }
-		
-		/*if(!file_exists($fileName)){
-			@mkdir(dirname($fileName), 7777, true);
-		}*/
-		if(!is_readable(dirname($fileName))){
-			mkdir(dirname($fileName));
-		}
-        file_put_contents($fileName,  $data);
+        
+        if (!is_readable(dirname($fileName))) {
+            mkdir(dirname($fileName));
+        }
+        file_put_contents($fileName, $data);
     }
 
     /**
@@ -205,25 +194,25 @@ class XMLgenerator {
     public function creatCsvFileStatic($table, $columns, $where, $fileName, $columnsName = false) {
         $db = new DB();
         $data = false;
-		$data = chr(0xEF) . chr(0xBB) . chr(0xBF); //diakritika pod UTF 8
+        $data = chr(0xEF) . chr(0xBB) . chr(0xBF); //diakritika pod UTF 8
         $query = "SELECT $columns FROM $table WHERE parent_id = 0 $where";
         if ($db->num_rows($query) > 0) {
             $data .= str_replace(" ", ";", $columns);
-			
-			if($columnsName){
-				$data .= str_replace(",",";",$columnsName) . "\n";
-			}else{
-				$data .= str_replace(" ", ";", $columns);
-			}
-			
+
+            if ($columnsName) {
+                $data .= str_replace(",", ";", $columnsName) . "\n";
+            } else {
+                $data .= str_replace(" ", ";", $columns);
+            }
+
             $data .= "\n";
             foreach ($db->get_results($query) as $row) {
-                $data .= $row['id_entity'] . ";" . $row['vendor_id'] . ";" . $row['name'] . ";" . $row['surname'] . ";" . $row['session_id'] . ";" . $row['mesto'] . ";" . $row['psc'] . ";" . $row['email'] . ";" . $row['content'] . ";" . $row['news'] . ";" . $row['news_2'] . ";" . $row['perex'] . ";" . $row['podmienky']. "\n";
+                $data .= $row['id_entity'] . ";" . $row['vendor_id'] . ";" . $row['name'] . ";" . $row['surname'] . ";" . $row['session_id'] . ";" . $row['mesto'] . ";" . $row['psc'] . ";" . $row['email'] . ";" . $row['content'] . ";" . $row['news'] . ";" . $row['news_2'] . ";" . $row['perex'] . ";" . $row['podmienky'] . "\n";
             }
         }
-		if(!is_readable(dirname($fileName))){
-			mkdir(dirname($fileName));
-		}
+        if (!is_readable(dirname($fileName))) {
+            mkdir(dirname($fileName));
+        }
         file_put_contents($fileName, $data);
     }
 

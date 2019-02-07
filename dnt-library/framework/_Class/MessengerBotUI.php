@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       MessengerUI
  *  author      Tomas Doubek
@@ -127,7 +128,6 @@ class MessengerUI {
         foreach ($this->xml->item as $item) {
             return $item->msg;
         }
-        
     }
 
     /**

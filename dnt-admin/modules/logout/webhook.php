@@ -1,4 +1,5 @@
 <?php
+
 $session = new Sessions;
 $dnt = new Dnt;
 $session->remove("admin_logged");

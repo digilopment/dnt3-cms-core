@@ -62,7 +62,7 @@
    <div class="grid no-border">
       <div class="grid-header">
          <i class="fa fa-table"></i>
-         <span class="grid-title">Zoznam kupónov</span>
+         <span class="grid-title">Zoznam Voucherov</span>
       </div>
       <form action="index.php?src=files&action=del" method="POST">
       <div class="grid-body">
@@ -81,7 +81,7 @@
             </thead>
             <tbody>
                <?php
-                  $query = "SELECT * FROM dnt_vouchers order by `order`";
+                  $query = "SELECT * FROM dnt_vouchers WHERE vendor_id = '".Vendor::getId()."' order by `order`";
                   if($db->num_rows($query)>0){
                   	foreach($db->get_results($query) as $row){
 						$postId 	= $row['id_entity'];

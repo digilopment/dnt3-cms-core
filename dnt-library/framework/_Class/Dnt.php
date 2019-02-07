@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       Dnt
  *  author      Tomas Doubek
@@ -16,12 +17,12 @@ class Dnt {
      */
     public static function getLastId($table, $vendor_id = true) {
         $db = new Db;
-		
-		if($vendor_id){
-			$query = "SELECT MAX(id) FROM " . $table . " WHERE vendor_id = '" . Vendor::getId() . "'";
-		}else{
-			$query = "SELECT MAX(id) FROM " . $table;
-		}
+
+        if ($vendor_id) {
+            $query = "SELECT MAX(id) FROM " . $table . " WHERE vendor_id = '" . Vendor::getId() . "'";
+        } else {
+            $query = "SELECT MAX(id) FROM " . $table;
+        }
 
 
         if ($db->num_rows($query) > 0) {
@@ -33,15 +34,22 @@ class Dnt {
         }
         return $return;
     }
-	
-	public static function getMaxValueFromColumn($table, $column, $vendor_id=true) {
+
+    /**
+     * 
+     * @param type $table
+     * @param type $column
+     * @param type $vendor_id
+     * @return boolean
+     */
+    public static function getMaxValueFromColumn($table, $column, $vendor_id = true) {
         $db = new Db;
-		
-		if($vendor_id){
-			$query = "SELECT MAX($column) FROM " . $table . " WHERE vendor_id = '" . Vendor::getId() . "'";
-		}else{
-			$query = "SELECT MAX($column) FROM " . $table;
-		}
+
+        if ($vendor_id) {
+            $query = "SELECT MAX($column) FROM " . $table . " WHERE vendor_id = '" . Vendor::getId() . "'";
+        } else {
+            $query = "SELECT MAX($column) FROM " . $table;
+        }
 
 
         if ($db->num_rows($query) > 0) {
@@ -53,10 +61,12 @@ class Dnt {
         }
         return $return;
     }
-	
-	
-	
-	public static function getLastIdVendor() {
+
+    /**
+     * 
+     * @return boolean
+     */
+    public static function getLastIdVendor() {
         $db = new Db;
         $query = "SELECT MAX(id) FROM dnt_vendors ";
         if ($db->num_rows($query) > 0) {
@@ -68,29 +78,37 @@ class Dnt {
         }
         return $return;
     }
-	
-	function getMapLocation($googleMapsUrl){
-		$string = $googleMapsUrl;
-		$string = explode("@", $string);
-		$position = $string[1];
-		$position = explode("z/data", $position);
-		$position = $position[0];
-		$position = explode(",", $position);
-		return $position;
-	}
-	
-	public static function getIdEntity($lastId) {
-		$db = new Db;
-		$db->update(
-			'dnt_posts',	//table
-			array(	//set
-				'id_entity' => $lastId
-				), 
-			array( 	//where
-				'id' => $lastId
-			)
-		);
-	}
+
+    /**
+     * 
+     * @param type $googleMapsUrl
+     * @return type
+     */
+    function getMapLocation($googleMapsUrl) {
+        $string = $googleMapsUrl;
+        $string = explode("@", $string);
+        $position = $string[1];
+        $position = explode("z/data", $position);
+        $position = $position[0];
+        $position = explode(",", $position);
+        return $position;
+    }
+
+    /**
+     * 
+     * @param type $lastId
+     */
+    public static function getIdEntity($lastId) {
+        $db = new Db;
+        $db->update(
+                'dnt_posts', //table
+                array(//set
+            'id_entity' => $lastId
+                ), array(//where
+            'id' => $lastId
+                )
+        );
+    }
 
     /**
      * 
@@ -99,6 +117,18 @@ class Dnt {
      */
     public static function cislo($link) {
         return preg_replace("/[^0-9]/", "", $link);
+    }
+
+    /**
+     * 
+     * @param type $input
+     * @return type
+     */
+    function linkFormat($input) {
+        $input = str_replace("http://", "", $input);
+        $input = str_replace("https://", "", $input);
+        $input = str_replace("", "", $input);
+        return $input;
     }
 
     /**
@@ -123,7 +153,7 @@ class Dnt {
     public static function datetime() {
         return date("Y-m-d H:i:s");
     }
-    
+
     /**
      * 
      * @return type
@@ -306,11 +336,11 @@ class Dnt {
      * @return string
      */
     public static function get_os($external = false) {
-		if($exteral){
-			$agent = $external;
-		}else{
-			$agent = $_SERVER['HTTP_USER_AGENT'];
-		}
+        if ($exteral) {
+            $agent = $external;
+        } else {
+            $agent = $_SERVER['HTTP_USER_AGENT'];
+        }
         if (preg_match('/Android/', $agent))
             $os = 'Android';
         elseif (preg_match('/Win/', $agent))
@@ -327,69 +357,67 @@ class Dnt {
             $os = 'Nerozpoznaný OS';
         return $os;
     }
-	
-	function getOS($user_agent) { 
 
-		$os_platform  = "Unknown OS Platform";
+    function getOS($user_agent) {
 
-		$os_array     = array(
-		  '/windows nt 10/i'      =>  'Windows 10',
-		  '/windows nt 6.3/i'     =>  'Windows 8.1',
-		  '/windows nt 6.2/i'     =>  'Windows 8',
-		  '/windows nt 6.1/i'     =>  'Windows 7',
-		  '/windows nt 6.0/i'     =>  'Windows Vista',
-		  '/windows nt 5.2/i'     =>  'Windows Server 2003/XP x64',
-		  '/windows nt 5.1/i'     =>  'Windows XP',
-		  '/windows xp/i'         =>  'Windows XP',
-		  '/windows nt 5.0/i'     =>  'Windows 2000',
-		  '/windows me/i'         =>  'Windows ME',
-		  '/win98/i'              =>  'Windows 98',
-		  '/win95/i'              =>  'Windows 95',
-		  '/win16/i'              =>  'Windows 3.11',
-		  '/macintosh|mac os x/i' =>  'Mac OS X',
-		  '/mac_powerpc/i'        =>  'Mac OS 9',
-		  '/linux/i'              =>  'Linux',
-		  '/ubuntu/i'             =>  'Ubuntu',
-		  '/iphone/i'             =>  'iPhone',
-		  '/ipod/i'               =>  'iPod',
-		  '/ipad/i'               =>  'iPad',
-		  '/android/i'            =>  'Android',
-		  '/blackberry/i'         =>  'BlackBerry',
-		  '/webos/i'              =>  'Mobile'
-		);
+        $os_platform = "Unknown OS Platform";
 
-		foreach ($os_array as $regex => $value)
-		if (preg_match($regex, $user_agent))
-		$os_platform = $value;
+        $os_array = array(
+            '/windows nt 10/i' => 'Windows 10',
+            '/windows nt 6.3/i' => 'Windows 8.1',
+            '/windows nt 6.2/i' => 'Windows 8',
+            '/windows nt 6.1/i' => 'Windows 7',
+            '/windows nt 6.0/i' => 'Windows Vista',
+            '/windows nt 5.2/i' => 'Windows Server 2003/XP x64',
+            '/windows nt 5.1/i' => 'Windows XP',
+            '/windows xp/i' => 'Windows XP',
+            '/windows nt 5.0/i' => 'Windows 2000',
+            '/windows me/i' => 'Windows ME',
+            '/win98/i' => 'Windows 98',
+            '/win95/i' => 'Windows 95',
+            '/win16/i' => 'Windows 3.11',
+            '/macintosh|mac os x/i' => 'Mac OS X',
+            '/mac_powerpc/i' => 'Mac OS 9',
+            '/linux/i' => 'Linux',
+            '/ubuntu/i' => 'Ubuntu',
+            '/iphone/i' => 'iPhone',
+            '/ipod/i' => 'iPod',
+            '/ipad/i' => 'iPad',
+            '/android/i' => 'Android',
+            '/blackberry/i' => 'BlackBerry',
+            '/webos/i' => 'Mobile'
+        );
 
-		return $os_platform;
-	}
+        foreach ($os_array as $regex => $value)
+            if (preg_match($regex, $user_agent))
+                $os_platform = $value;
 
-	function getBrowser($user_agent) {
+        return $os_platform;
+    }
 
-		$browser        = "Unknown Browser";
+    function getBrowser($user_agent) {
 
-		$browser_array = array(
-				'/msie/i'      => 'Internet Explorer',
-				'/firefox/i'   => 'Firefox',
-				'/safari/i'    => 'Safari',
-				'/chrome/i'    => 'Chrome',
-				'/edge/i'      => 'Edge',
-				'/opera/i'     => 'Opera',
-				'/netscape/i'  => 'Netscape',
-				'/maxthon/i'   => 'Maxthon',
-				'/konqueror/i' => 'Konqueror',
-				'/mobile/i'    => 'Mobile Browser'
-		 );
+        $browser = "Unknown Browser";
 
-		foreach ($browser_array as $regex => $value)
-			if (preg_match($regex, $user_agent))
-				$browser = $value;
+        $browser_array = array(
+            '/msie/i' => 'Internet Explorer',
+            '/firefox/i' => 'Firefox',
+            '/safari/i' => 'Safari',
+            '/chrome/i' => 'Chrome',
+            '/edge/i' => 'Edge',
+            '/opera/i' => 'Opera',
+            '/netscape/i' => 'Netscape',
+            '/maxthon/i' => 'Maxthon',
+            '/konqueror/i' => 'Konqueror',
+            '/mobile/i' => 'Mobile Browser'
+        );
 
-		return $browser;
-	}
+        foreach ($browser_array as $regex => $value)
+            if (preg_match($regex, $user_agent))
+                $browser = $value;
 
-
+        return $browser;
+    }
 
     /**
      * 
@@ -505,7 +533,7 @@ class Dnt {
         echo '</script>';
         echo '<meta http-equiv="refresh" content="0;url=' . $presmeruj_url . '" />';
     }
-    
+
     /**
      * 
      * @param type $str
@@ -615,7 +643,7 @@ class Dnt {
         else
             return false;
     }
-    
+
     /**
      * 
      * @param type $iban
@@ -871,164 +899,165 @@ class Dnt {
             return false;
         }
     }
-	
-	public static function setMetaStatus($value, $meta){
-		if($value == 1){
-			$ano = 'selected';
-			$color = "3C763D";
-			$nie = false;
-			
-		}
-		else{
-			$nie = 'selected';
-			$color = "ff0000";
-			$ano = false;
-		}
-		echo '<select class="form-control" name="zobrazit_'.$meta.'" style="border: 2px #'.$color.' solid;">
-				<option value="1" '.$ano.'>Áno</option>
-				<option value="0" '.$nie.'>Nie</option>
+
+    public static function setMetaStatus($value, $meta) {
+        if ($value == 1) {
+            $ano = 'selected';
+            $color = "3C763D";
+            $nie = false;
+        } else {
+            $nie = 'selected';
+            $color = "ff0000";
+            $ano = false;
+        }
+        echo '<select class="form-control" name="zobrazit_' . $meta . '" style="border: 2px #' . $color . ' solid;">
+				<option value="1" ' . $ano . '>Áno</option>
+				<option value="0" ' . $nie . '>Nie</option>
 			</select>';
-	}
-	
-	/** HEX to RGBA **/
-	function hex2rgba($color, $opacity = false) {
- 
-		$default = 'rgb(0,0,0)';
-		
-		//Return default if no color provided
-		if(empty($color))
-			  return $default; 
-	 
-		//Sanitize $color if "#" is provided 
-			if ($color[0] == '#' ) {
-				$color = substr( $color, 1 );
-			}
-	 
-			//Check if color has 6 or 3 characters and get values
-			if (strlen($color) == 6) {
-					$hex = array( $color[0] . $color[1], $color[2] . $color[3], $color[4] . $color[5] );
-			} elseif ( strlen( $color ) == 3 ) {
-					$hex = array( $color[0] . $color[0], $color[1] . $color[1], $color[2] . $color[2] );
-			} else {
-					return $default;
-			}
-	 
-			//Convert hexadec to rgb
-			$rgb =  array_map('hexdec', $hex);
-	 
-			//Check if opacity is set(rgba or rgb)
-			if($opacity){
-				if(abs($opacity) == 1)
-					$opacity = 1.0;
-				$output = 'rgba('.implode(",",$rgb).','.$opacity.')';
-			} else {
-				$output = 'rgb('.implode(",",$rgb).')';
-			}
-	 
-			//Return rgb(a) color string
-			return $output;
-	}
-	
-	public static function colorInverse($color){
-		$color = str_replace('#', '', $color);
-		if (strlen($color) != 6){ return '000000'; }
-		$rgb = '';
-		for ($x=0;$x<3;$x++){
-			$c = 255 - hexdec(substr($color,(2*$x),2));
-			$c = ($c < 0) ? 0 : dechex($c);
-			$rgb .= (strlen($c) < 2) ? '0'.$c : $c;
-		}
-		return '#'.$rgb;
-	}
-	
-	function darkenColor($rgb, $darker=2) {
+    }
 
-		$hash = (strpos($rgb, '#') !== false) ? '#' : '';
-		$rgb = (strlen($rgb) == 7) ? str_replace('#', '', $rgb) : ((strlen($rgb) == 6) ? $rgb : false);
-		if(strlen($rgb) != 6) return $hash.'000000';
-		$darker = ($darker > 1) ? $darker : 1;
+    /** HEX to RGBA * */
+    function hex2rgba($color, $opacity = false) {
 
-		list($R16,$G16,$B16) = str_split($rgb,2);
+        $default = 'rgb(0,0,0)';
 
-		$R = sprintf("%02X", floor(hexdec($R16)/$darker));
-		$G = sprintf("%02X", floor(hexdec($G16)/$darker));
-		$B = sprintf("%02X", floor(hexdec($B16)/$darker));
+        //Return default if no color provided
+        if (empty($color))
+            return $default;
 
-		return $hash.$R.$G.$B;
-	}
-	
-	public static function rmkdir($path){
-		if(@mkdir($path) or file_exists($path)) return true;
-		return (self::rmkdir(dirname($path)) and mkdir($path));
-	}
-	
-/*	
- *
- * writeLog()
- * metoda zapisuje logy do suboru csv
- * kazdy novy zaznam sa zapisuje do noveho riadku
- * kazdy den sa vytvori novy subor s prefixxom Y_m_d
- * logy je mozne ukladat do vlastného súboru (suborov)
- *  
- *
-**/
-	public function writeToFile($fileName, $arrToInsert = array(), $serverVariables = false){
-		
-		//VYTVOR FOLDER AK NIE JE
-		self::rmkdir(dirname($fileName));
-		
-		//NACITANIE STARYCH DAT ZO SUBORU
-		$data = @file_get_contents($fileName);
-		
-		//AK SU SERVER VARIABLES
-		if(!is_array($serverVariables))
-		$serverVariables = array();
-		
-		//PRIRADENIE ZOZNAM SERVEROVYCH METOD DO SUPERGLOBALNEJ PREMENNEJ SERVER  A ZISKANIE JEJ HODNOTY
-		foreach ($serverVariables as $item) {
-			$arrToInsert[$item] = isset($_SERVER[$item]) ? $_SERVER[$item] : false;
-		};
-		
-		//NAZVY STLPCOV
-		foreach($arrToInsert as $key => $value){
-			$columnName[] = $key;
-		}
-		
-		//ZAPIS NAZVY STLPCOV, LEN AK SA JEDNA O NOVOVYTVORENZ SUBOR
-		$columnsName = empty($data) ? implode(";", $columnName)."\n" : "";
-		
-		//IMPLODE DO RETAZCA
-		$newData = implode(";", $arrToInsert);
+        //Sanitize $color if "#" is provided 
+        if ($color[0] == '#') {
+            $color = substr($color, 1);
+        }
 
-		//OSETRENIE (PRIODANIE) NOVEHO RIADKU, LEN V PRIPADE AK SU V SUBORE DATA
-		$newLine = !empty($data) ? "\n" : "";
-		
-		//SPOJENIE STARYCH DAT, RIADKU A NOVYCH DAT DO PREMENY putData
-		$putData = $columnsName . $data . $newLine . $newData;
-		
-		//ZAPIS VSETKYCH DAT DO SUBORU
-		file_put_contents($fileName, $putData);
-		
-	}
-	
-	public static function getCountryCode($ip){
-		return strtolower(file_get_contents(GEO_IP_SERVICE.''.$ip.''));
-	}
+        //Check if color has 6 or 3 characters and get values
+        if (strlen($color) == 6) {
+            $hex = array($color[0] . $color[1], $color[2] . $color[3], $color[4] . $color[5]);
+        } elseif (strlen($color) == 3) {
+            $hex = array($color[0] . $color[0], $color[1] . $color[1], $color[2] . $color[2]);
+        } else {
+            return $default;
+        }
 
-	/**
-	 * static function to embed video
-	 *
-	 *
-	 **/
-	public static function youtubeVideoToEmbed($video){
-		 if (count(explode('?v=', $video)) > 1) {
+        //Convert hexadec to rgb
+        $rgb = array_map('hexdec', $hex);
+
+        //Check if opacity is set(rgba or rgb)
+        if ($opacity) {
+            if (abs($opacity) == 1)
+                $opacity = 1.0;
+            $output = 'rgba(' . implode(",", $rgb) . ',' . $opacity . ')';
+        } else {
+            $output = 'rgb(' . implode(",", $rgb) . ')';
+        }
+
+        //Return rgb(a) color string
+        return $output;
+    }
+
+    public static function colorInverse($color) {
+        $color = str_replace('#', '', $color);
+        if (strlen($color) != 6) {
+            return '000000';
+        }
+        $rgb = '';
+        for ($x = 0; $x < 3; $x++) {
+            $c = 255 - hexdec(substr($color, (2 * $x), 2));
+            $c = ($c < 0) ? 0 : dechex($c);
+            $rgb .= (strlen($c) < 2) ? '0' . $c : $c;
+        }
+        return '#' . $rgb;
+    }
+
+    function darkenColor($rgb, $darker = 2) {
+
+        $hash = (strpos($rgb, '#') !== false) ? '#' : '';
+        $rgb = (strlen($rgb) == 7) ? str_replace('#', '', $rgb) : ((strlen($rgb) == 6) ? $rgb : false);
+        if (strlen($rgb) != 6)
+            return $hash . '000000';
+        $darker = ($darker > 1) ? $darker : 1;
+
+        list($R16, $G16, $B16) = str_split($rgb, 2);
+
+        $R = sprintf("%02X", floor(hexdec($R16) / $darker));
+        $G = sprintf("%02X", floor(hexdec($G16) / $darker));
+        $B = sprintf("%02X", floor(hexdec($B16) / $darker));
+
+        return $hash . $R . $G . $B;
+    }
+
+    public static function rmkdir($path) {
+        if (@mkdir($path) or file_exists($path))
+            return true;
+        return (self::rmkdir(dirname($path)) and mkdir($path));
+    }
+
+    /* 	
+     *
+     * writeLog()
+     * metoda zapisuje logy do suboru csv
+     * kazdy novy zaznam sa zapisuje do noveho riadku
+     * kazdy den sa vytvori novy subor s prefixxom Y_m_d
+     * logy je mozne ukladat do vlastného súboru (suborov)
+     *  
+     *
+     * */
+
+    public function writeToFile($fileName, $arrToInsert = array(), $serverVariables = false) {
+
+        //VYTVOR FOLDER AK NIE JE
+        self::rmkdir(dirname($fileName));
+
+        //NACITANIE STARYCH DAT ZO SUBORU
+        $data = @file_get_contents($fileName);
+
+        //AK SU SERVER VARIABLES
+        if (!is_array($serverVariables))
+            $serverVariables = array();
+
+        //PRIRADENIE ZOZNAM SERVEROVYCH METOD DO SUPERGLOBALNEJ PREMENNEJ SERVER  A ZISKANIE JEJ HODNOTY
+        foreach ($serverVariables as $item) {
+            $arrToInsert[$item] = isset($_SERVER[$item]) ? $_SERVER[$item] : false;
+        };
+
+        //NAZVY STLPCOV
+        foreach ($arrToInsert as $key => $value) {
+            $columnName[] = $key;
+        }
+
+        //ZAPIS NAZVY STLPCOV, LEN AK SA JEDNA O NOVOVYTVORENZ SUBOR
+        $columnsName = empty($data) ? implode(";", $columnName) . "\n" : "";
+
+        //IMPLODE DO RETAZCA
+        $newData = implode(";", $arrToInsert);
+
+        //OSETRENIE (PRIODANIE) NOVEHO RIADKU, LEN V PRIPADE AK SU V SUBORE DATA
+        $newLine = !empty($data) ? "\n" : "";
+
+        //SPOJENIE STARYCH DAT, RIADKU A NOVYCH DAT DO PREMENY putData
+        $putData = $columnsName . $data . $newLine . $newData;
+
+        //ZAPIS VSETKYCH DAT DO SUBORU
+        file_put_contents($fileName, $putData);
+    }
+
+    public static function getCountryCode($ip) {
+        return strtolower(file_get_contents(GEO_IP_SERVICE . '' . $ip . ''));
+    }
+
+    /**
+     * static function to embed video
+     *
+     *
+     * */
+    public static function youtubeVideoToEmbed($video) {
+        if (count(explode('?v=', $video)) > 1) {
             $video = explode("?v=", $video);
-            $youtube_hash = "https://www.youtube.com/embed/".$video[1];
+            $youtube_hash = "https://www.youtube.com/embed/" . $video[1];
         } else {
             $youtube_hash = $video;
         }
-		return $youtube_hash;
-	} 
-	
+        return $youtube_hash;
+    }
 
 }

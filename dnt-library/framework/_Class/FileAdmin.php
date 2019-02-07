@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       FileAdmin
  *  author      Tomas Doubek
@@ -85,9 +86,7 @@ class FileAdmin {
         } else {
             $strana = 1;
         }
-
-
-
+        
         $query = self::prepare_query(false);
         $pocet = $db->num_rows($query);
         $limit = self::limit();
@@ -128,10 +127,10 @@ class FileAdmin {
     public function paginator($index) {
         $adresa = explode("?", WWW_FULL_PATH);
         if (isset($_GET['page'])) {
-            $adresa_bez_page = explode("&page=" . $_GET['page'] . "", $adresa[1]); //src=obsah&page=2
+            $adresa_bez_page = explode("&page=" . $_GET['page'] . "", $adresa[1]);
             $return = $adresa_bez_page[0];
         } else {
-            $return = $adresa[1]; //this function return an array
+            $return = $adresa[1];
         }
 
         return WWW_PATH_ADMIN . "index.php?" . $return . "&page=" . self::getPage($index);

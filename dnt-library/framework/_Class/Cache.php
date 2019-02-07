@@ -13,9 +13,7 @@
 
 class Cache {
 
-    // Pages you do not want to Cache:
     var $doNotCache = array("rpc");
-    // General Config Vars
     var $cacheDir = "dnt-cache";
     var $cacheTime = CACHE_TIME_SEC; //in seconds
     var $caching = false;
@@ -25,6 +23,9 @@ class Cache {
     var $cacheLog;
     var $CACHE_ADDR;
     
+    /**
+     * 
+     */
     function __construct() {
         $this->cacheFile = base64_encode(@$_SERVER['HTTP_HOST'] . @$_SERVER['REQUEST_URI']);
         $this->cacheFileName = $this->cacheDir . '/' . $this->cacheFile . '.txt';
@@ -37,6 +38,9 @@ class Cache {
             $this->cacheLog = array();
     }
 
+    /**
+     * 
+     */
     function start() {
         $dntLog = new DntLog;
         $location = array_slice(explode('/', @$_SERVER['HTTP_HOST'] . @$_SERVER['REQUEST_URI']), 2);

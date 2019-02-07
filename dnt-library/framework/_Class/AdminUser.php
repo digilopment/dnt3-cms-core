@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       AdminUser
  *  author      Tomas Doubek
@@ -7,7 +8,7 @@
  *  date        2017
  */
 class AdminUser extends Image {
-    
+
     /**
      * 
      * @param type $type
@@ -31,48 +32,62 @@ class AdminUser extends Image {
             return false;
         }
     }
-	
-	 public function updateDatetime($vendor_id, $email){
-		$db = new Db;
-		
-	    $db->update(
-			"dnt_users",	//table
-			array(	//set
-				'datetime_update' => Dnt::datetime()
-				), 
-			array( 	//where
-				'vendor_id' 	=> $vendor_id, 
-				'email' 		=> $email
-			)
-		);
-	}
-	
-	 public function emailExists($email, $vendor_id) {
+
+    /**
+     * 
+     * @param type $vendor_id
+     * @param type $email
+     */
+    public function updateDatetime($vendor_id, $email) {
+        $db = new Db;
+
+        $db->update(
+                "dnt_users", //table
+                array(//set
+            'datetime_update' => Dnt::datetime()
+                ), array(//where
+            'vendor_id' => $vendor_id,
+            'email' => $email
+                )
+        );
+    }
+
+    /**
+     * 
+     * @param type $email
+     * @param type $vendor_id
+     * @return boolean
+     */
+    public function emailExists($email, $vendor_id) {
         $db = new Db;
         $query = "SELECT email FROM dnt_users WHERE email = '" . $email . "' AND vendor_id = '" . $vendor_id . "'";
         if ($db->num_rows($query) > 0) {
-			return true;
+            return true;
         } else {
             return false;
         }
     }
-	
-	
-	public function updatePassword($vendor_id, $email, $pass) {
+
+    /**
+     * 
+     * @param type $vendor_id
+     * @param type $email
+     * @param type $pass
+     */
+    public function updatePassword($vendor_id, $email, $pass) {
         $db = new Db;
-		
-	    $db->update(
-			"dnt_users",	//table
-			array(	//set
-				'pass' => md5($pass)
-				), 
-			array( 	//where
-				'vendor_id' 	=> $vendor_id, 
-				'email' 		=> $email
-			)
-		);
+
+        $db->update(
+                "dnt_users", //table
+                array(//set
+            'pass' => md5($pass)
+                ), array(//where
+            'vendor_id' => $vendor_id,
+            'email' => $email
+                )
+        );
     }
-    
+
     /**
      * 
      * @return type
@@ -88,7 +103,7 @@ class AdminUser extends Image {
             return array(false);
         }
     }
-    
+
     /**
      * 
      * @return type
@@ -97,7 +112,7 @@ class AdminUser extends Image {
         $columns = new XMLgenerator;
         return $columns->getTableColumns("dnt_users", "*");
     }
-    
+
     /**
      * 
      * @param type $type
@@ -116,7 +131,7 @@ class AdminUser extends Image {
             return false;
         }
     }
-    
+
     /**
      * 
      * @return type
@@ -125,7 +140,7 @@ class AdminUser extends Image {
         $imageId = self::data("admin", "img");
         return self::getFileImage($imageId);
     }
-    
+
     /**
      * 
      * @param type $type
@@ -145,7 +160,7 @@ class AdminUser extends Image {
             return false;
         }
     }
-    
+
     /**
      * 
      * @param type $id

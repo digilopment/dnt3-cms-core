@@ -1,12 +1,19 @@
 <?php
-include "dnt-library/framework/_Class/Autoload.php";
+include "../globals.php";
+include "../dnt-library/framework/_Class/Autoload.php";
 $autoload		= new Autoload;
-$path			= "/";
+$path			= "../";
 $autoload->load($path);
+
 $rest = new Rest;
 $dntUpload = new DntUpload;
-$rest->get("type");
 
+/** 
+ *
+ *WORKING WITH FACE DETECT
+ *
+ *
+**/
 if($rest->get("type") == "square"){
 	$face_detect = new FaceModify('dnt-library/framework/_Class/detection.dat');
 	$face_detect->faceDetect('dnt-view/data/1/kubik.jpg');

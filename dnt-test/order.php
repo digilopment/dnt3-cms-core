@@ -9,7 +9,6 @@ function clean($string) {
    $string = str_replace('È', 'cš', $string);
    $string = str_replace('', 't', $string);
    $string = str_replace('ò', 'n', $string);
-   
    return $string;
 
 }
@@ -38,6 +37,13 @@ function arrayOrder($data, $orderby, $sort){
 	 return $data;
 }
 
+/** 
+ *
+ *ORDER AND EXPORT ARRAY
+ *
+ *
+**/
+
 include "../dnt-library/framework/_Class/Autoload.php";
 $autoload		= new Autoload;
 $path			= "../";
@@ -62,7 +68,7 @@ $input=array (
 	
 	var_dump(arrayOrder($input, "meno", "desc"));
 	exit;
-//VYTVOR ZORADOVACI INDEX
+	//VYTVOR ZORADOVACI INDEX
 	foreach($input as $value){
 		$data[] = array(
 			"meno" =>$value['meno'], 
@@ -70,7 +76,7 @@ $input=array (
 		);
 	}
 	
-//ZORAD PODLA INDEXU
+	//ZORAD PODLA INDEXU
 	$orderby = "order";
 
 	$sortArray = array(); 
@@ -86,7 +92,7 @@ $input=array (
 	array_multisort($sortArray[$orderby],SORT_ASC,$data); 
 	
 	
-//EXPORT
+	//EXPORT
 	$xlsx = new XMLgenerator;
 	$xlsx->creatXlsFileFromArray($data, "export.csv");
 	

@@ -1,6 +1,7 @@
 <?php
+
 /**
- *  class       Rest
+ *  class       Sessions
  *  author      Tomas Doubek
  *  framework   Sessions
  *  package     dnt3

@@ -1,10 +1,15 @@
 <?php
-
 include "../dnt-library/framework/_Class/Autoload.php";
 $autoload		= new Autoload;
 $path			= "../";
 $autoload->load($path);
 
+/** 
+ *
+ *READ FROM XLSX
+ *
+ *
+**/
 $xlsx = new Xlsx;
 $fileName = "test.xlsx";
 $excel_data = $xlsx->read($path, $fileName);

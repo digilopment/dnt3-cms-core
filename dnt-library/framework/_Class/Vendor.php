@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       Vendor
  *  author      Tomas Doubek
@@ -15,6 +16,7 @@ class Vendor {
      * 
      * @return type
      */
+
     public static function getVendorUrl() {
 
         $hosts = explode(".", @$_SERVER['HTTP_HOST']);
@@ -35,100 +37,185 @@ class Vendor {
      * 
      * @return boolean
      */
-	 
+    /* public static function getId() {
+      if ($GLOBALS['VENDOR_ID']) {
+      return $GLOBALS['VENDOR_ID'];
+      }
+      $db = new Db;
+      $rest = new Rest;
+
+
+      if ($rest->get("dnt3_get_vendor_id")) {
+      $vendor_id = $rest->get("dnt3_get_vendor_id");
+      $GLOBALS['VENDOR_ID'] = $vendor_id;
+      return $vendor_id;
+      }
+
+
+      $query = "SELECT `id_entity`,`real_url`, `show_real_url` FROM `dnt_vendors`";
+      if ($db->num_rows($query) > 0) {
+
+      //ORIGIN DOMAIN PARSER
+      $data = WWW_PATH;
+      $data = str_replace("www.", "", $data);
+      $data = explode("://", $data);
+      $ORIGIN_PROTOCOL = "" . $data[0] . "://";
+      $data = explode("/", $data[1]);
+      $ORIGIN_DOMAIN = $data[0] . "" . WWW_FOLDERS . "/" . $rest->webhook(0);
+      $ORIGIN_DOMAIN_LNG = $rest->webhook(0);
+
+      foreach ($db->get_results($query) as $row) {
+      if ($row['show_real_url'] == 1) {
+      //DB DOMAIN PARSER
+      $data = $row['real_url'];
+      $data = str_replace("www.", "", $data);
+      $data = explode("://", $data);
+      $fd = $data[1];
+      $DB_PROTOCOL = "" . $data[0] . "://";
+      $data = explode("/", $data[1]);
+      $DB_DOMAIN = $data[0] . "" . WWW_FOLDERS;
+      $DB_DOMAIN_FULL = $fd;
+
+      if ($ORIGIN_DOMAIN == $DB_DOMAIN_FULL) {
+      $vendor_id = $row['id_entity'];
+      $GLOBALS['VENDOR_ID'] = $vendor_id;
+      $GLOBALS['ORIGIN_DOMAIN'] = $ORIGIN_DOMAIN;
+      $GLOBALS['DB_DOMAIN'] = $DB_DOMAIN;
+      $GLOBALS['ORIGIN_PROTOCOL'] = $ORIGIN_PROTOCOL;
+      $GLOBALS['DB_PROTOCOL'] = $DB_PROTOCOL;
+      return $vendor_id;
+      } else {
+      $GLOBALS['ORIGIN_DOMAIN'] = $ORIGIN_DOMAIN;
+      $GLOBALS['DB_DOMAIN'] = $DB_DOMAIN;
+      $GLOBALS['ORIGIN_PROTOCOL'] = $ORIGIN_PROTOCOL;
+      $GLOBALS['DB_PROTOCOL'] = $DB_PROTOCOL;
+      }
+      }
+      }
+      }
+
+      $host = explode(".", $_SERVER["HTTP_HOST"]);
+      //ak je host[1] existuje subdomena
+      if (isset($host[1])) {
+      $vendor_url = $host[0];
+      $status = "url";
+      } else {
+      $vendor_url = false;
+      $status = "default";
+      }
+
+      $query = "SELECT `id_entity` FROM `dnt_vendors` WHERE
+      name_url = '" . $vendor_url . "'";
+
+      if ($db->num_rows($query) > 0) {
+      foreach ($db->get_results($query) as $row) {
+      $vendor_id = $row['id_entity'];
+      }
+      } else {
+      $query2 = "SELECT `id_entity` FROM `dnt_vendors` WHERE `is_default` = '1'";
+      if ($db->num_rows($query2) > 0) {
+      foreach ($db->get_results($query2) as $row2) {
+      $vendor_id = $row2['id_entity'];
+      }
+      } else {
+      $vendor_id = false;
+      }
+      }
+      $GLOBALS['VENDOR_ID'] = $vendor_id;
+      return $vendor_id;
+      } */
+
+    /**
+     * new method
+     * @return boolean
+     */
     public static function getId() {
-		if($GLOBALS['VENDOR_ID']){
-			return $GLOBALS['VENDOR_ID'];
-		}
+        if ($GLOBALS['VENDOR_ID']) {
+            return $GLOBALS['VENDOR_ID'];
+        }
         $db = new Db;
         $rest = new Rest;
-		
-		
-		if($rest->get("dnt3_get_vendor_id")){
-			$vendor_id = $rest->get("dnt3_get_vendor_id");
-			$GLOBALS['VENDOR_ID'] = $vendor_id;
-			return $vendor_id;
-		}
-		
 
-		$query = "SELECT `id_entity`,`real_url`, `show_real_url` FROM `dnt_vendors`";
-		if ($db->num_rows($query) > 0) {
-			
-			//ORIGIN DOMAIN PARSER
-			$data = WWW_PATH;
-			$data = str_replace("www.", "", $data);
-			$data = explode("://", $data);
-			$ORIGIN_PROTOCOL = "".$data[0]."://";
-			$data = explode("/", $data[1]);
-			$ORIGIN_DOMAIN = $data[0]."".WWW_FOLDERS."/".$rest->webhook(0);
-			$ORIGIN_DOMAIN_LNG = $rest->webhook(0);
-			
-            foreach ($db->get_results($query) as $row) {
-				if($row['show_real_url'] == 1){
-					//DB DOMAIN PARSER
-					$data = $row['real_url'];
-					$data = str_replace("www.", "", $data);
-					$data = explode("://", $data);
-					$fd   = $data[1];
-					$DB_PROTOCOL = "".$data[0]."://";
-					$data = explode("/", $data[1]);
-					$DB_DOMAIN = $data[0]."".WWW_FOLDERS;
-					$DB_DOMAIN_FULL = $fd;
-					
-						
-						//var_dump("OR => ".$ORIGIN_DOMAIN);
-						//var_dump("DB => ".$DB_DOMAIN_FULL);
-					
-					
-					
-					if($ORIGIN_DOMAIN == $DB_DOMAIN_FULL){					
-						$vendor_id = $row['id_entity'];
-						$GLOBALS['VENDOR_ID'] = $vendor_id;
-						$GLOBALS['ORIGIN_DOMAIN'] = $ORIGIN_DOMAIN;
-						$GLOBALS['DB_DOMAIN'] = $DB_DOMAIN;
-						$GLOBALS['ORIGIN_PROTOCOL'] = $ORIGIN_PROTOCOL;
-						$GLOBALS['DB_PROTOCOL'] = $DB_PROTOCOL;
-						return $vendor_id;
-					}else{
-						$GLOBALS['ORIGIN_DOMAIN'] = $ORIGIN_DOMAIN;
-						$GLOBALS['DB_DOMAIN'] = $DB_DOMAIN;
-						$GLOBALS['ORIGIN_PROTOCOL'] = $ORIGIN_PROTOCOL;
-						$GLOBALS['DB_PROTOCOL'] = $DB_PROTOCOL;
-					}
-					
-				}
-			}
-		}
-			
-        $host = explode(".", $_SERVER["HTTP_HOST"]);
 
-        //ak je host[1] existuje subdomena
-        if (isset($host[1])) {
-            $vendor_url = $host[0];
-            $status = "url";
-        } else {
-            $vendor_url = false;
-            $status = "default";
+        if ($rest->get("dnt3_get_vendor_id")) {
+            $vendor_id = $rest->get("dnt3_get_vendor_id");
+            $GLOBALS['VENDOR_ID'] = $vendor_id;
+            return $vendor_id;
         }
 
-        $query = "SELECT `id_entity` FROM `dnt_vendors` WHERE
-		name_url = '" . $vendor_url . "'";
 
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
-                $vendor_id = $row['id_entity'];
-            }
+        $data = WWW_PATH;
+        $data = str_replace("www.", "", $data);
+        $data = explode("://", $data);
+        $ORIGIN_PROTOCOL = "" . $data[0] . "://";
+        $data = explode("/", $data[1]);
+        $ORIGIN_DOMAIN = HTTP_PROTOCOL . $data[0] . "" . WWW_FOLDERS . "";
+        $ORIGIN_DOMAIN_NP = $data[0] . "" . WWW_FOLDERS . "";
+
+
+
+
+        if ($rest->webhook(0)) {
+            $ORIGIN_DOMAIN_LNG = HTTP_PROTOCOL . $data[0] . "" . WWW_FOLDERS . "/" . $rest->webhook(0);
+            $ORIGIN_DOMAIN_LNG_NP = $data[0] . "" . WWW_FOLDERS . "/" . $rest->webhook(0);
         } else {
-            $query2 = "SELECT `id_entity` FROM `dnt_vendors` WHERE `is_default` = '1'";
-            if ($db->num_rows($query2) > 0) {
-                foreach ($db->get_results($query2) as $row2) {
-                    $vendor_id = $row2['id_entity'];
+            $ORIGIN_DOMAIN_LNG = HTTP_PROTOCOL . $data[0] . "" . WWW_FOLDERS . "";
+            $ORIGIN_DOMAIN_LNG_NP = $data[0] . "" . WWW_FOLDERS . "";
+        }
+
+        if ($ORIGIN_DOMAIN == $ORIGIN_DOMAIN_LNG) {
+            $query = "SELECT `id_entity`,`real_url`, `show_real_url` FROM `dnt_vendors` WHERE real_url LIKE '%" . $ORIGIN_DOMAIN_NP . "'";
+            if ($db->num_rows($query) > 0) {
+                foreach ($db->get_results($query) as $row) {
+                    $vendor_id = $row['id_entity'];
                 }
             } else {
-                $vendor_id = false;
+                $host = explode(".", $_SERVER["HTTP_HOST"]);
+                //ak je host[1] existuje subdomena
+                if (isset($host[1])) {
+                    $vendor_url = $host[0];
+                    $status = "url";
+                } else {
+                    $vendor_url = false;
+                    $status = "default";
+                }
+
+                $query = "SELECT `id_entity` FROM `dnt_vendors` WHERE name_url = '" . $vendor_url . "'";
+                if ($db->num_rows($query) > 0) {
+                    foreach ($db->get_results($query) as $row) {
+                        $vendor_id = $row['id_entity'];
+                    }
+                } else {
+                    $query2 = "SELECT `id_entity` FROM `dnt_vendors` WHERE `is_default` = '1'";
+                    if ($db->num_rows($query2) > 0) {
+                        foreach ($db->get_results($query2) as $row2) {
+                            $vendor_id = $row2['id_entity'];
+                        }
+                    } else {
+                        $vendor_id = false;
+                    }
+                }
+            }
+        } else {
+            $query = "SELECT `id_entity`,`real_url`, `show_real_url` FROM `dnt_vendors` WHERE real_url LIKE '%" . $ORIGIN_DOMAIN_LNG_NP . "'";
+            //V PRIPADE, ZE SA JEDNA O JAZYKOVU MUTACIU SO SLUGOM
+            if ($db->num_rows($query) > 0) {
+                foreach ($db->get_results($query) as $row) {
+                    $vendor_id = $row['id_entity'];
+                }
+            } else { //V PRIPADE, ZE SA JEDNA O JAZYKOVU MUTACIU DEFAULTNEHO JAZYKU SO SLUGOM
+                $query = "SELECT `id_entity`,`real_url`, `show_real_url` FROM `dnt_vendors` WHERE real_url LIKE '%" . $ORIGIN_DOMAIN_NP . "'";
+                if ($db->num_rows($query) > 0) {
+                    foreach ($db->get_results($query) as $row) {
+                        $vendor_id = $row['id_entity'];
+                    }
+                } else {
+                    $vendor_id = false;
+                }
             }
         }
-		$GLOBALS['VENDOR_ID'] = $vendor_id;
+        $GLOBALS['ORIGIN_DOMAIN_LNG'] = $ORIGIN_DOMAIN_LNG;
+        $GLOBALS['VENDOR_ID'] = $vendor_id;
         return $vendor_id;
     }
 
@@ -139,11 +226,11 @@ class Vendor {
     public static function getLayout() {
         $db = new Db;
         $rest = new Rest;
-		
-		if($rest->get("dnt3_get_layout")){
-			return $rest->get("dnt3_get_layout");
-		}
-		
+
+        if ($rest->get("dnt3_get_layout")) {
+            return $rest->get("dnt3_get_layout");
+        }
+
         $query = "SELECT `layout` FROM `dnt_vendors` WHERE
 		id = '" . self::getId() . "'";
 
@@ -157,34 +244,24 @@ class Vendor {
 
         return $layout;
     }
-	
-	public function getLayouts(){
-		$layouts = array();
-		$files = scandir('../dnt-view/layouts/');
-		foreach($files as $file) {
-		  if($file == "." || $file == ".."){
-			  continue;
-		  }else{
-			  $layouts[] = $file;
-		  }
-		}
-		
-		return $layouts;
 
-       /* 
-	   $db = new Db;
-	   $query = "SELECT DISTINCT `layout` FROM `dnt_vendors` ";
-
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
-                $layouts[] = $row['layout'];
+    /**
+     * 
+     * @return type
+     */
+    public function getLayouts() {
+        $layouts = array();
+        $files = scandir('../dnt-view/layouts/');
+        foreach ($files as $file) {
+            if ($file == "." || $file == "..") {
+                continue;
+            } else {
+                $layouts[] = $file;
             }
-        } else {
-            $layouts[] = array();
         }
+
         return $layouts;
-		*/
-	}
+    }
 
     /**
      * 
