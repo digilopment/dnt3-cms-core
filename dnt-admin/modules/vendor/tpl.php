@@ -22,7 +22,8 @@
             <table class="table table-hover">
                <thead>
                   <tr>
-                     <th>#id</th>
+                     <th>#</th>
+                     <th>id</th>
                      <th>Názov postu</th>
                      <th>Editovať vlastnosti webu</th>
                      <th>Zobrazenie na pracovnej adrese</th>
@@ -42,6 +43,7 @@
                      $adminUrl 	= $webUrl."/dnt-admin/index.php?src=login&action=2&domain_change=1&admin_id=".$email."&id_entity=".$vendorId;
                      ?>
                   <tr>
+                     <td><?php echo $i; ?></td>
                      <td><?php echo $row['id_entity']; ?></td>
                      <td style="max-width: 500px;"><b><a target="_blank" href="<?php echo $adminUrl; ?>"><?php echo $row['name']; ?></a></b></td>
                      <td><a href="<?php echo $adminUrl; ?>"><i class="fa fa-pencil bg-blue action"></i></a></td>
