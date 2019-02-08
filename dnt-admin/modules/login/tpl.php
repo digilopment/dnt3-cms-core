@@ -21,7 +21,9 @@
 							<label class="checkbox pull-left">
 								<!--<input type="checkbox" value="remember-me">Remember me-->
 							</label>
-							<a href="http://designdnt.query.sk/" target="_blank" class="pull-right need-help">Potrebujete pomôcť?</a><span class="clearfix"></span>
+							<a href="<?php echo HTTP_PROTOCOL.DOMAIN.WWW_FOLDERS.'/dnt-admin'; ?>" class="pull-left need-help">Prihlásiť sa do posledného aktívneho webu</a>
+							<a href="http://designdnt.query.sk/" target="_blank" class="pull-right need-help">Potrebujete pomôcť?</a>
+							<span class="clearfix"></span>
 						</form>
 						<!-- END LOGIN FORM -->
 					</div>

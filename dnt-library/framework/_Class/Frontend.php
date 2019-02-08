@@ -104,5 +104,19 @@ class Frontend {
             return false;
         }
     }
+	
+	 /**
+     * 
+     * @param type $data
+     * @param type $key
+     * @return boolean
+     */
+    public static function getDeafult($data, $key) {
+        if (isset($data[$key])) {
+            return $data[$key];
+        } else {
+            return false;
+        }
+    }
 
 }
