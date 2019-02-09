@@ -201,11 +201,11 @@
             <input type="text" class="btn-default btn-lg btn-block" name="title" value="<?php echo Settings::get("title"); ?>" />
             <div class="padding"></div>
             <p class="lead">Description webu</p>
-            <p>Zadajte tie krátky popis vášho webu</p>
+            <p>Zadajte krátky popis vášho webu</p>
             <input type="text" class="btn-default btn-lg btn-block" name="description" value="<?php echo Settings::get("description"); ?>" />
             <div class="padding"></div>
             <p class="lead">Kľúčové slová</p>
-            <p>Zadajte tie najkľúčovejšie slová pre vašu stránku (slová oddeľujte čiarkou)</p>
+            <p>Zadajte kľúčové slová pre vašu stránku (slová oddeľujte čiarkou)</p>
             <input type="text" class="btn-default btn-lg btn-block" name="keywords" value="<?php echo Settings::get("keywords"); ?>" />
             <div class="padding"></div>
             <p class="lead">Štartovací modul</p>
@@ -227,21 +227,18 @@
             </select>
             <div class="padding"></div>
             <p class="lead">Jazyková mutácia</p>
-            <p>Nastavená jazyková mutácia sa zobrazí v zdrojom kóde. Pri načítavaní externých pluginov alebo pri indexacii napríklad Google bude jasné, o aku lokalizíciu sa jedná.</p>
+            <p>Nastavená jazyková mutácia sa zobrazí v zdrojom kóde. Pri načítavaní externých pluginov alebo pri indexacii napríklad Google bude jasné, o aku lokalizíciu sa jedná.
+                <br/>V tomto nastavení sa definuje, ak jazyk bude používať konkrétne tento web.</p>
             <select name="language" class="btn-default btn-lg btn-block" type="text" size="1">
             <?php 
                $currentLang = Settings::get("language");
-               $LANGUAGES = array(
-                "sk",
-                "cz",
-                "en",
-                "de",
-               );
-               foreach($LANGUAGES as $key => $value){
-               if($currentLang == $value){
-               	echo '<option selected value="'.$value.'">'.$value.'</option>';
+               foreach(MultyLanguage::getLanguages() as $row){
+               $value = $row['slug'];
+               $name = $row['name'];
+               if ($currentLang == $value) {
+               	echo '<option selected value="'.$value.'">'.$name.'</option>';
                }else{
-               	echo '<option value="'.$value.'">'.$value.'</option>';
+               	echo '<option value="'.$value.'">'.$name.'</option>';
                
                }
                }

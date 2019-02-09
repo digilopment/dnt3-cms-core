@@ -29,7 +29,7 @@ if (isset($_POST['sent'])) {
                 '`id`' => $vendor_id)
         );
     
-    //kontrola ci sa neymenila URL
+    //kontrola ci sa nezmenila URL
     if($url != $currentVendorUrl && ($vendor_id == Vendor::getId())){
         include "tpl_functions.php";
         get_top();
@@ -44,7 +44,6 @@ if (isset($_POST['sent'])) {
         $dnt = new Dnt;
         $session->remove("admin_logged");
         $session->remove("admin_id");
-       // $dnt->redirect(WWW_PATH_ADMIN);
     }else{
 
         include "tpl_functions.php";

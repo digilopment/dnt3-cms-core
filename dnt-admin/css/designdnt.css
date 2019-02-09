@@ -65,3 +65,13 @@ margin: 0px 40px 10px -22px;
     color: #111;
     font-weight: bold;
 }
+.lead {
+    font-weight: bold;
+}
+.web-title {
+	color: #eeeeee;
+    margin-top: -1px;
+    text-align: left;
+    margin-left: 5px;
+    margin-bottom: 10px;
+}

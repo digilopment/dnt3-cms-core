@@ -172,7 +172,26 @@ class MultyLanguage {
             }
         }
     }
-    
+
+    /**
+     * 
+     * @param type $frontend
+     * @return type
+     */
+    public function getLanguages($frontend = false) {
+        $db = new Db;
+        if ($frontend == true) {
+            $query = "SELECT * FROM dnt_languages WHERE `show` = '1' AND vendor_id = '" . Vendor::getId() . "'";
+        } else {
+            $query = "SELECT * FROM dnt_languages WHERE `home_lang` = '0' AND `show` = '1' AND vendor_id = '" . Vendor::getId() . "'";
+        }
+        if ($db->num_rows($query) > 0) {
+            return $db->get_results($query);
+        } else {
+            return false;
+        }
+    }
+
     /**
      * 
      */
