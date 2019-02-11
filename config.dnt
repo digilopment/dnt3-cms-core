@@ -79,6 +79,7 @@ define( 'DEAFULT_LANG', 'sk' ); // set system lang
 define( 'SRC', 'src' ); // ser $_GET['{eny}']
 define( 'SEND_ERRORS_TO', '' ); //set email notification email address
 define( 'DISPLAY_DEBUG', true ); //display db errors?
+define( 'DELETING_VENDORS', true ); //deleting vendors?
 
 
 

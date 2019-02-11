@@ -125,7 +125,7 @@ class DntUpload {
      * @param type $files
      * @param type $path
      */
-    public function multypleUpload($files, $path) {
+    public function multypleUpload($files, $path, $insertToDatabase = true) {
         $db = new Db;
         $files_arr = $this->arrayFiles($files);
 
@@ -137,12 +137,14 @@ class DntUpload {
                 $dntUpload->Process($path);
                 if ($dntUpload->processed) {
                     //insert to files table of files
-                    $insertedData = array(
-                        'vendor_id' => Vendor::getId(),
-                        'name' => $dntUpload->file_dst_name,
-                        'type' => $dntUpload->file_src_mime
-                    );
-                    $db->insert('dnt_uploads', $insertedData);
+					$insertedData = array(
+						'vendor_id' => Vendor::getId(),
+						'name' => $dntUpload->file_dst_name,
+						'type' => $dntUpload->file_src_mime
+					);
+					if($insertToDatabase){
+						$db->insert('dnt_uploads', $insertedData);
+					}
                     return $insertedData;
                 }
             }

@@ -82,10 +82,10 @@ Class Install {
             'layout' => $vendor_layout,
             'is_default' => 0,
         );
-        
+
         $db->insert('dnt_vendors', $insertedData);
         $NEW_VENDOR_ID = Dnt::getLastIdVendor();
-        
+
         foreach ($tables as $table) {
             $query = "SELECT * FROM $table WHERE vendor_id = '$COPY_FROM'";
             if ($db->num_rows($query) > 0) {
@@ -114,12 +114,8 @@ Class Install {
             $where = array('vendor_id' => $id);
             $db->delete($table, $where);
         }
-        $query = "
-		DELETE FROM `dnt_vendors` WHERE `dnt_vendors`.`id` = '$id';
-		";
+        $query = "DELETE FROM `dnt_vendors` WHERE `dnt_vendors`.`id` = '$id'";
         $db->query($query);
-
-        echo "Deleted";
     }
 
     /**
@@ -143,10 +139,10 @@ Class Install {
                 'vendor_id' => $id)
             );
         }
-        
+
         $query = "UPDATE `dnt_vendors` SET `id` = '" . $move_to . "' WHERE `dnt_vendors`.`id` = $id";
         $db->query($query);
-        
+
         echo "Updated";
     }
 
@@ -167,7 +163,7 @@ Class Install {
                         'id' => $row['id'],
                             )
                     );
-                    
+
                     $qU = "UPDATE `$table` SET id_entity = '" . $row['id'] . "' WHERE id_entity = 0 AND id = '" . $row['id'] . "'";
                     $db->query($qU);
                 }
@@ -224,6 +220,38 @@ Class Install {
         $db->query($addVendor);
 
         echo "Data imported, vendor created";
+    }
+    
+    /**
+     * 
+     * @param type $sqlFile
+     */
+    public static function addInstallation($sqlFile) {
+
+
+        $db = new Db;
+
+
+        //INSERT DATA
+        $filename = $sqlFile;
+        // Temporary variable, used to store current query
+        $templine = '';
+        // Read in entire file
+        $lines = file($filename);
+        // Loop through each line
+        foreach ($lines as $line) {
+            // Skip it if it's a comment
+            if (substr($line, 0, 2) == '--' || $line == '')
+                continue;
+
+            // Add this line to the current segment
+            $templine .= $line;
+            // If it has a semicolon at the end, it's the end of the query
+            if (substr(trim($line), -1, 1) == ';') {
+                $db->query($templine);
+                $templine = '';
+            }
+        }
     }
 
     /**

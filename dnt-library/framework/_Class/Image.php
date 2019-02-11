@@ -26,13 +26,14 @@ Class Image {
             return false;
         }
     }
-
+    
     /**
      * 
-     * @param type $id
+     * @param type $input
+     * @param type $path = true
      * @return boolean
      */
-    public function getFileImage($input) {
+    public function getFileImage($input, $path = true) {
         if (!is_numeric($input)) {
             return $input;
         }
@@ -47,7 +48,11 @@ Class Image {
 		" . Dnt::showStatus("show") . "";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
-                return WWW_PATH . "dnt-view/data/uploads/" . $row['name'];
+                if($path == true){
+                    return WWW_PATH . "dnt-view/data/uploads/" . $row['name'];
+                }else{
+                    return $row['name'];
+                }
             }
         } else {
             return false;
@@ -195,6 +200,27 @@ Class Image {
             }
         }
         return $data;
+    }
+    
+    
+    /**
+     * vymaze fyzicky subory, ktore nemaju dipendenciu na databazu
+     */
+    public function cleanIndependentFiles() {
+        $image = new Image;
+        $path  = "../dnt-view/data/uploads/";
+        $files = glob($path . "*");
+        foreach ($files as $file) {
+            $fileName = str_replace($path, "", $file);
+            if (filetype($file) == "file") {
+                if (!$image->hasDipendency($fileName, false)) {
+                    if (file_exists($path . $fileName)) {
+                        unlink($path.$fileName);
+                        //echo 'Deleted: <a href="' . $path . '' . $fileName . '">' . $fileName . "</a><br/>";
+                    }
+                }
+            }
+        }
     }
 
 }

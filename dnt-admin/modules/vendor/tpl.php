@@ -28,7 +28,8 @@
                      <th>Editovať vlastnosti webu</th>
                      <th>Zobrazenie na pracovnej adrese</th>
                      <th>Zobrazenie na vlastnej doméne</th>
-                     <th>Globálne vlastnosti webu</th>
+                     <th>Globálne nastavenie</th>
+                     <th>Vymazať</th>
                   </tr>
                </thead>
                <tbody>
@@ -156,6 +157,13 @@
                            </div>
                         </div>
                         <!-- END MODAL -->
+                     </td>
+                     <td>
+						<?php if(Vendor::getId() == $row['id_entity'] || DELETING_VENDORS == false){
+							echo '<i title="Nemôžete vymazať web, v ktorom ste prihlásený." class="fa fa-times bg-red action" style="opacity:0.3;border:2px solid red "></i>';
+						}else{?>
+                         <a <?php echo Dnt::confirmMsg("Naozaj chcete vymazať tento web?"); ?> href="index.php?src=vendor&action=del&vendor_id=<?php echo $row['id_entity']; ?>"><i class="fa fa-times bg-red action"></i></a>
+						<?php } ?>
                      </td>
                   </tr>
                   <?php 

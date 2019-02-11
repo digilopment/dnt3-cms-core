@@ -162,9 +162,9 @@ class Vendor {
             $ORIGIN_DOMAIN_LNG = HTTP_PROTOCOL . $data[0] . "" . WWW_FOLDERS . "";
             $ORIGIN_DOMAIN_LNG_NP = $data[0] . "" . WWW_FOLDERS . "";
         }
-
+        
         if ($ORIGIN_DOMAIN == $ORIGIN_DOMAIN_LNG) {
-            $query = "SELECT `id_entity`,`real_url`, `show_real_url` FROM `dnt_vendors` WHERE real_url LIKE '%" . $ORIGIN_DOMAIN_NP . "'";
+            $query = "SELECT `id_entity`,`real_url`, `show_real_url` FROM `dnt_vendors` WHERE real_url LIKE '%" . $ORIGIN_DOMAIN_NP . "' AND show_real_url = 1";
             if ($db->num_rows($query) > 0) {
                 foreach ($db->get_results($query) as $row) {
                     $vendor_id = $row['id_entity'];

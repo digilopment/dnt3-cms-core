@@ -1,4 +1,5 @@
 <?php
+
 $image = new Image();
 if (isset($_POST['sent'])) {
 
@@ -14,8 +15,14 @@ if (isset($_POST['sent'])) {
     $post_id = $rest->get("post_id");
     if ($post_id) {
         $post_id = $rest->get("post_id");
+        $imageName = $image->getFileImage($post_id, false);
+        if (!$image->hasDipendency($post_id)) {
+            $fileName = "../dnt-view/data/uploads/" . $imageName;
+            Dnt::deleteFile($fileName);
+        }
         $where = array('id_entity' => $post_id, 'vendor_id' => Vendor::getId());
         $db->delete('dnt_uploads', $where);
+        $image->cleanIndependentFiles();
     }
 }
 

@@ -156,6 +156,33 @@ class Dnt {
 
     /**
      * 
+     * @param type $file
+     */
+    public static function deleteFile($file) {
+        if (file_exists($file)) {
+            unlink($file);
+        }
+    }
+
+    /**
+     * 
+     * @param type $src
+     */
+    function rrmdir($dirPath) {
+        $files = new RecursiveIteratorIterator(
+			new RecursiveDirectoryIterator($dirPath, RecursiveDirectoryIterator::SKIP_DOTS),
+			RecursiveIteratorIterator::CHILD_FIRST
+		);
+
+		foreach ($files as $fileinfo) {
+			$todo = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
+			$todo($fileinfo->getRealPath());
+		}
+
+    }
+
+    /**
+     * 
      * @return type
      */
     public static function timestamp() {
@@ -274,7 +301,7 @@ class Dnt {
         while (false !== ( $file = readdir($dir))) {
             if (( $file != '.' ) && ( $file != '..' )) {
                 if (is_dir($src . '/' . $file)) {
-                    recurse_copy($src . '/' . $file, $dst . '/' . $file);
+                    self::recurse_copy($src . '/' . $file, $dst . '/' . $file);
                 } else {
                     copy($src . '/' . $file, $dst . '/' . $file);
                 }
