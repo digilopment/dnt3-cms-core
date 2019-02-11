@@ -16,7 +16,7 @@ if(isset($_GET['vendor_id'])){
 	
 	$vendor_id = $_GET['vendor_id'];
 	//exportuj databázu
-	file_get_contents(WWW_PATH."dnt-jobs/dbExport.php?install_vendor=$vendor_id");
+	@file_get_contents(WWW_PATH."dnt-jobs/dbExport.php?install_vendor=$vendor_id");
 
 
 	// Get real path for our folder
@@ -41,9 +41,29 @@ if(isset($_GET['vendor_id'])){
 			// Get real and relative path for current file
 			$filePath = $file->getRealPath();
 			$relativePath = substr($filePath, strlen($rootPath) + 1);
-
-			// Add current file to archive
-			$zip->addFile($filePath, $relativePath);
+			/*if(
+				Dnt::in_string("", $relativePath)
+			){
+				$filePathSQL 		= $filePath;
+				$relativePathSQL 	= $relativePath;
+				$zip->addFile($filePathSQL, $relativePathSQL);
+				var_dump($filePathSQL, $relativePathSQL);
+			}*/
+			
+			if(
+				Dnt::in_string("dnt-backup", $relativePath) || 
+				Dnt::in_string("dnt-cache", $relativePath) || 
+				Dnt::in_string("nbproject", $relativePath) || 
+				//Dnt::in_string("dnt-view/layouts", $relativePath) || 
+				Dnt::in_string(".git", $relativePath)
+			)
+			{
+				
+			}else{
+				// Add current file to archive
+				$zip->addFile($filePath, $relativePath);
+			}
+			//var_dump($filePath, $relativePath);
 		}
 	}
 
