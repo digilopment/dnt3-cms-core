@@ -41,20 +41,13 @@ if(isset($_GET['vendor_id'])){
 			// Get real and relative path for current file
 			$filePath = $file->getRealPath();
 			$relativePath = substr($filePath, strlen($rootPath) + 1);
-			/*if(
-				Dnt::in_string("", $relativePath)
-			){
-				$filePathSQL 		= $filePath;
-				$relativePathSQL 	= $relativePath;
-				$zip->addFile($filePathSQL, $relativePathSQL);
-				var_dump($filePathSQL, $relativePathSQL);
-			}*/
 			
 			if(
 				Dnt::in_string("dnt-backup", $relativePath) || 
 				Dnt::in_string("dnt-cache", $relativePath) || 
 				Dnt::in_string("nbproject", $relativePath) || 
-				//Dnt::in_string("dnt-view/layouts", $relativePath) || 
+				Dnt::in_string("external-uploads", $relativePath) || 
+				Dnt::in_string("generated-files", $relativePath) || 
 				Dnt::in_string(".git", $relativePath)
 			)
 			{

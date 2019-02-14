@@ -129,6 +129,34 @@ class Vendor {
      * new method
      * @return boolean
      */
+    public function getProtocolFromUrl($url) {
+        $tmp = explode("//", $url);
+        $tmp = $tmp[0];
+        if ($tmp == "http:" || "https:") {
+            return $tmp . "//";
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 
+     * @param type $url
+     * @return boolean
+     */
+    public function getDomainFromUrl($url) {
+        $tmp = explode("://", $url);
+        if (isset($tmp[1])) {
+            return $tmp[1];
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 
+     * @return boolean
+     */
     public static function getId() {
         if ($GLOBALS['VENDOR_ID']) {
             return $GLOBALS['VENDOR_ID'];
@@ -152,9 +180,6 @@ class Vendor {
         $ORIGIN_DOMAIN = HTTP_PROTOCOL . $data[0] . "" . WWW_FOLDERS . "";
         $ORIGIN_DOMAIN_NP = $data[0] . "" . WWW_FOLDERS . "";
 
-
-
-
         if ($rest->webhook(0)) {
             $ORIGIN_DOMAIN_LNG = HTTP_PROTOCOL . $data[0] . "" . WWW_FOLDERS . "/" . $rest->webhook(0);
             $ORIGIN_DOMAIN_LNG_NP = $data[0] . "" . WWW_FOLDERS . "/" . $rest->webhook(0);
@@ -162,37 +187,43 @@ class Vendor {
             $ORIGIN_DOMAIN_LNG = HTTP_PROTOCOL . $data[0] . "" . WWW_FOLDERS . "";
             $ORIGIN_DOMAIN_LNG_NP = $data[0] . "" . WWW_FOLDERS . "";
         }
-        
+
         if ($ORIGIN_DOMAIN == $ORIGIN_DOMAIN_LNG) {
             $query = "SELECT `id_entity`,`real_url`, `show_real_url` FROM `dnt_vendors` WHERE real_url LIKE '%" . $ORIGIN_DOMAIN_NP . "' AND show_real_url = 1";
             if ($db->num_rows($query) > 0) {
                 foreach ($db->get_results($query) as $row) {
                     $vendor_id = $row['id_entity'];
+                    $dbProtocol = $row['real_url'];
                 }
             } else {
                 $host = explode(".", $_SERVER["HTTP_HOST"]);
                 //ak je host[1] existuje subdomena
                 if (isset($host[1])) {
                     $vendor_url = $host[0];
-                    $status = "url";
+                    $dbProtocol = false;
+                    //$status = "url";
                 } else {
                     $vendor_url = false;
-                    $status = "default";
+                    $dbProtocol = false;
+                    //$status = "default";
                 }
 
-                $query = "SELECT `id_entity` FROM `dnt_vendors` WHERE name_url = '" . $vendor_url . "'";
+                $query = "SELECT `id_entity`, `real_url` FROM `dnt_vendors` WHERE name_url = '" . $vendor_url . "'";
                 if ($db->num_rows($query) > 0) {
                     foreach ($db->get_results($query) as $row) {
                         $vendor_id = $row['id_entity'];
+                        $dbProtocol = $row['real_url'];
                     }
                 } else {
-                    $query2 = "SELECT `id_entity` FROM `dnt_vendors` WHERE `is_default` = '1'";
+                    $query2 = "SELECT `id_entity`, `real_url` FROM `dnt_vendors` WHERE `is_default` = '1'";
                     if ($db->num_rows($query2) > 0) {
                         foreach ($db->get_results($query2) as $row2) {
                             $vendor_id = $row2['id_entity'];
+                            $dbProtocol = $row['real_url'];
                         }
                     } else {
                         $vendor_id = false;
+                        $dbProtocol = false;
                     }
                 }
             }
@@ -202,20 +233,27 @@ class Vendor {
             if ($db->num_rows($query) > 0) {
                 foreach ($db->get_results($query) as $row) {
                     $vendor_id = $row['id_entity'];
+                    $dbProtocol = $row['real_url'];
                 }
             } else { //V PRIPADE, ZE SA JEDNA O JAZYKOVU MUTACIU DEFAULTNEHO JAZYKU SO SLUGOM
                 $query = "SELECT `id_entity`,`real_url`, `show_real_url` FROM `dnt_vendors` WHERE real_url LIKE '%" . $ORIGIN_DOMAIN_NP . "'";
                 if ($db->num_rows($query) > 0) {
                     foreach ($db->get_results($query) as $row) {
                         $vendor_id = $row['id_entity'];
+                        $dbProtocol = $row['real_url'];
                     }
                 } else {
                     $vendor_id = false;
+                    $dbProtocol = false;
                 }
             }
         }
         $GLOBALS['ORIGIN_DOMAIN_LNG'] = $ORIGIN_DOMAIN_LNG;
+        $GLOBALS['DB_DOMAIN'] = self::getDomainFromUrl($dbProtocol);
+        $GLOBALS['ORIGIN_DOMAIN'] = self::getDomainFromUrl($ORIGIN_DOMAIN);
         $GLOBALS['VENDOR_ID'] = $vendor_id;
+        $GLOBALS['DB_PROTOCOL'] = self::getProtocolFromUrl($dbProtocol);
+        $GLOBALS['ORIGIN_PROTOCOL'] = $ORIGIN_PROTOCOL;
         return $vendor_id;
     }
 

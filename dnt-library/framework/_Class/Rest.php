@@ -19,7 +19,6 @@ class Rest {
      * @return type
      * this method creat a GET method of `default` and `rewrited` addr
      */
-
     public function get($get) {
         $addr1 = explode($get . "=", WWW_FULL_PATH);
 
@@ -46,25 +45,47 @@ class Rest {
      * @param type $stillRedirect
      */
     public function redirectToDomain($stillRedirect = false) {
+
         if ($stillRedirect == true) {
-            if ($GLOBALS['DB_PROTOCOL']) {
-                if (($GLOBALS['ORIGIN_DOMAIN'] != $GLOBALS['DB_DOMAIN']) || ($GLOBALS['ORIGIN_PROTOCOL'] != $GLOBALS['DB_PROTOCOL'])) {
-                    $db_domain = $GLOBALS['DB_PROTOCOL'] . $GLOBALS['DB_DOMAIN'];
+            if ($GLOBALS['DB_DOMAIN']) {
+                if ($GLOBALS['ORIGIN_PROTOCOL'] != $GLOBALS['DB_PROTOCOL']) {
+
+
+                    $db_domain = $GLOBALS['DB_DOMAIN'];
                     $origin_domain = $GLOBALS['ORIGIN_PROTOCOL'] . $GLOBALS['ORIGIN_DOMAIN'];
                     $request = explode($origin_domain, WWW_FULL_PATH);
-                    $request = $request[1];
-                    $return = $db_domain . $request;
+
+
+
+                    if (isset($request[1])) {
+                        $request = $request[1];
+                    } else {
+                        $request = false;
+                    }
+                    $return = $GLOBALS['DB_PROTOCOL'] . $db_domain . $request;
                     Dnt::redirect($return);
                     exit;
                 }
             }
         } else {
-            if (($GLOBALS['ORIGIN_DOMAIN'] == $GLOBALS['DB_DOMAIN']) && ($GLOBALS['ORIGIN_PROTOCOL'] != $GLOBALS['DB_PROTOCOL'])) {
-                $db_domain = $GLOBALS['DB_PROTOCOL'] . $GLOBALS['DB_DOMAIN'];
+            $DB_DOMAIN_ONLY = explode("/", $GLOBALS['DB_DOMAIN']);
+            $DB_DOMAIN_ONLY = $DB_DOMAIN_ONLY[0];
+
+            $ORIGIN_DOMAIN_ONLY = explode("/", $GLOBALS['ORIGIN_DOMAIN']);
+            $ORIGIN_DOMAIN_ONLY = $ORIGIN_DOMAIN_ONLY[0];
+
+            if (($GLOBALS['ORIGIN_PROTOCOL'] != $GLOBALS['DB_PROTOCOL']) &&
+                    (($GLOBALS['ORIGIN_DOMAIN'] == $GLOBALS['DB_DOMAIN']) || Dnt::in_string($ORIGIN_DOMAIN_ONLY, $DB_DOMAIN_ONLY))
+            ) {
+                $db_domain = $GLOBALS['DB_DOMAIN'];
                 $origin_domain = $GLOBALS['ORIGIN_PROTOCOL'] . $GLOBALS['ORIGIN_DOMAIN'];
                 $request = explode($origin_domain, WWW_FULL_PATH);
-                $request = $request[1];
-                $return = $db_domain . $request;
+                if (isset($request[1])) {
+                    $request = $request[1];
+                } else {
+                    $request = false;
+                }
+                $return = $GLOBALS['DB_PROTOCOL'] . $db_domain . $request;
                 Dnt::redirect($return);
                 exit;
             }
