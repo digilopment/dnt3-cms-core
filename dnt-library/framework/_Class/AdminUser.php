@@ -148,10 +148,15 @@ class AdminUser extends Image {
      * @param type $id
      * @return boolean
      */
-    public function dataById($type, $column, $email) {
+    public function dataById($type = false, $column, $email) {
         $db = new Db;
         $session = new Sessions();
-        $query = "SELECT $column FROM dnt_users WHERE type = '$type' AND email = '" . $email . "' AND vendor_id = '" . Vendor::getId() . "'";
+		if($type){
+			$andType = "AND type = '".$type."'";
+		}else{
+			$andType = false;
+		}
+        $query = "SELECT $column FROM dnt_users WHERE email = '" . $email . "' ".$andType." AND vendor_id = '" . Vendor::getId() . "'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 return $row[$column];

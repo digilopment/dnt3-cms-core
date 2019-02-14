@@ -744,7 +744,7 @@ echo '
   </div>
 </div>
 <!--<meta http-equiv="refresh" content="2;url='.Rest::setGet(array("mail_id" => $next_id)).'">-->
-<meta http-equiv="refresh" content="2;url='.AdminMailer::sent_next_mail($next_id).'">
+<meta http-equiv="refresh" content="1;url='.AdminMailer::sent_next_mail($next_id).'">
 ';
 get_bottom();
 }

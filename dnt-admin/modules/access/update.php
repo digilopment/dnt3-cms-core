@@ -9,7 +9,7 @@ if (isset($_POST['sent'])) {
     $post_id = $rest->get("post_id");
     $return = $rest->post("return");
     $pass = $rest->post("pass");
-    $query = "SELECT * FROM dnt_users";
+    $query = "SELECT * FROM dnt_users LIMIT 1";
     foreach ($user->getColumns($query) as $key => $value) {
         if ($value != "id" && ($rest->post($value) != false) && $value != "pass") {
             $setData["" . $value . ""] = $rest->post($value);
