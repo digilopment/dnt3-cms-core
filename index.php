@@ -21,9 +21,8 @@ if (!Install::db_exists()) {
     Dnt::redirect("dnt-install/index.php");
 }
 
-$modul = $rest->getModul();
 $rest->redirectToDomain(Settings::get("still_redirect_to_domain"));
-
+$modul = $rest->getModul();
 if ($modul) {
     $dntLog->add(array(
         "http_response" => 200,

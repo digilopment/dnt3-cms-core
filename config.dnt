@@ -33,8 +33,8 @@ if (!isset($_SERVER['SERVER_NAME'])) {
  *
 */
 define( 'WWW_FOLDERS', "/dnt3" ); //YOUR APPLICATION FOLDER. IF APPLICATION IS IN ROOT FOLDER PLEASE SET as define( 'WWW_FOLDERS', "" );
-define( 'DEAFULT_MODUL', 'homepage' ); // set system name
-define( 'DEFAULT_MODUL_ADMIN', 'settings' ); // set system name
+define( 'DEAFULT_MODUL', 'default' ); // set system default modul
+define( 'DEFAULT_MODUL_ADMIN', 'settings' ); // set dnt-admin default modul
 
 
 

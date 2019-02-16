@@ -187,9 +187,9 @@ class Vendor {
             $ORIGIN_DOMAIN_LNG = HTTP_PROTOCOL . $data[0] . "" . WWW_FOLDERS . "";
             $ORIGIN_DOMAIN_LNG_NP = $data[0] . "" . WWW_FOLDERS . "";
         }
-
+        
         if ($ORIGIN_DOMAIN == $ORIGIN_DOMAIN_LNG) {
-            $query = "SELECT `id_entity`,`real_url`, `show_real_url` FROM `dnt_vendors` WHERE real_url LIKE '%" . $ORIGIN_DOMAIN_NP . "' AND show_real_url = 1";
+            $query = "SELECT `id_entity`,`real_url`, `show_real_url` FROM `dnt_vendors` WHERE real_url LIKE 'http://" . $ORIGIN_DOMAIN_NP . "' || 'https://" . $ORIGIN_DOMAIN_NP . "' AND show_real_url = 1";
             if ($db->num_rows($query) > 0) {
                 foreach ($db->get_results($query) as $row) {
                     $vendor_id = $row['id_entity'];
@@ -201,11 +201,9 @@ class Vendor {
                 if (isset($host[1])) {
                     $vendor_url = $host[0];
                     $dbProtocol = false;
-                    //$status = "url";
                 } else {
                     $vendor_url = false;
                     $dbProtocol = false;
-                    //$status = "default";
                 }
 
                 $query = "SELECT `id_entity`, `real_url` FROM `dnt_vendors` WHERE name_url = '" . $vendor_url . "'";
@@ -248,6 +246,7 @@ class Vendor {
                 }
             }
         }
+        
         $GLOBALS['ORIGIN_DOMAIN_LNG'] = $ORIGIN_DOMAIN_LNG;
         $GLOBALS['DB_DOMAIN'] = self::getDomainFromUrl($dbProtocol);
         $GLOBALS['ORIGIN_DOMAIN'] = self::getDomainFromUrl($ORIGIN_DOMAIN);
