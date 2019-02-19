@@ -141,10 +141,15 @@ class ArticleView extends AdminContent {
      * @param type $name_url
      * @return boolean
      */
-    public function StaticViewParam($column, $name_url) {
+    public function StaticViewParam($column, $name_url, $service = false) {
         $rest = new Rest;
         $db = new Db;
-        $query = "SELECT `$column` FROM dnt_posts WHERE `name_url` = '$name_url' AND vendor_id = '" . Vendor::getId() . "'";
+        if($service){
+            $AND_SRV = " AND service = '".$service."'";
+        }else{
+            $AND_SRV = false;
+        }
+        $query = "SELECT `$column` FROM dnt_posts WHERE `name_url` = '$name_url' AND vendor_id = '" . Vendor::getId() . "' ".$AND_SRV."";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 return $row[$column];
@@ -167,7 +172,12 @@ class ArticleView extends AdminContent {
      */
     public function getStaticId() {
         $rest = new Rest;
-        return $this->StaticViewParam("id_entity", $rest->webhook(1));
+        if($rest->webhook(1)){
+            $service = false;
+            return $this->StaticViewParam("id_entity", $rest->webhook(1), $service);
+        }else{
+            return $this->StaticViewParam("id_entity", $rest->webhook(1));
+        }
     }
 
     /**
