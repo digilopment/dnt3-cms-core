@@ -14,7 +14,7 @@ dnt-view/layouts/*
 
 dnt-library/framework/_keys/secred.php
 
-#dnt-view/*
+dnt-view/*
 nbproject/
 
 push.sh
