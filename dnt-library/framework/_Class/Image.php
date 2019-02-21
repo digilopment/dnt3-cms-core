@@ -8,7 +8,12 @@
  *  date        2017
  */
 Class Image {
-
+	
+	const THUMB = 150;
+	const SMALL = 350;
+	const MEDIUM= 600;
+	const LARGE = 950;
+	
     /**
      * 
      * @param type $id
@@ -33,11 +38,11 @@ Class Image {
      * @param type $path = true
      * @return boolean
      */
-    public function getFileImage($input, $path = true) {
+    public function getFileImage($input, $path = true, $format = false) {
         if (!is_numeric($input)) {
             return $input;
         }
-
+		
         $db = new Db;
 
         $imageId = $input;
@@ -49,7 +54,17 @@ Class Image {
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 if($path == true){
-                    return WWW_PATH . "dnt-view/data/uploads/" . $row['name'];
+					$imageFileFormat = "dnt-view/data/uploads/formats/".$format."/" . $row['name'];
+					$imageFile		 = WWW_PATH . "dnt-view/data/uploads/" . $row['name'];
+					if($format){
+						if(file_exists("../".$imageFileFormat) || file_exists($imageFileFormat)){
+							return WWW_PATH . $imageFileFormat;
+						}else{
+							return $imageFile;
+						}
+					}else{
+						return $imageFile;
+					}
                 }else{
                     return $row['name'];
                 }
@@ -64,7 +79,7 @@ Class Image {
      * @param type $ids
      * @return boolean
      */
-    public function getFileImages($ids) {
+    public function getFileImages($ids, $path = true, $format = false) {
         $db = new Db;
         $ids = explode(",", $ids);
         if (is_array($ids)) {
@@ -75,14 +90,25 @@ Class Image {
 				" . Dnt::showStatus("show") . "";
                 if ($db->num_rows($query) > 0) {
                     foreach ($db->get_results($query) as $row) {
-                        $return[] = WWW_PATH . "dnt-view/data/uploads/" . $row['name'];
+						$imageFileFormat = "dnt-view/data/uploads/formats/".$format."/" . $row['name'];
+						$imageFile		 = WWW_PATH . "dnt-view/data/uploads/" . $row['name'];
+						if($format){
+							if(file_exists("../".$imageFileFormat) || file_exists($imageFileFormat)){
+								$return[] = WWW_PATH . $imageFileFormat;
+							}else{
+								$return[] = $imageFile;
+							}
+						}else{
+							$return[] = $imageFile;
+						}
+                        //$return[] = WWW_PATH . "dnt-view/data/uploads/" . $row['name'];
                     }
                 } else {
-                    $return = array(false);
+                    $return = array();
                 }
             }
         } else {
-            $return = array(false);
+            $return = array();
         }
         return $return;
     }
@@ -93,16 +119,20 @@ Class Image {
      * @param type $table
      * @return type
      */
-    public function getPostImage($id, $table = null) {
+    public function getPostImage($id, $table = null, $format = false) {
         $db = new Db;
 
-        if (null === $table) {
+        if ($table == true || $table == false || $table === null) {
             $table = "dnt_posts";
         } else {
             $table = $table;
         }
         $imageId = self::get($id, $table);
-        return self::getFileImage($imageId);
+		if($format){
+			return self::getFileImage($imageId, true, $format);
+		}else{
+			return self::getFileImage($imageId);
+		}
     }
 
     /**
@@ -124,6 +154,35 @@ Class Image {
         }
     }
 
+	/**
+     * 
+     * @param type $file
+     * 
+     * 
+     */
+    public function hasVendorDipendency($file) {
+        $db = new Db();
+
+        if (!is_numeric($file)) {
+            $image_id_entity = self::getColumnByName($file);
+        } else {
+            $image_id_entity = $file;
+        }
+		
+        $data = false;
+        
+		/**
+		* If $image_id_entity
+		*/
+        if ($image_id_entity) {
+			$query = "SELECT * FROM dnt_uploads WHERE id_entity = '" . $image_id_entity . "'";
+			if ($db->num_rows($query) > 1) {
+				$data = true;
+			}
+        }
+        return $data;
+    }
+	
     /**
      * 
      * @param type $file

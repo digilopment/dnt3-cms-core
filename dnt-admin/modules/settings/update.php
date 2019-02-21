@@ -146,10 +146,16 @@ elseif(isset($_POST['odoslat_logo'])){
 		if($row['content_type'] == "image" or $row['content_type'] == "file"){
 			//$files 	= 'userfile_'.$row['id_entity']; 
 			if($rest->post('gallery_key_' . $row['id_entity'])){
+				if($rest->post('gallery_key_' . $row['id_entity']) == "del"){
+					$galleryData = "";
+				}else{
+					$galleryData = $rest->post('gallery_key_' . $row['id_entity']);
+				}
+					
 				$db->update(
 						"dnt_settings",	//table
 						array(	//set
-							'value' => $rest->post('gallery_key_' . $row['id_entity']),
+							'value' => $galleryData,
 							), 
 						array( 	//where
 								'id_entity' 	=> $row['id_entity'], 

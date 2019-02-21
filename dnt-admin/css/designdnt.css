@@ -48,9 +48,11 @@ margin: 0px 40px 10px -22px;
 	width:100%
 }
 .dnt-gallery-chooser .thumbnail>img, .thumbnail a>img {
-    margin-right: auto;
-    height: 80px;
+    height: 55px;
     margin-left: auto;
+}
+ul.thumbnails.image_picker_selector li {
+    margin: 0px 10px 0px 0px;
 }
 .dnt-gallery-chooser.modal.in .modal-dialog {
     width: 100%;

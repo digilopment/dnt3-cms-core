@@ -167,10 +167,15 @@ if(isset($_POST['sent'])){
 	
 	
 	if($rest->post("gallery_key_".$post_id)){
+		if($rest->post("gallery_key_".$post_id) == "del"){
+			$galleryData = "";
+		}else{
+			$galleryData = $rest->post("gallery_key_".$post_id);
+		}
 		$db->update(
 		$table,	//table
 		array(	//set
-			'img' => $rest->post("gallery_key_".$post_id),
+			'img' => $galleryData,
 			), 
 		array( 	//where
 			'id_entity' 			=> $post_id, 

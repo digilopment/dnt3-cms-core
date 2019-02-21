@@ -24,6 +24,7 @@
    $tags 			= AdminContent::getPostParam("tags", $post_id);
    $service 		= AdminContent::getPostParam("service", $post_id);
    $service_id 		= AdminContent::getPostParam("service_id", $post_id);
+   $imageID 		= AdminContent::getPostParam("img", $post_id);
    
    //osetrenie vstupov
    if($datetime_publish == "0000-00-00 00:00:00"){
@@ -68,13 +69,24 @@
 					</div>
 				</div>
                   <br/>
-				  <?php galleryChooser($post_id); ?>
+				  <?php 
+				  galleryChooser($post_id, $imageID); ?>
 				  <input name="userfile" type="file" class="form-control">
 				  <br/>
 				  <br/>
-                  <h5>Current image</h5>
-                  <img src="<?php echo Image::getPostImage($post_id);?>" style="width: 100%" />
-                  <hr/>
+                  <h5>Current image(s)</h5>
+                  
+    
+				  <?php
+				  $image = new Image;
+					if(is_numeric($imageID)){
+						echo '<img src="'.Image::getPostImage($post_id, true, Image::SMALL).'" style="width: 100%" /><hr/>';
+					}else{
+					foreach($image->getFileImages($imageID, true, Image::THUMB) as $image){
+						echo '<img src="'.$image.'" style="height: 55px; margin-left:0px; margin:10px;">';
+					}
+					}
+					?>
                   <?php /*
                      <h5>Externý odkaz - <u>nepovinné</u>:<br/></h5>
                               <input cat_id="text" name="hyperlink" class="form-control" placeholder="externý hyperlink: http://">

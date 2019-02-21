@@ -44,7 +44,7 @@ class FileAdmin {
      * 
      * @return type
      */
-    public function query() {
+    public function query($noLimit = false) {
         $db = new Db;
 
         if (isset($_GET['page'])) {
@@ -69,7 +69,11 @@ class FileAdmin {
         $next_page = $strana + 1;
         $stranok_round = ceil($stranok);
 
-        $pager = "LIMIT " . $pociatok . ", " . $limit . "";
+		if($noLimit){
+			$pager = false;
+		}else{
+			$pager = "LIMIT " . $pociatok . ", " . $limit . "";
+		}
         return self::prepare_query($pager);
     }
 

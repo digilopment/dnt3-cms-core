@@ -38,14 +38,14 @@
 								<?php galleryChooser($row['id_entity']); ?>
 								<?php 
 								$image = new Image;
-								foreach($image->getFileImages($row['value']) as $image){
+								foreach($image->getFileImages($row['value'], true, Image::THUMB) as $image){
 									echo '<img src="'.$image.'" style="height: 55px; margin-left:0px; margin:10px;">';
 								}
 							}elseif($row['content_type'] == "file"){ ?>
 								<input name="userfile_<?php echo $row['id_entity']; ?>[]" multiple="multipl" type="file" class="form-control">
 								<?php 
 								$image = new Image;
-								foreach($image->getFileImages($row['value']) as $file){
+								foreach($image->getFileImages($row['value'], true, Image::THUMB) as $file){
 									echo  "<a target='_blank' href='".$file."'>".$file."</a><br/>";
 								}
 							}

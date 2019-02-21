@@ -54,7 +54,7 @@ $query = "SELECT * FROM dnt_users";
             <div class="row form-group">
                <label class="col-sm-2 control-label"><b>&nbsp;</b></label>
                <div class="col-sm-6">
-                  <input type="submit" name="odoslat" class="btn btn-primary btn-lg btn-block" value="Vytvoriť novú súťaž" />
+                  <input type="submit" name="odoslat" class="btn btn-primary btn-lg btn-block" value="Vytvoriť nový web" />
                   <br>
                </div>
             </div>

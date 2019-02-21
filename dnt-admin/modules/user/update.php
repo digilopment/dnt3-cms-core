@@ -46,10 +46,16 @@ if(isset($_POST['sent'])){
 		);
 	
 	if($rest->post("gallery_key_user_avatar_".$post_id)){
+		if($rest->post('gallery_key_user_avatar_' . $post_id) == "del"){
+			$galleryData = "";
+		}else{
+			$galleryData = $rest->post('gallery_key_user_avatar_' . $post_id);
+		}
+				
 		$db->update(
 		"dnt_registred_users",	//table
 		array(	//set
-			'img' => $rest->post("gallery_key_user_avatar_".$post_id),
+			'img' => $galleryData,
 			), 
 		array( 	//where
 			'id_entity' 	=> $post_id, 

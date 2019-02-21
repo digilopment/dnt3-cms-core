@@ -781,10 +781,15 @@ get_top();
 get_bottom();
 }
 ?>
-<?php function galleryChooser($keyId){ 
+<?php function galleryChooser($keyId, $selected = false, $limit = false){ 
 	$rest 	= new Rest;
 	$db 	= new Db;
 	$image 	= new Image;
+	if($limit){
+		$limit = $limit;
+	}else{
+		$limit = "100000000";
+	}
 	?>   
 	
 <link rel="stylesheet" type="text/css" href="<?php echo WWW_PATH_ADMIN; ?>css/image-picker.css">
@@ -804,15 +809,14 @@ get_bottom();
          </div>
          <div class="modal-body">
           <div class="picker">
-               <select name="gallery" id="gallery_key_<?php echo $keyId; ?>_s" class="image-picker show-html" data-limit="10" multiple="multiple" 
+               <select name="gallery" id="gallery_key_<?php echo $keyId; ?>_s" class="image-picker show-html" data-limit="<?php echo $limit;?>" multiple="multiple" 
 			   style="display:nones;" >
 				<?php
-				  $query = FileAdmin::query();
+				  $query = FileAdmin::query(true);
                   if($db->num_rows($query)>0){
                   	foreach($db->get_results($query) as $row){
-						
 						if(Dnt::in_string("image", $row['type'])){ 
-							echo '<option data-img-src="'.$image->getFileImage($row['id_entity']).'" value="'.$row['id_entity'].'">Cute Kitten 1</option>';
+							echo '<option data-img-src="'.$image->getFileImage($row['id_entity'], true, Image::SMALL).'" value="'.$row['id_entity'].'">Cute Kitten 1</option>';
 						}
 					}
 				  }
@@ -820,7 +824,14 @@ get_bottom();
                </select>
 			   <input type="hidden" name="gallery_key_<?php echo $keyId; ?>" id="gallery_key_<?php echo $keyId; ?>">
             </div>
-			<span id="save_<?php echo $keyId; ?>" data-dismiss="modal" aria-label="Close" class="btn center-block clode btn-success" style="width:150px;">Uložiť</span>
+			<div class="row">
+				<div class="col-xs-6">
+					<span id="save_<?php echo $keyId; ?>" data-dismiss="modal" aria-label="Close" class="btn center-block clode btn-success" style="width:150px;">Uložiť</span>
+				</div>
+				<div class="col-xs-6">
+					<span id="delete_<?php echo $keyId; ?>" data-dismiss="modal" aria-label="Close" class="btn center-block clode btn-danger" style="width:150px;">Vymazať</span>
+				</div>
+			</div>
             <script type="text/javascript">
                $("#image_picker_<?php echo $keyId; ?> select.image-picker").imagepicker({
                  hide_select:  true,
@@ -843,13 +854,29 @@ get_bottom();
                  });
                });
 			   
+			   <?php
+			   echo "var selected = '';";
+				/*if($selected){
+					echo "selected = '".$selected.",'; ";
+					echo "alert(selected);";
+					echo "$( '#gallery_key_".$keyId."' ).val('".$selected."');";
+				}*/
+			?>
+					
 			   $( document ).ready(function() {
 				   $( "#gallery_key_<?php echo $keyId; ?>_s" ).change(function() {
 					var selectedValues = $('#gallery_key_<?php echo $keyId; ?>_s').val();
 					$( "#save_<?php echo $keyId; ?>" ).click(function() {
-						$( "#gallery_key_<?php echo $keyId; ?>" ).val(selectedValues);
+						$( "#gallery_key_<?php echo $keyId; ?>" ).val(selected + selectedValues);
+						
 					});
 					});
+					
+					$( "#delete_<?php echo $keyId; ?>" ).click(function() {
+						$( "#gallery_key_<?php echo $keyId; ?>" ).val("del");
+					});
+					
+					
 				});
             </script>
          </div>

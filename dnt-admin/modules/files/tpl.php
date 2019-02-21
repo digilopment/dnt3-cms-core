@@ -11,7 +11,7 @@
 	<ul>
 	
 		<li class="post_type" style="text-decoration: underline">
-			<form enctype='multipart/form-data' action="index.php?src=files&action=add" method="POST" style="    display: flex;">
+			<form enctype='multipart/form-data' action="index.php?src=files&action=add" method="POST" style="display: flex;">
 				<input name="userfile[]" multiple="multipl" type="file" class="form-control">
 				<input type="submit" name="sent" value="Upload">
 			</form>
@@ -58,12 +58,28 @@
 					$sub_cat_id = false;
 					$type 	= $row['type'];
 					$page 	= FileAdmin::getPage("current");
+					
+					$imageName = $image->getFileImage($post_id, false, false);
                   ?>
 				   <tr>
 					  <td><?php echo $i++; ?></td>
 					  <td><?php echo $row['id_entity'] ?></td>
 					  <td style="max-width: 500px;"><b><a target="_blank" href="<?php echo $image->getFileImage($post_id);?>">
-					  <?php echo $row['name']; ?></a></b><br/><br/><input style="width: 250px" type="text" value="<?php echo $image->getFileImage($post_id);?>"></td>
+					  
+					  <?php echo $row['name']; ?></a></b>
+					  					  					  <br>
+					  <?php foreach(DntUpload::imageFormats() as $format){
+						  if(Dnt::in_string("image", $type)){
+						  ?>
+					  <span style="font-weight:bold;"><a href="<?php echo "../dnt-view/data/uploads/formats/".$format."/".$imageName ?>" target="_blank">width-<?php echo $format; ?></a> | </span>
+					  <?php } ?>
+					  <?php } ?>
+					  
+					  <br><br>
+					  <input style="width: 250px" type="text" value="<?php echo $image->getFileImage($post_id);?>">
+					  					  
+
+					  </td>
 					  <td>
 						<?php echo FileAdmin::getPostParam("type", $row['id_entity']); ?>
 					 </td>
@@ -73,7 +89,7 @@
 					   <?php 
 						echo '<a target="_blank" href="'.$image->getFileImage($post_id).'">'; 
 						if(Dnt::in_string("image", $row['type'])){ 
-							echo '<img style="width: 100px;" src="'.$image->getFileImage($post_id).'"/>';
+							echo '<img style="width: 100px;" src="'.$image->getFileImage($post_id, true, Image::SMALL).'"/>';
 						}else{
 							echo "Súbor";
 						} 
