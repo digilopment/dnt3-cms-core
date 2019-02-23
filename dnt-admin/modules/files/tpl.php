@@ -20,6 +20,28 @@
 	
 	</ul>
 </section>
+<section class="col-xs-12" style="margin-bottom:15px">
+<a href="index.php?src=files">
+	<span class="label label-primary bg-blue" style="padding:5px;margin-right:20px;"><big>všetky</big></span>
+</a>
+<?php
+$query = "SELECT DISTINCT name FROM dnt_uploads WHERE vendor_id = '".Vendor::getId()."'";
+$formats = array();
+if($db->num_rows($query)>0){
+foreach($db->get_results($query) as $row){
+	$type = explode(".", $row['name']);
+	$formats[$type[1]] = $type[1];
+  }
+}
+foreach($formats as $format){
+	?>
+	<a href="index.php?src=files&search=<?php echo $format;?>">
+		<span class="label label-primary bg-orange" style="padding:5px;"><big><?php echo $format;?></big></span>
+	</a>
+ <?php
+}
+?>	
+</section>
 <div style="clear: both;"></div>
 <div class="col-md-12">
    <div class="grid no-border">
