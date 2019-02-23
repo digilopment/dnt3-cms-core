@@ -164,5 +164,16 @@ class Url {
 
         return WWW_CDN_PATH . "" . SYSTEM_NAME . "/layouts/" . $this->layout . "/images/" . $img . $this->get_img_version();
     }
+	
+	
+	public function getPostUrl($url){
+		if(Dnt::in_string("<WWW_PATH>", $url)){
+			return str_replace("<WWW_PATH>", WWW_PATH, $url);
+		}elseif(Dnt::is_external_url($url)){
+			return $url;
+		}else{
+			return WWW_FOLDERS."/".$url;
+		}
+	}
 
 }

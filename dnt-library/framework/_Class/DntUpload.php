@@ -50,8 +50,6 @@ class DntUpload {
      * @param type $path
      */
     public function addDefaultImage($file, $table, $setColumn, $updateColumn, $updateValue, $path) {
-		var_dump($_FILES[$file]);
-		exit;
         $dntUpload = new Upload(@$_FILES[$file]);
         $db = new Db;
 

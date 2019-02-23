@@ -2,10 +2,24 @@
 <?php get_top(); ?>
 <?php include "top.php";?>
 <?php
-
+$rest = new Rest();
 
 ?>
-<section class="content">
+<section class="col-xs-12" style="margin-bottom:15px">
+	<a href="index.php?src=content&included=<?php echo  $rest->get("included"); ?>&filter=<?php echo  $rest->get("filter"); ?>">
+		<span class="label label-primary bg-blue" style="padding:5px;" ><big>PREJSŤ NA ZOZNAM</big></span>
+	</a>
+	<a href="index.php?src=content&included=<?php echo  $rest->get("included"); ?>&filter=<?php echo  $rest->get("filter"); ?>&action=add">
+		<span class="label label-primary bg-green" style="padding:5px;"><big>PRIDAŤ NOVÝ POST V TEJTO KATEGÓRII</big></span>
+	</a>
+	<?php if($rest->get("included") == "sitemap"){?>
+	<a <?php echo Dnt::confirmMsg("Pred prejdením na post sa prosím uistite, či máte uložte všetky zmeny."); ?> 
+	href="index.php?src=content&filter=<?php echo  $rest->get("filter"); ?>&sub_cat_id=<?php echo  $rest->get("sub_cat_id"); ?>&post_id=<?php echo  $rest->get("post_id"); ?>&page=1&action=edit&included=<?php echo  $rest->get("included"); ?>">
+		<span class="label label-primary bg-orange" style="padding:5px;"><big>PREJSŤ NA POST</big></span>
+	</a>
+	<?php } ?>
+</section>	
+<section class="col-xs-12 content">
    <div class="row">
    <div class="row" style="background-color: #fff;padding: 5px;margin: 0px;">
       <label class="col-sm-2 control-label"><b>Názov vstupu</b></label>

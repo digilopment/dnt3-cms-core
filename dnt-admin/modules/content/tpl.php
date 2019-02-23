@@ -45,26 +45,15 @@
 
 
 <!-- BEGIN CUSTOM TABLE -->
-<section class="row content-header">
-	<ul>
-	
-		<li class="post_type" style="text-decoration: underline">
-			<a href="<?php echo Rest::setGet(array("action"=>"add")); ?>">
-				<span class="label label-primary bg-green" style="padding: 5px;"><big>PRIDAŤ TENTO POST</big></span>
-			</a>
-			<a href="#">
-				<span class="label label-primary bg-green" style="padding: 5px;" data-toggle="modal" data-target="#pridat_kat"><big>PRIDAŤ KATEGORIU</big></span>
-			</a>
-		</li>
-		<br/>
-		<br/>
-		<li class="post_type">
-			<a href="index.php?src=obsah&amp;filtruj=1">
-				<span class="label label-primary bg-blue" style="padding: 5px;"><big>Pages</big></span>
-			</a>
-		</li>
-	</ul>
-</section>
+<section class="col-xs-12" style="margin-bottom:15px">
+	<a href="index.php?src=content&included=<?php echo  $rest->get("included"); ?>&filter=<?php echo  $rest->get("filter"); ?>&action=add">
+		<span class="label label-primary bg-green" style="padding:5px;"><big>PRIDAŤ NOVÝ POST V TEJTO KATEGÓRII</big></span>
+	</a>
+	<a href="#">
+		<span class="label label-primary bg-green" data-toggle="modal" data-target="#pridat_kat" style="padding:5px;"><big>PRIDAŤ KATEGORIU</big></span>
+	</a>
+</section>	
+
 <div style="clear: both;"></div>
 <div class="col-md-12">
    <div class="grid no-border">

@@ -5,8 +5,8 @@ $path			= "../";
 $autoload->load($path);
 $install = new Install;
 
-$vendor_id 			= "12"; //ORIGINAL
-$vendor_movde_to 	= "1";  //NEW VENDOR ID
+$vendor_id 			= "53"; //ORIGINAL
+$vendor_movde_to 	= "48";  //NEW VENDOR ID
 $tables = array(
 	//VSETKY STLPCE
 	"dnt_admin_menu",
@@ -29,6 +29,7 @@ $tables = array(
 	"dnt_translates",
 	"dnt_uploads",
 	"dnt_users",
+	"dnt_vouchers",
 );
 
 

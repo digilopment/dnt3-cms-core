@@ -320,7 +320,7 @@ Class Install {
         }
         foreach ($target_tables as $table) {
             $result = $mysqli->query("SELECT * FROM " . $table . " $vendor_where");
-            $fields_amount = $result->field_count;
+            $fields_amount = @$result->field_count;
             $rows_num = $mysqli->affected_rows;
             $res = $mysqli->query('SHOW CREATE TABLE ' . $table);
             $TableMLine = $res->fetch_row();

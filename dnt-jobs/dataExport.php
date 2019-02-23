@@ -49,30 +49,22 @@ if(isset($_GET['vendor_id'])){
 			$relativePath = substr($filePath, strlen($rootPath) + 1);
 			
 			if(
-				Dnt::in_string("dnt-backup", $relativePath) || 
-				Dnt::in_string("dnt-cache", $relativePath) || 
-				Dnt::in_string("nbproject", $relativePath) || 
-				Dnt::in_string("external-uploads", $relativePath) || 
-				Dnt::in_string("generated-files", $relativePath) || 
-				Dnt::in_string(".git", $relativePath) ||
-				Dnt::in_string("data", $relativePath)
+				Dnt::in_string("dnt-view", $relativePath) || 
+				Dnt::in_string("dnt-install", $relativePath)
 			)
 			{
-				
 				$query = "SELECT name FROM dnt_uploads WHERE vendor_id = $vendor_id";
 				if ($db->num_rows($query) > 0) {
 					foreach ($db->get_results($query) as $row) {
 						if(Dnt::in_string($row['name'], $relativePath)){
-							//var_dump($relativePath);
 							$zip->addFile($filePath, $relativePath);
 						}
 					}
 				}
-			}else{
-				// Add current file to archive
-				$zip->addFile($filePath, $relativePath);
+				if(Dnt::in_string("dnt-install", $relativePath)){
+					$zip->addFile($filePath, $relativePath);
+				}
 			}
-			//var_dump($filePath, $relativePath);
 		}
 	}
 

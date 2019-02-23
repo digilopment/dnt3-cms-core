@@ -32,7 +32,21 @@
    }
 ?>
    
-  		
+  	<!-- BEGIN CUSTOM TABLE -->
+<section class="col-xs-12" style="margin-bottom:15px">
+	<a href="index.php?src=content&included=<?php echo  $rest->get("included"); ?>&filter=<?php echo  $rest->get("filter"); ?>">
+		<span class="label label-primary bg-blue" style="padding:5px;" ><big>PREJSŤ NA ZOZNAM</big></span>
+	</a>
+	<a href="index.php?src=content&included=<?php echo  $rest->get("included"); ?>&filter=<?php echo  $rest->get("filter"); ?>&action=add">
+		<span class="label label-primary bg-green" style="padding:5px;"><big>PRIDAŤ NOVÝ POST V TEJTO KATEGÓRII</big></span>
+	</a>
+	<?php if($rest->get("included") == "sitemap" && $service){?>
+	<a <?php echo Dnt::confirmMsg("Pred prejdením na službu sa prosím uistite, či máte uložte všetky zmeny."); ?> 
+	href="index.php?src=content&included=<?php echo  $rest->get("included"); ?>&filter=<?php echo $rest->get("filter"); ?>&post_id=<?php echo  $rest->get("post_id"); ?>&services=<?php echo $service; ?>">
+		<span class="label label-primary bg-orange" style="padding:5px;"><big>PREJSŤ NA SLUŽBU</big></span>
+	</a>
+	<?php } ?>
+</section>	
 <section class="content">
    <div class="row">
       <!-- BEGIN LEFT TABS -->

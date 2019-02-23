@@ -225,6 +225,7 @@ $perex_name = "name_perex_".$row['slug'];
    $db = new Db;
    $admin = new AdminUser;
    $andWhere = false;
+   $reset = new Rest;
    
    $query = "SELECT * FROM `dnt_admin_menu` WHERE 
    `type` = 'menu' AND 
@@ -244,7 +245,7 @@ if($row['name_url'] == "content"){
       <span><?php echo $row['name'];?></span>
       <i class="fa fa-angle-left pull-right"></i>
       </a>
-      <ul class="sub-menu">
+      <ul class="sub-menu" <?php  if($row['name_url'] == $reset->get("src")){echo "style='display:block'";}?>>
          <?php
             $query2 = "SELECT * FROM `dnt_post_type` 
             WHERE 
@@ -276,7 +277,7 @@ if($row['name_url'] == "content"){
       <span><?php echo $row['name'];?></span>
       <i class="fa fa-angle-left pull-right"></i>
       </a>
-      <ul class="sub-menu">
+      <ul class="sub-menu" >
 		<li>
             <a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$row['name_url'];?>" >
             <span>Všetci používatelia</span>
@@ -326,7 +327,7 @@ if($row['name_url'] == "content"){
       <span><?php echo $row['name'];?></span>
       <i class="fa fa-angle-left pull-right"></i>
       </a>
-      <ul class="sub-menu">
+      <ul class="sub-menu" <?php  if($row['name_url'] == $reset->get("src")){echo "style='display:block'";}?>>
          <?php
             foreach($db->get_results($query2) as $row2){
             ?>
@@ -829,7 +830,7 @@ get_bottom();
 					<span id="save_<?php echo $keyId; ?>" data-dismiss="modal" aria-label="Close" class="btn center-block clode btn-success" style="width:150px;">Uložiť</span>
 				</div>
 				<div class="col-xs-6">
-					<span id="delete_<?php echo $keyId; ?>" data-dismiss="modal" aria-label="Close" class="btn center-block clode btn-danger" style="width:150px;">Vymazať</span>
+					<span id="delete_<?php echo $keyId; ?>" data-dismiss="modal" aria-label="Close" class="btn center-block clode btn-danger" style="width:150px;">Vymazať galériu</span>
 				</div>
 			</div>
             <script type="text/javascript">

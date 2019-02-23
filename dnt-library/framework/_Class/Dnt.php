@@ -521,6 +521,11 @@ class Dnt {
      */
     public static function creat_name_url($name, $name_url) {
 
+		if(self::in_string("<WWW_PATH>", $name_url)){
+			$name_url = explode("WWW_PATH",  $name_url);
+			$name_url = "<WWW_PATH>".self::name_url($name_url[1]);
+			return $name_url;
+		}
 
         if (empty($name_url)) {
             return self::name_url($name);

@@ -24,6 +24,7 @@ $tables = array(
 	"dnt_settings",
 	"dnt_translates",
 	"dnt_uploads",
+	"dnt_vouchers",
 	"dnt_users",
 );
 
