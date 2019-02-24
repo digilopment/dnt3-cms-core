@@ -99,7 +99,7 @@
 				   <tr>
 					  <td><?php echo $i++; ?></td>
 					  <td><?php echo $post_id ?></td>
-					  <td style="max-width: 500px;"><b><a href="<?php echo AdminContent::url("edit", $cat_id, $sub_cat_id, false, $post_id, $page) ?>"><?php echo $row['name']; ?></a></b></td>
+					  <td style="max-width: 500px;"><b><a href="<?php echo AdminContent::url("edit", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>"><?php echo $row['name']; ?></a></b></td>
 					  <td>
 						<?php if($row['show']>0){?>
 						<a href="<?php echo WWW_PATH."a/".$post_id?>" target="_blank"><i class="fa fa-external-link-square"></i><?php echo AdminContent::getPostParam("type", $post_id); ?></a>
