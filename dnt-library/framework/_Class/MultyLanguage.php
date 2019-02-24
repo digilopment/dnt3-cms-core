@@ -27,7 +27,7 @@ class MultyLanguage {
         } else {
 
             //$q = "SELECTs * FROMs dnt_languages WHEREs `show` = '1' AND vendor_id = '" . Vendor::getId() . "'";
-            $q = "SELECT * FROM dnt_languages WHERE `show` = '1' AND vendor_id = '" . Vendor::getId() . "'";
+            $q = "SELECT * FROM dnt_languages WHERE `show` = '1' AND vendor_id = '" . Vendor::getId() . "' ORDER BY slug asc";
             if ($db->num_rows($q) > 0) {
                 foreach ($db->get_results($q) as $row) {
                     $data[] = $row['slug'];
@@ -58,7 +58,7 @@ class MultyLanguage {
         $db = new Db();
 		
         if (isset($_GET['search'])) {
-           $typ = "AND (`translate_id` LIKE '%" . str_replace("-", "_", Dnt::name_url($_GET['search'])) . "%' OR `translate` LIKE '%" . str_replace("-", "_", urldecode($_GET['search'])) . "%') ";
+            $typ = "AND (`translate_id` LIKE '%" . str_replace("-", "_", Dnt::name_url($_GET['search'])) . "%' OR `translate` LIKE '%" . str_replace("-", "_", urldecode($_GET['search'])) . "%') ";
         } else
             $typ = "AND type = 'static'";
 
