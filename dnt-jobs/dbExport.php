@@ -20,11 +20,6 @@ error_reporting(0);
 		$backup_name   	= "../dnt-install/install.sql";
 		//echo "Database was exported. - ".$backup_name;
 	}
-	elseif(isset($_GET['install_vendor'])){
-		$vendor_id 		= $_GET['install_vendor'];
-		$backup_name   	= "../dnt-install/install.sql";
-		//echo "Database was exported. - ".$backup_name;
-	}
 	elseif(isset($_GET['vendor_id'])){
 		$vendor_id 		= $rest->get("vendor_id");
 		$backup_name   = "../dnt-backup/".$rest->get("vendor_id")."-".Dnt::name_url(Dnt::datetime())."-".$DbName.".sql";
