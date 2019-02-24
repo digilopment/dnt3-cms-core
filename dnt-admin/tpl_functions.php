@@ -6,7 +6,13 @@
       <!--[if IE]>
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
       <![endif]-->
-      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+	  <meta name="viewport" content="width=800px, initial-scale=auto">
+	  <style>
+	  @-ms-viewport{
+		  width: 800px;
+		}
+	  </style>
       <meta name="description" content="">
       <meta name="author" content="">
       <title>Systém | Designdnt</title>
@@ -888,3 +894,4 @@ get_bottom();
 Vybrať súbory z galérie
 </button>
 <?php } ?>
+
