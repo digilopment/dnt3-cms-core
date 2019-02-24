@@ -100,11 +100,13 @@
 					  <td><?php echo $i++; ?></td>
 					  <td><?php echo $post_id ?></td>
 					  <td style="max-width: 500px;"><b><a href="<?php echo AdminContent::url("edit", $cat_id, $sub_cat_id, false, $post_id, $page) ?>"><?php echo $row['name']; ?></a></b></td>
-					  <td><a href="<?php echo AdminContent::url("filter", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>">
-						<!--<?php echo AdminContent::getPostParam("sub_cat_id", $post_id)." -> ".AdminContent::getPostParam("cat_id", $post_id); ?>-->
-						
+					  <td>
+						<?php if($row['show']>0){?>
 						<a href="<?php echo WWW_PATH."a/".$post_id?>" target="_blank"><i class="fa fa-external-link-square"></i><?php echo AdminContent::getPostParam("type", $post_id); ?></a>
-						</a></td>
+						<?php }else{?>
+							<i class="fa fa-ban" title="Pre otvorenie na webe, musíte povoliť publikáciu"></i><?php echo AdminContent::getPostParam("type", $post_id); ?>
+						<?php } ?>
+						</td>
 					  <td><b><?php echo $row['datetime_creat']; ?></b></td>
 					  <td>
 						 <a href="<?php echo AdminContent::url("show_hide", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>">

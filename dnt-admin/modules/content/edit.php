@@ -47,9 +47,11 @@
 	</a>
 	<?php } ?>
 	
+	<?php if($show>0){?>
 	<a  href="<?php echo WWW_PATH."a/".$rest->get("post_id"); ?>" target="_blank" style="float:right">
-		<span class="label label-primary bg-blue" style="padding:5px;"><big><i class="fa fa-external-link-square"></i> OTVORIŤ NA WEBE</big></span>
+		<span class="label label-primary bg-blue" style="padding:5px;"><big><i class="fa fa-external-link-square"></i> OTVORIŤ POST NA WEBE</big></span>
 	</a>
+	<?php } ?>
 	
 	
 	
