@@ -100,6 +100,15 @@
                                                                <br/>
                                                             </div>
                                                          </div>
+														 
+														 <div class="form-group">
+                                                            <label class="col-sm-3 control-label"><b>Vendor ID:</b></label>
+                                                            <div class="col-sm-9">
+                                                               <input type="number"  value="<?php echo $row['id']; ?>" name="vendor_id_move" class="form-control" placeholder="Názov:">
+                                                               <br/>
+                                                            </div>
+                                                         </div>
+														 
                                                          <!-- layout -->
                                                          <div class="form-group">
                                                             <label class="col-sm-3 control-label"><b>Layout</b></label>

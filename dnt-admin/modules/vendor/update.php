@@ -1,6 +1,7 @@
 <?php
 
 $db = new Db;
+$install = new Install;
 if (isset($_POST['sent'])) {
 
     $vendor_id = $rest->post("vendor_id");
@@ -12,6 +13,7 @@ if (isset($_POST['sent'])) {
     $real_url = $rest->post("real_url");
     $real_url = preg_replace('/\s+/', '', $real_url);
     $return = $rest->post("return");
+    $vendor_movde_to = $rest->post("vendor_id_move");
     
     $currentVendorUrl = Vendor::getColumn("name_url");
     
@@ -30,6 +32,50 @@ if (isset($_POST['sent'])) {
         );
     
     //kontrola ci sa nezmenila URL
+	if($vendor_movde_to != $vendor_id){
+		
+		$vendorId = array();
+		foreach(Vendor::getAll() as $vendor){
+			$vendorId[] = $vendor['id'];
+		}
+		
+		if(in_array($vendor_movde_to, $vendorId)){
+			$customMessage = "Vendor ID <b>$vendor_movde_to</b>, sa už používa, prosím použite iné <b>Vendor ID</b>";
+			include "tpl_functions.php";
+			get_top();
+			include "top.php";
+			error_message("Vendor ID", $customMessage);
+			include "bottom.php";
+			get_bottom();
+		}else{
+			$tables = array(
+				//VSETKY STLPCE
+				"dnt_admin_menu",
+				"dnt_api",
+				"dnt_config",
+				"dnt_gallery",
+				"dnt_languages",
+				"dnt_logs",
+				"dnt_mailer_mails",
+				"dnt_mailer_type",
+				"dnt_microsites",
+				"dnt_microsites_composer",
+				"dnt_polls",
+				"dnt_polls_composer",
+				"dnt_posts",
+				"dnt_posts_meta",
+				"dnt_post_type",
+				"dnt_registred_users",
+				"dnt_settings",
+				"dnt_translates",
+				"dnt_uploads",
+				"dnt_users",
+				"dnt_vouchers",
+			);
+			$install->moveVendor($vendor_id, $vendor_movde_to, $tables);
+		}
+	}
+	
     if($url != $currentVendorUrl && ($vendor_id == Vendor::getId())){
         include "tpl_functions.php";
         get_top();

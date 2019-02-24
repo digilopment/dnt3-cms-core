@@ -7,7 +7,7 @@ if(isset($_POST['sent'])){
 	$files 		= $_FILES['userfile']; 
 	
 	$uploadedFile = $dntUpload->multypleUpload($files, $path, false);
-	$uploadedFile = $uploadedFile['name'];
+	$uploadedFile = $uploadedFile[0]['name'];
 	
 	$zipFile = "../dnt-view/data/uploads/".$uploadedFile;
 	$res = $zip->open($zipFile);
@@ -39,7 +39,7 @@ if(isset($_POST['sent'])){
 	include "tpl_functions.php";
 			get_top();
 			include "top.php";
-			error_message("názov", $customMessage);
+			error_message("súbor", $customMessage);
 			include "bottom.php";
 			get_bottom();
 }else{

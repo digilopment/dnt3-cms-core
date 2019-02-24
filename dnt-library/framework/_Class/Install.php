@@ -141,9 +141,10 @@ Class Install {
         }
 
         $query = "UPDATE `dnt_vendors` SET `id` = '" . $move_to . "' WHERE `dnt_vendors`.`id` = $id";
+		$db->query($query);
+        $query = "UPDATE `dnt_vendors` SET `id_entity` = '" . $move_to . "' WHERE `dnt_vendors`.`id_entity` = $id";
         $db->query($query);
-
-        echo "Updated";
+		return "Updated";
     }
 
     public function updateIdEntity($tables) {
