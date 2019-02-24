@@ -124,14 +124,17 @@ class ArticleList extends AdminContent {
      * @param type $postId
      * @return boolean
      */
-    public function getArticleUrl($postId) {
+    public function getArticleUrl($postId, $fullPath = true) {
         $db = new Db;
         $articleView = new ArticleView;
 
         $query = self::query($postId);
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
-                $url = $articleView->detailUrl($row['cat_name_url'], $row['id'], $row['name_url']);
+				if($fullPath)
+					$url = $articleView->detailUrl($row['cat_name_url'], $row['id'], $row['name_url']);
+				else
+					$url = $row['name_url'];
             }
         } else {
             $url = false;

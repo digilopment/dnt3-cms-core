@@ -1,7 +1,9 @@
 <?php
 $articleList 	= new ArticleList;
 $rest 			= new Rest;
-$url = $articleList->getArticleUrl($rest->webhook(2));
+
+$name_url = $articleList->getArticleUrl($rest->webhook(2), false);
+$url = $GLOBALS['ORIGIN_DOMAIN_LNG']."/".$name_url;
 if($url)
 	Dnt::redirect($url);
 else{
