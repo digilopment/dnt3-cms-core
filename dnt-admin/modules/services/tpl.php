@@ -18,6 +18,9 @@ $rest = new Rest();
 		<span class="label label-primary bg-orange" style="padding:5px;"><big>PREJSŤ NA POST</big></span>
 	</a>
 	<?php } ?>
+	<a  href="<?php echo WWW_PATH."a/".$rest->get("post_id"); ?>" target="_blank" style="float:right">
+		<span class="label label-primary bg-blue" style="padding:5px;"><big><i class="fa fa-external-link-square"></i> OTVORIŤ NA WEBE</big></span>
+	</a>
 </section>	
 <section class="col-xs-12 content">
    <div class="row">

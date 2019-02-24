@@ -387,7 +387,16 @@ class ArticleView extends AdminContent {
      * @return string
      */
     function detailUrl($cat_name_url, $id_entity, $name_url) {
-        $url = Url::get("WWW_PATH") . $cat_name_url . "/detail/" . $id_entity . "/" . $name_url . "";
+		if(Dnt::is_external_url($name_url)){
+			$url = $name_url;
+		}
+		elseif(Dnt::in_string("<WWW_PATH>", $name_url)){
+			$url = str_replace("<WWW_PATH>", WWW_PATH, $name_url);
+		}elseif(in_array($name_url, Webhook::getSitemapModules())){
+			$url = Url::get("WWW_PATH") . "" . $name_url . "";
+		}else{
+			$url = Url::get("WWW_PATH") . $cat_name_url . "/detail/" . $id_entity . "/" . $name_url . "";
+		}
         return $url;
     }
 

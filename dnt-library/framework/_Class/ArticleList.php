@@ -69,9 +69,9 @@ class ArticleList extends AdminContent {
             ON 
                     `dnt_posts`.`cat_id` = `dnt_post_type`.`id_entity` 
             WHERE 
-                    `dnt_posts`.`vendor_id` 	= '" . Vendor::getId() . "' 
+                    `dnt_posts`.`vendor_id` 	= '" . Vendor::getId() . "'
             AND
-                    `dnt_posts`.`show` 			= '1'
+                    `dnt_posts`.`show` 			<> '0'
             " . $typArticle . " 
             " . $typ . " 
             GROUP BY 
@@ -125,7 +125,6 @@ class ArticleList extends AdminContent {
      * @return boolean
      */
     public function getArticleUrl($postId) {
-
         $db = new Db;
         $articleView = new ArticleView;
 

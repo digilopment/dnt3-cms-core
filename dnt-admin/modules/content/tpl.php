@@ -52,6 +52,9 @@
 	<a href="#">
 		<span class="label label-primary bg-green" data-toggle="modal" data-target="#pridat_kat" style="padding:5px;"><big>PRIDAŤ KATEGORIU</big></span>
 	</a>
+	<a  href="<?php echo WWW_PATH; ?>" target="_blank" style="float:right">
+		<span class="label label-primary bg-blue" style="padding:5px;"><big><i class="fa fa-external-link-square"></i> OTVORIŤ WEB</big></span>
+	</a>
 </section>	
 
 <div style="clear: both;"></div>
@@ -99,7 +102,8 @@
 					  <td style="max-width: 500px;"><b><a href="<?php echo AdminContent::url("edit", $cat_id, $sub_cat_id, false, $post_id, $page) ?>"><?php echo $row['name']; ?></a></b></td>
 					  <td><a href="<?php echo AdminContent::url("filter", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>">
 						<!--<?php echo AdminContent::getPostParam("sub_cat_id", $post_id)." -> ".AdminContent::getPostParam("cat_id", $post_id); ?>-->
-						<?php echo AdminContent::getPostParam("type", $post_id); ?>
+						
+						<a href="<?php echo WWW_PATH."a/".$post_id?>" target="_blank"><i class="fa fa-external-link-square"></i><?php echo AdminContent::getPostParam("type", $post_id); ?></a>
 						</a></td>
 					  <td><b><?php echo $row['datetime_creat']; ?></b></td>
 					  <td>
