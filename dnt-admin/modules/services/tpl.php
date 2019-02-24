@@ -13,12 +13,6 @@ $show = AdminContent::getPostParam("show", $post_id);
 	<a href="index.php?src=content&included=<?php echo  $rest->get("included"); ?>&filter=<?php echo  $rest->get("filter"); ?>&action=add">
 		<span class="label label-primary bg-green" style="padding:5px;"><big>PRIDAŤ NOVÝ POST V TEJTO KATEGÓRII</big></span>
 	</a>
-	<?php if($rest->get("included") == "sitemap"){?>
-	<a <?php echo Dnt::confirmMsg("Pred prejdením na post sa prosím uistite, či máte uložte všetky zmeny."); ?> 
-	href="index.php?src=content&filter=<?php echo  $rest->get("filter"); ?>&sub_cat_id=<?php echo  $rest->get("sub_cat_id"); ?>&post_id=<?php echo  $post_id; ?>&page=1&action=edit&included=<?php echo  $rest->get("included"); ?>">
-		<span class="label label-primary bg-orange" style="padding:5px;"><big>PREJSŤ NA POST</big></span>
-	</a>
-	<?php } ?>
 	<?php if($show>0){?>
 	<a  href="<?php echo WWW_PATH."a/".$post_id; ?>" target="_blank" style="float:right">
 		<span class="label label-primary bg-blue" style="padding:5px;"><big><i class="fa fa-external-link-square"></i> OTVORIŤ POST NA WEBE</big></span>

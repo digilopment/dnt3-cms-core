@@ -18,7 +18,7 @@
             </div>
          </div>
          <form action="<?php echo WWW_PATH_ADMIN; ?>index.php?src=<?php echo $rest->get("src")?>" method="GET" class="sidebar-form">
-            <div class="web-title">web: <b><?php echo Vendor::getColumn("name") ?></b></div>
+            <div class="web-title">web: <b><a target="_blank" href="<?php echo WWW_PATH;?>"><?php echo Vendor::getColumn("name") ?></a></b></div>
             <div class="input-group">
                <input type="hidden" name="src" value="<?php echo $rest->get("src")?>">
 			   <?php if(isset($_GET['action'])){

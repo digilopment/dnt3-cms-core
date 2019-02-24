@@ -58,7 +58,7 @@ class MultyLanguage {
         $db = new Db();
 		
         if (isset($_GET['search'])) {
-            $typ = "AND `translate_id` LIKE '%" . str_replace("-", "_", Dnt::name_url($_GET['search'])) . "%' OR `translate` LIKE '%" . str_replace("-", "_", urldecode($_GET['search'])) . "%'";
+           $typ = "AND (`translate_id` LIKE '%" . str_replace("-", "_", Dnt::name_url($_GET['search'])) . "%' OR `translate` LIKE '%" . str_replace("-", "_", urldecode($_GET['search'])) . "%') ";
         } else
             $typ = "AND type = 'static'";
 
