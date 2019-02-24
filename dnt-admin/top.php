@@ -1,6 +1,8 @@
 <body class="skin-dark">
    <!-- BEGIN HEADER -->
-   <?php get_header(); ?>
+   <?php get_header();
+   $rest = new Rest();
+   ?>
    <!-- END HEADER -->
    <div class="wrapper row-offcanvas row-offcanvas-left">
    <!-- BEGIN SIDEBAR -->
@@ -19,6 +21,9 @@
             <div class="web-title">web: <b><?php echo Vendor::getColumn("name") ?></b></div>
             <div class="input-group">
                <input type="hidden" name="src" value="<?php echo $rest->get("src")?>">
+			   <?php if(isset($_GET['action'])){
+				   echo ' <input type="hidden" name="action" value="'.$rest->get("action").'">';
+			   }?>
                <input type="text" name="search" class="form-control" placeholder="Hľadať...">
                <span class="input-group-btn">
                <button type="submit" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
