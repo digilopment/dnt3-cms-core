@@ -14,14 +14,25 @@ class ArticleView extends AdminContent {
      * @param type $post_type
      * @return type
      */
-    public function getPosts($post_type) {
-        //$post_type = "personal";
+    public function getPosts($post_type, $limit = false) {
+		
+		if($limit){
+			$limit = "LIMIT $limit";
+		}
+		if(is_numeric($post_type)){
+			$andPost = "`cat_id` = '".$post_type."' AND ";
+		}
+		elseif(Dnt::in_string(",", $post_type)){
+			$andPost = "`cat_id` = IN('" . $post_type . "') AND";
+		}else{
+			$andPost = "`cat_id` = '" . self::getCatId($post_type) . "' AND ";
+		}
         $db = new Db;
         $query = "SELECT * FROM dnt_posts WHERE 
             `type`      = 'post' AND 
-            `show`      = '1' AND 
-            `cat_id`    = '" . self::getCatId($post_type) . "' AND 
-            `vendor_id` = '" . Vendor::getId() . "'";
+            `show`      > '0' AND 
+            ".$andPost."
+            `vendor_id` = '" . Vendor::getId() . "' $limit";
 
         if ($db->num_rows($query) > 0) {
             return $db->get_results($query);

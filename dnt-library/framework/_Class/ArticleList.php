@@ -14,7 +14,7 @@ class ArticleList extends AdminContent {
      * @param type $is_limit
      * @return string
      */
-    protected function prepare_query($is_limit, $postId = false, $servicesIDsStatic = false) {
+    public function prepare_query($is_limit, $postId = false, $servicesIDsStatic = false) {
 
         $servicesIDs = Frontend::get();
         $db = new Db();
