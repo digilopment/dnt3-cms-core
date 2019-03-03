@@ -51,6 +51,7 @@ class ArticleList extends AdminContent {
         $query = "
             SELECT 
                     `dnt_posts`.`id_entity` AS id, 
+                    `dnt_posts`.`tags` AS tags, 
                     `dnt_posts`.`search` AS search, 
                     `dnt_posts`.`vendor_id` AS vendor_id , 
                     `dnt_posts`.`type` AS type, 
