@@ -28,7 +28,7 @@ echo '<urlset
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 	
 	foreach(Navigation::getParents() as $row){ 
-			$name_url_1 = $article->getPostParam("name_url", $row['id'], true);
+			$name_url_1 = WWW_PATH."".$row['name_url'];
 			echo '<url>';
 				echo '<loc>'.$name_url_1.'</loc>';
 				echo '<lastmod>'.date('Y-m-d').'</lastmod>';
@@ -37,7 +37,7 @@ echo '<urlset
 			echo '</url>';
 			if(Navigation::hasChild($row['id'])){ 
 			foreach(Navigation::getChildren($row['id']) as $row2){ 
-				$name_url_2 = $article->getPostParam("name_url", $row2['id'], true);
+				$name_url_2 = WWW_PATH."".$row2['name_url'];;
 				echo '<url>';
 					echo '<loc>'.$name_url_2.'</loc>';
 					echo '<lastmod>'.date('Y-m-d').'</lastmod>';

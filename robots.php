@@ -1,4 +1,5 @@
 <?php
+include "globals.php";
 include "dnt-library/framework/_Class/Autoload.php";
 $autoload		= new Autoload;
 $path			= "";
@@ -38,7 +39,10 @@ Disallow: composer.json
 Disallow: robots.php
 Disallow: config.dnt
 <?php
-//foreach($vendor->getAll() as $row){
+$layout = Vendor::getLayout();
+if(file_exists("dnt-view/layouts/".$layout."/modules/rpc/sitemap.php")){
+	echo "Sitemap: ". WWW_PATH."rpc/xml/sitemap\n";
+}else{
 	echo "Sitemap: ". WWW_PATH."dnt-api/sitemap.php\n";
-//}
+}
 ?>
