@@ -4,19 +4,29 @@ class autoRedirectAbstractModulController{
 	public function run(){
 		$articleList 	= new ArticleList;
 		$rest 			= new Rest;
+		$articleId 		= $rest->webhook(2); 
 
-		$name_url = $articleList->getArticleUrl($rest->webhook(2), false);
+		$name_url = $articleList->getArticleUrl($articleId, false);
 		$url = $GLOBALS['ORIGIN_DOMAIN_LNG']."/".$name_url;
-		if($url){
-			if(Dnt::in_string("<WWW_PATH>", $name_url)){
-				Dnt::redirect(str_replace("<WWW_PATH>", WWW_PATH, $name_url));
-			}else{
+		
+		//internal redirect
+		if(Dnt::in_string("<WWW_PATH>", $name_url)){
+			Dnt::redirect(str_replace("<WWW_PATH>", WWW_PATH, $name_url));
+		}
+		
+		//external redirect
+		if(Dnt::in_string(":\/\/", $name_url)){
+			Dnt::redirect($name_url);
+		}
+		
+		//sitemap redirect
+		foreach(Webhook::getSitemapModules() as $modul){
+			if($modul == $name_url){
 				Dnt::redirect($url);
 			}
 		}
-		else{
-			Dnt::redirect(Url::get("WWW_PATH"));
-		}
+		
+		Dnt::redirect($articleList->getArticleUrl($articleId));
 	}
 }
 
