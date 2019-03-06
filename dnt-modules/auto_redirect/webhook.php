@@ -12,6 +12,7 @@ class autoRedirectAbstractModulController{
 		//internal redirect
 		if(Dnt::in_string("<WWW_PATH>", $name_url)){
 			Dnt::redirect(str_replace("<WWW_PATH>", WWW_PATH, $name_url));
+			exit;
 		}
 		
 		//external redirect
@@ -23,6 +24,7 @@ class autoRedirectAbstractModulController{
 		foreach(Webhook::getSitemapModules() as $modul){
 			if($modul == $name_url){
 				Dnt::redirect($url);
+				exit;
 			}
 		}
 		
