@@ -58,7 +58,8 @@
             </thead>
             <tbody>
                <?php
-			   $i = 1;
+			   //$i = 1;
+			   $i = FileAdmin::showOrder();
 			   foreach($user->getUserByType($rest->get("type")) as $row){
 				   $image 		= $user->getImage($row['img']);
 				   $voucherId 	= $row['voucher'];
