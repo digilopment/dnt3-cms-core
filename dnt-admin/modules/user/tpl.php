@@ -47,7 +47,9 @@
                   <th>#</th>
                   <th>Meno, priezvisko</th>
                   <th>Email</th>
-                  <th>Voucher</th>
+                  <th>Súhlas s <br/>pravidlami</th>
+                  <th>Súhlas s <br/>news 1</th>
+                  <th>Súhlas s <br/>news 2</th>
                   <th>Dátum vytvorenia<br/>Dátum aktualizácie</th>
                   <th>img</th>
 				  <th>Voucher</th>
@@ -56,6 +58,7 @@
             </thead>
             <tbody>
                <?php
+			   $i = 1;
 			   foreach($user->getUserByType($rest->get("type")) as $row){
 				   $image 		= $user->getImage($row['img']);
 				   $voucherId 	= $row['voucher'];
@@ -63,10 +66,12 @@
 				   $voucherAssigneUrl = "index.php?src=user&type=".$rest->get("type")."&action=assign-voucher&post_id=$postId";
 				?>
 				<tr>
-					<td><b><?php echo $postId ?></b></td>
+			   <td><b><?php echo $i ?> <span style="font-size:7px">(<?php echo $postId ?>)</span></b></td>
 					<td><b><?php echo $row['name']." ".$row['surname']; ?></b></td>
 					<td><?php echo $row['email']; ?></td>
-					<td><?php echo $row['voucher']; ?></td>
+					<td><?php echo $row['podmienky']; ?></td>
+					<td><?php echo $row['news']; ?></td>
+					<td><?php echo $row['news_2']; ?></td>
 					<td><?php echo $row['datetime_creat']; ?><br/><b><?php echo $row['datetime_update']; ?></b></td>
 					
 					<td><b><?php if($image){echo '<a href="'.$image.'" target="_blank"><i class="fa fa-picture-o bg-green action"></i>';}?></td>
@@ -83,6 +88,7 @@
 					</td>
 				</tr>
                <?php
+				$i++;
                   }
                   
                   ?>									

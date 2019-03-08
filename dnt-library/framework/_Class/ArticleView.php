@@ -311,9 +311,9 @@ class ArticleView extends AdminContent {
      * @param type $id
      * @return type
      */
-    public function getPostImage($id) {
+    public function getPostImage($id, $table = null, $format = false) {
         $image = new Image;
-        return $image->getPostImage($id);
+        return $image->getPostImage($id, $table, $format);
     }
 
     /**
