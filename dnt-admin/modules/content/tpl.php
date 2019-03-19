@@ -44,6 +44,46 @@
 <!-- END MODAL -->
 
 
+<!-- EDIT NEW KAT -->
+<div class="modal fade" id="edit_kat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel8" aria-hidden="true">
+   <div class="modal-wrapper">
+      <div class="modal-dialog">
+         <form action="index.php?src=content&action=edit_cat" method="POST">
+            <div class="modal-content">
+               <div class="modal-header bg-blue">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title" id="myModalLabel8">Upraviť kategóriu v zozname</h4>
+               </div>
+               <div class="modal-body">
+			   
+				<?php
+				$catData = AdminContent::getCatData($rest->get("filter"));
+				$catData = $catData[0];
+				?>
+                  Názov: <input type="text" name="name" value="<?php echo $catData['name']; ?>" class="form-control" placeholder="Názov postu:"/><br>
+                  Url: <input type="text" name="name_url" value="<?php echo $catData['name_url']; ?>" class="form-control" placeholder="Názov postu:"/><br/>
+				 <input type="hidden" name="id_entity" value="<?php echo $catData['id_entity']; ?>"/>
+				 
+				  <?php echo Dnt::returnInput();?>
+               </div>
+               <div class="modal-footer">
+                  <div class="btn-group">
+                     <button type="button" class="btn btn-default" data-dismiss="modal">Zavrieť</button>
+                     <input type="submit" name="sent" value="Upraviť" class="btn btn-primary" />
+                  </div>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>
+<!-- END MODAL -->
+
+<?php
+
+
+?>
+
 <!-- BEGIN CUSTOM TABLE -->
 <section class="col-xs-12" style="margin-bottom:15px">
 	<a href="index.php?src=content&included=<?php echo  $rest->get("included"); ?>&filter=<?php echo  $rest->get("filter"); ?>&action=add">
@@ -51,6 +91,9 @@
 	</a>
 	<a href="#">
 		<span class="label label-primary bg-green" data-toggle="modal" data-target="#pridat_kat" style="padding:5px;"><big>PRIDAŤ KATEGORIU</big></span>
+	</a>
+	<a href="#">
+		<span class="label label-primary bg-green" data-toggle="modal" data-target="#edit_kat" style="padding:5px;"><big>UPRAVIŤ KATEGORIU</big></span>
 	</a>
 	<a  href="<?php echo WWW_PATH; ?>" target="_blank" style="float:right">
 		<span class="label label-primary bg-blue" style="padding:5px;"><big><i class="fa fa-external-link-square"></i> OTVORIŤ WEB</big></span>

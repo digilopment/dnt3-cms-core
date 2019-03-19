@@ -70,7 +70,8 @@ class ArticleList extends AdminContent {
             ON 
                     `dnt_posts`.`cat_id` = `dnt_post_type`.`id_entity` 
             WHERE 
-                    `dnt_posts`.`vendor_id` 	= '" . Vendor::getId() . "'
+                    `dnt_posts`.`vendor_id` 	= '" . Vendor::getId() . "' AND 
+                    `dnt_post_type`.`vendor_id` = '" . Vendor::getId() . "' 
             AND
                     `dnt_posts`.`show` 			<> '0'
             " . $typArticle . " 
@@ -125,17 +126,23 @@ class ArticleList extends AdminContent {
      * @param type $postId
      * @return boolean
      */
-    public function getArticleUrl($postId, $fullPath = true) {
+    public function getArticleUrl($postId, $fullPath = true, $type = false) {
         $db = new Db;
         $articleView = new ArticleView;
 
         $query = self::query($postId);
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
-				if($fullPath)
-					$url = $articleView->detailUrl($row['cat_name_url'], $row['id'], $row['name_url']);
-				else
+				if($fullPath){
+					if($type){
+						$url = $articleView->detailUrl($row['cat_name_url'], $row['id'], $row['name_url'], $type);
+					}else{
+						$url = $articleView->detailUrl($row['cat_name_url'], $row['id'], $row['name_url']);
+					}
+				}
+				else{
 					$url = $row['name_url'];
+				}
             }
         } else {
             $url = false;

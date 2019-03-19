@@ -24,7 +24,7 @@ function creatCsvFileStatic($table, $columns, $where, $fileName, $columnsName = 
 		$data .= "\n";
 		$i = 1;
 		foreach ($db->get_results($query) as $row) {
-			$data .= $i.";".$row['id_entity'] . ";" . $row['vendor_id'] . ";" . $row['name'] . ";" . $row['surname'] . ";" . $row['session_id'] . ";" . $row['mesto'] . ";" . $row['psc'] . ";" . $row['email'] . ";" . $row['content'] . ";" . $row['news'] . ";" . $row['news_2'] . ";" . $row['img'] . ";" . $row['podmienky']."\n";
+			$data .= $i.";".$row['id_entity'] . ";" . $row['vendor_id'] . ";" . $row['name'] . ";" . $row['surname'] . ";" . $row['session_id'] . ";" . $row['mesto'] . ";" . $row['psc'] . ";" . $row['email'] . ";" . $row['content'] . ";" . $row['custom_1'] . ";" . $row['news'] . ";" . $row['news_2'] . ";" . $row['img'] . ";" . $row['podmienky']."\n";
 			$i++;
 		}
 	}
@@ -38,8 +38,8 @@ function creatCsvFileStatic($table, $columns, $where, $fileName, $columnsName = 
 $date_time_format = date("d")."-".date("m")."-".date("Y");
 
 //DEFAULT CONFIG
-$columns 		= "id_entity, vendor_id, name, surname, session_id, mesto, psc, email, content, news, news_2, img, podmienky";
-$columnsName 	= "order, id_entity, competition_id, meno, priezvisko, unique_id, mesto, psc, email, odpoved, news, news_2, fotka, podmienky";
+$columns 		= "id_entity, vendor_id, name, surname, session_id, mesto, psc, email, content, custom_1, news, news_2, img, podmienky";
+$columnsName 	= "order, id_entity, competition_id, meno, priezvisko, unique_id, mesto, psc, email, odpoved, custom_1, news, news_2, fotka, podmienky";
 $table 			= "dnt_registred_users";
 
 //ALL EXPORTS

@@ -28,13 +28,14 @@ if($session->get("admin_logged")){
 	$query = "SELECT * FROM `dnt_admin_menu` WHERE 
 				`parent_id` = '0' AND 
 				`show` = '1' AND
-				`type` = 'menu'";
+				`type` = 'menu' AND vendor_id = ".Vendor::getId()."";
 	$data = $db->get_results($query);
 	//add static modul to arrat
 	array_push($data, 
 		array("name_url" => "login"), 
 		array("name_url" => "logout"),
 		array("name_url" => "pdfgen"),
+		array("name_url" => "menucreator"),
 		array("name_url" => "vendor")
 	);
 	if($rest->get('src')){

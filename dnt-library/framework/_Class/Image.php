@@ -81,8 +81,14 @@ Class Image {
      */
     public function getFileImages($ids, $path = true, $format = false) {
         $db = new Db;
-        $ids = explode(",", $ids);
-        if (is_array($ids)) {
+        
+		if (!is_array($ids)) {
+			$ids = explode(",", $ids);
+		}else{
+			$ids = $ids;
+		}
+		
+		if (is_array($ids)) {
             foreach ($ids as $imageId) {
                 $query = "SELECT name FROM dnt_uploads WHERE 
 				`id_entity` = '" . $imageId . "' AND 

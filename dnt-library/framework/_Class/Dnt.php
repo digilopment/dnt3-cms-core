@@ -421,6 +421,21 @@ class Dnt {
 
         return $os_platform;
     }
+	
+	public static function downloadFile($url, $cesta){
+		$img = explode("/", $url);
+		$array = $img;
+		if (!is_array($array)) 
+			return $array; 
+		if (!count($array)) 
+			return null; 
+		end($array); 
+		$fotka = $array[key($array)];
+		
+		$img = $cesta.$fotka;
+		file_put_contents($img, file_get_contents($url));
+		return array("file" => $fotka, "path" => $cesta);
+	}
 
     function getBrowser($user_agent) {
 
@@ -1023,6 +1038,32 @@ class Dnt {
             return true;
         return (self::rmkdir(dirname($path)) and mkdir($path));
     }
+	
+	public static function orderby($data, $column = "id", $sort = "ASC"){
+		$sortArray = array(); 
+		foreach($data as $item){ 
+			foreach($item as $key=>$value){ 
+				if(!isset($sortArray[$key])){ 
+					$sortArray[$key] = array(); 
+				} 
+				$sortArray[$key][] = $value; 
+			}
+			if($column == "datetime_publish"){
+				$sortArray['datetime'][] = strtotime($item[$column]);
+				$orderby = "datetime";
+			}					
+		} 
+		
+		$orderby = $column;
+		
+		if($sort == "ASC" || $sort == "asc"){
+			array_multisort($sortArray[$orderby],SORT_ASC,$data);
+		}else{
+			array_multisort($sortArray[$orderby],SORT_DESC,$data);
+		}
+		return $data;
+			
+	}
 
     /* 	
      *

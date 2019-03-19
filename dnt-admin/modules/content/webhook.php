@@ -44,6 +44,11 @@ elseif($rest->get("action") == "add_cat")
 	//add category
 	include "add_cat.php";
 }
+elseif($rest->get("action") == "edit_cat")
+{
+	//add category
+	include "edit_cat.php";
+}
 else{
 	if($rest->get("services")){
 		include "modules/services/webhook.php";

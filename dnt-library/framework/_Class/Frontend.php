@@ -18,6 +18,7 @@ class Frontend {
 
         $article = new ArticleView;
         $settings = new Settings;
+        $rest = new Rest;
 
 
         if ($custom_data == false) {
@@ -46,6 +47,7 @@ class Frontend {
             "media_path" => WWW_PATH . "dnt-view/layouts/" . Vendor::getLayout() . "/",
             "title" => Settings::get("title"),
             "post_id" => $post_id,
+            "webhook" => $rest->webhook(),
             "meta" => array(
                 '<meta name="keywords" content="' . Settings::get("keywords") . '" />',
                 '<meta name="description" content="' . Settings::get("description") . '" />',

@@ -25,7 +25,9 @@ class AdminContent extends MultyLanguage {
         return array(
             "post" => "Obsah",
             "sitemap" => "Sitemapa",
-            "article" => "Články"
+            "article" => "Články",
+            "video" => "Video",
+            "gallery" => "Galérie",
         );
     }
 
@@ -42,7 +44,22 @@ class AdminContent extends MultyLanguage {
                 return $row['id_entity'];
             }
         } else {
-            return array(false);
+            return array();
+        }
+    }
+	
+	/**
+     * 
+     * @param type $type
+     * @return boolean
+     */
+    public function getCatData($id_entity) {
+        $db = new Db;
+        $query = "SELECT * FROM dnt_post_type WHERE id_entity = '" . $id_entity . "' AND `vendor_id` = '" . Vendor::getId() . "'";
+        if ($db->num_rows($query) > 0) {
+           return $db->get_results($query);
+        } else {
+            return array();
         }
     }
 
@@ -61,8 +78,12 @@ class AdminContent extends MultyLanguage {
             $typ = "AND cat_id = '" . $_GET['filter'] . "'";
         } elseif (isset($_GET['included']) && $_GET['included'] == "post") {
             $typ = "AND cat_id = '" . $_GET['filter'] . "'";
-        } elseif (isset($_GET['filter']))
+        } elseif (isset($_GET['included']) && $_GET['included'] != "") {
+            $typ = "AND cat_id = '" . $_GET['filter'] . "'";
+        }
+		elseif (isset($_GET['filter']))
             $typ = "AND sub_cat_id = '" . $_GET['filter'] . "'";
+			
         elseif (isset($_GET['search'])) {
             $typ = "AND `name_url` LIKE '%" . Dnt::name_url($_GET['search']) . "%'";
         } else

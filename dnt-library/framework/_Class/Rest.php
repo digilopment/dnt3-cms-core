@@ -97,7 +97,7 @@ class Rest {
      * @param type $thisArg
      * @return boolean
      */
-    public function webhook($thisArg) {
+    public function webhook($thisArg = false) {
         if (MULTY_LANGUAGE) {
             $defLang = DEAFULT_LANG;
             $langArray = array("sk", "cz", "pl", "en", "de", "at", "nl", "dk");
@@ -109,6 +109,11 @@ class Rest {
                 $langArray = array("sk", "cz", "pl", "en", "de", "at", "nl", "dk");
             }
         }
+		
+		if($thisArg === false){
+			return array_merge(array($defLang),explode("/", $_GET[SRC]));
+		}
+		
         if (isset($_GET[SRC])) {
             $arr = array();
             $src = $_GET[SRC];
@@ -173,25 +178,38 @@ class Rest {
         foreach (array_keys($this->webhook) as $this->index) {
             foreach ($this->webhook[$this->index] as $this->key => $this->value) {
                 if ($this->webhook(2) == "detail") {
-                    $return = "article_view";
+					if ($this->value == $this->webhook(1)) {
+						$return = $this->index;
+						return $return;
+					}else{
+						$return = "article_view";
+					}
+                }elseif ($this->webhook(1) == "embed" && $this->webhook(2) == "video") {
+                    return "video_embed";
+					exit;
                 }
-                if ($this->webhook(1) == "") {
-                    $default = Settings::get("startovaci_modul");
-                    if ($default) {
-                        $redirect = $webhook->getSitemapModules($default);
-                        $domain = $GLOBALS['ORIGIN_DOMAIN_LNG'] . "/";
-                        //var_dump($domain.$redirect[0]);
-                        //exit;
-                        Dnt::redirect($domain . $redirect[0]);
-                        exit;
-                        $return = $default;
-                    } else {
-                        $return = DEAFULT_MODUL;
-                    }
+				elseif ($this->webhook(2) == "video") {
+                    $return = "video_view";
                 }
-                if ($this->value == $this->webhook(1)) {
-                    $return = $this->index;
-                }
+				else{
+					if ($this->webhook(1) == "") {
+						$default = Settings::get("startovaci_modul");
+						if ($default) {
+							$redirect = $webhook->getSitemapModules($default);
+							$domain = $GLOBALS['ORIGIN_DOMAIN_LNG'] . "/";
+							//var_dump($domain.$redirect[0]);
+							//exit;
+							Dnt::redirect($domain . $redirect[0]);
+							exit;
+							$return = $default;
+						} else {
+							$return = DEAFULT_MODUL;
+						}
+					}
+					if ($this->value == $this->webhook(1)) {
+						$return = $this->index;
+					}
+				}
             }
         }
         $GLOBALS['GET_MODUL'] = $return;
