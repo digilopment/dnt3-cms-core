@@ -1,5 +1,4 @@
 <?php
-
 /**
  *  Designdnt3 Application
  *  Framework Dnt3
