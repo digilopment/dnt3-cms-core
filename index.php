@@ -6,7 +6,7 @@
  *  author: thomas.doubek@gmail.com
  * Thanks for using!
  */
- 
+
 include "globals.php";
 include "dnt-library/framework/_Class/Autoload.php";
 $autoload = new Autoload;
