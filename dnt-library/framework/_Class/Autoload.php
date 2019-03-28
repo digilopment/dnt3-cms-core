@@ -14,7 +14,12 @@ class Autoload {
          * CONFIG
          */
         include $path . "dnt-library/framework/_keys/public.php";
-        include $path . "config.dnt";
+		
+		if(file_exists($path . "config_dev.dnt")){
+			include $path . "config_dev.dnt";
+		}else{
+			include $path . "config.dnt";
+		}
 
         /**
          * CLASS
