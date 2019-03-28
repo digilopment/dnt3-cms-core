@@ -187,9 +187,15 @@ class Vendor {
             $ORIGIN_DOMAIN_LNG = HTTP_PROTOCOL . $data[0] . "" . WWW_FOLDERS . "";
             $ORIGIN_DOMAIN_LNG_NP = $data[0] . "" . WWW_FOLDERS . "";
         }
-
+		
         if ($ORIGIN_DOMAIN == $ORIGIN_DOMAIN_LNG) {
-            $query = "SELECT `id_entity`,`real_url`, `show_real_url` FROM `dnt_vendors` WHERE real_url LIKE 'http://" . $ORIGIN_DOMAIN_NP . "' || real_url LIKE 'https://" . $ORIGIN_DOMAIN_NP . "' AND show_real_url = 1";
+            $query = "SELECT `id_entity`,`real_url`, `show_real_url` FROM `dnt_vendors` WHERE 
+				real_url LIKE 'http://www." . $ORIGIN_DOMAIN_NP . "' || 
+				real_url LIKE 'https://www." . $ORIGIN_DOMAIN_NP . "' || 
+				real_url LIKE 'http://" . $ORIGIN_DOMAIN_NP . "' || 
+				real_url LIKE 'https://" . $ORIGIN_DOMAIN_NP . "' 
+				
+			AND show_real_url = 1";
             if ($db->num_rows($query) > 0) {
                 foreach ($db->get_results($query) as $row) {
                     $vendor_id = $row['id_entity'];
@@ -307,7 +313,7 @@ class Vendor {
     public function getAll() {
         $db = new Db;
 
-        $query = "SELECT * FROM `dnt_vendors`";
+        $query = "SELECT * FROM `dnt_vendors` order by id_entity asc";
 
         if ($db->num_rows($query) > 0) {
             return $db->get_results($query);

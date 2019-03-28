@@ -28,3 +28,31 @@ function custom_modules(){
 	);
 	return $custom_modules;
 }
+function modulesConfig(){
+		return array(
+		"homepage" => array(
+			"service_name" => "Homepage",
+			"sql" => ""
+		),
+		"partners" => array(
+			"service_name" => "Partneri",
+			"sql" => ""
+		),
+		"contact" => array(
+			"service_name" => "Kontakt",
+			"sql" => ""
+		),
+		"eshop" => array(
+			"service_name" => "Eshop",
+			"sql" => ""
+		),
+		"wp_hotely" => array(
+			"service_name" => "Hotely",
+			"sql" => ""
+		),
+		"polls" => array(
+			"service_name" => "Ankety a Kvízy",
+			"sql" => ""
+		),
+	);
+}

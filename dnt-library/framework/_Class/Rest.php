@@ -46,6 +46,7 @@ class Rest {
      */
     public function redirectToDomain($stillRedirect = false) {
 
+	
         if ($stillRedirect == true) {
             if ($GLOBALS['DB_DOMAIN']) {
                 if ($GLOBALS['ORIGIN_PROTOCOL'] != $GLOBALS['DB_PROTOCOL']) {
@@ -73,7 +74,7 @@ class Rest {
 
             $ORIGIN_DOMAIN_ONLY = explode("/", $GLOBALS['ORIGIN_DOMAIN']);
             $ORIGIN_DOMAIN_ONLY = $ORIGIN_DOMAIN_ONLY[0];
-
+			
             if (($GLOBALS['ORIGIN_PROTOCOL'] != $GLOBALS['DB_PROTOCOL']) &&
                     (($GLOBALS['ORIGIN_DOMAIN'] == $GLOBALS['DB_DOMAIN']) || Dnt::in_string($ORIGIN_DOMAIN_ONLY, $DB_DOMAIN_ONLY))
             ) {
@@ -88,8 +89,21 @@ class Rest {
                 $return = $GLOBALS['DB_PROTOCOL'] . $db_domain . $request;
                 Dnt::redirect($return);
                 exit;
-            }
+            }elseif(Dnt::in_string("www.", $DB_DOMAIN_ONLY) && !Dnt::in_string("www.", WWW_FULL_PATH)){
+				$db_domain = $GLOBALS['DB_DOMAIN'];
+                $origin_domain = $GLOBALS['ORIGIN_PROTOCOL'] . $GLOBALS['ORIGIN_DOMAIN'];
+                $request = explode($origin_domain, WWW_FULL_PATH);
+                if (isset($request[1])) {
+                    $request = $request[1];
+                } else {
+                    $request = false;
+                }
+                $return = $GLOBALS['DB_PROTOCOL'] . $db_domain . $request;
+                Dnt::redirect($return);
+				exit;
+			}
         }
+		
     }
 
     /**
