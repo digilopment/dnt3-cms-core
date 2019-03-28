@@ -9,12 +9,12 @@ dnt-api/dnt-cache/*
 
 dnt-logs/
 
+dnt-view/data/*
 dnt-view/layouts/*
-!dnt-view/layouts/skeleton
+!dnt-view/layouts/default
 
 dnt-library/framework/_keys/secred.php
 
-dnt-view/*
 nbproject/
 
 push.sh
