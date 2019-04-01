@@ -191,13 +191,14 @@ class Rest {
         $this->webhook = $webhook->get($custom_modules);
         foreach (array_keys($this->webhook) as $this->index) {
             foreach ($this->webhook[$this->index] as $this->key => $this->value) {
-                if ($this->webhook(2) == "detail") {
-					if ($this->value == $this->webhook(1)) {
+                if ($this->webhook(2) == "detail") { //detail only as article_view 
+					$return = "article_view";
+					/*if ($this->value == $this->webhook(1)) {
 						$return = $this->index;
 						return $return;
 					}else{
 						$return = "article_view";
-					}
+					}*/
                 }elseif ($this->webhook(1) == "embed" && $this->webhook(2) == "video") {
                     return "video_embed";
 					exit;
