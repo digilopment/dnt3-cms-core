@@ -24,8 +24,6 @@ if(isset($_POST['sent'])){
 	$service 		= $rest->post("service");
 	$service_id 	= $rest->post("service_id");
 	
-	
-	
 	$searchMeta = array();
 	if($service){
 		foreach($article->getPostsMeta($post_id, $service) as $meta){
@@ -71,10 +69,22 @@ if(isset($_POST['sent'])){
 	);
 	
 	
-	//DELETE HOME LANG CACHE FILES
+	$cat_name_url = ArticleList::getArticleUrl($post_id);
+	$cat_name_url = (str_replace(WWW_PATH, "", $cat_name_url));
+	
+	//delete as sitemap
+	$cache->delete($GLOBALS['ORIGIN_DOMAIN']."/".$name_url);
+	$cache->delete($GLOBALS['DB_DOMAIN']."/".$name_url);
+	
+	//delete as detail
+	$cache->delete($GLOBALS['ORIGIN_DOMAIN']."/".$cat_name_url);
+	$cache->delete($GLOBALS['DB_DOMAIN']."/".$cat_name_url);
+	
+	/*
 	foreach($cache->deteleAllLangs($name_url) as $langDel){
 		$cache->delete($langDel);
 	}
+	*/
 	
 	
 	
@@ -94,9 +104,9 @@ if(isset($_POST['sent'])){
 			$tags		= $rest->post("name_tags_".$row['slug']);
 			
 			//DELETE MULTYLANGUAGE CACHE FILES
-			foreach($cache->deteleAllLangs($name_url) as $langDel){
+			/*foreach($cache->deteleAllLangs($name_url) as $langDel){
 				$cache->delete($langDel);
-			}
+			}*/
 			
 			//name
 			$insertedData = array(

@@ -118,21 +118,17 @@ class Cache {
      * @param type $location
      */
     public function delete($location) {
-        $location = base64_encode(@$_SERVER['HTTP_HOST'] . WWW_FOLDERS . $location);
+        //$location = base64_encode(@$_SERVER['HTTP_HOST'] . WWW_FOLDERS . $location);
         //echo $location;
+		$location =  base64_encode($location);
         $dir = "../dnt-cache/";
         if (is_dir($dir)) {
             if ($dh = opendir($dir)) {
                 while (($file = readdir($dh)) !== false) {
-
-                    //echo base64_decode($file)."<br/>";
-                    //echo $file."<br/><br/>";
-                    //echo $location." => ".$file."<br/>";
+					
                     if (preg_match('/' . $location . '/', $file)) {
                         $fileName = $dir . $file;
                         unlink($fileName);
-                        //echo base64_decode($file)."<br/>";
-                        //echo $file."<br/><br/>";
                     }
                 }
                 closedir($dh);
