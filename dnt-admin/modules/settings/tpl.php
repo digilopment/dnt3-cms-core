@@ -162,7 +162,17 @@
                   </select> */?>
                   <div class="padding"></div>
                   <div class="row">
-                     <div class="col-md-4">
+				  
+				  <div class="col-md-3">
+                     <p class="lead">Vymazať cache</p>
+                     <p>Vymaže celú cache pre web: <br/><b><?php echo WWW_PATH; ?></b></p>
+                     <a target="_self" href="index.php?src=settings&action=del_cache">
+                     <span name="sent_4" class="btn btn-danger btn-radius" >Vymazať cache</span>
+                     </a>
+                     <div class="padding"></div>
+                  </div>
+				  
+                     <div class="col-md-3">
                         <p class="lead">Exportovať len moje dáta z databázy</p>
                         <p>Exportujú sa všetky moje dáta, teda dáta zobrazujúce sa na stránke <b><?php echo WWW_PATH; ?></b></p>
                         <a target="_blank" href="<?php echo WWW_PATH;?>dnt-jobs/dbExport.php?vendor_id=<?php echo Vendor::getId();?>&time=<?php echo Dnt::timestamp();?>">
@@ -170,7 +180,7 @@
                         </a>
                         <div class="padding"></div>
                      </div>
-                     <div class="col-md-4">
+                     <div class="col-md-3">
                         <p class="lead">Exportovať vetky dáta z databázy</p>
                         <p>Exportujú sa všetky moje dáta, a tak isto aj dáta ostatných používateľov<b><br/><br/></b></p>
                         <a  target="_blank"  href="<?php echo WWW_PATH;?>dnt-jobs/dbExport.php?time=<?php echo Dnt::timestamp();?>">
@@ -187,7 +197,7 @@
                      <div class="padding"></div>
                   </div>
                   */?>
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                      <p class="lead">Exportovať tento web</p>
                      <p>Exportujú sa všetky dáta s databázou pre web: <br/><b><?php echo WWW_PATH; ?></b></p>
                      <a target="_blank" href="<?php echo WWW_PATH;?>dnt-jobs/dataExport.php?vendor_id=<?php echo Vendor::getId();?>&time=<?php echo Dnt::timestamp();?>">
