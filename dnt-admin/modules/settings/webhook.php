@@ -17,7 +17,8 @@ elseif($rest->get("action") == "del_cache")
 {
 	$originDOmain 	= $GLOBALS['ORIGIN_DOMAIN'];
 	$dbDomain 		= $GLOBALS['DB_DOMAIN'];
-	$cache->deleteCacheByDomain($path, $dbDomain);
+	$cache->deleteCacheByDomain("../dnt-cache/", $originDOmain);
+	$cache->deleteCacheByDomain("../dnt-cache/", $dbDomain);
 	Dnt::redirect("index.php?src=settings");
 }
 else{
