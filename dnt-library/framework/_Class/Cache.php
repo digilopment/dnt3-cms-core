@@ -180,8 +180,10 @@ class Cache {
 	
 	public function deleteCacheByDomain($path, $domain){
 		$dir = $path;
-		$domain = str_replace("==", "", base64_encode($domain));
-		
+		//$domain = str_replace("www", "", $domain);
+		$domain = str_replace("=", "", base64_encode($domain));
+		$domain = str_replace("=", "", $domain);
+		$domain = str_replace("=", "", $domain);
 		if (is_dir($dir)) {
 			if ($dh = opendir($dir)) {
 				while (($filename = readdir($dh)) !== false) {
