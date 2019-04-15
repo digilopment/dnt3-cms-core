@@ -29,11 +29,10 @@ class ArticleView extends AdminContent {
 		}
         $db = new Db;
         $query = "SELECT * FROM dnt_posts WHERE 
-            `type`      = 'post' AND 
             `show`      > '0' AND 
             ".$andPost."
             `vendor_id` = '" . Vendor::getId() . "' $limit";
-
+			
         if ($db->num_rows($query) > 0) {
             return $db->get_results($query);
         } else {
