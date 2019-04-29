@@ -184,6 +184,7 @@ class Cache {
 		$domain = str_replace("=", "", base64_encode($domain));
 		$domain = str_replace("=", "", $domain);
 		$domain = str_replace("=", "", $domain);
+		$domain = substr($domain, 0, -3);
 		if (is_dir($dir)) {
 			if ($dh = opendir($dir)) {
 				while (($filename = readdir($dh)) !== false) {
