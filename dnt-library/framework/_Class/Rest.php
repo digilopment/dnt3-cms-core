@@ -46,8 +46,7 @@ class Rest {
      */
     public function redirectToDomain($stillRedirect = false) {
 
-	
-        if ($stillRedirect == true) {
+        if ($stillRedirect == 0) {
             if ($GLOBALS['DB_DOMAIN']) {
                 if ($GLOBALS['ORIGIN_PROTOCOL'] != $GLOBALS['DB_PROTOCOL']) {
 
