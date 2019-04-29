@@ -14,11 +14,18 @@ class ArticleView extends AdminContent {
      * @param type $post_type
      * @return type
      */
-    public function getPosts($post_type, $limit = false) {
+    public function getPosts($post_type, $limit = false, $orderBy = false) {
 		
 		if($limit){
 			$limit = "LIMIT $limit";
 		}
+		
+		if($orderBy){
+			$orderByStr = "ORDER BY $orderBy";
+		}else{
+			$orderByStr = false;
+		}
+		
 		if(is_numeric($post_type)){
 			$andPost = "`cat_id` = '".$post_type."' AND ";
 		}
@@ -31,7 +38,7 @@ class ArticleView extends AdminContent {
         $query = "SELECT * FROM dnt_posts WHERE 
             `show`      > '0' AND 
             ".$andPost."
-            `vendor_id` = '" . Vendor::getId() . "' $limit";
+            `vendor_id` = '" . Vendor::getId() . "' $limit $orderByStr";
 			
         if ($db->num_rows($query) > 0) {
             return $db->get_results($query);
