@@ -20,12 +20,15 @@ class Autoloader {
         /**
          * CONFIG
          */
-        include $path . "dnt-library/framework/_keys/public.php";
-		
-		if(file_exists($path . "config_pro.dnt")){
-			include $path . "config_pro.dnt";
-		}else{
-			include $path . "config.dnt";
+		 
+		if (!defined('WWW_PATH')) {
+			include $path . "dnt-library/framework/_keys/public.php";
+			
+			if(file_exists($path . "config_pro.dnt")){
+				include $path . "config_pro.dnt";
+			}else{
+				include $path . "config.dnt";
+			}
 		}
 		
 		$this->fileLoader($path . "dnt-library/framework/app/Db.php");

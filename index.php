@@ -9,6 +9,7 @@
 
 include "globals.php";
 include "dnt-library/framework/_Class/Autoload.php";
+include "dnt-library/framework/app/Autoload.php";
 $autoload = new Autoload;
 $path = "";
 $autoload->load($path);
@@ -21,35 +22,44 @@ if (!Install::db_exists()) {
     Dnt::redirect("dnt-install/index.php");
 }
 
-$rest->redirectToDomain(Settings::get("still_redirect_to_domain"));
-$modul = $rest->getModul();
-if ($modul) {
-    $dntLog->add(array(
-        "http_response" => 200,
-        "system_status" => "web_log",
-        "msg" => "Web Log 200",
-    ));
 
-    /**
-     * IS_CACHING                       = GLOBAL Cache
-     * Settings::get("cachovanie")      = VENDOR Cache
-     * 
-     */
-    if (IS_CACHING && Settings::get("cachovanie") == 1) {
+
+/**
+*
+* FRM 2
+**/
+//$rest->redirectToDomain(Settings::get("still_redirect_to_domain"));
+$autoloader	= new Autoloader();
+$autoloader->load($path);
+$client = new Client();
+$modul = new Modul();
+
+$client->init();
+$client->setDomain($client->realUrl, Settings::get("still_redirect_to_domain"));
+$modul->init($client);
+if ($modul->name) {
+	$dntLog->add(array(
+		"http_response" => 200,
+		"system_status" => "web_log",
+		"msg" => "Web Log 200",
+	));
+	
+	 if (IS_CACHING && Settings::get("cachovanie") == 1) {
         $dntCache->start();
-        $rest->loadMyModul($modul);
+        $modul->load($client, $modul->name);
         $dntCache->end();
     } else {
-        $rest->loadMyModul($modul);
-    }
+        $modul->load($client, $modul->name);
+	}
 } else {
     $dntLog->add(array(
         "http_response" => 404,
         "system_status" => "web_log",
         "msg" => "Web Log 404",
     ));
-    $rest->loadMyModul("default");
+    $modul->load($client, "default");
 }
+
 
 /**
  * if debug mod, then logs to csv
