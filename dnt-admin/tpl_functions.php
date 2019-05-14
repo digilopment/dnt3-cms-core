@@ -314,8 +314,6 @@ if($row['name_url'] == "content"){
 	<?php		
 	  //getUserColumns()
 	  }
-	  
-
       else{
       ?>
    <?php

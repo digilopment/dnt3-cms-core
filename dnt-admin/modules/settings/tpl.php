@@ -110,10 +110,10 @@
                                     $myFonts = fonts();
                                     echo  '<option value="" >Vyberte font</option>';
                                     foreach($myFonts as $key => $font){
-                                    	if($font == $row['value']){
-                                    		echo  '<option value="'.$font.'" selected >'.$font.'</option>';
+                                    	if($key == $row['value']){
+                                    		echo  '<option value="'.$key.'" selected >'.$font.'</option>';
                                     	}else{
-                                    		echo  '<option value="'.$font.'">'.$font.'</option>';
+                                    		echo  '<option value="'.$key.'">'.$font.'</option>';
                                     	}
                                     	
                                     }

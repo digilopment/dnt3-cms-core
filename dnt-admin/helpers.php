@@ -1,17 +1,19 @@
 <?php
 function fonts(){
-	return array(
-		"roboto" 				=> "Roboto",
-		"Arial" 				=> "Arial",
-		"Georgia" 				=> "Georgia",
+	$fonts = array(
+		"Arimo" 				=> "Arial",
 		"Calibri" 				=> "Calibri",
 		"Cambria" 				=> "Cambria",
+		"Impact" 				=> "Impact",
 		"Lucida Sans Unicode" 	=> "Lucida Sans Unicode",
+		"Montserrat" 			=> "Montserrat",
 		"Myriad Pro Regular " 	=> "Myriad Pro Regular",
+		"Oswald" 				=> "Bebas",
+		"Roboto" 				=> "Roboto",
+		"Times New Roman" 		=> "Times New Roman",
 		"Tahoma" 				=> "Tahoma",
 		"Verdana" 				=> "Verdana",
-		//"Times New Roman" 	=> "Times New Roman",
-		//"bebas_neueregular" 	=> "Bebas",
-		//"impact" 	=> "Impact",
 	);
+	//sort($fonts);
+	return $fonts;
 }
