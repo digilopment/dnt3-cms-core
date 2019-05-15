@@ -30,6 +30,8 @@ class autoRedirectAbstractModulController{
 				exit;
 			}
 		}
+		
+		
 		if($type == "video"){
 			Dnt::redirect($articleList->getArticleUrl($articleId, true, $type));
 		}else{

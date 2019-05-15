@@ -102,19 +102,33 @@ class Modul extends Database{
 		if(count($request) == count($pattern)){
 			//var_dump(count($request), count($pattern));
 			foreach($pattern as $singlPattern){
+				
+				//strict
 				if($singlPattern == $request[$i]){
 					$compareString[] .= $singlPattern;	
 					$i++;
 				}
+				
+				//digit
 				if($singlPattern == "{digit}" && is_numeric($request[$i])){
 					$compareString[] .= $request[$i];	
 					$i++;
 				}
+				
+				//alphabet
+				if($singlPattern == "{alphabet}" && ctype_alpha(str_replace("-", "", $request[$i]))){
+					$compareString[] .= $request[$i];	
+					$i++;
+				}
 			}
+			
+			//var_dump($i == count($request));
 			if($i == count($request)){
 				$returnString = "/".join("/", $compareString);
+				//var_dump($returnString);
 			}
 		}
+		//exit;
 		return $returnString;
 	}
 	
@@ -135,21 +149,17 @@ class Modul extends Database{
 		foreach (array_keys($custom_modules) as $index) {
 			foreach($custom_modules[$index] as $key=>$modulUrl){
 				
-				if("/".$modulUrl == $client->requestNoParam){
+				if($this->hasPattern($client->requestNoLang, "/".$modulUrl) == $client->requestNoLang){
 					$module = $index;
 				}
 				
-				if($this->hasPattern($client->requestNoParam, "/".$modulUrl) == $client->requestNoParam){
+				if("/".$modulUrl == $client->requestNoParam){
 					$module = $index;
 				}
 				
 				if($modulUrl == $client->route(1)){
 					$module = $index;
 				}
-				
-				
-								
-				
 				
 			}
 		}		

@@ -20,6 +20,7 @@ class Client extends Database{
 	public $domainNP;
 	public $request;
 	public $requestNoParam;
+	public $requestNoLang;
 	public $domainWww;
 	public $originProtocol;
 	public $clients;
@@ -50,18 +51,50 @@ class Client extends Database{
 	}
 	
 	protected function id(){
+		$hasMatch = 0;
+		
 		foreach($this->clients as $client){
-			if($this->isIncluded(str_replace("/", "", $this->domainNP), str_replace("/", "", $client->real_url)) && $client->show_real_url == 1 && $client->real_url){
+			
+			if($client->real_url){
+				$realUrlNp = explode("://", $client->real_url);
+				$realUrlNp = $realUrlNp[1];
+				if(
+					str_replace("/", "", $this->domainNP.$this->route(0)) == str_replace("/", "", $realUrlNp) && 
+					$client->show_real_url == 1 
+					&& $hasMatch == 0
+					&& $client->real_url
+				   ){
+					$hasMatch = 1;
+					$this->id = $client->id_entity;
+					$this->realUrl = $client->real_url;
+					$this->showRealUrl = $client->show_real_url;
+					$this->layout = $client->layout;
+				}
+			}
+		}
+		
+		foreach($this->clients as $client){
+			if($client->real_url){
+				$realUrlNp = explode("://", $client->real_url);
+				$realUrlNp = $realUrlNp[1];
+				if(str_replace("/", "", $this->domainNP) == str_replace("/", "", $realUrlNp) && $hasMatch == 0){
+					$hasMatch = 1;
+					$this->id = $client->id_entity;
+					$this->realUrl = $client->real_url;
+					$this->showRealUrl = $client->show_real_url;
+					$this->layout = $client->layout;
+				}
+			}
+		}
+		
+		foreach($this->clients as $client){
+			if($this->url == $client->name_url && $hasMatch == 0){
+				$hasMatch = 1;
 				$this->id = $client->id_entity;
 				$this->realUrl = $client->real_url;
 				$this->showRealUrl = $client->show_real_url;
 				$this->layout = $client->layout;
-			}elseif($this->url == $client->name_url){
-				$this->id = $client->id_entity;
-				$this->realUrl = $client->real_url;
-				$this->showRealUrl = $client->show_real_url;
-				$this->layout = $client->layout;
-			}		
+			}
 		}
 	}
 	
@@ -70,7 +103,7 @@ class Client extends Database{
 			$this->domainWww = "www";
 		}
 		
-	   $data = str_replace("www.", "", WWW_PATH);
+		$data = str_replace("www.", "", WWW_PATH);
         $data = explode("://", $data);
         $ORIGIN_PROTOCOL = "" . $data[0] . "://";
         $data = explode("/", $data[1]);
@@ -80,6 +113,13 @@ class Client extends Database{
 		$this->originProtocol = $ORIGIN_PROTOCOL;
 		$this->request = explode($this->domainNP, WWW_FULL_PATH)[1];
 		$this->requestNoParam = explode("?", $this->request)[0];
+		
+
+		if($this->route(0)){
+			$this->requestNoLang = explode($this->route(0), $this->request)[1];
+		}else{
+			$this->requestNoLang = $this->request;
+		}
 	}
 	
 	
@@ -92,6 +132,7 @@ class Client extends Database{
 				return $data[$index];
 			}
 		}else{
+			$this->lang = Settings::get("language");
 			if(isset($data[$index-1])){
 				return $data[$index-1];
 			}
@@ -103,11 +144,19 @@ class Client extends Database{
 		$protocol 		= false;
 		$domain 		= false;
 		$www_folders 	= false;
+		$lang 			= false;
 		
 		$data = explode("://", $dbDomain);
 		if(isset($data[0])){
 			$protocol = $data[0]."://";
 		}
+		
+		$dataLng = explode("/", $data[1]);
+		$lng = $dataLng[count($dataLng)-1];
+		if(strlen($lng)==2){
+			$lang = $lng;
+		}
+		
 		
 		if($this->isIncluded(str_replace("/", "~", WWW_FOLDERS), str_replace("/", "~", $dbDomain))){
 			$www_folders = WWW_FOLDERS;
@@ -133,6 +182,7 @@ class Client extends Database{
 			"protocol" 		=> $protocol,
 			"domain" 		=> $domain,
 			"www_folders" 	=> $www_folders,
+			"lang" 			=> $lang,
 		);
 		
 
@@ -144,10 +194,14 @@ class Client extends Database{
 	
 	public function setDomain($dbDomain, $toDbDomain = true){
 		$data = $this->domainParser($dbDomain);
+		//var_dump($this->originProtocol);
+		//var_dump($data['protocol']);
+		//var_dump($this->lang);
 		if($toDbDomain){
 			if(
 				$this->originProtocol 	== $data['protocol'] &&
 				$this->domainNP 		== $data['domain'] &&
+				($this->lang 			== $data['lang'] || $data['lang'] == "") &&
 				$this->domainWww 		== $data['www']
 			){
 				//zhoda

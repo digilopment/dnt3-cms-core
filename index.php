@@ -37,6 +37,7 @@ $modul = new Modul();
 $client->init();
 $client->setDomain($client->realUrl, Settings::get("still_redirect_to_domain"));
 $modul->init($client);
+
 if ($modul->name) {
 	$dntLog->add(array(
 		"http_response" => 200,
@@ -66,7 +67,7 @@ if ($modul->name) {
  *
  * */
 if (DEBUG_QUERY == 1) {
-    $path = "dnt-logs/" . Vendor::getId() . "/sql/" . $modul . "_query.csv";
+    $path = "dnt-logs/" . Vendor::getId() . "/sql/" . $modul->name . "_query.csv";
     if (!file_exists($path)) {
         foreach ($_SESSION as $key => $value) {
             $serverVariables = array(
@@ -85,7 +86,7 @@ if (DEBUG_QUERY == 1) {
                     "id" => 'null',
                     "id_entity" => 0,
                     "vendor_id" => Vendor::getId(),
-                    "name" => $modul . " Modul Query ",
+                    "name" => $modul->name . " Modul Query ",
                     "name_url" => md5($value),
                     "query" => $value,
                     "parent_id" => 0,
