@@ -10,23 +10,20 @@
  
 $path		= "";
 include "dnt-library/framework/app/Bootstrap.php";
-
 $rest 		= new Rest;
 $dntLog 	= new DntLog;
 $dntCache 	= new Cache;
 $db 		= new Db;
 
-
 if (!Install::db_exists()) {
     Dnt::redirect("dnt-install/index.php");
 }
 
-
-
 $modul = new Modul();
-$client->setDomain($client->realUrl, Settings::get("still_redirect_to_domain"), $client->getSetting("language"));
+$client->setDomain($client->realUrl, $client->getSetting("still_redirect_to_domain"), $client->getSetting("language"));
 $modul->init($client);
-
+//var_dump($client->route(1));
+//exit;
 //var_dump($client->id);
 //var_dump(Vendor::getId());
 

@@ -80,10 +80,13 @@ class Client extends Database{
 			if($client->real_url){
 				$realUrlNp = explode("://", $client->real_url);
 				$realUrlNp = $realUrlNp[1];
-				//var_dump($this->urlHooks(0));
 				if(
 					//str_replace("/", "", $this->domainNP.$this->route(0)) == str_replace("/", "", $realUrlNp) && 
-					str_replace("/", "", $this->domainNP.$this->urlHooks(0)) == str_replace("/", "", $realUrlNp) && 
+					(
+					str_replace("/", "", $this->domainNP.$this->urlHooks(0)) == str_replace("/", "", $realUrlNp) ||
+					str_replace("/", "", "www.".$this->domainNP.$this->urlHooks(0)) == str_replace("/", "", $realUrlNp)
+					)
+					&& 
 					$client->show_real_url == 1 
 					&& $hasMatch == 0
 					&& $client->real_url
@@ -101,7 +104,14 @@ class Client extends Database{
 			if($client->real_url){
 				$realUrlNp = explode("://", $client->real_url);
 				$realUrlNp = $realUrlNp[1];
-				if(str_replace("/", "", $this->domainNP) == str_replace("/", "", $realUrlNp) && $hasMatch == 0){
+				
+				if(
+					(
+					str_replace("/", "", $this->domainNP) == str_replace("/", "", $realUrlNp) ||
+					str_replace("/", "", "www.".$this->domainNP) == str_replace("/", "", $realUrlNp) 
+					)
+					
+					&& $hasMatch == 0){
 					$hasMatch = 1;
 					$this->id = $client->id_entity;
 					$this->realUrl = $client->real_url;
@@ -120,6 +130,7 @@ class Client extends Database{
 				$this->layout = $client->layout;
 			}
 		}
+		//var_dump($this->id);exit;
 	}
 	
 	
@@ -129,6 +140,7 @@ class Client extends Database{
 		}
 		
 		$data = str_replace("www.", "", WWW_PATH);
+		$data = WWW_PATH;
         $data = explode("://", $data);
         $ORIGIN_PROTOCOL = "" . $data[0] . "://";
         $data = explode("/", $data[1]);
@@ -295,26 +307,24 @@ class Client extends Database{
 	}
 	
 	public function setDomain($dbDomain, $toDbDomain = true, $language = false){
+
 		$data = $this->domainParser($dbDomain);
 		if($data['www']){
 			$www = "www.";
 		}else{
 			$www = "";
 		}
-		
 		if($toDbDomain){
-			
 			//presmerovanie z default lang na no-lang
 			if($this->urlLang($this->request) == $language && $data['lang'] == false){
 				$newDomain = $data['protocol'].$www.$data['domain'].$this->requestNoLang;
 				$this->redirect($newDomain);
 				exit;
-			}	 
-			
+			}
 			//presmerovanie na protocol
 			if(
 				$this->originProtocol 	== $data['protocol'] &&
-				$this->domainNP 		== $data['domain'] &&
+				$this->domainNP 		== $www.$data['domain'] &&
 				($this->route(0)		== $language || $language == "") &&
 				$this->domainWww 		== $data['www']
 			){
