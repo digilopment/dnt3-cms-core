@@ -42,7 +42,9 @@ class Modul extends Database{
         }
 		$arr = array();
 		if($this->sitemapUrl){
+
 			foreach($this->sitemapUrl as $item){
+				//var_dump($item->name_url);
 				if($item->service == $eQ){
 					$arr[] = $item->name_url;
 				}
@@ -115,6 +117,12 @@ class Modul extends Database{
 					$i++;
 				}
 				
+				//eny
+				if($singlPattern == "{eny}" && !empty($request[$i])){
+					$compareString[] .= $request[$i];	
+					$i++;
+				}
+				
 				//alphabet
 				if($singlPattern == "{alphabet}" && ctype_alpha(str_replace("-", "", $request[$i]))){
 					$compareString[] .= $request[$i];	
@@ -128,7 +136,6 @@ class Modul extends Database{
 				//var_dump($returnString);
 			}
 		}
-		//exit;
 		return $returnString;
 	}
 	
@@ -148,27 +155,29 @@ class Modul extends Database{
 		
 		foreach (array_keys($custom_modules) as $index) {
 			foreach($custom_modules[$index] as $key=>$modulUrl){
-				
 				if($this->hasPattern($client->requestNoLang, "/".$modulUrl) == $client->requestNoLang){
 					$module = $index;
+					break;
 				}
 				
 				if("/".$modulUrl == $client->requestNoParam){
 					$module = $index;
+					break;
 				}
 				
 				if($modulUrl == $client->route(1)){
 					$module = $index;
+					break;
 				}
 				
 			}
-		}		
-		
+		}
+		//var_dump($module, $client->requestNoLang, $client->route(1));exit;
 		if($client->route(1) == ""){
-			$default = Settings::get("startovaci_modul");
+			$default = $client->getSetting("startovaci_modul");//Settings::get("startovaci_modul");
 			$moduleUrl = $this->getSitemapModules($default);
 			if ($default && isset($moduleUrl[0])) {
-				$redirect = $client->wwwPath . $moduleUrl[0];
+				$redirect = $client->wwwPath . $client->lang."/" . $moduleUrl[0];
 				Dnt::redirect($redirect);
 				exit;
 			} else {

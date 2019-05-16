@@ -25,6 +25,7 @@ class Client extends Database{
 	public $originProtocol;
 	public $clients;
 	public $init;
+	public $settings;
 	
 	protected function url() {
         $hosts = explode(".", @$_SERVER['HTTP_HOST']);
@@ -48,6 +49,27 @@ class Client extends Database{
 		if ($this->num_rows($query) > 0) {
 			$this->clients = $this->get_results($query, true);
 		}
+		foreach($this->clients as $client){
+			if($client->real_url){
+				$client->real_url = rtrim($client->real_url, "/");
+			}
+		}
+	}
+	
+	protected function loadSettings(){
+		$query = "SELECT * FROM dnt_settings WHERE `vendor_id` = '" . $this->id . "'";
+        if ($this->num_rows($query) > 0) {
+			$this->settings = $this->get_results($query, true);
+		}
+	}
+	
+	public function getSetting($key){
+		foreach($this->settings as $setting){
+			if($setting->key == $key){
+				return $setting->value;
+			}
+		}
+		return false;
 	}
 	
 	protected function id(){
@@ -58,8 +80,10 @@ class Client extends Database{
 			if($client->real_url){
 				$realUrlNp = explode("://", $client->real_url);
 				$realUrlNp = $realUrlNp[1];
+				//var_dump($this->urlHooks(0));
 				if(
-					str_replace("/", "", $this->domainNP.$this->route(0)) == str_replace("/", "", $realUrlNp) && 
+					//str_replace("/", "", $this->domainNP.$this->route(0)) == str_replace("/", "", $realUrlNp) && 
+					str_replace("/", "", $this->domainNP.$this->urlHooks(0)) == str_replace("/", "", $realUrlNp) && 
 					$client->show_real_url == 1 
 					&& $hasMatch == 0
 					&& $client->real_url
@@ -98,7 +122,32 @@ class Client extends Database{
 		}
 	}
 	
-	protected function removeProtocol(){
+	
+	protected function rootDomainParser(){
+		if($this->isIncluded("www.", WWW_PATH)){
+			$this->domainWww = "www";
+		}
+		
+		$data = str_replace("www.", "", WWW_PATH);
+        $data = explode("://", $data);
+        $ORIGIN_PROTOCOL = "" . $data[0] . "://";
+        $data = explode("/", $data[1]);
+        $ORIGIN_DOMAIN = HTTP_PROTOCOL . $data[0] . "" . WWW_FOLDERS . "";
+        $ORIGIN_DOMAIN_NP = $data[0] . "" . WWW_FOLDERS . "";
+		
+		$this->domainNP = $ORIGIN_DOMAIN_NP;
+		$this->originProtocol = $ORIGIN_PROTOCOL;
+		$this->request = explode($this->domainNP, WWW_FULL_PATH)[1];
+		$this->requestNoParam = explode("?", $this->request)[0];
+		
+		if($this->urlLang()){
+			$this->requestNoLang = explode($this->urlLang(), $this->requestNoParam)[1];
+		}else{
+			$this->requestNoLang = $this->requestNoParam;
+		}
+	}
+	
+	/*protected function removeProtocol(){
 		if($this->isIncluded("www.", WWW_PATH)){
 			$this->domainWww = "www";
 		}
@@ -114,29 +163,64 @@ class Client extends Database{
 		$this->request = explode($this->domainNP, WWW_FULL_PATH)[1];
 		$this->requestNoParam = explode("?", $this->request)[0];
 		
-
 		if($this->route(0)){
-			$this->requestNoLang = explode($this->route(0), $this->request)[1];
+			$tmp = $this->requestNoLang = explode("?", $this->request);
+			$tmp = ltrim($tmp[0], '/');
+			$tmp = explode($this->route(0)."/", $tmp);
+			if($tmp[0]){
+				$this->requestNoLang = $tmp[0];
+			}else{
+				if($tmp[0] == "" && !isset($tmp[1])){
+					$this->requestNoLang = false;
+				}else{
+					$this->requestNoLang = $tmp[1];
+				}
+			}
+			$this->requestNoLang = "/".$this->requestNoLang; 
+			//var_dump($this->route(0));
+			//$this->requestNoLang = explode("?", explode($this->route(0), $this->request)[1])[0];
 		}else{
-			$this->requestNoLang = $this->request;
+			$this->requestNoLang = explode("?", $this->request)[0];
 		}
-	}
+	}*/
 	
 	
 	public function route($index){
+		//var_dump($this->requestNoParam);
 		$data = ltrim($this->requestNoParam, '/');
 		$data = explode("/", $data);
-		if(strlen($data[0])== 2){
-			$this->lang = $data[0];
-			if(isset($data[$index])){
-				return $data[$index];
+		//var_dump($this->requestNoParam);
+		//var_dump($this->requestNoLang);
+		if($index === false){
+			if($this->urlLang()){
+				$this->routes = $data;
+				$this->lang = $this->urlLang();
+			}else{
+				//$this->lang = Settings::get("language");
+				$this->lang = $this->getSetting("language");
+				$this->routes = array_merge(array($this->lang), $data);
 			}
 		}else{
-			$this->lang = Settings::get("language");
-			if(isset($data[$index-1])){
-				return $data[$index-1];
+			if(isset($this->routes[$index]) && $this->routes[$index] != ""){
+				return $this->routes[$index];
 			}
+			/*if(strlen($data[0])== 2){
+				$this->lang = $data[0];
+				$this->routes = $data;
+				if(isset($data[$index])){
+					return $data[$index];
+				}
+			}else{
+				//$this->lang = Settings::get("language");
+				$this->lang = $this->getSetting("language");
+				$this->routes = array_merge(array($this->lang), $data);
+				if(isset($this->routes[$index])){
+					return $this->routes[$index];
+				}
+			}*/
 		}
+		//var_dump($this->routes);
+		//exit;
 	}
 	
 	protected function domainParser($dbDomain){
@@ -192,33 +276,61 @@ class Client extends Database{
 		header("Location: $domain");
 	}
 	
-	public function setDomain($dbDomain, $toDbDomain = true){
+	public function urlLang(){
+		$urlLang = explode("/", ltrim($this->request, "/"))[0];
+		if(strlen($urlLang)==2){
+			return $urlLang;
+		}else{
+			return false;
+		}
+	}
+	
+	public function urlHooks($index){
+		$hooks = explode("/", ltrim($this->request, "/"));
+		if(isset($hooks[$index])){
+			return $hooks[$index];
+		}else{
+			return false;
+		}
+	}
+	
+	public function setDomain($dbDomain, $toDbDomain = true, $language = false){
 		$data = $this->domainParser($dbDomain);
-		//var_dump($this->originProtocol);
-		//var_dump($data['protocol']);
-		//var_dump($this->lang);
+		if($data['www']){
+			$www = "www.";
+		}else{
+			$www = "";
+		}
+		
 		if($toDbDomain){
+			
+			//presmerovanie z default lang na no-lang
+			if($this->urlLang($this->request) == $language && $data['lang'] == false){
+				$newDomain = $data['protocol'].$www.$data['domain'].$this->requestNoLang;
+				$this->redirect($newDomain);
+				exit;
+			}	 
+			
+			//presmerovanie na protocol
 			if(
 				$this->originProtocol 	== $data['protocol'] &&
 				$this->domainNP 		== $data['domain'] &&
-				($this->lang 			== $data['lang'] || $data['lang'] == "") &&
+				($this->route(0)		== $language || $language == "") &&
 				$this->domainWww 		== $data['www']
 			){
 				//zhoda
-				
 			}else{
 				if($this->showRealUrl){
-					if($data['www']){
-						$www = "www.";
+					if($language){
+						$newDomain = $data['protocol'].$www.$data['domain']."/".$language.$this->requestNoLang;
 					}else{
-						$www = "";
+						$newDomain = $data['protocol'].$www.$data['domain'].$this->request;
 					}
-					$newDomain = $data['protocol'].$www.$data['domain'].$this->request;
 					$this->redirect($newDomain);
 					exit;
 				}
 			}
-		}else{ //change protocol
+		}else{ //change protocol local domain
 			if($this->originProtocol == $data['protocol']){
 				//zhoda
 			}else{
@@ -242,11 +354,13 @@ class Client extends Database{
 	
 	public function init(){
 		if(!$this->init){
-			$this->removeProtocol();
+			$this->rootDomainParser();
 			$this->clients();
 			$this->url();
 			$this->id();
-			$this->init = true;
+			$this->loadSettings();
+			$this->route(false);
+			//$this->removeProtocol();
 		}
 	}
 }

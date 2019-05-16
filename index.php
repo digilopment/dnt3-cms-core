@@ -7,16 +7,15 @@
  * Thanks for using!
  */
 
-include "globals.php";
-include "dnt-library/framework/_Class/Autoload.php";
-include "dnt-library/framework/app/Autoload.php";
-$autoload = new Autoload;
-$path = "";
-$autoload->load($path);
-$rest = new Rest;
-$dntLog = new DntLog;
-$dntCache = new Cache;
-$db = new Db;
+ 
+$path		= "";
+include "dnt-library/framework/app/Bootstrap.php";
+
+$rest 		= new Rest;
+$dntLog 	= new DntLog;
+$dntCache 	= new Cache;
+$db 		= new Db;
+
 
 if (!Install::db_exists()) {
     Dnt::redirect("dnt-install/index.php");
@@ -24,19 +23,12 @@ if (!Install::db_exists()) {
 
 
 
-/**
-*
-* FRM 2
-**/
-//$rest->redirectToDomain(Settings::get("still_redirect_to_domain"));
-$autoloader	= new Autoloader();
-$autoloader->load($path);
-$client = new Client();
 $modul = new Modul();
-
-$client->init();
-$client->setDomain($client->realUrl, Settings::get("still_redirect_to_domain"));
+$client->setDomain($client->realUrl, Settings::get("still_redirect_to_domain"), $client->getSetting("language"));
 $modul->init($client);
+
+//var_dump($client->id);
+//var_dump(Vendor::getId());
 
 if ($modul->name) {
 	$dntLog->add(array(
