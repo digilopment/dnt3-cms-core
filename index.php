@@ -20,11 +20,21 @@ if (!Install::db_exists()) {
 }
 
 $modul = new Modul();
-$client->setDomain($client->realUrl, $client->getSetting("still_redirect_to_domain"), $client->getSetting("language"));
+$client->setDomain(
+	$client->realUrl, 
+	$client->wwwPath, 
+	$client->getSetting("still_redirect_to_domain"), 
+	$client->getSetting("language")
+	);
+
+$post = new Post();
+$post->init();
+//var_dump($post->postsSubNavigation);exit;
+	
 $modul->init($client);
 //var_dump($client->route(1));
 //exit;
-//var_dump($client->id);
+//var_dump($client->id); exit;
 //var_dump(Vendor::getId());
 
 if ($modul->name) {

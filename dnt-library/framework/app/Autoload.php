@@ -34,6 +34,7 @@ class Autoloader {
 		$this->fileLoader($path . "dnt-library/framework/app/Db.php");
 		$this->fileLoader($path . "dnt-library/framework/app/Client.php");
 		$this->fileLoader($path . "dnt-library/framework/app/Modul.php");
+		$this->fileLoader($path . "dnt-library/framework/app/Post.php");
         
     }
 

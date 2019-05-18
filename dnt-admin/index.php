@@ -2,6 +2,7 @@
 
 $path		= "../";
 include $path."dnt-library/framework/app/Bootstrap.php";
+include "helpers.php";
 $rest 		= new Rest();
 $dntLog 	= new DntLog();
 $dntCache 	= new Cache();

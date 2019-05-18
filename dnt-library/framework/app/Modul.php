@@ -177,7 +177,11 @@ class Modul extends Database{
 			$default = $client->getSetting("startovaci_modul");//Settings::get("startovaci_modul");
 			$moduleUrl = $this->getSitemapModules($default);
 			if ($default && isset($moduleUrl[0])) {
-				$redirect = $client->wwwPath . $client->lang."/" . $moduleUrl[0];
+				if($client->urlLang()){
+					$redirect = $client->wwwPath . $client->lang."/" . $moduleUrl[0];
+				}else{
+					$redirect = $client->wwwPath . $moduleUrl[0];
+				}
 				Dnt::redirect($redirect);
 				exit;
 			} else {

@@ -14,6 +14,7 @@ class Client extends Database{
 	public $url;
 	public $lang;
 	public $layout;
+	public $primaryRootUrl;
 	public $realUrl;
 	public $showRealUrl;
 	public $domain;
@@ -26,6 +27,8 @@ class Client extends Database{
 	public $clients;
 	public $init;
 	public $settings;
+	public $routes;
+	public $rpc;
 	
 	protected function url() {
         $hosts = explode(".", @$_SERVER['HTTP_HOST']);
@@ -297,6 +300,14 @@ class Client extends Database{
 		}
 	}
 	
+	
+	protected function rpc(){
+		$data = explode("/", ltrim($this->request, "/"));
+		if(in_array("rpc", $data )){
+			$this->rpc = true;
+		}
+	}
+	
 	public function urlHooks($index){
 		$hooks = explode("/", ltrim($this->request, "/"));
 		if(isset($hooks[$index])){
@@ -306,17 +317,66 @@ class Client extends Database{
 		}
 	}
 	
-	public function setDomain($dbDomain, $toDbDomain = true, $language = false){
-
-		$data = $this->domainParser($dbDomain);
-		if($data['www']){
-			$www = "www.";
-		}else{
-			$www = "";
-		}
-		if($toDbDomain){
+	/*public function primaryRootUrl($dbDomain, $wwwPath, $toDbDomain = true, $language = false){
+		//$this->primaryRootUrl = $wwwPath;
+		
+		if($toDbDomain || $dbDomain == $wwwPath || $dbDomain == rtrim($wwwPath.$this->urlLang(), "/")){
+			$data = $this->domainParser($dbDomain);
+			if($data['www']){
+				$www = "www.";
+			}else{
+				$www = "";
+			}
 			//presmerovanie z default lang na no-lang
 			if($this->urlLang($this->request) == $language && $data['lang'] == false){
+				$newDomain = $data['protocol'].$www.$data['domain'].$this->requestNoLang;
+				$this->primaryRootUrl = $newDomain;
+			}
+			//presmerovanie na protocol
+			if(
+				$this->originProtocol 	== $data['protocol'] &&
+				$this->domainNP 		== $www.$data['domain'] &&
+				($this->route(0)		== $language || $language == "") &&
+				$this->domainWww 		== $data['www']
+			){
+				//zhoda
+			}else{
+				if($this->showRealUrl){
+					if($language){
+						$newDomain = $data['protocol'].$www.$data['domain']."/".$language.$this->requestNoLang;
+					}else{
+						$newDomain = $data['protocol'].$www.$data['domain'].$this->request;
+					}
+					$this->primaryRootUrl = $newDomain;
+				}
+			}
+		}else{ 
+			if($toDbDomain == false){
+				$data = $this->domainParser(WWW_PATH);
+				if($this->urlLang($this->request) == $language && $data['lang'] == false){
+					$newDomain = $data['protocol'].$data['domain'].$this->requestNoLang;
+					$this->primaryRootUrl = $newDomain;
+				}
+			}
+		}
+	}*/
+	
+	public function setDomain($dbDomain, $wwwPath, $toDbDomain = true, $language = false){
+		/*var_dump($dbDomain);
+		var_dump(rtrim($wwwPath.$this->urlLang(), "/"));
+		var_dump($dbDomain == rtrim($wwwPath.$this->urlLang(), "/"));
+		exit;
+		*/
+		if($toDbDomain || $dbDomain == $wwwPath || $dbDomain == rtrim($wwwPath.$this->urlLang(), "/")){
+			$data = $this->domainParser($dbDomain);
+			if($data['www']){
+				$www = "www.";
+			}else{
+				$www = "";
+			}
+		
+			//presmerovanie z default lang na no-lang
+			if($this->urlLang($this->request) == $language && $data['lang'] == false && $this->rpc === null){
 				$newDomain = $data['protocol'].$www.$data['domain'].$this->requestNoLang;
 				$this->redirect($newDomain);
 				exit;
@@ -340,8 +400,17 @@ class Client extends Database{
 					exit;
 				}
 			}
-		}else{ //change protocol local domain
-			if($this->originProtocol == $data['protocol']){
+		}else{ 
+			if($toDbDomain == false){
+				$data = $this->domainParser(WWW_PATH);
+				if($this->urlLang($this->request) == $language && $data['lang'] == false){
+					$newDomain = $data['protocol'].$data['domain'].$this->requestNoLang;
+					$this->redirect($newDomain);
+					exit;
+				}
+			}
+			//change protocol local domain
+			/*if($this->originProtocol == $data['protocol']){
 				//zhoda
 			}else{
 				if($data['protocol'] == "https://"){
@@ -354,7 +423,7 @@ class Client extends Database{
 					$this->redirect($newDomain);
 					exit;
 				}
-			}
+			}*/
 		}
 		
 		
@@ -365,11 +434,18 @@ class Client extends Database{
 	public function init(){
 		if(!$this->init){
 			$this->rootDomainParser();
+			$this->rpc();
 			$this->clients();
 			$this->url();
 			$this->id();
 			$this->loadSettings();
 			$this->route(false);
+			/*$this->primaryRootUrl(
+				$this->realUrl, 
+				$this->wwwPath, 
+				$this->getSetting("still_redirect_to_domain"), 
+				$this->getSetting("language")
+			);*/
 			//$this->removeProtocol();
 		}
 	}

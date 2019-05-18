@@ -111,14 +111,14 @@ class Rest {
      * @return boolean
      */
     public function webhook($thisArg = false) {
-		if($thisArg != false){
+		if($thisArg === false){
+			return $GLOBALS['WEBHOOKS'];
+		}else{
 			if(isset($GLOBALS['WEBHOOKS'][$thisArg])){
 				return $GLOBALS['WEBHOOKS'][$thisArg];
 			}else{
 				return false;
 			}
-		}else{
-			return $GLOBALS['WEBHOOKS'];
 		}
     }
 
