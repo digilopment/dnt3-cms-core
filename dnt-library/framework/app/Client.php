@@ -13,7 +13,7 @@ class Client extends Database{
 	public $wwwPath = WWW_PATH;
 	public $url;
 	public $lang;
-	public $layout;
+	public $layout = "default";
 	public $primaryRootUrl;
 	public $realUrl;
 	public $showRealUrl;
@@ -77,7 +77,6 @@ class Client extends Database{
 	
 	protected function id(){
 		$hasMatch = 0;
-		
 		foreach($this->clients as $client){
 			
 			if($client->real_url){
