@@ -224,7 +224,7 @@ class Vendor {
                             $dbProtocol = $row['real_url'];
                         }
                     } else {
-                        $vendor_id = false;
+                        $vendor_id = 0;
                         $dbProtocol = false;
                     }
                 }
@@ -245,7 +245,7 @@ class Vendor {
                         $dbProtocol = $row['real_url'];
                     }
                 } else {
-                    $vendor_id = false;
+                    $vendor_id = 0;
                     $dbProtocol = false;
                 }
             }
