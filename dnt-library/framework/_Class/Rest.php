@@ -111,53 +111,15 @@ class Rest {
      * @return boolean
      */
     public function webhook($thisArg = false) {
-        if (MULTY_LANGUAGE) {
-            $defLang = DEAFULT_LANG;
-            $langArray = array("sk", "cz", "pl", "en", "de", "at", "nl", "dk");
-        } else {
-            $defLang = "0";
-            if ($thisArg == 1) {
-                $langArray = MultyLanguage::activeVendorLangs();
-            } else {
-                $langArray = array("sk", "cz", "pl", "en", "de", "at", "nl", "dk");
-            }
-        }
-		
 		if($thisArg === false){
-			return array_merge(array($defLang),explode("/", $_GET[SRC]));
+			return $GLOBALS['WEBHOOKS'];
+		}else{
+			if(isset($GLOBALS['WEBHOOKS'][$thisArg])){
+				return $GLOBALS['WEBHOOKS'][$thisArg];
+			}else{
+				return false;
+			}
 		}
-		
-        if (isset($_GET[SRC])) {
-            $arr = array();
-            $src = $_GET[SRC];
-            $arr = explode("/", $src);
-            if (is_array($langArray)) {
-                if (in_array($arr[0], $langArray)) {
-                    if (isset($arr[$thisArg])) {
-                        return $arr[$thisArg];
-                    } else {
-                        return false;
-                    }
-                } else {
-                    $arr = explode("/", $defLang . "/" . $src);
-                    if (isset($arr[$thisArg])) {
-                        return $arr[$thisArg];
-                    } else {
-                        return false;
-                    }
-                }
-            }
-        } else {
-            /* if ($thisArg == 0) {
-              return DEAFULT_LANG;
-              }
-              if ($thisArg == 0) {
-              return DEAFULT_MODUL;
-              } */
-            if ($thisArg == 0) {
-                return false;
-            }
-        }
     }
 
     public static function getModulUrl($module) {

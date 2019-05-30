@@ -163,8 +163,6 @@ class Vendor {
         }
         $db = new Db;
         $rest = new Rest;
-
-
         if ($rest->get("dnt3_get_vendor_id")) {
             $vendor_id = $rest->get("dnt3_get_vendor_id");
             $GLOBALS['VENDOR_ID'] = $vendor_id;
@@ -260,6 +258,7 @@ class Vendor {
         $GLOBALS['DB_PROTOCOL'] = self::getProtocolFromUrl($dbProtocol);
         $GLOBALS['ORIGIN_PROTOCOL'] = $ORIGIN_PROTOCOL;
         return $vendor_id;
+		
     }
 
     /**
@@ -267,7 +266,10 @@ class Vendor {
      * @return boolean
      */
     public static function getLayout() {
-        $db = new Db;
+		if ($GLOBALS['VENDOR_LAYOUT']) {
+            return $GLOBALS['VENDOR_LAYOUT'];
+        }
+        /*$db = new Db;
         $rest = new Rest;
 
         if ($rest->get("dnt3_get_layout")) {
@@ -285,7 +287,7 @@ class Vendor {
             $layout = false;
         }
 
-        return $layout;
+        return $layout;*/
     }
 
     /**

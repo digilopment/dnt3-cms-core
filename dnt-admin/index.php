@@ -1,17 +1,18 @@
 <?php
-include "../globals.php";
-include "../dnt-library/framework/_Class/Autoload.php";
+
+$path		= "../";
+include $path."dnt-library/framework/app/Bootstrap.php";
 include "helpers.php";
-$autoload		= new Autoload;
-$path			= "../";
-$autoload->load($path);
-
-$rest = new Rest;
-$db = new Db;
-$session = new Sessions;
+$rest 		= new Rest();
+$dntLog 	= new DntLog();
+$dntCache 	= new Cache();
+$db 		= new Db();
+$session 	= new Sessions();
+$adminUser 	= new AdminUser();
 $session->init();
-$adminUser = new AdminUser;
 
+
+			
 if(WWW_PATH_ADMIN == HTTP_PROTOCOL.DOMAIN.WWW_FOLDERS."/dnt-admin/"){
 	$vendors = Vendor::getAll();
 	$lastVendor = end($vendors);
@@ -20,7 +21,8 @@ if(WWW_PATH_ADMIN == HTTP_PROTOCOL.DOMAIN.WWW_FOLDERS."/dnt-admin/"){
 	Dnt::redirect($url);
 }
 
-//$session->set("logged", "1");
+//$session->set("admin_logged", "1");
+//var_dump($session->get("admin_logged"));
 if($session->get("admin_logged")){
 	
 	

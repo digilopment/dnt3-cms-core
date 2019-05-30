@@ -42,7 +42,7 @@
  All examples provided below assume that this class has been initiated
  Examples below assume the class has been iniated using $database = DB::getInstance();
 ********************************/
-class Db
+class Database
 {
     private $link = null;
     public $filter;

@@ -1,6 +1,8 @@
 <?php
-function custom_modules(){
-	$webhook = new Webhook;
+function custom_modules($webhook = false){
+	if(!$webhook){
+		$webhook = new Webhook;
+	}
 	/*
 	custom modul listeners
 	*/

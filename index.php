@@ -7,56 +7,66 @@
  * Thanks for using!
  */
 
-include "globals.php";
-include "dnt-library/framework/_Class/Autoload.php";
-$autoload = new Autoload;
-$path = "";
-$autoload->load($path);
-$rest = new Rest;
-$dntLog = new DntLog;
-$dntCache = new Cache;
-$db = new Db;
+ 
+$path		= "";
+include "dnt-library/framework/app/Bootstrap.php";
+$rest 		= new Rest;
+$dntLog 	= new DntLog;
+$dntCache 	= new Cache;
+$db 		= new Db;
 
 if (!Install::db_exists()) {
     Dnt::redirect("dnt-install/index.php");
 }
 
-$rest->redirectToDomain(Settings::get("still_redirect_to_domain"));
-$modul = $rest->getModul();
-if ($modul) {
-    $dntLog->add(array(
-        "http_response" => 200,
-        "system_status" => "web_log",
-        "msg" => "Web Log 200",
-    ));
+$modul = new Modul();
+$client->setDomain(
+	$client->realUrl, 
+	$client->wwwPath, 
+	$client->getSetting("still_redirect_to_domain"), 
+	$client->getSetting("language")
+	);
 
-    /**
-     * IS_CACHING                       = GLOBAL Cache
-     * Settings::get("cachovanie")      = VENDOR Cache
-     * 
-     */
-    if (IS_CACHING && Settings::get("cachovanie") == 1) {
+$post = new Post();
+$post->init();
+//var_dump($post->postsSubNavigation);exit;
+	
+$modul->init($client);
+//var_dump($client->route(1));
+//exit;
+//var_dump($client->id); exit;
+//var_dump(Vendor::getId());
+
+if ($modul->name) {
+	$dntLog->add(array(
+		"http_response" => 200,
+		"system_status" => "web_log",
+		"msg" => "Web Log 200",
+	));
+	
+	 if (IS_CACHING && Settings::get("cachovanie") == 1) {
         $dntCache->start();
-        $rest->loadMyModul($modul);
+        $modul->load($client, $modul->name);
         $dntCache->end();
     } else {
-        $rest->loadMyModul($modul);
-    }
+        $modul->load($client, $modul->name);
+	}
 } else {
     $dntLog->add(array(
         "http_response" => 404,
         "system_status" => "web_log",
         "msg" => "Web Log 404",
     ));
-    $rest->loadMyModul("default");
+    $modul->load($client, "default");
 }
+
 
 /**
  * if debug mod, then logs to csv
  *
  * */
 if (DEBUG_QUERY == 1) {
-    $path = "dnt-logs/" . Vendor::getId() . "/sql/" . $modul . "_query.csv";
+    $path = "dnt-logs/" . Vendor::getId() . "/sql/" . $modul->name . "_query.csv";
     if (!file_exists($path)) {
         foreach ($_SESSION as $key => $value) {
             $serverVariables = array(
@@ -75,7 +85,7 @@ if (DEBUG_QUERY == 1) {
                     "id" => 'null',
                     "id_entity" => 0,
                     "vendor_id" => Vendor::getId(),
-                    "name" => $modul . " Modul Query ",
+                    "name" => $modul->name . " Modul Query ",
                     "name_url" => md5($value),
                     "query" => $value,
                     "parent_id" => 0,

@@ -1,17 +1,19 @@
 <?php
-class autoRedirectAbstractModulController{
+class autoRedirectAbstractModulController extends Client{
 	
 	public function run(){
+		$this->init();
 		$articleList 	= new ArticleList;
 		$articleView 	= new ArticleView;
 		$rest 			= new Rest;
 		$articleId 		= $rest->webhook(2); 
 
 		$name_url = $articleList->getArticleUrl($articleId, false);
-		$url = $GLOBALS['ORIGIN_DOMAIN_LNG']."/".$name_url;
+		$url = $this->wwwPath.$this->lang."/".$name_url;
 		
+		//var_dump($url);exit;
 		$type = $articleView->getPostParam("type", $articleId);
-		 
+		
 		//internal redirect
 		if(Dnt::in_string("<WWW_PATH>", $name_url)){
 			Dnt::redirect(str_replace("<WWW_PATH>", WWW_PATH, $name_url));
@@ -30,6 +32,8 @@ class autoRedirectAbstractModulController{
 				exit;
 			}
 		}
+		
+		
 		if($type == "video"){
 			Dnt::redirect($articleList->getArticleUrl($articleId, true, $type));
 		}else{
@@ -37,5 +41,5 @@ class autoRedirectAbstractModulController{
 		}
 	}
 }
-
-autoRedirectAbstractModulController::run();
+$modul = new autoRedirectAbstractModulController();
+$modul->run();
