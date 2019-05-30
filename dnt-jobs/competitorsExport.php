@@ -13,7 +13,6 @@ function creatCsvFileStatic($table, $columns, $where, $fileName, $columnsName = 
 	$data = chr(0xEF) . chr(0xBB) . chr(0xBF); //diakritika pod UTF 8
 	$query = "SELECT $columns FROM $table WHERE parent_id = 0 $where";
 	if ($db->num_rows($query) > 0) {
-		//$data .= str_replace(" ", ";", $columns);
 		
 		if($columnsName){
 			$data .= str_replace(",",";",$columnsName);
