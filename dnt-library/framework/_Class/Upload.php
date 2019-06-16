@@ -2545,6 +2545,7 @@ class Upload {
             'onepkg' => 'application/onenote',
             'csv' => 'application/octet-stream',
             'mp4' => 'video/mp4',
+            'svg' => 'image/svg+xml',
         );
 
     }
