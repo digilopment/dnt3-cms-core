@@ -167,6 +167,23 @@ class PollsFrontend extends Polls {
     public function getResultPercent($poll_id) {
         return (100 * self::getCorrectAnsewers($poll_id)) / self::getNumberOfQuestions($poll_id);
     }
+	
+	
+	 /**
+     * 
+     * @param type $poll_id
+     * @return type
+     * Funkcia vrati percentualny progress
+     */
+    public function getProgressPercent($poll_id, $question_id) {
+		$current = 0;
+        foreach (self::getPollsIds($poll_id) as $currentQuestionId) {
+            if($currentQuestionId <= $question_id){
+                $current++;
+            }
+        }
+		return (100 * $current) / self::getNumberOfQuestions($poll_id);
+    }
 
     /**
      * 
