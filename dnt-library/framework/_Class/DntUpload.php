@@ -155,7 +155,7 @@ class DntUpload {
      * @param type $files
      * @param type $path
      */
-    public function multypleUpload($files, $path, $insertToDatabase = true) {
+    public function multypleUpload($files, $path, $insertToDatabase = true, $moreFormats = true) {
         $db = new Db;
         $files_arr = $this->arrayFiles($files);
 		$returnInserted = array();
@@ -179,8 +179,10 @@ class DntUpload {
                     $returnInserted[] = $insertedData;
                 }
 				
-				foreach(self::imageFormats() as $format){
-					self::makeImageFormat(new Upload($file), $path."/formats/".$format, $format, $fileName);
+				if($moreFormats === true){
+					foreach(self::imageFormats() as $format){
+						self::makeImageFormat(new Upload($file), $path."/formats/".$format, $format, $fileName);
+					}
 				}
 				
             }

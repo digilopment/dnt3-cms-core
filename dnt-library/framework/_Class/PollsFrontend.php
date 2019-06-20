@@ -96,6 +96,20 @@ class PollsFrontend extends Polls {
             return false;
         }
     }
+	
+	 public function getValueByInputId($input, $id) {
+        $db = new Db;
+        $query = "SELECT `$input` FROM dnt_polls_composer WHERE
+		vendor_id 	= " . Vendor::getId() . " AND
+		id_entity = $id";
+        if ($db->num_rows($query) > 0) {
+            foreach ($db->get_results($query) as $row) {
+                return $row[$input];
+            }
+        } else {
+            return false;
+        }
+    }
 
     /**
      * 

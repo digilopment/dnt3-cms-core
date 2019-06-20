@@ -25,6 +25,7 @@ class Autoload {
          * CLASS
          */
         include $path . "dnt-library/framework/_Class/dompdf/dompdf_config.inc.php";
+        include $path . "dnt-library/framework/_Class/qr/qrlib.php";
         include $path . "dnt-library/framework/_Class/xlsx/php-excel-reader/excel_reader2.php";
         include $path . "dnt-library/framework/_Class/xlsx/SpreadsheetReader.php";
         include $path . "dnt-library/framework/_Class/Db.php";
