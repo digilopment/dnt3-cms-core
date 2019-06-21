@@ -25,6 +25,19 @@ class PostMeta {
         }
         return array();
     }
+	
+	public function getPostMeta($id_entity){
+		$db = new Db;
+        $query = "SELECT * FROM dnt_posts_meta WHERE `vendor_id` = '" . Vendor::getId() . "' AND id_entity = '" . $id_entity . "'";
+        if ($db->num_rows($query) > 0) {
+            foreach ($db->get_results($query) as $row) {
+                $arr['keys'][$row['key']]['show'] = $row['show'];
+                $arr['keys'][$row['key']]['value'] = $row['value'];
+            }
+            return $arr;
+        }
+        return array();
+	}
 
     /**
      * 
