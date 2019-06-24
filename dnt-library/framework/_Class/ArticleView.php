@@ -30,7 +30,7 @@ class ArticleView extends AdminContent {
 			$andPost = "`cat_id` = '".$post_type."' AND ";
 		}
 		elseif(Dnt::in_string(",", $post_type)){
-			$andPost = "`cat_id` = IN('" . $post_type . "') AND";
+			$andPost = "`cat_id` IN(" . $post_type . ") AND";
 		}else{
 			$andPost = "`cat_id` = '" . self::getCatId($post_type) . "' AND ";
 		}
@@ -39,7 +39,6 @@ class ArticleView extends AdminContent {
             `show`      > '0' AND 
             ".$andPost."
             `vendor_id` = '" . Vendor::getId() . "' $limit $orderByStr";
-			
         if ($db->num_rows($query) > 0) {
             return $db->get_results($query);
         } else {
