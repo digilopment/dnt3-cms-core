@@ -155,7 +155,7 @@ class Client extends Database{
 		$this->requestNoParam = explode("?", $this->request)[0];
 		
 		if($this->urlLang()){
-			$this->requestNoLang = explode($this->urlLang(), $this->requestNoParam)[1];
+			$this->requestNoLang = explode("/".$this->urlLang(), $this->requestNoParam)[1];
 		}else{
 			$this->requestNoLang = $this->requestNoParam;
 		}
