@@ -40,4 +40,5 @@ $client->init();
 $GLOBALS['VENDOR_LAYOUT']	= $client->layout;
 $GLOBALS['VENDOR_ID']		= $client->id;
 $GLOBALS['WEBHOOKS'] 		= $client->routes;
+define( 'WWW_PATH_LANG', WWW_PATH.$client->lang."/" ); //server path too root file usualy index.php or home.php
 

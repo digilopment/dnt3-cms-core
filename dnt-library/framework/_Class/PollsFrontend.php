@@ -190,7 +190,7 @@ class PollsFrontend extends Polls {
      * Funkcia vrati percentualny progress
      */
     public function getProgressPercent($poll_id, $question_id) {
-		$current = 0;
+		$current = -1;
         foreach (self::getPollsIds($poll_id) as $currentQuestionId) {
             if($currentQuestionId <= $question_id){
                 $current++;
