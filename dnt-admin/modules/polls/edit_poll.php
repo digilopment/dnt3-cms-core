@@ -34,11 +34,11 @@
                   <tbody>
                      <tr>
                         <td><?php echo Polls::getParam("id", $poll_id);?></td>
-                        <td style="max-width: 500px;">
+                        <td style="width: 400px;">
                            <input type="text" name="poll_name" value="<?php echo Polls::getParam("name", $poll_id);?>" class="form-control" placeholder="">
                         </td>
                         <td>
-                           <select class="form-control" name="poll_show" style="border: 2px #3C763D solid;width:200px">
+                           <select class="form-control" name="poll_show" style="border: 2px #3C763D solid;width:150px">
                            <?php getZobrazenie(Polls::getParam("show", $poll_id)); ?>
                            </select>
                         </td>
