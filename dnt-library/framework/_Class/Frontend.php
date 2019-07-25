@@ -61,6 +61,7 @@ class Frontend {
                 "name_url" => $article->getPostParam("name_url", $post_id),
                 "perex" => $article->getPostParam("perex", $post_id),
                 "content" => $article->getPostParam("content", $post_id),
+                "embed" => $article->getPostParam("embed", $post_id),
                 "datetime_publish" => $article->getPostParam("datetime_publish", $post_id),
                 "name" => $articleName,
                 "service" => $article->getPostParam("service", $post_id),
