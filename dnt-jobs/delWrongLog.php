@@ -7,7 +7,7 @@ $autoload->load($path);
 class DelJobsLogs{
 	public function init(){
 		$db 	= new DB();
-		$where 	= array('HTTP_ACCEPT' => '*/*');
+		$where 	= array('HTTP_COOKIE' => 'IS_JOB=1');
 		$db->delete('dnt_logs', $where);
 	}
 }
