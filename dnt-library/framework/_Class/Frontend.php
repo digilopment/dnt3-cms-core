@@ -93,6 +93,20 @@ class Frontend {
             return false;
         }
     }
+	
+	/**
+     * 
+     * @param type $data
+     * @param type $key
+     * @return boolean
+     */
+    public static function getMetaSettingBool($data, $key) {
+        if (isset($data['meta_settings']['keys'][$key]['show']) && $data['meta_settings']['keys'][$key]['show'] == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * 
