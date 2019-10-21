@@ -189,9 +189,8 @@ class DntLog {
 
         if (IS_LOGSYSTEM_ON) {
             $db->insert('dnt_logs', $arrToInsert);
-
-            $where = array('HTTP_ACCEPT' => '*/*');
-            $db->delete('dnt_logs', $where);
+            //$where = array('HTTP_ACCEPT' => '*/*');
+            //$db->delete('dnt_logs', $where);
         }
 
         if ($http_response >= 490) {
