@@ -8,6 +8,7 @@ class DelJobsLogs{
 	public function init(){
 		$db 	= new DB();
 		$where 	= array('HTTP_ACCEPT' => '*/*');
+		$db->delete('dnt_logs', $where);
 	}
 }
 
