@@ -402,7 +402,7 @@ class Client extends Database{
 		}else{ 
 			if($toDbDomain == false){
 				$data = $this->domainParser(WWW_PATH);
-				if($this->urlLang($this->request) == $language && $data['lang'] == false){
+				if($this->urlLang($this->request) == $language && $data['lang'] == false && $this->rpc === null){
 					$newDomain = $data['protocol'].$data['domain'].$this->requestNoLang;
 					$this->redirect($newDomain);
 					exit;
