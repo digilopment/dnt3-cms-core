@@ -165,6 +165,7 @@ class ArticleView extends AdminContent {
         }else{
             $AND_SRV = false;
         }
+		
         $query = "SELECT `$column` FROM dnt_posts WHERE `name_url` = '$name_url' AND vendor_id = '" . Vendor::getId() . "' ".$AND_SRV."";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {

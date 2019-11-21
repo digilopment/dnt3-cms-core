@@ -29,13 +29,7 @@ $client->setDomain(
 
 $post = new Post();
 $post->init();
-//var_dump($post->postsSubNavigation);exit;
-	
 $modul->init($client);
-//var_dump($client->route(1));
-//exit;
-//var_dump($client->id); exit;
-//var_dump(Vendor::getId());
 
 if ($modul->name) {
 	$dntLog->add(array(
@@ -57,7 +51,7 @@ if ($modul->name) {
         "system_status" => "web_log",
         "msg" => "Web Log 404",
     ));
-    $modul->load($client, "default");
+    //$modul->load($client, "default");
 }
 
 

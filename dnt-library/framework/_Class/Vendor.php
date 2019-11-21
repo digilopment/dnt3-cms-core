@@ -3,7 +3,7 @@
 /**
  *  class       Vendor
  *  author      Tomas Doubek
- *  framework   Sessions
+ *  framework   Dnt3
  *  package     dnt3
  *  date        2017
  */
@@ -161,6 +161,8 @@ class Vendor {
         if ($GLOBALS['VENDOR_ID']) {
             return $GLOBALS['VENDOR_ID'];
         }
+		
+		/*
         $db = new Db;
         $rest = new Rest;
         if ($rest->get("dnt3_get_vendor_id")) {
@@ -258,7 +260,7 @@ class Vendor {
         $GLOBALS['DB_PROTOCOL'] = self::getProtocolFromUrl($dbProtocol);
         $GLOBALS['ORIGIN_PROTOCOL'] = $ORIGIN_PROTOCOL;
         return $vendor_id;
-		
+		*/
     }
 
     /**
