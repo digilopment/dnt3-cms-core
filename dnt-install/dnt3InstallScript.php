@@ -49,7 +49,7 @@ function rrmdir($src) {
 
 $projectFolder = "dnt3/";
 
-if(downloadFile("https://bitbucket.org/digilopment/dnt3-platform/get/0ac29071b065.zip", "")){
+if(downloadFile("https://github.com/designdnt/cms-designdnt3/archive/master.zip", "")){
 	$zip = new ZipArchive;
 	$res = $zip->open('master.zip');
 	@file($res);
