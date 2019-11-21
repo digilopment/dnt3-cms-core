@@ -278,7 +278,7 @@ Class Install {
         if ($tables !== false) {
             $target_tables = array_intersect($target_tables, $tables);
         }
-        if ($vendor_id == false) {
+        if ($vendor_id === false) {
             $vendor_where = false;
             $contentVendor = false;
         } else {

@@ -15,8 +15,8 @@ error_reporting(0);
     $backup_name        = false;
     $tables             = false;
 	
-	if(isset($_GET['vendor_id']) && $_GET['vendor_id'] == 1){
-		$vendor_id 		= 1;
+	if(isset($_GET['vendor_id']) && $_GET['vendor_id'] == 0){
+		$vendor_id 		= 0;
 		$backup_name   	= "../dnt-install/install.sql";
 		//echo "Database was exported. - ".$backup_name;
 	}
