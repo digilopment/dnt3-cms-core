@@ -160,7 +160,10 @@ class Vendor {
     public static function getId() {
         if ($GLOBALS['VENDOR_ID']) {
             return $GLOBALS['VENDOR_ID'];
-        }
+        }else{
+			$GLOBALS['VENDOR_ID'] = 0;
+			return $GLOBALS['VENDOR_ID'];
+		}
 		
 		/*
         $db = new Db;
