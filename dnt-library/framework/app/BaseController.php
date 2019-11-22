@@ -1,5 +1,13 @@
 <?php
 
+/**
+ *  class       Autoload
+ *  author      Tomas Doubek
+ *  framework   DntLibrary
+ *  package     dnt3
+ *  date        2019
+ */
+
 class BaseController {
 
     protected $suffix = "generated";
@@ -53,7 +61,6 @@ class BaseController {
     }
 
     protected function cacheToSeconds($plugin) {
-
         $index = strtoupper(substr($plugin['cache'], -1));
         switch ($index) {
             case "S":
@@ -78,7 +85,6 @@ class BaseController {
                 $multiplier = 86400 * 365;
                 break;
         }
-
         $value = preg_replace("/[^0-9]/", "", $plugin['cache']);
         return $value * $multiplier;
     }
@@ -101,12 +107,13 @@ class BaseController {
     public function bodyParser($conf, $data) {
 
         $tplFunctions = "dnt-view/layouts/" . Vendor::getLayout() . "/tpl_functions.php";
-        if (file_exists($tplFunctions))
+        if (file_exists($tplFunctions)) {
             include $tplFunctions;
+        }
 
         $output = [];
         foreach ($conf as $plugin) {
-            
+
             if ($this->isCachedFile($plugin)) {
                 $output[$plugin['layout']][] = $this->getCachedFileToString($plugin, $data);
             } else {
@@ -114,31 +121,31 @@ class BaseController {
                 $this->createCacheFile($plugin, $html);
                 $output[$plugin['layout']][] = $html;
             }
-            if($plugin['layout'] == 'LAYOUT'){
+            if ($plugin['layout'] == 'LAYOUT') {
                 $pluginLayout = $plugin;
             }
         }
-       
-       $uniqLayout = [];
-       foreach($conf as $uniqPlugin){
-           if($uniqPlugin['layout'] == 'LAYOUT'){
+
+        $uniqLayout = [];
+        foreach ($conf as $uniqPlugin) {
+            if ($uniqPlugin['layout'] == 'LAYOUT') {
                 $uniqLayout[$uniqPlugin['layout']] = $pluginLayout;
-           }else{
+            } else {
                 $uniqLayout[$uniqPlugin['layout']] = 1;
-           }
-       }
-       
-       foreach($uniqLayout as $layoutKey => $plugin){
-           if($layoutKey == 'LAYOUT'){
-                $layout = $this->getTemplateToString($plugin, $data);
-            }else{
-                $layouts[] =    '<<!'.$layoutKey.'!>>';
-                $templates[] =  join("", $output[$layoutKey]);
             }
-       }
-       
-       $html = preg_replace($layouts, $templates, $layout);
-       echo $html;
+        }
+
+        foreach ($uniqLayout as $layoutKey => $plugin) {
+            if ($layoutKey == 'LAYOUT') {
+                $layout = $this->getTemplateToString($plugin, $data);
+            } else {
+                $layouts[] = '<<!' . $layoutKey . '!>>';
+                $templates[] = join("", $output[$layoutKey]);
+            }
+        }
+
+        $html = preg_replace($layouts, $templates, $layout);
+        echo $html;
     }
 
     protected function minify($html) {
@@ -155,12 +162,12 @@ class BaseController {
             '\\1',
             ''
         );
-        $html = preg_replace($search, $replace, $html);
-        return $html;
+        return preg_replace($search, $replace, $html);
     }
-    
+
     protected function modulConfigurator($data) {
         $confFile = "dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $data['article']['service'] . "/composer.conf";
+        $conf = [];
         if (file_exists($confFile)) {
             $xml = simplexml_load_file("dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $data['article']['service'] . "/composer.conf");
             foreach ($xml as $plugin) {

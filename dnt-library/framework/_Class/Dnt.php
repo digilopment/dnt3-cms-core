@@ -1115,7 +1115,7 @@ class Dnt {
     }
 
     public static function getCountryCode($ip) {
-        return strtolower(file_get_contents(GEO_IP_SERVICE . '' . $ip . ''));
+        return strtolower(@file_get_contents(GEO_IP_SERVICE . '' . $ip . ''));
     }
 
     /**

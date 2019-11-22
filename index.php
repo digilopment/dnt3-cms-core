@@ -14,12 +14,8 @@ $rest 		= new Rest;
 $dntLog 	= new DntLog;
 $dntCache 	= new Cache;
 $db 		= new Db;
+$modul 		= new Modul();
 
-if (!Install::db_exists()) {
-    Dnt::redirect("dnt-install/index.php");
-}
-
-$modul = new Modul();
 $client->setDomain(
 	$client->realUrl, 
 	$client->wwwPath, 

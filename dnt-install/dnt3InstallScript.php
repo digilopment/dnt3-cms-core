@@ -58,6 +58,7 @@ if(downloadFile("https://github.com/designdnt/cms-designdnt3/archive/master.zip"
 	recurse_copy($projectFolder."cms-designdnt3-master",$projectFolder);
 	rrmdir($projectFolder.'cms-designdnt3-master');
 	unlink('master.zip');
-	print ("\nInstalation finished\n");
+	print ("\nInstalation finished... redirecting\n");
+	print ("<script>window.setTimeout(location.href = '/".$projectFolder."dnt-install/index.php',5000)</script>");
 }
 ?>
