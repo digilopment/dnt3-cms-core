@@ -47,7 +47,7 @@ if ($modul->name) {
         "system_status" => "web_log",
         "msg" => "Web Log 404",
     ));
-    //$modul->load($client, "default");
+    $modul->load($client, "default");
 }
 
 

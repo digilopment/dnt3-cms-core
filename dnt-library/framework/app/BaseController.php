@@ -57,7 +57,7 @@ class BaseController {
         $file = str_replace("../", "", $plugin['tpl']);
         $file = explode(".", $file);
         $file = current($file);
-        return md5($this->path() . $file) . "-" . str_replace("/", "-", $file) . "-" . $plugin['cache'] . ".generated";
+        return md5($this->path() . $file) . "-" . str_replace("/", "-", $file) . "-" . $plugin['data']['post_id'] . "-" . $plugin['cache'] . ".generated";
     }
 
     protected function cacheToSeconds($plugin) {
@@ -113,7 +113,9 @@ class BaseController {
 
         $output = [];
         foreach ($conf as $plugin) {
-
+			
+			$plugin["data"] = $data;
+			
             if ($this->isCachedFile($plugin)) {
                 $output[$plugin['layout']][] = $this->getCachedFileToString($plugin, $data);
             } else {
