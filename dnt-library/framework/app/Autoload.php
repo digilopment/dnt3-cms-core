@@ -14,6 +14,10 @@ class Autoloader {
             include $file;
         }
     }
+	
+	public function className($module){
+		return str_replace(' ','',ucwords(str_replace('-', ' ', $module)));
+	}
 
     public function load($path) {
         /**

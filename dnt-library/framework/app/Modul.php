@@ -85,7 +85,7 @@ class Modul extends Database {
                     $i++;
                 }
             }
-            
+
             if ($i == count($request)) {
                 $returnString = "/" . join("/", $compareString);
             }
@@ -125,7 +125,7 @@ class Modul extends Database {
                 }
             }
         }
-        
+
         if ($client->route(1) == "") {
             $default = $client->getSetting("startovaci_modul"); //Settings::get("startovaci_modul");
             $moduleUrl = $this->getSitemapModules($default);
@@ -151,12 +151,21 @@ class Modul extends Database {
         $function = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/functions.php";
         $template = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/webhook.php";
         $webhookModule = "dnt-modules/" . $module . "/webhook.php";
-        if (file_exists($function))
-            include $function;
-        if (file_exists($webhookModule)) {
-            include $webhookModule;
-        } elseif (file_exists($template)) {
-            include $template;
+        $controller = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/" . (new Autoloader())->className($module) . "Controller.php";
+        
+        if (file_exists($controller)) {
+            include $controller;
+            $clsName = (new Autoloader())->className($module) . "Controller";
+            $moduleClass = new $clsName();
+            $moduleClass->run();
+        } else { //older templates
+            if (file_exists($function))
+                include $function;
+            if (file_exists($webhookModule)) {
+                include $webhookModule;
+            } elseif (file_exists($template)) {
+                include $template;
+            }
         }
     }
 

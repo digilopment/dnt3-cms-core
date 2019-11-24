@@ -1,6 +1,6 @@
 <?php
 
-class defaultModulController extends BaseController {
+class SkeletonController extends BaseController {
 
     public function run() {
         $article = new ArticleView;
@@ -16,6 +16,3 @@ class defaultModulController extends BaseController {
     }
 
 }
-
-$modul = new defaultModulController();
-$modul->run();

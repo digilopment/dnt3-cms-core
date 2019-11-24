@@ -1,6 +1,6 @@
 <?php
 
-class defaultModulController extends BaseController {
+class DefaultController extends BaseController {
 
     public function run() {
         $article = new ArticleView;
@@ -8,10 +8,6 @@ class defaultModulController extends BaseController {
 
         if ($id) {
             header("HTTP/1.0 404 Not Found");
-            $article = new ArticleView;
-            $articleName = $article->getPostParam("name", $id);
-            $service_id = $article->getPostParam("service_id", $id);
-            $articleImage = $article->getPostImage($id);
             $data = Frontend::get();
             $this->modulConfigurator($data);
         } else {
@@ -20,6 +16,3 @@ class defaultModulController extends BaseController {
     }
 
 }
-
-$modul = new defaultModulController();
-$modul->run();
