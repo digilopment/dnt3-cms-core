@@ -7,7 +7,6 @@ class SkeletonController extends BaseController {
         $id = $article->getStaticId();
 
         if ($id) {
-            $article = new ArticleView;
             $data = Frontend::get();
             $this->modulConfigurator($data);
         } else {

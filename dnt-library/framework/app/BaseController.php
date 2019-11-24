@@ -9,7 +9,8 @@
  */
 class BaseController {
 
-    protected $suffix = "generated";
+    protected $suffix = 'generated';
+    protected $confFile = 'pluginCompose.conf';
 
     protected function path() {
         return "dnt-view/layouts/" . Vendor::getLayout() . "/plugins/";
@@ -216,11 +217,11 @@ class BaseController {
 
     protected function modulConfigurator($data) {
         if (isset($data['article']['service'])) {
-            $confFile = "dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $data['article']['service'] . "/composer.conf";
+            $confFile = "dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $data['article']['service'] . "/" . $this->confFile;
             $conf = [];
 
             if (file_exists($confFile)) {
-                $xml = simplexml_load_file("dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $data['article']['service'] . "/composer.conf");
+                $xml = simplexml_load_file("dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $data['article']['service'] . "/" . $this->confFile);
                 foreach ($xml as $plugin) {
                     $name = (string) $plugin['name'];
                     //	var_dump($name);
