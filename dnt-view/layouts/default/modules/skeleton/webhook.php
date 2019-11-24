@@ -1,6 +1,6 @@
 <?php
 class defaultModulController extends BaseController {
-
+	
     public function run() {
         $article = new ArticleView;
         $id = $article->getStaticId();

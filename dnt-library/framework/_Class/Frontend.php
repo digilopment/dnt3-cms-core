@@ -122,6 +122,17 @@ class Frontend {
         }
     }
 	
+	public static function ENV($data,$plugin){
+		if(isset($data['PLUGINS'])){
+			return (object) $data['PLUGINS'][$plugin];
+		}
+		return false;
+	}
+	
+	public static function pluginBridgeVar(){
+		
+	}
+	
 	 /**
      * 
      * @param type $data

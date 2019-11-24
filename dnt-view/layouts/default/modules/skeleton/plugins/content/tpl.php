@@ -1,5 +1,5 @@
 
-      <main role="main">
+	  <main role="main">
          <!-- Main jumbotron for a primary marketing message or call to action -->
          <div class="jumbotron">
             <div class="container">
@@ -10,6 +10,11 @@
          </div>
          <div class="container">
             <!-- Example row of columns -->
+			<div class="row">
+				 <div class="col-md-4">
+                  <h2><?php print( $data['ENV']->limit ); ?></h2>
+               </div>
+			</div>
             <div class="row">
                <div class="col-md-4">
                   <h2>Heading</h2>

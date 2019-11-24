@@ -29,8 +29,35 @@ class BaseController {
 
     protected function getTemplateToString($plugin, $data) {
         ob_start();
-        include $this->path() . $plugin['tpl'];
-        $string = ob_get_clean();
+		
+		$controller 	= $plugin['tpl'].'.php';
+		$pathCompose 	= '';
+		$pluginName		= '';
+		
+		if(isset($plugin['type']) && $plugin['type'] == 'mdl'){
+			$controller = $plugin['tpl'] .'/'. $plugin['tpl'] . 'PluginControll.php';
+		}
+		if(isset($plugin['level']) && $plugin['level'] == 'local'){
+			$pathCompose = '../modules/'.$data['article']['service'].'/plugins/';
+		}
+		
+		
+		
+		if(isset($plugin['type']) && $plugin['type'] == 'mdl'){
+			$clsName = $plugin['tpl']."PluginControll";
+			if (!class_exists($clsName)) {
+				include $this->path() . $pathCompose . $controller;
+				$plugin = new $clsName($data, $plugin['id']);
+				$plugin->run();
+			}else{
+				$plugin = new $clsName($data, $plugin['id']);
+				$plugin->run();
+			}
+		}else{
+			include $this->path() . $pathCompose . $controller;
+		}
+        
+		$string = ob_get_clean();
         return $string;
     }
 
@@ -57,7 +84,20 @@ class BaseController {
         $file = str_replace("../", "", $plugin['tpl']);
         $file = explode(".", $file);
         $file = current($file);
-        return md5($this->path() . $file) . "-" . str_replace("/", "-", $file) . "-" . $plugin['data']['post_id'] . "-" . $plugin['cache'] . ".generated";
+		if(isset($plugin['cache_id'])){
+			$cacheId = (isset($_GET['src']) && $plugin['cache_id'] == 'GET[src]') ? str_replace("/","-",$_GET['src']) : false;
+		}else{
+			$cacheId = false;
+		}
+        return 
+			md5($this->path() . $file) . "-" . 
+			str_replace("/", "-", $file) . "-" . 
+			$plugin['level'] . "-" . 
+			$plugin['data']['post_id'] . "-" . 
+			$plugin['id'] . "-" . 
+			Vendor::getId() . "-" . 
+			$cacheId . "-" . 
+			$plugin['cache'] . ".generated";
     }
 
     protected function cacheToSeconds($plugin) {
@@ -104,8 +144,8 @@ class BaseController {
         return false;
     }
 
-    public function bodyParser($conf, $data) {
-
+    public function bodyParser($conf, $pluginKeys, $data) {
+		
         $tplFunctions = "dnt-view/layouts/" . Vendor::getLayout() . "/tpl_functions.php";
         if (file_exists($tplFunctions)) {
             include $tplFunctions;
@@ -120,7 +160,7 @@ class BaseController {
                 $output[$plugin['layout']][] = $this->getCachedFileToString($plugin, $data);
             } else {
                 $html = $this->getTemplateToString($plugin, $data);
-                $this->createCacheFile($plugin, $html);
+				$this->createCacheFile($plugin, $html);
                 $output[$plugin['layout']][] = $html;
             }
             if ($plugin['layout'] == 'LAYOUT') {
@@ -168,20 +208,36 @@ class BaseController {
     }
 
     protected function modulConfigurator($data) {
-        $confFile = "dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $data['article']['service'] . "/composer.conf";
-        $conf = [];
-        if (file_exists($confFile)) {
-            $xml = simplexml_load_file("dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $data['article']['service'] . "/composer.conf");
-            foreach ($xml as $plugin) {
-                $name = (string) $plugin['name'];
-                foreach ($plugin->VAR as $var) {
-                    $conf[$name][(string) $var['id']] = (string) $var['value'];
-                }
-            }
-            $this->bodyParser($conf, $data);
-        } else {
-            die("No config file found <b>" . $confFile . "</b>");
-        }
+		if(isset($data['article']['service'])){
+			$confFile = "dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $data['article']['service'] . "/composer.conf";
+			$conf = [];
+			
+			if (file_exists($confFile)) {
+				$xml = simplexml_load_file("dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $data['article']['service'] . "/composer.conf");	
+				foreach ($xml as $plugin) {
+					$name = (string) $plugin['name'];
+				//	var_dump($name);
+					foreach ($plugin->VAR as $var) {
+						$conf[$name][(string) $var['id']] = (string) $var['value'];
+					}
+				}
+				$data['PLUGINS'] = $conf;
+			} else {
+				die("No config file found <b>" . $confFile . "</b>");
+			}
+			
+			foreach ($xml as $plugin) {
+				$name = (string) $plugin['name'];
+				foreach ($plugin->VAR as $var) {
+					$conf[$name][(string) $var['id']] = (string) $var['value'];
+				}
+			}
+			$pluginKeys = array_keys($conf);
+			$this->bodyParser($conf, $pluginKeys, $data);
+			
+		}else{
+			die('No $data["article"]["service"] service set');
+		}
     }
 
     protected function modulLoader($data, $file) {
