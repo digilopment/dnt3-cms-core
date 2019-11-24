@@ -20,23 +20,26 @@ class Rest {
      * this method creat a GET method of `default` and `rewrited` addr
      */
     public function get($get) {
-        $addr1 = explode($get . "=", WWW_FULL_PATH);
-
-        if (isset($addr1[1])) {
-            $addr = $addr1[1];
-            if (isset($addr1[1])) {
-                if (explode("&", @$addr1[1]) == true) {
-
-                    if (isset($addr1[1])) {
-                        @$addr2 = explode("&", @$addr1[1]);
-                        $this->get = @$addr2[0];
-                    }
-                } else {
-                    $this->get = $addr;
-                }
-            }
-        }
-        return $this->get;
+		$return = false;
+		if(isset($_GET[SRC]) && $get==SRC){
+			$return = $_GET[SRC];
+		}else{
+			$addr1 = explode($get . "=", WWW_FULL_PATH);
+			if (isset($addr1[1])) {
+				$addr = $addr1[1];
+				if (isset($addr1[1])) {
+					if (explode("&", @$addr1[1]) == true) {
+						if (isset($addr1[1])) {
+							@$addr2 = explode("&", @$addr1[1]);
+							$return = @$addr2[0];
+						}
+					} else {
+						$return = $addr;
+					}
+				}
+			}
+		}
+        return $return;
     }
 
     /**

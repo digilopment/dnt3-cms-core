@@ -81,13 +81,21 @@ class BaseController {
     }
 
     protected function pluginCacheName($plugin) {
+		
         $file = str_replace("../", "", $plugin['tpl']);
         $file = explode(".", $file);
         $file = current($file);
+
+		$cacheId = false;
 		if(isset($plugin['cache_id'])){
-			$cacheId = (isset($_GET['src']) && $plugin['cache_id'] == 'GET[src]') ? str_replace("/","-",$_GET['src']) : false;
-		}else{
-			$cacheId = false;
+			//var_dump($plugin['cache_id']);
+			if(Dnt::in_string('GET{', $plugin['cache_id'])){
+				$val = str_replace('GET{','',$plugin['cache_id']);
+				$val = str_replace('}','',$val);
+				//var_dump($val);
+				$cacheId = (!empty((new Rest())->get($val)) && $plugin['cache_id'] == 'GET{'.$val.'}') ? str_replace("/","-",(new Rest())->get($val)) : false;
+				//var_dump($cacheId);
+			}
 		}
         return 
 			md5($this->path() . $file) . "-" . 
