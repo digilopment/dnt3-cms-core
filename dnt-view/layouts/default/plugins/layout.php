@@ -1,6 +1,6 @@
 <!HEAD-CONTENT!>
     <body>
         <!MAIN-CONTENT!>
-		<!SCRIPTS!>
+        <!SCRIPTS!>
     </body>
 <!BOTTOM-CONTENT!>

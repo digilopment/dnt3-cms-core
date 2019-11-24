@@ -6,11 +6,19 @@ class Plugin {
 
     public function __construct($data, $currentPlugin) {
         $this->data = $data;
-        $this->data['ENV'] = Frontend::ENV($data, $currentPlugin);
+        $this->data['ENV'] = $this->env($data, $currentPlugin);
     }
 
-    protected function layout($path, $layout) {
+    protected function env($data, $plugin) {
+        if (isset($data['PLUGINS'])) {
+            return (object) $data['PLUGINS'][$plugin];
+        }
+        return false;
+    }
 
+    protected function layout($path, $layout, $pluginData = false) {
+
+        $this->data['plugin_data'] = $pluginData;
         $data = $this->data;
         $file = dirname($path) . "/" . $layout . ".php";
         if (file_exists($file)) {

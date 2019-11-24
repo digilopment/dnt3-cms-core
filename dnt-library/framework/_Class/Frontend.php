@@ -93,8 +93,8 @@ class Frontend {
             return false;
         }
     }
-	
-	/**
+
+    /**
      * 
      * @param type $data
      * @param type $key
@@ -121,19 +121,12 @@ class Frontend {
             return false;
         }
     }
-	
-	public static function ENV($data,$plugin){
-		if(isset($data['PLUGINS'])){
-			return (object) $data['PLUGINS'][$plugin];
-		}
-		return false;
-	}
-	
-	public static function pluginBridgeVar(){
-		
-	}
-	
-	 /**
+
+    public static function pluginBridgeVar() {
+        
+    }
+
+    /**
      * 
      * @param type $data
      * @param type $key
