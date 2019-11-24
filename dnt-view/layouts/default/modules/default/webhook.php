@@ -1,4 +1,5 @@
 <?php
+
 class defaultModulController extends BaseController {
 
     public function run() {
@@ -17,7 +18,7 @@ class defaultModulController extends BaseController {
             Dnt::redirect(WWW_PATH . "404");
         }
     }
-    
+
 }
 
 $modul = new defaultModulController();

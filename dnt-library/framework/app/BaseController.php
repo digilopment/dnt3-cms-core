@@ -7,7 +7,6 @@
  *  package     dnt3
  *  date        2019
  */
-
 class BaseController {
 
     protected $suffix = "generated";
@@ -29,35 +28,35 @@ class BaseController {
 
     protected function getTemplateToString($plugin, $data) {
         ob_start();
-		
-		$controller 	= $plugin['tpl'].'.php';
-		$pathCompose 	= '';
-		$pluginName		= '';
-		
-		if(isset($plugin['type']) && $plugin['type'] == 'mdl'){
-			$controller = $plugin['tpl'] .'/'. $plugin['tpl'] . 'PluginControll.php';
-		}
-		if(isset($plugin['level']) && $plugin['level'] == 'local'){
-			$pathCompose = '../modules/'.$data['article']['service'].'/plugins/';
-		}
-		
-		
-		
-		if(isset($plugin['type']) && $plugin['type'] == 'mdl'){
-			$clsName = $plugin['tpl']."PluginControll";
-			if (!class_exists($clsName)) {
-				include $this->path() . $pathCompose . $controller;
-				$plugin = new $clsName($data, $plugin['id']);
-				$plugin->run();
-			}else{
-				$plugin = new $clsName($data, $plugin['id']);
-				$plugin->run();
-			}
-		}else{
-			include $this->path() . $pathCompose . $controller;
-		}
-        
-		$string = ob_get_clean();
+
+        $controller = $plugin['tpl'] . '.php';
+        $pathCompose = '';
+        $pluginName = '';
+
+        if (isset($plugin['type']) && $plugin['type'] == 'mdl') {
+            $controller = $plugin['tpl'] . '/' . $plugin['tpl'] . 'PluginControll.php';
+        }
+        if (isset($plugin['level']) && $plugin['level'] == 'local') {
+            $pathCompose = '../modules/' . $data['article']['service'] . '/plugins/';
+        }
+
+
+
+        if (isset($plugin['type']) && $plugin['type'] == 'mdl') {
+            $clsName = $plugin['tpl'] . "PluginControll";
+            if (!class_exists($clsName)) {
+                include $this->path() . $pathCompose . $controller;
+                $plugin = new $clsName($data, $plugin['id']);
+                $plugin->run();
+            } else {
+                $plugin = new $clsName($data, $plugin['id']);
+                $plugin->run();
+            }
+        } else {
+            include $this->path() . $pathCompose . $controller;
+        }
+
+        $string = ob_get_clean();
         return $string;
     }
 
@@ -81,31 +80,31 @@ class BaseController {
     }
 
     protected function pluginCacheName($plugin) {
-		
+
         $file = str_replace("../", "", $plugin['tpl']);
         $file = explode(".", $file);
         $file = current($file);
 
-		$cacheId = false;
-		if(isset($plugin['cache_id'])){
-			//var_dump($plugin['cache_id']);
-			if(Dnt::in_string('GET{', $plugin['cache_id'])){
-				$val = str_replace('GET{','',$plugin['cache_id']);
-				$val = str_replace('}','',$val);
-				//var_dump($val);
-				$cacheId = (!empty((new Rest())->get($val)) && $plugin['cache_id'] == 'GET{'.$val.'}') ? str_replace("/","-",(new Rest())->get($val)) : false;
-				//var_dump($cacheId);
-			}
-		}
-        return 
-			md5($this->path() . $file) . "-" . 
-			str_replace("/", "-", $file) . "-" . 
-			$plugin['level'] . "-" . 
-			$plugin['data']['post_id'] . "-" . 
-			$plugin['id'] . "-" . 
-			Vendor::getId() . "-" . 
-			$cacheId . "-" . 
-			$plugin['cache'] . ".generated";
+        $cacheId = false;
+        if (isset($plugin['cache_id'])) {
+            //var_dump($plugin['cache_id']);
+            if (Dnt::in_string('GET{', $plugin['cache_id'])) {
+                $val = str_replace('GET{', '', $plugin['cache_id']);
+                $val = str_replace('}', '', $val);
+                //var_dump($val);
+                $cacheId = (!empty((new Rest())->get($val)) && $plugin['cache_id'] == 'GET{' . $val . '}') ? str_replace("/", "-", (new Rest())->get($val)) : false;
+                //var_dump($cacheId);
+            }
+        }
+        return
+                md5($this->path() . $file) . "-" .
+                str_replace("/", "-", $file) . "-" .
+                $plugin['level'] . "-" .
+                $plugin['data']['post_id'] . "-" .
+                $plugin['id'] . "-" .
+                Vendor::getId() . "-" .
+                $cacheId . "-" .
+                $plugin['cache'] . ".generated";
     }
 
     protected function cacheToSeconds($plugin) {
@@ -153,7 +152,7 @@ class BaseController {
     }
 
     public function bodyParser($conf, $pluginKeys, $data) {
-		
+
         $tplFunctions = "dnt-view/layouts/" . Vendor::getLayout() . "/tpl_functions.php";
         if (file_exists($tplFunctions)) {
             include $tplFunctions;
@@ -161,14 +160,14 @@ class BaseController {
 
         $output = [];
         foreach ($conf as $plugin) {
-			
-			$plugin["data"] = $data;
-			
+
+            $plugin["data"] = $data;
+
             if ($this->isCachedFile($plugin)) {
                 $output[$plugin['layout']][] = $this->getCachedFileToString($plugin, $data);
             } else {
                 $html = $this->getTemplateToString($plugin, $data);
-				$this->createCacheFile($plugin, $html);
+                $this->createCacheFile($plugin, $html);
                 $output[$plugin['layout']][] = $html;
             }
             if ($plugin['layout'] == 'LAYOUT') {
@@ -216,36 +215,35 @@ class BaseController {
     }
 
     protected function modulConfigurator($data) {
-		if(isset($data['article']['service'])){
-			$confFile = "dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $data['article']['service'] . "/composer.conf";
-			$conf = [];
-			
-			if (file_exists($confFile)) {
-				$xml = simplexml_load_file("dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $data['article']['service'] . "/composer.conf");	
-				foreach ($xml as $plugin) {
-					$name = (string) $plugin['name'];
-				//	var_dump($name);
-					foreach ($plugin->VAR as $var) {
-						$conf[$name][(string) $var['id']] = (string) $var['value'];
-					}
-				}
-				$data['PLUGINS'] = $conf;
-			} else {
-				die("No config file found <b>" . $confFile . "</b>");
-			}
-			
-			foreach ($xml as $plugin) {
-				$name = (string) $plugin['name'];
-				foreach ($plugin->VAR as $var) {
-					$conf[$name][(string) $var['id']] = (string) $var['value'];
-				}
-			}
-			$pluginKeys = array_keys($conf);
-			$this->bodyParser($conf, $pluginKeys, $data);
-			
-		}else{
-			die('No $data["article"]["service"] service set');
-		}
+        if (isset($data['article']['service'])) {
+            $confFile = "dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $data['article']['service'] . "/composer.conf";
+            $conf = [];
+
+            if (file_exists($confFile)) {
+                $xml = simplexml_load_file("dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $data['article']['service'] . "/composer.conf");
+                foreach ($xml as $plugin) {
+                    $name = (string) $plugin['name'];
+                    //	var_dump($name);
+                    foreach ($plugin->VAR as $var) {
+                        $conf[$name][(string) $var['id']] = (string) $var['value'];
+                    }
+                }
+                $data['PLUGINS'] = $conf;
+            } else {
+                die("No config file found <b>" . $confFile . "</b>");
+            }
+
+            foreach ($xml as $plugin) {
+                $name = (string) $plugin['name'];
+                foreach ($plugin->VAR as $var) {
+                    $conf[$name][(string) $var['id']] = (string) $var['value'];
+                }
+            }
+            $pluginKeys = array_keys($conf);
+            $this->bodyParser($conf, $pluginKeys, $data);
+        } else {
+            die('No $data["article"]["service"] service set');
+        }
     }
 
     protected function modulLoader($data, $file) {

@@ -1,2 +1,2 @@
-<script src="<?php echo WWW_PATH;?>dnt-view/layouts/default/js/skeleton/jquery-3.3.1.slim.min.js"></script>
-<script src="<?php echo WWW_PATH;?>dnt-view/layouts/default/js/skeleton/bootstrap.bundle.min.js" ></script>
+<script src="<?php echo WWW_PATH; ?>dnt-view/layouts/default/js/skeleton/jquery-3.3.1.slim.min.js"></script>
+<script src="<?php echo WWW_PATH; ?>dnt-view/layouts/default/js/skeleton/bootstrap.bundle.min.js" ></script>
