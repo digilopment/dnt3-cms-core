@@ -1,7 +1,7 @@
 <?php
 
 /**
- *  class       Autoload
+ *  class       BaseControll
  *  author      Tomas Doubek
  *  framework   DntLibrary
  *  package     dnt3

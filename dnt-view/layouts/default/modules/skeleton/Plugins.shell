@@ -26,7 +26,7 @@ type =>
 	
 -->
 
-<MODULE cache="1"><!-- THIS CACHE ALLOW (1) OR DISABLE (0) ALL PLUGINS CACHE -->
+<MODULE cache="0"><!-- THIS CACHE ALLOW (1) OR DISABLE (0) ALL PLUGINS CACHE -->
    
    <PLUGIN name="layout">
       <VAR id="id" value="layout" />
@@ -55,6 +55,7 @@ type =>
            <VAR id="cache" value="1H" />
            <VAR id="cache_id" value="" />
            <VAR id="compress" value="1" />
+           <VAR id="type" value="mdl" />
            <VAR id="tpl" value="navigation" />
         </PLUGIN>
 
