@@ -1,6 +1,6 @@
-<MODULE cache="10M">
+<MODULE cache="1">
    
-<PLUGIN name="layout">
+   <PLUGIN name="layout">
       <VAR id="id" value="layout" />
       <VAR id="layout" value="LAYOUT" />
       <VAR id="level" value="global" />

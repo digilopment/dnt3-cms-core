@@ -10,7 +10,7 @@
 class BaseController {
 
     protected $suffix = 'generated';
-    protected $confFile = 'pluginCompose.conf';
+    protected $confFile = 'Plugins.shell';
 
     protected function path() {
         return "dnt-view/layouts/" . Vendor::getLayout() . "/plugins/";
