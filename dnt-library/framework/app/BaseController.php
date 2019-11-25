@@ -44,7 +44,7 @@ class BaseController {
 
 
         if (isset($plugin['type']) && $plugin['type'] == 'mdl') {
-            $clsName = $plugin['tpl'] . "PluginControll";
+            $clsName = (new Autoloader())->className($plugin['tpl']) . "PluginControll";
             if (!class_exists($clsName)) {
                 include $this->path() . $pathCompose . $controller;
                 $plugin = new $clsName($data, $plugin['id']);

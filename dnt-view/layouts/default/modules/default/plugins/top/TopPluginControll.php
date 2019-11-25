@@ -1,6 +1,6 @@
 <?php
 
-class topPluginControll extends Plugin {
+class TopPluginControll extends Plugin {
     
     protected $loc = __FILE__;
     

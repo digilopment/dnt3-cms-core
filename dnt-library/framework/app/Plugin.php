@@ -34,5 +34,5 @@ class Plugin {
             die("layout " . $layout . " not exists");
         }
     }
-
+    
 }

@@ -1,6 +1,6 @@
 <?php
 
-class navigationPluginControll extends Plugin {
+class NavigationPluginControll extends Plugin {
 
     protected $loc = __FILE__;
 

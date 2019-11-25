@@ -1,6 +1,6 @@
 <?php
 
-class contentPluginControll extends Plugin {
+class ContentPluginControll extends Plugin {
     
     protected $loc = __FILE__;
     
