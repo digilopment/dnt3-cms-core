@@ -88,13 +88,10 @@ class BaseController {
 
         $cacheId = false;
         if (isset($plugin['cache_id'])) {
-            //var_dump($plugin['cache_id']);
             if (Dnt::in_string('GET{', $plugin['cache_id'])) {
                 $val = str_replace('GET{', '', $plugin['cache_id']);
                 $val = str_replace('}', '', $val);
-                //var_dump($val);
                 $cacheId = (!empty((new Rest())->get($val)) && $plugin['cache_id'] == 'GET{' . $val . '}') ? str_replace("/", "-", (new Rest())->get($val)) : false;
-                //var_dump($cacheId);
             }
         }
         return
@@ -145,14 +142,14 @@ class BaseController {
         }
     }
 
-    protected function isCachedFile($plugin) {
-        if (file_exists($this->cachedFile($plugin)) && $this->inCacheRange($plugin)) {
+    protected function isCachedFile($plugin, $allowCache) {
+        if (file_exists($this->cachedFile($plugin)) && $this->inCacheRange($plugin) && $allowCache) {
             return true;
         }
         return false;
     }
 
-    public function bodyParser($conf, $pluginKeys, $data) {
+    public function bodyParser($conf, $pluginKeys, $allowCache, $data) {
 
         $tplFunctions = "dnt-view/layouts/" . Vendor::getLayout() . "/tpl_functions.php";
         if (file_exists($tplFunctions)) {
@@ -164,11 +161,13 @@ class BaseController {
 
             $plugin["data"] = $data;
 
-            if ($this->isCachedFile($plugin)) {
+            if ($this->isCachedFile($plugin, $allowCache)) {
                 $output[$plugin['layout']][] = $this->getCachedFileToString($plugin, $data);
             } else {
                 $html = $this->getTemplateToString($plugin, $data);
-                $this->createCacheFile($plugin, $html);
+                if ($allowCache) {
+                    $this->createCacheFile($plugin, $html);
+                }
                 $output[$plugin['layout']][] = $html;
             }
             if ($plugin['layout'] == 'LAYOUT') {
@@ -221,10 +220,10 @@ class BaseController {
             $conf = [];
 
             if (file_exists($confFile)) {
-                $xml = simplexml_load_file("dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $data['article']['service'] . "/" . $this->confFile);
+                $xml = simplexml_load_file($confFile);
+                $allowCache = (string) $xml['cache'];
                 foreach ($xml as $plugin) {
                     $name = (string) $plugin['name'];
-                    //	var_dump($name);
                     foreach ($plugin->VAR as $var) {
                         $conf[$name][(string) $var['id']] = (string) $var['value'];
                     }
@@ -241,7 +240,7 @@ class BaseController {
                 }
             }
             $pluginKeys = array_keys($conf);
-            $this->bodyParser($conf, $pluginKeys, $data);
+            $this->bodyParser($conf, $pluginKeys, $allowCache, $data);
         } else {
             die('No $data["article"]["service"] service set');
         }
