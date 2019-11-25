@@ -6,12 +6,19 @@ class Plugin {
 
     public function __construct($data, $currentPlugin) {
         $this->data = $data;
-        $this->data['ENV'] = $this->env($data, $currentPlugin);
+        $this->data['ENV'] = $this->envDriver($data, $currentPlugin);
     }
 
-    protected function env($data, $plugin) {
+    protected function envDriver($data, $plugin) {
         if (isset($data['PLUGINS'])) {
             return (object) $data['PLUGINS'][$plugin];
+        }
+        return false;
+    }
+
+    public function env($env) {
+        if (isset($this->data['ENV']->$env)) {
+            return $this->data['ENV']->$env;
         }
         return false;
     }

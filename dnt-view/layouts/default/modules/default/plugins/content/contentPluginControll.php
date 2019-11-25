@@ -2,9 +2,11 @@
 
 class contentPluginControll extends Plugin {
 
+    protected $loc = __FILE__;
+
     public function run() {
         $pluginData = ['array' => 'pluginData'];
-        $this->layout(__FILE__, 'tpl', $pluginData);
+        $this->layout($this->loc, 'tpl', $pluginData);
     }
 
 }
