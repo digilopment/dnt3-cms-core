@@ -155,23 +155,21 @@ class Modul extends Database {
         $controller = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/" . (new Autoloader())->className($module) . "Controller.php";
         $function = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/functions.php";
         $webhook = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/webhook.php";
-        $return = false;
+        
         if (file_exists($controller)) {
             include $controller;
             $clsName = (new Autoloader())->className($module) . "Controller";
             $moduleClass = new $clsName();
             $moduleClass->run();
-            $return = true;
         } else {
             if (file_exists($function)) {
                 include $function;
             }
             if (file_exists($webhook)) {
                 include $webhook;
-                $return = true;
             }
         }
-        return $return;
+        exit; //performance optimalization
     }
 
     public function load($client, $module) {
