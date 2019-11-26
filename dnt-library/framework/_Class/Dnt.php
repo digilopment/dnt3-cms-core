@@ -103,7 +103,7 @@ class Dnt {
         $db->update(
                 'dnt_posts', //table
                 array(//set
-            'id_entity' => $lastId
+                    'id_entity' => $lastId
                 ), array(//where
             'id' => $lastId
                 )
@@ -170,15 +170,14 @@ class Dnt {
      */
     function rrmdir($dirPath) {
         $files = new RecursiveIteratorIterator(
-			new RecursiveDirectoryIterator($dirPath, RecursiveDirectoryIterator::SKIP_DOTS),
-			RecursiveIteratorIterator::CHILD_FIRST
-		);
+                new RecursiveDirectoryIterator($dirPath, RecursiveDirectoryIterator::SKIP_DOTS),
+                RecursiveIteratorIterator::CHILD_FIRST
+        );
 
-		foreach ($files as $fileinfo) {
-			$todo = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
-			$todo($fileinfo->getRealPath());
-		}
-
+        foreach ($files as $fileinfo) {
+            $todo = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
+            $todo($fileinfo->getRealPath());
+        }
     }
 
     /**
@@ -421,21 +420,21 @@ class Dnt {
 
         return $os_platform;
     }
-	
-	public static function downloadFile($url, $cesta){
-		$img = explode("/", $url);
-		$array = $img;
-		if (!is_array($array)) 
-			return $array; 
-		if (!count($array)) 
-			return null; 
-		end($array); 
-		$fotka = $array[key($array)];
-		
-		$img = $cesta.$fotka;
-		file_put_contents($img, file_get_contents($url));
-		return array("file" => $fotka, "path" => $cesta);
-	}
+
+    public static function downloadFile($url, $cesta) {
+        $img = explode("/", $url);
+        $array = $img;
+        if (!is_array($array))
+            return $array;
+        if (!count($array))
+            return null;
+        end($array);
+        $fotka = $array[key($array)];
+
+        $img = $cesta . $fotka;
+        file_put_contents($img, file_get_contents($url));
+        return array("file" => $fotka, "path" => $cesta);
+    }
 
     function getBrowser($user_agent) {
 
@@ -536,11 +535,11 @@ class Dnt {
      */
     public static function creat_name_url($name, $name_url) {
 
-		if(self::in_string("<WWW_PATH>", $name_url)){
-			$name_url = explode("WWW_PATH",  $name_url);
-			$name_url = "<WWW_PATH>".self::name_url($name_url[1]);
-			return $name_url;
-		}
+        if (self::in_string("<WWW_PATH>", $name_url)) {
+            $name_url = explode("WWW_PATH", $name_url);
+            $name_url = "<WWW_PATH>" . self::name_url($name_url[1]);
+            return $name_url;
+        }
 
         if (empty($name_url)) {
             return self::name_url($name);
@@ -1038,32 +1037,31 @@ class Dnt {
             return true;
         return (self::rmkdir(dirname($path)) and mkdir($path));
     }
-	
-	public static function orderby($data, $column = "id", $sort = "ASC"){
-		$sortArray = array(); 
-		foreach($data as $item){ 
-			foreach($item as $key=>$value){ 
-				if(!isset($sortArray[$key])){ 
-					$sortArray[$key] = array(); 
-				} 
-				$sortArray[$key][] = $value; 
-			}
-			if($column == "datetime_publish"){
-				$sortArray['datetime'][] = strtotime($item[$column]);
-				$orderby = "datetime";
-			}					
-		} 
-		
-		$orderby = $column;
-		
-		if($sort == "ASC" || $sort == "asc"){
-			array_multisort($sortArray[$orderby],SORT_ASC,$data);
-		}else{
-			array_multisort($sortArray[$orderby],SORT_DESC,$data);
-		}
-		return $data;
-			
-	}
+
+    public static function orderby($data, $column = "id", $sort = "ASC") {
+        $sortArray = array();
+        foreach ($data as $item) {
+            foreach ($item as $key => $value) {
+                if (!isset($sortArray[$key])) {
+                    $sortArray[$key] = array();
+                }
+                $sortArray[$key][] = $value;
+            }
+            if ($column == "datetime_publish") {
+                $sortArray['datetime'][] = strtotime($item[$column]);
+                $orderby = "datetime";
+            }
+        }
+
+        $orderby = $column;
+
+        if ($sort == "ASC" || $sort == "asc") {
+            array_multisort($sortArray[$orderby], SORT_ASC, $data);
+        } else {
+            array_multisort($sortArray[$orderby], SORT_DESC, $data);
+        }
+        return $data;
+    }
 
     /* 	
      *

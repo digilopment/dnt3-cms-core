@@ -153,11 +153,11 @@ class Modul extends Database {
         $webhookModule = "dnt-modules/" . $module . "/webhook.php";
 
         $controller = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/" . (new Autoloader())->className($module) . "Controller.php";
-        $globalController = "dnt-modules/" . $module . "/" . (new Autoloader())->className($module) . "Controller.php";
-
+        $globalController = "dnt-modules/" . $module . "/" . (new Autoloader())->className($module) . "ModuleController.php";
+        
         if (file_exists($globalController)) {
             include $globalController;
-            $clsName = (new Autoloader())->className($module) . "Controller";
+            $clsName = (new Autoloader())->className($module) . "ModuleController";
             $moduleClass = new $clsName();
             $moduleClass->run();
         } elseif (file_exists($controller)) {
@@ -168,8 +168,9 @@ class Modul extends Database {
             
         //older templates
         } else { 
-            if (file_exists($function))
+            if (file_exists($function)){
                 include $function;
+            }
             if (file_exists($webhookModule)) {
                 include $webhookModule;
             } elseif (file_exists($template)) {

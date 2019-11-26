@@ -1,6 +1,6 @@
 <?php
 
-class AutoRedirectController extends Client {
+class AutoRedirectModuleController extends Client {
 
     public function run() {
         $this->init();
@@ -13,7 +13,6 @@ class AutoRedirectController extends Client {
         $url = $this->wwwPath . $this->lang . "/" . $name_url;
 
         $type = $articleView->getPostParam("type", $articleId);
-
         //internal redirect
         if (Dnt::in_string("<WWW_PATH>", $name_url)) {
             Dnt::redirect(str_replace("<WWW_PATH>", WWW_PATH, $name_url));

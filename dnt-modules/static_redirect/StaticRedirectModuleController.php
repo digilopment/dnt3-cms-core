@@ -1,6 +1,6 @@
 <?php
 
-class StaticRedirectController {
+class StaticRedirectModuleController {
 
     public function run() {
         $article = new ArticleView();

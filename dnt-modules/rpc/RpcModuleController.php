@@ -1,6 +1,6 @@
 <?php
 
-class RpcController {
+class RpcModuleController {
 
     public function run() {
         $rest = new Rest;
