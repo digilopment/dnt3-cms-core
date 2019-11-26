@@ -146,36 +146,45 @@ class Modul extends Database {
         $this->init = true;
     }
 
+    public function ModuleControllerToModuleName($path) {
+        return ltrim(join('_', explode(' ', strtolower(preg_replace("([A-Z])", " $0", str_replace('ModuleController', '', pathinfo($path, PATHINFO_FILENAME)))))), '_');
+    }
+
+    public function loadVendorModul($module) {
+        $layout = Vendor::getLayout();
+        $controller = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/" . (new Autoloader())->className($module) . "Controller.php";
+        $function = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/functions.php";
+        $webhook = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/webhook.php";
+        $return = false;
+        if (file_exists($controller)) {
+            include $controller;
+            $clsName = (new Autoloader())->className($module) . "Controller";
+            $moduleClass = new $clsName();
+            $moduleClass->run();
+            $return = true;
+        } else {
+            if (file_exists($function)) {
+                include $function;
+            }
+            if (file_exists($webhook)) {
+                include $webhook;
+                $return = true;
+            }
+        }
+        return $return;
+    }
+
     public function load($client, $module) {
         $layout = $client->layout;
-        $function = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/functions.php";
-        $template = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/webhook.php";
-        $webhookModule = "dnt-modules/" . $module . "/webhook.php";
-
-        $controller = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/" . (new Autoloader())->className($module) . "Controller.php";
         $globalController = "dnt-modules/" . $module . "/" . (new Autoloader())->className($module) . "ModuleController.php";
-        
+
         if (file_exists($globalController)) {
             include $globalController;
             $clsName = (new Autoloader())->className($module) . "ModuleController";
             $moduleClass = new $clsName();
             $moduleClass->run();
-        } elseif (file_exists($controller)) {
-            include $controller;
-            $clsName = (new Autoloader())->className($module) . "Controller";
-            $moduleClass = new $clsName();
-            $moduleClass->run();
-            
-        //older templates
-        } else { 
-            if (file_exists($function)){
-                include $function;
-            }
-            if (file_exists($webhookModule)) {
-                include $webhookModule;
-            } elseif (file_exists($template)) {
-                include $template;
-            }
+        } else {
+            $this->loadVendorModul($module);
         }
     }
 

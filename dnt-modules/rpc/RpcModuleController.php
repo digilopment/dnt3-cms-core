@@ -1,14 +1,17 @@
 <?php
 
-class RpcModuleController {
+class RpcModuleController extends Modul {
 
+    protected $loc = __FILE__;
+    
     public function run() {
         $rest = new Rest;
         if ($rest->webhook(2) == "subscriber") {
             include "dnt-admin/modules/subscriber/webhook.php";
         } else {
-            include "dnt-view/layouts/" . Vendor::getLayout() . "/modules/rpc/webhook.php";
+            if (!$this->loadVendorModul($this->ModuleControllerToModuleName($this->loc))) {
+                die('no module, no acction');
+            }
         }
     }
-
 }
