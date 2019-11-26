@@ -561,6 +561,7 @@ class Dnt {
     public static function redirect($presmeruj_url) {
         if (!headers_sent()) {
             header('Location: ' . $presmeruj_url);
+            exit;
         } else {
             echo '<script type="text/javascript">';
             echo 'window.location.href="' . $presmeruj_url . '"';
