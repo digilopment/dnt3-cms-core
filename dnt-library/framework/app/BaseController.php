@@ -35,13 +35,11 @@ class BaseController {
         $pluginName = '';
 
         if (isset($plugin['type']) && $plugin['type'] == 'mdl') {
-            $controller = $plugin['tpl'] . '/' . $plugin['tpl'] . 'PluginControll.php';
+            $controller = $plugin['tpl'] . '/' . (new Autoloader())->className($plugin['tpl']) . 'PluginControll.php';
         }
         if (isset($plugin['level']) && $plugin['level'] == 'local') {
             $pathCompose = '../modules/' . $data['article']['service'] . '/plugins/';
         }
-
-
 
         if (isset($plugin['type']) && $plugin['type'] == 'mdl') {
             $clsName = (new Autoloader())->className($plugin['tpl']) . "PluginControll";
