@@ -69,20 +69,8 @@ type =>
            <VAR id="level" value="local" />
            <VAR id="type" value="mdl" />
            <VAR id="tpl" value="content" />
-                <VAR id="title" value="Hello Digilopment" />
-        </PLUGIN>
-
-        <PLUGIN group="content" name="content2">
-           <VAR id="id" value="content2" />
-           <VAR id="layout" value="MAIN-CONTENT" />
-           <VAR id="cache" value="1H" />
-           <VAR id="cache_id" value="GET{src}" />
-           <VAR id="limit" value="20" />
-           <VAR id="compress" value="1" />
-           <VAR id="level" value="local" />
-           <VAR id="type" value="mdl" />
-           <VAR id="tpl" value="content" />
-                <VAR id="title" value="Hello World" />
+                <VAR id="title" value="Digilopment" />
+                <VAR id="subtitle" value="Nová digitálna multidoménová platforma, s vysokým výkonom a odladeným enginom, pre maximálny výkon. Poporujeme klientov so svojími vlastnými developermi, ideálna je skúsenosť s objektovo orientovaným programovaním." />
         </PLUGIN>
 
         <PLUGIN name="footer">

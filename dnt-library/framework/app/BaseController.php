@@ -46,9 +46,15 @@ class BaseController {
             if (!class_exists($clsName)) {
                 include $this->path() . $pathCompose . $controller;
                 $plugin = new $clsName($data, $plugin['id']);
+                if (method_exists($plugin, 'init')) {
+                    $plugin->init();
+                }
                 $plugin->run();
             } else {
                 $plugin = new $clsName($data, $plugin['id']);
+                if (method_exists($plugin, 'init')) {
+                    $plugin->init();
+                }
                 $plugin->run();
             }
         } else {
