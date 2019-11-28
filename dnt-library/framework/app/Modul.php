@@ -93,22 +93,39 @@ class Modul extends Database {
         return $returnString;
     }
 
-    protected function get($client) {
-        $module = "";
+    protected function oldModulesRegistrator($client){
         $file = "dnt-view/layouts/" . $client->layout . "/conf.php";
         if (file_exists($file)) {
             include_once $file;
             if (function_exists("custom_modules")) {
-                $custom_modules = custom_modules($this);
+                $modulesRegistrator = custom_modules($this);
             } else {
-                $custom_modules = array();
+                $modulesRegistrator = array();
             }
         } else {
-            $custom_modules = array();
+            $modulesRegistrator = array();
         }
-
-        foreach (array_keys($custom_modules) as $index) {
-            foreach ($custom_modules[$index] as $key => $modulUrl) {
+        return $modulesRegistrator;
+    }
+    
+    protected function get($client) {
+        $module = "";
+        
+        $file = "dnt-view/layouts/" . $client->layout . "/Configurator.php";
+        if (file_exists($file)) {
+            include $file;
+            $configurator = new Configurator();
+            if (method_exists($configurator, 'modulesRegistrator')) {
+                $modulesRegistrator = $configurator->modulesRegistrator();
+            }else{
+                $modulesRegistrator = array();
+            }
+        }else{
+            $modulesRegistrator = $this->oldModulesRegistrator($client);
+        }
+        
+        foreach (array_keys($modulesRegistrator) as $index) {
+            foreach ($modulesRegistrator[$index] as $key => $modulUrl) {
                 if ($this->hasPattern($client->requestNoLang, "/" . $modulUrl) == $client->requestNoLang) {
                     $module = $index;
                     break;
@@ -136,7 +153,6 @@ class Modul extends Database {
                     $redirect = $client->wwwPath . $moduleUrl[0];
                 }
                 Dnt::redirect($redirect);
-                exit;
             } else {
                 $module = DEAFULT_MODUL;
             }
@@ -175,7 +191,6 @@ class Modul extends Database {
     public function load($client, $module) {
         $layout = $client->layout;
         $globalController = "dnt-modules/" . $module . "/" . (new Autoloader())->className($module) . "ModuleController.php";
-
         if (file_exists($globalController)) {
             include $globalController;
             $clsName = (new Autoloader())->className($module) . "ModuleController";

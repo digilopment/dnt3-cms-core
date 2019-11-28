@@ -133,22 +133,58 @@ class Settings {
         );
     }
 
-    /**
-     * 
-     */
-    public function loadNewSettingsFromConf() {
-
+    
+    protected static function settingsConf(){
+        $settingsData = false;
         $conf = "../dnt-view/layouts/" . Vendor::getLayout() . "/conf.php";
         if (!function_exists("websettings")) {
             if (file_exists($conf)) {
                 include $conf;
+                if (function_exists("websettings")) {
+                    $settingsData = websettings();
+                }
             }
         }
-
-        if (file_exists($conf) && function_exists("websettings")) {
+        
+        return $settingsData;
+    }
+    
+     protected static function settingsConfigurator(){
+        $file = "../dnt-view/layouts/" . Vendor::getLayout() . "/Configurator.php";
+        $modulesRegistrator = false;
+        if (!class_exists('Configurator')) {
+            if (file_exists($file)) {
+                include $file;
+                $configurator = new Configurator();
+                if (method_exists($configurator, 'metaSettings')) {
+                    $modulesRegistrator = $configurator->metaSettings();
+                }
+            }
+        }else{
+            $configurator = new Configurator();
+            if (method_exists($configurator, 'metaSettings')) {
+                $modulesRegistrator = $configurator->metaSettings();
+            }
+        }
+        return $modulesRegistrator;
+    }
+    
+    /**
+     * 
+     */
+    public function loadNewSettingsFromConf() {
+        
+        if(self::settingsConfigurator()){
+            $settingsData = self::settingsConfigurator();
+        }else{
+            $settingsData = self::settingsConf();
+        }
+        //var_dump($settingsData);exit;
+        if ($settingsData) {
+            
             $result = array();
             $existingKey = array();
-            $settingsData = websettings();
+            
             foreach ($settingsData as $key => $value) {
                 $configKeys[] = $value['`key`'];
             }
@@ -167,7 +203,6 @@ class Settings {
                     continue;
                 }
             }
-
             $db = new Db;
             foreach ($arrOfConfigKeys as $key) {
                 $db->insert('dnt_settings', $settingsData[$key]);

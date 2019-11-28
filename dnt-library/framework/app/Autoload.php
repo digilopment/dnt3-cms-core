@@ -14,6 +14,15 @@ class Autoloader {
             include $file;
         }
     }
+    
+    public function addVendroClass($path, $class) {
+        $file = dirname($path).'/app/'.$class.".php";
+        if(!class_exists($class)){
+            if (file_exists($file)) {
+                include $file;
+            }
+        }
+    }
 
     public function className($module) {
         return str_replace(' ', '', ucwords(str_replace('-', ' ', str_replace('_', ' ', $module))));

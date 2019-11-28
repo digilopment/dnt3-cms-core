@@ -84,7 +84,7 @@ class Webhook {
      * @param type $config
      * @return type
      */
-    public function services($postId = false, $config = false) {
+    public function servicesConfFile($postId = false, $config = false) {
         if ($config === true) {
             return array(
                 "config" => array(
@@ -162,6 +162,19 @@ class Webhook {
                     "
                 ),
             );
+        }
+    }
+    
+    public function services($postId = false, $config = false) {
+        $file = "../dnt-view/layouts/" . Vendor::getLayout() . "/Configurator.php";
+        if (file_exists($file)) {
+            include $file;
+            $configurator = new Configurator();
+            if (method_exists($configurator, 'modulesConfigurator')) {
+                return $configurator->modulesConfigurator();
+            }
+        } else {
+            return $this->servicesConfFile($postId = false, $config = false);
         }
     }
 

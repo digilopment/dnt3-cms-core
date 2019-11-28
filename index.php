@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  Designdnt3 Application
  *  Framework Dnt3
@@ -6,41 +7,38 @@
  *  author: thomas.doubek@gmail.com
  * Thanks for using!
  */
-
- 
-$path		= "";
+$path = "";
 include "dnt-library/framework/app/Bootstrap.php";
-$rest 		= new Rest;
-$dntLog 	= new DntLog;
-$dntCache 	= new Cache;
-$db 		= new Db;
-$modul 		= new Modul();
+$rest = new Rest;
+$dntLog = new DntLog;
+$dntCache = new Cache;
+$db = new Db;
+$modul = new Modul();
 
 $client->setDomain(
-	$client->realUrl, 
-	$client->wwwPath, 
-	$client->getSetting("still_redirect_to_domain"), 
-	$client->getSetting("language")
-	);
-
+        $client->realUrl,
+        $client->wwwPath,
+        $client->getSetting("still_redirect_to_domain"),
+        $client->getSetting("language")
+);
 $post = new Post();
 $post->init();
 $modul->init($client);
 
 if ($modul->name) {
-	$dntLog->add(array(
-		"http_response" => 200,
-		"system_status" => "web_log",
-		"msg" => "Web Log 200",
-	));
-	
-	 if (IS_CACHING && Settings::get("cachovanie") == 1) {
+    $dntLog->add(array(
+        "http_response" => 200,
+        "system_status" => "web_log",
+        "msg" => "Web Log 200",
+    ));
+
+    if (IS_CACHING && Settings::get("cachovanie") == 1) {
         $dntCache->start();
         $modul->load($client, $modul->name);
         $dntCache->end();
     } else {
         $modul->load($client, $modul->name);
-	}
+    }
 } else {
     $dntLog->add(array(
         "http_response" => 404,

@@ -44,11 +44,11 @@ class AdminContent extends MultyLanguage {
                 return $row['id_entity'];
             }
         } else {
-            return array();
+            return false;
         }
     }
 	
-	/**
+    /**
      * 
      * @param type $type
      * @return boolean

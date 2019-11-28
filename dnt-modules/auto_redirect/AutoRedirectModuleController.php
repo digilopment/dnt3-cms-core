@@ -8,7 +8,6 @@ class AutoRedirectModuleController extends Client {
         $articleView = new ArticleView;
         $rest = new Rest;
         $articleId = $rest->webhook(2);
-
         $name_url = $articleList->getArticleUrl($articleId, false);
         $url = $this->wwwPath . $this->lang . "/" . $name_url;
 
