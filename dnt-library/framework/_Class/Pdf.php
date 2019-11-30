@@ -83,7 +83,7 @@ Class Pdf {
         $dompdf = new Dompdf();
         $dompdf->load_html($html);
         $dompdf->render();
-        file_put_contents($path . 'dnt-view/data/uploads/' . $pdfName . '.pdf', $dompdf->output());
+        file_put_contents($path . 'dnt-view/data/uploads/' . $fileName . '.pdf', $dompdf->output());
     }
 
 }

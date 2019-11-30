@@ -98,5 +98,9 @@ class App {
     public function runApi() {
         $this->inicialization('Api');
     }
+	
+	 public function runTest() {
+        $this->inicialization('Test');
+    }
 
 }
