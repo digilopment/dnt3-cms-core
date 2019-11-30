@@ -1,8 +1,11 @@
 <?php
 
-$path		= "../";
-include $path."dnt-library/framework/app/Bootstrap.php";
+require '../dnt-library/framework/app/Bootstrap.php';
 include "helpers.php";
+$bootstrap = new Bootstrap('../../');
+$bootstrap->boot();
+$app = new App($bootstrap->client);
+
 $rest 		= new Rest();
 $dntLog 	= new DntLog();
 $dntCache 	= new Cache();

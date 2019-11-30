@@ -1,0 +1,8 @@
+RewriteEngine on
+RewriteRule ^([^\./]*).php$ index.php?src=$1 [L,NC,QSA]
+
+RewriteCond  $1 ^([^_][a-zA-Z0-9\ _/:\-%]+)
+RewriteRule  ^([^_][a-zA-Z0-9\ _/:\-%]+)$     index.php?src=$1   [L]
+
+RewriteCond  $1 ^([^_][a-zA-Z0-9\ _/:\-%]+)
+RewriteRule  ^([^_][a-zA-Z0-9\ _/:\-%]+)$     index.php?src=$1   [L]

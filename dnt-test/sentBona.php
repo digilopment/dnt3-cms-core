@@ -1,17 +1,16 @@
 <?php
-//include "autoload.php";
-include "../globals.php";
+
 include "../dnt-library/framework/_Class/Autoload.php";
-$autoload		= new Autoload;
-$path			= "../";
+$autoload = new Autoload;
+$path = "../";
 $autoload->load($path);
 $dntMailer = new Mailer;
 
-$senderEmail	= "no-reply@markiza.sk";
-$recipientEmail	= "doubek.tomas@markiza.sk";
-$messageTitle	= "Formulár Bona"; 
+$senderEmail = "no-reply@markiza.sk";
+$recipientEmail = "doubek.tomas@markiza.sk";
+$messageTitle = "Formulár Bona";
 
-$msg			= "<html><head></head><body>
+$msg = "<html><head></head><body>
 		
 		<h3>Kontaktné údaje</h3>
 		<b>Formulár:</b>: Formulár Bona<br/>
@@ -34,4 +33,3 @@ $dntMailer->set_sender_email($senderEmail);
 $dntMailer->sent_email();
 
 echo rand(0, 999);
-			

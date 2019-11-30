@@ -233,7 +233,7 @@ class DntLog {
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 foreach ($columnsData->getTableColumns("dnt_logs", $columns) as $key => $value) {
-                    print $value . "\t\t\t => " . $row[$value] . "\n";
+                    print $value . "\t\t\t => <b>" . $row[$value] . "</b><br/>";
                 }
             }
         }

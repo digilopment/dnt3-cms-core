@@ -1,16 +1,8 @@
-RewriteEngine On
+RewriteEngine on
+RewriteRule ^([^\./]*).php$ index.php?src=$1 [L,NC,QSA]
 
 RewriteCond  $1 ^([^_][a-zA-Z0-9\ _/:\-%]+)
 RewriteRule  ^([^_][a-zA-Z0-9\ _/:\-%]+)$     index.php?src=$1   [L]
 
 RewriteCond  $1 ^([^_][a-zA-Z0-9\ _/:\-%]+)
 RewriteRule  ^([^_][a-zA-Z0-9\ _/:\-%]+)$     index.php?src=$1   [L]
-
-Redirect 301 /sitemap /dnt-view/api/xml/sitemap/
-Redirect 301 /rss /dnt-view/api/xml/rss/
-Redirect 301 /sitemaps /dnt-view/api/xml/sitemaps/
-
-deny from 188.138.9.49
-deny from 80.110.124.206
-deny from 217.251.221.147
-deny from 91.141.3.158

@@ -25,7 +25,7 @@ class Autoloader {
     }
 
     public function className($module) {
-        return str_replace(' ', '', ucwords(str_replace('-', ' ', str_replace('_', ' ', $module))));
+        return str_replace('.php', '', str_replace(' ', '', ucwords(str_replace('-', ' ', str_replace('_', ' ', $module)))));
     }
 
     public function load($path) {
@@ -42,6 +42,7 @@ class Autoloader {
             }
         }
 
+        $this->fileLoader($path . "dnt-library/framework/app/App.php");
         $this->fileLoader($path . "dnt-library/framework/app/Db.php");
         $this->fileLoader($path . "dnt-library/framework/app/Client.php");
         $this->fileLoader($path . "dnt-library/framework/app/Modul.php");
