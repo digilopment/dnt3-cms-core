@@ -1,9 +1,14 @@
 <?php
 
-require '../dnt-library/framework/app/Bootstrap.php';
-$bootstrap = new Bootstrap('../../');
-$bootstrap->boot();
-
+/**
+ * 
+ * If you download this script as a singl script file, 
+ * please add this line of code below, after last bracket
+ * *
+ * * * => (new Dnt3InstallScript())->run();
+ * *
+ * 
+ */
 class Dnt3InstallScript {
 
     protected static function downloadFile($url, $path) {
@@ -68,6 +73,5 @@ class Dnt3InstallScript {
             print ("<script>window.setTimeout(location.href = '/" . $projectFolder . "dnt-install/index.php',5000)</script>");
         }
     }
-}
 
-(new Dnt3InstallScript())->run();
+}

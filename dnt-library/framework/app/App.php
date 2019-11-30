@@ -68,12 +68,21 @@ class App {
         return $result;
     }
 
-    protected function inicialization($type) {
+    protected function inicialization($type, $starter = false) {
         $controll = (new Rest())->webhook(2);
+
         $classFile = (new Autoloader())->className($controll);
 
         $file = './' . $classFile . '.php';
         $className = $classFile . $type;
+        if (!$controll) {
+            if (!$starter) {
+                $classFile = (new Autoloader())->className($starter);
+                $className = $classFile . $type;
+            } else {
+                die($type . ' does not exists');
+            }
+        }
         foreach ($this->dynamicLoad('./') as $file) {
             if (file_exists($file)) {
                 include $file;
@@ -87,20 +96,24 @@ class App {
         }
     }
 
-    public function runJob() {
-        $this->inicialization('Job');
+    public function runJob($starter = false) {
+        $this->inicialization('Job', $starter);
     }
 
-    public function runSystem() {
-        $this->inicialization('System');
+    public function runSystem($starter = false) {
+        $this->inicialization('System', $starter);
     }
-    
-    public function runApi() {
-        $this->inicialization('Api');
+
+    public function runApi($starter = false) {
+        $this->inicialization('Api', $starter);
     }
-	
-	 public function runTest() {
-        $this->inicialization('Test');
+
+    public function runTest($starter = false) {
+        $this->inicialization('Test', $starter);
+    }
+
+    public function runInstall($starter = false) {
+        $this->inicialization('Install', $starter);
     }
 
 }

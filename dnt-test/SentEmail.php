@@ -3,7 +3,7 @@
 class SentEmailTest {
 
     public function run() {
-        $dntMailer = new Mailer;
+        $dntMailer = new Mailer();
 
         $senderEmail = "test@winprizes.eu";
         $recipientEmail = "thomas.doubek@gmail.com";
@@ -17,7 +17,7 @@ class SentEmailTest {
         $dntMailer->set_sender_name($senderEmail);
         $dntMailer->set_sender_email($senderEmail);
         $dntMailer->sent_email();
-        
+
         echo 'snet, time: ' . time();
     }
 
