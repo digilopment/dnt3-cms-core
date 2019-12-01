@@ -185,7 +185,11 @@ class Modul extends Database {
                 include $webhook;
             }
         }
-        exit; //performance optimalization
+        
+        //performance optimalization
+        if (DEBUG_QUERY == 0 || DEBUG_QUERY === false) {
+            exit; 
+        }
     }
 
     public function load($client, $module) {

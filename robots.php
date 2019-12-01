@@ -1,12 +1,14 @@
 <?php
 
-require "dnt-library/framework/app/Bootstrap.php";
-$bootstrap = new Bootstrap(__FILE__);
-$bootstrap->boot();
+class Init {
 
-class Robots {
+    public function __construct() {
+        require "dnt-library/framework/app/Bootstrap.php";
+        $bootstrap = new Bootstrap(__FILE__);
+        $bootstrap->boot();
+    }
 
-    public function init() {
+    public function template() {
 
         $text = "";
         $text .= "User-agent: * \n";
@@ -45,9 +47,9 @@ class Robots {
     }
 
     public function run() {
-        print($this->init());
+        print($this->template());
     }
 
 }
 
-(new Robots())->run();
+(new Init())->run();

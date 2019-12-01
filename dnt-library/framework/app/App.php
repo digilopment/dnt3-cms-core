@@ -25,6 +25,7 @@ class App {
         );
         $this->post->init();
         $this->modul->init($this->client);
+        
 
         if ($this->modul->name) {
             $this->dntLog->add(array(
@@ -48,6 +49,7 @@ class App {
             ));
             $this->modul->load($this->client, "default");
         }
+        $this->dntLog->debugQuery($this->modul);
     }
 
     public function dynamicLoad($dir) {

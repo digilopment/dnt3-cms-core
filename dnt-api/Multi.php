@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * 
+ * http://skeleton.localhost/dnt3/dnt-api/multi/xml/JajsZ5s4/1028
+ * http://skeleton.localhost/dnt3/dnt-api/multi/json/?query=SELECT%20*%20FROM%20dnt_users
+ *
+ * */
 class MultiApi {
 
     public function run() {
@@ -46,6 +52,3 @@ class MultiApi {
     }
 
 }
-
-//http://skeleton.localhost/dnt3/dnt-api/multi/xml/JajsZ5s4/1028
-//http://skeleton.localhost/dnt3/dnt-api/multi/json/?query=SELECT%20*%20FROM%20dnt_users
