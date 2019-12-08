@@ -1,6 +1,7 @@
 <?php
 
-class App {
+class App
+{
 
     protected $client;
     protected $post;
@@ -8,7 +9,8 @@ class App {
     protected $dntCache;
     protected $modul;
 
-    public function __construct($client) {
+    public function __construct($client)
+    {
         $this->client = $client;
         $this->post = new Post();
         $this->dntLog = new DntLog();
@@ -16,7 +18,8 @@ class App {
         $this->modul = new Modul();
     }
 
-    public function run() {
+    public function run()
+    {
         $this->client->setDomain(
                 $this->client->realUrl,
                 $this->client->wwwPath,
@@ -25,7 +28,7 @@ class App {
         );
         $this->post->init();
         $this->modul->init($this->client);
-        
+
 
         if ($this->modul->name) {
             $this->dntLog->add(array(
@@ -52,7 +55,8 @@ class App {
         $this->dntLog->debugQuery($this->modul);
     }
 
-    public function dynamicLoad($dir) {
+    public function dynamicLoad($dir)
+    {
 
         $result = array();
 
@@ -70,7 +74,8 @@ class App {
         return $result;
     }
 
-    protected function inicialization($type, $starter = false) {
+    protected function inicialization($type, $starter = false)
+    {
         $controll = (new Rest())->webhook(2);
 
         $classFile = (new Autoloader())->className($controll);
@@ -98,24 +103,46 @@ class App {
         }
     }
 
-    public function runJob($starter = false) {
+    protected function loadApp()
+    {
+        foreach ($this->dynamicLoad('./app/') as $file) {
+            $path = './app/' . $file;
+            if (file_exists($path)) {
+                include $path;
+            }
+        }
+    }
+
+    public function runJob($starter = false)
+    {
         $this->inicialization('Job', $starter);
     }
 
-    public function runSystem($starter = false) {
+    public function runSystem($starter = false)
+    {
         $this->inicialization('System', $starter);
     }
 
-    public function runApi($starter = false) {
+    public function runApi($starter = false)
+    {
         $this->inicialization('Api', $starter);
     }
 
-    public function runTest($starter = false) {
+    public function runTest($starter = false)
+    {
         $this->inicialization('Test', $starter);
     }
 
-    public function runInstall($starter = false) {
+    public function runInstall($starter = false)
+    {
         $this->inicialization('Install', $starter);
+    }
+
+    public function runAdmin()
+    {
+        $this->loadApp();
+        $roter = new RouterAdmin();
+        $roter->init();
     }
 
 }

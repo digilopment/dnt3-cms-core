@@ -20,14 +20,14 @@ class Bootstrap {
         $GLOBALS['VENDOR_LAYOUT'] = $client->layout;
         $GLOBALS['VENDOR_ID'] = $client->id;
         $GLOBALS['WEBHOOKS'] = $client->routes;
+        $GLOBALS['WEBHOOK'] = $client->routes;
         $GLOBALS['GET_MODUL'] = false;
-        $GLOBALS['ORIGIN_DOMAIN'] = false;
-        $GLOBALS['ORIGIN_DOMAIN_LNG'] = false;
-        $GLOBALS['DB_DOMAIN'] = false;
+        $GLOBALS['ORIGIN_DOMAIN'] = $client->wwwPath;
+        $GLOBALS['ORIGIN_DOMAIN_LNG'] = $client->lang;
+        $GLOBALS['DB_DOMAIN'] = $client->realUrl;
         $GLOBALS['DB_PROTOCOL'] = false;
-        $GLOBALS['ORIGIN_PROTOCOL'] = false;
+        $GLOBALS['ORIGIN_PROTOCOL'] = $client->originProtocol;
         $GLOBALS['ACTIVE_LANGS_ARR'] = [];
-        $GLOBALS['WEBHOOK'] = [];
     }
 
     protected function registerDefine($client) {
@@ -46,6 +46,8 @@ class Bootstrap {
         $autoloader = new Autoloader();
         $autoloader->load($path);
         $client = new Client();
+        $session = new Sessions();
+        $session->init();
         $client->init();
         $this->registerGlobals($client);
         $this->registerDefine($client);

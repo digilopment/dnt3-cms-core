@@ -10,9 +10,9 @@ class Init {
         $bootstrap = new Bootstrap('../../');
         $bootstrap->boot();
         $app = new App($bootstrap->client);
-        $app->runSystem();
+        $app->runJob();
     }
 
 }
 
-(new Init())->runJob();
+(new Init())->run();

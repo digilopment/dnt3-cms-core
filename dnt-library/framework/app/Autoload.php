@@ -23,9 +23,22 @@ class Autoloader {
             }
         }
     }
+    
+    public function addClass($path, $class){
+       $file = dirname($path).'/'.$class.".php";
+        if(!class_exists($class)){
+            if (file_exists($file)) {
+                include $file;
+            }
+        }
+    }
 
     public function className($module) {
         return str_replace('.php', '', str_replace(' ', '', ucwords(str_replace('-', ' ', str_replace('_', ' ', $module)))));
+    }
+    
+    public function methodName($module) {
+        return lcfirst($this->className($module));
     }
 
     public function load($path) {
@@ -49,6 +62,7 @@ class Autoloader {
         $this->fileLoader($path . "dnt-library/framework/app/Post.php");
         $this->fileLoader($path . "dnt-library/framework/app/BaseController.php");
         $this->fileLoader($path . "dnt-library/framework/app/Plugin.php");
+        $this->fileLoader($path . "dnt-library/framework/app/AbstractUser.php");
     }
 
 }
