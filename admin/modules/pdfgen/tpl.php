@@ -1,6 +1,6 @@
-<?php include "tpl_functions.php"; ?>
+<?php include "plugins/webhook/tpl_functions.php"; ?>
 <?php get_top(); ?>
-<?php include "top.php";?>
+<?php include "plugins/webhook/top.php";?>
 <!-- END CONTENT HEADER -->
 <section class="content">
    <div class="row">
@@ -18,7 +18,7 @@
             <!-- Nastavenia vlastníctva-->
             <p class="lead">Nastavenia vlastníctva</p>
             <div class="grid-body">
-               <form id="obchod" action="<?php echo WWW_PATH_ADMIN."index.php?src=settings&pa=2&action=update ";?>" method="post">
+               <form id="obchod" action="<?php echo WWW_PATH_ADMIN_2."index.php?src=settings&pa=2&action=update ";?>" method="post">
                   <p class="lead">Nastavte <b>meno </b> Vašej firmy</p>
                   <p>Tento údaj sa bude zobrazovať všade tam, kde budete prezentovať Vašu firmu</p>
                   <input type="text" class="btn-default btn-lg btn-block" name="vendor_company" value="<?php echo Settings::get("vendor_company"); ?>" />
@@ -68,7 +68,7 @@
             <?php }elseif(isset($_GET[ 'pa']) && $_GET[ 'pa']==3 ){?>
             <p class="lead">Rozšírené nastavenia vlastníctva</p>
             <!-- begin is here!-->
-            <form id="obchod" action="<?php echo WWW_PATH_ADMIN."index.php?src=settings&update ";?>" method="post">
+            <form id="obchod" action="<?php echo WWW_PATH_ADMIN_2."index.php?src=settings&update ";?>" method="post">
                <p class="lead">Ste platcom <b>DPH</b>?</p>
                <p>Tento údaj sa bude zobrazovať všade tam, kde budete prezentovať Vašu firmu</p>
                <input type="text" class="btn-default btn-lg btn-block" name="platca_dph">
@@ -95,7 +95,7 @@
             <!-- begin is here!-->
             <div class="row">
                <div class="col-md-6">
-                  <form id="obchod" enctype='multipart/form-data' action="<?php echo WWW_PATH_ADMIN."index.php?src=settings&pa=4&action=update ";?>" method="post">
+                  <form id="obchod" enctype='multipart/form-data' action="<?php echo WWW_PATH_ADMIN_2."index.php?src=settings&pa=4&action=update ";?>" method="post">
                      <p class="lead">Nastavte logo <b>vašej firmy</b></p>
                      <p>Ak máte eshop a vystavíte faktúru, vaše logo bude v hlavičke faktúry</p>
                      <img src="<?php echo Settings::getImage("logo_firmy");?>" style="max-width: 200px; margin: 15px;" alt="" />
@@ -106,7 +106,7 @@
                   </form>
                </div>
                <div class="col-md-6">
-                  <form id="obchod" enctype='multipart/form-data' action="<?php echo WWW_PATH_ADMIN."index.php?src=settings&pa=4&action=update";?>" method="post">
+                  <form id="obchod" enctype='multipart/form-data' action="<?php echo WWW_PATH_ADMIN_2."index.php?src=settings&pa=4&action=update";?>" method="post">
                      <p class="lead">Nastavte defaultný <b>obrázok</b></p>
                      <p>Tento obrázok sa zobrazí všade tam, kde nenastavíte vlastný obrázok</p>
                      <img src="<?php echo Settings::getImage("no_img");?>" style="max-width: 200px; margin: 15px;" alt="" />
@@ -120,7 +120,7 @@
             <!-- end is here! -->
             <?php }elseif(isset($_GET[ 'pa']) && $_GET[ 'pa']==5 ){?>
             <div class="grid-body">
-               <form  id="socialne-siete" action="<?php echo WWW_PATH_ADMIN."index.php?src=settings&pa=5&action=update";?>" method="post">
+               <form  id="socialne-siete" action="<?php echo WWW_PATH_ADMIN_2."index.php?src=settings&pa=5&action=update";?>" method="post">
                   <p class="lead">Nastavte si Váš email</p>
                   <p>Nastavenie emailu: 
                      <b>Tento email bude fungovať ako <br/> notifakčný email a bude Vás kontaktovať, ak to bude potrebné</b>
@@ -156,7 +156,7 @@
             <div class="grid-body">
                <div class="row">
                   <div class="col-md-6">
-                     <form enctype='multipart/form-data' id="pristupy" action="<?php echo WWW_PATH_ADMIN."index.php?src=access&action=update&post_id=".AdminUser::data("admin", "id")."";?>" method="post">
+                     <form enctype='multipart/form-data' id="pristupy" action="<?php echo WWW_PATH_ADMIN_2."index.php?src=access&action=update&post_id=".AdminUser::data("admin", "id")."";?>" method="post">
                         <input type="hidden" name="id" value="<?php echo AdminUser::data("admin", "id");?>" />
                         <p class="lead">Nastavte Vaše <b>meno</b></p>
                         <p>Ak máte eshop a vystavíte faktúru, vaše meno tam bude predvyplnené</p>
@@ -188,7 +188,7 @@
             <?php }else{ ?>
             <!-- Nastavenia stránky-->
             <div class="grid-body">
-               <form  action="<?php echo WWW_PATH_ADMIN."index.php?src=settings&pa=1&action=update";?>" method="post">
+               <form  action="<?php echo WWW_PATH_ADMIN_2."index.php?src=settings&pa=1&action=update";?>" method="post">
                   <p class="lead">Defaultný jazyk</p>
                   <p>Tento jazyk bude ako prednastavený jazyk po načítaní.</p>
                   <?php /*<select name="default_lang" class="btn-default btn-lg btn-block" type="text" size="1">
@@ -317,5 +317,5 @@
       </div>
    </div>
 </section>
-<?php include "bottom.php"; ?>
+<?php include "plugins/webhook/bottom.php"; ?>
 <?php get_bottom(); ?>

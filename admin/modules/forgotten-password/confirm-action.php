@@ -48,5 +48,5 @@ if(isset($_POST['sent'])){
 	$errTitle	= "Chyba";
 }
 
-include "tpl_functions.php";
+include "plugins/webhook/tpl_functions.php";
 errorAccess($errTitle,$message);

@@ -41,7 +41,7 @@ if (isset($_POST['sent'])) {
         }
         $db->dbcommit();
     }
-    $dnt->redirect(WWW_PATH_ADMIN . "index.php?src=" . $rest->get("src") . "");
+    $dnt->redirect(WWW_PATH_ADMIN_2 . "index.php?src=" . $rest->get("src") . "");
 } else {
-    $dnt->redirect(WWW_PATH_ADMIN . "index.php?src=" . DEFAULT_MODUL_ADMIN);
+    $dnt->redirect(WWW_PATH_ADMIN_2 . "index.php?src=" . DEFAULT_MODUL_ADMIN);
 }

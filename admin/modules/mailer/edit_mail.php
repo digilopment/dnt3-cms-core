@@ -32,5 +32,5 @@ if(isset($_POST['sent'])){
 	$dnt->redirect($return);
 	
 }else{
-	$dnt->redirect(WWW_PATH_ADMIN."?src=".DEFAULT_MODUL_ADMIN);
+	$dnt->redirect(WWW_PATH_ADMIN_2."?src=".DEFAULT_MODUL_ADMIN);
 }

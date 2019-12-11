@@ -1,4 +1,4 @@
-<?php include "tpl_functions.php"; ?>
+<?php include "plugins/webhook/tpl_functions.php"; ?>
 <?php get_top(); ?>
 <body class="login">
 <div class="outer">
@@ -10,7 +10,7 @@
 					<h3 class="text-center login-title">Žiadosť o odoslanie nového hesla</h3>
 					<div class="account-wall">
 						<!-- BEGIN PROFILE IMAGE -->
-						<img class="profile-img" src="<?php echo WWW_PATH_ADMIN; ?>img/designdnt_singl_dark.png" alt="">
+						<img class="profile-img" src="<?php echo WWW_PATH_ADMIN_2; ?>img/designdnt_singl_dark.png" alt="">
 						<!-- END PROFILE IMAGE -->
 						<!-- BEGIN LOGIN FORM -->
 						<form name="login" action="<?php echo WWW_FULL_PATH; ?>" method="POST" class="form-login">
@@ -26,7 +26,7 @@
 						</form>
 						<!-- END LOGIN FORM -->
 					</div>
-					<a href="<?php echo WWW_PATH_ADMIN."index.php?src=login";?>" class="text-center new-account">Prihlásiť sa</a>
+					<a href="<?php echo WWW_PATH_ADMIN_2."index.php?src=login";?>" class="text-center new-account">Prihlásiť sa</a>
 				</div>
 				<!-- END LOGIN BOX -->
 			</div>

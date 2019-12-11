@@ -1,6 +1,6 @@
-<?php include "tpl_functions.php"; ?>
+<?php include "plugins/webhook/tpl_functions.php"; ?>
 <?php get_top(); ?>
-<?php include "top.php"; ?>
+<?php include "plugins/webhook/top.php"; ?>
 <div class="row">
 <!-- BEGIN CUSTOM TABLE -->
 <div class="col-md-12">
@@ -37,7 +37,7 @@
                    ?>
 				   <tr>
 					  <td><?php echo $row['id_entity']; ?></td>
-					  <td><img src="<?php echo WWW_PATH_ADMIN?>img/flags/<?php echo $row['img']; ?>.png"></td>
+					  <td><img src="<?php echo WWW_PATH_ADMIN_2?>img/flags/<?php echo $row['img']; ?>.png"></td>
 					  <td><b>
 					   <?php /*<?php if($row['slug'] == DEAFULT_LANG){ ?>
 					   Defaultný jazyk - <?php echo DEAFULT_LANG; ?>
@@ -53,12 +53,12 @@
 						 </span>
 					  </td>
 					  <td>
-					   <a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$rest->get('src')."&action=show_hide&post_id=".$row['id_entity']; ?>">
+					   <a href="<?php echo WWW_PATH_ADMIN_2."index.php?src=".$rest->get('src')."&action=show_hide&post_id=".$row['id_entity']; ?>">
 						 <i class="<?php echo admin_zobrazenie_stav($row['show']);?>"></i>
 					  <?php /*<?php if($row['slug'] == DEAFULT_LANG){ ?>
 						<i title="" class="fa fa-arrow-right bg-blue action"></i></a>
 					  <?php }else{ ?>
-						 <a href="<?php echo WWW_PATH_ADMIN."index.php?src=".$rest->get('src')."&action=show_hide&post_id=".$row['id_entity']; ?>">
+						 <a href="<?php echo WWW_PATH_ADMIN_2."index.php?src=".$rest->get('src')."&action=show_hide&post_id=".$row['id_entity']; ?>">
 						 <i class="<?php echo admin_zobrazenie_stav($row['show']);?>"></i>
 						 </a>
 					  <?php } ?>
@@ -78,5 +78,5 @@
    </div>
 </div>
 <!-- END CUSTOM TABLE -->
-<?php include "bottom.php"; ?>
+<?php include "plugins/webhook/bottom.php"; ?>
 <?php get_bottom(); ?>

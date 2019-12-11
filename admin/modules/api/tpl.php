@@ -1,6 +1,6 @@
-<?php include "tpl_functions.php"; ?>
+<?php include "plugins/webhook/tpl_functions.php"; ?>
 <?php get_top(); ?>
-<?php include "top.php"; 
+<?php include "plugins/webhook/top.php"; 
    $api = new Api;
 		$SQL_LOG_FILES = array();
 		$folderOfQueries = "../dnt-logs/".Vendor::getId()."/sql/";
@@ -225,5 +225,5 @@
    <!-- END CUSTOM TABLE -->			
 </div>
 <!-- END CUSTOM TABLE -->
-<?php include "bottom.php"; ?>
+<?php include "plugins/webhook/bottom.php"; ?>
 <?php get_bottom(); ?>

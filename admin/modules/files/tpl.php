@@ -1,6 +1,6 @@
-<?php include "tpl_functions.php"; ?>
+<?php include "plugins/webhook/tpl_functions.php"; ?>
 <?php get_top(); ?>
-<?php include "top.php";?>
+<?php include "plugins/webhook/top.php";?>
 <?php 
 	$db 	= new Db;
 	$rest 	= new Rest;
@@ -178,5 +178,5 @@ foreach($formats as $format){
 </div>
 <!-- BEGIN PAGINATION -->
 <!-- END CUSTOM TABLE -->
-<?php include "bottom.php"; ?>
+<?php include "plugins/webhook/bottom.php"; ?>
 <?php get_bottom(); ?>

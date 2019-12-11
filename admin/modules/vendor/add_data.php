@@ -32,19 +32,19 @@ if(isset($_POST['name'])){
 		);
 		//var_dump($VENDOR_NAME, $COPY_FROM);
 		$install->addVendor($tables, $VENDOR_NAME, $COPY_FROM, $LAYOUT, $DELETE_DATA);
-		$return = WWW_PATH_ADMIN."index.php?src=vendor";
-		include "tpl_functions.php";
+		$return = WWW_PATH_ADMIN_2."index.php?src=vendor";
+		include "plugins/webhook/tpl_functions.php";
 		get_top();
-		include "top.php";
+		include "plugins/webhook/top.php";
 		getConfirmMessage($return, "<br/>Web bol úspešne vytvorený");
-		include "bottom.php";
+		include "plugins/webhook/bottom.php";
 		get_bottom();
 	}else{
-		include "tpl_functions.php";
+		include "plugins/webhook/tpl_functions.php";
 		get_top();
-		include "top.php";
+		include "plugins/webhook/top.php";
 		error_message("Názov webu", "<b>Nezadali ste názov webu</b>");
-		include "bottom.php";
+		include "plugins/webhook/bottom.php";
 		get_bottom();
 	}
 }

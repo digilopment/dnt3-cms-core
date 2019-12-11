@@ -74,11 +74,11 @@ if(isset($_POST['sent'])){
 		);
 	}
 		
-	include "tpl_functions.php";
+	include "plugins/webhook/tpl_functions.php";
 	get_top();
-	include "top.php";
+	include "plugins/webhook/top.php";
 	getConfirmMessage($return, "<br/>Údaje sa úspešne uložili ");
-	include "bottom.php";
+	include "plugins/webhook/bottom.php";
 	get_bottom();
 }
 

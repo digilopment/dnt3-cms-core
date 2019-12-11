@@ -601,13 +601,13 @@ function sql2Arr(){
 	 $x = $x+12;
 	}
 }
-
+$rest = new Rest();
 if($rest->get("action") == "sql2Arr")
 {
 	sql2Arr();
 }elseif($rest->get("action") == "addToMenu"){
 	addToMenu();
-	Dnt::redirect(WWW_PATH_ADMIN."index.php?src=".$rest->get("src")."");
+	Dnt::redirect(WWW_PATH_ADMIN_2."index.php?src=".$rest->get("src")."");
 }elseif($rest->get("action") == "show_hide"){
 	include "show_hide.php";
 }elseif($rest->get("action") == "update"){

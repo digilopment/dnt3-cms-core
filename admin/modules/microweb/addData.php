@@ -61,11 +61,11 @@ if (isset($_POST['odoslat'])) {
 		meta = 'layout'");
 
         $presmeruj_url = "index.php?src=" . $rest->get('src') . "&id=" . $thisId . "&action=edit";
-        include "tpl_functions.php";
+        include "plugins/webhook/tpl_functions.php";
         get_top();
-        include "top.php";
+        include "plugins/webhook/top.php";
         getConfirmMessage($presmeruj_url, "Údaje sa úspešne uložili");
-        include "bottom.php";
+        include "plugins/webhook/bottom.php";
         get_bottom();
     }
 }

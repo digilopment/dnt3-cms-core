@@ -1,6 +1,6 @@
-<?php include "tpl_functions.php"; ?>
+<?php include "plugins/webhook/tpl_functions.php"; ?>
 <?php get_top(); ?>
-<?php include "top.php"; ?>
+<?php include "plugins/webhook/top.php"; ?>
 <?php 
 $rest = new Rest;
 $user = new User;
@@ -167,5 +167,5 @@ foreach($user->getUser($id_entity) as $row){
 </div>
 
 <?php } ?>
-<?php include "bottom.php"; ?>
+<?php include "plugins/webhook/bottom.php"; ?>
 <?php get_bottom(); ?>

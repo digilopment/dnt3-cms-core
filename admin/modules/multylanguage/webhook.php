@@ -1,6 +1,7 @@
 <?php
 $rest = new Rest;
 $dnt = new Dnt;
+$db = new Db;
 
 if($rest->get("action") == "edit"){
 	include "edit.php";

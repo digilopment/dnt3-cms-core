@@ -1,6 +1,6 @@
-<?php include "tpl_functions.php"; ?>
+<?php include "plugins/webhook/tpl_functions.php"; ?>
 <?php get_top(); ?>
-<?php include "top.php"; ?>
+<?php include "plugins/webhook/top.php"; ?>
 
 <section class="content">
    <div class="row">
@@ -82,5 +82,5 @@
    </div>
 </section>
 <!-- END CUSTOM TABLE -->
-<?php include "bottom.php"; ?>
+<?php include "plugins/webhook/bottom.php"; ?>
 <?php get_bottom(); ?>

@@ -1,6 +1,6 @@
-<?php include "tpl_functions.php"; ?>
+<?php include "plugins/webhook/tpl_functions.php"; ?>
 <?php get_top(); ?>
-<?php include "top.php";?>
+<?php include "plugins/webhook/top.php";?>
 <?php 
 	$db 	= new Db;
 	$rest 	= new Rest;
@@ -130,5 +130,5 @@
 <?php /*echo Xlsx::read("../", "39_b50072fbe38c292d4f0cfdf59246fcaa_o.csv")*/ ?>
 <!-- BEGIN PAGINATION -->
 <!-- END CUSTOM TABLE -->
-<?php include "bottom.php"; ?>
+<?php include "plugins/webhook/bottom.php"; ?>
 <?php get_bottom(); ?>

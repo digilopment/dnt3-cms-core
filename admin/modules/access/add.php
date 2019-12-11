@@ -1,6 +1,6 @@
-<?php include "tpl_functions.php"; ?>
+<?php include "plugins/webhook/tpl_functions.php"; ?>
 <?php get_top(); ?>
-<?php include "top.php"; ?>
+<?php include "plugins/webhook/top.php"; ?>
 <?php
 $rest = new Rest;
 $user = new Api;
@@ -102,5 +102,5 @@ $query = "SELECT * FROM dnt_users";
     </div>
 </section>
 
-<?php include "bottom.php"; ?>
+<?php include "plugins/webhook/plugins/webhook/bottom.php"; ?>
 <?php get_bottom(); ?>

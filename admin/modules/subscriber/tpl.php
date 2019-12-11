@@ -1,4 +1,4 @@
 <?php 
-include "dnt-admin/tpl_functions.php"; 
+include "plugins/webhook/tpl_functions.php"; 
 errorAccess($errTitle,$errContent);
 ?>

@@ -1,6 +1,6 @@
-<?php include "tpl_functions.php"; ?>
+<?php include "plugins/webhook/tpl_functions.php"; ?>
 <?php get_top(); ?>
-<?php include "top.php"; 
+<?php include "plugins/webhook/top.php"; 
 $rest = new Rest;
 ?>
  
@@ -80,12 +80,12 @@ $rest = new Rest;
                            <td><b><?php if(MULTY_LANGUAGE == false) echo ""; else echo $row['lang_id']; ?></b></td>
                            <td><b><?php echo $row['translate_id']; ?></b></td>
                            <td>
-                              <a <?php echo Dnt::confirmMsg("Naozaj chcete zmazať tento preklad?"); ?> href="<?php echo WWW_PATH_ADMIN."index.php?src=multylanguage&action=del&translate_id=".$row['translate_id']."";?>">
+                              <a <?php echo Dnt::confirmMsg("Naozaj chcete zmazať tento preklad?"); ?> href="<?php echo WWW_PATH_ADMIN_2."index.php?src=multylanguage&action=del&translate_id=".$row['translate_id']."";?>">
                               <i class="fa fa-times bg-red action"></i>
                               </a>
                            </td>
                            <td>
-                              <a href="<?php echo WWW_PATH_ADMIN."index.php?src=multylanguage&action=edit&translate_id=".$row['translate_id']."&page=".$rest->get('page').""; ?>"><i class="fa fa-pencil bg-blue action"></i></a>
+                              <a href="<?php echo WWW_PATH_ADMIN_2."index.php?src=multylanguage&action=edit&translate_id=".$row['translate_id']."&page=".$rest->get('page').""; ?>"><i class="fa fa-pencil bg-blue action"></i></a>
                            </td>
                         </tr>
                         <?php 
@@ -99,7 +99,7 @@ $rest = new Rest;
             </div>
             <ul class="pagination">
                <li class="">
-                  <a href="<?php echo WWW_PATH_ADMIN."index.php?src=multylanguage&action=translates".$prevPageUrl."";?>">
+                  <a href="<?php echo WWW_PATH_ADMIN_2."index.php?src=multylanguage&action=translates".$prevPageUrl."";?>">
                   «
                   </a>
                </li>
@@ -112,18 +112,18 @@ $rest = new Rest;
                </li>
 			   
 			   <?php /*<li>
-                  <a href="<?php echo WWW_PATH_ADMIN."index.php?src=multylanguage&action=translates".$prevPageUrl."";?>">
+                  <a href="<?php echo WWW_PATH_ADMIN_2."index.php?src=multylanguage&action=translates".$prevPageUrl."";?>">
                   <?php echo $prevPage; ?>
                   </a>
                </li>
                <li>
-                  <a href="<?php echo WWW_PATH_ADMIN."index.php?src=multylanguage&action=translates".$nextPageUrl."";?>">
+                  <a href="<?php echo WWW_PATH_ADMIN_2."index.php?src=multylanguage&action=translates".$nextPageUrl."";?>">
                   <?php echo $nextPage; ?>							</a>
                </li>*/?>
 			   
 			   
                <li>
-                   <a href="<?php echo WWW_PATH_ADMIN."index.php?src=multylanguage&action=translates".$nextPageUrl."";?>">
+                   <a href="<?php echo WWW_PATH_ADMIN_2."index.php?src=multylanguage&action=translates".$nextPageUrl."";?>">
                   »
                   </a>
                </li>
@@ -135,5 +135,5 @@ $rest = new Rest;
       </div>
    </section>
    
-   <?php include "bottom.php"; ?>
+   <?php include "plugins/webhook/bottom.php"; ?>
 <?php get_bottom(); ?>

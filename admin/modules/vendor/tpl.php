@@ -1,6 +1,6 @@
-<?php include "tpl_functions.php"; ?>
+<?php include "plugins/webhook/tpl_functions.php"; ?>
 <?php get_top(); ?>
-<?php include "top.php"; 
+<?php include "plugins/webhook/top.php"; 
    $vendor = new Vendor;
    ?>
 <section class="content">
@@ -41,7 +41,7 @@
                      $realUrl 	= $row['real_url'];
 					 $email     = AdminUser::data("admin", "email");
 					 $vendorId  = $row['id_entity'];
-                     $adminUrl 	= $webUrl."/dnt-admin/index.php?src=login&action=2&domain_change=1&admin_id=".$email."&id_entity=".$vendorId;
+                     $adminUrl 	= $webUrl."/".ADMIN_URL_2."/index.php?src=login&action=auto-login&domain_change=1&admin_id=".$email."&id_entity=".$vendorId;
                      ?>
                   <tr>
                      <td><?php echo $i; ?></td>
@@ -189,5 +189,5 @@
    <!-- END CUSTOM TABLE -->			
 </div>
 <!-- END CUSTOM TABLE -->
-<?php include "bottom.php"; ?>
+<?php include "plugins/webhook/bottom.php"; ?>
 <?php get_bottom(); ?>

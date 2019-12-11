@@ -25,7 +25,7 @@ $db->update(
         'id' => $post_id,
         )
     );
-$dnt->redirect(WWW_PATH_ADMIN."index.php?src=".$rest->get("src")."&filter=".$rest->get("filter")."");
+$dnt->redirect(WWW_PATH_ADMIN_2."index.php?src=".$rest->get("src")."&filter=".$rest->get("filter")."");
 
 
 
