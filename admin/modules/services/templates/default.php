@@ -14,11 +14,15 @@ $actionUrl = "index.php?src=services&included=" . $service . "&filter=" . $rest-
 ?>
 
 <section class="col-xs-12" style="margin-bottom:15px">
-    <a href="index.php?src=services&included=<?php echo $rest->get("included"); ?>&filter=<?php echo $rest->get("filter"); ?>">
+   
+    <a href="index.php?src=content&included=<?php echo $rest->get("included"); ?>&filter=<?php echo $rest->get("filter"); ?>">
         <span class="label label-primary bg-blue" style="padding:5px;" ><big>PREJSŤ NA ZOZNAM</big></span>
     </a>
-    <a href="index.php?src=services&included=<?php echo $rest->get("included"); ?>&filter=<?php echo $rest->get("filter"); ?>&action=add">
+    <a href="index.php?src=content&included=<?php echo $rest->get("included"); ?>&filter=<?php echo $rest->get("filter"); ?>&action=add">
         <span class="label label-primary bg-green" style="padding:5px;"><big>PRIDAŤ NOVÝ POST V TEJTO KATEGÓRII</big></span>
+    </a>
+     <a href="index.php?src=content&filter=<?php echo $rest->get("filter"); ?>&sub_cat_id=&post_id=<?php echo $postId; ?>&page=1&action=edit&included=<?php echo $rest->get("included"); ?>">
+        <span class="label label-primary bg-orange" style="padding:5px;"><big>SPAŤ NA DETAIL</big></span>
     </a>
     <?php if ($show > 0) { ?>
         <a  href="<?php echo WWW_PATH . "a/" . $postId; ?>" target="_blank" style="float:right">

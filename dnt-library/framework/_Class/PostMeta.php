@@ -113,7 +113,7 @@ class PostMeta
                 }
             }
         } else {
-            $this->loadNewPostMetaFromInstallConf($postId, $service);
+            self::loadNewPostMetaFromInstallConf($postId, $service);
         }
     }
 

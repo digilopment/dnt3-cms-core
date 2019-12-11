@@ -46,7 +46,7 @@ if ($datetime_publish == "0000-00-00 00:00:00") {
     </a>
     <?php if ($rest->get("included") == "sitemap" && $service) { ?>
         <a <?php echo Dnt::confirmMsg("Pred prejdením na službu sa prosím uistite, či máte uložte všetky zmeny."); ?> 
-            href="index.php?src=content&included=<?php echo $rest->get("included"); ?>&filter=<?php echo $rest->get("filter"); ?>&post_id=<?php echo $rest->get("post_id"); ?>&services=<?php echo $service; ?>">
+            href="index.php?src=services&included=<?php echo $rest->get("included"); ?>&filter=<?php echo $rest->get("filter"); ?>&post_id=<?php echo $rest->get("post_id"); ?>&service=<?php echo $service; ?>">
             <span class="label label-primary bg-orange" style="padding:5px;"><big>PREJSŤ NA SLUŽBU</big></span>
         </a>
     <?php } ?>

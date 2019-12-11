@@ -47,7 +47,19 @@ class RouterAdmin
         }
     } */
     
-     protected function loadModul($module)
+    /**
+     * old modules...
+     */
+    protected function loadByWebhook($module){
+        $file = 'modules/'.$module.'/webhook.php';
+        if (file_exists($file)) {
+            include $file;
+            return true;
+        }
+        return false;
+    }
+    
+    protected function loadModul($module)
     {
 
         $classPrefix = $module;
@@ -69,7 +81,10 @@ class RouterAdmin
                 $moduleClass->indexAction();
             }
         } else {
-            die('no action');
+            if(!$this->loadByWebhook($module)){
+                 die('no action');
+            }
+            
         }
     }
 
