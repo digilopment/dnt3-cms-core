@@ -41,11 +41,11 @@ if (isset($_POST['sent'])) {
 		
 		if(in_array($vendor_movde_to, $vendorId)){
 			$customMessage = "Vendor ID <b>$vendor_movde_to</b>, sa už používa, prosím použite iné <b>Vendor ID</b>";
-			include "plugins/webhook/tpl_functions.php";
+			
 			get_top();
-			include "plugins/webhook/top.php";
+			get_top_html();
 			error_message("Vendor ID", $customMessage);
-			include "plugins/webhook/bottom.php";
+			get_bottom_html();
 			get_bottom();
 		}else{
 			$tables = array(
@@ -77,13 +77,13 @@ if (isset($_POST['sent'])) {
 	}
 	
     if($url != $currentVendorUrl && ($vendor_id == Vendor::getId())){
-        include "plugins/webhook/tpl_functions.php";
+        
         get_top();
-        include "plugins/webhook/top.php";
+        get_top_html();
         $redirectUrl = HTTP_PROTOCOL.$url.'.'.DOMAIN.WWW_FOLDERS.'/'.ADMIN_URL_2;
         $urlString = '<a href="'.$redirectUrl.'">Prosím znovu sa prihláste</a>';
         getConfirmMessage($redirectUrl, "<br/><br/>Údaje sa úspešne uložili, ale zmenili ste aj adresu webu.<br><u> $urlString </u>");
-        include "plugins/webhook/bottom.php";
+        get_bottom_html();
         get_bottom();
         
         $session = new Sessions;
@@ -92,11 +92,11 @@ if (isset($_POST['sent'])) {
         $session->remove("admin_id");
     }else{
 
-        include "plugins/webhook/tpl_functions.php";
+        
         get_top();
-        include "plugins/webhook/top.php";
+        get_top_html();
         getConfirmMessage($return, "<br/>Údaje sa úspešne uložili ");
-        include "plugins/webhook/bottom.php";
+        get_bottom_html();
         get_bottom();
     }
 }

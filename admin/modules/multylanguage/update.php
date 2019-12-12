@@ -35,19 +35,19 @@ if(isset($_POST['sent'])){
 		 }
 
 	if($return){
-		include "plugins/webhook/tpl_functions.php";
+		
 		get_top();
-		include "plugins/webhook/top.php";
+		get_top_html();
 		getConfirmMessage("index.php?src=multylanguage&action=translates", "<br/>Údaje sa úspešne uložili ");
-		include "plugins/webhook/bottom.php";
+		get_bottom_html();
 		get_bottom();
 	}
 	else{
-		include "plugins/webhook/tpl_functions.php";
+		
 		get_top();
-		include "plugins/webhook/top.php";
+		get_top_html();
 		error_message("heslo", "<b>Prosím zadajte vaše heslo pre uloženie údajov</b>");
-		include "plugins/webhook/bottom.php";
+		get_bottom_html();
 		get_bottom();
 	}
 	

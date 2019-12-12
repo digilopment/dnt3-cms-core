@@ -1,4 +1,4 @@
-<?php include "plugins/webhook/tpl_functions.php"; ?>
+
 <?php get_top(); ?>
 <body class="login">
 <div class="outer">

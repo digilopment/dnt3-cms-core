@@ -29,11 +29,11 @@ if(isset($_POST['sent'])){
 	  }
 
 	
-	include "plugins/webhook/tpl_functions.php";
+	
 	get_top();
-	include "plugins/webhook/top.php";
+	get_top_html();
 	getConfirmMessage("index.php?src=multylanguage&action=translate-all", "<br/>Údaje sa úspešne uložili ");
-	include "plugins/webhook/bottom.php";
+	get_bottom_html();
 	get_bottom();
 }else{
 	$dnt->redirect(WWW_PATH_ADMIN_2."?src=".DEFAULT_MODUL_ADMIN);

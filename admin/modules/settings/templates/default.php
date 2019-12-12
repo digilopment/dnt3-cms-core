@@ -107,7 +107,7 @@ $image = $data['image'];
                                     }elseif($row['content_type'] == "font"){ ?>
                                  <select name="key_<?php echo $row['id_entity'] ?>" class="btn-default btn-lg btn-block" type="text" size="1">
                                  <?php
-                                    $myFonts = fonts();
+                                    $myFonts = Helper::fonts();
                                     echo  '<option value="" >Vyberte font</option>';
                                     foreach($myFonts as $key => $font){
                                     	if($key == $row['value']){

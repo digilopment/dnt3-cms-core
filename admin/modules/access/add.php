@@ -1,6 +1,6 @@
-<?php include "plugins/webhook/tpl_functions.php"; ?>
+
 <?php get_top(); ?>
-<?php include "plugins/webhook/top.php"; ?>
+<?php get_top_html(); ?>
 <?php
 $rest = new Rest;
 $user = new Api;

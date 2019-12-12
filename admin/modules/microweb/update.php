@@ -64,11 +64,11 @@ if (isset($_POST['odoslat']) && isset($_GET['id'])) {
     }
     $presmeruj_url = "index.php?src=" . $rest->get('src') . "&id=" . $id . "&action=edit";
 
-    include "plugins/webhook/tpl_functions.php";
+    
     get_top();
-    include "plugins/webhook/top.php";
+    get_top_html();
     getConfirmMessage($presmeruj_url, "Údaje sa úspešne uložili");
-    include "plugins/webhook/bottom.php";
+    get_bottom_html();
     get_bottom();
 } elseif (isset($_POST['odoslat_sutaz'])) {
 
@@ -131,11 +131,11 @@ if (isset($_POST['odoslat']) && isset($_GET['id'])) {
 
 
     $presmeruj_url = "index.php?src=".$rest->get("src");
-    include "plugins/webhook/tpl_functions.php";
+    
     get_top();
-    include "plugins/webhook/top.php";
+    get_top_html();
     getConfirmMessage($presmeruj_url, "Údaje sa úspešne uložili");
-    include "plugins/webhook/bottom.php";
+    get_bottom_html();
     get_bottom();
 }
 

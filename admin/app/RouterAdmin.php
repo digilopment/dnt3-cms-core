@@ -23,42 +23,24 @@ class RouterAdmin
             Dnt::redirect($url);
         }
     }
-
-    /* protected function loadModul($module)
-    {
-
-        if (isset($_GET['action'])) {
-            $classPrefix = $_GET['action'] . '-' . $module;
-            $classFile = (new Autoloader())->className($classPrefix) . "Controller.php";
-            $className = (new Autoloader())->className($classPrefix) . "Controller";
-        } else {
-            $classPrefix = 'Index' . '-' . $module;
-            $classFile = (new Autoloader())->className($classPrefix) . "Controller.php";
-            $className = (new Autoloader())->className($classPrefix) . "Controller";
-        }
-        $file = "modules/" . $module . "/" . $classFile;
-
-        if (file_exists($file)) {
-            include $file;
-            $moduleClass = new $className();
-            $moduleClass->run();
-        } else {
-            die('no action');
-        }
-    } */
     
     /**
      * old modules...
      */
-    protected function loadByWebhook($module){
-        $file = 'modules/'.$module.'/webhook.php';
+    protected function loadByWebhook($module)
+    {
+        $file = 'modules/' . $module . '/webhook.php';
+        $tplFunctions = 'plugins/tpl_functions.php';
+        if (file_exists($tplFunctions)) {
+            include $tplFunctions;
+        }
         if (file_exists($file)) {
             include $file;
             return true;
         }
         return false;
     }
-    
+
     protected function loadModul($module)
     {
 

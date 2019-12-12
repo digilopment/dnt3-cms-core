@@ -1,6 +1,6 @@
-<?php include "plugins/webhook/tpl_functions.php"; ?>
+
 <?php get_top(); ?>
-<?php include "plugins/webhook/top.php"; 
+<?php get_top_html(); 
    $rest = new Rest;
    
    if($rest->get('page')){
@@ -80,5 +80,5 @@
       </form>
    </div>
 </section>
-<?php include "plugins/webhook/bottom.php"; ?>
+<?php get_bottom_html(); ?>
 <?php get_bottom(); ?>

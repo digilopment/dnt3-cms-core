@@ -36,11 +36,11 @@ if(isset($_POST['sent'])){
 		$urlString = '<a href="'.$redirectUrl.'">Prosím použite platný <b>.zip</b> súbor</a>';
 		$customMessage = "<b>.súbor</b>, ktorý sa pokúšate importovať ako nový web, nie je súbor vo formáte <b>.zip</b>.<br><br> $urlString";
 	}
-	include "plugins/webhook/tpl_functions.php";
+	
 			get_top();
-			include "plugins/webhook/top.php";
+			get_top_html();
 			error_message("súbor", $customMessage);
-			include "plugins/webhook/bottom.php";
+			get_bottom_html();
 			get_bottom();
 }else{
 	$dnt->redirect(WWW_PATH_ADMIN_2."index.php?src=vendor");

@@ -1,6 +1,6 @@
-<?php include "plugins/webhook/tpl_functions.php"; ?>
+
 <?php get_top(); ?>
-<?php include "plugins/webhook/top.php"; ?>
+<?php get_top_html(); ?>
 <?php
 $rest = new Rest;
 $post_id = $rest->get("post_id");
@@ -69,5 +69,5 @@ $post_id = $rest->get("post_id");
     </div>
 </section>
 
-<?php include "plugins/webhook/bottom.php"; ?>
+<?php get_bottom_html(); ?>
 <?php get_bottom(); ?>

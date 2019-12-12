@@ -42,7 +42,7 @@ $query = "SELECT * FROM dnt_mailer_mails WHERE cat_id = '".$cat_id."' AND vendor
 $sended_mails = $db->num_rows($query);
 
 if($post_id){
-	include "plugins/webhook/tpl_functions.php";
+	
 	$dntMailer		= new Mailer;
 	$sender_email	= str_replace(" ", "", dnt::getPostParam("dnt_mailer_mails", "email", $post_id));
 	$msg 			= $session->get("message");
@@ -68,7 +68,7 @@ if($post_id){
 	$dntMailer->sent_email();
 	tpl_sending_mails($to_finish, $sender_email, $next_id);
 }else{
-	include "plugins/webhook/tpl_functions.php";
+	
 	$session->remove("cat_id");
 	$session->remove("subject");
 	$session->remove("template");

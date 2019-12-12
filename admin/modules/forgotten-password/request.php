@@ -41,5 +41,5 @@ if(isset($_POST['sent'])){
 	$message = "Ľutujeme, ale táto požiadavka nebola korektne spracovaná.";
 	$errTitle = "Chyba";
 }
-include "plugins/webhook/tpl_functions.php";
+
 errorAccess($errTitle,$message);
