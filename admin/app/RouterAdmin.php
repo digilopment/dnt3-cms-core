@@ -1,4 +1,5 @@
 <?php
+
 class RouterAdmin
 {
 
@@ -23,7 +24,7 @@ class RouterAdmin
             Dnt::redirect($url);
         }
     }
-    
+
     /**
      * old modules...
      */
@@ -63,10 +64,9 @@ class RouterAdmin
                 $moduleClass->indexAction();
             }
         } else {
-            if(!$this->loadByWebhook($module)){
-                 die('no action');
+            if (!$this->loadByWebhook($module)) {
+                die('no action');
             }
-            
         }
     }
 
@@ -75,13 +75,13 @@ class RouterAdmin
         $query = "SELECT * FROM `dnt_admin_menu` WHERE `parent_id` = '0' AND `show` = '1' AND `type` = 'menu' AND vendor_id = " . Vendor::getId() . "";
         $this->navigation = $this->db->get_results($query);
         array_push(
-            $this->navigation,
-            ["name_url" => "login"],
-            ["name_url" => "logout"],
-            ["name_url" => "pdfgen"],
-            ["name_url" => "menucreator"],
-            ["name_url" => "vendor"],
-            ["name_url" => "services"]
+                $this->navigation,
+                ["name_url" => "login"],
+                ["name_url" => "logout"],
+                ["name_url" => "pdfgen"],
+                ["name_url" => "menucreator"],
+                ["name_url" => "vendor"],
+                ["name_url" => "services"]
         );
     }
 
@@ -98,7 +98,7 @@ class RouterAdmin
     {
         $this->redirect();
         $this->navigation();
-        
+
         if ($this->session->get("admin_logged") && empty($this->rest->get('src'))) {
             Dnt::redirect('index.php?src=' . DEFAULT_MODUL_ADMIN);
         } elseif ($this->session->get("admin_logged")) {
@@ -109,9 +109,7 @@ class RouterAdmin
                 die('no module');
             }
         } else {
-            $getRequest = $this->rest->get('src');
-            $module = ($getRequest) ? $getRequest : 'login';
-            $this->loadModul($module);
+            $this->loadModul('login');
         }
     }
 
