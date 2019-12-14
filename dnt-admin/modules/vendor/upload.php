@@ -24,7 +24,7 @@ if(isset($_POST['sent'])){
 			Dnt::recurse_copy($src, $dst);
 			Install::addInstallation($sqlFile);
 			Dnt::rrmdir("../dnt-install/_temp/");
-			$dnt->redirect(WWW_PATH_ADMIN."index.php?src=vendor");
+			$dnt->redirect(WWW_PATH_ADMIN_2."index.php?src=vendor");
 		}else{
 			$redirectUrl = "index.php?src=vendor&action=import";
 			$urlString = '<a href="'.$redirectUrl.'">Prosím použite iný súbor</a>';
@@ -36,12 +36,12 @@ if(isset($_POST['sent'])){
 		$urlString = '<a href="'.$redirectUrl.'">Prosím použite platný <b>.zip</b> súbor</a>';
 		$customMessage = "<b>.súbor</b>, ktorý sa pokúšate importovať ako nový web, nie je súbor vo formáte <b>.zip</b>.<br><br> $urlString";
 	}
-	include "tpl_functions.php";
+	
 			get_top();
-			include "top.php";
+			get_top_html();
 			error_message("súbor", $customMessage);
-			include "bottom.php";
+			get_bottom_html();
 			get_bottom();
 }else{
-	$dnt->redirect(WWW_PATH_ADMIN."index.php?src=vendor");
+	$dnt->redirect(WWW_PATH_ADMIN_2."index.php?src=vendor");
 }

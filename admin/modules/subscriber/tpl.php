@@ -1,4 +1,0 @@
-<?php 
- 
-errorAccess($errTitle,$errContent);
-?>

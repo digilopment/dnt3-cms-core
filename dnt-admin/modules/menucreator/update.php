@@ -24,7 +24,7 @@ if(isset($_POST['sent'])){
 			)
 		);
 	}
-	Dnt::redirect(WWW_PATH_ADMIN."?src=menucreator");
+	Dnt::redirect(WWW_PATH_ADMIN_2."?src=menucreator");
 }else{
-	Dnt::redirect(WWW_PATH_ADMIN."?src=".DEFAULT_MODUL_ADMIN);
+	Dnt::redirect(WWW_PATH_ADMIN_2."?src=".DEFAULT_MODUL_ADMIN);
 }

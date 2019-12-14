@@ -136,7 +136,7 @@ define( 'WWW_PATH', HTTP_PROTOCOL.@$_SERVER['SERVER_NAME'].WWW_FOLDERS."/" ); //
 
 //URL ADMIN
 define( 'ADMIN_URL', 'dnt-admin' ); // set admin hook
-define( 'ADMIN_URL_2', 'admin' ); // set admin hook
+define( 'ADMIN_URL_2', 'dnt-admin' ); // set admin hook
 define( 'WWW_PATH_ADMIN', HTTP_PROTOCOL."".@$_SERVER['SERVER_NAME'].WWW_FOLDERS."/".ADMIN_URL."/" );
 define( 'WWW_PATH_ADMIN_2', HTTP_PROTOCOL."".@$_SERVER['SERVER_NAME'].WWW_FOLDERS."/".ADMIN_URL_2."/" );
 

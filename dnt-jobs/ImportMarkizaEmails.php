@@ -107,7 +107,7 @@ class ImportMarkizaEmailsJob
     public function run()
     {
 
-        if ((new Rest())->get('inser')) {
+        if ((new Rest())->get('insert')) {
             $this->insert();
         }
         if ((new Rest())->get('delete')) {

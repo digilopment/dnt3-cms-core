@@ -45,4 +45,4 @@ if (isset($_POST['sent'])) {
     }
 }
 
-$dnt->redirect(WWW_PATH_ADMIN . "index.php?src=" . $rest->get("src") . "");
+$dnt->redirect(WWW_PATH_ADMIN_2 . "index.php?src=" . $rest->get("src") . "");

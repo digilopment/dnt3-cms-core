@@ -18,7 +18,7 @@ if(isset($_POST['sent'])){
 	$db->insert('dnt_mailer_type', $insertedData);
 	
 	//return
-	$dnt->redirect(WWW_PATH_ADMIN."?src=mailer");
+	$dnt->redirect(WWW_PATH_ADMIN_2."?src=mailer");
 }else{
-	$dnt->redirect(WWW_PATH_ADMIN."?src=".DEFAULT_MODUL_ADMIN);
+	$dnt->redirect(WWW_PATH_ADMIN_2."?src=".DEFAULT_MODUL_ADMIN);
 }

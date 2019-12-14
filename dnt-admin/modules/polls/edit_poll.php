@@ -1,6 +1,6 @@
-<?php include "tpl_functions.php"; ?>
+
 <?php get_top(); ?>
-<?php include "top.php"; ?>
+<?php get_top_html(); ?>
 <?php
    $poll_id = $rest->get("post_id");
    $last_question_id = 1;
@@ -273,5 +273,5 @@
    </section>
 </form>
 <!-- END CUSTOM TABLE -->
-<?php include "bottom.php"; ?>
+<?php get_bottom_html(); ?>
 <?php get_bottom(); ?>

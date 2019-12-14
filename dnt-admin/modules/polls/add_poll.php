@@ -1,6 +1,6 @@
-<?php include "tpl_functions.php"; ?>
+
 <?php get_top(); ?>
-<?php include "top.php"; ?>
+<?php get_top_html(); ?>
 <section class="content">
       <!-- BEGIN LEFT TABS -->
       <div class="row">
@@ -66,5 +66,5 @@
       </div>
 </section>
 <!-- END CUSTOM TABLE -->
-<?php include "bottom.php"; ?>
+<?php get_bottom_html(); ?>
 <?php get_bottom(); ?>

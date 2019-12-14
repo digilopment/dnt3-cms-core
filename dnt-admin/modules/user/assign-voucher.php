@@ -4,10 +4,10 @@ if(Voucher::assignLastVoucher($post_id)){
 	$url = "index.php?src=".$rest->get("src")."&type=".$rest->get("type")."";
 	Dnt::redirect($url);
 }else{
-	include "tpl_functions.php";
+	
 	get_top();
-	include "top.php";
+	get_top_html();
 	error_message_default("Nie je možné pridať voucher. <br/>Pre pridanie vouchera, potrebujete mať naimportovaný zoznam voucherov.");
-	include "bottom.php";
+	get_bottom_html();
 	get_bottom();
 }
