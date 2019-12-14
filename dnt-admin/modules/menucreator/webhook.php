@@ -602,6 +602,7 @@ function sql2Arr(){
 	}
 }
 $rest = new Rest();
+$db = new Db();
 if($rest->get("action") == "sql2Arr")
 {
 	sql2Arr();
