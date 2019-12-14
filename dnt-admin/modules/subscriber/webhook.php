@@ -1,4 +1,5 @@
 <?php
+$db = new Db;
 $url = WWW_PATH."rpc/subscriber/?email=".urlencode(base64_encode("thomas.doubek@gmail.com"))."&vendor_id=".urlencode(base64_encode(Vendor::getId()))."&status=0&id_entity=".urlencode(base64_encode("26"));
 echo $url."<br/>";
 

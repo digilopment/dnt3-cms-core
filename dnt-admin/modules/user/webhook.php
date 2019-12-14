@@ -3,6 +3,7 @@ $rest = new Rest;
 $session = new Sessions;
 $dnt 	= new Dnt;
 $db 	= new Db;
+$db = new Db;
 
 if($rest->get("action") == "update")
 {

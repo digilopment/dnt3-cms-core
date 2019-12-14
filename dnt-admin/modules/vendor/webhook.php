@@ -4,6 +4,7 @@ $rest = new Rest;
 $session = new Sessions;
 $dnt = new Dnt;
 $adminUser = new AdminUser;
+$db = new Db;
 
 if ($rest->get("action") == "update") {
     include "update.php";
