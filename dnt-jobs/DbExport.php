@@ -1,13 +1,15 @@
 <?php
 
-class DbExportJob {
+class DbExportJob
+{
 
-    public function run() {
+    public function run()
+    {
         $rest = new Rest;
         error_reporting(0);
         $vendor_id = (new Rest())->get('vendor_id');
-        
-        
+
+
         //ENTER THE RELEVANT INFO BELOW
         $mysqlUserName = DB_USER;
         $mysqlPassword = DB_PASS;
@@ -15,7 +17,7 @@ class DbExportJob {
         $DbName = DB_NAME;
         $backup_name = false;
         $tables = false;
-        
+
         if ($vendor_id == 0) {
             $backup_name = "../dnt-install/install.sql";
             //echo "Database was exported. - ".$backup_name;

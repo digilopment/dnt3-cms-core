@@ -7,13 +7,15 @@
  *  package     dnt3
  *  date        2017
  */
-class Webhook {
+class Webhook
+{
 
     /**
      * 
      * @return type
      */
-    public function getSitemapModules($type = false, $vendorId = false) {
+    public function getSitemapModules($type = false, $vendorId = false)
+    {
         $db = new Db;
         $ml = new MultyLanguage;
 
@@ -84,7 +86,8 @@ class Webhook {
      * @param type $config
      * @return type
      */
-    public function servicesConfFile($postId = false, $config = false) {
+    public function servicesConfFile($postId = false, $config = false)
+    {
         if ($config === true) {
             return array(
                 "config" => array(
@@ -164,8 +167,9 @@ class Webhook {
             );
         }
     }
-    
-    public function services($postId = false, $config = false) {
+
+    public function services($postId = false, $config = false)
+    {
         $file = "../dnt-view/layouts/" . Vendor::getLayout() . "/Configurator.php";
         if (file_exists($file)) {
             include $file;
@@ -182,7 +186,8 @@ class Webhook {
      * 
      * @return boolean
      */
-    public function getArticleViewCat() {
+    public function getArticleViewCat()
+    {
         $db = new Db;
         $arr = array();
         $query = "SELECT `name_url` FROM dnt_posts WHERE `type` = 'sitemap' AND `show` > '0' AND vendor_id = '" . Vendor::getId() . "'";
@@ -205,7 +210,8 @@ class Webhook {
      * key_array -> represent modul service
      * array_alue-> represent the hook get PARAMETER 
      */
-    public function get($custom_modules = false) {
+    public function get($custom_modules = false)
+    {
         if ($custom_modules == false) {
             $custom_modules = array(array(false));
         } else {

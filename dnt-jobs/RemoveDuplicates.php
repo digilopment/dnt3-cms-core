@@ -1,8 +1,10 @@
 <?php
 
-class RemoveDuplicatesJob {
+class RemoveDuplicatesJob
+{
 
-    public function run() {
+    public function run()
+    {
         $vendor = new Vendor();
         $db = new DB();
 

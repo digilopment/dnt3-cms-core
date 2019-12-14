@@ -1,8 +1,10 @@
 <?php
 
-class PrepareCacheByUrlJob {
+class PrepareCacheByUrlJob
+{
 
-    public function run() {
+    public function run()
+    {
         $vendor = new Vendor;
         $opts = array(
             'http' => array(

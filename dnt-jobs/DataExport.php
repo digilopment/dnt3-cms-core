@@ -1,8 +1,10 @@
 ﻿<?php
 
-class DataExportJob {
+class DataExportJob
+{
 
-    public function run() {
+    public function run()
+    {
 
         $rest = new Rest;
         $config = new Config;
@@ -10,11 +12,11 @@ class DataExportJob {
         $XMLgenerator = new XMLgenerator;
         $dnt = new Dnt;
         $dntCache = new Cache;
-        
+
         $vendor_id = (new Rest())->get('vendor_id');
-        
+
         if ($vendor_id) {
-            
+
             $mysqlUserName = DB_USER;
             $mysqlPassword = DB_PASS;
             $mysqlHostName = DB_HOST;

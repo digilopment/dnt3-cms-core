@@ -1,13 +1,15 @@
 ﻿<?php
 
-class ImportMarkizaEmailsJob {
+class ImportMarkizaEmailsJob
+{
 
     protected $dbEmails = [];
     protected $fileEmails = [];
     protected $catId = 55;
     protected $vendorId = 39;
 
-    protected function countEmails() {
+    protected function countEmails()
+    {
         $db = new Db;
         $query = "SELECT email FROM dnt_mailer_mails WHERE cat_id = '" . $this->catId . "' AND vendor_id = '" . $this->vendorId . "'";
         $emails = [];
@@ -17,7 +19,8 @@ class ImportMarkizaEmailsJob {
         return count($emails);
     }
 
-    protected function writeToDb($email) {
+    protected function writeToDb($email)
+    {
         $db = new Db;
         $name = "";
         $surname = "";
@@ -36,7 +39,8 @@ class ImportMarkizaEmailsJob {
         $db->insert('dnt_mailer_mails', $insertedData);
     }
 
-    protected function deleteFromDb($email) {
+    protected function deleteFromDb($email)
+    {
         $db = new Db;
         $where = array(
             'email' => $email,
@@ -45,7 +49,8 @@ class ImportMarkizaEmailsJob {
         $db->delete('dnt_mailer_mails', $where, 1);
     }
 
-    protected function dbEmails() {
+    protected function dbEmails()
+    {
 
         $table = "dnt_mailer_mails";
         $db = new Db;
@@ -56,7 +61,8 @@ class ImportMarkizaEmailsJob {
         }
     }
 
-    protected function fileEmails($file) {
+    protected function fileEmails($file)
+    {
         $row = 1;
         if (($handle = fopen($file, "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
@@ -70,7 +76,8 @@ class ImportMarkizaEmailsJob {
         }
     }
 
-    protected function insert() {
+    protected function insert()
+    {
         $this->dbEmails();
         $this->fileEmails("velkanoc2019.csv");
 
@@ -83,7 +90,8 @@ class ImportMarkizaEmailsJob {
         }
     }
 
-    protected function delete() {
+    protected function delete()
+    {
         $this->dbEmails();
         $this->fileEmails("delete.csv");
 
@@ -96,7 +104,8 @@ class ImportMarkizaEmailsJob {
         }
     }
 
-    public function run() {
+    public function run()
+    {
 
         if ((new Rest())->get('inser')) {
             $this->insert();

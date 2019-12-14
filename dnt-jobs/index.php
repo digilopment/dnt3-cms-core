@@ -1,12 +1,15 @@
 <?php
 
-class Init {
+class Init
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         require '../dnt-library/framework/app/Bootstrap.php';
     }
 
-    public function run() {
+    public function run()
+    {
         $bootstrap = new Bootstrap('../../');
         $bootstrap->boot();
         $app = new App($bootstrap->client);

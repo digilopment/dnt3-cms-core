@@ -35,7 +35,6 @@ if (!isset($_SERVER['SERVER_NAME'])) {
 define( 'WWW_FOLDERS', "/dnt3" ); //YOUR APPLICATION FOLDER. IF APPLICATION IS IN ROOT FOLDER PLEASE SET as define( 'WWW_FOLDERS', "" );
 define( 'DEAFULT_MODUL', 'default' ); // set system default modul
 define( 'DEFAULT_MODUL_ADMIN', 'settings' ); // set dnt-admin default modul
-define( 'ADMIN_URL_2', 'admin' ); // set dnt-admin default modul
 
 
 
@@ -134,7 +133,11 @@ define("ENABLE_BACKEND_GEO_IP_SERVICE", false);
 define( 'HTTP_PROTOCOL', (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://" ); //protocol
 define( 'SERVER_NAME', $_SERVER['SERVER_NAME'] ); //server path too root file usualy index.php or home.php
 define( 'WWW_PATH', HTTP_PROTOCOL.@$_SERVER['SERVER_NAME'].WWW_FOLDERS."/" ); //server path too root file usualy index.php or home.php
-define( 'WWW_PATH_ADMIN', HTTP_PROTOCOL."".@$_SERVER['SERVER_NAME'].WWW_FOLDERS."/dnt-admin/" );
+
+//URL ADMIN
+define( 'ADMIN_URL', 'dnt-admin' ); // set admin hook
+define( 'ADMIN_URL_2', 'admin' ); // set admin hook
+define( 'WWW_PATH_ADMIN', HTTP_PROTOCOL."".@$_SERVER['SERVER_NAME'].WWW_FOLDERS."/".ADMIN_URL."/" );
 define( 'WWW_PATH_ADMIN_2', HTTP_PROTOCOL."".@$_SERVER['SERVER_NAME'].WWW_FOLDERS."/".ADMIN_URL_2."/" );
 
 //define( 'DOMAIN', explode(".", SERVER_NAME)[0]); //server path too root file usualy index.php or home.php

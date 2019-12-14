@@ -1,8 +1,10 @@
 <?php
 
-class DelOldCacheJob {
+class DelOldCacheJob
+{
 
-    public function run() {
+    public function run()
+    {
         $cache = new Cache();
         $cache->deleteOld("../dnt-cache/");
         print("\nCache was deleted\n");

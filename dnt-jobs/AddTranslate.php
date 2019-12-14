@@ -1,8 +1,10 @@
 ﻿<?php
 
-class AddTranslateJob {
+class AddTranslateJob
+{
 
-    public function run() {
+    public function run()
+    {
 
         $translates = array(
             array(

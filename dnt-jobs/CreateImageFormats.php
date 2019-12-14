@@ -1,8 +1,10 @@
 ﻿<?php
 
-class createImageFormatsJob {
+class createImageFormatsJob
+{
 
-    public function run() {
+    public function run()
+    {
         $vendor = new Vendor;
 
         $db = new Db;

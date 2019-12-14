@@ -1,8 +1,10 @@
 <?php
 
-class StaticRedirectModuleController {
+class StaticRedirectModuleController
+{
 
-    public function run() {
+    public function run()
+    {
         $article = new ArticleView();
         $id = $article->getStaticId();
         $name_url = $article->getPostParam("embed", $id);

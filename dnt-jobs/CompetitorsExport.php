@@ -1,8 +1,10 @@
 ﻿<?php
 
-class CompetitorsExportJob {
+class CompetitorsExportJob
+{
 
-    protected function creatCsvFileStatic($table, $columns, $where, $fileName, $columnsName = false) {
+    protected function creatCsvFileStatic($table, $columns, $where, $fileName, $columnsName = false)
+    {
         $db = new DB();
         $data = false;
         $data = chr(0xEF) . chr(0xBB) . chr(0xBF); //diakritika pod UTF 8
@@ -29,7 +31,8 @@ class CompetitorsExportJob {
         file_put_contents($fileName, $data);
     }
 
-    public function run() {
+    public function run()
+    {
         $vendor = new Vendor();
         $date_time_format = date("d") . "-" . date("m") . "-" . date("Y");
 

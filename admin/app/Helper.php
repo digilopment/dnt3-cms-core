@@ -19,7 +19,6 @@ class Helper
             "Tahoma" => "Tahoma",
             "Verdana" => "Verdana",
         );
-        //sort($fonts);
         return $fonts;
     }
 

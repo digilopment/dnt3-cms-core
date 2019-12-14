@@ -1,16 +1,18 @@
 <?php
 
-class webExportJob {
+class webExportJob
+{
 
-    public function run() {
+    public function run()
+    {
 
         $db = new DB;
         $zip = new ZipArchive();
-        
+
         $vendor_id = (new Rest())->get('vendor_id');
-        
+
         if ($vendor_id) {
-            
+
             $mysqlUserName = DB_USER;
             $mysqlPassword = DB_PASS;
             $mysqlHostName = DB_HOST;
