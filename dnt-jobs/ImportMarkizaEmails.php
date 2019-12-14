@@ -79,7 +79,7 @@ class ImportMarkizaEmailsJob
     protected function insert()
     {
         $this->dbEmails();
-        $this->fileEmails("velkanoc2019.csv");
+        $this->fileEmails("data/velkanoc2019.csv");
 
         //INSERT
         foreach ($this->fileEmails as $fileEmail) {
@@ -93,7 +93,7 @@ class ImportMarkizaEmailsJob
     protected function delete()
     {
         $this->dbEmails();
-        $this->fileEmails("delete.csv");
+        $this->fileEmails("data/delete.csv");
 
         //DELETE GDPR
         foreach ($this->fileEmails as $fileEmail) {
