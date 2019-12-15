@@ -109,7 +109,11 @@ class RouterAdmin
                 die('no module');
             }
         } else {
-            $this->loadModul('login');
+            if ($this->rest->get('src') == "forgotten-password") {
+                $this->loadModul('forgotten-password');
+            } else {
+                $this->loadModul('login');
+            }
         }
     }
 
