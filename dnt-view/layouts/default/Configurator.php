@@ -17,6 +17,9 @@ class Configurator extends Webhook {
             "static_redirect" => array_merge(
                     array(), $this->getSitemapModules("static_redirect")
             ),
+            "subscriber" => array_merge(
+                    array(), $this->getSitemapModules("subscriber")
+            ),
         );
         return $modulesRegistrator;
     }
@@ -31,6 +34,9 @@ class Configurator extends Webhook {
             ),
             "static_redirect" => array(
                 "service_name" => "Presmerovanie",
+            ),
+            "subscriber" => array(
+                "service_name" => "Služba na potvrdenie emailu",
             ),
         );
     }

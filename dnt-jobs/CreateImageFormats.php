@@ -5,10 +5,9 @@ class createImageFormatsJob
 
     public function run()
     {
-        $vendor = new Vendor;
-
-        $db = new Db;
-        $images = array();
+        $vendor = new Vendor();
+        $db = new DB();
+        $images = [];
         $originalImagePath = "../dnt-view/data/uploads/";
         $query = "SELECT DISTINCT name FROM dnt_uploads WHERE type LIKE '%image%'";
         if ($db->num_rows($query) > 0) {
