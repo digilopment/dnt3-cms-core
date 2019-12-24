@@ -830,7 +830,7 @@ function getZobrazenie($stav)
     }
 }
 
-function tpl_sending_mails($to_finish, $sender_email, $next_id)
+function tpl_sending_mails($to_finish, $sender_email, $next_id, $sleep = 0)
 {
     get_top();
 
@@ -861,8 +861,7 @@ function tpl_sending_mails($to_finish, $sender_email, $next_id)
 	</div>
   </div>
 </div>
-<!--<meta http-equiv="refresh" content="2;url=' . Rest::setGet(array("mail_id" => $next_id)) . '">-->
-<meta http-equiv="refresh" content="0;url=' . AdminMailer::sent_next_mail($next_id) . '">
+<meta http-equiv="refresh" content="'.$sleep.';url=' . AdminMailer::sent_next_mail($next_id) . '">
 ';
     get_bottom();
 }

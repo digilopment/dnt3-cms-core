@@ -89,6 +89,21 @@ class ImportMarkizaEmailsJob
             }
         }
     }
+	
+	protected function countUniqueNews()
+    {
+        $this->dbEmails();
+        $this->fileEmails("data/ak2019.csv");
+
+        //INSERT
+		$i=0;
+        foreach ($this->fileEmails as $fileEmail) {
+            if (!in_array($fileEmail, $this->dbEmails)) {
+                $i++;
+            }
+        }
+		echo "Nových emailov " . $i;
+    }
 
     protected function delete()
     {
@@ -115,6 +130,9 @@ class ImportMarkizaEmailsJob
         }
         if ((new Rest())->get('count')) {
             print $this->countEmails();
+        }
+		 if ((new Rest())->get('countUniqueNews')) {
+            print $this->countUniqueNews();
         }
     }
 

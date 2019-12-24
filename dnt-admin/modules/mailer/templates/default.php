@@ -1,9 +1,11 @@
-
 <?php get_top(); ?>
-<?php get_top_html();?>
-<?php 
-   $db 		= new Db;
-   $rest 	= new Rest;
+<?php get_top_html(); ?>
+<?php
+   $db = $data['db'];
+   $rest = $data['rest'];
+   $adminMailer = $data['adminMailer'];
+   $dnt = $data['dnt'];
+   $vendor = $data['vendor'];
    ?>
 <section class="row content-header">
    <ul >
@@ -16,7 +18,7 @@
       </li>
       <li class="post_type" >
          <a href="index.php?src=content&included=post&filter=293">
-			<span class="btn btn-primary bg-green" >VYTVORIŤ ŠABLONU</span>
+         <span class="btn btn-primary bg-green" >VYTVORIŤ ŠABLONU</span>
          </a>
       </li>
       <li class="post_type" style="text-decoration: underline">
@@ -24,36 +26,29 @@
          <button class="btn btn-primary bg-green" data-toggle="modal" data-target="#modalPrimary3">ODOSLAŤ HROMADNÝ MAIL</button>
       </li>
       <br/><br/><br/>
-	  
-	  
-	   <li class="post_type">
+      <li class="post_type">
          <a href="index.php?src=mailer">
          <span class="label label-primary bg-blue" style="padding: 5px;"><big>Všetky</big></span>
          </a>
       </li>
-	  
       <?php
-         $query = AdminMailer::catQuery();
-         $pocet = $db->num_rows($query);
-         if($db->num_rows($query)>0){
-         	foreach($db->get_results($query) as $row){
-                	?>
+         foreach ($data['categories'] as $cat) {
+             ?>
       <li class="post_type">
-         <a href="<?php echo AdminMailer::url("filter", $row['id_entity'], false, false, false, 1) ?>">
-         <span class="label label-primary bg-blue" style="padding: 5px;"><big><?php echo $row['name'];?></big></span>
+         <a href="<?php echo $adminMailer->url("filter", $cat['id_entity'], false, false, false, 1) ?>">
+         <span class="label label-primary bg-blue" style="padding: 5px;"><big><?php echo $cat['name']; ?></big></span>
          </a>
       </li>
       <?php
          }
-               }
-               ?>
+         ?>
    </ul>
 </section>
 <!-- MODAL NEW EMAIL -->
 <div class="modal fade" id="modalPrimary2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel8" aria-hidden="true">
    <div class="modal-wrapper">
       <div class="modal-dialog">
-         <form action="<?php echo AdminMailer::url("add_mail", false, false, false, false, false) ?>" method="POST">
+         <form action="<?php echo $adminMailer->url("add_mail", false, false, false, false, false) ?>" method="POST">
             <div class="modal-content">
                <div class="modal-header bg-blue">
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -69,13 +64,10 @@
                   <select name="cat_id" id="cname" class="form-control" minlength="2" required="">
                      <option value="NULL">(kategória emailu)</option>
                      <?php
-                        $query = AdminMailer::catQuery();
-                        $pocet = $db->num_rows($query);
-                        if($db->num_rows($query)>0){
-                        foreach($db->get_results($query) as $row){
-                        echo"<option value='".$row['id_entity']."'>".$row['name']."</option>";
-                        	}
+                        foreach ($data['categories'] as $cat) {
+                            echo"<option value='" . $cat['id_entity'] . "'>" . $cat['name'] . "</option>";
                         }
+                        
                         ?>
                   </select>
                </div>
@@ -95,7 +87,7 @@
 <div class="modal fade" id="pridat_kat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel8" aria-hidden="true">
    <div class="modal-wrapper">
       <div class="modal-dialog">
-         <form action="<?php echo AdminMailer::url("add_cat", false, false, false, false, false) ?>" method="POST">
+         <form action="<?php echo $adminMailer->url("add_cat", false, false, false, false, false) ?>" method="POST">
             <div class="modal-content">
                <div class="modal-header bg-blue">
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -117,63 +109,57 @@
    </div>
 </div>
 <!-- END MODAL -->
-
-   <!-- MODAL ODOSLAT EMAILY-->
-   <div class="modal fade" id="modalPrimary3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel8" aria-hidden="true">
-      <div class="modal-wrapper">
-         <div class="modal-dialog">
-            <form action="<?php echo AdminMailer::url("sent_mail", false, false, false, false, false) ?>" method="POST">
-<div class="modal-content">
-   <div class="modal-header bg-blue">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h4 class="modal-title" id="myModalLabel8">Pridať email do zoznamu</h4>
-   </div>
-   <div class="modal-body">
-      <input type="text" name="subject" class="form-control" placeholder="Predmet:"/>
-      <br/>
-      <select name="template" id="cname" class="form-control" minlength="2" required="">
-         <option value="NULL">(vyberte šablonu)</option>
-         <?php
-			$query = "SELECT * FROM dnt_posts WHERE cat_id = '293' AND vendor_id = '".Vendor::getId()."'";
-			if($db->num_rows($query)>0){
-				foreach($db->get_results($query) as $row){
-					echo"<option value='".$row['cat_id']."'>".$row['name']."</option>";
-				}
-			}
-            ?>
-      </select>
-      <br/>
-	  <input type="text" name="url_external" class="form-control" placeholder="Url: vzdialenej šablony"/>
-      <br/>
-      <select name="users" id="cname" class="form-control" minlength="2" required="">
-         <option value="NULL">(vyberte kategóriu prijmateľov)</option>
-		  <?php
-			$query = AdminMailer::catQuery();
-			$pocet = $db->num_rows($query);
-			if($db->num_rows($query)>0){
-			foreach($db->get_results($query) as $row){
-			echo"<option value='".$row['id_entity']."'>".$row['name']."</option>";
-				}
-			}
-			?>
-         
-      </select>
-      <br/>
-      <textarea  name="message" class="form-control" placeholder="Správa:"/></textarea>
-   </div>
-   <div class="modal-footer">
-      <div class="btn-group">
-         <button type="button" class="btn btn-default" data-dismiss="modal">Zavrieť</button>
-         <input type="submit" name="sent" value="Odoslať" class="btn btn-primary" />
+<!-- MODAL ODOSLAT EMAILY-->
+<div class="modal fade" id="modalPrimary3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel8" aria-hidden="true">
+   <div class="modal-wrapper">
+      <div class="modal-dialog">
+         <form action="<?php echo $adminMailer->url("sent_mail", false, false, false, false, false) ?>" method="POST">
+            <div class="modal-content">
+               <div class="modal-header bg-blue">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title" id="myModalLabel8">Pridať email do zoznamu</h4>
+               </div>
+               <div class="modal-body">
+                  <input type="text" name="subject" class="form-control" placeholder="Predmet:"/>
+                  <br/>
+                  <select name="template" id="cname" class="form-control" minlength="2" required="">
+                     <option value="NULL">(vyberte šablonu)</option>
+                     <?php
+                        $query = "SELECT * FROM dnt_posts WHERE cat_id = '293' AND vendor_id = '" . $vendor->getId() . "'";
+                        if ($db->num_rows($query) > 0) {
+                            foreach ($db->get_results($query) as $row) {
+                                echo"<option value='" . $row['cat_id'] . "'>" . $row['name'] . "</option>";
+                            }
+                        }
+                        ?>
+                  </select>
+                  <br/>
+                  <input type="text" name="url_external" class="form-control" placeholder="Url: vzdialenej šablony"/>
+                  <br/>
+                  <select name="users" id="cname" class="form-control" minlength="2" required="">
+                     <option value="NULL">(vyberte kategóriu prijmateľov)</option>
+                     <?php
+                        foreach ($data['categories'] as $cat) {
+                            echo"<option value='" . $cat['id_entity'] . "'>" . $cat['name'] . "</option>";
+                        }
+                        
+                        ?>
+                  </select>
+                  <br/>
+                  <textarea  name="message" class="form-control" placeholder="Správa:"/></textarea>
+               </div>
+               <div class="modal-footer">
+                  <div class="btn-group">
+                     <button type="button" class="btn btn-default" data-dismiss="modal">Zavrieť</button>
+                     <input type="submit" name="sent" value="Odoslať" class="btn btn-primary" />
+                  </div>
+               </div>
+            </div>
+         </form>
       </div>
    </div>
 </div>
-</form>
-</div>
-</div>
-</div>
 <!-- END MODAL -->
-
 <!-- BEGIN CUSTOM TABLE -->
 <br/>
 <div class="row" style="clear: both;"></div>
@@ -199,8 +185,8 @@
                   <tr>
                      <th>#</th>
                      <th style="width: 10%;">Titul</th>
-                    <th style="width: 20%;">Meno</th>
-                   <th style="width: 20%;">Priezvisko</th>
+                     <th style="width: 20%;">Meno</th>
+                     <th style="width: 20%;">Priezvisko</th>
                      <th style="width: 20%;">Email</th>
                      <!--<th>Dátum pridania</th>-->
                      <th style="width: 15%;">Kategória</th>
@@ -211,57 +197,51 @@
                </thead>
                <tbody>
                   <?php
-                     $query = AdminMailer::query();
-                     $i = AdminMailer::showOrder();
-                     if($db->num_rows($query)>0){
-                     	foreach($db->get_results($query) as $row){
-                     $cat_id 		= $row['cat_id'];
-                     $post_id 		= $row['id_entity'];
-                     $cat_id 		= $row['cat_id'];
-                     $page 			= AdminMailer::getPage("current");
-                     ?>
-                  <form method="POST" action="<?php echo AdminMailer::url("edit_mail", $cat_id, false, false, $post_id, $page) ?>" >
+                     $query = $adminMailer->query();
+                     $i = $adminMailer->showOrder();
+                     $page = $adminMailer->getPage("current");
+                     if ($db->num_rows($query) > 0) {
+                         foreach ($db->get_results($query) as $row) {
+                             $cat_id = $row['cat_id'];
+                             $post_id = $row['id_entity'];
+                             $cat_id = $row['cat_id'];
+                             ?>
+                  <form method="POST" action="<?php echo $adminMailer->url("edit_mail", $cat_id, false, false, $post_id, $page) ?>" >
                      <tr>
-                        <td><?php echo $i++; ?></td>
+                        <td><?php echo $i++; ?> (<?php echo $row['id_entity']; ?>)</td>
                         <td><b><input style="width: 80%;" type="text" name="title" value="<?php echo $row['title']; ?>" /></b></td>
                         <td><b><input style="width: 80%;" type="text" name="name" value="<?php echo $row['name']; ?>" /></b></td>
-                       <td><b><input style="width: 80%;" type="text" name="surname" value="<?php echo $row['surname']; ?>" /></b></td>
+                        <td><b><input style="width: 80%;" type="text" name="surname" value="<?php echo $row['surname']; ?>" /></b></td>
                         <td><b><input style="width: 100%;" type="email" name="email" value="<?php echo $row['email']; ?>" /></b></td>
-                        <!--<td><?php echo $row['date_update']; ?></td>-->
                         <td>
                            <select name="cat_id" id="cname" class="form-control" minlength="2" required >
                            <?php
-                              $query = AdminMailer::catQuery();
-                              $pocet = $db->num_rows($query);
-                              if($db->num_rows($query)>0){
-                              	foreach($db->get_results($query) as $row2){
-                              		if($row2['id_entity'] == $row['cat_id'])
-                              			echo"<option value='".$row2['id_entity']."' selected>".$row2['name']."</option>";
-                              		else
-                              			echo"<option value='".$row2['id_entity']."'>".$row2['name']."</option>";
-                              		}
-                              	}
-                                                   ?>
+                              foreach ($data['categories'] as $cat) {
+                                  if ($cat['id_entity'] == $row['cat_id'])
+                                      echo"<option value='" . $cat['id_entity'] . "' selected>" . $cat['name'] . "</option>";
+                                  else
+                                      echo"<option value='" . $cat['id_entity'] . "'>" . $cat['name'] . "</option>";
+                              }
+                              ?>
                            </select>
                         </td>
                         <td>
-                           <?php echo Dnt::returnInput();?>
+                           <?php echo $dnt->returnInput(); ?>
                            <input type="submit" name="sent" value="Upraviť" class="label-primary bg-green" />
                         </td>
-						<td>
-							<a href="<?php echo AdminMailer::url("show_hide", $cat_id, false, false, $post_id, $page) ?>">
-							<i class="<?php echo admin_zobrazenie_stav($row['show']);?>"></i>
-						 </a>
+                        <td>
+                           <a href="<?php echo $adminMailer->url("show_hide", $cat_id, false, false, $post_id, $page) ?>">
+                           <i class="<?php echo admin_zobrazenie_stav($row['show']); ?>"></i>
+                           </a>
                         </td>
                         <td>
-                           <a <?php echo Dnt::confirmMsg("Naozaj chcete zmazať tento email?"); ?> href="<?php echo AdminMailer::url("del_mail", $cat_id, false, false, $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
+                           <a <?php echo $dnt->confirmMsg("Naozaj chcete zmazať tento email?"); ?> href="<?php echo $adminMailer->url("del_mail", $cat_id, false, false, $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
                         </td>
                      </tr>
                   </form>
                   <?php
                      }
-                     }
-                     else{
+                     } else {
                      no_results();
                      }
                      ?>									
@@ -270,22 +250,22 @@
          </div>
          <ul class="pagination">
             <li class="">
-               <a href="<?php echo AdminMailer::paginator("prev");?>">
+               <a href="<?php echo $adminMailer->paginator("prev"); ?>">
                &laquo;
                </a>
             </li>
             <li>
-               <a href="<?php echo AdminMailer::paginator("first");?>">
-               <?php echo AdminMailer::getPage("first");?>
+               <a href="<?php echo $adminMailer->paginator("first"); ?>">
+               <?php echo $adminMailer->getPage("first", $data['countMails']); ?>
                </a>
             </li>
             <li>
-               <a href="<?php echo AdminMailer::paginator("last");?>">
-               <?php echo AdminMailer::getPage("last");?>
+               <a href="<?php echo $adminMailer->paginator("last"); ?>">
+               <?php echo $adminMailer->getPage("last", $data['countMails']); ?>
                </a>
             </li>
             <li>
-               <a href="<?php echo AdminMailer::paginator("next");?>">
+               <a href="<?php echo $adminMailer->paginator("next"); ?>">
                &raquo;
                </a>
             </li>
@@ -315,29 +295,28 @@
                </thead>
                <tbody>
                   <?php
-                     $query = AdminMailer::catQuery();
+                     $query = $adminMailer->catQuery();
                      $pocet = $db->num_rows($query);
-                     if($db->num_rows($query)>0){
-                     foreach($db->get_results($query) as $row){
-                     ?>
-                  <form method="POST" action="index.php?src=mailer&upravit-akcia=<?php echo $row['id_entity'];?>" >
+                     if ($db->num_rows($query) > 0) {
+                         foreach ($db->get_results($query) as $row) {
+                             ?>
+                  <form method="POST" action="index.php?src=mailer&upravit-akcia=<?php echo $row['id_entity']; ?>" >
                      <tr>
                         <td><?php echo $i++; ?></td>
                         <td><b><input style="width: 60%;" type="text" name="nazov" value="<?php echo $row['name']; ?>" /></b></td>
                         <td><b><input style="width: 60%;" type="text" name="typ" value="<?php echo $row['cat_id']; ?>" /></b></td>
                         <td>
-                           <?php echo Dnt::returnInput();?>
+                           <?php echo $dnt->returnInput(); ?>
                            <input type="submit" name="odoslat" value="Upraviť" class="label-primary bg-green" />
                         </td>
                         <td>
-                           <a href="<?php echo AdminMailer::url("del_cat", $cat_id, false, false, $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
+                           <a href="<?php echo $adminMailer->url("del_cat", $cat_id, false, false, $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
                         </td>
                      </tr>
                   </form>
                   <?php
                      }
-                     }
-                     else{
+                     } else {
                      no_results();
                      }
                      ?>									

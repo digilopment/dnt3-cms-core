@@ -7,13 +7,15 @@
  *  package     dnt3
  *  date        2017
  */
-class AdminMailer {
+class AdminMailer
+{
 
     /**
      * 
      * @return int
      */
-    public function limit() {
+    public function limit()
+    {
         return 20;
     }
 
@@ -21,7 +23,8 @@ class AdminMailer {
      * 
      * @return type
      */
-    public function catQuery() {
+    public function catQuery()
+    {
         return "SELECT * FROM `dnt_mailer_type` WHERE vendor_id = '" . Vendor::getId() . "'";
     }
 
@@ -30,7 +33,8 @@ class AdminMailer {
      * @param type $next_id
      * @return type
      */
-    public function sent_next_mail($next_id) {
+    public function sent_next_mail($next_id)
+    {
         return WWW_PATH_ADMIN . "?src=mailer&action=sent_mail&post_id=&mail_id=" . $next_id . "";
     }
 
@@ -44,7 +48,8 @@ class AdminMailer {
      * @param type $page
      * @return type
      */
-    public function url($action, $cat_id, $sub_cat_id, $type, $post_id, $page) {
+    public function url($action, $cat_id, $sub_cat_id, $type, $post_id, $page)
+    {
         if ($action == "filter") {
             return WWW_PATH_ADMIN . "index.php?src=mailer&filter=$cat_id&sub_cat_id=$sub_cat_id&type=$type";
         } else {
@@ -61,7 +66,8 @@ class AdminMailer {
      * @param type $is_limit
      * @return string
      */
-    protected function prepare_query($is_limit) {
+    protected function prepare_query($is_limit)
+    {
         $db = new Db();
 
         if (isset($_GET['filter']) && $_GET['filter'] != "")
@@ -81,12 +87,17 @@ class AdminMailer {
         $query = "SELECT * FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . Vendor::getId() . "' " . $typ . " ORDER BY `id` DESC " . $limit . "";
         return $query;
     }
+    
+    public function getAll(){
+        return self::prepare_query(false);
+    }
 
     /**
      * 
      * @return type
      */
-    public function query() {
+    public function query()
+    {
         $db = new Db;
 
         if (isset($_GET['page'])) {
@@ -120,7 +131,8 @@ class AdminMailer {
      * @param type $index
      * @return int
      */
-    public function getPage($index) {
+    public function getPage($index, $countPages = false)
+    {
         $db = new Db;
 
         if (isset($_GET['page'])) {
@@ -129,13 +141,18 @@ class AdminMailer {
             $strana = 1;
         }
 
-        $query = self::prepare_query(false);
-        $pocet = $db->num_rows($query);
+        if ($countPages == false) {
+            $query = self::prepare_query(false);
+            $pocet = $db->num_rows($query);
+        } else {
+            $pocet = $countPages;
+        }
         $limit = self::limit();
         $stranok = $pocet / $limit;
         $pociatok = ($strana * $limit) - $limit;
 
         $stranok_round = ceil($stranok);
+
         $prev_page = $strana - 1;
 
         if ($index == "next") {
@@ -165,7 +182,8 @@ class AdminMailer {
      * @param type $index
      * @return type
      */
-    public function paginator($index) {
+    public function paginator($index)
+    {
         $adresa = explode("?", WWW_FULL_PATH);
         if (isset($_GET['page'])) {
             $adresa_bez_page = explode("&page=" . $_GET['page'] . "", $adresa[1]); //src=obsah&page=2
@@ -181,7 +199,8 @@ class AdminMailer {
      * 
      * @return type
      */
-    public function showOrder() {
+    public function showOrder()
+    {
         return (AdminContent::getPage("current") * AdminContent::limit()) - AdminContent::limit() + 1;
     }
 

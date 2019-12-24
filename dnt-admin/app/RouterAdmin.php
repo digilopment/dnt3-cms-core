@@ -52,7 +52,10 @@ class RouterAdmin
         if (file_exists($file)) {
             include $file;
             $moduleClass = new $className();
-
+            if (method_exists($moduleClass, 'init')) {
+                   $moduleClass->init();
+            }
+                
             if (isset($_GET['action'])) {
                 $methodName = (new Autoloader())->methodName($_GET['action']) . 'Action';
                 if (method_exists($moduleClass, $methodName)) {
@@ -106,7 +109,7 @@ class RouterAdmin
             if (in_array($getRequest, $this->getNameUrlFromMenu())) {
                 $this->loadModul($getRequest);
             } else {
-                die('no module');
+                $this->loadModul('default');
             }
         } else {
             if ($this->rest->get('src') == "forgotten-password") {
