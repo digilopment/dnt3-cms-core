@@ -137,7 +137,7 @@ class MailerController extends AdminController
 
     public function showHideAction()
     {
-        $post_id = $this->rest->get("post_id");
+        $post_id = $this->rest->get('post_id');
         $query = "SELECT `show` FROM dnt_mailer_mails WHERE id_entity = '" . $post_id . "' AND vendor_id = '" . Vendor::getId() . "'";
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
@@ -152,7 +152,7 @@ class MailerController extends AdminController
         } else {
             $set_show = 0;
         }
-        $table = "dnt_mailer_mails";
+        $table = 'dnt_mailer_mails';
         $this->db->update(
                 $table,
                 array(
@@ -163,7 +163,7 @@ class MailerController extends AdminController
                     'vendor_id' => $this->vendor->getId(),
                 )
         );
-        $this->dnt->redirect(WWW_PATH_ADMIN_2 . "index.php?src=" . $this->rest->get("src") . "&included=" . $this->rest->get("included") . "&filter=" . $this->rest->get("filter") . "&page=" . $this->rest->get("page"));
+        $this->dnt->redirect(WWW_PATH_ADMIN_2 . 'index.php?src=' . $this->rest->get('src') . '&included=' . $this->rest->get('included') . '&filter=' . $this->rest->get('filter') . '&page=' . $this->rest->get('page'));
     }
 
     public function delMailAction()
