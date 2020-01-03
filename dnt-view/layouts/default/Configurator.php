@@ -8,17 +8,17 @@ class Configurator extends Webhook {
 
     public function modulesRegistrator() {
         $modulesRegistrator = array(
-            "default" => array_merge(
-                    array(), $this->getSitemapModules("default")
+            'default' => array_merge(
+                    array(), $this->getSitemapModules('default')
             ),
-            "skeleton" => array_merge(
-                    array(), $this->getSitemapModules("skeleton")
+            'skeleton' => array_merge(
+                    array(), $this->getSitemapModules('skeleton')
             ),
-            "static_redirect" => array_merge(
-                    array(), $this->getSitemapModules("static_redirect")
+            'static_redirect' => array_merge(
+                    array(), $this->getSitemapModules('static_redirect')
             ),
-            "subscriber" => array_merge(
-                    array(), $this->getSitemapModules("subscriber")
+            'subscriber' => array_merge(
+                    array(), $this->getSitemapModules('subscriber')
             ),
         );
         return $modulesRegistrator;
@@ -26,28 +26,28 @@ class Configurator extends Webhook {
 
     public function modulesConfigurator() {
         return array(
-            "default" => array(
-                "service_name" => "Global 404 (all vendors)"
+            'default' => array(
+                'service_name' => 'Global 404 (all vendors)'
             ),
-            "skeleton" => array(
-                "service_name" => "skeleton"
+            'skeleton' => array(
+                'service_name' => 'skeleton'
             ),
-            "static_redirect" => array(
-                "service_name" => "Presmerovanie",
+            'static_redirect' => array(
+                'service_name' => 'Presmerovanie',
             ),
-            "subscriber" => array(
-                "service_name" => "Služba na potvrdenie emailu",
+            'subscriber' => array(
+                'service_name' => 'Služba na potvrdenie emailu',
             ),
         );
     }
 
     public function metaSettings() {
         $metaSettings[] = array(
-            '`type`' => "default",
-            '`key`' => "test",
-            '`value`' => "",
-            '`content_type`' => "text",
-            '`description`' => "Testovacie nastavenie, meta nastavenia zbehli úspešne",
+            '`type`' => 'default',
+            '`key`' => 'test',
+            '`value`' => '',
+            '`content_type`' => 'text',
+            '`description`' => 'Testovacie nastavenie, meta nastavení zbehli úspešne',
             '`vendor_id`' => Vendor::getId(),
             '`show`' => '0',
             '`order`' => '10',

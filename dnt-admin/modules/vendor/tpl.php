@@ -24,11 +24,11 @@
                   <tr>
                      <th>#</th>
                      <th>id</th>
-                     <th>Názov postu</th>
-                     <th>Editovať vlastnosti webu</th>
+                     <th>Názov webu</th>
+                     <th>Administrácia webu</th>
                      <th>Zobrazenie na pracovnej adrese</th>
                      <th>Zobrazenie na vlastnej doméne</th>
-                     <th>Globálne nastavenie</th>
+                     <th>Globálne nastavenia webu</th>
                      <th>Vymazať</th>
                   </tr>
                </thead>

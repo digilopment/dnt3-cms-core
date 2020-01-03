@@ -68,7 +68,7 @@ class RouterAdmin
             }
         } else {
             if (!$this->loadByWebhook($module)) {
-                die('no action');
+                die('no action, no controller, no webhook');
             }
         }
     }

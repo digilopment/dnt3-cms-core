@@ -1,6 +1,14 @@
 <?php
 
-class Init
+/**
+ *  Designdnt3 Application
+ *  Framework Dnt3
+ *  Dnt3 MultiDomain Platform
+ *  CMS Designdnt3
+ *  author: Digilopment
+ * 
+ */
+(new class
 {
 
     public function __construct()
@@ -15,7 +23,4 @@ class Init
         $app = new App($bootstrap->client);
         $app->runJob();
     }
-
-}
-
-(new Init())->run();
+})->run();

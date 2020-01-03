@@ -1,12 +1,14 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *  Designdnt3 Application
+ *  Framework Dnt3
+ *  Dnt3 MultiDomain Platform
+ *  CMS Designdnt3
+ *  author: Digilopment
+ * 
  */
-
-class Init
+(new class
 {
 
     public function __construct()
@@ -21,7 +23,4 @@ class Init
         $app = new App($bootstrap->client);
         $app->runAdmin();
     }
-
-}
-
-(new Init())->run();
+})->run();

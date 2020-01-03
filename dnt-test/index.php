@@ -1,18 +1,26 @@
 <?php
 
-class Init {
+/**
+ *  Designdnt3 Application
+ *  Framework Dnt3
+ *  Dnt3 MultiDomain Platform
+ *  CMS Designdnt3
+ *  author: Digilopment
+ * 
+ */
+(new class
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         require '../dnt-library/framework/app/Bootstrap.php';
     }
 
-    public function run() {
+    public function run()
+    {
         $bootstrap = new Bootstrap('../../');
         $bootstrap->boot();
         $app = new App($bootstrap->client);
         $app->runTest();
     }
-
-}
-
-(new Init())->run();
+})->run();
