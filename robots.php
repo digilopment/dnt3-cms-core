@@ -57,8 +57,8 @@
         return $text;
     }
 
-    public function run()
+    public function main()
     {
         print($this->template());
     }
-})->run();
+})->main();
