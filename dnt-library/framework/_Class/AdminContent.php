@@ -7,13 +7,15 @@
  *  package     dnt3
  *  date        2017
  */
-class AdminContent extends MultyLanguage {
+class AdminContent extends MultyLanguage
+{
 
     /**
      * 
      * @return int
      */
-    public function limit() {
+    public function limit()
+    {
         return 20;
     }
 
@@ -21,13 +23,15 @@ class AdminContent extends MultyLanguage {
      * 
      * @return type
      */
-    public function primaryCat() {
+    public function primaryCat()
+    {
         return array(
             "post" => "Obsah",
             "sitemap" => "Sitemapa",
             "article" => "Články",
             "video" => "Video",
             "gallery" => "Galérie",
+            "product" => "Produkt",
         );
     }
 
@@ -36,7 +40,8 @@ class AdminContent extends MultyLanguage {
      * @param type $type
      * @return boolean
      */
-    public function getCatId($type) {
+    public function getCatId($type)
+    {
         $db = new Db;
         $query = "SELECT id_entity FROM dnt_post_type WHERE name_url = '" . $type . "' AND `vendor_id` = '" . Vendor::getId() . "'";
         if ($db->num_rows($query) > 0) {
@@ -47,17 +52,18 @@ class AdminContent extends MultyLanguage {
             return false;
         }
     }
-	
+
     /**
      * 
      * @param type $type
      * @return boolean
      */
-    public function getCatData($id_entity) {
+    public function getCatData($id_entity)
+    {
         $db = new Db;
         $query = "SELECT * FROM dnt_post_type WHERE id_entity = '" . $id_entity . "' AND `vendor_id` = '" . Vendor::getId() . "'";
         if ($db->num_rows($query) > 0) {
-           return $db->get_results($query);
+            return $db->get_results($query);
         } else {
             return array();
         }
@@ -68,7 +74,8 @@ class AdminContent extends MultyLanguage {
      * @param type $is_limit
      * @return string
      */
-    protected function prepare_query($is_limit) {
+    protected function prepare_query($is_limit)
+    {
         $db = new Db();
         if (isset($_GET['included']) && $_GET['included'] == "article") {
             $typ = "AND sub_cat_id = '" . $_GET['filter'] . "'";
@@ -80,10 +87,9 @@ class AdminContent extends MultyLanguage {
             $typ = "AND cat_id = '" . $_GET['filter'] . "'";
         } elseif (isset($_GET['included']) && $_GET['included'] != "") {
             $typ = "AND cat_id = '" . $_GET['filter'] . "'";
-        }
-		elseif (isset($_GET['filter']))
+        } elseif (isset($_GET['filter']))
             $typ = "AND sub_cat_id = '" . $_GET['filter'] . "'";
-			
+
         elseif (isset($_GET['search'])) {
             $typ = "AND `name_url` LIKE '%" . Dnt::name_url($_GET['search']) . "%'";
         } else
@@ -102,7 +108,8 @@ class AdminContent extends MultyLanguage {
      * 
      * @return type
      */
-    public function query() {
+    public function query()
+    {
         $db = new Db;
 
         if (isset($_GET['page'])) {
@@ -136,7 +143,8 @@ class AdminContent extends MultyLanguage {
      * @param type $index
      * @return int
      */
-    public function getPage($index) {
+    public function getPage($index)
+    {
         $db = new Db;
 
         if (isset($_GET['page'])) {
@@ -182,7 +190,8 @@ class AdminContent extends MultyLanguage {
      * @param type $index
      * @return type
      */
-    public function paginator($index) {
+    public function paginator($index)
+    {
         $adresa = explode("?", WWW_FULL_PATH);
         if (isset($_GET['page'])) {
             $adresa_bez_page = explode("&page=" . $_GET['page'] . "", $adresa[1]); //src=obsah&page=2
@@ -204,7 +213,8 @@ class AdminContent extends MultyLanguage {
      * @param type $page
      * @return type
      */
-    public function url($action, $cat_id, $sub_cat_id, $type, $post_id, $page) {
+    public function url($action, $cat_id, $sub_cat_id, $type, $post_id, $page)
+    {
 
         if ($action == "filter") {
             return "index.php?src=content&filter=$cat_id&sub_cat_id=$sub_cat_id&included=$type";
@@ -224,7 +234,8 @@ class AdminContent extends MultyLanguage {
      * @param type $post_id
      * @return boolean
      */
-    public function getPostParam($column, $post_id) {
+    public function getPostParam($column, $post_id)
+    {
         $db = new Db;
 
         $query = "SELECT `$column` FROM dnt_posts WHERE id_entity = '$post_id' AND vendor_id = '" . Vendor::getId() . "'";
@@ -241,7 +252,8 @@ class AdminContent extends MultyLanguage {
      * 
      * @return type
      */
-    public function showOrder() {
+    public function showOrder()
+    {
         return (AdminContent::getPage("current") * AdminContent::limit()) - AdminContent::limit() + 1;
     }
 
@@ -251,7 +263,8 @@ class AdminContent extends MultyLanguage {
      * @return type
      * tags
      */
-    public function databseTagsString($tags) {
+    public function databseTagsString($tags)
+    {
         $tags = str_replace(", ", ",", $tags);
         $tags = str_replace(" ,", ",", $tags);
         $tags = str_replace(", ", ",", $tags);
@@ -264,7 +277,8 @@ class AdminContent extends MultyLanguage {
      * @param type $data
      * @return type
      */
-    public function showTags($data) {
+    public function showTags($data)
+    {
         return explode(",", $data);
     }
 
@@ -273,7 +287,8 @@ class AdminContent extends MultyLanguage {
      * @param type $data
      * @return type
      */
-    public function showTagName($data) {
+    public function showTagName($data)
+    {
         $data = str_replace("-", " ", $data);
         return ucfirst($data);
     }
