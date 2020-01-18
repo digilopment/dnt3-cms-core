@@ -12,9 +12,6 @@ get_top_html();
     <a href="index.php?src=invoices&action=add">
         <span class="label label-primary bg-orange" style="padding:5px;"><big>NOVÁ OBJEDNÁVKA</big></span>
     </a>
-    <a href="http://skeletonis.localhost/dnt3/" target="_blank" style="float:right">
-        <span class="label label-primary bg-blue" style="padding:5px;"><big><i class="fa fa-external-link-square"></i> OTVORIŤ WEB</big></span>
-    </a>
 </section>
 <section class="content">
     <div class="row">

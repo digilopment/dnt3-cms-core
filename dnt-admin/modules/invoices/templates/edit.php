@@ -29,11 +29,8 @@ if ($data['order']['datetime_publish'] == "0000-00-00 00:00:00") {
     <a href="index.php?src=invoices&action=add">
         <span class="label label-primary bg-orange" style="padding:5px;"><big>NOVÁ OBJEDNÁVKA</big></span>
     </a>
-    <a <?php echo Dnt::confirmMsg("Naozaj chcete vymazať túto objednávku? Operáciu už nebude možné vrátiť späť"); ?> href="index.php?src=invoices&action=del&id_entity=<?php echo (new Rest())->get('id_entity') ?>">
+    <a style="float:right" <?php echo Dnt::confirmMsg("Naozaj chcete vymazať túto objednávku? Operáciu už nebude možné vrátiť späť"); ?> href="index.php?src=invoices&action=del&id_entity=<?php echo (new Rest())->get('id_entity') ?>">
         <span class="label label-primary bg-red" style="padding:5px;"><big>VYMAZAŤ OBJEDNÁVKU</big></span>
-    </a>
-    <a href="http://skeletonis.localhost/dnt3/" target="_blank" style="float:right">
-        <span class="label label-primary bg-blue" style="padding:5px;"><big><i class="fa fa-external-link-square"></i> OTVORIŤ WEB</big></span>
     </a>
 </section>
 <section class="content">
