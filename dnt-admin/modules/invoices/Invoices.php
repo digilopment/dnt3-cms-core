@@ -213,6 +213,15 @@ class Invoices
             }
         }
     }
+    
+    public function orderSum($orderProducts){
+        $orderSum = 0;
+        foreach ($orderProducts as $item) {
+            $count = $item['count'] == 0 ? 1 : $item['count'];
+            $orderSum += $item['price'] * $count;
+        }
+        return $orderSum;
+    }
 
     public function getOrderProductsById($products, $orderId)
     {
@@ -312,6 +321,7 @@ class Invoices
 
     public function update($id)
     {
+        $datetimePublish = Dnt::timeToDbFormat('.', $this->rest->post('datetime_publish'));
         $this->db->update(
                 'dnt_orders',
                 [
@@ -347,6 +357,8 @@ class Invoices
                     'status' => $this->rest->post('status'),
                     'is_seen' => $this->rest->post('is_seen'),
                     'show' => $this->rest->post('show'),
+                    'datetime_update' => $this->dnt->datetime(),
+                    'datetime_publish' => $datetimePublish,
                 ],
                 [
                     'id_entity' => $id,

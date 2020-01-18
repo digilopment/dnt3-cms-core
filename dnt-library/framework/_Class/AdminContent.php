@@ -77,7 +77,24 @@ class AdminContent extends MultyLanguage
     protected function prepare_query($is_limit)
     {
         $db = new Db();
+        
         if (isset($_GET['included']) && $_GET['included'] == "article") {
+            $typ = "AND sub_cat_id = '" . $_GET['filter'] . "'";
+        } elseif (isset($_GET['included']) && isset($_GET['filter'])) {
+            $typ = "AND cat_id = '" . $_GET['filter'] . "'";
+        } elseif (isset($_GET['included'])) {
+            $typ = "AND type = '" . $_GET['included'] . "'";
+        } elseif (isset($_GET['search'])) {
+            $typ = "AND `name_url` LIKE '%" . Dnt::name_url($_GET['search']) . "%'";
+        } else {
+            $typ = false;
+        }
+        if ($is_limit == false)
+            $limit = false;
+        else
+            $limit = $is_limit;
+
+        /*if (isset($_GET['included']) && $_GET['included'] == "article") {
             $typ = "AND sub_cat_id = '" . $_GET['filter'] . "'";
         } elseif (isset($_GET['included']) && $_GET['included'] == "sitemap-sub") {
             $typ = "AND cat_id = '" . $_GET['filter'] . "'";
@@ -99,6 +116,7 @@ class AdminContent extends MultyLanguage
             $limit = false;
         else
             $limit = $is_limit;
+         */
 
         $query = "SELECT * FROM `dnt_posts` WHERE  `vendor_id` = '" . Vendor::getId() . "' " . $typ . " ORDER BY `order` DESC " . $limit . "";
         return $query;

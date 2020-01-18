@@ -9,6 +9,12 @@ $psc = !empty($data['order']['company_psc']) ? $data['order']['company_psc'] : $
 $city = !empty($data['order']['company_city']) ? $data['order']['company_city'] : $data['order']['city'];
 $country = !empty($data['order']['company_country']) ? $data['order']['company_country'] : $data['order']['country'];
 $telephone = !empty($data['order']['company_phone_number']) ? $data['order']['company_phone_number'] : $data['order']['phone_number'];
+if ($data['order']['datetime_publish'] == "0000-00-00 00:00:00") {
+    $datetimePublish = Dnt::datetime();
+}else{
+    $datetimePublish = $data['order']['datetime_publish'];
+}
+$datePublish = new DateTime($datetimePublish);
 ?>
 <section class="content">
     <div class="row">
@@ -18,14 +24,14 @@ $telephone = !empty($data['order']['company_phone_number']) ? $data['order']['co
                     <div class="invoice-title">
                         <div class="row">
                             <div class="col-xs-12">
-                                <img src="http://system.query.sk/dnt-system/data/0/uploads/logo_tmave_male.png" alt="" height="35">
+                                <img src="<?php echo $data['image']($data['vendor']('invoice_logo')); ?>" alt="" height="35">
                             </div>
                         </div>
                         <br>
                         <div class="row">
                             <div class="col-xs-12">
-                                <h2><?php echo $data['order']['name'] . ' ' . $data['order']['surname']; ?><br>
-                                    <span class="small">č: #20160007</span>
+                                <h2><?php echo $data['vendor']('vendor_company'); ?><br>
+                                    <span class="small">č: #<?php echo $data['order']['order_id'];?></span>
                                 </h2>
                             </div>
                         </div>
@@ -35,12 +41,12 @@ $telephone = !empty($data['order']['company_phone_number']) ? $data['order']['co
                         <div class="col-xs-6">
                             <address>
                                 <strong>Dodávateľ:</strong><br>
-                                <?php echo $name; ?><br>
-                                <?php echo $data['order']['street'] . ' ' . $data['order']['gate_number']; ?><br>
-                                <?php echo $data['order']['city'] . ', ' . $data['order']['psc']; ?><br>
-                                <abbr>Telefón:</abbr> <?php echo $data['order']['phone_number']; ?><br>
-                                <abbr>IČO:</abbr> 48272205<br>
-                                <abbr>Bankové spojenie (IBAN):</abbr> SK7383605207004205294565										
+                                <?php echo $data['vendor']('vendor_company'); ?><br>
+                                <?php echo $data['vendor']('vendor_street') . ', ' . $data['vendor']('vendor_psc'); ?><br>
+                                <?php echo $data['vendor']('vendor_city'); ?><br>
+                                <abbr>Telefón:</abbr> <?php echo $data['vendor']('vendor_tel'); ?><br>
+                                <abbr>IČO:</abbr> <?php echo $data['vendor']('vendor_ico'); ?><br>
+                                <abbr>Bankové spojenie (IBAN):</abbr> <?php echo $data['vendor']('vendor_iban'); ?>										
                             </address>
                         </div>
                         <div class="col-xs-6 text-right">
@@ -64,7 +70,7 @@ $telephone = !empty($data['order']['company_phone_number']) ? $data['order']['co
                         <div class="col-xs-6 text-right">
                             <address>
                                 <strong>Dátum vystavenia:</strong><br>
-                                30.6.2016										
+                                <?php echo $datePublish->format('d.m.Y');?>										
                             </address>
                         </div>
                     </div>
@@ -75,7 +81,7 @@ $telephone = !empty($data['order']['company_phone_number']) ? $data['order']['co
                                 <thead>
                                     <tr class="line">
                                         <td><strong></strong></td>
-                                        <td class="text-center"><strong>Položka</strong></td>
+                                        <td class="text-left"><strong>Položka</strong></td>
                                         <td class="text-center"><strong>Množstvo</strong></td>
                                         <td class="text-center" style="width: 100px;"><strong>Jednotná cena</strong></td>
                                         <td></td>
@@ -83,16 +89,6 @@ $telephone = !empty($data['order']['company_phone_number']) ? $data['order']['co
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td><strong>TVN Odmena - 801PO0029231</strong></td>
-                                        <td class="text-center">1 ks</td>
-                                        <td class="text-center">124 €</td>
-                                        <td></td>
-                                        <td class="text-right">124 €</td>
-                                    </tr>
-                                    <!-- END LOOP -->
-                                    <!-- END LOOP -->
                                     <tr>
                                         <td></td>
                                         <td>
@@ -103,24 +99,35 @@ $telephone = !empty($data['order']['company_phone_number']) ? $data['order']['co
                                         <td></td>
                                         <td class="text-right">0 €</td>
                                     </tr>
+                                    <?php foreach ($data['orderProducts'] as $product) { ?>
+                                        <tr>
+                                            <td></td>
+                                            <td><strong><?php echo $product['name']; ?></strong></td>
+                                            <td class="text-center"><?php echo $product['count']; ?> ks</td>
+                                            <td class="text-center"><?php echo $product['price']; ?> €</td>
+                                            <td></td>
+                                            <td class="text-right"><?php echo $product['price'] * $product['count']; ?> €</td>
+                                        </tr>
+                                    <?php } ?>
                                     <tr>
                                         <td colspan="1">
                                         </td>
                                         <td class="text-left">Suma slovom: <strong>
-                                                <?php echo $data['sumText']; ?></strong>
+                                                <?php echo $data['orderSumText']; ?></strong>
                                         </td>
                                         <td class="text-right"><strong></strong></td>
                                         <td class="text-right"><strong></strong></td>
                                         <td></td>
-                                        <td class="text-right"><strong>124 €</strong></td>
+                                        <td class="text-right"><strong><?php echo $data['orderSum']; ?> €</strong></td>
                                     </tr>
                                 </tbody>
+
                             </table>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 text-right identity">
-                            <p>Faktúru vystavil<br><strong>Tomáš Doubek  - Designdnt</strong></p>
+                            <p>Faktúru vystavil<br><strong><?php echo $data['vendor']('vendor_company'); ?></strong></p>
                         </div>
                     </div>
                 </div>

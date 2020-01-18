@@ -91,14 +91,51 @@ function configMenuItems()
         '`vendor_id`' => Vendor::getId(),
         '`type`' => "menu",
         '`included`' => "",
-        '`ico`' => "fa fa-file-text-o",
+        '`ico`' => "fa fa-shopping-cart",
         '`order`' => "70",
-        '`name`' => "Faktúry",
+        '`name`' => "Eshop",
         '`name_url`' => 'invoices',
         '`name_url_sub`' => 'invoices',
         '`show`' => '0',
         '`parent_id`' => '0',
     );
+     $insertedData[] = array(
+        '`vendor_id`' => Vendor::getId(),
+        '`type`' => "submenu",
+        '`included`' => "",
+        '`ico`' => "fa fa-shopping-cart",
+        '`order`' => "70",
+        '`name`' => "Zoznam objednávok",
+        '`name_url`' => 'invoices',
+        '`name_url_sub`' => 'invoices',
+        '`show`' => '0',
+        '`parent_id`' => '0',
+    );
+     $insertedData[] = array(
+        '`vendor_id`' => Vendor::getId(),
+        '`type`' => "submenu",
+        '`included`' => "",
+        '`ico`' => "fa fa-product-hunt",
+        '`order`' => "70",
+        '`name`' => "Zoznam produktov",
+        '`name_url`' => 'invoices',
+        '`name_url_sub`' => 'content&included=product',
+        '`show`' => '0',
+        '`parent_id`' => '0',
+    );
+   $insertedData[] = array(
+        '`vendor_id`' => Vendor::getId(),
+        '`type`' => "submenu",
+        '`included`' => "",
+        '`ico`' => "fa fa-file-text-o",
+        '`order`' => "70",
+        '`name`' => "Nová objednávka",
+        '`name_url`' => 'invoices',
+        '`name_url_sub`' => 'invoices&action=add',
+        '`show`' => '0',
+        '`parent_id`' => '0',
+    );
+   
     $insertedData[] = array(
         '`vendor_id`' => Vendor::getId(),
         '`type`' => "menu",

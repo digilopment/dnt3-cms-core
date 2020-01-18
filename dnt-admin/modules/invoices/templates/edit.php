@@ -2,6 +2,12 @@
 get_top();
 get_top_html();
 $name = !empty($data['order']['company_name']) ? $data['order']['company_name'] : $data['order']['name'] . ' ' . $data['order']['surname'];
+//osetrenie vstupov
+if ($data['order']['datetime_publish'] == "0000-00-00 00:00:00") {
+    $datetime_publish = Dnt::datetime();
+}else{
+    $datetime_publish = $data['order']['datetime_publish'];
+}
 ?>
 <style>
     .line{
@@ -10,7 +16,26 @@ $name = !empty($data['order']['company_name']) ? $data['order']['company_name'] 
         margin-top: 20px;
     }
 </style>
-
+<section class="col-xs-12" style="margin-bottom:15px">
+    <a href="index.php?src=invoices&action=print&id_entity=<?php echo (new Rest())->get('id_entity') ?>">
+        <span class="label label-primary bg-blue" style="padding:5px;"><big>VYSTAVIŤ FAKTÚRU</big></span>
+    </a>
+    <a href="index.php?src=invoices">
+        <span class="label label-primary bg-green" style="padding:5px;"><big>ZOZNAM OBJEDNÁVOK</big></span>
+    </a>
+    <a href="index.php?src=content&included=product">
+        <span class="label label-primary bg-blue" style="padding:5px;"><big>ZOZNAM PRODUKTOV</big></span>
+    </a>
+    <a href="index.php?src=invoices&action=add">
+        <span class="label label-primary bg-orange" style="padding:5px;"><big>NOVÁ OBJEDNÁVKA</big></span>
+    </a>
+    <a <?php echo Dnt::confirmMsg("Naozaj chcete vymazať túto objednávku? Operáciu už nebude možné vrátiť späť"); ?> href="index.php?src=invoices&action=del&id_entity=<?php echo (new Rest())->get('id_entity') ?>">
+        <span class="label label-primary bg-red" style="padding:5px;"><big>VYMAZAŤ OBJEDNÁVKU</big></span>
+    </a>
+    <a href="http://skeletonis.localhost/dnt3/" target="_blank" style="float:right">
+        <span class="label label-primary bg-blue" style="padding:5px;"><big><i class="fa fa-external-link-square"></i> OTVORIŤ WEB</big></span>
+    </a>
+</section>
 <section class="content">
     <div class="row">
         <div class="col-md-12">
@@ -18,9 +43,6 @@ $name = !empty($data['order']['company_name']) ? $data['order']['company_name'] 
             <h4>Celková suma objednávky: <b><?php echo $data['orderSum']?> €</b> 
                 <br/>Zaplatené v hotovosti: <b><?php echo $data['order']['from_cash']; ?> €</b>, Zaplatené kartou: <b><?php echo $data['order']['from_account']; ?> €</b>
                 <br/>Zostáva zaplatiť: <b><?php echo $data['toBePaid'];?> €</b></h4>
-            <a href="index.php?src=invoices&action=print&id_entity=<?php echo $data['order']['id']; ?>">
-                <h4>Vystaviť faktúru</h4>
-            </a>
         </div>
     </div>
     <form action="index.php?src=invoices&action=update&id_entity=<?php echo $data['order']['id']; ?>" method="POST">
@@ -72,7 +94,7 @@ $name = !empty($data['order']['company_name']) ? $data['order']['company_name'] 
                 <input type="text" name="country" value="<?php echo $data['order']['country']; ?>"  class="form-control" >
             </div>
             <div class="col-md-12 line">
-                <h3 class="grid-title"><i class="fa fa-address-book"></i> Informácie o firme</h3>
+                <h3 class="grid-title"><i class="fa fa-address-book"></i> Informácie o firme klienta (ak sú uvedené)</h3>
             </div>
             <div class="form-group col-md-3">
                 <label for="usr">Názov firmy:</label>
@@ -168,6 +190,31 @@ $name = !empty($data['order']['company_name']) ? $data['order']['company_name'] 
                     ?>
                 </select>
             </div>
+            <div class="form-group col-md-3">
+                <label for="usr">Dátum na faktúre:</label>
+                <table style="width: 100%;">
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <div class='input-group date' id='datetimepicker1'>
+                                    <input type='text' name="datetime_publish" class="form-control" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <script type="text/javascript">
+                                $(function () {
+                                    $('#datetimepicker1').datetimepicker({
+                                        defaultDate: "<?php echo $datetime_publish; ?>",
+                                        locale: 'sk'
+                                    });
+                                });
+                            </script>
+                        </td>
+                    </tr>
+                </table>
+            </div>
             <div class="col-md-12 line">
                 <h3 class="grid-title"><i class="fa fa-product-hunt"></i>
                     <span class="btn btn-primary" data-toggle="modal" data-target="#image_picker_products" style="font-size: 12px;"><i class="fa fa-print"></i> Pridať produkt</span>
@@ -216,7 +263,7 @@ $name = !empty($data['order']['company_name']) ? $data['order']['company_name'] 
                                     </td>
                                     <!-- vzmazat -->
                                     <td style="width:20px" class="price text-right">
-                                        <a onclick="return confirm('Naozaj chcete vymazať tento produkt?');" href="index.php?src=invoices&action=del_product&order_id=<?php echo (new Rest())->get('id_entity') ?>&count=-1&id_entity=<?php echo $product['id_entity']?>">
+                                        <a onclick="return confirm('Naozaj chcete vymazať tento produkt?');" href="index.php?src=invoices&action=del_product&order_id=<?php echo (new Rest())->get('id_entity') ?>&product_id=<?php echo $product['id_entity']?>">
                                             <i class="fa fa-trash bg-red action"></i>
                                         </a>											
                                     </td>

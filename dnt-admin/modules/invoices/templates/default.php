@@ -2,12 +2,26 @@
 get_top();
 get_top_html();
 ?>
+<section class="col-xs-12" style="margin-bottom:15px">
+    <a href="index.php?src=invoices">
+        <span class="label label-primary bg-green" style="padding:5px;"><big>ZOZNAM OBJEDNÁVOK</big></span>
+    </a>
+    <a href="index.php?src=content&included=product">
+        <span class="label label-primary bg-blue" style="padding:5px;"><big>ZOZNAM PRODUKTOV</big></span>
+    </a>
+    <a href="index.php?src=invoices&action=add">
+        <span class="label label-primary bg-orange" style="padding:5px;"><big>NOVÁ OBJEDNÁVKA</big></span>
+    </a>
+    <a href="http://skeletonis.localhost/dnt3/" target="_blank" style="float:right">
+        <span class="label label-primary bg-blue" style="padding:5px;"><big><i class="fa fa-external-link-square"></i> OTVORIŤ WEB</big></span>
+    </a>
+</section>
 <section class="content">
     <div class="row">
         <div class="col-md-12">
             <div class="grid no-border">
                 <div class="grid-header">
-                    <i class="fa fa-file-o"></i> <span class="grid-title">Objednávky | <a href="index.php?src=objednavky&amp;pridat">Vygenerovať novú objednávku</a></span> 
+                    <i class="fa fa-file-o"></i> <span class="grid-title">Objednávky</span> 
                     <div class="pull-right grid-tools"> <a data-widget="collapse" title="Collapse"><i class="fa fa-chevron-up"></i></a> <a data-widget="reload" title="Reload"><i class="fa fa-refresh"></i></a> <a data-widget="remove" title="Remove"><i class="fa fa-times"></i></a> </div>
                 </div>
                 <div class="grid-body">
@@ -17,24 +31,29 @@ get_top_html();
                                 <th>#</th>
                                 <th>Id objednávky</th>
                                 <th>Meno, priezvisko</th>
-                                <th>Dátum objednania</th>
-                                <th>Dátum aktualizácie</th>
+                                <th>Dátum objednania <br/> Dátum aktualizácie <br/> Dátum na faktúre</th>
                                 <th>Status objednávky</th>
-                                <th>Zostáva zaplatiť</th>
+                                <th>Suma objednávky</th>
                                 <th>Akcia</th>
                             </tr>
                         </thead>
                         <tbody class="">
-                            <?php foreach ($data['orders'] as $row) { ?>
+                            <?php foreach ($data['orders'] as $row) { 
+                                $dateCreated = new DateTime($row['datetime_creat']);
+                                $dateUpdated = new DateTime($row['datetime_update']);
+                                $datePublish = new DateTime($row['datetime_publish']);
+                                ?>
                                 <tr>
                                     <td><?php echo $row['id'] ?></td>
-                                    <td> <span class="label label-fa bg-green action"> 20190001</span> </td>
-                                    <td><b>team4tourism s.r.o. </b></td>
-                                    <td><b>2.2.2019</b> - </td>
-                                    <td><b>2.2.2019</b> - </td>
+                                    <td> <span class="label label-fa bg-green action"> <?php echo $row['order_id'] ?></span> </td>
+                                    <td><b><?php echo (empty($row['company_name']))? $row['name'] ." ".$row['surname'] : $row['company_name']  ?> </b></td>
+                                    <td><b><?php echo $dateCreated->format('d.m.Y H:i:s');?></b><br/><?php echo $dateUpdated->format('d.m.Y H:i:s');?><br/><?php echo $datePublish->format('d.m.Y H:i:s');?></td>
                                     <td> <span class="label label-fa bg-green action"> Objednávka je vybavená</span> </td>
-                                    <td> <span class="text-green"> <b><big>0€ / 710</big></b> </span> </td>
-                                    <td> <a href="index.php?src=invoices&action=edit&id_entity=<?php echo $row['id_entity'] ?>"><i class="fa fa-pencil bg-blue action"></i></a> <a href="http://system.query.sk/dnt-admin/index.php?src=objednavky&amp;vymazat&amp;id=47&amp;this_address"><i class="fa fa-times bg-red action"></i></a> </td>
+                                    <td> <span class="text-green"> <b><big><?php echo $row['paid']?> €</big></b> </span> </td>
+                                    <td> 
+                                        <a title="Editovať objednávku" href="index.php?src=invoices&action=edit&id_entity=<?php echo $row['id_entity'] ?>"><i class="fa fa-pencil bg-blue action"></i></a>
+                                        <a title="Vystaviť faktúru" href="index.php?src=invoices&action=print&id_entity=<?php echo $row['id_entity'] ?>"><i class="fa fa-file-o bg-green action"></i></a>
+                                        <a title="Vymazať objednávku" <?php echo Dnt::confirmMsg("Naozaj chcete vymazať túto objednávku? Operáciu už nebude možné vrátiť späť"); ?> href="index.php?src=invoices&action=del&id_entity=<?php echo $row['id_entity'] ?>"><i class="fa fa-trash bg-red action"></i></a> </td>
                                 </tr>
                             <?php } ?>
                         </tbody>

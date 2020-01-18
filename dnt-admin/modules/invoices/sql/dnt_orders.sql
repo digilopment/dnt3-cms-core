@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS `dnt_orders` (
   `order_id` varchar(300) NOT NULL,
   `datetime_creat` datetime NOT NULL,
   `datetime_update` datetime NOT NULL,
+  `datetime_publish` datetime NOT NULL,
   `name` varchar(300) NOT NULL,
   `surname` varchar(300) NOT NULL,
   `street` varchar(300) NOT NULL,

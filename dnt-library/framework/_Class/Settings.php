@@ -173,13 +173,11 @@ class Settings {
      * 
      */
     public function loadNewSettingsFromConf() {
-        
         if(self::settingsConfigurator()){
             $settingsData = self::settingsConfigurator();
         }else{
             $settingsData = self::settingsConf();
         }
-        //var_dump($settingsData);exit;
         if ($settingsData) {
             
             $result = array();

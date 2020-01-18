@@ -214,6 +214,7 @@ class SettingsController extends AdminController
      */
     public function indexAction()
     {
+        $this->settings->loadNewSettingsFromConf();
         $data = [
             'settings' => $this->settings,
             'webhook' => new Webhook(),
