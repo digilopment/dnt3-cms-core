@@ -284,9 +284,10 @@ class Invoices
                     $metaData[$val['post_id']][$val['key']] = $val['value'];
                 }
             }
-
+            
+            $response = [];
             foreach ($dataProducts as $product) {
-                $response[] = (array_merge($product, $metaData[$product['id_entity']]));
+                 $response[] = isset($metaData[$product['id_entity']]) ? (array_merge($product, $metaData[$product['id_entity']])) : false;
             }
         }
         return $response;

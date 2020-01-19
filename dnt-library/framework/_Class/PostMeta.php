@@ -84,6 +84,7 @@ class PostMeta
     public function loadNewPostMetaFromConf($postId, $service)
     {
 
+       
         $conf = "../dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $service . "/install/MetaServices.php";
         if (file_exists($conf)) {
             include $conf;
@@ -106,7 +107,6 @@ class PostMeta
                         continue;
                     }
                 }
-
                 $db = new Db;
                 foreach ($arrOfConfigKeys as $key) {
                     $db->insert('dnt_posts_meta', $settingsData[$key]);

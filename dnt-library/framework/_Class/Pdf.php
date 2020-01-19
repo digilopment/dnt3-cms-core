@@ -121,8 +121,11 @@ Class Pdf
         if (IS_DEVEL) {
             $generateUrl = 'http://app.query.sk/temporary-online/?html=' . $base64;
         } else {
-            $generateUrl = WWW_PATH . 'temporary-online?base64=' . $base64;
+            $generateUrl = WWW_PATH_ADMIN_2 . 'index.php?src=temporary-online&base64=' . $base64;
         }
+        //docasne
+        $generateUrl = 'http://app.query.sk/temporary-online/?html=' . $base64;
+        
         $temporaryPageUrl = file_get_contents($generateUrl);
         $output = file_get_contents('https://api.html2pdf.app/v1/generate?url=' . $temporaryPageUrl . '&apiKey=' . $this->html2pdfAppKey . '');
         file_put_contents('../' . $path . $pdfName, $output);
