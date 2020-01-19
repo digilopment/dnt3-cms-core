@@ -25,9 +25,8 @@ class ServicesController extends AdminController
 
     protected function checkMetaServicesConfigurator()
     {
-        $file = basename($this->loc) . '../../../dnt-view/layouts/' . Vendor::getLayout() . "/modules/" . $this->rest->get('service') . "/install/install.php";
-        $class = basename($this->loc) . '../../../dnt-view/layouts/' . Vendor::getLayout() . "/modules/" . $this->rest->get('service') . "/install/MetaServices.php";
-
+        $file = '../dnt-view/layouts/' . Vendor::getLayout() . "/modules/" . $this->rest->get('service') . "/install/install.php";
+        $class = '../dnt-view/layouts/' . Vendor::getLayout() . "/modules/" . $this->rest->get('service') . "/install/MetaServices.php";
         if (file_exists($class) || file_exists($file)) {
             return true;
         } else {
