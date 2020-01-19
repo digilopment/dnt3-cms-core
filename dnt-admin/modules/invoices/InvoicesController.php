@@ -33,7 +33,7 @@ class InvoicesController extends AdminController
 
     public function addAction()
     {
-        $this->createOrder->new();
+        $this->createOrder->newOrder();
     }
 
     public function delAction()

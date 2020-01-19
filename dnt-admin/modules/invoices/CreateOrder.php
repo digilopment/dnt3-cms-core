@@ -17,7 +17,7 @@ class CreateOrder
         $this->data = $data;
     }
 
-    public function new()
+    public function newOrder()
     {
 
         $insert = [
