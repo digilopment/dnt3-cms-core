@@ -15,7 +15,13 @@ if ($data['order']['datetime_publish'] == "0000-00-00 00:00:00") {
     $datetimePublish = $data['order']['datetime_publish'];
 }
 $datePublish = new DateTime($datetimePublish);
+$invoiceHtml = false;
+if(isset($data['invoiceHtml'])){
+    $invoiceHtml = $data['invoiceHtml'];
+}
 ?>
+<!--INVOICE-BEGIN-->
+
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
@@ -31,7 +37,7 @@ $datePublish = new DateTime($datetimePublish);
                         <div class="row">
                             <div class="col-xs-12">
                                 <h2><?php echo $data['vendor']('vendor_company'); ?><br>
-                                    <span class="small">č: #<?php echo $data['order']['order_id'];?></span>
+                                    <span class="small">č.: #<?php echo $data['order']['order_id'];?></span>
                                 </h2>
                             </div>
                         </div>
@@ -55,7 +61,7 @@ $datePublish = new DateTime($datetimePublish);
                                 <?php echo $name; ?><br>
                                 <?php echo $street . ' ' . $gate_number . ', ' . $psc; ?><br>
                                 <?php echo $city . ', ' . $country; ?><br>
-                                <abbr title="Phone">Telefón:</abbr> <?php echo $telephone; ?><br>										
+                                <abbr>Telefón:</abbr> <?php echo $telephone; ?><br>										
                             </address>
                         </div>
                     </div>
@@ -95,18 +101,18 @@ $datePublish = new DateTime($datetimePublish);
                                             <strong>Doprava k zákazníkovi</strong><!--<br>Náklady na dopravu.-->
                                         </td>
                                         <td class="text-center">1 ks</td>
-                                        <td class="text-center">0 €</td>
+                                        <td class="text-center">0.00 €</td>
                                         <td></td>
-                                        <td class="text-right">0 €</td>
+                                        <td class="text-right">0.00 €</td>
                                     </tr>
                                     <?php foreach ($data['orderProducts'] as $product) { ?>
                                         <tr>
                                             <td></td>
-                                            <td><strong><?php echo $product['name']; ?></strong></td>
+                                            <td><?php echo $product['name']; ?></td>
                                             <td class="text-center"><?php echo $product['count']; ?> ks</td>
-                                            <td class="text-center"><?php echo $product['price']; ?> €</td>
+                                            <td class="text-center"><?php echo number_format($product['price'], 2, '.', ','); ?> €</td>
                                             <td></td>
-                                            <td class="text-right"><?php echo $product['price'] * $product['count']; ?> €</td>
+                                            <td class="text-right"><?php echo number_format($product['price'] * $product['count'], 2, '.', ','); ?> €</td>
                                         </tr>
                                     <?php } ?>
                                     <tr>
@@ -120,6 +126,29 @@ $datePublish = new DateTime($datetimePublish);
                                         <td></td>
                                         <td class="text-right"><strong><?php echo $data['orderSum']; ?> €</strong></td>
                                     </tr>
+                                    <?php if($data['order']['percentage_discount'] > 0 ){?>
+                                        <tr>
+                                        <td colspan="1">
+                                        </td>
+                                        <td class="text-left"><strong>Zľava: </strong></td>
+                                        <td class="text-center">1 ks</td>
+                                        <td class="text-center"><?php echo $data['order']['percentage_discount']; ?> %</td>
+                                        <td></td>
+                                        <td class="text-right"><?php echo $data['discountSum']; ?> €</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1">
+                                        </td>
+                                        <td class="text-left">Výsledná suma slovom: <strong>
+                                            <?php echo $data['finalDiscountSumText']; ?></strong>
+                                        </td>
+                                        <td class="text-right"><strong></strong></td>
+                                        <td class="text-right"><strong></strong></td>
+                                        <td></td>
+                                        <td class="text-right"><strong><?php echo $data['finalDiscountSum']; ?> €</strong></td>
+                                    </tr>    
+                                    <?php } ?> 
+                                    
                                 </tbody>
 
                             </table>
@@ -133,18 +162,25 @@ $datePublish = new DateTime($datetimePublish);
                 </div>
             </div>
         </div>
-        <div class="row no-print">
+        <div class="no-print col-xs-12">
             <!-- BEGIN CONTROL -->
-            <div class="col-xs-12">
-                <div class="pull-right">
+                <div class="pull-right" style="display: flex">
                     <button class="btn btn-primary" onclick="window.print()"><i class="fa fa-print"></i> Vytlačiť faktúru</button>
-                    <button class="btn btn-success"><i class="fa fa-download"></i> Vygenerovať PDF faktúru</button>
+                    <form  target="_blank" style="padding:0px 10px;" action="index.php?src=invoices&action=generate&id_entity=<?php echo (new Rest())->get('id_entity');?>" method="POST">
+                        <textarea style="display:none;" type="hidden" name="invoiceHtml"><?php echo $invoiceHtml;?></textarea>
+                        <input type="hidden" name="order_id" value="<?php echo $data['order']['order_id'];?>" >
+                        <button class="btn btn-success"><i class="fa fa-file"></i> Vygenerovať a otvoriť PDF faktúru</button>
+                    </form>
+                    <?php 
+                    if(file_exists($data['pdf_file'])){ ?>
+                        <a target="_blank" href="<?php echo $data['pdf_file']; ?>" class="btn btn-warning" ><i class="fa fa-download"></i> Stiahnuť vygenerovanú faktúru</a>
+                    <?php } ?>
                 </div>
-            </div>
             <!-- END CONTROL -->
         </div>
     </div>
 </section>
+<!--INVOICE-END-->
 <?php
 get_bottom_html();
 get_bottom();

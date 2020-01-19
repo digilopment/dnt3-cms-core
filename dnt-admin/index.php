@@ -16,11 +16,11 @@
         require '../dnt-library/framework/app/Bootstrap.php';
     }
 
-    public function main()
+    public function run()
     {
         $bootstrap = new Bootstrap('../../');
         $bootstrap->boot();
         $app = new App($bootstrap->client);
         $app->runAdmin();
     }
-})->main();
+})->run();

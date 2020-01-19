@@ -39,6 +39,9 @@ if ($data['order']['datetime_publish'] == "0000-00-00 00:00:00") {
             <h3><i class="fa fa-file-o"></i> <?php echo $data['order']['order_id'] . ' ' . $name ?></h3>
             <h4>Celková suma objednávky: <b><?php echo $data['orderSum']?> €</b> 
                 <br/>Zaplatené v hotovosti: <b><?php echo $data['order']['from_cash']; ?> €</b>, Zaplatené kartou: <b><?php echo $data['order']['from_account']; ?> €</b>
+                <?php if($data['order']['percentage_discount'] > 0 ){?>
+                
+                <?php } ?>
                 <br/>Zostáva zaplatiť: <b><?php echo $data['toBePaid'];?> €</b></h4>
         </div>
     </div>

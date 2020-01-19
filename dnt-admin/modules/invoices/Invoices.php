@@ -16,6 +16,9 @@ class Invoices
     public function numToText($cislo)
     {
         $cislo = strtr($cislo, ",", ".");
+        if ($cislo == "00") {
+            $cislo = 0;
+        }
         $spojka = '';
         $pomlcka = '';
         $oddelovac = '';
@@ -204,7 +207,7 @@ class Invoices
         foreach ($orderProducts as $product) {
             $productsInCartIds[$product['id_entity']] = $product['id_entity'];
         }
-        
+
         foreach ($productsToCart as $produktId) {
             if (in_array($produktId, $productsInCartIds)) {
                 $this->updateCountInCart($produktId, $count, $orderId);
@@ -213,8 +216,9 @@ class Invoices
             }
         }
     }
-    
-    public function orderSum($orderProducts){
+
+    public function orderSum($orderProducts)
+    {
         $orderSum = 0;
         foreach ($orderProducts as $item) {
             $count = $item['count'] == 0 ? 1 : $item['count'];
@@ -244,9 +248,9 @@ class Invoices
                 }
             }
         }
-        
-        /** add info in basket **/
-        foreach($final as $finalItem){
+
+        /** add info in basket * */
+        foreach ($final as $finalItem) {
             $return[] = array_merge($basketProductData[$finalItem['id_entity']], $finalItem);
         }
         return $return;
@@ -365,6 +369,27 @@ class Invoices
                     '`vendor_id`' => Vendor::getId()
                 ]
         );
+    }
+
+    protected function parseInvoice($html)
+    {
+        $begin = explode('<!--INVOICE-BEGIN-->', $html);
+        $invoice = explode('<!--INVOICE-END-->', $begin[1]);
+        return $invoice[0];
+    }
+
+    public function renderableInvoiceHtml($html)
+    {
+        ob_start();
+        get_top();
+        echo '<style>.no-print{display:none;}html,body{background: #fff;}.grid{box-shadow: initial;}</style>';
+        echo $this->parseInvoice($html);
+        get_bottom();
+        $response = ob_get_clean();
+        $response = preg_replace('@<!-- BEGIN CONTROL -->[^>]*?>.*?<!-- END CONTROL -->@si', '', $response);
+        $response = preg_replace('@<script[^>]*?>.*?</script>@si', '', $response);
+        $response = str_replace(WWW_PATH, 'https://query.sk/', $response);
+        return $response;
     }
 
 }

@@ -142,10 +142,12 @@ define( 'WWW_PATH_ADMIN_2', HTTP_PROTOCOL."".@$_SERVER['SERVER_NAME'].WWW_FOLDER
 
 //define( 'DOMAIN', explode(".", SERVER_NAME)[0]); //server path too root file usualy index.php or home.php
 if (preg_match('/ocalhost/i', SERVER_NAME)){
+        define( 'IS_DEVEL', 1);
 	$parts 	= explode(".", SERVER_NAME);
 	$pathCount = count($parts);
 	define( 'DOMAIN', $parts[$pathCount-1]);
 }else{
+        define( 'IS_DEVEL', 0);
 	$parts 	= explode(".", SERVER_NAME);
 	$pathCount = count($parts);
 	define( 'DOMAIN', $parts[$pathCount-2].".".$parts[$pathCount-1]);

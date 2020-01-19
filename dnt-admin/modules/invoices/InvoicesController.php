@@ -11,6 +11,8 @@ class InvoicesController extends AdminController
     protected $dnt;
     protected $settings;
     protected $image;
+    protected $invoicePath;
+    protected $pdf;
 
     public function __construct()
     {
@@ -25,6 +27,8 @@ class InvoicesController extends AdminController
         $this->db = new DB();
         $this->settings = new Settings();
         $this->image = new Image();
+        $this->invoicePath = 'dnt-view/data/invoices/';
+        $this->pdf = new Pdf();
     }
 
     public function addAction()
@@ -105,19 +109,12 @@ class InvoicesController extends AdminController
     {
         $id = $this->rest->get('id_entity');
         $data['order'] = $this->invoices->findById($id);
-
-        $arr = explode('.', $data['order']['amount']);
-        $eur = $cent = 0;
-        if (isset($arr[0])) {
-            $eur = $arr[0];
-        }
-        if (isset($arr[1])) {
-            $cent = $arr[1];
-        }
-
         $data['products'] = $this->invoices->getProducts();
         $data['orderProducts'] = $this->invoices->getOrderProductsById($data['products'], $this->rest->get('id_entity'));
         $orderSum = $this->invoices->orderSum($data['orderProducts']);
+        $settings = $this->settings->getAllSettings();
+
+        $orderSum = number_format($orderSum, 2, '.', ',');
         $arr = explode('.', $orderSum);
         $eur = $cent = 0;
         if (isset($arr[0])) {
@@ -128,17 +125,50 @@ class InvoicesController extends AdminController
         }
         $data['orderSumText'] = $this->invoices->numToText($eur) . ' eur, ' . $this->invoices->numToText($cent) . ' centov';
         $data['orderSum'] = $orderSum;
-        $settings = $this->settings->getAllSettings();
-        
+
         $data['vendor'] = function ($key) use ($settings) {
             return $settings['keys'][$key]['value'];
         };
+
         $data['image'] = function ($id) {
             return $this->image->getFileImage($id);
         };
-        
-                
+
+        /** DISCOUNT * */
+        $data['discountSum'] = number_format($data['orderSum'] / 100 * ( $data['order']['percentage_discount']), 2, '.', ',');
+        $data['finalDiscountSum'] = number_format($data['orderSum'] - $data['discountSum'], 2, '.', ',');
+        $arr = explode('.', $data['finalDiscountSum']);
+        $eur = $cent = 0;
+        if (isset($arr[0])) {
+            $eur = $arr[0];
+        }
+        if (isset($arr[1])) {
+            $cent = $arr[1];
+        }
+        $data['pdf_file'] = '../' . $this->invoicePath . Vendor::getId() . '_' . $data['order']['order_id'] . '.pdf';
+        $data['finalDiscountSumText'] = $this->invoices->numToText($eur) . ' eur, ' . $this->invoices->numToText($cent) . ' centov';
+
+        ob_start();
         $this->loadTemplate($this->loc, 'print', $data);
+        $html = ob_get_clean();
+
+        $invoiceResponseAsUrl = $this->invoices->renderableInvoiceHtml($html);
+        $data['invoiceHtml'] = $invoiceResponseAsUrl;
+        $this->loadTemplate($this->loc, 'print', $data);
+    }
+
+    public function generateAction()
+    {
+        if ($this->hasPost('invoiceHtml')) {
+
+            $path = $this->invoicePath;
+            $invoiceName = Vendor::getId() . '_' . $this->rest->post('order_id') . '.pdf';
+            $html = $this->rest->post('invoiceHtml');
+            $this->pdf->prepareHtmlToRender($path, $invoiceName, $html);
+            $this->dnt->redirect(WWW_PATH . $path . $invoiceName);
+        } else {
+            $this->dnt->redirect(WWW_PATH_ADMIN_2 . 'index.php?src=invoices');
+        }
     }
 
     public function indexAction()

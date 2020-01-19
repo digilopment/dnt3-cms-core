@@ -84,7 +84,8 @@ class RouterAdmin
                 ["name_url" => "pdfgen"],
                 ["name_url" => "menucreator"],
                 ["name_url" => "vendor"],
-                ["name_url" => "services"]
+                ["name_url" => "services"],
+                ["name_url" => "temporary-online"]
         );
     }
 

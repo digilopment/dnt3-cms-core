@@ -21,6 +21,9 @@ dnt-test/bkp/
 dnt-jobs/data/*
 !dnt-jobs/data/readme.txt
 
+dnt-test/data/*
+!dnt-test/data/readme.txt
+
 nbproject/
 
 push.sh
