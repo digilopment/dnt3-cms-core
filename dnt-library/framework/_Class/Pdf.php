@@ -105,7 +105,7 @@ Class Pdf
      */
     public function prepareHtmlToRender($path, $pdfName, $html)
     {
-        $response = preg_replace(
+        $minify = preg_replace(
                 array(
                     '/ {2,}/',
                     '/<!--.*?-->|\t|(?:\r?\n[ \t]*)+/s'
@@ -116,15 +116,15 @@ Class Pdf
                 ),
                 $html
         );
-        $base64 = base64_encode($response);
+        $base64 = base64_encode($minify);
 
         if (IS_DEVEL) {
             $generateUrl = 'http://app.query.sk/temporary-online/?html=' . $base64;
         } else {
             $generateUrl = WWW_PATH . 'temporary-online?base64=' . $base64;
         }
-        $responseUrl = file_get_contents($generateUrl);
-        $output = file_get_contents('https://api.html2pdf.app/v1/generate?url=' . $responseUrl . '&apiKey=' . $this->html2pdfAppKey . '');
+        $temporaryPageUrl = file_get_contents($generateUrl);
+        $output = file_get_contents('https://api.html2pdf.app/v1/generate?url=' . $temporaryPageUrl . '&apiKey=' . $this->html2pdfAppKey . '');
         file_put_contents('../' . $path . $pdfName, $output);
     }
 

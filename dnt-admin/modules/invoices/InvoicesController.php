@@ -152,15 +152,14 @@ class InvoicesController extends AdminController
         $this->loadTemplate($this->loc, 'print', $data);
         $html = ob_get_clean();
 
-        $invoiceResponseAsUrl = $this->invoices->renderableInvoiceHtml($html);
-        $data['invoiceHtml'] = $invoiceResponseAsUrl;
+        $invoiceHtml = $this->invoices->renderableInvoiceHtml($html);
+        $data['invoiceHtml'] = $invoiceHtml;
         $this->loadTemplate($this->loc, 'print', $data);
     }
 
     public function generateAction()
     {
         if ($this->hasPost('invoiceHtml')) {
-
             $path = $this->invoicePath;
             $invoiceName = Vendor::getId() . '_' . $this->rest->post('order_id') . '.pdf';
             $html = $this->rest->post('invoiceHtml');

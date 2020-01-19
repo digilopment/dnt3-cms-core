@@ -24,6 +24,25 @@ if(isset($data['invoiceHtml'])){
 
 <section class="content">
     <div class="row">
+         <div class="no-print col-xs-12">
+            <!-- BEGIN CONTROL -->
+            <div class="pull-left" style="display: flex">
+                <a target="" href="index.php?src=invoices&action=edit&id_entity=<?php echo (new Rest())->get('id_entity');?>" class="btn btn-primary" ><i class="fa fa-arrow-left"></i> Prejsť späť na editáciu</a>
+            </div>
+                <div class="pull-right" style="display: flex">
+                    <button class="btn btn-primary" onclick="window.print()"><i class="fa fa-print"></i> Vytlačiť faktúru</button>
+                    <form  target="_blank" style="padding:0px 10px;" action="index.php?src=invoices&action=generate&id_entity=<?php echo (new Rest())->get('id_entity');?>" method="POST">
+                        <textarea style="display:none;" type="hidden" name="invoiceHtml"><?php echo $invoiceHtml;?></textarea>
+                        <input type="hidden" name="order_id" value="<?php echo $data['order']['order_id'];?>" >
+                        <button class="btn btn-success"><i class="fa fa-file"></i> Vygenerovať a otvoriť PDF faktúru</button>
+                    </form>
+                    <?php 
+                    if(file_exists($data['pdf_file'])){ ?>
+                        <a target="_blank" href="<?php echo $data['pdf_file']; ?>" class="btn btn-warning" ><i class="fa fa-download"></i> Stiahnuť vygenerovanú faktúru</a>
+                    <?php } ?>
+                </div>
+            <!-- END CONTROL -->
+        </div>
         <div class="col-xs-12">
             <div class="grid invoice">
                 <div class="grid-body">
@@ -161,22 +180,6 @@ if(isset($data['invoiceHtml'])){
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="no-print col-xs-12">
-            <!-- BEGIN CONTROL -->
-                <div class="pull-right" style="display: flex">
-                    <button class="btn btn-primary" onclick="window.print()"><i class="fa fa-print"></i> Vytlačiť faktúru</button>
-                    <form  target="_blank" style="padding:0px 10px;" action="index.php?src=invoices&action=generate&id_entity=<?php echo (new Rest())->get('id_entity');?>" method="POST">
-                        <textarea style="display:none;" type="hidden" name="invoiceHtml"><?php echo $invoiceHtml;?></textarea>
-                        <input type="hidden" name="order_id" value="<?php echo $data['order']['order_id'];?>" >
-                        <button class="btn btn-success"><i class="fa fa-file"></i> Vygenerovať a otvoriť PDF faktúru</button>
-                    </form>
-                    <?php 
-                    if(file_exists($data['pdf_file'])){ ?>
-                        <a target="_blank" href="<?php echo $data['pdf_file']; ?>" class="btn btn-warning" ><i class="fa fa-download"></i> Stiahnuť vygenerovanú faktúru</a>
-                    <?php } ?>
-                </div>
-            <!-- END CONTROL -->
         </div>
     </div>
 </section>
