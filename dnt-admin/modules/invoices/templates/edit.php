@@ -15,8 +15,16 @@ if ($data['order']['datetime_publish'] == "0000-00-00 00:00:00") {
         border-top: 1px solid #929292;
         margin-top: 20px;
     }
+    .right-side > .content {
+        padding: 0px 25px 25px 25px;
+        background: #ffffff;
+    }
+    .right-side {
+        padding: 10px;
+        background-color: #f1f1f1;
+    }
 </style>
-<section class="col-xs-12" style="margin-bottom:15px">
+<section class="col-xs-12" style="padding:15px">
     <a href="index.php?src=invoices&action=print&id_entity=<?php echo (new Rest())->get('id_entity') ?>">
         <span class="label label-primary bg-blue" style="padding:5px;"><big>VYSTAVIŤ FAKTÚRU</big></span>
     </a>
