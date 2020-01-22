@@ -8,14 +8,16 @@
  *  date        2017
  *  This is std static class
  */
-class Dnt {
+class Dnt
+{
 
     /**
      * 
      * @param type $table
      * @return boolean
      */
-    public static function getLastId($table, $vendor_id = true) {
+    public static function getLastId($table, $vendor_id = true)
+    {
         $db = new Db;
 
         if ($vendor_id) {
@@ -42,7 +44,8 @@ class Dnt {
      * @param type $vendor_id
      * @return boolean
      */
-    public static function getMaxValueFromColumn($table, $column, $vendor_id = true) {
+    public static function getMaxValueFromColumn($table, $column, $vendor_id = true)
+    {
         $db = new Db;
 
         if ($vendor_id) {
@@ -66,7 +69,8 @@ class Dnt {
      * 
      * @return boolean
      */
-    public static function getLastIdVendor() {
+    public static function getLastIdVendor()
+    {
         $db = new Db;
         $query = "SELECT MAX(id) FROM dnt_vendors ";
         if ($db->num_rows($query) > 0) {
@@ -84,7 +88,8 @@ class Dnt {
      * @param type $googleMapsUrl
      * @return type
      */
-    function getMapLocation($googleMapsUrl) {
+    function getMapLocation($googleMapsUrl)
+    {
         $string = $googleMapsUrl;
         $string = explode("@", $string);
         $position = $string[1];
@@ -98,7 +103,8 @@ class Dnt {
      * 
      * @param type $lastId
      */
-    public static function getIdEntity($lastId) {
+    public static function getIdEntity($lastId)
+    {
         $db = new Db;
         $db->update(
                 'dnt_posts', //table
@@ -115,7 +121,8 @@ class Dnt {
      * @param type $link
      * @return type
      */
-    public static function cislo($link) {
+    public static function cislo($link)
+    {
         return preg_replace("/[^0-9]/", "", $link);
     }
 
@@ -124,7 +131,8 @@ class Dnt {
      * @param type $input
      * @return type
      */
-    function linkFormat($input) {
+    function linkFormat($input)
+    {
         $input = str_replace("http://", "", $input);
         $input = str_replace("https://", "", $input);
         $input = str_replace("", "", $input);
@@ -136,7 +144,8 @@ class Dnt {
      * @param type $column
      * @return type
      */
-    public static function showStatus($column) {
+    public static function showStatus($column)
+    {
         $rest = new Rest;
         if ($rest->isAdmin()) {
             //return "`show` = '1' or `show` = '2'";
@@ -150,7 +159,8 @@ class Dnt {
      * 
      * @return type
      */
-    public static function datetime() {
+    public static function datetime()
+    {
         return date("Y-m-d H:i:s");
     }
 
@@ -158,7 +168,8 @@ class Dnt {
      * 
      * @param type $file
      */
-    public static function deleteFile($file) {
+    public static function deleteFile($file)
+    {
         if (file_exists($file)) {
             unlink($file);
         }
@@ -168,7 +179,8 @@ class Dnt {
      * 
      * @param type $src
      */
-    function rrmdir($dirPath) {
+    function rrmdir($dirPath)
+    {
         $files = new RecursiveIteratorIterator(
                 new RecursiveDirectoryIterator($dirPath, RecursiveDirectoryIterator::SKIP_DOTS),
                 RecursiveIteratorIterator::CHILD_FIRST
@@ -184,7 +196,8 @@ class Dnt {
      * 
      * @return type
      */
-    public static function timestamp() {
+    public static function timestamp()
+    {
         return time();
     }
 
@@ -194,7 +207,8 @@ class Dnt {
      * @param type $time
      * @return type
      */
-    public static function timeToDbFormat($separator, $time) {
+    public static function timeToDbFormat($separator, $time)
+    {
         $dateAndTime = explode(" ", $time);
         $data = explode($separator, $dateAndTime[0]);
         return $data[2] . "-" . $data[1] . "-" . $data[0] . " " . $dateAndTime[1] . ":00";
@@ -206,7 +220,8 @@ class Dnt {
      * @param type $format
      * @return type
      */
-    public static function formatTime($time, $format) {
+    public static function formatTime($time, $format)
+    {
         $date = date_create($time);
         return date_format($date, $format);
     }
@@ -216,7 +231,8 @@ class Dnt {
      * @param type $cislo
      * @return type
      */
-    public static function dvojcifernyDatum($cislo) {
+    public static function dvojcifernyDatum($cislo)
+    {
         if (strlen($cislo) > 2) {
             $return = $cislo;
         } else {
@@ -235,7 +251,8 @@ class Dnt {
      * @param type $str
      * @return type
      */
-    public static function in_string($pharse, $str) {
+    public static function in_string($pharse, $str)
+    {
         return preg_match('/' . $pharse . '/', $str);
         //return preg_match("/".$pharse."\b/i", "".$str."");
     }
@@ -245,7 +262,8 @@ class Dnt {
      * @param type $link
      * @return type
      */
-    public static function desatinne_cislo($link) {
+    public static function desatinne_cislo($link)
+    {
         $link = str_replace(",", ".", $link);
         return preg_replace("/[^0-9\.]/", "", $link);
     }
@@ -255,7 +273,8 @@ class Dnt {
      * @param type $pocetZnakov
      * @return type
      */
-    public static function generujHeslo($pocetZnakov) {
+    public static function generujHeslo($pocetZnakov)
+    {
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         return substr(str_shuffle($chars), 0, $pocetZnakov);
     }
@@ -264,7 +283,8 @@ class Dnt {
      * 
      * @return type
      */
-    public static function microtimeSec() {
+    public static function microtimeSec()
+    {
         list($usec, $sec) = explode(" ", microtime());
         $tmp = ((float) $usec + (float) $sec);
         $tmp1 = explode(".", $tmp);
@@ -276,7 +296,8 @@ class Dnt {
      * 
      * @return type
      */
-    public static function is_mobile() {
+    public static function is_mobile()
+    {
         return preg_match("/(android|iPhone|iPod|iPad|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
     }
 
@@ -285,8 +306,14 @@ class Dnt {
      * @param type $file
      * @return type
      */
-    public static function getPripona($file) {
+    public static function getPripona($file)
+    {
         return pathinfo($file, PATHINFO_EXTENSION);
+    }
+
+    public static function getFileName($file)
+    {
+        return self::name_url(pathinfo($file, PATHINFO_FILENAME));
     }
 
     /**
@@ -294,7 +321,8 @@ class Dnt {
      * @param type $src
      * @param type $dst
      */
-    public static function recurse_copy($src, $dst) {
+    public static function recurse_copy($src, $dst)
+    {
         $dir = opendir($src);
         @mkdir($dst);
         while (false !== ( $file = readdir($dir))) {
@@ -313,7 +341,8 @@ class Dnt {
      * 
      * @return type
      */
-    public static function get_datum() {
+    public static function get_datum()
+    {
         return $get_datum = "" . date("d") . "." . date("m") . "." . date("Y") . "";
     }
 
@@ -321,7 +350,8 @@ class Dnt {
      * 
      * @return type
      */
-    public static function get_rok() {
+    public static function get_rok()
+    {
         return $get_rok = date("Y");
     }
 
@@ -329,7 +359,8 @@ class Dnt {
      * 
      * @return type
      */
-    public static function get_mesiac() {
+    public static function get_mesiac()
+    {
         return $get_mesiac = date("m");
     }
 
@@ -337,7 +368,8 @@ class Dnt {
      * 
      * @return type
      */
-    public static function get_ip() {
+    public static function get_ip()
+    {
         return $_SERVER['REMOTE_ADDR'];
     }
 
@@ -345,7 +377,8 @@ class Dnt {
      * 
      * @return type
      */
-    public static function get_den() {
+    public static function get_den()
+    {
         return $get_den = date("d");
     }
 
@@ -353,7 +386,8 @@ class Dnt {
      * 
      * @return type
      */
-    public static function get_cas() {
+    public static function get_cas()
+    {
         return $get_cas = date('H:i:s');
     }
 
@@ -361,7 +395,8 @@ class Dnt {
      * 
      * @return string
      */
-    public static function get_os($external = false) {
+    public static function get_os($external = false)
+    {
         if ($exteral) {
             $agent = $external;
         } else {
@@ -384,7 +419,8 @@ class Dnt {
         return $os;
     }
 
-    function getOS($user_agent) {
+    function getOS($user_agent)
+    {
 
         $os_platform = "Unknown OS Platform";
 
@@ -421,7 +457,8 @@ class Dnt {
         return $os_platform;
     }
 
-    public static function downloadFile($url, $cesta) {
+    public static function downloadFile($url, $cesta)
+    {
         $img = explode("/", $url);
         $array = $img;
         if (!is_array($array))
@@ -436,7 +473,8 @@ class Dnt {
         return array("file" => $fotka, "path" => $cesta);
     }
 
-    function getBrowser($user_agent) {
+    function getBrowser($user_agent)
+    {
 
         $browser = "Unknown Browser";
 
@@ -465,7 +503,8 @@ class Dnt {
      * @param type $dlzka
      * @return type
      */
-    public static function set_rand_string($dlzka = 10) {
+    public static function set_rand_string($dlzka = 10)
+    {
         $retazec = "";
         $nahodne = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
         for ($i = 0; $i < $dlzka; $i++) {
@@ -480,7 +519,8 @@ class Dnt {
      * 
      * @return type
      */
-    public static function set_four_one() {
+    public static function set_four_one()
+    {
         return "" . rand(1, 9) . "" . rand(1, 9) . "" . rand(1, 9) . "" . rand(1, 9) . "";
     }
 
@@ -489,7 +529,8 @@ class Dnt {
      * @param type $url_adresa
      * @return type
      */
-    public static function name_url($url_adresa) {
+    public static function name_url($url_adresa)
+    {
         # všetky znaky, ktoré v unicode nie sú písmená, čísla alebo podtržítka nahradíme pomlčkou
         $url_adresa = preg_replace('/[^\pL0-9_]+/u', '-', $url_adresa);
         # trimneme pomlčky
@@ -509,7 +550,8 @@ class Dnt {
      * @param type $name_url
      * @return boolean
      */
-    public static function is_external_url($name_url) {
+    public static function is_external_url($name_url)
+    {
         //$name_url = str_replace("/", "\/", $name_url);
         if (self::in_string("http:\/\/", $name_url)) {
             $return = true;
@@ -533,7 +575,8 @@ class Dnt {
      * @param type $name_url
      * @return type
      */
-    public static function creat_name_url($name, $name_url) {
+    public static function creat_name_url($name, $name_url)
+    {
 
         if (self::in_string("<WWW_PATH>", $name_url)) {
             $name_url = explode("WWW_PATH", $name_url);
@@ -558,7 +601,8 @@ class Dnt {
      * 
      * @param type $presmeruj_url
      */
-    public static function redirect($presmeruj_url) {
+    public static function redirect($presmeruj_url)
+    {
         if (!headers_sent()) {
             header('Location: ' . $presmeruj_url);
             exit;
@@ -574,7 +618,8 @@ class Dnt {
      * 
      * @param type $presmeruj_url
      */
-    public static function presmeruj_url_by_js($presmeruj_url) {
+    public static function presmeruj_url_by_js($presmeruj_url)
+    {
         echo '<script type="text/javascript">';
         echo 'window.location.href="' . $presmeruj_url . '"';
         echo '</script>';
@@ -586,7 +631,8 @@ class Dnt {
      * @param type $str
      * @return type
      */
-    public static function safe($str) {
+    public static function safe($str)
+    {
         if (is_array($str))
             return array_map(__METHOD__, $str);
 
@@ -603,7 +649,8 @@ class Dnt {
      * @param type $zobraz_znakov
      * @return string
      */
-    public static function obsah_uvod($str, $zobraz_znakov) {
+    public static function obsah_uvod($str, $zobraz_znakov)
+    {
         //return htmlspecialchars($str); 
         if (strlen($str) > $zobraz_znakov)
             return "" . $str = substr($str, 0, $zobraz_znakov) . "...";
@@ -620,7 +667,8 @@ class Dnt {
      * @param type $maxChars
      * @return type
      */
-    public static function get_perex($input, $maxWords, $maxChars) {
+    public static function get_perex($input, $maxWords, $maxChars)
+    {
         $words = preg_split('/\s+/', $input);
         $words = array_slice($words, 0, $maxWords);
         $words = array_reverse($words);
@@ -653,7 +701,8 @@ class Dnt {
      * @param type $maxPocetSlov
      * @return type
      */
-    public static function perex($str, $maxPocetSlov) {
+    public static function perex($str, $maxPocetSlov)
+    {
         $str = not_html($str);
         $slova = explode(" ", $str);
         $pocetSlov = count($slova);
@@ -670,7 +719,8 @@ class Dnt {
      * @param type $str
      * @return type
      */
-    public static function not_html($str) {
+    public static function not_html($str)
+    {
         //return htmlspecialchars($str); 
         $str = strip_tags($str);
         $str = trim($str);
@@ -682,7 +732,8 @@ class Dnt {
      * @param type $email
      * @return boolean
      */
-    public static function is_email($email) {
+    public static function is_email($email)
+    {
         if ($email == "")
             return true;
         elseif (preg_match("/^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/", $email))
@@ -696,7 +747,8 @@ class Dnt {
      * @param type $iban
      * @return boolean
      */
-    public static function is_iban($iban) {
+    public static function is_iban($iban)
+    {
         $iban = strtolower(str_replace(' ', '', $iban));
         $Countries = array('al' => 28, 'ad' => 24, 'at' => 20, 'az' => 28, 'bh' => 22, 'be' => 16, 'ba' => 20, 'br' => 29, 'bg' => 22, 'cr' => 21, 'hr' => 21, 'cy' => 28, 'cz' => 24, 'dk' => 18, 'do' => 28, 'ee' => 20, 'fo' => 18, 'fi' => 18, 'fr' => 27, 'ge' => 22, 'de' => 22, 'gi' => 23, 'gr' => 27, 'gl' => 18, 'gt' => 28, 'hu' => 28, 'is' => 26, 'ie' => 22, 'il' => 23, 'it' => 27, 'jo' => 30, 'kz' => 20, 'kw' => 30, 'lv' => 21, 'lb' => 28, 'li' => 21, 'lt' => 20, 'lu' => 20, 'mk' => 19, 'mt' => 31, 'mr' => 27, 'mu' => 30, 'mc' => 27, 'md' => 24, 'me' => 22, 'nl' => 18, 'no' => 15, 'pk' => 24, 'ps' => 29, 'pl' => 28, 'pt' => 25, 'qa' => 29, 'ro' => 24, 'sm' => 27, 'sa' => 24, 'rs' => 22, 'sk' => 24, 'si' => 19, 'es' => 24, 'se' => 24, 'ch' => 21, 'tn' => 24, 'tr' => 26, 'ae' => 23, 'gb' => 22, 'vg' => 24);
         $Chars = array('a' => 10, 'b' => 11, 'c' => 12, 'd' => 13, 'e' => 14, 'f' => 15, 'g' => 16, 'h' => 17, 'i' => 18, 'j' => 19, 'k' => 20, 'l' => 21, 'm' => 22, 'n' => 23, 'o' => 24, 'p' => 25, 'q' => 26, 'r' => 27, 's' => 28, 't' => 29, 'u' => 30, 'v' => 31, 'w' => 32, 'x' => 33, 'y' => 34, 'z' => 35);
@@ -735,7 +787,8 @@ class Dnt {
      * @param type $facebook_profil
      * @return boolean
      */
-    public static function is_facebook_profil($facebook_profil) {
+    public static function is_facebook_profil($facebook_profil)
+    {
         list($facebook_url, $facebook_user) = explode(".com/", $facebook_profil);
         if ($facebook_profil == "") {
             return false; //empty filed
@@ -751,7 +804,8 @@ class Dnt {
      * @param type $text
      * @return type
      */
-    public static function odstran_diakritiku($text) {
+    public static function odstran_diakritiku($text)
+    {
         $prevodni_tabulka = Array(
             'ä' => 'a',
             'Ä' => 'A',
@@ -851,7 +905,8 @@ class Dnt {
      * @param string $od_email
      * @param type $email_sprava
      */
-    public static function my_email($predmet, $komu, $od_meno, $od_email, $email_sprava) {
+    public static function my_email($predmet, $komu, $od_meno, $od_email, $email_sprava)
+    {
 
         $od_email = "info@query.sk";
         // carriage return type (we use a PHP end of line constant)
@@ -872,7 +927,8 @@ class Dnt {
         mail($to, $subject, $message, $headers);
     }
 
-    public static function returnInput() {
+    public static function returnInput()
+    {
         echo "<input type='hidden' name='return' value='" . WWW_FULL_PATH . "' />";
     }
 
@@ -881,7 +937,8 @@ class Dnt {
      * @param type $msg
      * @return type
      */
-    public static function confirmMsg($msg) {
+    public static function confirmMsg($msg)
+    {
         return " onclick=\"return confirm('$msg');\" ";
     }
 
@@ -892,7 +949,8 @@ class Dnt {
      * @param type $post_id
      * @return boolean
      */
-    public static function getPostParam($table, $column, $post_id) {
+    public static function getPostParam($table, $column, $post_id)
+    {
         $db = new Db;
         $rest = new Rest;
 
@@ -912,7 +970,8 @@ class Dnt {
      * @param type $and_where
      * @return boolean
      */
-    public static function db_current_id($table, $and_where) {
+    public static function db_current_id($table, $and_where)
+    {
         $db = new Db;
         $rest = new Rest;
 
@@ -933,7 +992,8 @@ class Dnt {
      * @param type $currentId
      * @return boolean
      */
-    public static function db_next_id($table, $and_where, $currentId) {
+    public static function db_next_id($table, $and_where, $currentId)
+    {
         $db = new Db;
         $rest = new Rest;
 
@@ -947,7 +1007,8 @@ class Dnt {
         }
     }
 
-    public static function setMetaStatus($value, $meta) {
+    public static function setMetaStatus($value, $meta)
+    {
         if ($value == 1) {
             $ano = 'selected';
             $color = "3C763D";
@@ -964,7 +1025,8 @@ class Dnt {
     }
 
     /** HEX to RGBA * */
-    function hex2rgba($color, $opacity = false) {
+    function hex2rgba($color, $opacity = false)
+    {
 
         $default = 'rgb(0,0,0)';
 
@@ -1002,7 +1064,8 @@ class Dnt {
         return $output;
     }
 
-    public static function colorInverse($color) {
+    public static function colorInverse($color)
+    {
         $color = str_replace('#', '', $color);
         if (strlen($color) != 6) {
             return '000000';
@@ -1016,7 +1079,8 @@ class Dnt {
         return '#' . $rgb;
     }
 
-    function darkenColor($rgb, $darker = 2) {
+    function darkenColor($rgb, $darker = 2)
+    {
 
         $hash = (strpos($rgb, '#') !== false) ? '#' : '';
         $rgb = (strlen($rgb) == 7) ? str_replace('#', '', $rgb) : ((strlen($rgb) == 6) ? $rgb : false);
@@ -1033,13 +1097,15 @@ class Dnt {
         return $hash . $R . $G . $B;
     }
 
-    public static function rmkdir($path) {
+    public static function rmkdir($path)
+    {
         if (@mkdir($path) or file_exists($path))
             return true;
         return (self::rmkdir(dirname($path)) and mkdir($path));
     }
 
-    public static function orderby($data, $column = "id", $sort = "ASC") {
+    public static function orderby($data, $column = "id", $sort = "ASC")
+    {
         $sortArray = array();
         foreach ($data as $item) {
             foreach ($item as $key => $value) {
@@ -1075,7 +1141,8 @@ class Dnt {
      *
      * */
 
-    public function writeToFile($fileName, $arrToInsert = array(), $serverVariables = false) {
+    public function writeToFile($fileName, $arrToInsert = array(), $serverVariables = false)
+    {
 
         //VYTVOR FOLDER AK NIE JE
         self::rmkdir(dirname($fileName));
@@ -1113,7 +1180,8 @@ class Dnt {
         file_put_contents($fileName, $putData);
     }
 
-    public static function getCountryCode($ip) {
+    public static function getCountryCode($ip)
+    {
         return strtolower(@file_get_contents(GEO_IP_SERVICE . '' . $ip . ''));
     }
 
@@ -1122,7 +1190,8 @@ class Dnt {
      *
      *
      * */
-    public static function youtubeVideoToEmbed($video) {
+    public static function youtubeVideoToEmbed($video)
+    {
         if (count(explode('?v=', $video)) > 1) {
             $video = explode("?v=", $video);
             $youtube_hash = "https://www.youtube.com/embed/" . $video[1];
@@ -1130,6 +1199,22 @@ class Dnt {
             $youtube_hash = $video;
         }
         return $youtube_hash;
+    }
+
+    public static function minify($html)
+    {
+        $minify = preg_replace(
+                array(
+                    '/ {2,}/',
+                    '/<!--.*?-->|\t|(?:\r?\n[ \t]*)+/s'
+                ),
+                array(
+                    ' ',
+                    ''
+                ),
+                $html
+        );
+        return $minify;
     }
 
 }

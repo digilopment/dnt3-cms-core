@@ -63,6 +63,7 @@ class Autoloader {
         $this->fileLoader($path . "dnt-library/framework/app/BaseController.php");
         $this->fileLoader($path . "dnt-library/framework/app/Plugin.php");
         $this->fileLoader($path . "dnt-library/framework/app/AbstractUser.php");
+        $this->fileLoader($path . "dnt-library/framework/app/Stream.php");
     }
 
 }

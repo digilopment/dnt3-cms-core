@@ -1,5 +1,7 @@
 dnt-cache/*
 !dnt-cache/readme.txt
+!dnt-cache/temp/readme.txt
+!dnt-cache/plugins/readme.txt
 
 dnt-backup/*
 dnt-backup/readme.txt

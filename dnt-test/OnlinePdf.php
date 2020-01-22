@@ -44,6 +44,7 @@ class OnlinePdfTest
         }
 
         $this->pdf->prepareHtmlToRender($path, $pdfName, $html);
+        
         print $this->htmlTemplate();
         print ('<a href="' . WWW_PATH . $path . $pdfName . '" target="_blank">Open</a>');
     }

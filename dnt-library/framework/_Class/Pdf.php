@@ -11,7 +11,12 @@ Class Pdf
 {
 
     protected $html2pdfAppKey = '8fc8992e7ab59463faeffa82343b41a21bb05a1fe5bc2102c52a02e0a171b864';
+    protected $stream;
 
+    public function __construct()
+    {
+        $this->stream = new Stream();
+    }
     /**
      * 
      * @param type $img
@@ -96,62 +101,23 @@ Class Pdf
         $dompdf->render();
         file_put_contents($path . 'dnt-view/data/uploads/' . $fileName . '.pdf', $dompdf->output());
     }
-
+    
     /**
      * 
+     * @param type $path
+     * @param type $fileName
      * @param type $html
-     * @return string
      * api https://html2pdf.app/
      * 3869c35b440ffc26915aff525e3c47aa2be6d5b2708235f57f2bde1bbbfd95f6
      */
-    
-    public function prepareHtmlToRender($path, $pdfName, $html)
+    public function prepareHtmlToRender($path, $fileName, $html)
     {
-        $minify = preg_replace(
-                array(
-                    '/ {2,}/',
-                    '/<!--.*?-->|\t|(?:\r?\n[ \t]*)+/s'
-                ),
-                array(
-                    ' ',
-                    ''
-                ),
-                $html
-        );
-        $base64 = base64_encode($minify);
-
-        if (IS_DEVEL) {
-            $generateUrl = 'http://app.query.sk/temporary-online/?html=' . $base64;
-        } else {
-            $generateUrl = WWW_PATH_ADMIN_2 . 'index.php?src=temporary-online&base64=' . $base64;
-        }
-        //docasne
-        $generateUrl = 'http://app.query.sk/temporary-online/?html=' . $base64;
-
-        $file = '../dnt-cache/temp/tests.html';
-        file_put_contents($file, $base64);
-
-        $url = 'http://app.query.sk/temporary-online/';
-        $compressed = base64_encode($base64);
-
-        $uniqid = uniqid();
-        $lenght = (strlen($compressed));
-        $countFloor = floor($lenght / 1000);
-        $finalPart = $lenght - $countFloor;
-
-        $stringParts = [];
-        for ($i = 0; $i < $countFloor; $i++) {
-            $stringParts[] = substr($compressed, $i * 1000, 1000);
-        }
-        $stringParts[] = substr($compressed, $countFloor * 1000, $finalPart);
-
-        foreach ($stringParts as $key => $part) {
-            file_get_contents($url . '?key=' . $key . '&id=' . $uniqid . '&part=' . $part);
-        }
-        $temporaryPageUrl = file_get_contents($url . '?merge=1&id=' . $uniqid);
-
-        $output = file_get_contents('https://api.html2pdf.app/v1/generate?url=' . $temporaryPageUrl . '&apiKey=' . $this->html2pdfAppKey . '');
-        file_put_contents('../' . $path . $pdfName, $output);
+        $converAs = 'html';
+        $streamResponse = $this->stream->streamIn($html, Dnt::getFileName($fileName), $converAs);
+        $mergePageUrl = $streamResponse['url'];
+        $output = file_get_contents('https://api.html2pdf.app/v1/generate?url=' . $mergePageUrl . '&apiKey=' . $this->html2pdfAppKey . '');
+        unlink($streamResponse['tmpFile']);
+        file_put_contents('../' . $path . $fileName, $output);
     }
 
 }
