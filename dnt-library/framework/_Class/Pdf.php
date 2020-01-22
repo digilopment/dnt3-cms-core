@@ -102,7 +102,9 @@ Class Pdf
      * @param type $html
      * @return string
      * api https://html2pdf.app/
+     * 3869c35b440ffc26915aff525e3c47aa2be6d5b2708235f57f2bde1bbbfd95f6
      */
+    
     public function prepareHtmlToRender($path, $pdfName, $html)
     {
         $minify = preg_replace(
@@ -125,8 +127,29 @@ Class Pdf
         }
         //docasne
         $generateUrl = 'http://app.query.sk/temporary-online/?html=' . $base64;
-        
-        $temporaryPageUrl = file_get_contents($generateUrl);
+
+        $file = '../dnt-cache/temp/tests.html';
+        file_put_contents($file, $base64);
+
+        $url = 'http://app.query.sk/temporary-online/';
+        $compressed = base64_encode($base64);
+
+        $uniqid = uniqid();
+        $lenght = (strlen($compressed));
+        $countFloor = floor($lenght / 1000);
+        $finalPart = $lenght - $countFloor;
+
+        $stringParts = [];
+        for ($i = 0; $i < $countFloor; $i++) {
+            $stringParts[] = substr($compressed, $i * 1000, 1000);
+        }
+        $stringParts[] = substr($compressed, $countFloor * 1000, $finalPart);
+
+        foreach ($stringParts as $key => $part) {
+            file_get_contents($url . '?key=' . $key . '&id=' . $uniqid . '&part=' . $part);
+        }
+        $temporaryPageUrl = file_get_contents($url . '?merge=1&id=' . $uniqid);
+
         $output = file_get_contents('https://api.html2pdf.app/v1/generate?url=' . $temporaryPageUrl . '&apiKey=' . $this->html2pdfAppKey . '');
         file_put_contents('../' . $path . $pdfName, $output);
     }
