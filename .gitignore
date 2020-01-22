@@ -14,6 +14,9 @@ dnt-cache/plugins/*
 dnt-backup/*
 dnt-backup/readme.txt
 
+#old admin
+dnt-admin-old/*
+
 dnt-api/dnt-cache/*
 !dnt-api/dnt-cache/readme.txt
 
