@@ -60,7 +60,7 @@ define( 'GET_SYSTEM_COMPONENTS', 'DntJson, DntSoap, DntXml, DntRss, DntXSSLoader
  *
 */
 define( 'IS_CACHING', false );
-define( 'IS_LOGSYSTEM_ON', true ); //anable or disable saving current logs to database
+define( 'IS_LOGSYSTEM_ON', false ); //anable or disable saving current logs to database
 define( 'DEBUG_QUERY', false ); //anable or disable saving current logs to database
 define( 'CACHE_HTTP_STATUS', '201' );
 define( 'CACHE_TIME_SEC', '86400' );
@@ -133,14 +133,21 @@ define("ENABLE_BACKEND_GEO_IP_SERVICE", false);
 define( 'HTTP_PROTOCOL', (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://" ); //protocol
 define( 'SERVER_NAME', $_SERVER['SERVER_NAME'] ); //server path too root file usualy index.php or home.php
 define( 'WWW_PATH', HTTP_PROTOCOL.@$_SERVER['SERVER_NAME'].WWW_FOLDERS."/" ); //server path too root file usualy index.php or home.php
-define( 'WWW_PATH_ADMIN', HTTP_PROTOCOL."".@$_SERVER['SERVER_NAME'].WWW_FOLDERS."/dnt-admin/" ); //server path too root file usualy index.php or home.php
+
+//URL ADMIN
+define( 'ADMIN_URL', 'dnt-admin' ); // set admin hook
+define( 'ADMIN_URL_2', 'dnt-admin' ); // set admin hook
+define( 'WWW_PATH_ADMIN', HTTP_PROTOCOL."".@$_SERVER['SERVER_NAME'].WWW_FOLDERS."/".ADMIN_URL."/" );
+define( 'WWW_PATH_ADMIN_2', HTTP_PROTOCOL."".@$_SERVER['SERVER_NAME'].WWW_FOLDERS."/".ADMIN_URL_2."/" );
 
 //define( 'DOMAIN', explode(".", SERVER_NAME)[0]); //server path too root file usualy index.php or home.php
 if (preg_match('/ocalhost/i', SERVER_NAME)){
+        define( 'IS_DEVEL', 1);
 	$parts 	= explode(".", SERVER_NAME);
 	$pathCount = count($parts);
 	define( 'DOMAIN', $parts[$pathCount-1]);
 }else{
+        define( 'IS_DEVEL', 0);
 	$parts 	= explode(".", SERVER_NAME);
 	$pathCount = count($parts);
 	define( 'DOMAIN', $parts[$pathCount-2].".".$parts[$pathCount-1]);

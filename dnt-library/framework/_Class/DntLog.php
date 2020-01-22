@@ -64,13 +64,13 @@ class DntLog {
         } else {
             $http_request_info = false;
         }
-        
+
         if ($http_request == $httpCacheStatus) {
             $headerMsgCache = "content-cache";
         } else {
             $headerMsgCache = "no-cache";
         }
-        
+
         $dntVendor = new Vendor();
         $session = new Sessions();
         $session->init();
@@ -95,6 +95,43 @@ class DntLog {
             header('X-Dnt-Cache: ' . $headerMsgCache);
             header('X-Dnt-Subsystem-Packages: dnt_logs(c), dnt_cache(c) ');
             header('X-Dnt-Author: Tomas Doubek, Dnt3.ltd ');
+        }
+    }
+
+    public function debugQuery($modul) {
+
+        if (DEBUG_QUERY == 1) {
+
+            $path = "dnt-logs/" . Vendor::getId() . "/sql/" . $modul->name . "_query.csv";
+            if (!file_exists($path)) {
+                foreach ($_SESSION as $key => $value) {
+                    $serverVariables = array(
+                        "HTTP_HOST",
+                        "REQUEST_TIME",
+                    );
+
+                    if (Dnt::in_string("debug_query", $key)) {
+                        $serverVariables = array();
+                        $value = str_replace("\n", " ", $value);
+                        $value = str_replace("\t", " ", $value);
+                        $value = str_replace("\r", " ", $value);
+                        $value = preg_replace('/\s\s+/', ' ', $value);
+                        $value = trim($value);
+                        $arrToInsert = array(
+                            "id" => 'null',
+                            "id_entity" => 0,
+                            "vendor_id" => Vendor::getId(),
+                            "name" => $modul->name . " Modul Query ",
+                            "name_url" => md5($value),
+                            "query" => $value,
+                            "parent_id" => 0,
+                        );
+                        Dnt::writeToFile($path, $arrToInsert, $serverVariables);
+                    }
+                }
+            } else {
+                
+            }
         }
     }
 
@@ -138,7 +175,7 @@ class DntLog {
         } else {
             $system_status = false;
         }
-        
+
         $serverVariables = array(
             "HTTP_HOST",
             "HTTP_CONNECTION",
@@ -223,17 +260,17 @@ class DntLog {
         $db = new DB();
         $columnsData = new XMLgenerator;
         $columns = "id,http_response,system_status,log_id,timestamp,vendor_id,msg,err_msg,THIS_URL,HTTP_REFERER,HTTP_HOST,HTTP_USER_AGENT,HTTP_ACCEPT,HTTP_ACCEPT_ENCODING,HTTP_ACCEPT_LANGUAGE,HTTP_ACCEPT_CHARSET,HTTP_COOKIE";
-        
+
         if ($log_id == "last") {
             $query = "SELECT * FROM `dnt_logs` WHERE id=(SELECT max(id) FROM dnt_logs)";
         } else {
             $query = "SELECT * FROM `dnt_logs` WHERE `log_id` = '" . $log_id . "'";
         }
-        
+
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 foreach ($columnsData->getTableColumns("dnt_logs", $columns) as $key => $value) {
-                    print $value . "\t\t\t => " . $row[$value] . "\n";
+                    print $value . "\t\t\t => <b>" . $row[$value] . "</b><br/>";
                 }
             }
         }

@@ -1,10 +1,12 @@
 <?php
 
-class RpcModuleController extends Modul {
+class RpcModuleController extends Modul
+{
 
     protected $loc = __FILE__;
-    
-    public function run() {
+
+    public function run()
+    {
         $rest = new Rest;
         if ($rest->webhook(2) == "subscriber") {
             include "dnt-admin/modules/subscriber/webhook.php";
@@ -14,4 +16,5 @@ class RpcModuleController extends Modul {
             }
         }
     }
+
 }

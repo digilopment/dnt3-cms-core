@@ -177,12 +177,12 @@ class Client extends Database {
         $domain = false;
         $www_folders = false;
         $lang = false;
-
+        
         $data = explode("://", $dbDomain);
         if (isset($data[0])) {
             $protocol = $data[0] . "://";
         }
-
+        
         $dataLng = explode("/", $data[1]);
         $lng = $dataLng[count($dataLng) - 1];
         if (strlen($lng) == 2) {
@@ -248,6 +248,9 @@ class Client extends Database {
 
     public function setDomain($dbDomain, $wwwPath, $toDbDomain = true, $language = false) {
         if ($toDbDomain || $dbDomain == $wwwPath || $dbDomain == rtrim($wwwPath . $this->urlLang(), "/")) {
+            if ($toDbDomain && empty($dbDomain)){
+                die('<h2>Externá doména neexistuje, alebo nie je priradená k webu.</h2>Prosím vypnite v nastaveniach permanentné presmerovanie na externú doménu, alebo pridajte externú doménu.');
+            }
             $data = $this->domainParser($dbDomain);
             if ($data['www']) {
                 $www = "www.";

@@ -1,6 +1,6 @@
-<?php include "tpl_functions.php"; ?>
+
 <?php get_top(); ?>
-<?php include "top.php"; 
+<?php get_top_html(); 
   $user = new User;
   $rest = new Rest;
   $type = $rest->get("type");
@@ -123,5 +123,5 @@
    
 </div>
 <!-- END CUSTOM TABLE -->
-<?php include "bottom.php"; ?>
+<?php get_bottom_html(); ?>
 <?php get_bottom(); ?>

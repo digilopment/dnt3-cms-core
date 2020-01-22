@@ -33,4 +33,4 @@ if ($vendor_id) {
     $install->delVendor($vendor_id, $tables);
     $image->cleanIndependentFiles();
 }
-Dnt::redirect(WWW_PATH_ADMIN . "index.php?src=" . $rest->get("src") . "");
+Dnt::redirect(WWW_PATH_ADMIN_2 . "index.php?src=" . $rest->get("src") . "");

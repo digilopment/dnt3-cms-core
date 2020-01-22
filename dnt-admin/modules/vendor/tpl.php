@@ -1,6 +1,6 @@
-<?php include "tpl_functions.php"; ?>
+
 <?php get_top(); ?>
-<?php include "top.php"; 
+<?php get_top_html(); 
    $vendor = new Vendor;
    ?>
 <section class="content">
@@ -24,11 +24,11 @@
                   <tr>
                      <th>#</th>
                      <th>id</th>
-                     <th>Názov postu</th>
-                     <th>Editovať vlastnosti webu</th>
+                     <th>Názov webu</th>
+                     <th>Administrácia webu</th>
                      <th>Zobrazenie na pracovnej adrese</th>
                      <th>Zobrazenie na vlastnej doméne</th>
-                     <th>Globálne nastavenie</th>
+                     <th>Globálne nastavenia webu</th>
                      <th>Vymazať</th>
                   </tr>
                </thead>
@@ -41,7 +41,7 @@
                      $realUrl 	= $row['real_url'];
 					 $email     = AdminUser::data("admin", "email");
 					 $vendorId  = $row['id_entity'];
-                     $adminUrl 	= $webUrl."/dnt-admin/index.php?src=login&action=2&domain_change=1&admin_id=".$email."&id_entity=".$vendorId;
+                     $adminUrl 	= $webUrl."/".ADMIN_URL_2."/index.php?src=login&action=auto-login&domain_change=1&admin_id=".$email."&id_entity=".$vendorId;
                      ?>
                   <tr>
                      <td><?php echo $i; ?></td>
@@ -189,5 +189,5 @@
    <!-- END CUSTOM TABLE -->			
 </div>
 <!-- END CUSTOM TABLE -->
-<?php include "bottom.php"; ?>
+<?php get_bottom_html(); ?>
 <?php get_bottom(); ?>

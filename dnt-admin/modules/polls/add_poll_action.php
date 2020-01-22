@@ -10,6 +10,6 @@ if($rest->post("poll_id") == 0){
 
 
 //redirect to first question of poll_id poll
-$dnt->redirect(WWW_PATH_ADMIN."index.php?src=polls&action=edit_poll&post_id=".$poll_id ."&question_id=1");
+$dnt->redirect(WWW_PATH_ADMIN_2."index.php?src=polls&action=edit_poll&post_id=".$poll_id ."&question_id=1");
 
 

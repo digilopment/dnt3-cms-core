@@ -93,7 +93,6 @@ class Api {
      * @param type $query
      */
     public function getJsonData($query) {
-        $xml = new SimpleXMLElement('<xml/>');
         $db = new Db;
 
         if ($db->num_rows($query) > 0) {

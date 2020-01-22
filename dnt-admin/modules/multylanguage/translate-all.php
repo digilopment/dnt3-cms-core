@@ -1,6 +1,6 @@
-<?php include "tpl_functions.php"; ?>
+
 <?php get_top(); ?>
-<?php include "top.php"; 
+<?php get_top_html(); 
    $rest = new Rest;
    
    if($rest->get('page')){
@@ -29,7 +29,7 @@
             </li>
          </ul>
       </section>
-      <form enctype="multipart/form-data" action="<?php echo WWW_PATH_ADMIN."index.php?src=multylanguage&action=update-all";?>" method="POST">
+      <form enctype="multipart/form-data" action="<?php echo WWW_PATH_ADMIN_2."index.php?src=multylanguage&action=update-all";?>" method="POST">
          <!-- prava strana-->
          <div class="col-md-12">
             <div class="col">
@@ -68,5 +68,5 @@
       </form>
    </div>
 </section>
-<?php include "bottom.php"; ?>
+<?php get_bottom_html(); ?>
 <?php get_bottom(); ?>

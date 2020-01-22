@@ -1,6 +1,6 @@
-<?php include "tpl_functions.php"; ?>
+
 <?php get_top(); ?>
-<?php include "top.php";?>
+<?php get_top_html();?>
 <?php 
 	$db 	= new Db;
 	$rest 	= new Rest;
@@ -61,5 +61,5 @@
 </div>
 <!-- BEGIN PAGINATION -->
 <!-- END CUSTOM TABLE -->
-<?php include "bottom.php"; ?>
+<?php get_bottom_html(); ?>
 <?php get_bottom(); ?>

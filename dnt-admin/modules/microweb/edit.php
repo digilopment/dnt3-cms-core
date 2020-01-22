@@ -1,6 +1,6 @@
-<?php include "tpl_functions.php"; ?>
+
 <?php get_top(); ?>
-<?php include "top.php"; ?>
+<?php get_top_html(); ?>
 <?php
 $db = new Db;
 $rest = new Rest;
@@ -520,5 +520,5 @@ $urlUpdate = "index.php?src=" . $rest->get('src') . "&id=" . $rest->get('id') . 
     </div>
 </section>
 
-<?php include "bottom.php"; ?>
+<?php get_bottom_html(); ?>
 <?php get_bottom(); ?>

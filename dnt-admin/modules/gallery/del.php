@@ -4,7 +4,7 @@ $post_id = $rest->get("post_id");
 $where = array( 'id_entity' => $post_id, 'vendor_id' => Vendor::getId());
 $db->delete( 'dnt_uploads', $where);
 
-$dnt->redirect(WWW_PATH_ADMIN."index.php?src=".$rest->get("src")."");
+$dnt->redirect(WWW_PATH_ADMIN_2."index.php?src=".$rest->get("src")."");
 */
 if(isset($_POST['sent'])){
 	//var_dump($_POST);
@@ -29,7 +29,7 @@ if(isset($_POST['sent'])){
 	}
 }
 
-$dnt->redirect(WWW_PATH_ADMIN."index.php?src=".$rest->get("src")."");
+$dnt->redirect(WWW_PATH_ADMIN_2."index.php?src=".$rest->get("src")."");
 
 
 /*
@@ -58,7 +58,7 @@ $db->update(
         'id' => $post_id,
         )
     );
-$dnt->redirect(WWW_PATH_ADMIN."index.php?src=".$rest->get("src")."&filter=".$rest->get("filter")."");
+$dnt->redirect(WWW_PATH_ADMIN_2."index.php?src=".$rest->get("src")."&filter=".$rest->get("filter")."");
 */
 
 

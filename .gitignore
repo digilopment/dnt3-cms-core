@@ -1,5 +1,15 @@
-dnt-cache/*
+#cache
+dnt-cache/*.txt
+dnt-cache/*.generated
 !dnt-cache/readme.txt
+
+#temp
+dnt-cache/temp/*
+!dnt-cache/temp/readme.txt
+
+#plugins
+dnt-cache/plugins/*
+!dnt-cache/plugins/readme.txt
 
 dnt-backup/*
 dnt-backup/readme.txt
@@ -7,13 +17,22 @@ dnt-backup/readme.txt
 dnt-api/dnt-cache/*
 !dnt-api/dnt-cache/readme.txt
 
-dnt-logs/
+dnt-logs/*
+!dnt-logs/readme.txt
 
 dnt-view/data/*
 dnt-view/layouts/*
 !dnt-view/layouts/default
 
 dnt-library/framework/_keys/secred.php
+
+dnt-test/bkp/
+
+dnt-jobs/data/*
+!dnt-jobs/data/readme.txt
+
+dnt-test/data/*
+!dnt-test/data/readme.txt
 
 nbproject/
 

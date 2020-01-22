@@ -4,9 +4,9 @@ class AutoRedirectModuleController extends Client {
 
     public function run() {
         $this->init();
-        $articleList = new ArticleList;
-        $articleView = new ArticleView;
-        $rest = new Rest;
+        $articleList = new ArticleList();
+        $articleView = new ArticleView();
+        $rest = new Rest();
         $articleId = $rest->webhook(2);
         $name_url = $articleList->getArticleUrl($articleId, false);
         $url = $this->wwwPath . $this->lang . "/" . $name_url;
@@ -15,7 +15,6 @@ class AutoRedirectModuleController extends Client {
         //internal redirect
         if (Dnt::in_string("<WWW_PATH>", $name_url)) {
             Dnt::redirect(str_replace("<WWW_PATH>", WWW_PATH, $name_url));
-            exit;
         }
 
         //external redirect
@@ -27,7 +26,6 @@ class AutoRedirectModuleController extends Client {
         foreach (Webhook::getSitemapModules() as $modul) {
             if ($modul == $name_url) {
                 Dnt::redirect($url);
-                exit;
             }
         }
 

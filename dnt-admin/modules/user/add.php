@@ -1,6 +1,6 @@
-<?php include "tpl_functions.php"; ?>
+
 <?php get_top(); ?>
-<?php include "top.php"; ?>
+<?php get_top_html(); ?>
 <?php 
 $rest = new Rest;
 $api = new Api;
@@ -94,5 +94,5 @@ $post_id = $rest->get("post_id");
    </div>
 </section>
 
-<?php include "bottom.php"; ?>
+<?php get_bottom_html(); ?>
 <?php get_bottom(); ?>

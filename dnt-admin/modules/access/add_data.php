@@ -49,20 +49,20 @@ if (isset($_POST['sent'])) {
                 $post_id, //where value
                 "../dnt-view/data/uploads"  //path
         );
-        include "tpl_functions.php";
+        include "plugins/webhook/tpl_functions.php";
         get_top();
-        include "top.php";
+        get_top_html();
         getConfirmMessage($return, "<br/>Údaje sa úspešne uložili ");
-        include "bottom.php";
+        get_bottom_html();
         get_bottom();
     } else {
-        include "tpl_functions.php";
+        include "plugins/webhook/tpl_functions.php";
         get_top();
-        include "top.php";
+        get_top_html();
         error_message("heslo", "<b>Vaše heslá sa musia zhodovať</b>");
-        include "bottom.php";
+        get_bottom_html();
         get_bottom();
     }
 } else {
-    $dnt->redirect(WWW_PATH_ADMIN . "?src=" . DEFAULT_MODUL_ADMIN);
+    $dnt->redirect(WWW_PATH_ADMIN_2 . "?src=" . DEFAULT_MODUL_ADMIN);
 }

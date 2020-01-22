@@ -7,20 +7,22 @@
  *  package     dnt3
  *  date        2017
  */
-Class Image {
-	
-	const THUMB = 150;
-	const SMALL = 350;
-	const MEDIUM= 600;
-	const LARGE = 950;
-	
+Class Image
+{
+
+    const THUMB = 150;
+    const SMALL = 350;
+    const MEDIUM = 600;
+    const LARGE = 950;
+
     /**
      * 
      * @param type $id
      * @param type $table
      * @return boolean
      */
-    public function get($id_entity, $table = null) {
+    public function get($id_entity, $table = null)
+    {
         $db = new Db;
         $query = "SELECT img FROM $table WHERE `id_entity` = '" . $id_entity . "' AND vendor_id = '" . Vendor::getId() . "'";
         if ($db->num_rows($query) > 0) {
@@ -31,18 +33,19 @@ Class Image {
             return false;
         }
     }
-    
+
     /**
      * 
      * @param type $input
      * @param type $path = true
      * @return boolean
      */
-    public function getFileImage($input, $path = true, $format = false) {
+    public function getFileImage($input, $path = true, $format = false)
+    {
         if (!is_numeric($input)) {
             return $input;
         }
-		
+
         $db = new Db;
 
         $imageId = $input;
@@ -52,19 +55,19 @@ Class Image {
 		`vendor_id` = '" . Vendor::getId() . "'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
-                if($path == true){
-					$imageFileFormat = "dnt-view/data/uploads/formats/".$format."/" . $row['name'];
-					$imageFile		 = WWW_PATH . "dnt-view/data/uploads/" . $row['name'];
-					if($format){
-						if(file_exists("../".$imageFileFormat) || file_exists($imageFileFormat)){
-							return WWW_PATH . $imageFileFormat;
-						}else{
-							return $imageFile;
-						}
-					}else{
-						return $imageFile;
-					}
-                }else{
+                if ($path == true) {
+                    $imageFileFormat = "dnt-view/data/uploads/formats/" . $format . "/" . $row['name'];
+                    $imageFile = WWW_PATH . "dnt-view/data/uploads/" . $row['name'];
+                    if ($format) {
+                        if (file_exists("../" . $imageFileFormat) || file_exists($imageFileFormat)) {
+                            return WWW_PATH . $imageFileFormat;
+                        } else {
+                            return $imageFile;
+                        }
+                    } else {
+                        return $imageFile;
+                    }
+                } else {
                     return $row['name'];
                 }
             }
@@ -78,16 +81,17 @@ Class Image {
      * @param type $ids
      * @return boolean
      */
-    public function getFileImages($ids, $path = true, $format = false) {
+    public function getFileImages($ids, $path = true, $format = false)
+    {
         $db = new Db;
-        
-		if (!is_array($ids)) {
-			$ids = explode(",", $ids);
-		}else{
-			$ids = $ids;
-		}
-		
-		if (is_array($ids)) {
+
+        if (!is_array($ids)) {
+            $ids = explode(",", $ids);
+        } else {
+            $ids = $ids;
+        }
+
+        if (is_array($ids)) {
             foreach ($ids as $imageId) {
                 $query = "SELECT name FROM dnt_uploads WHERE 
 				`id_entity` = '" . $imageId . "' AND 
@@ -95,17 +99,17 @@ Class Image {
 				" . Dnt::showStatus("show") . "";
                 if ($db->num_rows($query) > 0) {
                     foreach ($db->get_results($query) as $row) {
-						$imageFileFormat = "dnt-view/data/uploads/formats/".$format."/" . $row['name'];
-						$imageFile		 = WWW_PATH . "dnt-view/data/uploads/" . $row['name'];
-						if($format){
-							if(file_exists("../".$imageFileFormat) || file_exists($imageFileFormat)){
-								$return[] = WWW_PATH . $imageFileFormat;
-							}else{
-								$return[] = $imageFile;
-							}
-						}else{
-							$return[] = $imageFile;
-						}
+                        $imageFileFormat = "dnt-view/data/uploads/formats/" . $format . "/" . $row['name'];
+                        $imageFile = WWW_PATH . "dnt-view/data/uploads/" . $row['name'];
+                        if ($format) {
+                            if (file_exists("../" . $imageFileFormat) || file_exists($imageFileFormat)) {
+                                $return[] = WWW_PATH . $imageFileFormat;
+                            } else {
+                                $return[] = $imageFile;
+                            }
+                        } else {
+                            $return[] = $imageFile;
+                        }
                         //$return[] = WWW_PATH . "dnt-view/data/uploads/" . $row['name'];
                     }
                 } else {
@@ -124,7 +128,8 @@ Class Image {
      * @param type $table
      * @return type
      */
-    public function getPostImage($id, $table = null, $format = false) {
+    public function getPostImage($id, $table = null, $format = false)
+    {
         $db = new Db;
 
         if ($table == true || $table == false || $table === null) {
@@ -133,11 +138,11 @@ Class Image {
             $table = $table;
         }
         $imageId = self::get($id, $table);
-		if($format){
-			return self::getFileImage($imageId, true, $format);
-		}else{
-			return self::getFileImage($imageId);
-		}
+        if ($format) {
+            return self::getFileImage($imageId, true, $format);
+        } else {
+            return self::getFileImage($imageId);
+        }
     }
 
     /**
@@ -146,7 +151,8 @@ Class Image {
      * @param type $table
      * @return type
      */
-    public function getColumnByName($file) {
+    public function getColumnByName($file)
+    {
         $db = new Db;
 
         $query = "SELECT * FROM dnt_uploads WHERE name = '" . $file . "' LIMIT 1";
@@ -159,13 +165,14 @@ Class Image {
         }
     }
 
-	/**
+    /**
      * 
      * @param type $file
      * 
      * 
      */
-    public function hasVendorDipendency($file) {
+    public function hasVendorDipendency($file)
+    {
         $db = new Db();
 
         if (!is_numeric($file)) {
@@ -173,21 +180,21 @@ Class Image {
         } else {
             $image_id_entity = $file;
         }
-		
+
         $data = false;
-        
-		/**
-		* If $image_id_entity
-		*/
+
+        /**
+         * If $image_id_entity
+         */
         if ($image_id_entity) {
-			$query = "SELECT * FROM dnt_uploads WHERE id_entity = '" . $image_id_entity . "'";
-			if ($db->num_rows($query) > 1) {
-				$data = true;
-			}
+            $query = "SELECT * FROM dnt_uploads WHERE id_entity = '" . $image_id_entity . "'";
+            if ($db->num_rows($query) > 1) {
+                $data = true;
+            }
         }
         return $data;
     }
-	
+
     /**
      * 
      * @param type $file
@@ -197,7 +204,8 @@ Class Image {
      * v opacnom pripade sa vrati false
      * 
      */
-    public function hasDipendency($file, $onDelete = true) {
+    public function hasDipendency($file, $onDelete = true)
+    {
         $db = new Db();
 
         if (!is_numeric($file)) {
@@ -205,19 +213,19 @@ Class Image {
         } else {
             $image_id_entity = $file;
         }
-        
-        if($onDelete == true){
+
+        if ($onDelete == true) {
             $defaultUploadDipendency = 1;
-        }else{
+        } else {
             $defaultUploadDipendency = 0;
         }
         $data = array();
-        
+
         /**
          * If $image_id_entity
          */
         if ($image_id_entity) {
-            
+
             /**
              * skontroluje, ci sa nachadza v dnt_uploads prave 0, alebo 1 zaznam. 
              * ak ich je viac, ako 1zaznam, web mohol byt skopirovany a subor caka na pouzitie v druhom webe.
@@ -228,24 +236,24 @@ Class Image {
                 if ($db->num_rows($query) > $defaultUploadDipendency) {
                     foreach ($db->get_results($query) as $row) {
                         $data[] = array(
-                            "image"      => $image_id_entity,
-                            "image_url"  => $row['name'],
-                            "table"      => "dnt_uploads",
-                            "column"     => "id_entity",
-                            "vendor_id"  => $row['vendor_id'],
+                            "image" => $image_id_entity,
+                            "image_url" => $row['name'],
+                            "table" => "dnt_uploads",
+                            "column" => "id_entity",
+                            "vendor_id" => $row['vendor_id'],
                         );
                     }
                 }
             }
-            
+
             $tables = array(
-                "dnt_polls"             => "img",
-                "dnt_polls_composer"    => "img",
-                "dnt_posts"             => "img",
-                "dnt_posts_meta"        => "value", //value
-                "dnt_registred_users"   => "img",
-                "dnt_settings"          => "value", //value
-                "dnt_users"             => "img", //value
+                "dnt_polls" => "img",
+                "dnt_polls_composer" => "img",
+                "dnt_posts" => "img",
+                "dnt_posts_meta" => "value", //value
+                "dnt_registred_users" => "img",
+                "dnt_settings" => "value", //value
+                "dnt_users" => "img", //value
             );
 
             foreach ($tables as $table => $column) {
@@ -253,10 +261,10 @@ Class Image {
                 if ($db->num_rows($query) > 0) {
                     foreach ($db->get_results($query) as $row) {
                         $data[] = array(
-                            "image"     => $image_id_entity,
+                            "image" => $image_id_entity,
                             "image_url" => $file,
-                            "table"     => $table,
-                            "column"    => $column,
+                            "table" => $table,
+                            "column" => $column,
                             "vendor_id" => $row['vendor_id'],
                         );
                     }
@@ -265,21 +273,21 @@ Class Image {
         }
         return $data;
     }
-    
-    
+
     /**
      * vymaze fyzicky subory, ktore nemaju dipendenciu na databazu
      */
-    public function cleanIndependentFiles() {
+    public function cleanIndependentFiles()
+    {
         $image = new Image;
-        $path  = "../dnt-view/data/uploads/";
+        $path = "../dnt-view/data/uploads/";
         $files = glob($path . "*");
         foreach ($files as $file) {
             $fileName = str_replace($path, "", $file);
             if (filetype($file) == "file") {
                 if (!$image->hasDipendency($fileName, false)) {
                     if (file_exists($path . $fileName)) {
-                        unlink($path.$fileName);
+                        unlink($path . $fileName);
                         //echo 'Deleted: <a href="' . $path . '' . $fileName . '">' . $fileName . "</a><br/>";
                     }
                 }
