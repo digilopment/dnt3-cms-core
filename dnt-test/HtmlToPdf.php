@@ -6,7 +6,7 @@ class HtmlToPdfTest
     protected $pdf;
     protected $dnt;
     protected $rest;
-    protected $url = 'https://thenextweb.com/';
+    protected $url = 'http://example.com/';
 
     public function __construct()
     {
