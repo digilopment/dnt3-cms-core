@@ -1,12 +1,12 @@
 <?php
 
-class OnlinePdfTest
+class HtmlToPdfTest
 {
 
     protected $pdf;
     protected $dnt;
     protected $rest;
-    protected $url = 'http://www.example.com';
+    protected $url = 'https://thenextweb.com/';
 
     public function __construct()
     {
