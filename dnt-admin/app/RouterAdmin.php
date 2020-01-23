@@ -53,9 +53,9 @@ class RouterAdmin
             include $file;
             $moduleClass = new $className();
             if (method_exists($moduleClass, 'init')) {
-                   $moduleClass->init();
+                $moduleClass->init();
             }
-                
+
             if (isset($_GET['action'])) {
                 $methodName = (new Autoloader())->methodName($_GET['action']) . 'Action';
                 if (method_exists($moduleClass, $methodName)) {
@@ -115,6 +115,8 @@ class RouterAdmin
         } else {
             if ($this->rest->get('src') == "forgotten-password") {
                 $this->loadModul('forgotten-password');
+            } elseif ($this->rest->get('src') == "temporary-online") {
+                $this->loadModul('temporary-online');
             } else {
                 $this->loadModul('login');
             }
