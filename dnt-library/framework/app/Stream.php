@@ -103,7 +103,7 @@ class Stream
         }
         $file = $streamOutPath . $fileName . '.' . $fileType;
         file_put_contents($file, $html);
-        return WWW_PATH . $file;
+        echo WWW_PATH . $file;
     }
 
     public function streamOut($tempPath, $streamOutPath)
