@@ -5,7 +5,7 @@ class TemporaryOnlineController extends AdminController
 
     protected $rest;
     protected $stream;
-    protected $tempPath = '../dnt-cache/parts/';
+    protected $tempPath = '../dnt-cache/temp/';
     protected $streamOutPath = '../dnt-view/data/static/';
 
     public function __construct()
@@ -16,8 +16,12 @@ class TemporaryOnlineController extends AdminController
 
     function indexAction()
     {
-        if ($this->rest->get('part') || $this->rest->get('merge')) {
-            $this->stream->streamOut($this->tempPath, $this->streamOutPath);
+        if ($this->rest->get('part')) {
+            $this->stream->part($this->tempPath);
+        }
+
+        if ($this->rest->get('merge')) {
+            $this->stream->merge($this->tempPath, $this->streamOutPath);
         }
     }
 

@@ -4,6 +4,7 @@ class Stream
 {
 
     protected $dnt;
+    protected $rest;
     protected $tempPath = '../dnt-cache/temp/';
     protected $externalService = 'http://app.query.sk/temporary-online/?param=1';
     protected $internalService = WWW_PATH_ADMIN_2 . 'index.php?src=temporary-online';
@@ -14,6 +15,7 @@ class Stream
     public function __construct()
     {
         $this->dnt = new Dnt();
+        $this->rest = new Rest();
     }
 
     public function streamIn($content, $fileName, $fileType)
@@ -21,7 +23,6 @@ class Stream
         $this->uniqId = uniqid();
         $file = $this->tempPath . $this->uniqId . '.tmp';
         $serviceStreamUrl = IS_DEVEL ? $this->externalService : $this->internalService;
-
 
         if ($fileType == 'pdf') {
             $minify = $this->dnt->minify($content);
@@ -46,6 +47,7 @@ class Stream
         foreach ($stringParts as $key => $part) {
             file_get_contents($serviceStreamUrl . '&key=' . $key . '&id=' . $this->uniqId . '&part=' . $part);
         }
+
         $mergedStreamContent = file_get_contents($serviceStreamUrl . '&merge=1&fileName=' . $fileName . '&fileType=' . $fileType . '&id=' . $this->uniqId);
         if ($mergedStreamContent) {
             $this->status = 1;
@@ -59,7 +61,7 @@ class Stream
         ];
     }
 
-    protected function part($tempPath)
+    public function part($tempPath)
     {
         $part = $this->rest->get('part');
         $key = $this->rest->get('key');
@@ -71,7 +73,7 @@ class Stream
         }
     }
 
-    protected function merge($tempPath, $streamOutPath)
+    public function merge($tempPath, $streamOutPath)
     {
         $fileName = $this->rest->get('fileName');
         $fileType = $this->rest->get('fileType');
@@ -102,12 +104,6 @@ class Stream
         $file = $streamOutPath . $fileName . '.' . $fileType;
         file_put_contents($file, $html);
         echo WWW_PATH . $file;
-    }
-
-    public function streamOut($tempPath, $streamOutPath)
-    {
-        $this->part($tempPath);
-        $this->merge($tempPath, $streamOutPath);
     }
 
     public function streamControll($contentToStream, $pathToSave)
