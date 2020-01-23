@@ -6,7 +6,7 @@ class Stream
     protected $dnt;
     protected $tempPath = '../dnt-cache/temp/';
     protected $externalService = 'http://app.query.sk/temporary-online/?param=1';
-    protected $internalService = WWW_PATH_ADMIN_2 . 'index.php?src=temporary-online&param=1';
+    protected $internalService = WWW_PATH_ADMIN_2 . 'index.php?src=temporary-online';
     protected $maxCharsPerStream = 1000;
     protected $status = 0;
     protected $uniqId;
@@ -21,7 +21,6 @@ class Stream
         $this->uniqId = uniqid();
         $file = $this->tempPath . $this->uniqId . '.tmp';
         $serviceStreamUrl = IS_DEVEL ? $this->externalService : $this->internalService;
-        $serviceStreamUrl = $this->internalService;
 
 
         if ($fileType == 'pdf') {
@@ -45,10 +44,9 @@ class Stream
         $stringParts[] = substr($compressed, $countFloor * $this->maxCharsPerStream, $finalPart);
 
         foreach ($stringParts as $key => $part) {
-            file_get_contents($serviceStreamUrl . '?key=' . $key . '&id=' . $this->uniqId . '&part=' . $part);
+            file_get_contents($serviceStreamUrl . '&key=' . $key . '&id=' . $this->uniqId . '&part=' . $part);
         }
-        $mergedStreamContent = file_get_contents($serviceStreamUrl . '&fileName=' . $fileName . '&fileType=' . $fileType . '&id=' . $this->uniqId);
-
+        $mergedStreamContent = file_get_contents($serviceStreamUrl . '&merge=1&fileName=' . $fileName . '&fileType=' . $fileType . '&id=' . $this->uniqId);
         if ($mergedStreamContent) {
             $this->status = 1;
         }
