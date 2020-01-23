@@ -8,7 +8,7 @@
  *  author: Digilopment
  * 
  */
-(new class
+class Run
 {
 
     public function __construct()
@@ -23,4 +23,7 @@
         $app = new App($bootstrap->client);
         $app->run();
     }
-})->main();
+}
+
+$run = new Run();
+$run->main();

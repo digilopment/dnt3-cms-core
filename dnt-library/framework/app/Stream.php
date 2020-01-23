@@ -4,8 +4,9 @@ class Stream
 {
 
     protected $dnt;
+    protected $rest;
     protected $tempPath = '../dnt-cache/temp/';
-    protected $externalService = 'http://app.query.sk/temporary-online/';
+    protected $externalService = 'http://app.query.sk/temporary-online/?param=1';
     protected $internalService = WWW_PATH_ADMIN_2 . 'index.php?src=temporary-online';
     protected $maxCharsPerStream = 1000;
     protected $status = 0;
@@ -13,8 +14,8 @@ class Stream
 
     public function __construct()
     {
-
         $this->dnt = new Dnt();
+        $this->rest = new Rest();
     }
 
     public function streamIn($content, $fileName, $fileType)
@@ -22,7 +23,6 @@ class Stream
         $this->uniqId = uniqid();
         $file = $this->tempPath . $this->uniqId . '.tmp';
         $serviceStreamUrl = IS_DEVEL ? $this->externalService : $this->internalService;
-
 
         if ($fileType == 'pdf') {
             $minify = $this->dnt->minify($content);
@@ -45,10 +45,10 @@ class Stream
         $stringParts[] = substr($compressed, $countFloor * $this->maxCharsPerStream, $finalPart);
 
         foreach ($stringParts as $key => $part) {
-            file_get_contents($serviceStreamUrl . '?key=' . $key . '&id=' . $this->uniqId . '&part=' . $part);
+            file_get_contents($serviceStreamUrl . '&key=' . $key . '&id=' . $this->uniqId . '&part=' . $part);
         }
-        $mergedStreamContent = file_get_contents($serviceStreamUrl . '?merge=1&fileName=' . $fileName . '&fileType=' . $fileType . '&id=' . $this->uniqId);
 
+        $mergedStreamContent = file_get_contents($serviceStreamUrl . '&merge=1&fileName=' . $fileName . '&fileType=' . $fileType . '&id=' . $this->uniqId);
         if ($mergedStreamContent) {
             $this->status = 1;
         }
@@ -59,6 +59,51 @@ class Stream
             'uniqId' => $this->uniqId,
             'status' => $this->status,
         ];
+    }
+
+    public function part($tempPath)
+    {
+        $part = $this->rest->get('part');
+        $key = $this->rest->get('key');
+        $id = $this->rest->get('id');
+        if ($part) {
+            $html = str_replace(' ', '+', $part);
+            $file = $tempPath . $key . '_' . $id . '.tmp';
+            file_put_contents($file, $html);
+        }
+    }
+
+    public function merge($tempPath, $streamOutPath)
+    {
+        $fileName = $this->rest->get('fileName');
+        $fileType = $this->rest->get('fileType');
+        $id = $this->rest->get('id');
+        $returnHtml = '';
+        $files = [];
+
+        $dir = $tempPath;
+        if (!is_dir($dir)) {
+            return false;
+        }
+
+        $dh = opendir($dir);
+        while (($file = readdir($dh)) !== false) {
+            if (preg_match('/' . $id . '/', $file)) {
+                $files[explode('_', $file)[0]] = $tempPath . $file;
+            }
+        }
+        closedir($dh);
+        ksort($files);
+        foreach ($files as $file) {
+            $returnHtml .= file_get_contents($file);
+        }
+        $html = base64_decode(base64_decode($returnHtml));
+        foreach ($files as $file) {
+            unlink($file);
+        }
+        $file = $streamOutPath . $fileName . '.' . $fileType;
+        file_put_contents($file, $html);
+        echo WWW_PATH . $file;
     }
 
     public function streamControll($contentToStream, $pathToSave)
