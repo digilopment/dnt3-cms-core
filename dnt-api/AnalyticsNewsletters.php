@@ -20,10 +20,13 @@ class AnalyticsNewslettersApi extends DntLog
         $systemStatus = $this->rest->get('systemStatus');
 
         if (in_array($systemStatus, $this->availableStatus)) {
+            
+            $url = urldecode($this->rest->get('url'));
+            
             $data = [
                 'campainId' => $this->rest->get('campainId'),
                 'clickedId' => $this->rest->get('clickedId'),
-                'redirectTo' => $this->rest->get('url'),
+                'redirectTo' => $url,
                 'email' => base64_decode($this->rest->get('email')),
                 'systemStatus' => $systemStatus,
             ];
@@ -36,9 +39,9 @@ class AnalyticsNewslettersApi extends DntLog
             ];
 
             $this->add($arr);
-            $redirect = urldecode($this->rest->get('url'));
+            
             if ($systemStatus == 'newsletter_log_click') {
-                $this->dnt->redirect($redirect);
+                $this->dnt->redirect($url);
             }
         }
     }
