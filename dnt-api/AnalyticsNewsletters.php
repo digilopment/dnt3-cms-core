@@ -21,7 +21,7 @@ class AnalyticsNewslettersApi extends DntLog
 
         if (in_array($systemStatus, $this->availableStatus)) {
             $data = [
-                'campaignId' => $this->rest->get('campaignId'),
+                'campainId' => $this->rest->get('campainId'),
                 'clickedId' => $this->rest->get('clickedId'),
                 'redirectTo' => $this->rest->get('redirectTo'),
                 'systemStatus' => $systemStatus,

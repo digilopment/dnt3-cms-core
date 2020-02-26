@@ -207,7 +207,7 @@ class MailerController extends AdminController
                 $this->mailer->set_msg($content);
                 $this->mailer->set_subject($subject);
                 $this->mailer->set_sender_name(false);
-                //$this->mailer->sent_email();
+                $this->mailer->sent_email();
             }
             $data['toFinish'] = ($countMails - $sendedMails);
             $data['currentID'] = $currentID;

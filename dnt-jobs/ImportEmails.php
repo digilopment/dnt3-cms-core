@@ -1,12 +1,19 @@
 ﻿<?php
 
-class ImportMarkizaEmailsJob
+class ImportEmailsJob
 {
 
     protected $dbEmails = [];
     protected $fileEmails = [];
-    protected $catId = 55;
-    protected $vendorId = 39;
+    protected $catId;
+    protected $vendorId;
+
+    public function __construct()
+    {
+        $this->vendorId = 52;
+        $this->catId = 88;
+        $this->importFile = 'pyhrn-pirel-cz';
+    }
 
     protected function countEmails()
     {
@@ -24,7 +31,6 @@ class ImportMarkizaEmailsJob
         $db = new Db;
         $name = "";
         $surname = "";
-        $table = "dnt_mailer_mails";
 
         $insertedData = array(
             'name' => $name,
@@ -79,7 +85,7 @@ class ImportMarkizaEmailsJob
     protected function insert()
     {
         $this->dbEmails();
-        $this->fileEmails("data/velkanoc2019.csv");
+        $this->fileEmails("data/" . $this->importFile . ".csv");
 
         //INSERT
         foreach ($this->fileEmails as $fileEmail) {
@@ -89,20 +95,40 @@ class ImportMarkizaEmailsJob
             }
         }
     }
-	
-	protected function countUniqueNews()
+
+    protected function show()
+    {
+        $this->fileEmails("data/" . $this->importFile . ".csv");
+        $db = new DB;
+        $table = "dnt_mailer_mails";
+        foreach ($this->fileEmails as $fileEmail) {
+            $db->update(
+                $table,
+                [
+                    'show' => 1,
+                ],
+                [
+                    'email' => $fileEmail,
+                    'cat_id' => $this->catId,
+                    'vendor_id' => $this->vendorId
+                ]
+            );
+        }
+    }
+
+    protected function countUniqueNews()
     {
         $this->dbEmails();
         $this->fileEmails("data/ak2019.csv");
 
         //INSERT
-		$i=0;
+        $i = 0;
         foreach ($this->fileEmails as $fileEmail) {
             if (!in_array($fileEmail, $this->dbEmails)) {
                 $i++;
             }
         }
-		echo "Nových emailov " . $i;
+        echo "Nových emailov " . $i;
     }
 
     protected function delete()
@@ -125,13 +151,16 @@ class ImportMarkizaEmailsJob
         if ((new Rest())->get('insert')) {
             $this->insert();
         }
+        if ((new Rest())->get('show')) {
+            $this->show();
+        }
         if ((new Rest())->get('delete')) {
             $this->delete();
         }
         if ((new Rest())->get('count')) {
             print $this->countEmails();
         }
-		 if ((new Rest())->get('countUniqueNews')) {
+        if ((new Rest())->get('countUniqueNews')) {
             print $this->countUniqueNews();
         }
     }
