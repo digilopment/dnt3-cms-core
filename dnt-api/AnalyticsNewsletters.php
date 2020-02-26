@@ -15,19 +15,37 @@ class AnalyticsNewslettersApi extends DntLog
         $this->dnt = new Dnt();
     }
 
+    protected function strToHex($string)
+    {
+        $hex = '';
+        for ($i = 0; $i < strlen($string); $i++) {
+            $hex .= dechex(ord($string[$i]));
+        }
+        return $hex;
+    }
+
+    protected function hexToStr($hex)
+    {
+        $string = '';
+        for ($i = 0; $i < strlen($hex) - 1; $i += 2) {
+            $string .= chr(hexdec($hex[$i] . $hex[$i + 1]));
+        }
+        return $string;
+    }
+
     public function run()
     {
         $systemStatus = $this->rest->get('systemStatus');
 
         if (in_array($systemStatus, $this->availableStatus)) {
-            
+
             $url = urldecode($this->rest->get('url'));
-            
+
             $data = [
                 'campainId' => $this->rest->get('campainId'),
                 'clickedId' => $this->rest->get('clickedId'),
                 'redirectTo' => $url,
-                'email' => base64_decode($this->rest->get('email')),
+                'email' => $this->hexToStr($this->rest->get('email')),
                 'systemStatus' => $systemStatus,
             ];
 
@@ -38,8 +56,9 @@ class AnalyticsNewslettersApi extends DntLog
                 'status' => http_response_code(),
             ];
 
+            var_dump($data);
             $this->add($arr);
-            
+            exit;
             if ($systemStatus == 'newsletter_log_click') {
                 $this->dnt->redirect($url);
             }
