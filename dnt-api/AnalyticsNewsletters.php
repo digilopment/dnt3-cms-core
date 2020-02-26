@@ -56,9 +56,7 @@ class AnalyticsNewslettersApi extends DntLog
                 'status' => http_response_code(),
             ];
 
-            var_dump($data);
             $this->add($arr);
-            exit;
             if ($systemStatus == 'newsletter_log_click') {
                 $this->dnt->redirect($url);
             }
