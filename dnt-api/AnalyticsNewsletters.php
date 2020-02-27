@@ -15,24 +15,6 @@ class AnalyticsNewslettersApi extends DntLog
         $this->dnt = new Dnt();
     }
 
-    protected function strToHex($string)
-    {
-        $hex = '';
-        for ($i = 0; $i < strlen($string); $i++) {
-            $hex .= dechex(ord($string[$i]));
-        }
-        return $hex;
-    }
-
-    protected function hexToStr($hex)
-    {
-        $string = '';
-        for ($i = 0; $i < strlen($hex) - 1; $i += 2) {
-            $string .= chr(hexdec($hex[$i] . $hex[$i + 1]));
-        }
-        return $string;
-    }
-
     public function run()
     {
         $systemStatus = $this->rest->get('systemStatus');
@@ -45,7 +27,7 @@ class AnalyticsNewslettersApi extends DntLog
                 'campainId' => $this->rest->get('campainId'),
                 'clickedId' => $this->rest->get('clickedId'),
                 'redirectTo' => $url,
-                'email' => $this->hexToStr($this->rest->get('email')),
+                'email' => $this->dnt->hexToStr($this->rest->get('email')),
                 'systemStatus' => $systemStatus,
             ];
 
