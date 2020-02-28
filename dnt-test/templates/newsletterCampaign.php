@@ -69,7 +69,7 @@
                                 <td> <?php echo $item->email ?></td>
                                 <td> <?php echo $data['countClicks']($item->email) ?></td>
                                 <td> <?php foreach($data['logByEmail']($item->email) as $log){
-                                    echo isset(json_decode($log->msg)->redirectTo) ? json_decode($log->msg)->redirectTo . "<br/>" : '(undefined)' ."<br/>";
+                                    echo isset(json_decode($log->msg)->redirectTo) ? "<b>" . $log->timestamp ."</b><br/>". json_decode($log->msg)->redirectTo . "<br/>" : '(undefined)' ."<br/>";
                                 } ?></td>
                             </tr>
                         <?php } ?>
