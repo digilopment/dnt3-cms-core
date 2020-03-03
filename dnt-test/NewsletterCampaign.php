@@ -66,7 +66,7 @@ class NewsletterCampaignTest
     {
         $i = 0;
         foreach ($this->sentEmails as $email) {
-            if ($this->getSeenLogByEmail($email->email)) {
+            if ($this->getSeenLogByEmail($email->email) || $this->getLogByEmail($email->email)) {
                 $i++;
             }
         }
