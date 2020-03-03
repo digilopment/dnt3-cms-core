@@ -110,8 +110,6 @@ class NewsletterCampaignTest
         }
         return $logs;
     }
-    
-    
 
     protected function clickedEmails()
     {
@@ -156,14 +154,14 @@ class NewsletterCampaignTest
             return false;
         };
         $data['countMails'] = count($this->sentEmails);
-        
+
         //CLICKED
         $data['countClickedEmails'] = $this->clickedEmails();
         $data['clickedPercentage'] = $data['countMails'] > 0 ? round($data['countClickedEmails'] / $data['countMails'] * 100, 2) : 0;
         $data['countClicks'] = function($email) {
             return count($this->getLogByEmail($email));
         };
-        
+
         //SEEN
         $data['countSeenEmails'] = $this->seenEmails();
         $data['seenPercentage'] = $data['countMails'] > 0 ? round($data['countSeenEmails'] / $data['countMails'] * 100, 2) : 0;
