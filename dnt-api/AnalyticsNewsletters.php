@@ -43,7 +43,8 @@ class AnalyticsNewslettersApi extends DntLog
                 $this->dnt->redirect($url);
             }
             if ($systemStatus == 'newsletter_log_seen') {
-                print(time());
+                header("Content-type: image/png");
+                print( base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII='));
             }
         }
     }
