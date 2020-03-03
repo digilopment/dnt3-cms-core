@@ -22,9 +22,9 @@ class NewsletterCampaignTest
 
     protected function init()
     {
-        $this->clickQuery();
-        $this->getSeenLogs();
         $this->seenQuery();
+        $this->getSeenLogs();
+        $this->clickQuery();
         $this->getLogs();
         $this->emailCatId = $this->rest->get('emailCatId');
         $this->sentEmails();
