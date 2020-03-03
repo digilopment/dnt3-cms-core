@@ -32,8 +32,11 @@
             <div class="col-md-4">
                 <p>
                     Počet odoslaných emailov: <b><?php echo $data['countMails']?></b><br/>
-                    Počet respondentov, ktorý otvorili email: <b><?php echo $data['countOpenedMails']?></b><br/>
-                    Percentuálna úspešnosť otvorenia: <b><?php echo $data['percentage']?></b><br/>
+                    Počet respondentov, ktorí email videli: <b><?php echo $data['countSeens']?></b><br/>
+                    Percentuálna úspešnosť videných emailov: <b><?php echo $data['seenPercentage']?></b><br/>
+                    <hr/>
+                    Počet respondentov, ktorí otvorili email: <b><?php echo $data['countClicks']?></b><br/>
+                    Percentuálna úspešnosť kliknutia: <b><?php echo $data['clickedPercentage']?></b><br/>
                 </p>
             </div>
         </div>

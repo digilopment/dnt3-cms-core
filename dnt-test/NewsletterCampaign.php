@@ -62,7 +62,7 @@ class NewsletterCampaignTest
         return $logs;
     }
 
-    protected function openedSeenEmail()
+    protected function seenEmails()
     {
         $i = 0;
         foreach ($this->sentEmails as $email) {
@@ -110,8 +110,10 @@ class NewsletterCampaignTest
         }
         return $logs;
     }
+    
+    
 
-    protected function openedEmail()
+    protected function clickedEmails()
     {
         $i = 0;
         foreach ($this->sentEmails as $email) {
@@ -154,11 +156,19 @@ class NewsletterCampaignTest
             return false;
         };
         $data['countMails'] = count($this->sentEmails);
-        $data['countOpenedMails'] = $this->openedEmail();
-        $data['countSeenMails'] = $this->openedSeenEmail();
-        $data['percentage'] = $data['countMails'] > 0 ? round($data['countOpenedMails'] / $data['countMails'] * 100, 2) : 0;
+        
+        //CLICKED
+        $data['countClickedEmails'] = $this->clickedEmails();
+        $data['clickedPercentage'] = $data['countMails'] > 0 ? round($data['countClickedEmails'] / $data['countMails'] * 100, 2) : 0;
         $data['countClicks'] = function($email) {
             return count($this->getLogByEmail($email));
+        };
+        
+        //SEEN
+        $data['countSeenEmails'] = $this->seenEmails();
+        $data['seenPercentage'] = $data['countMails'] > 0 ? round($data['countSeenEmails'] / $data['countMails'] * 100, 2) : 0;
+        $data['countSeens'] = function($email) {
+            return count($this->getSeenLogByEmail($email));
         };
         require 'templates/newsletterCampaign.php';
     }
