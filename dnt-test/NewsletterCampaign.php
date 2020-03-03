@@ -4,13 +4,14 @@ class NewsletterCampaignTest
 {
 
     protected $campaignId = 'newsletter-spring-2020';
-    protected $mailerCategory = 25;
     protected $emailCatId;
     protected $db;
     protected $vendor;
-    protected $rawLogs;
-    protected $logs;
-    protected $sentEmails;
+    protected $rawLogs = [];
+    protected $logs = [];
+    protected $sentEmails = [];
+    protected $seenLogs = [];
+    protected $rawSeenLogs = [];
 
     public function __construct()
     {
@@ -21,14 +22,58 @@ class NewsletterCampaignTest
 
     protected function init()
     {
-        $this->query();
+        $this->clickQuery();
+        $this->getSeenLogs();
+        $this->seenQuery();
         $this->getLogs();
         $this->emailCatId = $this->rest->get('emailCatId');
         $this->sentEmails();
         $this->getTemplate();
     }
 
-    protected function query()
+    /** SEEN LOGS * */
+    protected function seenQuery()
+    {
+        $query = ("SELECT * FROM `dnt_logs` WHERE `system_status` = 'newsletter_log_seen' AND vendor_id = '" . $this->vendor->getId() . "'");
+        if ($this->db->num_rows($query) > 0) {
+            $this->rawSeenLogs = $this->db->get_results($query, true);
+        }
+    }
+
+    protected function getSeenLogs()
+    {
+        $logs = [];
+        foreach ($this->rawSeenLogs as $log) {
+            if (isset(json_decode($log->msg)->campainId) && json_decode($log->msg)->campainId == $this->campaignId) {
+                $logs[] = $log;
+            }
+        }
+        $this->seenLogs = $logs;
+    }
+
+    protected function getSeenLogByEmail($email)
+    {
+        $logs = [];
+        foreach ($this->seenLogs as $log) {
+            if (isset(json_decode($log->msg)->email) && json_decode($log->msg)->email == $email) {
+                $logs[] = $log;
+            }
+        }
+        return $logs;
+    }
+
+    protected function openedSeenEmail()
+    {
+        $i = 0;
+        foreach ($this->sentEmails as $email) {
+            if ($this->getSeenLogByEmail($email->email)) {
+                $i++;
+            }
+        }
+        return $i;
+    }
+
+    protected function clickQuery()
     {
         $query = ("SELECT * FROM `dnt_logs` WHERE `system_status` = 'newsletter_log_click' AND vendor_id = '" . $this->vendor->getId() . "'");
         if ($this->db->num_rows($query) > 0) {
@@ -70,7 +115,7 @@ class NewsletterCampaignTest
     {
         $i = 0;
         foreach ($this->sentEmails as $email) {
-            if($this->getLogByEmail($email->email)){
+            if ($this->getLogByEmail($email->email)) {
                 $i++;
             }
         }
@@ -84,9 +129,34 @@ class NewsletterCampaignTest
         $data['logByEmail'] = function($email) {
             return $this->getLogByEmail($email);
         };
+        $data['click'] = function($email) {
+            $click = 0;
+            foreach ($this->getLogByEmail($email) as $email) {
+                if (isset(json_decode($email->msg)->redirectTo)) {
+                    $click++;
+                }
+            }
+            return $click;
+        };
+        $data['seen'] = function($email) {
+            $seen = 0;
+            foreach ($this->getSeenLogByEmail($email) as $email) {
+                if (isset(json_decode($email->msg)->email)) {
+                    $seen++;
+                }
+            }
+            return $seen;
+        };
+        $data['log'] = function ($email, $object) {
+            if (isset($this->getLogByEmail($email)[0]->$object)) {
+                return $this->getLogByEmail($email)[0]->$object;
+            }
+            return false;
+        };
         $data['countMails'] = count($this->sentEmails);
         $data['countOpenedMails'] = $this->openedEmail();
-        $data['percentage'] = round($data['countOpenedMails']/$data['countMails']*100, 2);
+        $data['countSeenMails'] = $this->openedSeenEmail();
+        $data['percentage'] = $data['countMails'] > 0 ? round($data['countOpenedMails'] / $data['countMails'] * 100, 2) : 0;
         $data['countClicks'] = function($email) {
             return count($this->getLogByEmail($email));
         };
@@ -96,8 +166,6 @@ class NewsletterCampaignTest
     public function run()
     {
         $this->init();
-        //var_dump($this->getLogByEmail('u0000u0000'));
-        //var_dump($this->logs);
     }
 
 }

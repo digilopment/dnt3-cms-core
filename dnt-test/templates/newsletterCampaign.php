@@ -43,34 +43,40 @@
                     <thead>
                         <tr>
                             <th>id</th>
-                            <th>Meno</th>
-                            <th>Priezvisko</th>
+                            <th>Meno a priezvisko</th>
                             <th>email</th>
-                            <th>Otovril</th>
+                            <th>Videl</th>
+                            <th>Klikol</th>
+                            <th>Počet kliknutí</th>
                             <th>Kde klikal</th>
+                            <th>System</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
                             <th>id</th>
-                            <th>Meno</th>
-                            <th>Priezvisko</th>
+                            <th>Meno a priezvisko</th>
                             <th>email</th>
-                            <th>Otovril</th>
+                            <th>Videl</th>
+                            <th>Klikol</th>
+                            <th>Počet kliknutí</th>
                             <th>Kde klikal</th>
+                            <th>System</th>
                         </tr>
                     </tfoot>
                     <tbody>
                         <?php foreach ($data['sentEmails'] as $item) { ?>
                             <tr>
                                 <td> <?php echo $item->id ?></td>
-                                <td> <?php echo $item->name ?></td>
-                                <td> <?php echo $item->surname ?></td>
+                                <td> <?php echo $item->name ?> <?php echo $item->surname ?></td>
                                 <td> <?php echo $item->email ?></td>
+                                <td> <?php echo $data['seen']($item->email) ?></td>
+                                <td> <?php echo $data['click']($item->email) >= 1 ? "<b>ÁNO</b>" : "NIE" ?></td>
                                 <td> <?php echo $data['countClicks']($item->email) ?></td>
                                 <td> <?php foreach($data['logByEmail']($item->email) as $log){
                                     echo isset(json_decode($log->msg)->redirectTo) ? "<b>" . $log->timestamp ."</b><br/>". json_decode($log->msg)->redirectTo . "<br/>" : '(undefined)' ."<br/>";
                                 } ?></td>
+                                <td> <?php echo !empty($data['log']($item->email, 'HTTP_USER_AGENT')) ? Dnt::getOS($data['log']($item->email, 'HTTP_USER_AGENT')) : false; ?></td>
                             </tr>
                         <?php } ?>
                     </tbody>

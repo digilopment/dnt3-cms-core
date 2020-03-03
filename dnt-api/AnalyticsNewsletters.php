@@ -6,7 +6,7 @@ class AnalyticsNewslettersApi extends DntLog
     protected $rest;
     protected $availableStatus = [
         'newsletter_log_click',
-        'newsletter_log_delivered',
+        'newsletter_log_seen',
     ];
 
     public function __construct()
@@ -41,6 +41,9 @@ class AnalyticsNewslettersApi extends DntLog
             $this->add($arr);
             if ($systemStatus == 'newsletter_log_click') {
                 $this->dnt->redirect($url);
+            }
+            if ($systemStatus == 'newsletter_log_seen') {
+                print(time());
             }
         }
     }
