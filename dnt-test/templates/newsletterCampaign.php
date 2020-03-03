@@ -72,7 +72,7 @@
                                 <td> <?php echo $item->id ?></td>
                                 <td> <?php echo $item->name ?> <?php echo $item->surname ?></td>
                                 <td> <?php echo $item->email ?></td>
-                                <td> <?php echo $data['seen']($item->email) >= 1 ? "<b>ÁNO</b>" : "NIE" ?></td>
+                                <td> <?php echo $data['seen']($item->email) || $data['click']($item->email) >= 1 ? "<b>ÁNO</b>" : "NIE" ?></td>
                                 <td> <?php echo $data['click']($item->email) >= 1 ? "<b>ÁNO</b>" : "NIE" ?></td>
                                 <td> <?php echo $data['countClicks']($item->email) ?></td>
                                 <td> <?php foreach($data['logByEmail']($item->email) as $log){
