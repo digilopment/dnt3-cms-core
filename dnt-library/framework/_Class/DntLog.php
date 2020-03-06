@@ -224,7 +224,7 @@ class DntLog {
         $arrToInsert['err_msg'] = $this->error_to_json();
         $arrToInsert['THIS_URL'] = WWW_FULL_PATH;
 
-        if (IS_LOGSYSTEM_ON) {
+        if (IS_LOGSYSTEM_ON || isset($arr['force_log'])) {
             $db->insert('dnt_logs', $arrToInsert);
             //$where = array('HTTP_ACCEPT' => '*/*');
             //$db->delete('dnt_logs', $where);

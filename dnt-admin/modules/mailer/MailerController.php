@@ -203,11 +203,12 @@ class MailerController extends AdminController
                 $title = $this->replaceTitle($title, $content);
 
                 $content = str_replace('Dear clients, dear friends', $title, $content);
+                $content = str_replace('RECIPIENT_EMAIL_HEX', $this->dnt->strToHex($recipient['email']), $content);
 
                 $this->mailer->set_msg($content);
                 $this->mailer->set_subject($subject);
                 $this->mailer->set_sender_name(false);
-                //$this->mailer->sent_email();
+                $this->mailer->sent_email();
             }
             $data['toFinish'] = ($countMails - $sendedMails);
             $data['currentID'] = $currentID;
