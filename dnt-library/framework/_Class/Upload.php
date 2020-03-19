@@ -2485,7 +2485,7 @@ class Upload {
             'xll' => 'application/vnd.ms-excel',
             'ppt' => 'application/vnd.ms-powerpoint',
             'pps' => 'application/vnd.ms-powerpoint',
-            'ppsx' => 'application/vnd.ms-powerpoint',
+            'ppsx' => 'application/vnd.openxmlformats-officedocument.presentationml.slideshow',
             'rtf' => 'application/rtf',
             'pdf' => 'application/pdf',
             'html' => 'text/html',
