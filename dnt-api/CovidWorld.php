@@ -3,7 +3,7 @@
 class CovidWorldApi
 {
 
-    protected $serviceUrl = '../dnt-jobs/data/covidWorlds.json';
+    protected $serviceUrl = '../dnt-jobs/data/covidWorld.json';
     protected $content;
 
     public function __construct()
