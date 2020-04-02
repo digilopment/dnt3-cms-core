@@ -72,7 +72,7 @@ class CovidWorldJob
         $index = 0;
         $aDataTableDetailHTML = [];
         foreach ($Detail as $sNodeDetail) {
-            $aDataTableDetailHTML[$j][$this->dnt->name_url($aDataTableHeaderHTML[$index])] = [
+            $aDataTableDetailHTML[$j][str_replace('-', '', $this->dnt->name_url($aDataTableHeaderHTML[$index]))] = [
                 'name_origin' => $aDataTableHeaderHTML[$index],
                 'name' => $this->translate()[$this->dnt->name_url($aDataTableHeaderHTML[$index])],
                 'value' => $this->replaceValue($sNodeDetail->textContent)
