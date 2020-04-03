@@ -362,7 +362,7 @@ class CovidWorldJob
                 $response[$key1][$key2] = [
                     'name_origin' => $row['name_origin'],
                     'name' => $row['name'],
-                    'value' => is_numeric($value) ? number_format($value, 0, '', ' ') : $this->translateState($value)
+                    'value' => $this->translateState($value)
                 ];
                 $response[$key1]['mortality'] = $this->addColumn(
                         'Úmrtnosť',
