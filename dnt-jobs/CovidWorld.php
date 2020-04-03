@@ -360,7 +360,7 @@ class CovidWorldJob
                 $value = empty($row['value']) ? 0 : $row['value'];
                 $response[$key1][$key2] = [
                     'name_origin' => $row['name_origin'],
-                    'name' => $row['name_origin'],
+                    'name' => $row['name'],
                     'value' => $this->translateState($value)
                 ];
                 $response[$key1]['mortality'] = $this->addColumn(
