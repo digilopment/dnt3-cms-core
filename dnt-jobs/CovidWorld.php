@@ -9,6 +9,7 @@ class CovidWorldJob
     protected $yesterdayCovidData;
     protected $finalData;
     protected $dnt;
+    protected $dom;
     protected $firstCovidCase = 0;
 
     const TODAY = 'main_table_countries_today';
@@ -16,6 +17,8 @@ class CovidWorldJob
 
     public function __construct()
     {
+        $this->dnt = new Dnt();
+        $this->dom = new DOMDocument();
         $this->getData();
         $this->initYesterdayData();
         $this->finalData();
@@ -23,7 +26,6 @@ class CovidWorldJob
 
     protected function getData()
     {
-        $this->dnt = new Dnt();
         $content = file_get_contents($this->serviceUrl);
         $this->content = $content;
     }
@@ -58,12 +60,12 @@ class CovidWorldJob
             'Mexico' => 'Mexiko',
             'Belgium' => 'Belgicko',
             'Austria' => 'Rakúsko',
-            'S. Korea' => 'S. Korea',
+            'S. Korea' => 'Južná Kórea',
             'China' => 'Čína',
             'Thailand' => 'Thailand',
             'Malaysia' => 'Malajzia',
             'Russia' => 'Rusko',
-            'South Africa' => 'južná Afrika',
+            'South Africa' => 'Južná Afrika',
             'Indonesia' => 'Indonézia',
             'New Zealand' => 'Nový Zéland',
             'Faeroe Islands' => 'Faerské ostrovy',
@@ -83,7 +85,7 @@ class CovidWorldJob
             'Pakistan' => 'Pakistan',
             'Kuwait' => 'Kuvajt',
             'Philippines' => 'Filipíny',
-            'Hungary' => 'maďarsko',
+            'Hungary' => 'Maďarsko',
             'Cambodia' => 'Kambodža',
             'Georgia' => 'Georgia',
             'Bangladesh' => 'Bangladéš',
@@ -91,7 +93,7 @@ class CovidWorldJob
             'Greenland' => 'Grónsko',
             'Bhutan' => 'Bhután',
             'Gabon' => 'Gabon',
-            'Spain' => 'španielsko',
+            'Spain' => 'Španielsko',
             'Germany' => 'Nemecko',
             'Italy' => 'Taliansko',
             'Iran' => 'Irán',
@@ -100,7 +102,7 @@ class CovidWorldJob
             'Denmark' => 'Dánsko',
             'Diamond Princess' => 'Diamantová princezná',
             'Australia' => 'Austrália',
-            'Peru' => 'peru',
+            'Peru' => 'Peru',
             'Japan' => 'Japonsko',
             'Turkey' => 'Turecko',
             'Bahrain' => 'Bahrain',
@@ -114,7 +116,7 @@ class CovidWorldJob
             'Argentina' => 'Argentína',
             'Netherlands' => 'Holandsko',
             'Iraq' => 'Irak',
-            'Egypt' => 'egypt',
+            'Egypt' => 'Egypt',
             'Hong Kong' => 'Hong Kong',
             'UK' => 'Spojené kráľovstvo',
             'Brazil' => 'Brazília',
@@ -123,7 +125,7 @@ class CovidWorldJob
             'Croatia' => 'Chorvátsko',
             'Luxembourg' => 'Luxembursko',
             'Albania' => 'Albánsko',
-            'Qatar' => 'katar',
+            'Qatar' => 'Katar',
             'Slovenia' => 'Slovinsko',
             'Portugal' => 'Portugalsko',
             'Ecuador' => 'Ekvádor',
@@ -134,7 +136,7 @@ class CovidWorldJob
             'Brunei' => 'Brunej',
             'Colombia' => 'Kolumbia',
             'Senegal' => 'Senegal',
-            'Belarus' => 'bielorusko',
+            'Belarus' => 'Bielorusko',
             'Burkina Faso' => 'Burkina Faso',
             'Taiwan' => 'Taiwan',
             'Lebanon' => 'Libanon',
@@ -183,10 +185,10 @@ class CovidWorldJob
             'Curaçao' => 'Curaçao',
             'Ethiopia' => 'Etiópia',
             'Namibia' => 'Namíbia',
-            'Jamaica' => 'jamaica',
-            'Congo' => 'Congo',
-            'Sudan' => 'Sudan',
-            'Monaco' => 'Monaco',
+            'Jamaica' => 'Jamajka',
+            'Congo' => 'Kongo',
+            'Sudan' => 'Sudán',
+            'Monaco' => 'Monako',
             'Saint Martin' => 'Svätý Martin',
             'Tanzania' => 'Tanzánia',
             'Mauritania' => 'Mauritánia',
@@ -197,11 +199,11 @@ class CovidWorldJob
             'Trinidad and Tobago' => 'Trinidad a Tobago',
             'Angola' => 'Angola',
             'Bahamas' => 'Bahamské ostrovy',
-            'Haiti' => 'haiti',
+            'Haiti' => 'Haiti',
             'Nepal' => 'Nepál',
             'Aruba' => 'Aruba',
             'New Caledonia' => 'Nová Kaledónia',
-            'Equatorial Guinea' => 'rovníková Guinea',
+            'Equatorial Guinea' => 'Rovníková Guinea',
             'Benin' => 'Benin',
             'Saint Lucia' => 'Svätá Lucia',
             'St. Barth' => 'Svätý Bartolomej',
@@ -225,13 +227,13 @@ class CovidWorldJob
             'Cabo Verde' => 'Cabo Verde',
             'Nicaragua' => 'Nikaragua',
             'Botswana' => 'Botswana',
-            'CAR' => 'AUTO',
+            'CAR' => 'CAR',
             'Rwanda' => 'Rwanda',
             'Liechtenstein' => 'Lichtenštajnsko',
-            'Madagascar' => 'madagaskar',
+            'Madagascar' => 'Madagaskar',
             'Guinea' => 'Guinea',
             'Barbados' => 'Barbados',
-            'Uganda' => 'uganda',
+            'Uganda' => 'Uganda',
             'Djibouti' => 'Džibutsko',
             'French Polynesia' => 'Francúzska Polynézia',
             'Eritrea' => 'Eritrea',
@@ -252,7 +254,7 @@ class CovidWorldJob
             'Montserrat' => 'Montserrat',
             'Turks and Caicos' => 'Turci a Caicos',
             'Anguilla' => 'Anguilla',
-            'Belize' => 'belize',
+            'Belize' => 'Belize',
             'British Virgin Islands' => 'Britské Panenské ostrovy',
             'Burundi' => 'Burundi',
             'Malawi' => 'Malawi',
@@ -264,9 +266,8 @@ class CovidWorldJob
 
         if (isset($country[$current])) {
             return $country[$current];
-        } else {
-            return $current;
         }
+        return $current;
     }
 
     protected function getTable($tableId, $data)
@@ -289,32 +290,31 @@ class CovidWorldJob
     public function covidData($tableId)
     {
         $content = $this->getTable($tableId, $this->content);
-        $DOM = new DOMDocument();
-        @$DOM->loadHTML($content);
-        $Header = $DOM->getElementsByTagName('th');
-        $Detail = $DOM->getElementsByTagName('td');
+        @$this->dom->loadHTML($content);
+        $header = $this->dom->getElementsByTagName('th');
+        $detail = $this->dom->getElementsByTagName('td');
 
-        foreach ($Header as $NodeHeader) {
-            $aDataTableHeaderHTML[] = trim($NodeHeader->textContent);
+        foreach ($header as $nodeHeader) {
+            $dataTableHeader[] = trim($nodeHeader->textContent);
         }
 
         $i = 0;
         $j = 0;
         $index = 0;
-        $aDataTableDetailHTML = [];
-        foreach ($Detail as $sNodeDetail) {
-            $aDataTableDetailHTML[$j][$this->clean($aDataTableHeaderHTML[$index])] = [
-                'name_origin' => $aDataTableHeaderHTML[$index],
-                'name' => $this->translate()[$this->clean($aDataTableHeaderHTML[$index])],
-                'value' => $this->replaceValue($sNodeDetail->textContent)
+        $dataTable = [];
+        foreach ($detail as $nodeDetail) {
+            $dataTable[$j][$this->clean($dataTableHeader[$index])] = [
+                'name_origin' => $dataTableHeader[$index],
+                'name' => $this->translate()[$this->clean($dataTableHeader[$index])],
+                'value' => $this->replaceValue($nodeDetail->textContent)
             ];
 
             $i = $i + 1;
-            $j = $i % count($aDataTableHeaderHTML) == 0 ? $j + 1 : $j;
-            $index = $i % count($aDataTableHeaderHTML) == 0 ? 0 : $index + 1;
+            $j = $i % count($dataTableHeader) == 0 ? $j + 1 : $j;
+            $index = $i % count($dataTableHeader) == 0 ? 0 : $index + 1;
         }
 
-        return $aDataTableDetailHTML;
+        return $dataTable;
     }
 
     protected function initYesterdayData()
@@ -322,7 +322,7 @@ class CovidWorldJob
         $this->yesterdayCovidData = $this->covidData(self::YESTERDAY);
     }
 
-    protected function addColumn($key, $name, $value)
+    protected function addColumn($name, $value)
     {
         return [
             'name_origin' => $name,
@@ -364,12 +364,10 @@ class CovidWorldJob
                     'value' => $this->translateState($value)
                 ];
                 $response[$key1]['mortality'] = $this->addColumn(
-                        'mortality',
                         'Úmrtnosť',
                         $this->mortality($covidData[$key1]['totalcases']['value'], $covidData[$key1]['totaldeaths']['value'])
                 );
                 $response[$key1]['newrecovered'] = $this->addColumn(
-                        'newrecovered',
                         'Nové uzdravenia',
                         $this->newRecovered($covidData[$key1]['totalrecovered']['value'], $covidData[$key1]['countryother']['value'])
                 );
