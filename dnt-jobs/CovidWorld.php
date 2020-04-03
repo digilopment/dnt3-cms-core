@@ -36,12 +36,12 @@ class CovidWorldJob
     protected function translate()
     {
         $words = [
-            'countryother' => 'Krajina',
+            'countryother' => 'Názov krajiny',
             'totalcases' => 'Počet infikovaných',
-            'newcases' => 'Nové infikácie',
+            'newcases' => 'Nové prípady',
             'totaldeaths' => 'Počet úmrtí',
-            'totalrecovered' => 'Počet vyliečených',
-            'newdeaths' => 'Počet nových úmrtí',
+            'totalrecovered' => 'Počet uzdravených',
+            'newdeaths' => 'Nové úmrtia',
             'activecases' => 'Aktívne prípady',
             'seriouscritical' => 'Kritické prípady',
             'totcases1mpop' => 'Počet prípadov na 1 milión populácie',
@@ -139,7 +139,11 @@ class CovidWorldJob
         $covidData = $this->covidData(self::TODAY);
         foreach ($covidData as $key1 => $column) {
             foreach ($column as $key2 => $row) {
-                $response[$key1][$key2] = $row;
+                $response[$key1][$key2] = [
+                    'name_origin' => $row['name_origin'],
+                    'name' => $row['name_origin'],
+                    'value' => (empty($row['value'])) ? 0 : $row['value']
+                ];
                 $response[$key1]['mortality'] = $this->addColumn(
                         'mortality',
                         'Úmrtnosť',
@@ -147,7 +151,7 @@ class CovidWorldJob
                 );
                 $response[$key1]['newrecovered'] = $this->addColumn(
                         'newrecovered',
-                        'Noví vyliečení',
+                        'Nové uzdravenia',
                         $this->newRecovered($covidData[$key1]['totalrecovered']['value'], $covidData[$key1]['countryother']['value'])
                 );
             }
