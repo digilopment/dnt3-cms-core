@@ -45,8 +45,8 @@ class CovidWorldJob
             'totalrecovered' => 'Počet uzdravených',
             'newdeaths' => 'Nové úmrtia',
             'activecases' => 'Aktívne prípady',
-            'seriouscritical' => 'Kritické prípady',
-            'totcases1mpop' => 'Počet na 1 Mil pop.',
+            'seriouscritical' => 'V kritickom stave',
+            'totcases1mpop' => 'Počet prípadov na mil obyvatelov',
             'deaths1mpop' => 'Počet úmrtí na na 1 milión populácie',
             'reported1stcase' => 'Prvý prípad nákazy'
         ];
