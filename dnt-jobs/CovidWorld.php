@@ -56,7 +56,7 @@ class CovidWorldJob
     protected function translateState($current)
     {
         $country = [
-            'Total:' => 'Celý svet',
+            'World' => 'Celý svet',
             'Switzerland' => 'Švajčiarsko',
             'Mexico' => 'Mexiko',
             'Belgium' => 'Belgicko',
