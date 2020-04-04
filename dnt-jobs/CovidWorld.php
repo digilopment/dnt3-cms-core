@@ -57,6 +57,7 @@ class CovidWorldJob
     {
         $country = [
             'World' => 'Celý svet',
+            'Total:' => 'Spolu',
             'Switzerland' => 'Švajčiarsko',
             'Mexico' => 'Mexiko',
             'Belgium' => 'Belgicko',
