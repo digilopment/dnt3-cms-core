@@ -3,24 +3,28 @@
 class CovidWorldJob
 {
 
-    protected $json;
-    protected $covidData;
-    protected $yesterdayCovidData;
-    protected $finalData;
     protected $dnt;
     protected $dom;
-    protected $firstCovidCase = 0;
+    protected $yesterdayCovidData;
+    protected $todayCovidData;
+    protected $finalData;
 
     const SERVICE_URL = 'https://www.worldometers.info/coronavirus/';
     const TODAY = 'main_table_countries_today';
     const YESTERDAY = 'main_table_countries_yesterday';
+    const STATIC_FILE = 'data/covidWorld.json';
 
     public function __construct()
     {
         $this->dnt = new Dnt();
         $this->dom = new DOMDocument();
+    }
+
+    protected function init()
+    {
         $this->getData();
         $this->initYesterdayData();
+        $this->initTodayData();
         $this->finalData();
     }
 
@@ -38,22 +42,13 @@ class CovidWorldJob
     protected function updated($format)
     {
         $temp = explode('updated:', $this->content);
-        if(!isset($temp[1])){
+        if (!isset($temp[1])) {
             return ((new DateTime('now'))->format($format));
         }
         $rawData = explode('GMT', $temp[1])[0];
         $clean = trim($rawData);
         $date = new DateTime($clean);
         return $date->format($format);
-    }
-
-    protected function setSettings()
-    {
-        return [
-            'updated_datetime' => $this->updated('Y-m-d H:i:s'),
-            'updated_formated' => $this->updated('d.m.Y, H:i'),
-            'source' => self::SERVICE_URL
-        ];
     }
 
     protected function translate($current)
@@ -80,7 +75,22 @@ class CovidWorldJob
         return $current;
     }
 
-    protected function translateState($current)
+    protected function dataToJson($array)
+    {
+        return json_encode($array);
+    }
+
+    protected function writeToFile($json)
+    {
+        file_put_contents(self::STATIC_FILE, $json);
+    }
+
+    protected function render($json)
+    {
+        print $json;
+    }
+
+    protected function translateCountry($current)
     {
         $country = [
             'World' => 'Celý svet',
@@ -145,7 +155,7 @@ class CovidWorldJob
             'Argentina' => 'Argentína',
             'Netherlands' => 'Holandsko',
             'Iraq' => 'Irak',
-            'Egypt' => 'egypt',
+            'Egypt' => 'Egypt',
             'Hong Kong' => 'Hong Kong',
             'UK' => 'Veľká Británia',
             'Brazil' => 'Brazília',
@@ -301,22 +311,18 @@ class CovidWorldJob
 
     protected function getTable($tableId, $data)
     {
-        $data = explode($tableId, $data);
-        if(!isset($data[1])){
+        $tempArr = explode($tableId, $data);
+        if (!isset($tempArr[1])) {
             return null;
         }
-        $data = $data[1];
-        $data = explode('</table>', $data);
-        $data = $data[0];
-        $content = '<table id="' . $tableId . $data . '</table>';
+        $parsed = explode('</table>', $tempArr[1]);
+        $content = '<table id="' . $tableId . $parsed[0] . '</table>';
         return $content;
     }
 
     protected function replaceValue($value)
     {
-        $value = str_replace(',', '', trim($value));
-        $value = str_replace('+', '', $value);
-        return $value;
+        return str_replace('+', '', str_replace(',', '', trim($value)));
     }
 
     public function covidData($tableId)
@@ -354,6 +360,11 @@ class CovidWorldJob
         $this->yesterdayCovidData = $this->covidData(self::YESTERDAY);
     }
 
+    protected function initTodayData()
+    {
+        $this->todayCovidData = $this->covidData(self::TODAY);
+    }
+
     protected function addColumn($name, $value)
     {
         return [
@@ -383,41 +394,55 @@ class CovidWorldJob
         return $totalRecovered;
     }
 
-    protected function finalData()
+    protected function setSettingsData()
+    {
+        return [
+            'updated_datetime' => $this->updated('Y-m-d H:i:s'),
+            'updated_formated' => $this->updated('d.m.Y, H:i'),
+            'source' => self::SERVICE_URL
+        ];
+    }
+
+    protected function setCovidData()
     {
         $data = [];
-        $covidData = $this->covidData(self::TODAY);
-        foreach ($covidData as $key1 => $column) {
+        $todayCovidData = $this->todayCovidData;
+        foreach ($todayCovidData as $key1 => $column) {
             foreach ($column as $key2 => $row) {
                 $value = empty($row['value']) ? 0 : $row['value'];
                 $data[$key1][$key2] = [
                     'name_origin' => $row['name_origin'],
                     'name' => $row['name'],
-                    'value' => $this->translateState($value)
+                    'value' => $this->translateCountry($value)
                 ];
                 $data[$key1]['mortality'] = $this->addColumn(
                         'Úmrtnosť',
-                        $this->mortality($covidData[$key1]['totalcases']['value'], $covidData[$key1]['totaldeaths']['value'])
+                        $this->mortality($todayCovidData[$key1]['totalcases']['value'], $todayCovidData[$key1]['totaldeaths']['value'])
                 );
                 $data[$key1]['newrecovered'] = $this->addColumn(
                         'Nové uzdravenia',
-                        $this->newRecovered($covidData[$key1]['totalrecovered']['value'], $covidData[$key1]['countryother']['value'])
+                        $this->newRecovered($todayCovidData[$key1]['totalrecovered']['value'], $todayCovidData[$key1]['countryother']['value'])
                 );
             }
         }
+        return $data;
+    }
 
+    protected function finalData()
+    {
         $response = [
-            'settings' => $this->setSettings(),
-            'data' => $data
+            'settings' => $this->setSettingsData(),
+            'data' => $this->setCovidData()
         ];
         $this->finalData = $response;
     }
 
     public function run()
     {
-        $response = json_encode($this->finalData);
-        file_put_contents('data/covidWorld.json', $response);
-        print $response;
+        $this->init();
+        $json = $this->dataToJson($this->finalData);
+        $this->writeToFile($json);
+        $this->render($json);
     }
 
 }
