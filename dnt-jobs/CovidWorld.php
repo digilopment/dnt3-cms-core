@@ -3,7 +3,6 @@
 class CovidWorldJob
 {
 
-    protected $serviceUrl = 'https://www.worldometers.info/coronavirus/';
     protected $json;
     protected $covidData;
     protected $yesterdayCovidData;
@@ -12,6 +11,7 @@ class CovidWorldJob
     protected $dom;
     protected $firstCovidCase = 0;
 
+    const SERVICE_URL = 'https://www.worldometers.info/coronavirus/';
     const TODAY = 'main_table_countries_today';
     const YESTERDAY = 'main_table_countries_yesterday';
 
@@ -26,7 +26,7 @@ class CovidWorldJob
 
     protected function getData()
     {
-        $content = file_get_contents($this->serviceUrl);
+        $content = file_get_contents(self::SERVICE_URL);
         $this->content = $content;
     }
 
@@ -35,8 +35,30 @@ class CovidWorldJob
         return str_replace('-', '', $this->dnt->name_url($string));
     }
 
-    protected function translate()
+    protected function updated($format)
     {
+        $temp = explode('updated:', $this->content);
+        if(!isset($temp[1])){
+            return ((new DateTime('now'))->format($format));
+        }
+        $rawData = explode('GMT', $temp[1])[0];
+        $clean = trim($rawData);
+        $date = new DateTime($clean);
+        return $date->format($format);
+    }
+
+    protected function setSettings()
+    {
+        return [
+            'updated_datetime' => $this->updated('Y-m-d H:i:s'),
+            'updated_formated' => $this->updated('d.m.Y, H:i'),
+            'source' => self::SERVICE_URL
+        ];
+    }
+
+    protected function translate($current)
+    {
+        $currentKey = $this->clean($current);
         $words = [
             'countryother' => 'Názov krajiny',
             'totalcases' => 'Počet infikovaných',
@@ -47,10 +69,15 @@ class CovidWorldJob
             'activecases' => 'Aktívne prípady',
             'seriouscritical' => 'V kritickom stave',
             'totcases1mpop' => 'Počet prípadov<br/>na mil. obyvatelov',
-            'deaths1mpop' => 'Počet úmrtí na na 1 milión populácie',
-            'reported1stcase' => 'Prvý prípad nákazy'
+            'deaths1mpop' => 'Počet úmrtí na 1 mil. obyvateľov',
+            'reported1stcase' => 'Prvý prípad nákazy',
+            'totaltests' => 'Počet testov',
+            'tests1mpop' => 'Počet testov na mil. obyvateľov'
         ];
-        return $words;
+        if (isset($words[$currentKey])) {
+            return $words[$currentKey];
+        }
+        return $current;
     }
 
     protected function translateState($current)
@@ -275,6 +302,9 @@ class CovidWorldJob
     protected function getTable($tableId, $data)
     {
         $data = explode($tableId, $data);
+        if(!isset($data[1])){
+            return null;
+        }
         $data = $data[1];
         $data = explode('</table>', $data);
         $data = $data[0];
@@ -307,7 +337,7 @@ class CovidWorldJob
         foreach ($detail as $nodeDetail) {
             $dataTable[$j][$this->clean($dataTableHeader[$index])] = [
                 'name_origin' => $dataTableHeader[$index],
-                'name' => $this->translate()[$this->clean($dataTableHeader[$index])],
+                'name' => $this->translate($dataTableHeader[$index]),
                 'value' => $this->replaceValue($nodeDetail->textContent)
             ];
 
@@ -355,26 +385,31 @@ class CovidWorldJob
 
     protected function finalData()
     {
-        $response = [];
+        $data = [];
         $covidData = $this->covidData(self::TODAY);
         foreach ($covidData as $key1 => $column) {
             foreach ($column as $key2 => $row) {
                 $value = empty($row['value']) ? 0 : $row['value'];
-                $response[$key1][$key2] = [
+                $data[$key1][$key2] = [
                     'name_origin' => $row['name_origin'],
                     'name' => $row['name'],
                     'value' => $this->translateState($value)
                 ];
-                $response[$key1]['mortality'] = $this->addColumn(
+                $data[$key1]['mortality'] = $this->addColumn(
                         'Úmrtnosť',
                         $this->mortality($covidData[$key1]['totalcases']['value'], $covidData[$key1]['totaldeaths']['value'])
                 );
-                $response[$key1]['newrecovered'] = $this->addColumn(
+                $data[$key1]['newrecovered'] = $this->addColumn(
                         'Nové uzdravenia',
                         $this->newRecovered($covidData[$key1]['totalrecovered']['value'], $covidData[$key1]['countryother']['value'])
                 );
             }
         }
+
+        $response = [
+            'settings' => $this->setSettings(),
+            'data' => $data
+        ];
         $this->finalData = $response;
     }
 
