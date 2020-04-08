@@ -10,9 +10,9 @@ class CovidWorldJob
     protected $finalData;
 
     const SERVICE_URL = 'https://www.worldometers.info/coronavirus/';
+    const STATIC_FILE = 'data/covidWorld.json';
     const TODAY = 'main_table_countries_today';
     const YESTERDAY = 'main_table_countries_yesterday';
-    const STATIC_FILE = 'data/covidWorld.json';
 
     public function __construct()
     {
@@ -83,11 +83,7 @@ class CovidWorldJob
     protected function writeToFile($json)
     {
         file_put_contents(self::STATIC_FILE, $json);
-    }
-
-    protected function render($json)
-    {
-        print $json;
+        return new Render($json);
     }
 
     protected function translateCountry($current)
@@ -441,8 +437,7 @@ class CovidWorldJob
     {
         $this->init();
         $json = $this->dataToJson($this->finalData);
-        $this->writeToFile($json);
-        $this->render($json);
+        $this->writeToFile($json)->render();
     }
 
 }

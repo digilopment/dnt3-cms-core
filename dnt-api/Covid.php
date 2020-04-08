@@ -1,17 +1,15 @@
 <?php
-
 class CovidApi
 {
 
-    protected $serviceUrl = 'https://ezdravie.nczisk.sk/webapi/v1/kpi';
-
     const LOCAL_SERVICE_URL = 'https://www.tvnoviny.sk/clanok/1994138_korona-vidget';
-    const TABLE = 'covid-slovensko';
+    const EXTERNAL_SERVICE_URL = 'https://ezdravie.nczisk.sk/webapi/v1/kpi';
+    const LOCAL_TABLE = 'covid-slovensko';
 
-    protected $json;
     protected $dnt;
-    protected $firstCovidCase = 0;
     protected $dom;
+    protected $json;
+    protected $firstCovidCase = 0;
     protected $localContent = null;
     protected $hasLocalData = null;
 
@@ -35,7 +33,7 @@ class CovidApi
 
     protected function getTable($tableId, $data)
     {
-        $tempArr = explode(self::TABLE, $data);
+        $tempArr = explode(self::LOCAL_TABLE, $data);
         if (!isset($tempArr[1])) {
             return null;
         }
@@ -44,23 +42,22 @@ class CovidApi
         return $content;
     }
 
-    protected function getHttpResponseCode($url)
+    protected function dataToJson($array)
     {
-        $headers = get_headers($url);
-        return substr($headers[0], 9, 3);
+        return new Render(json_encode($array));
     }
 
     protected function loadLocalData()
     {
         $this->localContent = file_get_contents(self::LOCAL_SERVICE_URL . '?time=' . time());
-        if (isset(explode(self::TABLE, $this->localContent)[1])) {
+        if (isset(explode(self::LOCAL_TABLE, $this->localContent)[1])) {
             $this->hasLocalData = true;
         }
     }
 
     protected function getValue($elementId, $clean = true)
     {
-        $content = $this->getTable(self::TABLE, $this->localContent);
+        $content = $this->getTable(self::LOCAL_TABLE, $this->localContent);
         @$this->dom->loadHTML($content);
         if ($clean) {
             return $this->clean($this->dom->getElementById($elementId)->textContent);
@@ -71,7 +68,7 @@ class CovidApi
     protected function getData()
     {
         $this->dnt = new Dnt();
-        $content = file_get_contents($this->serviceUrl);
+        $content = file_get_contents(self::EXTERNAL_SERVICE_URL);
         $this->json = json_decode($content, true);
     }
 
@@ -90,7 +87,6 @@ class CovidApi
     protected function covidDataLocal()
     {
         $updated = $this->getValue('covid-updated-date', false) . ', ' . $this->getValue('covid-updated-time', false);
-
         $final['tested'] = [
             'updatedFormated' => $updated,
             'latest' => $this->getValue('covid-test-today'),
@@ -172,14 +168,18 @@ class CovidApi
         return $final;
     }
 
+    protected function getActualData()
+    {
+        if ($this->hasLocalData) {
+            return $this->dataToJson($this->covidDataLocal());
+        }
+        return $this->dataToJson($this->covidData());
+    }
+
     public function run()
     {
         $this->init();
-        if ($this->hasLocalData) {
-            print json_encode($this->covidDataLocal());
-        } else {
-            print json_encode($this->covidData());
-        }
+        $this->getActualData()->render();
     }
 
 }

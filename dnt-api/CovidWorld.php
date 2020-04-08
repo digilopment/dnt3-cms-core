@@ -22,7 +22,7 @@ class CovidWorldApi
 
     public function run()
     {
-        print $this->content;
+        (new Render($this->content))->render();
     }
 
 }
