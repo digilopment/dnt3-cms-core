@@ -396,6 +396,7 @@ class CovidWorldJob
     protected function setSettingsData()
     {
         return [
+            'generated' => (new DateTime('NOW'))->format('Y-m-d H:i:s'),
             'updated_datetime' => $this->updated('Y-m-d H:i:s'),
             'updated_formated' => $this->updated('d.m.Y, H:i'),
             'source' => self::SERVICE_URL
