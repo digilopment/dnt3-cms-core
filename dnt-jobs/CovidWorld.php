@@ -82,7 +82,10 @@ class CovidWorldJob
 
     protected function writeToFile($json)
     {
-        file_put_contents(self::STATIC_FILE, $json);
+        if ($this->setCovidData()) {
+            file_put_contents(self::STATIC_FILE, $json);
+            return new Render($json);
+        }
         return new Render($json);
     }
 
@@ -307,7 +310,7 @@ class CovidWorldJob
 
     protected function getTable($tableId, $data)
     {
-        $tempArr = explode($tableId, $data);
+        $tempArr = explode('id="' . $tableId, $data);
         if (!isset($tempArr[1])) {
             return null;
         }
