@@ -10,7 +10,7 @@ class CovidWorldBetaJob
     protected $finalData;
 
     const SERVICE_URL = 'https://www.worldometers.info/coronavirus/';
-    const STATIC_FILE = 'data/covidWorld.json';
+    const STATIC_FILE = 'data/covidWorldBeta.json';
     const TODAY = 'main_table_countries_today';
     const YESTERDAY = 'main_table_countries_yesterday';
 
@@ -83,7 +83,7 @@ class CovidWorldBetaJob
     protected function writeToFile($json)
     {
         if ($this->setCovidData()) {
-            //file_put_contents(self::STATIC_FILE, $json);
+            file_put_contents(self::STATIC_FILE, $json);
             return new Render($json);
         }
         return new Render($json);
