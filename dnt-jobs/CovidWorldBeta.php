@@ -427,7 +427,7 @@ class CovidWorldBetaJob
                 if ($column['totalcases']['value'] == $totalMax) {
                     foreach ($column as $key2 => $row) {
                         $value = empty($row['value']) ? 0 : $row['value'];
-                        $data[$key1][$key2] = [
+                        $data[][$key2] = [
                             'name_origin' => $row['name_origin'],
                             'name' => $row['name'],
                             'value' => $this->translateCountry($value)
