@@ -1,6 +1,6 @@
 <?php
 
-class CovidWorldJob
+class CovidWorldBetaJob
 {
 
     protected $dnt;
@@ -83,7 +83,7 @@ class CovidWorldJob
     protected function writeToFile($json)
     {
         if ($this->setCovidData()) {
-            file_put_contents(self::STATIC_FILE, $json);
+            //file_put_contents(self::STATIC_FILE, $json);
             return new Render($json);
         }
         return new Render($json);
@@ -299,7 +299,14 @@ class CovidWorldJob
             'Caribbean Netherlands' => 'Karibské Holandsko',
             'Sierra Leone' => 'Sierra Leone',
             'Papua New Guinea' => 'Papua-Nová Guinea',
-            'Timor-Leste' => 'Timor-Leste'
+            'Timor-Leste' => 'Timor-Leste',
+            'Europe' => 'Európa',
+            'Asia' => 'Ázia',
+            'Oceania' => 'Oceánia',
+            'North America' => 'Severná Amerika',
+            'South America' => 'Južná Amerika',
+            'South Sudan' => 'Južný sudán',
+            'Africa' => 'Afrika'
         ];
 
         if (isset($country[$current])) {
@@ -406,23 +413,44 @@ class CovidWorldJob
     protected function setCovidData()
     {
         $data = [];
+        $totals = [];
         $todayCovidData = $this->todayCovidData;
         foreach ($todayCovidData as $key1 => $column) {
-            foreach ($column as $key2 => $row) {
-                $value = empty($row['value']) ? 0 : $row['value'];
-                $data[$key1][$key2] = [
-                    'name_origin' => $row['name_origin'],
-                    'name' => $row['name'],
-                    'value' => $this->translateCountry($value)
-                ];
-                $data[$key1]['mortality'] = $this->addColumn(
-                        'Úmrtnosť',
-                        $this->mortality($todayCovidData[$key1]['totalcases']['value'], $todayCovidData[$key1]['totaldeaths']['value'])
-                );
-                $data[$key1]['newrecovered'] = $this->addColumn(
-                        'Nové uzdravenia',
-                        $this->newRecovered($todayCovidData[$key1]['totalrecovered']['value'], $todayCovidData[$key1]['countryother']['value'])
-                );
+            if ($column['countryother']['value'] == 'Total:') {
+                $totals[] = $column['totalcases']['value'];
+            }
+        }
+        $totalMax = max($totals);
+
+        foreach ($todayCovidData as $key1 => $column) {
+            if ($column['countryother']['value'] == 'Total:') {
+                if ($column['totalcases']['value'] == $totalMax) {
+                    foreach ($column as $key2 => $row) {
+                        $value = empty($row['value']) ? 0 : $row['value'];
+                        $data[$key1][$key2] = [
+                            'name_origin' => $row['name_origin'],
+                            'name' => $row['name'],
+                            'value' => $this->translateCountry($value)
+                        ];
+                    }
+                }
+            } else {
+                foreach ($column as $key2 => $row) {
+                    $value = empty($row['value']) ? 0 : $row['value'];
+                    $data[$key1][$key2] = [
+                        'name_origin' => $row['name_origin'],
+                        'name' => $row['name'],
+                        'value' => $this->translateCountry($value)
+                    ];
+                    $data[$key1]['mortality'] = $this->addColumn(
+                            'Úmrtnosť',
+                            $this->mortality($todayCovidData[$key1]['totalcases']['value'], $todayCovidData[$key1]['totaldeaths']['value'])
+                    );
+                    $data[$key1]['newrecovered'] = $this->addColumn(
+                            'Nové uzdravenia',
+                            $this->newRecovered($todayCovidData[$key1]['totalrecovered']['value'], $todayCovidData[$key1]['countryother']['value'])
+                    );
+                }
             }
         }
         return $data;
