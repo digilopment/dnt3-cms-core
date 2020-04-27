@@ -7,41 +7,51 @@
  *  package     dnt3
  *  date        2019
  */
-class Autoloader {
+class Autoloader
+{
 
-    protected function fileLoader($file) {
+    protected function fileLoader($file)
+    {
         if (file_exists($file)) {
             include $file;
         }
     }
-    
-    public function addVendroClass($path, $class) {
-        $file = dirname($path).'/app/'.$class.".php";
-        if(!class_exists($class)){
-            if (file_exists($file)) {
-                include $file;
-            }
-        }
-    }
-    
-    public function addClass($path, $class){
-       $file = dirname($path).'/'.$class.".php";
-        if(!class_exists($class)){
+
+    public function addVendroClass($path, $class)
+    {
+        $file = dirname($path) . '/app/' . $class . ".php";
+        if (!class_exists($class)) {
             if (file_exists($file)) {
                 include $file;
             }
         }
     }
 
-    public function className($module) {
+    public function addClass($path, $class, $init = false)
+    {
+        $file = dirname($path) . '/' . $class . ".php";
+        if (!class_exists($class)) {
+            if (file_exists($file)) {
+                include_once $file;
+                if ($init) {
+                    return (new $class());
+                }
+            }
+        }
+    }
+
+    public function className($module)
+    {
         return str_replace('.php', '', str_replace(' ', '', ucwords(str_replace('-', ' ', str_replace('_', ' ', $module)))));
     }
-    
-    public function methodName($module) {
+
+    public function methodName($module)
+    {
         return lcfirst($this->className($module));
     }
 
-    public function load($path) {
+    public function load($path)
+    {
         /**
          * CONFIG
          */
