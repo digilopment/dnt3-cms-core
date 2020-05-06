@@ -1,30 +1,35 @@
 <?php
 
-class Plugin {
+class Plugin
+{
 
     protected $data;
 
-    public function __construct($data, $currentPlugin) {
+    public function __construct($data, $currentPlugin)
+    {
         $this->data = $data;
         $this->data['ENV'] = $this->envDriver($data, $currentPlugin);
     }
 
-    protected function envDriver($data, $plugin) {
+    protected function envDriver($data, $plugin)
+    {
         if (isset($data['PLUGINS'])) {
             return (object) $data['PLUGINS'][$plugin];
         }
         return false;
     }
 
-    public function env($env) {
+    public function env($env)
+    {
         if (isset($this->data['ENV']->$env)) {
             return $this->data['ENV']->$env;
         }
         return false;
     }
 
-    protected function layout($path, $layout, $pluginData = false) {
-
+    protected function layout($path, $layout, $pluginData = false, $toString = false)
+    {
+        ob_start();
         $this->data['plugin_data'] = $pluginData;
         $data = $this->data;
         $file = dirname($path) . "/" . $layout . ".php";
@@ -33,6 +38,12 @@ class Plugin {
         } else {
             die("layout " . $layout . " not exists");
         }
+        $response = ob_get_clean();
+        if ($toString) {
+            return $response;
+        } else {
+            print $response;
+        }
     }
-    
+
 }

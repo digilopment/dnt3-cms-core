@@ -15,7 +15,7 @@ class DataExportJob
 
         $vendor_id = (new Rest())->get('vendor_id');
 
-        if ($vendor_id) {
+        if ($vendor_id || $vendor_id == 0) {
 
             $mysqlUserName = DB_USER;
             $mysqlPassword = DB_PASS;
@@ -71,7 +71,9 @@ class DataExportJob
 
             $url = WWW_PATH . "dnt-backup/" . $vendor_id . "_dnt3.zip";
             echo '<a target="_blank" href="' . $url . '">Download => ' . $url . '</a>';
-        }
+        }else{
+			echo 'no vendor';
+		}
     }
 
 }
