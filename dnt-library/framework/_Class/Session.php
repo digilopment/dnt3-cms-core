@@ -7,14 +7,19 @@
  *  package     dnt3
  *  date        2017
  */
-class Sessions {
+
+namespace DntLibrary\Base;
+
+class Sessions
+{
 
     protected $sessionID;
 
     /**
      * 
      */
-    public function init() {
+    public function init()
+    {
         if (!isset($_SESSION)) {
             @session_start();
         }
@@ -23,7 +28,8 @@ class Sessions {
     /**
      * 
      */
-    public function set_session_id() {
+    public function set_session_id()
+    {
         //$this->start_session();
         $this->sessionID = session_id();
     }
@@ -32,7 +38,8 @@ class Sessions {
      * 
      * @return type
      */
-    public function get_session_id() {
+    public function get_session_id()
+    {
         return $this->sessionID;
     }
 
@@ -41,7 +48,8 @@ class Sessions {
      * @param type $session_name
      * @return boolean
      */
-    public function exist($session_name) {
+    public function exist($session_name)
+    {
         if (isset($_SESSION[$session_name])) {
             return true;
         } else {
@@ -54,7 +62,8 @@ class Sessions {
      * @param type $session_name
      * @param type $is_array
      */
-    public function create($session_name, $is_array = false) {
+    public function create($session_name, $is_array = false)
+    {
         if (!isset($_SESSION[$session_name])) {
             if ($is_array == true) {
                 $_SESSION[$session_name] = array();
@@ -69,7 +78,8 @@ class Sessions {
      * @param type $session_name
      * @param array $data
      */
-    public function insert($session_name, array $data) {
+    public function insert($session_name, array $data)
+    {
         if (is_array($_SESSION[$session_name])) {
             array_push($_SESSION[$session_name], $data);
         }
@@ -79,7 +89,8 @@ class Sessions {
      * 
      * @param type $session_name
      */
-    public function display_session($session_name) {
+    public function display_session($session_name)
+    {
         echo '<pre>';
         print_r($_SESSION[$session_name]);
         echo '</pre>';
@@ -89,7 +100,8 @@ class Sessions {
      * 
      * @param type $session_name
      */
-    public function remove($session_name = '') {
+    public function remove($session_name = '')
+    {
         if (!empty($session_name)) {
             unset($_SESSION[$session_name]);
         } else {
@@ -104,7 +116,8 @@ class Sessions {
      * @param type $session_name
      * @return boolean
      */
-    public function get($session_name) {
+    public function get($session_name)
+    {
         if (isset($_SESSION[$session_name])) {
             return $_SESSION[$session_name];
         } else {
@@ -117,7 +130,8 @@ class Sessions {
      * @param type $session_name
      * @param type $data
      */
-    public function set($session_name, $data) {
+    public function set($session_name, $data)
+    {
         $_SESSION[$session_name] = $data;
     }
 

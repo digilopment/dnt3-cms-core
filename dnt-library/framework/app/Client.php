@@ -7,7 +7,13 @@
  *  package     dnt3
  *  date        2019
  */
-class Client extends Database {
+
+namespace DntLibrary\App;
+
+use DntLibrary\App\Database;
+
+class Client extends Database
+{
 
     public $id;
     public $wwwPath = WWW_PATH;
@@ -30,7 +36,8 @@ class Client extends Database {
     public $routes;
     public $rpc;
 
-    protected function url() {
+    protected function url()
+    {
         $hosts = explode(".", @$_SERVER['HTTP_HOST']);
         $host = $hosts[0];
 
@@ -43,11 +50,13 @@ class Client extends Database {
         }
     }
 
-    protected function isIncluded($pharse, $str) {
+    protected function isIncluded($pharse, $str)
+    {
         return preg_match('/' . $pharse . '/', $str);
     }
 
-    protected function clients() {
+    protected function clients()
+    {
         $query = "SELECT * FROM `dnt_vendors`";
         if ($this->num_rows($query) > 0) {
             $this->clients = $this->get_results($query, true);
@@ -59,14 +68,16 @@ class Client extends Database {
         }
     }
 
-    protected function loadSettings() {
+    protected function loadSettings()
+    {
         $query = "SELECT * FROM dnt_settings WHERE `vendor_id` = '" . $this->id . "'";
         if ($this->num_rows($query) > 0) {
             $this->settings = $this->get_results($query, true);
         }
     }
 
-    public function getSetting($key) {
+    public function getSetting($key)
+    {
         foreach ($this->settings as $setting) {
             if ($setting->key == $key) {
                 return $setting->value;
@@ -75,7 +86,8 @@ class Client extends Database {
         return false;
     }
 
-    protected function id() {
+    protected function id()
+    {
         $hasMatch = 0;
         foreach ($this->clients as $client) {
 
@@ -83,10 +95,10 @@ class Client extends Database {
                 $realUrlNp = explode("://", $client->real_url);
                 $realUrlNp = $realUrlNp[1];
                 if (
-                       (str_replace("/", "", $this->domainNP . $this->urlHooks(0)) == str_replace("/", "", $realUrlNp) || 
-                        str_replace("/", "", "www." . $this->domainNP . $this->urlHooks(0)) == str_replace("/", "", $realUrlNp)) && 
+                        (str_replace("/", "", $this->domainNP . $this->urlHooks(0)) == str_replace("/", "", $realUrlNp) ||
+                        str_replace("/", "", "www." . $this->domainNP . $this->urlHooks(0)) == str_replace("/", "", $realUrlNp)) &&
                         $client->show_real_url == 1 && $hasMatch == 0 && $client->real_url
-                    ) {
+                ) {
                     $hasMatch = 1;
                     $this->id = $client->id_entity;
                     $this->realUrl = $client->real_url;
@@ -102,9 +114,9 @@ class Client extends Database {
                 $realUrlNp = $realUrlNp[1];
 
                 if (
-                    (str_replace("/", "", $this->domainNP) == str_replace("/", "", $realUrlNp) || 
-                    str_replace("/", "", "www." . $this->domainNP) == str_replace("/", "", $realUrlNp)
-                    ) && $hasMatch == 0) {
+                        (str_replace("/", "", $this->domainNP) == str_replace("/", "", $realUrlNp) ||
+                        str_replace("/", "", "www." . $this->domainNP) == str_replace("/", "", $realUrlNp)
+                        ) && $hasMatch == 0) {
                     $hasMatch = 1;
                     $this->id = $client->id_entity;
                     $this->realUrl = $client->real_url;
@@ -125,7 +137,8 @@ class Client extends Database {
         }
     }
 
-    protected function rootDomainParser() {
+    protected function rootDomainParser()
+    {
         if ($this->isIncluded("www.", WWW_PATH)) {
             $this->domainWww = "www";
         }
@@ -150,7 +163,8 @@ class Client extends Database {
         }
     }
 
-    public function route($index) {
+    public function route($index)
+    {
         $data = ltrim($this->requestNoParam, '/');
         $data = explode("/", $data);
         if ($index === false) {
@@ -171,18 +185,19 @@ class Client extends Database {
         }
     }
 
-    protected function domainParser($dbDomain) {
+    protected function domainParser($dbDomain)
+    {
         $www = false;
         $protocol = false;
         $domain = false;
         $www_folders = false;
         $lang = false;
-        
+
         $data = explode("://", $dbDomain);
         if (isset($data[0])) {
             $protocol = $data[0] . "://";
         }
-        
+
         $dataLng = explode("/", $data[1]);
         $lng = $dataLng[count($dataLng) - 1];
         if (strlen($lng) == 2) {
@@ -217,11 +232,13 @@ class Client extends Database {
         );
     }
 
-    protected function redirect($domain) {
+    protected function redirect($domain)
+    {
         header("Location: $domain");
     }
 
-    public function urlLang() {
+    public function urlLang()
+    {
         $urlLang = explode("/", ltrim($this->request, "/")) [0];
         if (strlen($urlLang) == 2) {
             return $urlLang;
@@ -230,14 +247,16 @@ class Client extends Database {
         }
     }
 
-    protected function rpc() {
+    protected function rpc()
+    {
         $data = explode("/", ltrim($this->request, "/"));
         if (in_array("rpc", $data)) {
             $this->rpc = true;
         }
     }
 
-    public function urlHooks($index) {
+    public function urlHooks($index)
+    {
         $hooks = explode("/", ltrim($this->request, "/"));
         if (isset($hooks[$index])) {
             return $hooks[$index];
@@ -246,9 +265,10 @@ class Client extends Database {
         }
     }
 
-    public function setDomain($dbDomain, $wwwPath, $toDbDomain = true, $language = false) {
+    public function setDomain($dbDomain, $wwwPath, $toDbDomain = true, $language = false)
+    {
         if ($toDbDomain || $dbDomain == $wwwPath || $dbDomain == rtrim($wwwPath . $this->urlLang(), "/")) {
-            if ($toDbDomain && empty($dbDomain)){
+            if ($toDbDomain && empty($dbDomain)) {
                 die('<h2>Externá doména neexistuje, alebo nie je priradená k webu.</h2>Prosím vypnite v nastaveniach permanentné presmerovanie na externú doménu, alebo pridajte externú doménu.');
             }
             $data = $this->domainParser($dbDomain);
@@ -266,11 +286,10 @@ class Client extends Database {
             }
             //presmerovanie na protocol
             if (
-                    $this->originProtocol == $data['protocol'] && 
-                    $this->domainNP == $www . $data['domain'] && 
-                    ($this->route(0) == $language || $language == "") && 
-                    $this->domainWww == $data['www']) 
-            {
+                    $this->originProtocol == $data['protocol'] &&
+                    $this->domainNP == $www . $data['domain'] &&
+                    ($this->route(0) == $language || $language == "") &&
+                    $this->domainWww == $data['www']) {
                 //zhoda
             } else {
                 if ($this->showRealUrl) {
@@ -295,7 +314,8 @@ class Client extends Database {
         }
     }
 
-    public function init() {
+    public function init()
+    {
         if (!$this->init) {
             $this->rootDomainParser();
             $this->rpc();

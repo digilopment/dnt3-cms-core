@@ -1,5 +1,10 @@
 <?php
 
+namespace DntJobs;
+
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Vendor;
+
 class RemoveDuplicatesJob
 {
 

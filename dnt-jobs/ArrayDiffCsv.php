@@ -1,5 +1,10 @@
 <?php
 
+namespace DntJobs;
+
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+
 class ArrayDiffCsvJob
 {
 
@@ -37,7 +42,7 @@ class ArrayDiffCsvJob
 
         $diff = array_diff($all, $imported);
         $createIn = join(', ', $diff);
-        
+
         $query = "SELECT * FROM addons.obchod_zakaznici WHERE id IN ( $createIn )";
         $rows = $this->db->get_results($query);
         foreach ($rows as $row) {

@@ -1,6 +1,9 @@
 <?php
 
-class ExceptionThrower {
+namespace DntLibrary\Base;
+
+class ExceptionThrower
+{
 
     static $IGNORE_DEPRECATED = true;
 
@@ -8,7 +11,8 @@ class ExceptionThrower {
      * Start redirecting PHP errors
      * @param int $level PHP Error level to catch (Default = E_ALL & ~E_DEPRECATED)
      */
-    static function Start($level = null) {
+    static function Start($level = null)
+    {
 
         if ($level == null) {
             if (defined("E_DEPRECATED")) {
@@ -25,7 +29,8 @@ class ExceptionThrower {
     /**
      * Stop redirecting PHP errors
      */
-    static function Stop() {
+    static function Stop()
+    {
         restore_error_handler();
     }
 
@@ -41,7 +46,8 @@ class ExceptionThrower {
      * @param string $line
      * @param string $context
      */
-    static function HandleError($code, $string, $file, $line, $context) {
+    static function HandleError($code, $string, $file, $line, $context)
+    {
         // ignore supressed errors
         if (error_reporting() == 0)
             return;

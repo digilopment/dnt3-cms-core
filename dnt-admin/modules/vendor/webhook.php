@@ -1,10 +1,16 @@
 <?php
 
+use DntLibrary\Base\AdminUser;
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Sessions;
+
 $rest = new Rest;
 $session = new Sessions;
 $dnt = new Dnt;
 $adminUser = new AdminUser;
-$db = new Db;
+$db = new DB();
 
 if ($rest->get("action") == "update") {
     include "update.php";
@@ -14,11 +20,11 @@ if ($rest->get("action") == "update") {
     include "del.php";
 } elseif ($rest->get("action") == "add_data") {
     include "add_data.php";
-}elseif ($rest->get("action") == "import") {
+} elseif ($rest->get("action") == "import") {
     include "import.php";
-}elseif ($rest->get("action") == "upload") {
+} elseif ($rest->get("action") == "upload") {
     include "upload.php";
-}  else {
+} else {
     include "tpl.php";
 }
 

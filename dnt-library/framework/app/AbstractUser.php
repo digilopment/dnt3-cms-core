@@ -1,5 +1,12 @@
 <?php
 
+namespace DntLibrary\App;
+
+use DntLibrary\Base\Cookie;
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Sessions;
+use DntLibrary\Base\Vendor;
+
 class AbstractUser
 {
 
@@ -14,7 +21,7 @@ class AbstractUser
     public function __construct($conf)
     {
 
-        $this->db = new Db();
+        $this->db = new DB();
 
         $this->table = $conf['table'];
         $this->type = $conf['type'];
@@ -51,7 +58,7 @@ class AbstractUser
 
     public function validProcessLogin($email, $pass)
     {
-        $db = new Db;
+        $db = new DB;
         $query = "SELECT pass FROM " . $this->table . " WHERE type = '" . $this->type . "' AND email = '" . $email . "' AND vendor_id = '" . Vendor::getId() . "'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {

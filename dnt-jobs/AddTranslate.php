@@ -1,5 +1,11 @@
 ﻿<?php
 
+namespace DntJobs;
+
+use DntLibrary\Base\DB;
+use DntLibrary\Base\MultyLanguage;
+use DntLibrary\Base\Vendor;
+
 class AddTranslateJob
 {
 
@@ -21,12 +27,8 @@ class AddTranslateJob
             ),
         );
 
-
-
-
-
         $table = "dnt_translates";
-        $db = new Db;
+        $db = new DB;
         foreach ($translates as $translate) {
             $vendor = new Vendor;
             foreach ($vendor->getAll() as $vendor) {

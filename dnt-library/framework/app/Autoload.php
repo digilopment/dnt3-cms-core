@@ -7,13 +7,14 @@
  *  package     dnt3
  *  date        2019
  */
+namespace DntLibrary\App;
 class Autoloader
 {
 
     protected function fileLoader($file)
     {
         if (file_exists($file)) {
-            include $file;
+            include_once $file;
         }
     }
 
@@ -22,7 +23,7 @@ class Autoloader
         $file = dirname($path) . '/app/' . $class . ".php";
         if (!class_exists($class)) {
             if (file_exists($file)) {
-                include $file;
+                include_once $file;
             }
         }
     }
@@ -75,6 +76,7 @@ class Autoloader
         $this->fileLoader($path . "dnt-library/framework/app/AbstractUser.php");
         $this->fileLoader($path . "dnt-library/framework/app/Stream.php");
         $this->fileLoader($path . "dnt-library/framework/app/Render.php");
+        $this->fileLoader($path . "dnt-library/framework/app/Categories.php");
     }
 
 }

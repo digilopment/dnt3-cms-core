@@ -1,5 +1,11 @@
+<?php
 
-<?php get_top(); ?>
+use DntLibrary\Base\AdminUser;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Rest;
+
+get_top();
+?>
 <?php get_top_html(); ?>
 <?php
 $rest = new Rest;
@@ -51,10 +57,10 @@ $post_id = $rest->get("post_id");
                                 <p>Ak máte eshop a vystavíte faktúru, vaše meno tam bude predvyplnené</p>
                                 <img src="<?php echo AdminUser::avatarById($post_id); ?>" style="max-width: 200px; margin: 15px;" alt="">
                                 <input type="file" name="userfile" class="btn-default btn-lg btn-block">
-                                <?php galleryChooser("user_avatar"); ?>
+<?php galleryChooser("user_avatar"); ?>
                                 <div class="padding"></div>
                                 <div class="checkbox">
-                                    <?php echo Dnt::returnInput(); ?>
+<?php echo Dnt::returnInput(); ?>
                                     <input type="hidden" name="group" value="<?php echo AdminUser::dataById("admin", "type", $post_id); ?>" class="form-control">
                                     <input type="submit" name="sent" value="Uložiť" class="btn btn-primary" style="width: 40%;">
                                 </div>

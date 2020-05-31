@@ -7,19 +7,24 @@
  *  package     dnt3
  *  date        2017
  */
-class Autoload {
 
-    public function load($path) {
+namespace DntLibrary\Base;
+
+class Autoload
+{
+
+    public function load($path)
+    {
         /**
          * CONFIG
          */
         include $path . "dnt-library/framework/_keys/public.php";
-		
-		if(file_exists($path . "config_pro.dnt")){
-			include $path . "config_pro.dnt";
-		}else{
-			include $path . "config.dnt";
-		}
+
+        if (file_exists($path . "config_pro.dnt")) {
+            include $path . "config_pro.dnt";
+        } else {
+            include $path . "config.dnt";
+        }
 
         /**
          * CLASS
@@ -56,7 +61,7 @@ class Autoload {
         include $path . "dnt-library/framework/_Class/AdminContent.php";
         include $path . "dnt-library/framework/_Class/AdminMailer.php";
         include $path . "dnt-library/framework/_Class/Navigation.php";
-    
+
 
         include $path . "dnt-library/framework/_Class/Polls.php";
         include $path . "dnt-library/framework/_Class/PollsFrontend.php";
@@ -72,7 +77,7 @@ class Autoload {
         include $path . "dnt-library/framework/_Class/PostMeta.php";
         include $path . "dnt-library/framework/_Class/Voucher.php";
         include $path . "dnt-library/framework/_Class/Gallery.php";
-		
+
         /**
          * MESSENGER BOT
          */

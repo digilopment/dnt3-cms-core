@@ -1,5 +1,9 @@
 <?php
 
+namespace DntAdmin\Moduls;
+
+use DntLibrary\Base\DB;
+
 class CreateTable
 {
 
@@ -7,7 +11,7 @@ class CreateTable
 
     public function __construct()
     {
-        $this->db = new Db();
+        $this->db = new DB();
     }
 
     public function ifNotExists($tableName)

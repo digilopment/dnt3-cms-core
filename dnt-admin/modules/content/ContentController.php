@@ -1,9 +1,22 @@
 <?php
 
+namespace DntAdmin\Moduls;
+
+use DntAdmin\App\AdminController;
+use DntLibrary\App\Autoloader;
+use DntLibrary\Base\AdminContent;
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Image;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Vendor;
+use DntLibrary\Base\Webhook;
+
 class ContentController extends AdminController
 {
 
     protected $loc = __FILE__;
+    protected $namespace = __NAMESPACE__ . '';
     protected $db;
     protected $rest;
     protected $webhook;
@@ -12,11 +25,13 @@ class ContentController extends AdminController
     protected $dnt;
     protected $vendor;
     protected $updateContent;
+    protected $importContent;
 
     public function __construct()
     {
 
         (new Autoloader())->addClass($this->loc, 'UpdateContent');
+        (new Autoloader())->addClass($this->loc, 'ImportContent');
 
         $this->db = new DB();
         $this->rest = new Rest();
@@ -24,7 +39,7 @@ class ContentController extends AdminController
         $this->image = new Image();
         $this->adminContent = new AdminContent();
         $this->dnt = new Dnt();
-        $this->updateContent = new UpdateContent();
+        $this->importContent = new ImportContent();
     }
 
     public function indexAction()
@@ -59,6 +74,19 @@ class ContentController extends AdminController
         $lastId = $this->dnt->getLastId('dnt_posts');
         $redirect = WWW_PATH_ADMIN_2 . 'index.php?src=content&filter=' . $this->rest->get('filter') . '&sub_cat_id=' . $this->rest->get('sub_cat_id') . '&post_id=' . $lastId . '&page=1&action=edit&included=' . $this->rest->get('included') . '';
         $this->dnt->redirect($redirect);
+    }
+
+    public function importAction()
+    {
+        $postData = [
+            'name' => 'Specialized S-Workd 2020',
+            'content' => 'Toto je content',
+            'perex' => 'Toto je perex',
+            'service' => 'product_detail',
+            'type' => 'product',
+            'image' => 'https://cyan.com/wp-content/uploads/2019/08/test-image.jpg'
+        ];
+        $this->importContent->createPost($postData, []);
     }
 
     public function delAction()

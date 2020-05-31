@@ -7,27 +7,47 @@
  *  package     dnt3
  *  date        2019
  */
-class BaseController {
+
+namespace DntLibrary\App;
+
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Settings;
+use DntLibrary\Base\Vendor;
+
+class BaseController
+{
 
     protected $suffix = 'generated';
     protected $confFile = 'Plugins.shell';
+    protected $settinhs;
 
-    protected function path() {
+    protected function modul()
+    {
+        $settings = new Settings();
+        return $settings->global()->module;
+    }
+
+    protected function path()
+    {
         return "dnt-view/layouts/" . Vendor::getLayout() . "/plugins/";
     }
 
-    protected function cachedFile($plugin) {
+    protected function cachedFile($plugin)
+    {
         return "dnt-cache/plugins/" . $this->pluginCacheName($plugin);
     }
 
-    protected function pluginKey($plugin, $key) {
+    protected function pluginKey($plugin, $key)
+    {
         if (isset($plugin[$key])) {
             return $plugin[$key];
         }
         return false;
     }
 
-    protected function getTemplateToString($plugin, $data) {
+    protected function getTemplateToString($plugin, $data)
+    {
         ob_start();
 
         $controller = $plugin['tpl'] . '.php';
@@ -45,6 +65,7 @@ class BaseController {
             $clsName = (new Autoloader())->className($plugin['tpl']) . "PluginControll";
             if (!class_exists($clsName)) {
                 include $this->path() . $pathCompose . $controller;
+                $clsName = '\DntView\Layout\Modul\Plugin\\' . $clsName;
                 $plugin = new $clsName($data, $plugin['id']);
                 if (method_exists($plugin, 'init')) {
                     $plugin->init();
@@ -65,14 +86,16 @@ class BaseController {
         return $string;
     }
 
-    protected function getCachedFileToString($plugin, $data) {
+    protected function getCachedFileToString($plugin, $data)
+    {
         ob_start();
         include $this->cachedFile($plugin);
         $string = ob_get_clean();
         return $string;
     }
 
-    protected function createCacheFile($plugin, $html) {
+    protected function createCacheFile($plugin, $html)
+    {
         if (!is_dir("dnt-cache/plugins")) {
             mkdir("dnt-cache/plugins");
         }
@@ -84,7 +107,8 @@ class BaseController {
         file_put_contents($this->cachedFile($plugin), $html);
     }
 
-    protected function pluginCacheName($plugin) {
+    protected function pluginCacheName($plugin)
+    {
 
         $file = str_replace("../", "", $plugin['tpl']);
         $file = explode(".", $file);
@@ -109,7 +133,8 @@ class BaseController {
                 $plugin['cache'] . ".generated";
     }
 
-    protected function cacheToSeconds($plugin) {
+    protected function cacheToSeconds($plugin)
+    {
         $index = strtoupper(substr($plugin['cache'], -1));
         switch ($index) {
             case "S":
@@ -138,7 +163,8 @@ class BaseController {
         return $value * $multiplier;
     }
 
-    protected function inCacheRange($plugin) {
+    protected function inCacheRange($plugin)
+    {
         if (time() - filemtime($this->cachedFile($plugin)) <= $this->cacheToSeconds($plugin)) {
             return true;
         } else {
@@ -146,14 +172,16 @@ class BaseController {
         }
     }
 
-    protected function isCachedFile($plugin, $allowCache) {
+    protected function isCachedFile($plugin, $allowCache)
+    {
         if (file_exists($this->cachedFile($plugin)) && $this->inCacheRange($plugin) && $allowCache) {
             return true;
         }
         return false;
     }
 
-    public function bodyParser($conf, $pluginKeys, $allowCache, $data) {
+    public function bodyParser($conf, $pluginKeys, $allowCache, $data)
+    {
 
         $tplFunctions = "dnt-view/layouts/" . Vendor::getLayout() . "/tpl_functions.php";
         if (file_exists($tplFunctions)) {
@@ -201,7 +229,8 @@ class BaseController {
         echo $html;
     }
 
-    protected function minify($html) {
+    protected function minify($html)
+    {
 
         $search = array(
             '/\>[^\S ]+/s', // strip whitespaces after tags, except space
@@ -218,11 +247,23 @@ class BaseController {
         return preg_replace($search, $replace, $html);
     }
 
-    protected function modulConfigurator($data) {
-        if (isset($data['article']['service'])) {
+    protected function modulConfigurator($data, $modul = false)
+    {
+        if (isset($data['article']['service']) && !empty($data['article']['service'])) {
             $confFile = "dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $data['article']['service'] . "/" . $this->confFile;
-            $conf = [];
-
+        } elseif ($modul) {
+            $data['article']['service'] = $modul;
+            $confFile = "dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $modul . "/" . $this->confFile;
+        } else {
+            $confFile = false;
+        }
+        /* if ($modul) {
+          $confFile = "dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $modul . "/" . $this->confFile;
+          } else {
+          $confFile = "dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $data['article']['service'] . "/" . $this->confFile;
+          } */
+        $conf = [];
+        if ($confFile) {
             if (file_exists($confFile)) {
                 $xml = simplexml_load_file($confFile);
                 $allowCache = (string) $xml['cache'];
@@ -246,11 +287,12 @@ class BaseController {
             $pluginKeys = array_keys($conf);
             $this->bodyParser($conf, $pluginKeys, $allowCache, $data);
         } else {
-            die('No $data["article"]["service"] service set');
+            die('No $data["article"]["service"] service set ');
         }
     }
 
-    protected function modulLoader($data, $file) {
+    protected function modulLoader($data, $file)
+    {
         include "dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $data['article']['service'] . "/" . $file;
     }
 

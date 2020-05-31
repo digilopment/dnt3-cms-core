@@ -1,5 +1,15 @@
 <?php
 
+namespace DntAdmin\Moduls;
+
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Vendor;
+use function get_bottom;
+use function get_top;
+use function str_split;
+
 class Invoices
 {
 
@@ -8,7 +18,7 @@ class Invoices
 
     public function __construct()
     {
-        $this->db = new Db();
+        $this->db = new DB();
         $this->rest = new Rest();
         $this->dnt = new Dnt();
     }
@@ -284,10 +294,10 @@ class Invoices
                     $metaData[$val['post_id']][$val['key']] = $val['value'];
                 }
             }
-            
+
             $response = [];
             foreach ($dataProducts as $product) {
-                 $response[] = isset($metaData[$product['id_entity']]) ? (array_merge($product, $metaData[$product['id_entity']])) : false;
+                $response[] = isset($metaData[$product['id_entity']]) ? (array_merge($product, $metaData[$product['id_entity']])) : false;
             }
         }
         return $response;

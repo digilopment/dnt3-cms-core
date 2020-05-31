@@ -1,3 +1,8 @@
+<?php
+
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\MultyLanguage;
+?>
 <div class="container">
     <div class="jumbotron">
         <div class="container">

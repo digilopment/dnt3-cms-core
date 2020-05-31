@@ -1,6 +1,12 @@
 <?php
 
-$db = new Db;
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Image;
+use DntLibrary\Base\Meta;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Vendor;
+
+$db = new DB();
 $rest = new Rest;
 $image = new Image();
 
@@ -64,7 +70,7 @@ if (isset($_POST['odoslat']) && isset($_GET['id'])) {
     }
     $presmeruj_url = "index.php?src=" . $rest->get('src') . "&id=" . $id . "&action=edit";
 
-    
+
     get_top();
     get_top_html();
     getConfirmMessage($presmeruj_url, "Údaje sa úspešne uložili");
@@ -130,8 +136,8 @@ if (isset($_POST['odoslat']) && isset($_GET['id'])) {
     }
 
 
-    $presmeruj_url = "index.php?src=".$rest->get("src");
-    
+    $presmeruj_url = "index.php?src=" . $rest->get("src");
+
     get_top();
     get_top_html();
     getConfirmMessage($presmeruj_url, "Údaje sa úspešne uložili");

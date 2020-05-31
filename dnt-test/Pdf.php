@@ -1,7 +1,14 @@
 <?php
-class PdfTest {
 
-    public function run() {
+namespace DntTest;
+
+use DntLibrary\Base\Pdf;
+
+class PdfTest
+{
+
+    public function run()
+    {
         $path = '../';
         $fileName = 'test';
         $pdfName = 'Test Pdf';
@@ -17,9 +24,8 @@ class PdfTest {
 
         $pdf = new Pdf();
         $pdf->downloadPdf($path, $fileName, $pdfName, $html);
-        
+
         echo "<b>saved to:</b> data/uploads/" . $fileName . '.pdf';
     }
 
 }
-

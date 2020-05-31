@@ -1,9 +1,14 @@
 <?php
 
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Vendor;
+
 if (isset($_POST['odoslat'])) {
 
     $rest = new Rest;
-    $db = new Db;
+    $db = new DB();
 
     $nazov = $rest->post("nazov");
 
@@ -33,21 +38,21 @@ if (isset($_POST['odoslat'])) {
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 $db->dbTransaction();
-				$db->query("INSERT INTO `dnt_microsites_composer` 
+                $db->query("INSERT INTO `dnt_microsites_composer` 
 				( `vendor_id`, `competition_id`, `cat_id`, `content_type`, `description`, `meta`, `value`, `zobrazenie`, `poradie`, `parent_id`)
 					VALUES
 				('" . Vendor::getId() . "',  '$thisId', '" . $row['cat_id'] . "', '" . $row['content_type'] . "', '" . $row['description'] . "', '" . $row['meta'] . "', '" . $row['value'] . "', '" . $row['zobrazenie'] . "', '" . $row['poradie'] . "', '0')");
-				$post_id = $db->lastid();
-				$db->update(
-					'dnt_microsites_composer',	//table
-					array(	//set
-						'id_entity' => $lastId
-						), 
-					array( 	//where
-						'id' => $lastId
-					)
-				);
-				$db->dbCommit();
+                $post_id = $db->lastid();
+                $db->update(
+                        'dnt_microsites_composer', //table
+                        array(//set
+                            'id_entity' => $lastId
+                        ),
+                        array(//where
+                            'id' => $lastId
+                        )
+                );
+                $db->dbCommit();
             }
         }
 
@@ -61,7 +66,7 @@ if (isset($_POST['odoslat'])) {
 		meta = 'layout'");
 
         $presmeruj_url = "index.php?src=" . $rest->get('src') . "&id=" . $thisId . "&action=edit";
-        
+
         get_top();
         get_top_html();
         getConfirmMessage($presmeruj_url, "Údaje sa úspešne uložili");

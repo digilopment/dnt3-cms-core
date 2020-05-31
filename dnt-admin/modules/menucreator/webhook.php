@@ -1,5 +1,10 @@
 <?php
 
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Vendor;
+
 function configMenuItems()
 {
 
@@ -99,7 +104,7 @@ function configMenuItems()
         '`show`' => '0',
         '`parent_id`' => '0',
     );
-     $insertedData[] = array(
+    $insertedData[] = array(
         '`vendor_id`' => Vendor::getId(),
         '`type`' => "submenu",
         '`included`' => "",
@@ -111,7 +116,7 @@ function configMenuItems()
         '`show`' => '0',
         '`parent_id`' => '0',
     );
-     $insertedData[] = array(
+    $insertedData[] = array(
         '`vendor_id`' => Vendor::getId(),
         '`type`' => "submenu",
         '`included`' => "",
@@ -123,7 +128,7 @@ function configMenuItems()
         '`show`' => '0',
         '`parent_id`' => '0',
     );
-   $insertedData[] = array(
+    $insertedData[] = array(
         '`vendor_id`' => Vendor::getId(),
         '`type`' => "submenu",
         '`included`' => "",
@@ -135,7 +140,20 @@ function configMenuItems()
         '`show`' => '0',
         '`parent_id`' => '0',
     );
-   
+    
+    $insertedData[] = array(
+        '`vendor_id`' => Vendor::getId(),
+        '`type`' => "menu",
+        '`included`' => "",
+        '`ico`' => "fa fa-list-alt",
+        '`order`' => "70",
+        '`name`' => "Kategórie",
+        '`name_url`' => 'categories',
+        '`name_url_sub`' => 'categories',
+        '`show`' => '0',
+        '`parent_id`' => '0',
+    );
+
     $insertedData[] = array(
         '`vendor_id`' => Vendor::getId(),
         '`type`' => "menu",
@@ -532,7 +550,7 @@ function menuQuery()
 
 function addToMenu()
 {
-    $db = new Db();
+    $db = new DB();
     $query = menuQuery();
     foreach ($db->get_results($query) as $row) {
         //var_dump($row);	
@@ -562,7 +580,7 @@ function addToMenu()
         }
     }
 
-    $db = new Db;
+    $db = new DB();
     foreach ($arrOfConfigKeys as $key) {
         var_dump($menuData[$key]);
         $db->insert('dnt_admin_menu', $menuData[$key]);
@@ -658,7 +676,7 @@ function sql2Arr()
 }
 
 $rest = new Rest();
-$db = new Db();
+$db = new DB();
 if ($rest->get("action") == "sql2Arr") {
     sql2Arr();
 } elseif ($rest->get("action") == "addToMenu") {

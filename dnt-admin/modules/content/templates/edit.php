@@ -1,4 +1,8 @@
 <?php
+
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Image;
+
 get_top();
 get_top_html();
 
@@ -29,6 +33,7 @@ $tags = $adminContent->getPostParam("tags", $post_id);
 $service = $adminContent->getPostParam("service", $post_id);
 $service_id = $adminContent->getPostParam("service_id", $post_id);
 $imageID = $adminContent->getPostParam("img", $post_id);
+$post_category_id = $adminContent->getPostParam("post_category_id", $post_id);
 
 //osetrenie vstupov
 if ($datetime_publish == "0000-00-00 00:00:00") {
@@ -72,6 +77,12 @@ if ($datetime_publish == "0000-00-00 00:00:00") {
                         <h3>Nastavenia postu pre defaultný jazyk</h3>
                         <hr/>
                         <?php get_typ_zaradenie($cat_id, $sub_cat_id, $type); ?>
+                        
+                        <h5><b>Zaradiť post do categories</b> <a class="btn btn-success" href="index.php?src=categories&productId=<?php echo $post_id; ?>" target="">(zobraziť strom kategorii)</a>:<br/></h5>
+                        Vložiť <b>ID ručne</b><br/> 
+                        <input type='text' name="post_category_id" value="<?php echo $post_category_id; ?>" class="form-control" />
+               
+                        <br/>
                         <div class="row">
                             <div class="col-xs-8">
                                 <h5>Typ služby:<br/></h5>

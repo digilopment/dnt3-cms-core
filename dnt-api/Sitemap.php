@@ -1,10 +1,22 @@
 <?php
-class SitemapApi {
 
-    public function run() {
+namespace DntApi;
+
+use DntLibrary\Base\Api;
+use DntLibrary\Base\ArticleView;
+use DntLibrary\Base\DB;
+use DntLibrary\Base\DntLog;
+use DntLibrary\Base\Navigation;
+use DntLibrary\Base\Rest;
+
+class SitemapApi
+{
+
+    public function run()
+    {
 
         $rest = new Rest;
-        $db = new Db;
+        $db = new DB;
         $api = new Api;
         $dntLog = new DntLog;
         $article = new ArticleView;

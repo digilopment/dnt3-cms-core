@@ -1,5 +1,12 @@
 <?php
 
+namespace DntAdmin\Moduls;
+
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Vendor;
+
 class CreateOrder
 {
 
@@ -11,7 +18,7 @@ class CreateOrder
 
     public function __construct($data = false)
     {
-        $this->db = new Db();
+        $this->db = new DB();
         $this->dnt = new Dnt();
         $this->rest = new Rest();
         $this->data = $data;

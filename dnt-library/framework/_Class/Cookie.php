@@ -7,7 +7,11 @@
  *  package     dnt3
  *  date        2017
  */
-class Cookie {
+
+namespace DntLibrary\Base;
+
+class Cookie
+{
 
     const Session = null;
     const OneDay = 86400;
@@ -23,7 +27,8 @@ class Cookie {
      * @param string $name
      * @return bool
      */
-    static public function Exists($name) {
+    static public function Exists($name)
+    {
         return isset($_COOKIE[$name]);
     }
 
@@ -34,7 +39,8 @@ class Cookie {
      * @param string $name
      * @return bool
      */
-    static public function IsEmpty($name) {
+    static public function IsEmpty($name)
+    {
         return empty($_COOKIE[$name]);
     }
 
@@ -46,7 +52,8 @@ class Cookie {
      * @param string $default
      * @return mixed
      */
-    static public function Get($name, $default = '') {
+    static public function Get($name, $default = '')
+    {
         return (isset($_COOKIE[$name]) ? $_COOKIE[$name] : $default);
     }
 
@@ -60,7 +67,8 @@ class Cookie {
      * @param string $domain
      * @return bool
      */
-    static public function Set($name, $value, $expiry = self::OneYear, $path = '/', $domain = false) {
+    static public function Set($name, $value, $expiry = self::OneYear, $path = '/', $domain = false)
+    {
         $retval = false;
         if (!headers_sent()) {
             if ($domain === false)
@@ -89,7 +97,8 @@ class Cookie {
      * @param bool $remove_from_global Set to true to remove this cookie from this request.
      * @return bool
      */
-    static public function Delete($name, $path = '/', $domain = false, $remove_from_global = false) {
+    static public function Delete($name, $path = '/', $domain = false, $remove_from_global = false)
+    {
         $retval = false;
         if (!headers_sent()) {
             if ($domain === false)

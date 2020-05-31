@@ -1,5 +1,11 @@
 ﻿<?php
 
+namespace DntJobs;
+
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Rest;
+
 class ImportEmailsJob
 {
 
@@ -17,7 +23,7 @@ class ImportEmailsJob
 
     protected function countEmails()
     {
-        $db = new Db;
+        $db = new DB;
         $query = "SELECT email FROM dnt_mailer_mails WHERE cat_id = '" . $this->catId . "' AND vendor_id = '" . $this->vendorId . "'";
         $emails = [];
         foreach ($db->get_results($query) as $row) {
@@ -28,7 +34,7 @@ class ImportEmailsJob
 
     protected function writeToDb($email)
     {
-        $db = new Db;
+        $db = new DB;
         $name = "";
         $surname = "";
 
@@ -47,7 +53,7 @@ class ImportEmailsJob
 
     protected function deleteFromDb($email)
     {
-        $db = new Db;
+        $db = new DB;
         $where = array(
             'email' => $email,
             'vendor_id' => $this->vendorId
@@ -59,7 +65,7 @@ class ImportEmailsJob
     {
 
         $table = "dnt_mailer_mails";
-        $db = new Db;
+        $db = new DB;
 
         $query = "SELECT email FROM $table WHERE cat_id = '" . $this->catId . "' AND vendor_id = '" . $this->vendorId . "'";
         foreach ($db->get_results($query) as $row) {
@@ -103,15 +109,15 @@ class ImportEmailsJob
         $table = "dnt_mailer_mails";
         foreach ($this->fileEmails as $fileEmail) {
             $db->update(
-                $table,
-                [
-                    'show' => 1,
-                ],
-                [
-                    'email' => $fileEmail,
-                    'cat_id' => $this->catId,
-                    'vendor_id' => $this->vendorId
-                ]
+                    $table,
+                    [
+                        'show' => 1,
+                    ],
+                    [
+                        'email' => $fileEmail,
+                        'cat_id' => $this->catId,
+                        'vendor_id' => $this->vendorId
+                    ]
             );
         }
     }

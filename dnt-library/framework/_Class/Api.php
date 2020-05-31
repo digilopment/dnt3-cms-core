@@ -7,13 +7,21 @@
  *  package     dnt3
  *  date        2017
  */
-class Api {
+
+namespace DntLibrary\Base;
+
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Vendor;
+
+class Api
+{
 
     /**
      * 
      * @return type
      */
-    public function getAll() {
+    public function getAll()
+    {
         $db = new DB();
         $query = "SELECT * FROM dnt_api WHERE vendor_id = '" . Vendor::getId() . "'";
         if ($db->num_rows($query) > 0) {
@@ -28,7 +36,8 @@ class Api {
      * @param type $query
      * @return boolean
      */
-    public function getColumns($query) {
+    public function getColumns($query)
+    {
         $db = new DB();
         $i = 1;
         if ($db->num_rows($query) > 0) {
@@ -53,7 +62,8 @@ class Api {
      * @param type $getQuery
      * @return boolean
      */
-    public function getQuery($name_url, $id, $getQuery) {
+    public function getQuery($name_url, $id, $getQuery)
+    {
         if ($getQuery) {
             return urldecode($getQuery);
         } else {
@@ -73,9 +83,10 @@ class Api {
      * 
      * @param type $query
      */
-    public function getXmlData($query) {
+    public function getXmlData($query)
+    {
         $xml = new SimpleXMLElement('<xml/>');
-        $db = new Db;
+        $db = new DB;
 
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
@@ -92,8 +103,9 @@ class Api {
      * 
      * @param type $query
      */
-    public function getJsonData($query) {
-        $db = new Db;
+    public function getJsonData($query)
+    {
+        $db = new DB;
 
         if ($db->num_rows($query) > 0) {
             echo '{ "items": [';

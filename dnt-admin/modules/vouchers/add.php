@@ -1,5 +1,8 @@
 <?php
 
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Vendor;
+
 if (isset($_POST['sent'])) {
     $voucherValue = $rest->post("voucher");
     if ($voucherValue) {

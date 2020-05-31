@@ -1,5 +1,8 @@
-
-<?php get_top(); ?>
+<?php 
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\MultyLanguage;
+use DntLibrary\Base\Rest;
+get_top(); ?>
 <?php get_top_html(); 
    $rest = new Rest;
    

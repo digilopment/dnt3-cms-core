@@ -1,5 +1,11 @@
 <?php
 
+use DntLibrary\Base\Api;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\DntUpload;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Vendor;
+
 if (isset($_POST['sent'])) {
     $query = $query = "SELECT * FROM dnt_users";
     $table = "dnt_users";

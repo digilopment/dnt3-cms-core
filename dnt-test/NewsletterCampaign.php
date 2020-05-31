@@ -1,5 +1,11 @@
 <?php
 
+namespace DntTest;
+
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Vendor;
+
 class NewsletterCampaignTest
 {
 

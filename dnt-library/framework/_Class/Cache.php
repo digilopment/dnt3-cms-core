@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       Cache
  *  author      Tomas Doubek
@@ -11,7 +12,15 @@
  *  Rewritovana adresa je len vtedy, ak sa namiesto `index.php?src=` nahradi nicim
  */
 
-class Cache {
+namespace DntLibrary\Base;
+
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\DntLog;
+use DntLibrary\Base\MultyLanguage;
+
+class Cache
+{
 
     var $doNotCache = array("rpc");
     var $cacheDir = "dnt-cache";
@@ -22,11 +31,12 @@ class Cache {
     var $cacheLogFile;
     var $cacheLog;
     var $CACHE_ADDR;
-    
+
     /**
      * 
      */
-    function __construct() {
+    function __construct()
+    {
         $this->cacheFile = base64_encode(@$_SERVER['HTTP_HOST'] . @$_SERVER['REQUEST_URI']);
         $this->cacheFileName = $this->cacheDir . '/' . $this->cacheFile . '.txt';
         $this->cacheLogFile = $this->cacheDir . "/log.txt";
@@ -41,7 +51,8 @@ class Cache {
     /**
      * 
      */
-    function start() {
+    function start()
+    {
         $dntLog = new DntLog;
         $location = array_slice(explode('/', @$_SERVER['HTTP_HOST'] . @$_SERVER['REQUEST_URI']), 2);
         if (!in_array(@$location[0], $this->doNotCache)) {
@@ -64,12 +75,13 @@ class Cache {
             }
         }
     }
-    
+
     /**
      * 
      * @return boolean
      */
-    function end() {
+    function end()
+    {
         if ($this->caching) {
             @file_put_contents($this->cacheFileName, ob_get_contents());
             ob_end_flush();
@@ -84,7 +96,8 @@ class Cache {
      * @param type $location
      * @return boolean
      */
-    function purge($location) {
+    function purge($location)
+    {
         $location = base64_encode($location);
         $this->cacheLog[$location] = 0;
         if (file_put_contents($this->cacheLogFile, serialize($this->cacheLog)))
@@ -98,9 +111,10 @@ class Cache {
      * @param type $name_url
      * @return string
      */
-    public function deteleAllLangs($name_url) {
+    public function deteleAllLangs($name_url)
+    {
         $multylanguages = new MultyLanguage;
-        $db = new Db;
+        $db = new DB;
         $query = $multylanguages->getLangs();
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
@@ -117,15 +131,16 @@ class Cache {
      * 
      * @param type $location
      */
-    public function delete($location) {
+    public function delete($location)
+    {
         //$location = base64_encode(@$_SERVER['HTTP_HOST'] . WWW_FOLDERS . $location);
         //echo $location;
-		$location =  base64_encode($location);
+        $location = base64_encode($location);
         $dir = "../dnt-cache/";
         if (is_dir($dir)) {
             if ($dh = opendir($dir)) {
                 while (($file = readdir($dh)) !== false) {
-					
+
                     if (preg_match('/' . $location . '/', $file)) {
                         $fileName = $dir . $file;
                         unlink($fileName);
@@ -140,7 +155,8 @@ class Cache {
      * 
      * @return boolean
      */
-    function purge_all() {
+    function purge_all()
+    {
         if (file_exists($this->cacheLogFile)) {
             foreach ($this->cacheLog as $key => $value)
                 $this->cacheLog[$key] = 0;
@@ -155,7 +171,8 @@ class Cache {
      * 
      * @param type $path
      */
-    public function deleteOld($path) {
+    public function deleteOld($path)
+    {
         $dnt = new Dnt;
         $dir = $path;
         if (is_dir($dir)) {
@@ -176,26 +193,25 @@ class Cache {
             }
         }
     }
-	
-	
-	public function deleteCacheByDomain($path, $domain){
-		$dir = $path;
-		//$domain = str_replace("www", "", $domain);
-		$domain = str_replace("=", "", base64_encode($domain));
-		$domain = str_replace("=", "", $domain);
-		$domain = str_replace("=", "", $domain);
-		$domain = substr($domain, 0, -3);
-		if (is_dir($dir)) {
-			if ($dh = opendir($dir)) {
-				while (($filename = readdir($dh)) !== false) {
-					if(Dnt::in_string($domain, $filename)){
-						 @unlink($dir . $filename);
-					}
-				}
-				closedir($dh);
-			}
-		}
-		
-	}
+
+    public function deleteCacheByDomain($path, $domain)
+    {
+        $dir = $path;
+        //$domain = str_replace("www", "", $domain);
+        $domain = str_replace("=", "", base64_encode($domain));
+        $domain = str_replace("=", "", $domain);
+        $domain = str_replace("=", "", $domain);
+        $domain = substr($domain, 0, -3);
+        if (is_dir($dir)) {
+            if ($dh = opendir($dir)) {
+                while (($filename = readdir($dh)) !== false) {
+                    if (Dnt::in_string($domain, $filename)) {
+                        @unlink($dir . $filename);
+                    }
+                }
+                closedir($dh);
+            }
+        }
+    }
 
 }

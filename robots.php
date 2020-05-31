@@ -8,6 +8,12 @@
  *  author: Digilopment
  * 
  */
+
+namespace Robots;
+
+use DntLibrary\App\Bootstrap;
+use DntLibrary\Base\Vendor;
+
 (new class
 {
 

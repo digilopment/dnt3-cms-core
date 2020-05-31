@@ -1,5 +1,11 @@
 <?php
 
+namespace DntJobs;
+
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Install;
+use DntLibrary\Base\Rest;
+
 class DbExportJob
 {
 

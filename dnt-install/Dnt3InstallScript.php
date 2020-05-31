@@ -9,9 +9,11 @@
  * *
  * 
  */
-class Dnt3InstallScript {
+class Dnt3InstallScript
+{
 
-    protected static function downloadFile($url, $path) {
+    protected static function downloadFile($url, $path)
+    {
         $file = explode("/", $url);
         $array = $file;
         if (!is_array($array))
@@ -26,7 +28,8 @@ class Dnt3InstallScript {
         return true;
     }
 
-    protected static function recurse_copy($src, $dst) {
+    protected static function recurse_copy($src, $dst)
+    {
         $dir = opendir($src);
         @mkdir($dst);
         while (false !== ( $file = readdir($dir))) {
@@ -41,7 +44,8 @@ class Dnt3InstallScript {
         closedir($dir);
     }
 
-    protected static function rrmdir($src) {
+    protected static function rrmdir($src)
+    {
         $dir = opendir($src);
         while (false !== ( $file = readdir($dir))) {
             if (( $file != '.' ) && ( $file != '..' )) {
@@ -57,7 +61,8 @@ class Dnt3InstallScript {
         rmdir($src);
     }
 
-    public function run() {
+    public function run()
+    {
         $projectFolder = "dnt3/";
 
         if (self::downloadFile("https://github.com/designdnt/cms-designdnt3/archive/master.zip", "")) {

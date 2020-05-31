@@ -1,5 +1,11 @@
 ﻿<?php
 
+namespace DntJobs;
+
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Rest;
+
 class ImportMarkizaEmailsJob
 {
 
@@ -10,7 +16,7 @@ class ImportMarkizaEmailsJob
 
     protected function countEmails()
     {
-        $db = new Db;
+        $db = new DB;
         $query = "SELECT email FROM dnt_mailer_mails WHERE cat_id = '" . $this->catId . "' AND vendor_id = '" . $this->vendorId . "'";
         $emails = [];
         foreach ($db->get_results($query) as $row) {
@@ -21,7 +27,7 @@ class ImportMarkizaEmailsJob
 
     protected function writeToDb($email)
     {
-        $db = new Db;
+        $db = new DB;
         $name = "";
         $surname = "";
         $table = "dnt_mailer_mails";
@@ -41,7 +47,7 @@ class ImportMarkizaEmailsJob
 
     protected function deleteFromDb($email)
     {
-        $db = new Db;
+        $db = new DB;
         $where = array(
             'email' => $email,
             'vendor_id' => $this->vendorId
@@ -53,7 +59,7 @@ class ImportMarkizaEmailsJob
     {
 
         $table = "dnt_mailer_mails";
-        $db = new Db;
+        $db = new DB;
 
         $query = "SELECT email FROM $table WHERE cat_id = '" . $this->catId . "' AND vendor_id = '" . $this->vendorId . "'";
         foreach ($db->get_results($query) as $row) {
@@ -89,20 +95,20 @@ class ImportMarkizaEmailsJob
             }
         }
     }
-	
-	protected function countUniqueNews()
+
+    protected function countUniqueNews()
     {
         $this->dbEmails();
         $this->fileEmails("data/ak2019.csv");
 
         //INSERT
-		$i=0;
+        $i = 0;
         foreach ($this->fileEmails as $fileEmail) {
             if (!in_array($fileEmail, $this->dbEmails)) {
                 $i++;
             }
         }
-		echo "Nových emailov " . $i;
+        echo "Nových emailov " . $i;
     }
 
     protected function delete()
@@ -131,7 +137,7 @@ class ImportMarkizaEmailsJob
         if ((new Rest())->get('count')) {
             print $this->countEmails();
         }
-		 if ((new Rest())->get('countUniqueNews')) {
+        if ((new Rest())->get('countUniqueNews')) {
             print $this->countUniqueNews();
         }
     }

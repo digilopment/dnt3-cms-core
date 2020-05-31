@@ -1,6 +1,19 @@
 <?php
-   function adminFunctionsExists(){}
-   function get_top()
+
+use DntLibrary\Base\AdminContent;
+use DntLibrary\Base\AdminMailer;
+use DntLibrary\Base\AdminUser;
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\FileAdmin;
+use DntLibrary\Base\Image;
+use DntLibrary\Base\MultyLanguage;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Settings;
+use DntLibrary\Base\Vendor;
+
+function adminFunctionsExists(){}
+function get_top()
    {
        ?>
 <!DOCTYPE html>
@@ -186,7 +199,7 @@
       <ul class="nav nav-tabs">
          <li class="active"><a href="#home-lang" data-toggle="tab">Defaultný jazyk</a></li>
          <?php
-            $db = new Db;
+            $db = new DB;
             $multylanguages = new MultyLanguage;
             $query = $multylanguages->getLangs();
             if ($db->num_rows($query) > 0) {
@@ -202,7 +215,7 @@
          {
              ?>
       <?php
-         $db = new Db;
+         $db = new DB;
          $rest = new Rest;
          $id = $rest->get('post_id');
          $multylanguages = new MultyLanguage;
@@ -302,7 +315,7 @@
 <?php
    function admin_menu()
    {
-       $db = new Db;
+       $db = new DB;
        $admin = new AdminUser;
        $andWhere = false;
        $reset = new Rest;
@@ -714,7 +727,7 @@
 <?php
    function get_typ_zaradenie($cat_id, $sub_cat_id, $type)
    {
-       $db = new Db;
+       $db = new DB;
        ?>
 <h5>Zaradenie postu v rámci typu:<br/></h5>
 <select name="type" id="cname" class="form-control" minlength="2" required style="">
@@ -960,7 +973,7 @@
    function galleryChooser($keyId, $selected = false, $limit = false)
    {
        $rest = new Rest;
-       $db = new Db;
+       $db = new DB;
        $image = new Image;
        if ($limit) {
            $limit = $limit;

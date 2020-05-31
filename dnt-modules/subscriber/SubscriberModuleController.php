@@ -1,5 +1,11 @@
 <?php
 
+namespace DntModules\Controllers;
+
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Vendor;
+
 class SubscriberModuleController
 {
 
@@ -46,9 +52,9 @@ class SubscriberModuleController
         $vendor_id = base64_decode(urldecode($this->rest->get('vendor_id')));
         $status = base64_decode(urldecode($this->rest->get('status')));
         $id_entity = base64_decode(urldecode($this->rest->get('id_entity')));
-        
+
         $this->test();
-        
+
         if ($status == 1 || $status = 0) {
 
             $this->db->update(

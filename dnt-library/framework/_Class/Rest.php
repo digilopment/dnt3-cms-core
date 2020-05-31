@@ -7,7 +7,14 @@
  *  package     dnt3
  *  date        2017
  */
-class Rest {
+
+namespace DntLibrary\Base;
+
+use DntView\Layout\Configurator;
+use function custom_modules;
+
+class Rest
+{
 
     var $get; //variable of get result
     var $post; //variable of get post
@@ -19,7 +26,8 @@ class Rest {
      * @return type
      * this method creat a GET method of `default` and `rewrited` addr
      */
-    public function get($get) {
+    public function get($get)
+    {
         $return = false;
         if (isset($_GET[SRC]) && $get == SRC) {
             $return = $_GET[SRC];
@@ -47,7 +55,8 @@ class Rest {
      * domain redirector 
      * @param type $stillRedirect
      */
-    public function redirectToDomain($stillRedirect = 0) {
+    public function redirectToDomain($stillRedirect = 0)
+    {
 
         if ($stillRedirect == 0) {
             if ($GLOBALS['DB_DOMAIN']) {
@@ -112,7 +121,8 @@ class Rest {
      * @param type $thisArg
      * @return boolean
      */
-    public function webhook($thisArg = false) {
+    public function webhook($thisArg = false)
+    {
         if ($thisArg === false) {
             return $GLOBALS['WEBHOOKS'];
         } else {
@@ -124,7 +134,8 @@ class Rest {
         }
     }
 
-    public static function getModulUrl($module) {
+    public static function getModulUrl($module)
+    {
         $webhook = new Webhook();
         $url = $webhook->getSitemapModules($module);
         return $url[0];
@@ -134,8 +145,8 @@ class Rest {
      * 
      * @return type
      */
-    
-     protected function oldModulesRegistrator(){
+    protected function oldModulesRegistrator()
+    {
         $file = "dnt-view/layouts/" . Vendor::getLayout() . "/conf.php";
         if (file_exists($file)) {
             include_once $file;
@@ -149,8 +160,9 @@ class Rest {
         }
         return $custom_modules;
     }
-    
-    public function getModul() {
+
+    public function getModul()
+    {
         if ($GLOBALS['GET_MODUL']) {
             return $GLOBALS['GET_MODUL'];
         }
@@ -161,13 +173,13 @@ class Rest {
             $configurator = new Configurator();
             if (method_exists($configurator, 'modulesRegistrator')) {
                 $modulesRegistrator = $configurator->modulesRegistrator();
-            }else{
+            } else {
                 $modulesRegistrator = array();
             }
-        }else{
+        } else {
             $modulesRegistrator = $this->oldModulesRegistrator();
         }
-        
+
         $webhook = new Webhook();
         $this->webhook = $webhook->get($modulesRegistrator);
         foreach (array_keys($this->webhook) as $this->index) {
@@ -214,7 +226,8 @@ class Rest {
     /**
      * 
      */
-    public function loadModul() {
+    public function loadModul()
+    {
         $module = $this->getModul();
         //$function = "dnt-modules/" . $module . "/functions.php";
 
@@ -235,7 +248,8 @@ class Rest {
     /**
      * 
      */
-    public function loadDefault() {
+    public function loadDefault()
+    {
         $layout = Vendor::getLayout();
         if ($layout) {
             include "dnt-view/layouts/" . Vendor::getLayout() . "/modules/default/webhook.php";
@@ -248,7 +262,8 @@ class Rest {
      * 
      * @param type $module
      */
-    public function loadMyModul($module) {
+    public function loadMyModul($module)
+    {
         $layout = Vendor::getLayout();
         $function = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/functions.php";
         $template = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/webhook.php";
@@ -267,7 +282,8 @@ class Rest {
      * @param type $post
      * @return type
      */
-    public function post($post) {
+    public function post($post)
+    {
         if (isset($_POST[$post])) {
             $this->post = @$_POST[$post];
         } else {
@@ -282,7 +298,8 @@ class Rest {
      * @param type $arr
      * @return type
      */
-    public function setGet($arr) {
+    public function setGet($arr)
+    {
         foreach ($arr as $key => $value) {
             $get_s[] = "$key=$value";
         }
@@ -296,7 +313,8 @@ class Rest {
      * @param type $input
      * @return type
      */
-    public function escape($input) {
+    public function escape($input)
+    {
         $this->escape = mysql_real_escape_string($input);
         return $this->escape;
     }
@@ -305,7 +323,8 @@ class Rest {
      * 
      * @return boolean
      */
-    public function isAdmin() {
+    public function isAdmin()
+    {
         if (Dnt::in_string("dnt-admin", WWW_FULL_PATH)) {
             return true;
         } else {

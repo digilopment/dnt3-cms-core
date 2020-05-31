@@ -1,5 +1,7 @@
 <?php
 
+namespace DntTest;
+
 class PointerTest
 {
 

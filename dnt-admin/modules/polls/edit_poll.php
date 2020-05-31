@@ -1,5 +1,9 @@
-
-<?php get_top(); ?>
+<?php 
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Image;
+use DntLibrary\Base\Polls;
+use DntLibrary\Base\PollsFrontend;
+get_top(); ?>
 <?php get_top_html(); ?>
 <?php
    $poll_id = $rest->get("post_id");

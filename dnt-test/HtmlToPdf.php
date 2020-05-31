@@ -1,5 +1,11 @@
 <?php
 
+namespace DntTest;
+
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Pdf;
+use DntLibrary\Base\Rest;
+
 class HtmlToPdfTest
 {
 
@@ -44,7 +50,7 @@ class HtmlToPdfTest
         }
 
         $this->pdf->prepareHtmlToRender($path, $pdfName, $html);
-        
+
         print $this->htmlTemplate();
         print ('<a href="' . WWW_PATH . $path . $pdfName . '" target="_blank">Open</a>');
     }

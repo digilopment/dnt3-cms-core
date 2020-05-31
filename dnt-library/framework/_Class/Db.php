@@ -44,6 +44,12 @@
   Examples below assume the class has been iniated using $database = DB::getInstance();
  * ****************************** */
 
+namespace DntLibrary\Base;
+
+use mysqli;
+use Swoole\MySQL\Exception;
+use function mb_internal_encoding;
+
 class DB
 {
 

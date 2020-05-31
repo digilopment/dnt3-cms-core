@@ -1,4 +1,7 @@
 <?php
+
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\DntUpload;
 $dnt = new Dnt;
 if(isset($_POST['sent'])){
 	$dntUpload 	= new DntUpload;

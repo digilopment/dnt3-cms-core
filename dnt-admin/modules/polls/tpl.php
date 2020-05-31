@@ -1,5 +1,7 @@
+<?php 
+use DntLibrary\Base\Polls;
 
-<?php get_top(); ?>
+get_top(); ?>
 <?php get_top_html(); ?>
 
 <section class="content">

@@ -1,8 +1,17 @@
 <?php
 
-class SkeletonController extends BaseController {
+namespace DntView\Layout\Modul;
 
-    public function run() {
+use DntLibrary\App\BaseController;
+use DntLibrary\Base\ArticleView;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Frontend;
+
+class SkeletonController extends BaseController
+{
+
+    public function run()
+    {
         $article = new ArticleView;
         $id = $article->getStaticId();
         if ($id) {

@@ -1,5 +1,17 @@
 <?php
 
+namespace DntLibrary\App;
+
+use DntAdmin\App\RouterAdmin;
+use DntLibrary\App\Autoloader;
+use DntLibrary\App\Modul;
+use DntLibrary\App\Post;
+use DntLibrary\Base\Cache;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\DntLog;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Settings;
+
 class App
 {
 
@@ -31,6 +43,7 @@ class App
 
 
         if ($this->modul->name) {
+            $GLOBALS['VENDOR_MODULE'] = $this->modul->name;
             $this->dntLog->add(array(
                 "http_response" => 200,
                 "system_status" => "web_log",
@@ -77,8 +90,13 @@ class App
     protected function inicialization($type, $starter = false)
     {
         $controll = (new Rest())->webhook(2);
-
         $classFile = (new Autoloader())->className($controll);
+
+        if ($type == 'Job') {
+            $nameSpace = '\DntJobs\\';
+        } else {
+            $nameSpace = '\Dnt' . $type . '\\';
+        }
 
         $file = './' . $classFile . '.php';
         $className = $classFile . $type;
@@ -87,14 +105,14 @@ class App
                 $classFile = (new Autoloader())->className($starter);
                 $className = $classFile . $type;
             } else {
-                die($type . ' does not exists');
+                die($type . ' file does not exists');
             }
         }
-        foreach ($this->dynamicLoad('./') as $file) {
-            if (file_exists($file)) {
-                include $file;
-            }
+        
+        if (file_exists($file)) {
+            include_once $file;
         }
+        $className = $nameSpace . $className;
         if (class_exists($className)) {
             $jobClass = new $className();
             $jobClass->run();

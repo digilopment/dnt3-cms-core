@@ -7,6 +7,14 @@
  *  package     dnt3
  *  date        2017
  */
+
+namespace DntLibrary\Base;
+
+use DntLibrary\Base\AdminContent;
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Vendor;
+
 class AdminMailer
 {
 
@@ -68,7 +76,7 @@ class AdminMailer
      */
     protected function prepare_query($is_limit)
     {
-        $db = new Db();
+        $db = new DB();
 
         if (isset($_GET['filter']) && $_GET['filter'] != "")
             $typ = "AND cat_id = '" . $_GET['filter'] . "'";
@@ -87,8 +95,9 @@ class AdminMailer
         $query = "SELECT * FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . Vendor::getId() . "' " . $typ . " ORDER BY `id` DESC " . $limit . "";
         return $query;
     }
-    
-    public function getAll(){
+
+    public function getAll()
+    {
         return self::prepare_query(false);
     }
 
@@ -98,7 +107,7 @@ class AdminMailer
      */
     public function query()
     {
-        $db = new Db;
+        $db = new DB;
 
         if (isset($_GET['page'])) {
             $returnPage = "&page=" . $_GET['page'];
@@ -133,7 +142,7 @@ class AdminMailer
      */
     public function getPage($index, $countPages = false)
     {
-        $db = new Db;
+        $db = new DB;
 
         if (isset($_GET['page'])) {
             $strana = $_GET['page'];

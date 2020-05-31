@@ -7,7 +7,13 @@
  *  package     dnt3
  *  date        2017
  */
-Class Xlsx {
+
+namespace DntLibrary\Base;
+
+use DntLibrary\Base\Vendor;
+
+class Xlsx
+{
 
     /**
      * 
@@ -16,7 +22,8 @@ Class Xlsx {
      * @param type $pdfName
      * @param type $html
      */
-    public function read($path, $fileName) {
+    public function read($path, $fileName)
+    {
         $vendor = new Vendor;
         $filePath = $path . "dnt-view/data/uploads/" . $fileName;
         $excel_data = false;
@@ -43,7 +50,8 @@ Class Xlsx {
      * @param type $fileName
      * @param type $fullPath
      */
-    public function toArray($path, $fileName, $fullPath = false) {
+    public function toArray($path, $fileName, $fullPath = false)
+    {
         $vendor = new Vendor;
         if ($fullPath != false) {
             $filePath = $fullPath;

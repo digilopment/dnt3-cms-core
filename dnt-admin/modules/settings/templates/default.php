@@ -1,4 +1,13 @@
 <?php
+
+use DntAdmin\App\Helper;
+use DntLibrary\Base\AdminUser;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Image;
+use DntLibrary\Base\MultyLanguage;
+use DntLibrary\Base\Settings;
+use DntLibrary\Base\Vendor;
+
 get_top();
 get_top_html();
 $settings = $data['settings'];

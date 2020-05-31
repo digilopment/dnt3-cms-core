@@ -1,13 +1,21 @@
 <?php
 
-class AplicationInstall {
+namespace DntInstall;
+
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Install;
+use DntLibrary\Base\Url;
+
+class AplicationInstall
+{
 
     protected $msg;
     protected $skel;
     protected $web;
     protected $adm;
 
-    protected function template() {
+    protected function template()
+    {
         print ('<!DOCTYPE html>
 	<html lang="sk">
 	  <head>
@@ -29,7 +37,8 @@ class AplicationInstall {
 	</html>');
     }
 
-    public function run() {
+    public function run()
+    {
         $install = new Install();
         $this->web = Url::get("WWW_PATH") . "?t=" . Dnt::timestamp();
         $this->skel = Url::get("WWW_PATH") . "skeleton?t=" . Dnt::timestamp();

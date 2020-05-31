@@ -1,5 +1,10 @@
 <?php
 
+namespace DntAdmin\Moduls;
+
+use DntAdmin\App\AdminController;
+use DntLibrary\Base\DntLog;
+
 class StatisticsController extends AdminController
 {
 

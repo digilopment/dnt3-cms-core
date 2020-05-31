@@ -8,6 +8,12 @@
  *  author: Digilopment
  * 
  */
+
+namespace Index;
+
+use DntLibrary\App\App;
+use DntLibrary\App\Bootstrap;
+
 (new class
 {
 

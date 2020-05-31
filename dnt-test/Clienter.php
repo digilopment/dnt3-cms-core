@@ -1,11 +1,23 @@
 <?php
 
-class ClienterTest {
+namespace DntTest;
 
-    public function run() {
-        $client = new Client();
-        $client->init();
-        var_dump($client);
+use DntLibrary\App\Client;
+
+class ClienterTest
+{
+
+    protected $client;
+
+    public function __construct()
+    {
+        $this->client = new Client();
+    }
+
+    public function run()
+    {
+        $this->client->init();
+        var_dump($this->client);
     }
 
 }

@@ -7,15 +7,26 @@
  *  package     dnt3
  *  date        2017
  */
-class Settings {
+
+namespace DntLibrary\Base;
+
+use DntLibrary\Base\DB;
+use DntView\Layout\Configurator;
+use DntLibrary\Base\Dnt;
+use function websettings;
+
+class Settings
+{
 
     /**
      * 
      * @param type $key
      * @return boolean
      */
-    public static function get($key) {
-        $db = new Db;
+    public static function get($key)
+    {
+        $db = new DB;
+        ;
         $query = "SELECT value FROM dnt_settings WHERE `key` = '" . $key . "' AND `vendor_id` = '" . Vendor::getId() . "'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
@@ -26,13 +37,30 @@ class Settings {
         }
     }
 
+    public function global()
+    {
+        $dnt = new Dnt();
+        $parsed = [];
+        foreach (array_keys($GLOBALS) as $key) {
+            $parsed[strtolower($key)] = $GLOBALS[$key];
+        }
+
+        foreach ($parsed['globals']['GLOBALS'] as $key2 => $val) {
+            $final[strtolower($key2)] = $GLOBALS[$key2];
+        }
+        
+        return (object) $final;
+    }
+
     /**
      * 
      * @param type $key
      * @return boolean
      */
-    public static function show($key) {
-        $db = new Db;
+    public static function show($key)
+    {
+        $db = new DB;
+        ;
         $query = "SELECT * FROM dnt_settings WHERE `key` = '" . $key . "' AND `vendor_id` = '" . Vendor::getId() . "' AND `show` = '1'";
         if ($db->num_rows($query) > 0) {
             return true;
@@ -46,8 +74,10 @@ class Settings {
      * @param type $catId
      * @return boolean
      */
-    public function customMeta($catId = false) {
-        $db = new Db;
+    public function customMeta($catId = false)
+    {
+        $db = new DB;
+        ;
         if ($catId) {
             $query = "SELECT * FROM dnt_settings WHERE `type` = '$catId' AND `vendor_id` = '" . Vendor::getId() . "' ORDER BY `order`";
         } else {
@@ -64,8 +94,10 @@ class Settings {
      * 
      * @return type
      */
-    public function getMetaData() {
-        $db = new Db;
+    public function getMetaData()
+    {
+        $db = new DB;
+        ;
         $query = "SELECT * FROM dnt_settings WHERE `type` = 'custom' AND `vendor_id` = '" . Vendor::getId() . "'";
 
         if ($db->num_rows($query) > 0) {
@@ -82,8 +114,9 @@ class Settings {
      * 
      * @return type
      */
-    public function getAllSettings() {
-        $db = new Db;
+    public function getAllSettings()
+    {
+        $db = new DB;
         $query = "SELECT * FROM dnt_settings WHERE `vendor_id` = '" . Vendor::getId() . "'";
 
         if ($db->num_rows($query) > 0) {
@@ -101,9 +134,11 @@ class Settings {
      * @param type $key
      * @return boolean
      */
-    public static function getImage($key) {
+    public static function getImage($key)
+    {
 
-        $db = new Db;
+        $db = new DB;
+        ;
         if (is_numeric($key)) {
             $imageId = $key;
         } else {
@@ -124,7 +159,8 @@ class Settings {
      * 
      * @return type
      */
-    public static function showStatus() {
+    public static function showStatus()
+    {
         return array(
             "0" => "Vymazať",
             "1" => "Publikovať post",
@@ -133,8 +169,8 @@ class Settings {
         );
     }
 
-    
-    protected static function settingsConf(){
+    protected static function settingsConf()
+    {
         $settingsData = false;
         $conf = "../dnt-view/layouts/" . Vendor::getLayout() . "/conf.php";
         if (!function_exists("websettings")) {
@@ -145,22 +181,23 @@ class Settings {
                 }
             }
         }
-        
+
         return $settingsData;
     }
-    
-     protected static function settingsConfigurator(){
+
+    protected static function settingsConfigurator()
+    {
         $file = "../dnt-view/layouts/" . Vendor::getLayout() . "/Configurator.php";
         $modulesRegistrator = false;
         if (!class_exists('Configurator')) {
             if (file_exists($file)) {
-                include $file;
+                include_once $file;
                 $configurator = new Configurator();
                 if (method_exists($configurator, 'metaSettings')) {
                     $modulesRegistrator = $configurator->metaSettings();
                 }
             }
-        }else{
+        } else {
             $configurator = new Configurator();
             if (method_exists($configurator, 'metaSettings')) {
                 $modulesRegistrator = $configurator->metaSettings();
@@ -168,21 +205,22 @@ class Settings {
         }
         return $modulesRegistrator;
     }
-    
+
     /**
      * 
      */
-    public function loadNewSettingsFromConf() {
-        if(self::settingsConfigurator()){
+    public function loadNewSettingsFromConf()
+    {
+        if (self::settingsConfigurator()) {
             $settingsData = self::settingsConfigurator();
-        }else{
+        } else {
             $settingsData = self::settingsConf();
         }
         if ($settingsData) {
-            
+
             $result = array();
             $existingKey = array();
-            
+
             foreach ($settingsData as $key => $value) {
                 $configKeys[] = $value['`key`'];
             }
@@ -201,7 +239,8 @@ class Settings {
                     continue;
                 }
             }
-            $db = new Db;
+            $db = new DB;
+            ;
             foreach ($arrOfConfigKeys as $key) {
                 $db->insert('dnt_settings', $settingsData[$key]);
             }

@@ -1,11 +1,15 @@
 <?php
+
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Rest;
+
 get_top();
 get_top_html();
 $name = !empty($data['order']['company_name']) ? $data['order']['company_name'] : $data['order']['name'] . ' ' . $data['order']['surname'];
 //osetrenie vstupov
 if ($data['order']['datetime_publish'] == "0000-00-00 00:00:00") {
     $datetime_publish = Dnt::datetime();
-}else{
+} else {
     $datetime_publish = $data['order']['datetime_publish'];
 }
 ?>
@@ -45,12 +49,12 @@ if ($data['order']['datetime_publish'] == "0000-00-00 00:00:00") {
     <div class="row">
         <div class="col-md-12">
             <h3><i class="fa fa-file-o"></i> <?php echo $data['order']['order_id'] . ' ' . $name ?></h3>
-            <h4>Celková suma objednávky: <b><?php echo $data['orderSum']?> €</b> 
+            <h4>Celková suma objednávky: <b><?php echo $data['orderSum'] ?> €</b> 
                 <br/>Zaplatené v hotovosti: <b><?php echo $data['order']['from_cash']; ?> €</b>, Zaplatené kartou: <b><?php echo $data['order']['from_account']; ?> €</b>
-                <?php if($data['order']['percentage_discount'] > 0 ){?>
-                
+                <?php if ($data['order']['percentage_discount'] > 0) { ?>
+
                 <?php } ?>
-                <br/>Zostáva zaplatiť: <b><?php echo $data['toBePaid'];?> €</b></h4>
+                <br/>Zostáva zaplatiť: <b><?php echo $data['toBePaid']; ?> €</b></h4>
         </div>
     </div>
     <form action="index.php?src=invoices&action=update&id_entity=<?php echo $data['order']['id']; ?>" method="POST">
@@ -227,20 +231,21 @@ if ($data['order']['datetime_publish'] == "0000-00-00 00:00:00") {
                 <h3 class="grid-title"><i class="fa fa-product-hunt"></i>
                     <span class="btn btn-primary" data-toggle="modal" data-target="#image_picker_products" style="font-size: 12px;"><i class="fa fa-print"></i> Pridať produkt</span>
                 </h3>
-                
-                <?php 
+
+                <?php
                 //return POST['gallery_key_products']
-                productsChooser($data['products']); ?>
+                productsChooser($data['products']);
+                ?>
             </div>
             <div class="col-md-12">
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <tbody>
-                            <?php foreach ($data['orderProducts'] as $product) { ?>
+<?php foreach ($data['orderProducts'] as $product) { ?>
                                 <tr>
                                     <!-- id -->
                                     <td class="number text-center">
-                                        <?php echo $product['id_entity']; ?>													
+    <?php echo $product['id_entity']; ?>													
                                     </td>
                                     <!--nazov a popis -->
                                     <td class="">
@@ -259,24 +264,24 @@ if ($data['order']['datetime_publish'] == "0000-00-00 00:00:00") {
                                     </td>
                                     <!-- zvýšiť o jeden -->
                                     <td style="width:20px" class="price text-right">
-                                        <a onclick="return confirm('Zvýšiť počet o 1');" href="index.php?src=invoices&action=add_to_cart&order_id=<?php echo (new Rest())->get('id_entity') ?>&count=1&id_entity=<?php echo $product['id_entity']?>">
+                                        <a onclick="return confirm('Zvýšiť počet o 1');" href="index.php?src=invoices&action=add_to_cart&order_id=<?php echo (new Rest())->get('id_entity') ?>&count=1&id_entity=<?php echo $product['id_entity'] ?>">
                                             <i class="fa fa-plus bg-blue action"></i>
                                         </a>											
                                     </td>
                                     <!-- znizit o jeden -->
                                     <td style="width:20px" class="price text-right">
-                                        <a onclick="return confirm('Znížiť počet o 1');" href="index.php?src=invoices&action=add_to_cart&order_id=<?php echo (new Rest())->get('id_entity') ?>&count=-1&id_entity=<?php echo $product['id_entity']?>">
+                                        <a onclick="return confirm('Znížiť počet o 1');" href="index.php?src=invoices&action=add_to_cart&order_id=<?php echo (new Rest())->get('id_entity') ?>&count=-1&id_entity=<?php echo $product['id_entity'] ?>">
                                             <i class="fa fa-minus bg-orange action"></i>
                                         </a>											
                                     </td>
                                     <!-- vzmazat -->
                                     <td style="width:20px" class="price text-right">
-                                        <a onclick="return confirm('Naozaj chcete vymazať tento produkt?');" href="index.php?src=invoices&action=del_product&order_id=<?php echo (new Rest())->get('id_entity') ?>&product_id=<?php echo $product['id_entity']?>">
+                                        <a onclick="return confirm('Naozaj chcete vymazať tento produkt?');" href="index.php?src=invoices&action=del_product&order_id=<?php echo (new Rest())->get('id_entity') ?>&product_id=<?php echo $product['id_entity'] ?>">
                                             <i class="fa fa-trash bg-red action"></i>
                                         </a>											
                                     </td>
                                 </tr>
-                            <?php } ?>
+<?php } ?>
                         </tbody>
                     </table>
                 </div>

@@ -7,14 +7,21 @@
  *  package     dnt3
  *  date        2017
  */
-class Config {
+
+namespace DntLibrary\Base;
+
+use DntLibrary\Base\DB;
+
+class Config
+{
 
     /**
      * 
      * @param type $key
      * @return type
      */
-    public function getValue($key) {
+    public function getValue($key)
+    {
 
         $db = new DB(); //get instance
 

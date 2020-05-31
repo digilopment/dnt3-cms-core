@@ -7,14 +7,27 @@
  *  package     dnt3
  *  date        2019
  */
-class Modul extends Database {
+
+namespace DntLibrary\App;
+
+use DntLibrary\App\Autoloader;
+use DntLibrary\App\Database;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Vendor;
+use DntView\Layout\Configurator;
+use function custom_modules;
+
+class Modul extends Database
+{
 
     public $name;
     public $init;
     public $sitemapUrl;
+    public $modul;
 
-    protected function getSitemap($client) {
-        $this->sitemapUrl = "";
+    protected function getSitemap($client)
+    {
+        $this->sitemapUrl = '';
         $query = "SELECT id_entity, name_url, type, name, service FROM `dnt_posts` 
             WHERE `dnt_posts`.`type` = 'sitemap' 
             AND `dnt_posts`.`show` > '0' 
@@ -26,9 +39,10 @@ class Modul extends Database {
         }
     }
 
-    public function getSitemapModules($type = false) {
+    public function getSitemapModules($type = false)
+    {
 
-        if ($type == "static_view") {
+        if ($type == 'static_view') {
             $eQ = '';
         } else {
             if ($type) {
@@ -50,11 +64,11 @@ class Modul extends Database {
         return $arr;
     }
 
-    protected function hasPattern($request, $pattern) {
-        $request = explode("/", ltrim($request, "/"));
-        $pattern = explode("/", ltrim($pattern, "/"));
+    protected function hasPattern($request, $pattern)
+    {
+        $request = explode('/', ltrim($request, '/'));
+        $pattern = explode('/', ltrim($pattern, '/'));
         $returnString = false;
-
         $i = 0;
         $compareString = array();
         if (count($request) == count($pattern)) {
@@ -68,36 +82,37 @@ class Modul extends Database {
                 }
 
                 //digit
-                if ($singlPattern == "{digit}" && is_numeric($request[$i])) {
+                if ($singlPattern == '{digit}' && is_numeric($request[$i])) {
                     $compareString[] .= $request[$i];
                     $i++;
                 }
 
                 //eny
-                if ($singlPattern == "{eny}" && !empty($request[$i])) {
+                if ($singlPattern == '{eny}' && !empty($request[$i])) {
                     $compareString[] .= $request[$i];
                     $i++;
                 }
 
                 //alphabet
-                if ($singlPattern == "{alphabet}" && ctype_alpha(str_replace("-", "", $request[$i]))) {
+                if ($singlPattern == '{alphabet}' && ctype_alpha(str_replace('-', '', $request[$i]))) {
                     $compareString[] .= $request[$i];
                     $i++;
                 }
             }
 
             if ($i == count($request)) {
-                $returnString = "/" . join("/", $compareString);
+                $returnString = '/' . join('/', $compareString);
             }
         }
         return $returnString;
     }
 
-    protected function oldModulesRegistrator($client){
-        $file = "dnt-view/layouts/" . $client->layout . "/conf.php";
+    protected function oldModulesRegistrator($client)
+    {
+        $file = 'dnt-view/layouts/' . $client->layout . '/conf.php';
         if (file_exists($file)) {
             include_once $file;
-            if (function_exists("custom_modules")) {
+            if (function_exists('custom_modules')) {
                 $modulesRegistrator = custom_modules($this);
             } else {
                 $modulesRegistrator = array();
@@ -107,31 +122,51 @@ class Modul extends Database {
         }
         return $modulesRegistrator;
     }
-    
-    protected function get($client) {
-        $module = "";
-        
-        $file = "dnt-view/layouts/" . $client->layout . "/Configurator.php";
+
+    protected function getPattern($client, $modulesRegistrator)
+    {
+        foreach (array_keys($modulesRegistrator) as $index) {
+            foreach ($modulesRegistrator[$index] as $key => $modulUrl) {
+                if ($this->hasPattern($client->requestNoLang, '/' . $modulUrl) == $client->requestNoLang) {
+                    return $index;
+                }
+
+                if ('/' . $modulUrl == $client->requestNoParam) {
+                    return $index;k;
+                }
+
+                if ($modulUrl == $client->route(1)) {
+                    return $index;
+                }
+            }
+        }
+        return false;
+    }
+
+    protected function get($client)
+    {
+        //$module = '';
+        $file = 'dnt-view/layouts/' . $client->layout . '/Configurator.php';
         if (file_exists($file)) {
             include $file;
             $configurator = new Configurator();
             if (method_exists($configurator, 'modulesRegistrator')) {
                 $modulesRegistrator = $configurator->modulesRegistrator();
-            }else{
+            } else {
                 $modulesRegistrator = array();
             }
-        }else{
+        } else {
             $modulesRegistrator = $this->oldModulesRegistrator($client);
         }
-        
-        foreach (array_keys($modulesRegistrator) as $index) {
+
+        /*foreach (array_keys($modulesRegistrator) as $index) {
             foreach ($modulesRegistrator[$index] as $key => $modulUrl) {
-                if ($this->hasPattern($client->requestNoLang, "/" . $modulUrl) == $client->requestNoLang) {
+                if ($this->hasPattern($client->requestNoLang, '/' . $modulUrl) == $client->requestNoLang) {
                     $module = $index;
                     break;
                 }
 
-                if ("/" . $modulUrl == $client->requestNoParam) {
+                if ('/' . $modulUrl == $client->requestNoParam) {
                     $module = $index;
                     break;
                 }
@@ -141,14 +176,15 @@ class Modul extends Database {
                     break;
                 }
             }
-        }
+        }*/
+        $module = $this->getPattern($client, $modulesRegistrator);
 
-        if ($client->route(1) == "") {
-            $default = $client->getSetting("startovaci_modul"); //Settings::get("startovaci_modul");
+        if ($client->route(1) == '') {
+            $default = $client->getSetting('startovaci_modul'); //Settings::get('startovaci_modul');
             $moduleUrl = $this->getSitemapModules($default);
             if ($default && isset($moduleUrl[0])) {
                 if ($client->urlLang()) {
-                    $redirect = $client->wwwPath . $client->lang . "/" . $moduleUrl[0];
+                    $redirect = $client->wwwPath . $client->lang . '/' . $moduleUrl[0];
                 } else {
                     $redirect = $client->wwwPath . $moduleUrl[0];
                 }
@@ -162,19 +198,22 @@ class Modul extends Database {
         $this->init = true;
     }
 
-    public function ModuleControllerToModuleName($path) {
-        return ltrim(join('_', explode(' ', strtolower(preg_replace("([A-Z])", " $0", str_replace('ModuleController', '', pathinfo($path, PATHINFO_FILENAME)))))), '_');
+    public function ModuleControllerToModuleName($path)
+    {
+        return ltrim(join('_', explode(' ', strtolower(preg_replace('([A-Z])', ' $0', str_replace('ModuleController', '', pathinfo($path, PATHINFO_FILENAME)))))), '_');
     }
 
-    public function loadVendorModul($module) {
+    public function loadVendorModul($module)
+    {
         $layout = Vendor::getLayout();
-        $controller = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/" . (new Autoloader())->className($module) . "Controller.php";
-        $function = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/functions.php";
-        $webhook = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/webhook.php";
-        
+        $controller = 'dnt-view/layouts/' . $layout . '/modules/' . $module . '/' . (new Autoloader())->className($module) . 'Controller.php';
+        $function = 'dnt-view/layouts/' . $layout . '/modules/' . $module . '/functions.php';
+        $webhook = 'dnt-view/layouts/' . $layout . '/modules/' . $module . '/webhook.php';
+
         if (file_exists($controller)) {
             include $controller;
-            $clsName = (new Autoloader())->className($module) . "Controller";
+            $clsName = (new Autoloader())->className($module) . 'Controller';
+            $clsName = 'DntView\Layout\Modul\\' . $clsName;
             $moduleClass = new $clsName();
             $moduleClass->run();
         } else {
@@ -185,19 +224,22 @@ class Modul extends Database {
                 include $webhook;
             }
         }
-        
+
         //performance optimalization
         if (DEBUG_QUERY == 0 || DEBUG_QUERY === false) {
-            exit; 
+            exit;
         }
     }
 
-    public function load($client, $module) {
+    public function load($client, $module)
+    {
         $layout = $client->layout;
-        $globalController = "dnt-modules/" . $module . "/" . (new Autoloader())->className($module) . "ModuleController.php";
+        $GLOBALS['MODULE'] = $module;
+        $globalController = 'dnt-modules/' . $module . '/' . (new Autoloader())->className($module) . 'ModuleController.php';
         if (file_exists($globalController)) {
             include $globalController;
-            $clsName = (new Autoloader())->className($module) . "ModuleController";
+            $clsName = (new Autoloader())->className($module) . 'ModuleController';
+            $clsName = '\DntModules\Controllers\\' . $clsName;
             $moduleClass = new $clsName();
             $moduleClass->run();
         } else {
@@ -205,7 +247,8 @@ class Modul extends Database {
         }
     }
 
-    public function init($client) {
+    public function init($client)
+    {
         if (!$this->init) {
             $this->getSitemap($client);
             $this->get($client);

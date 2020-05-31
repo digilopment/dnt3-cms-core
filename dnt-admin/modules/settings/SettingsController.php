@@ -1,5 +1,18 @@
 <?php
 
+namespace DntAdmin\Moduls;
+
+use DntAdmin\App\AdminController;
+use DntLibrary\Base\Cache;
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\DntUpload;
+use DntLibrary\Base\Image;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Settings;
+use DntLibrary\Base\Vendor;
+use DntLibrary\Base\Webhook;
+
 class SettingsController extends AdminController
 {
 
@@ -13,7 +26,7 @@ class SettingsController extends AdminController
 
     public function __construct()
     {
-        $this->db = new Db();
+        $this->db = new DB();
         $this->rest = new Rest();
         $this->dntUpload = new DntUpload();
         $this->settings = new Settings();
@@ -250,7 +263,7 @@ class SettingsController extends AdminController
         $originDomain = $GLOBALS['ORIGIN_DOMAIN'];
         $dbDomain = $GLOBALS['DB_DOMAIN'];
         $this->cache->deleteCacheByDomain("../dnt-cache/", $originDomain);
-        $this->cache ->deleteCacheByDomain("../dnt-cache/", $dbDomain);
+        $this->cache->deleteCacheByDomain("../dnt-cache/", $dbDomain);
         Dnt::redirect("index.php?src=settings");
     }
 

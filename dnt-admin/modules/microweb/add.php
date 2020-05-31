@@ -1,8 +1,11 @@
-
-<?php get_top(); ?>
+<?php 
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Vendor;
+get_top(); ?>
 <?php
 get_top_html();
-$db = new Db;
+$db = new DB();
 $rest = new Rest;
 ?>
 <!-- BEGIN LEFT TABS -->

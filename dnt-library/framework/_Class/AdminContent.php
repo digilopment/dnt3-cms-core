@@ -1,5 +1,13 @@
 <?php
 
+namespace DntLibrary\Base;
+
+use DntLibrary\Base\AdminContent;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\MultyLanguage;
+use DntLibrary\Base\Vendor;
+use DntLibrary\Base\DB;
+
 /**
  *  class       AdminContent
  *  author      Tomas Doubek
@@ -42,7 +50,7 @@ class AdminContent extends MultyLanguage
      */
     public function getCatId($type)
     {
-        $db = new Db;
+        $db = new DB;
         $query = "SELECT id_entity FROM dnt_post_type WHERE name_url = '" . $type . "' AND `vendor_id` = '" . Vendor::getId() . "'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
@@ -60,7 +68,7 @@ class AdminContent extends MultyLanguage
      */
     public function getCatData($id_entity)
     {
-        $db = new Db;
+        $db = new DB;
         $query = "SELECT * FROM dnt_post_type WHERE id_entity = '" . $id_entity . "' AND `vendor_id` = '" . Vendor::getId() . "'";
         if ($db->num_rows($query) > 0) {
             return $db->get_results($query);
@@ -76,8 +84,8 @@ class AdminContent extends MultyLanguage
      */
     protected function prepare_query($is_limit)
     {
-        $db = new Db();
-        
+        $db = new DB();
+
         if (isset($_GET['included']) && $_GET['included'] == "article") {
             $typ = "AND sub_cat_id = '" . $_GET['filter'] . "'";
         } elseif (isset($_GET['included']) && isset($_GET['filter'])) {
@@ -94,28 +102,28 @@ class AdminContent extends MultyLanguage
         else
             $limit = $is_limit;
 
-        /*if (isset($_GET['included']) && $_GET['included'] == "article") {
-            $typ = "AND sub_cat_id = '" . $_GET['filter'] . "'";
-        } elseif (isset($_GET['included']) && $_GET['included'] == "sitemap-sub") {
-            $typ = "AND cat_id = '" . $_GET['filter'] . "'";
-        } elseif (isset($_GET['included']) && $_GET['included'] == "sitemap") {
-            $typ = "AND cat_id = '" . $_GET['filter'] . "'";
-        } elseif (isset($_GET['included']) && $_GET['included'] == "post") {
-            $typ = "AND cat_id = '" . $_GET['filter'] . "'";
-        } elseif (isset($_GET['included']) && $_GET['included'] != "") {
-            $typ = "AND cat_id = '" . $_GET['filter'] . "'";
-        } elseif (isset($_GET['filter']))
-            $typ = "AND sub_cat_id = '" . $_GET['filter'] . "'";
+        /* if (isset($_GET['included']) && $_GET['included'] == "article") {
+          $typ = "AND sub_cat_id = '" . $_GET['filter'] . "'";
+          } elseif (isset($_GET['included']) && $_GET['included'] == "sitemap-sub") {
+          $typ = "AND cat_id = '" . $_GET['filter'] . "'";
+          } elseif (isset($_GET['included']) && $_GET['included'] == "sitemap") {
+          $typ = "AND cat_id = '" . $_GET['filter'] . "'";
+          } elseif (isset($_GET['included']) && $_GET['included'] == "post") {
+          $typ = "AND cat_id = '" . $_GET['filter'] . "'";
+          } elseif (isset($_GET['included']) && $_GET['included'] != "") {
+          $typ = "AND cat_id = '" . $_GET['filter'] . "'";
+          } elseif (isset($_GET['filter']))
+          $typ = "AND sub_cat_id = '" . $_GET['filter'] . "'";
 
-        elseif (isset($_GET['search'])) {
-            $typ = "AND `name_url` LIKE '%" . Dnt::name_url($_GET['search']) . "%'";
-        } else
-            $typ = false;
+          elseif (isset($_GET['search'])) {
+          $typ = "AND `name_url` LIKE '%" . Dnt::name_url($_GET['search']) . "%'";
+          } else
+          $typ = false;
 
-        if ($is_limit == false)
-            $limit = false;
-        else
-            $limit = $is_limit;
+          if ($is_limit == false)
+          $limit = false;
+          else
+          $limit = $is_limit;
          */
 
         $query = "SELECT * FROM `dnt_posts` WHERE  `vendor_id` = '" . Vendor::getId() . "' " . $typ . " ORDER BY `order` DESC " . $limit . "";
@@ -128,7 +136,7 @@ class AdminContent extends MultyLanguage
      */
     public function query()
     {
-        $db = new Db;
+        $db = new DB;
 
         if (isset($_GET['page'])) {
             $returnPage = "&page=" . $_GET['page'];
@@ -163,7 +171,7 @@ class AdminContent extends MultyLanguage
      */
     public function getPage($index)
     {
-        $db = new Db;
+        $db = new DB;
 
         if (isset($_GET['page'])) {
             $strana = $_GET['page'];
@@ -254,7 +262,7 @@ class AdminContent extends MultyLanguage
      */
     public function getPostParam($column, $post_id)
     {
-        $db = new Db;
+        $db = new DB;
 
         $query = "SELECT `$column` FROM dnt_posts WHERE id_entity = '$post_id' AND vendor_id = '" . Vendor::getId() . "'";
         if ($db->num_rows($query) > 0) {

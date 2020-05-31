@@ -7,14 +7,23 @@
  *  package     dnt3
  *  date        2017
  */
-class XMLgenerator {
+
+namespace DntLibrary\Base;
+
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Image;
+
+class XMLgenerator
+{
 
     /**
      * 
      * @param type $array
      * @return type
      */
-    public function getColumn($array) {
+    public function getColumn($array)
+    {
         return array_keys($array);
     }
 
@@ -24,7 +33,8 @@ class XMLgenerator {
      * @param type $columns
      * @return boolean
      */
-    public function getTableColumns($table, $columns) {
+    public function getTableColumns($table, $columns)
+    {
 
         $db = new DB();
         $query = ("SELECT $columns FROM $table");
@@ -43,7 +53,8 @@ class XMLgenerator {
      * @param boolean $andWhere
      * @return boolean
      */
-    public function getSQLData($table, $andWhere) {
+    public function getSQLData($table, $andWhere)
+    {
         $db = new DB();
 
         if ($andWhere) {
@@ -70,7 +81,8 @@ class XMLgenerator {
      * @param type $id
      * @return boolean
      */
-    public function getTableRows($table, $columns, $id_entity) {
+    public function getTableRows($table, $columns, $id_entity)
+    {
         $db = new DB();
         $query = "SELECT $columns FROM $table WHERE id_entity = $id_entity";
         if ($db->num_rows($query) > 0) {
@@ -89,7 +101,8 @@ class XMLgenerator {
      * @param type $input
      * @return type
      */
-    public function arrayToXls($input) {
+    public function arrayToXls($input)
+    {
         // BoF
         $ret = pack('ssssss', 0x809, 0x8, 0x0, 0x10, 0x0, 0x0);
 
@@ -119,7 +132,8 @@ class XMLgenerator {
      * @param type $where
      * @return type
      */
-    public function prepareData($table, $columns, $where) {
+    public function prepareData($table, $columns, $where)
+    {
         $allId = $this->getSQLData($table, $where);
         $input[] = $this->getTableColumns($table, $columns);
         foreach ($allId as $id) {
@@ -135,7 +149,8 @@ class XMLgenerator {
      * @param type $where
      * @param type $fileName
      */
-    public function creatXlsFile($table, $columns, $where, $fileName) {
+    public function creatXlsFile($table, $columns, $where, $fileName)
+    {
         $input = $this->prepareData($table, $columns, $where);
         file_put_contents($fileName, $this->arrayToXls($input));
     }
@@ -147,7 +162,8 @@ class XMLgenerator {
      * @param type $where
      * @param type $fileName
      */
-    public function creatCsvFile($table, $columns, $where, $fileName, $columnsName = false) {
+    public function creatCsvFile($table, $columns, $where, $fileName, $columnsName = false)
+    {
         $db = new DB();
         $image = new Image();
         $data = false;
@@ -177,7 +193,7 @@ class XMLgenerator {
                 }
             }
         }
-        
+
         if (!is_readable(dirname($fileName))) {
             mkdir(dirname($fileName));
         }
@@ -191,7 +207,8 @@ class XMLgenerator {
      * @param type $where
      * @param type $fileName
      */
-    public function creatCsvFileStatic($table, $columns, $where, $fileName, $columnsName = false) {
+    public function creatCsvFileStatic($table, $columns, $where, $fileName, $columnsName = false)
+    {
         $db = new DB();
         $data = false;
         $data = chr(0xEF) . chr(0xBB) . chr(0xBF); //diakritika pod UTF 8
@@ -221,7 +238,8 @@ class XMLgenerator {
      * @param type $input
      * @param type $fileName
      */
-    public function creatXlsFileFromArray($input, $fileName) {
+    public function creatXlsFileFromArray($input, $fileName)
+    {
         file_put_contents($fileName, $this->arrayToXls($input));
     }
 

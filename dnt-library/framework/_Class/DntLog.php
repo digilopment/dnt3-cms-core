@@ -7,7 +7,18 @@
  *  package     dnt3
  *  date        2017
  */
-class DntLog {
+
+namespace DntLibrary\Base;
+
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Mailer;
+use DntLibrary\Base\Sessions;
+use DntLibrary\Base\Vendor;
+use DntLibrary\Base\XMLgenerator;
+
+class DntLog
+{
 
     public $results;
 
@@ -15,7 +26,8 @@ class DntLog {
      * 
      * @return boolean
      */
-    public function is_error() {
+    public function is_error()
+    {
         if (count(error_get_last()) == 0) {
             return false;
         }
@@ -26,14 +38,16 @@ class DntLog {
      * 
      * @return type
      */
-    public function error_to_json() {
+    public function error_to_json()
+    {
         return json_encode(error_get_last());
     }
 
     /**
      * get session ID
      */
-    function getID() {
+    function getID()
+    {
 
         $session = new Sessions();
         $dnt = new Dnt();
@@ -49,7 +63,8 @@ class DntLog {
      * 
      * @param type $arr
      */
-    public function get_http_header($arr) {
+    public function get_http_header($arr)
+    {
 
         $httpCacheStatus = CACHE_HTTP_STATUS;
 
@@ -98,7 +113,8 @@ class DntLog {
         }
     }
 
-    public function debugQuery($modul) {
+    public function debugQuery($modul)
+    {
 
         if (DEBUG_QUERY == 1) {
 
@@ -139,7 +155,8 @@ class DntLog {
      * 
      * @param type $arr
      */
-    public function add($arr) {
+    public function add($arr)
+    {
 
         $this->getID();
 
@@ -256,7 +273,8 @@ class DntLog {
      * 
      * @param type $log_id
      */
-    public function show($log_id) {
+    public function show($log_id)
+    {
         $db = new DB();
         $columnsData = new XMLgenerator;
         $columns = "id,http_response,system_status,log_id,timestamp,vendor_id,msg,err_msg,THIS_URL,HTTP_REFERER,HTTP_HOST,HTTP_USER_AGENT,HTTP_ACCEPT,HTTP_ACCEPT_ENCODING,HTTP_ACCEPT_LANGUAGE,HTTP_ACCEPT_CHARSET,HTTP_COOKIE";
@@ -279,7 +297,8 @@ class DntLog {
     /**
      * 
      */
-    public function getAll() {
+    public function getAll()
+    {
         $db = new DB();
         $query = "SELECT * FROM `dnt_logs` WHERE vendor_id = " . Vendor::getId();
         if ($db->num_rows($query) > 0) {
@@ -295,7 +314,8 @@ class DntLog {
      * @param type $andWhere
      * @return type
      */
-    public function getAllAccess($andWhere) {
+    public function getAllAccess($andWhere)
+    {
 
         $db = new DB();
         $query = "SELECT id FROM `dnt_logs` WHERE vendor_id = " . Vendor::getId() . " $andWhere";
@@ -308,7 +328,8 @@ class DntLog {
      * @param type $andWhere
      * @return type
      */
-    public function getUniqueAccess($andWhere) {
+    public function getUniqueAccess($andWhere)
+    {
         $db = new DB();
         $query = "SELECT DISTINCT `REMOTE_ADDR` FROM `dnt_logs` WHERE vendor_id = " . Vendor::getId() . " $andWhere";
         return $db->num_rows($query);
@@ -319,7 +340,8 @@ class DntLog {
      * @param type $andWhere
      * @return type
      */
-    public function getallUsers($andWhere) {
+    public function getallUsers($andWhere)
+    {
 
         $db = new DB();
         $query = "SELECT `id` FROM `dnt_registred_users` WHERE vendor_id = " . Vendor::getId() . " $andWhere";
@@ -331,7 +353,8 @@ class DntLog {
      * @param type $andWhere
      * @return type
      */
-    public function getUniqueUsers($andWhere) {
+    public function getUniqueUsers($andWhere)
+    {
         $db = new DB();
         $query = "SELECT DISTINCT `email` FROM `dnt_registred_users` WHERE vendor_id = " . Vendor::getId() . " $andWhere";
         return $db->num_rows($query);
@@ -342,7 +365,8 @@ class DntLog {
      * @param type $andWhere
      * @return type
      */
-    public function getCountOs($andWhere) {
+    public function getCountOs($andWhere)
+    {
 
         $db = new DB();
 

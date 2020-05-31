@@ -7,14 +7,23 @@
  *  package     dnt3
  *  date        2017
  */
-class Navigation {
+
+namespace DntLibrary\Base;
+
+use DntLibrary\Base\AdminContent;
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Vendor;
+
+class Navigation
+{
 
     /**
      * 
      * @return type
      */
-    public function getParents() {
-        $db = new Db;
+    public function getParents()
+    {
+        $db = new DB;
         $query = "SELECT * FROM dnt_posts WHERE 
 		type = 'sitemap' AND 
 		cat_id = '" . AdminContent::getCatId("sitemap") . "' AND 
@@ -32,8 +41,9 @@ class Navigation {
      * @param type $parentId
      * @return boolean
      */
-    public function hasChild($parentId) {
-        $db = new Db;
+    public function hasChild($parentId)
+    {
+        $db = new DB;
         $query = "SELECT * FROM `dnt_posts` WHERE 
 		type = 'sitemap' AND 
 		`show` = '1' AND 
@@ -51,8 +61,9 @@ class Navigation {
      * @param type $parentId
      * @return type
      */
-    public function getChildren($parentId) {
-        $db = new Db;
+    public function getChildren($parentId)
+    {
+        $db = new DB;
         $query = "SELECT * FROM `dnt_posts` WHERE 
 		type = 'sitemap' AND 
 		`show` = '1' AND 

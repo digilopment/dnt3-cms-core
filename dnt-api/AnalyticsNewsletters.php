@@ -1,5 +1,11 @@
 <?php
 
+namespace DntApi;
+
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\DntLog;
+use DntLibrary\Base\Rest;
+
 class AnalyticsNewslettersApi extends DntLog
 {
 

@@ -1,8 +1,16 @@
+<?php
 
-<?php get_top(); ?>
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Image;
+use DntLibrary\Base\Meta;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Vendor;
+
+get_top();
+?>
 <?php get_top_html(); ?>
 <?php
-$db = new Db;
+$db = new DB();
 $rest = new Rest;
 $image = new Image();
 
@@ -92,9 +100,9 @@ $urlUpdate = "index.php?src=" . $rest->get('src') . "&id=" . $rest->get('id') . 
 
                                             <?php Meta::getCompetitionFont($row['value']); ?>
 
-                                        <?php } else { ?>
+        <?php } else { ?>
                                             <input type="text" name="<?php echo $row['meta'] ?>" value='<?php echo $row['value'] ?>' class="form-control" placeholder="">
-                                        <?php } ?>
+                                <?php } ?>
                                     </div>
                                 </div>
                                 <br/>
@@ -110,7 +118,7 @@ $urlUpdate = "index.php?src=" . $rest->get('src') . "&id=" . $rest->get('id') . 
                         <b style="color: red;">Vypnutie tohoto hotela na stránke docielite nastavením hodnoty "Zobrazenie" na hodnotu "NIE" pre vstup fieldu  "Názov hotelu 1". </b><br/><br/>
                         <?php
                         $query = meta::competition_id_query(2);
-						$i = 0;
+                        $i = 0;
                         if ($db->num_rows($query) > 0) {
                             foreach ($db->get_results($query) as $row) {
                                 ?>
@@ -120,7 +128,7 @@ $urlUpdate = "index.php?src=" . $rest->get('src') . "&id=" . $rest->get('id') . 
                                         <?php Meta::setMetaStatus($row['zobrazenie'], $row['meta']); ?>
                                     </label>
                                     <div class="col-sm-9 text-left">
-                                        <?php if (strpos($row['meta'], "_text_") > 0) { ?>
+        <?php if (strpos($row['meta'], "_text_") > 0) { ?>
 
                                             <iframe src="app/microwebFileUpload.php?metaId=<?php echo $row['id_entity']; ?>"  scrolling="yes" frameBorder="0" id="info" class="iframe" name="info" width="1000px" height="30px" seamless=""></iframe>
 
@@ -129,14 +137,14 @@ $urlUpdate = "index.php?src=" . $rest->get('src') . "&id=" . $rest->get('id') . 
                                             <img class="img-thumb" src="<?php echo $image->getFileImage(Meta::getCompetitionMetaById($row['meta'], Vendor::getId())); ?>" alt="" />
 
                                             <iframe src="app/microwebFileUpload.php?metaId=<?php echo $row['id_entity']; ?>"  scrolling="yes" frameBorder="0" id="info" class="iframe" name="info" width="1000px" height="30px" seamless=""></iframe>
-                                        <?php } else { ?>
+        <?php } else { ?>
                                             <input type="text" name="<?php echo $row['meta'] ?>" value='<?php echo $row['value'] ?>' class="form-control" placeholder="">
-                                        <?php } ?>
+                                <?php } ?>
                                     </div>
                                 </div>
                                 <br/>
                                 <?php
-								$i++;
+                                $i++;
                             }
                         }
                         ?>
@@ -154,7 +162,7 @@ $urlUpdate = "index.php?src=" . $rest->get('src') . "&id=" . $rest->get('id') . 
                                         <?php Meta::setMetaStatus($row['zobrazenie'], $row['meta']); ?>
                                     </label>
                                     <div class="col-sm-9 text-left">
-                                        <?php if (strpos($row['meta'], "_text_") > 0) { ?>
+        <?php if (strpos($row['meta'], "_text_") > 0) { ?>
 
                                             <iframe src="app/microwebFileUpload.php?metaId=<?php echo $row['id_entity']; ?>"  scrolling="yes" frameBorder="0" id="info" class="iframe" name="info" width="1000px" height="30px" seamless=""></iframe>
 
@@ -162,9 +170,9 @@ $urlUpdate = "index.php?src=" . $rest->get('src') . "&id=" . $rest->get('id') . 
                                         <?php } elseif (strpos($row['meta'], "image") > 0) { ?>
                                             <img class="img-thumb" src="<?php echo $image->getFileImage(Meta::getCompetitionMetaById($row['meta'], Vendor::getId())); ?>" alt="" />
                                             <iframe src="app/microwebFileUpload.php?metaId=<?php echo $row['id_entity']; ?>"  scrolling="yes" frameBorder="0" id="info" class="iframe" name="info" width="1000px" height="30px" seamless=""></iframe>
-                                        <?php } else { ?>
+        <?php } else { ?>
                                             <input type="text" name="<?php echo $row['meta'] ?>" value='<?php echo $row['value'] ?>' class="form-control" placeholder="">
-                                        <?php } ?>
+                                <?php } ?>
                                     </div>
                                 </div>
                                 <br/>
@@ -192,9 +200,9 @@ $urlUpdate = "index.php?src=" . $rest->get('src') . "&id=" . $rest->get('id') . 
                                         <?php } elseif (strpos($row['meta'], "image") > 0) { ?>
                                             <img class="img-thumb" src="<?php echo $image->getFileImage(Meta::getCompetitionMetaById($row['meta'], Vendor::getId())); ?>" alt="" />
                                             <iframe src="app/microwebFileUpload.php?metaId=<?php echo $row['id_entity']; ?>"  scrolling="yes" frameBorder="0" id="info" class="iframe" name="info" width="1000px" height="30px" seamless=""></iframe>
-                                        <?php } else { ?>
+        <?php } else { ?>
                                             <input type="text" name="<?php echo $row['meta'] ?>" value='<?php echo $row['value'] ?>' class="form-control" placeholder="">
-                                        <?php } ?>
+                                <?php } ?>
                                     </div>
                                 </div>
                                 <br/>
@@ -223,9 +231,9 @@ $urlUpdate = "index.php?src=" . $rest->get('src') . "&id=" . $rest->get('id') . 
                                         <?php } elseif (strpos($row['meta'], "image") > 0) { ?>
                                             <img class="img-thumb" src="<?php echo $image->getFileImage(Meta::getCompetitionMetaById($row['meta'], Vendor::getId())); ?>" alt="" />
                                             <iframe src="app/microwebFileUpload.php?metaId=<?php echo $row['id_entity']; ?>"  scrolling="yes" frameBorder="0" id="info" class="iframe" name="info" width="1000px" height="30px" seamless=""></iframe>
-                                        <?php } else { ?>
+        <?php } else { ?>
                                             <input type="text" name="<?php echo $row['meta'] ?>" value='<?php echo $row['value'] ?>' class="form-control" placeholder="">
-                                        <?php } ?>
+                                <?php } ?>
                                     </div>
                                 </div>
                                 <br/>
@@ -253,9 +261,9 @@ $urlUpdate = "index.php?src=" . $rest->get('src') . "&id=" . $rest->get('id') . 
                                         <?php if (strpos($row['meta'], "logo") > 0) { ?>
                                             <img class="img-thumb" src="<?php echo $image->getFileImage(Meta::getCompetitionMetaById($row['meta'], Vendor::getId())); ?>" alt="" />
                                             <iframe src="app/microwebFileUpload.php?metaId=<?php echo $row['id_entity']; ?>"  scrolling="yes" frameBorder="0" id="info" class="iframe" name="info" width="1000px" height="30px" seamless=""></iframe>
-                                        <?php } else { ?>
+        <?php } else { ?>
                                             <input type="text" name="<?php echo $row['meta'] ?>" value='<?php echo $row['value'] ?>' class="form-control" placeholder="">
-                                        <?php } ?>
+                                <?php } ?>
                                     </div>
                                 </div>
                                 <br/>
@@ -280,9 +288,9 @@ $urlUpdate = "index.php?src=" . $rest->get('src') . "&id=" . $rest->get('id') . 
                                         <?php if (strpos($row['meta'], "logo") > 0) { ?>
                                             <img class="img-thumb" src="<?php echo $image->getFileImage(Meta::getCompetitionMetaById($row['meta'], Vendor::getId())); ?>" alt="" />
                                             <iframe src="app/microwebFileUpload.php?metaId=<?php echo $row['id_entity']; ?>"  scrolling="yes" frameBorder="0" id="info" class="iframe" name="info" width="1000px" height="30px" seamless=""></iframe>
-                                        <?php } else { ?>
+        <?php } else { ?>
                                             <input type="text" name="<?php echo $row['meta'] ?>" value='<?php echo $row['value'] ?>' class="form-control" placeholder="">
-                                        <?php } ?>
+                                <?php } ?>
                                     </div>
                                 </div>
                                 <br/>
@@ -300,9 +308,9 @@ $urlUpdate = "index.php?src=" . $rest->get('src') . "&id=" . $rest->get('id') . 
                                 <div class="row form">
                                     <label class="col-sm-2 control-label"><b><?php echo $row['description'] ?></b></label>
                                     <label class="col-sm-1 control-label">
-                                        <?php Meta::setMetaStatus($row['zobrazenie'], $row['meta']); ?>
+        <?php Meta::setMetaStatus($row['zobrazenie'], $row['meta']); ?>
                                     </label>
-                                    <?php if (strpos($row['meta'], "koniec_registracie") > 0) { ?>
+        <?php if (strpos($row['meta'], "koniec_registracie") > 0) { ?>
                                         <div class="col-sm-9 text-left">
                                             <iframe src="app/microwebFileUpload.php?metaId=<?php echo $row['id_entity']; ?>"  scrolling="yes" frameBorder="0" id="info" class="iframe" name="info" width="1000px" height="30px" seamless=""></iframe>
                                             <textarea name="<?php echo $row['meta'] ?>" class="ckeditor" id="editor_a" style="height: 95px;"><?php echo $row['value'] ?></textarea>
@@ -311,7 +319,7 @@ $urlUpdate = "index.php?src=" . $rest->get('src') . "&id=" . $rest->get('id') . 
                                         <div class="col-sm-9 text-left">
                                             <input type="text" name="<?php echo $row['meta'] ?>" value='<?php echo $row['value'] ?>' class="form-control" placeholder="">
                                         </div>
-                                    <?php } ?>
+                                <?php } ?>
                                 </div>
                                 <br/>
                                 <?php
@@ -334,7 +342,7 @@ $urlUpdate = "index.php?src=" . $rest->get('src') . "&id=" . $rest->get('id') . 
                                             <?php Meta::setMetaStatus($row['zobrazenie'], $row['meta']); ?>
                                         </label>
                                         <div class="col-sm-9 text-left">
-                                            <?php if (strpos($row['meta'], "_text_") > 0) { ?>
+            <?php if (strpos($row['meta'], "_text_") > 0) { ?>
                                                 <iframe src="app/microwebFileUpload.php?metaId=<?php echo $row['id_entity']; ?>"  scrolling="yes" frameBorder="0" id="info" class="iframe" name="info" width="1000px" height="30px" seamless=""></iframe>
                                                 <textarea name="<?php echo $row['meta'] ?>" class="ckeditor" id="editor<?php echo $i; ?>" style="height: 95px;"><?php echo $row['value'] ?></textarea>
 
@@ -350,9 +358,9 @@ $urlUpdate = "index.php?src=" . $rest->get('src') . "&id=" . $rest->get('id') . 
                                             <?php } elseif (strpos($row['meta'], "gallery") > 0) { ?>
                                                 <iframe src="app/microwebFileUpload.php?metaId=<?php echo $row['id_entity']; ?>"  scrolling="yes" frameBorder="0" id="info" class="iframe" name="info" width="1000px" height="30px" seamless=""></iframe>
 
-                                            <?php } else { ?>
+            <?php } else { ?>
                                                 <input type="text" name="<?php echo $row['meta'] ?>" value='<?php echo $row['value'] ?>' class="form-control" placeholder="">
-                                            <?php } ?>
+                                    <?php } ?>
                                         </div>
                                     </div>
                                     <br/>
@@ -375,14 +383,14 @@ $urlUpdate = "index.php?src=" . $rest->get('src') . "&id=" . $rest->get('id') . 
                                         <?php Meta::setMetaStatus($row['zobrazenie'], $row['meta']); ?>
                                     </label>
                                     <div class="col-sm-9 text-left">
-                                        <?php if (strpos($row['meta'], "file") > 0) { ?>
+        <?php if (strpos($row['meta'], "file") > 0) { ?>
                                             <a target="_blank" href="<?php echo $image->getFileImage(Meta::getCompetitionMetaById($row['meta'], Vendor::getId())) ?>">
                                                 <img class="img-thumb" src="./img/pdf.png" alt="" style="height: 30px;"/>
                                             </a>
                                             <iframe src="app/microwebFileUpload.php?metaId=<?php echo $row['id_entity']; ?>"  scrolling="yes" frameBorder="0" id="info" class="iframe" name="info" width="1000px" height="30px" seamless=""></iframe>
-                                        <?php } else { ?>
+        <?php } else { ?>
                                             <input type="text" name="<?php echo $row['meta'] ?>" value='<?php echo $row['value'] ?>' class="form-control" placeholder="">
-                                        <?php } ?>
+                                <?php } ?>
                                     </div>
                                 </div>
                                 <br/>
@@ -407,9 +415,9 @@ $urlUpdate = "index.php?src=" . $rest->get('src') . "&id=" . $rest->get('id') . 
                                         <?php if (strpos($row['meta'], "file") > 0) { ?>
                                             <img class="img-thumb" src="<?php echo $image->getFileImage(Meta::getCompetitionMetaById($row['meta'], Vendor::getId())); ?>" alt="" />
                                             <iframe src="app/microwebFileUpload.php?metaId=<?php echo $row['id_entity']; ?>"  scrolling="yes" frameBorder="0" id="info" class="iframe" name="info" width="1000px" height="30px" seamless=""></iframe>
-                                        <?php } else { ?>
+        <?php } else { ?>
                                             <input type="text" name="<?php echo $row['meta'] ?>" value='<?php echo $row['value'] ?>' class="form-control" placeholder="">
-                                        <?php } ?>
+                                <?php } ?>
                                     </div>
                                 </div>
                                 <br/>
@@ -428,7 +436,7 @@ $urlUpdate = "index.php?src=" . $rest->get('src') . "&id=" . $rest->get('id') . 
                             $query = "SELECT * FROM `dnt_microsites_composer` WHERE 
 					`vendor_id` = '" . Vendor::getId() . "' AND 
 					`zobrazenie` = '1' AND
-					`competition_id` = '".$rest->get('id')."' AND
+					`competition_id` = '" . $rest->get('id') . "' AND
 					`meta` LIKE '%_menu_name%'
 					ORDER by `poradie` ASC
 					";

@@ -1,5 +1,10 @@
 <?php
 
+namespace DntLibrary\App;
+
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Rest;
+
 class Stream
 {
 

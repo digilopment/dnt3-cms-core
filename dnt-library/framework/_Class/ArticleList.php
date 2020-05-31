@@ -7,17 +7,30 @@
  *  package     dnt3
  *  date        2017
  */
-class ArticleList extends AdminContent {
+
+namespace DntLibrary\Base;
+
+use DntLibrary\Base\AdminContent;
+use DntLibrary\Base\ArticleView;
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Frontend;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Vendor;
+
+class ArticleList extends AdminContent
+{
 
     /**
      * 
      * @param type $is_limit
      * @return string
      */
-    public function prepare_query($is_limit, $postId = false, $servicesIDsStatic = false) {
+    public function prepare_query($is_limit, $postId = false, $servicesIDsStatic = false)
+    {
 
         $servicesIDs = Frontend::get();
-        $db = new Db();
+        $db = new DB();
         $rest = new Rest();
 
         $servicesIDs = $servicesIDs['article']['service_id'];
@@ -87,8 +100,9 @@ class ArticleList extends AdminContent {
      * 
      * @return type
      */
-    public function query($postId = false, $servicesIDsStatic = false) {
-        $db = new Db;
+    public function query($postId = false, $servicesIDsStatic = false)
+    {
+        $db = new DB;
 
         if (isset($_GET['page'])) {
             $returnPage = "&page=" . $_GET['page'];
@@ -126,23 +140,23 @@ class ArticleList extends AdminContent {
      * @param type $postId
      * @return boolean
      */
-    public function getArticleUrl($postId, $fullPath = true, $type = false) {
-        $db = new Db;
+    public function getArticleUrl($postId, $fullPath = true, $type = false)
+    {
+        $db = new DB;
         $articleView = new ArticleView;
 
         $query = self::query($postId);
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
-				if($fullPath){
-					if($type){
-						$url = $articleView->detailUrl($row['cat_name_url'], $row['id'], $row['name_url'], $type);
-					}else{
-						$url = $articleView->detailUrl($row['cat_name_url'], $row['id'], $row['name_url']);
-					}
-				}
-				else{
-					$url = $row['name_url'];
-				}
+                if ($fullPath) {
+                    if ($type) {
+                        $url = $articleView->detailUrl($row['cat_name_url'], $row['id'], $row['name_url'], $type);
+                    } else {
+                        $url = $articleView->detailUrl($row['cat_name_url'], $row['id'], $row['name_url']);
+                    }
+                } else {
+                    $url = $row['name_url'];
+                }
             }
         } else {
             $url = false;
@@ -156,8 +170,9 @@ class ArticleList extends AdminContent {
      * @param type $servicesIDsStatic
      * @return type
      */
-    public function data($postId, $servicesIDsStatic) {
-        $db = new Db;
+    public function data($postId, $servicesIDsStatic)
+    {
+        $db = new DB;
         $query = self::query($postId, $servicesIDsStatic);
         if ($db->num_rows($query) > 0) {
             return $db->get_results($query);

@@ -7,7 +7,18 @@
  *  package     dnt3
  *  date        2017
  */
-class PollsFrontend extends Polls {
+
+namespace DntLibrary\Base;
+
+use DntLibrary\Base\Cookie;
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Polls;
+use DntLibrary\Base\PollsFrontend;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Vendor;
+
+class PollsFrontend extends Polls
+{
 
     /**
      * 
@@ -16,8 +27,9 @@ class PollsFrontend extends Polls {
      * @param type $question_id
      * @return type
      */
-    public function url($index, $poll_id, $question_id) {
-        $db = new Db;
+    public function url($index, $poll_id, $question_id)
+    {
+        $db = new DB;
         $rest = new Rest;
 
         $result_url = "result";
@@ -81,8 +93,9 @@ class PollsFrontend extends Polls {
      * @param type $question_id
      * @return boolean
      */
-    public function getCurrentQuestions($poll_id, $question_id) {
-        $db = new Db;
+    public function getCurrentQuestions($poll_id, $question_id)
+    {
+        $db = new DB;
         $query = "SELECT `value` FROM dnt_polls_composer WHERE
 		vendor_id 	= " . Vendor::getId() . " AND
 		poll_id 	= " . $poll_id . " AND
@@ -96,9 +109,10 @@ class PollsFrontend extends Polls {
             return false;
         }
     }
-	
-	 public function getValueByInputId($input, $id) {
-        $db = new Db;
+
+    public function getValueByInputId($input, $id)
+    {
+        $db = new DB;
         $query = "SELECT `$input` FROM dnt_polls_composer WHERE
 		vendor_id 	= " . Vendor::getId() . " AND
 		id_entity = $id";
@@ -116,8 +130,9 @@ class PollsFrontend extends Polls {
      * @param type $poll_id
      * @return int
      */
-    public function getPollsIds($poll_id) {
-        $db = new Db;
+    public function getPollsIds($poll_id)
+    {
+        $db = new DB;
         $arr = array();
         $query = "SELECT `question_id` FROM dnt_polls_composer WHERE
 		vendor_id 	= " . Vendor::getId() . " AND
@@ -139,8 +154,9 @@ class PollsFrontend extends Polls {
      * @return int
      * METODA 1
      */
-    public function getCorrectOpinion($vendor_ansewer_id) {
-        $db = new Db;
+    public function getCorrectOpinion($vendor_ansewer_id)
+    {
+        $db = new DB;
         $query = "SELECT `is_correct` FROM dnt_polls_composer WHERE
 		vendor_id 	= " . Vendor::getId() . " AND
 		is_correct 	= '1' AND
@@ -160,7 +176,8 @@ class PollsFrontend extends Polls {
      * @return int
      * Funkcia vrati počet spravnych odpovedí v type ankety, kde je očakávaný počet percent ako výsledok
      */
-    public function getCorrectAnsewers($poll_id) {
+    public function getCorrectAnsewers($poll_id)
+    {
         $correct = 0;
         foreach (self::getPollsIds($poll_id) as $i) {
             $vendor_ansewer_id = Cookie::Get("poll_" . $poll_id . "_" . $i);
@@ -178,25 +195,26 @@ class PollsFrontend extends Polls {
      * @return type
      * Funkcia vrati percentualny vysledok spravnych odpovedi
      */
-    public function getResultPercent($poll_id) {
+    public function getResultPercent($poll_id)
+    {
         return (100 * self::getCorrectAnsewers($poll_id)) / self::getNumberOfQuestions($poll_id);
     }
-	
-	
-	 /**
+
+    /**
      * 
      * @param type $poll_id
      * @return type
      * Funkcia vrati percentualny progress
      */
-    public function getProgressPercent($poll_id, $question_id) {
-		$current = -1;
+    public function getProgressPercent($poll_id, $question_id)
+    {
+        $current = -1;
         foreach (self::getPollsIds($poll_id) as $currentQuestionId) {
-            if($currentQuestionId <= $question_id){
+            if ($currentQuestionId <= $question_id) {
                 $current++;
             }
         }
-		return (100 * $current) / self::getNumberOfQuestions($poll_id);
+        return (100 * $current) / self::getNumberOfQuestions($poll_id);
     }
 
     /**
@@ -205,8 +223,9 @@ class PollsFrontend extends Polls {
      * @return int
      * METODA 2
      */
-    public function getVendorAnsewerPoints($vendor_ansewer_id) {
-        $db = new Db;
+    public function getVendorAnsewerPoints($vendor_ansewer_id)
+    {
+        $db = new DB;
         $query = "SELECT `points` FROM dnt_polls_composer WHERE
 		vendor_id 	= " . Vendor::getId() . " AND
 		id_entity 	= '" . $vendor_ansewer_id . "'";
@@ -224,7 +243,8 @@ class PollsFrontend extends Polls {
      * @param type $poll_id
      * @return type
      */
-    public function getVendorPoints($poll_id) {
+    public function getVendorPoints($poll_id)
+    {
         $correct = 0;
         foreach (self::getPollsIds($poll_id) as $i) {
             $vendor_ansewer_id = Cookie::Get("poll_" . $poll_id . "_" . $i);
@@ -241,8 +261,9 @@ class PollsFrontend extends Polls {
      * @param type $poll_id
      * @return type
      */
-    public function getVendorResultPointsRange($poll_id) {
-        $db = new Db;
+    public function getVendorResultPointsRange($poll_id)
+    {
+        $db = new DB;
         $points = self::getVendorPoints($poll_id);
         $data = array(false);
         $points_MAX = 0;
@@ -277,8 +298,9 @@ class PollsFrontend extends Polls {
      * @param type $poll_id
      * @return boolean
      */
-    public function getVendorResultPointsCat($poll_id) {
-        $db = new Db;
+    public function getVendorResultPointsCat($poll_id)
+    {
+        $db = new DB;
         $points_range = self::getVendorResultPointsRange($poll_id);
         $poins_max = $points_range['max'];
         //$points_range = self::getVendorResultPointsRange($poll_id);
@@ -305,8 +327,9 @@ class PollsFrontend extends Polls {
      * @param type $id
      * @return boolean
      */
-    public function getComposerDataById($column, $id) {
-        $db = new Db;
+    public function getComposerDataById($column, $id)
+    {
+        $db = new DB;
         $query = "SELECT `$column` FROM dnt_polls_composer WHERE 
 		`id_entity` = '$id' AND
 		`vendor_id` = '" . Vendor::getId() . "'";
@@ -324,7 +347,8 @@ class PollsFrontend extends Polls {
      * 
      * @param type $poll_id
      */
-    public function deleteCookies($poll_id) {
+    public function deleteCookies($poll_id)
+    {
         foreach (PollsFrontend::getPollsIds($poll_id) as $i) {
             Cookie::Delete("poll_" . $poll_id . "_" . $i);
         }

@@ -1,5 +1,17 @@
 <?php
 
+namespace DntAdmin\Moduls;
+
+use DntAdmin\App\AdminController;
+use DntLibrary\App\Autoloader;
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Image;
+use DntLibrary\Base\Pdf;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Settings;
+use DntLibrary\Base\Vendor;
+
 class InvoicesController extends AdminController
 {
 

@@ -1,9 +1,14 @@
 <?php
 
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Sessions;
+
 $rest = new Rest;
 $session = new Sessions;
 $dnt = new Dnt;
-$db = new Db;
+$db = new DB();
 
 if ($rest->get("action") == "add") {
     include "upload.php";

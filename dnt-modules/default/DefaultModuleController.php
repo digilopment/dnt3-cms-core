@@ -1,5 +1,9 @@
 <?php
 
+namespace DntModules\Controllers;
+
+use DntLibrary\App\Modul;
+
 class DefaultModuleController extends Modul
 {
 

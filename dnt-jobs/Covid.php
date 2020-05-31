@@ -1,9 +1,15 @@
 <?php
 
+namespace DntJobs;
+
+use DntLibrary\Base\Dnt;
+use DOMDocument;
+
 class CovidJob
 {
 
-    const LOCAL_SERVICE_URL = 'https://www.tvnoviny.sk/clanok/1994138_korona-vidget';
+    //const LOCAL_SERVICE_URL = 'https://www.tvnoviny.sk/clanok/1994138_korona-vidget?data=1';
+    const LOCAL_SERVICE_URL = 'https://varenypeceny.markiza.sk/dnt-markiza/forms/?action=covid-article';
     const LOCAL_TABLE = 'covid-slovensko';
     const STATIC_FILE = 'data/covid.json';
 
@@ -48,7 +54,7 @@ class CovidJob
 
     protected function loadLocalData()
     {
-        $this->localContent = file_get_contents(self::LOCAL_SERVICE_URL . '?time=' . time());
+        $this->localContent = file_get_contents(self::LOCAL_SERVICE_URL . '&time=' . time());
         if (isset(explode(self::LOCAL_TABLE, $this->localContent)[1])) {
             $this->hasLocalData = true;
         }

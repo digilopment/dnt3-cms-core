@@ -7,16 +7,25 @@
  *  package     dnt3
  *  date        2017
  */
-Class Pdf
+
+namespace DntLibrary\Base;
+
+use DntLibrary\App\Stream;
+use DOMPDF;
+
+class Pdf
 {
 
     protected $html2pdfAppKey = '8fc8992e7ab59463faeffa82343b41a21bb05a1fe5bc2102c52a02e0a171b864';
     protected $stream;
+    public $file;
+    public $url;
 
     public function __construct()
     {
         $this->stream = new Stream();
     }
+
     /**
      * 
      * @param type $img
@@ -99,9 +108,11 @@ Class Pdf
         $dompdf->set_option('enable_css_float', TRUE);
         $dompdf->load_html($html);
         $dompdf->render();
-        file_put_contents($path . 'dnt-view/data/uploads/' . $fileName . '.pdf', $dompdf->output());
+        $this->file = $path . 'dnt-view/data/uploads/' . $fileName . '.pdf';
+        $this->url = WWW_PATH . 'dnt-view/data/uploads/' . $fileName . '.pdf';
+        file_put_contents($this->file, $dompdf->output());
     }
-    
+
     /**
      * 
      * @param type $path

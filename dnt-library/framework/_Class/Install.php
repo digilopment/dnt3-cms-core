@@ -7,13 +7,22 @@
  *  package     dnt3
  *  date        2017
  */
-Class Install {
+
+namespace DntLibrary\Base;
+
+use mysqli;
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+
+class Install
+{
 
     /**
      * 
      * @return boolean
      */
-    public static function db_exists() {
+    public static function db_exists()
+    {
 
         //$conn = new mysqli(DB_HOST, DB_USER, DB_PASS);
 
@@ -37,7 +46,8 @@ Class Install {
      * @param type $query
      * @return boolean
      */
-    public static function getColumns($query) {
+    public static function getColumns($query)
+    {
         $db = new DB();
         $i = 1;
         if ($db->num_rows($query) > 0) {
@@ -63,8 +73,9 @@ Class Install {
      * @param type $VENDOR_NAME
      * @param type $COPY_FROM
      */
-    public static function addVendor($tables, $VENDOR_NAME, $COPY_FROM, $VENDOR_LAYOUT = false, $DELETE_DATA = 1) {
-        $db = new Db;
+    public static function addVendor($tables, $VENDOR_NAME, $COPY_FROM, $VENDOR_LAYOUT = false, $DELETE_DATA = 1)
+    {
+        $db = new DB;
         $COPY_FROM = $COPY_FROM;
         $vendor_name = $VENDOR_NAME;
         $vendor_name_url = Dnt::name_url($VENDOR_NAME);
@@ -106,9 +117,10 @@ Class Install {
      * @param type $id
      * @param type $tables
      */
-    public static function delVendor($id, $tables) {
+    public static function delVendor($id, $tables)
+    {
 
-        $db = new Db;
+        $db = new DB;
 
         foreach ($tables as $table) {
             $where = array('vendor_id' => $id);
@@ -124,9 +136,10 @@ Class Install {
      * @param type $move_to
      * @param type $tables
      */
-    public static function moveVendor($id, $move_to, $tables) {
+    public static function moveVendor($id, $move_to, $tables)
+    {
 
-        $db = new Db;
+        $db = new DB;
 
         foreach ($tables as $table) {
             $where = array('vendor_id' => $id);
@@ -134,21 +147,22 @@ Class Install {
             $db->update(
                     $table, //table
                     array(//set
-                'vendor_id' => $move_to,
+                        'vendor_id' => $move_to,
                     ), array(//where
                 'vendor_id' => $id)
             );
         }
 
         $query = "UPDATE `dnt_vendors` SET `id` = '" . $move_to . "' WHERE `dnt_vendors`.`id` = $id";
-		$db->query($query);
+        $db->query($query);
         $query = "UPDATE `dnt_vendors` SET `id_entity` = '" . $move_to . "' WHERE `dnt_vendors`.`id_entity` = $id";
         $db->query($query);
-		return "Updated";
+        return "Updated";
     }
 
-    public function updateIdEntity($tables) {
-        $db = new Db;
+    public function updateIdEntity($tables)
+    {
+        $db = new DB;
         foreach ($tables as $table) {
             $query = "SELECT * FROM $table WHERE 1";
             if ($db->num_rows($query) > 0) {
@@ -158,7 +172,7 @@ Class Install {
                     $db->update(
                             $table, //table
                             array(//set
-                        'id_entity' => $row['id'],
+                                'id_entity' => $row['id'],
                             ), array(//where
                         'id_entity' => 0,
                         'id' => $row['id'],
@@ -175,7 +189,8 @@ Class Install {
     /**
      * installation
      */
-    public static function installation() {
+    public static function installation()
+    {
 
         //CREAT TABLE
         $conn = new mysqli(DB_HOST, DB_USER, DB_PASS);
@@ -192,7 +207,7 @@ Class Install {
         }
         $conn->close();
 
-        $db = new Db;
+        $db = new DB;
 
 
         //INSERT DATA
@@ -222,15 +237,16 @@ Class Install {
 
         echo "Data imported, vendor created";
     }
-    
+
     /**
      * 
      * @param type $sqlFile
      */
-    public static function addInstallation($sqlFile) {
+    public static function addInstallation($sqlFile)
+    {
 
 
-        $db = new Db;
+        $db = new DB;
 
 
         //INSERT DATA
@@ -265,7 +281,8 @@ Class Install {
      * @param type $backup_name
      * @param type $vendor_id
      */
-    public static function Export_Database($host, $user, $pass, $name, $tables = false, $backup_name = false, $vendor_id = false) {
+    public static function Export_Database($host, $user, $pass, $name, $tables = false, $backup_name = false, $vendor_id = false)
+    {
 
         $mysqli = new mysqli($host, $user, $pass, $name);
         $mysqli->select_db($name);
@@ -371,7 +388,8 @@ Class Install {
         //echo $content; exit;
     }
 
-    public function importSql($file) {
+    public function importSql($file)
+    {
         //INSERT DATA
         $filename = $file;
         // Temporary variable, used to store current query

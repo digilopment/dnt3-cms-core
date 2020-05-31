@@ -1,5 +1,9 @@
 <?php
 
+namespace DntAdmin\App;
+
+use DntLibrary\Base\Vendor;
+
 class NavigationAdmin
 {
 

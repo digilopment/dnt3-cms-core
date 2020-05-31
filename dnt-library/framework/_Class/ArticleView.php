@@ -7,37 +7,51 @@
  *  package     dnt3
  *  date        2017
  */
-class ArticleView extends AdminContent {
+
+namespace DntLibrary\Base;
+
+use DntLibrary\Base\AdminContent;
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Image;
+use DntLibrary\Base\MultyLanguage;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Url;
+use DntLibrary\Base\Vendor;
+use DntLibrary\Base\Webhook;
+
+class ArticleView extends AdminContent
+{
 
     /**
      * 
      * @param type $post_type
      * @return type
      */
-    public function getPosts($post_type, $limit = false, $orderBy = false) {
-		
-		if($limit){
-			$limit = "LIMIT $limit";
-		}
-		
-		if($orderBy){
-			$orderByStr = "ORDER BY $orderBy";
-		}else{
-			$orderByStr = false;
-		}
-		
-		if(is_numeric($post_type)){
-			$andPost = "`cat_id` = '".$post_type."' AND ";
-		}
-		elseif(Dnt::in_string(",", $post_type)){
-			$andPost = "`cat_id` IN(" . $post_type . ") AND";
-		}else{
-			$andPost = "`cat_id` = '" . self::getCatId($post_type) . "' AND ";
-		}
-        $db = new Db;
+    public function getPosts($post_type, $limit = false, $orderBy = false)
+    {
+
+        if ($limit) {
+            $limit = "LIMIT $limit";
+        }
+
+        if ($orderBy) {
+            $orderByStr = "ORDER BY $orderBy";
+        } else {
+            $orderByStr = false;
+        }
+
+        if (is_numeric($post_type)) {
+            $andPost = "`cat_id` = '" . $post_type . "' AND ";
+        } elseif (Dnt::in_string(",", $post_type)) {
+            $andPost = "`cat_id` IN(" . $post_type . ") AND";
+        } else {
+            $andPost = "`cat_id` = '" . self::getCatId($post_type) . "' AND ";
+        }
+        $db = new DB;
         $query = "SELECT * FROM dnt_posts WHERE 
             `show`      > '0' AND 
-            ".$andPost."
+            " . $andPost . "
             `vendor_id` = '" . Vendor::getId() . "' $limit $orderByStr";
         if ($db->num_rows($query) > 0) {
             return $db->get_results($query);
@@ -51,9 +65,10 @@ class ArticleView extends AdminContent {
      * @param type $post_type
      * @return type
      */
-    public function getPostsMeta($postId, $m_service) {
+    public function getPostsMeta($postId, $m_service)
+    {
         //$post_type = "personal";
-        $db = new Db;
+        $db = new DB;
         $query = "SELECT * FROM dnt_posts_meta WHERE 
             `post_id` = '" . $postId . "' AND 
             `service` = '" . $m_service . "' AND 
@@ -74,7 +89,8 @@ class ArticleView extends AdminContent {
      * @param type $dbKey
      * @return type
      */
-    function defaultMetaToArray($postId, $moduleName, $dbKey = false) {
+    function defaultMetaToArray($postId, $moduleName, $dbKey = false)
+    {
         $pattern = '/\s*/m';
         $replace = '';
         $data = defaultModulMetaDataInstalation($postId, $moduleName);
@@ -89,7 +105,7 @@ class ArticleView extends AdminContent {
         $data = str_replace("(", "", $data);
         $data = str_replace("'", "", $data);
         $data = explode("),", $data);
-        
+
         foreach ($data as $id => $item) {
             foreach (explode(",", $item) as $id2 => $key) {
 
@@ -131,14 +147,15 @@ class ArticleView extends AdminContent {
         }
         return $array;
     }
-    
+
     /**
      * 
      * @return type
      */
-    public function getSitemap() {
+    public function getSitemap()
+    {
         //$post_type = "personal";
-        $db = new Db;
+        $db = new DB;
         $query = "SELECT * FROM dnt_posts WHERE 
             `type`      = 'sitemap' AND 
             `cat_id`    = '" . AdminContent::getCatId("sitemap") . "' AND 
@@ -157,16 +174,17 @@ class ArticleView extends AdminContent {
      * @param type $name_url
      * @return boolean
      */
-    public function StaticViewParam($column, $name_url, $service = false) {
+    public function  StaticViewParam($column, $name_url, $service = false)
+    {
         $rest = new Rest;
-        $db = new Db;
-        if($service){
-            $AND_SRV = " AND service = '".$service."'";
-        }else{
+        $db = new DB;
+        if ($service) {
+            $AND_SRV = " AND service = '" . $service . "'";
+        } else {
             $AND_SRV = false;
         }
-		
-        $query = "SELECT `$column` FROM dnt_posts WHERE `name_url` = '$name_url' AND vendor_id = '" . Vendor::getId() . "' ".$AND_SRV."";
+
+        $query = "SELECT `$column` FROM dnt_posts WHERE `name_url` = '$name_url' AND vendor_id = '" . Vendor::getId() . "' " . $AND_SRV . "";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 return $row[$column];
@@ -187,12 +205,13 @@ class ArticleView extends AdminContent {
      * 
      * @return type
      */
-    public function getStaticId() {
+    public function getStaticId()
+    {
         $rest = new Rest;
-        if($rest->webhook(1)){
+        if ($rest->webhook(1)) {
             $service = false;
             return $this->StaticViewParam("id_entity", $rest->webhook(1), $service);
-        }else{
+        } else {
             return $this->StaticViewParam("id_entity", $rest->webhook(1));
         }
     }
@@ -201,7 +220,8 @@ class ArticleView extends AdminContent {
      * 
      * @return type
      */
-    public function getArticleId() {
+    public function getArticleId()
+    {
         $rest = new Rest;
         return $rest->webhook(2);
     }
@@ -212,7 +232,8 @@ class ArticleView extends AdminContent {
      * @return type
      * returns array of tags
      */
-    public function getPostTags($post_id) {
+    public function getPostTags($post_id)
+    {
         $arr = array();
         if (count($this->showTags($this->getPostParam("tags", $post_id))) > 0) {
             foreach ($this->showTags($this->getPostParam("tags", $post_id)) as $tag) {
@@ -232,11 +253,12 @@ class ArticleView extends AdminContent {
      * @param type $default
      * @return boolean
      */
-    public function getPostParam($column, $post_id, $full_url = false, $default = false) {
-        
-        $db = new Db;
+    public function getPostParam($column, $post_id, $full_url = false, $default = false)
+    {
+
+        $db = new DB;
         $lang = new MultyLanguage;
-        
+
         if (DEAFULT_LANG == $lang->getLang() || MULTY_LANGUAGE == false) {
             $Q_column = $column;
             $query = "
@@ -248,10 +270,10 @@ class ArticleView extends AdminContent {
                 ";
         } else {
             if (
-                $column == "name" ||
-                $column == "name_url" ||
-                $column == "content" ||
-                $column == "perex"
+                    $column == "name" ||
+                    $column == "name_url" ||
+                    $column == "content" ||
+                    $column == "perex"
             ) {
                 $Q_column = "l_translate";
                 $query = "
@@ -317,7 +339,8 @@ class ArticleView extends AdminContent {
      * @param type $id
      * @return type
      */
-    public function getPostImage($id, $table = null, $format = false) {
+    public function getPostImage($id, $table = null, $format = false)
+    {
         $image = new Image;
         return $image->getPostImage($id, $table, $format);
     }
@@ -327,8 +350,9 @@ class ArticleView extends AdminContent {
      * @param type $id_entity
      * @return type
      */
-    public function getMetaData($id_entity) {
-        $db = new Db;
+    public function getMetaData($id_entity)
+    {
+        $db = new DB;
         $query = "
                 SELECT 
                     `dnt_posts`.`id_entity` AS dnt_posts_id, 
@@ -403,21 +427,21 @@ class ArticleView extends AdminContent {
      * @param type $name_url
      * @return string
      */
-    function detailUrl($cat_name_url, $id_entity, $name_url, $type = false) {
-		if(Dnt::is_external_url($name_url)){
-			$url = $name_url;
-		}
-		elseif(Dnt::in_string("<WWW_PATH>", $name_url)){
-			$url = str_replace("<WWW_PATH>", WWW_PATH, $name_url);
-		}elseif(in_array($name_url, Webhook::getSitemapModules())){
-			$url = Url::get("WWW_PATH") . "" . $name_url . "";
-		}else{
-			if($type){
-				$url = Url::get("WWW_PATH") . $cat_name_url . "/".$type."/" . $id_entity . "/" . $name_url . "";
-			}else{
-				$url = Url::get("WWW_PATH") . $cat_name_url . "/detail/" . $id_entity . "/" . $name_url . "";
-			}
-		}
+    function detailUrl($cat_name_url, $id_entity, $name_url, $type = false)
+    {
+        if (Dnt::is_external_url($name_url)) {
+            $url = $name_url;
+        } elseif (Dnt::in_string("<WWW_PATH>", $name_url)) {
+            $url = str_replace("<WWW_PATH>", WWW_PATH, $name_url);
+        } elseif (in_array($name_url, Webhook::getSitemapModules())) {
+            $url = Url::get("WWW_PATH") . "" . $name_url . "";
+        } else {
+            if ($type) {
+                $url = Url::get("WWW_PATH") . $cat_name_url . "/" . $type . "/" . $id_entity . "/" . $name_url . "";
+            } else {
+                $url = Url::get("WWW_PATH") . $cat_name_url . "/detail/" . $id_entity . "/" . $name_url . "";
+            }
+        }
         return $url;
     }
 

@@ -1,5 +1,9 @@
 <?php
 
+namespace DntTest;
+
+use DntLibrary\Base\Mailer;
+
 class SentEmailTest
 {
 

@@ -1,4 +1,15 @@
 <?php
+namespace DntAdmin\Moduls;
+
+use DntLibrary\Base\ArticleList;
+use DntLibrary\Base\ArticleView;
+use DntLibrary\Base\Cache;
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\DntUpload;
+use DntLibrary\Base\MultyLanguage;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Vendor;
 
 class UpdateContent
 {
@@ -47,6 +58,7 @@ class UpdateContent
         $tags = $rest->post('tags');
         $service = $rest->post('service');
         $service_id = $rest->post('service_id');
+        $post_category_id = $rest->post('post_category_id');
 
         $searchMeta = [];
         if ($service) {
@@ -69,6 +81,7 @@ class UpdateContent
                 array(
                     'cat_id' => $cat_id,
                     'sub_cat_id' => $sub_cat_id,
+                    'post_category_id' => $post_category_id,
                     'type' => $type,
                     'show' => $show,
                     'protected' => $protected,

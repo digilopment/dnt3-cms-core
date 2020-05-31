@@ -1,8 +1,19 @@
 <?php
 
-class AutoRedirectModuleController extends Client {
+namespace DntModules\Controllers;
 
-    public function run() {
+use DntLibrary\Base\ArticleList;
+use DntLibrary\Base\ArticleView;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Webhook;
+use DntLibrary\App\Client;
+
+class AutoRedirectModuleController extends Client
+{
+
+    public function run()
+    {
         $this->init();
         $articleList = new ArticleList();
         $articleView = new ArticleView();

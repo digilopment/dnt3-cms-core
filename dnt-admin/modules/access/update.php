@@ -1,5 +1,11 @@
 <?php
 
+use DntLibrary\Base\Api;
+use DntLibrary\Base\DntUpload;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Sessions;
+use DntLibrary\Base\Vendor;
+
 if (isset($_POST['sent'])) {
     $session = new Sessions;
 

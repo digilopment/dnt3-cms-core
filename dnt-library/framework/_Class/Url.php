@@ -7,7 +7,16 @@
  *  package     dnt3
  *  date        2017
  */
-class Url {
+
+namespace DntLibrary\Base;
+
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\MultyLanguage;
+use DntLibrary\Base\Sessions;
+
+class Url
+{
 
     /** OLD * */
     var $url;
@@ -27,7 +36,8 @@ class Url {
      * @param type $file
      * @return type
      */
-    public function getCss($file) {
+    public function getCss($file)
+    {
         $path = WWW_CDN_PATH . "dnt-view/layouts/markiza/css/" . $file;
         return '<link href="' . $path . '" media="screen, tv, projection" rel="stylesheet" type="text/css" />';
     }
@@ -37,7 +47,8 @@ class Url {
      * @param type $file
      * @return type
      */
-    public function getJs($file) {
+    public function getJs($file)
+    {
         $path = WWW_CDN_PATH . "dnt-view/layouts/markiza/js/" . $file;
         return '<script src="' . $path . '" type="text/javascript"></script>';
     }
@@ -47,7 +58,8 @@ class Url {
      * @param type $url
      * @return string
      */
-    public function get($url) {
+    public function get($url)
+    {
         if ($url == "WWW_PATH") {
             $lang = MultyLanguage::getLang();
             if ($lang == DEAFULT_LANG || MULTY_LANGUAGE == false) {
@@ -67,7 +79,8 @@ class Url {
      * 
      * @return string
      */
-    protected function get_img_version() {
+    protected function get_img_version()
+    {
         return "?125";
     }
 
@@ -78,7 +91,8 @@ class Url {
      * @param type $column
      * @return type
      */
-    protected function p_query($type, $postId, $column) {
+    protected function p_query($type, $postId, $column)
+    {
         $dntDb = new DB();
 
         if ($type == false || "dnt_posts") {
@@ -97,7 +111,8 @@ class Url {
      * @param type $column
      * @return type
      */
-    protected function p_img_property($type, $postId, $column) {
+    protected function p_img_property($type, $postId, $column)
+    {
         $dntDb = new DB();
         $query = $this->p_query($type, $postId, $column);
         foreach ($dntDb->get_results($query) as $row) {
@@ -113,7 +128,8 @@ class Url {
      * @return type
      * returns post image of post, product, user saved in data/vendor_id/$folder/
      */
-    public function get_post_image($type, $postId, $folder = "posts") {
+    public function get_post_image($type, $postId, $folder = "posts")
+    {
         return WWW_CDN_PATH . "" . SYSTEM_NAME . "/data/" . $this->p_img_property($type, $postId, "vendor") . "/" . $folder . "/" . $this->p_img_property($type, $postId, "url_fotka") . "." . $this->p_img_property($type, $postId, "fotka_pripona") . $this->get_img_version();
     }
 
@@ -123,7 +139,8 @@ class Url {
      * @return type
      * returns uploaded image saved in data/vendor_id/uploads/
      */
-    public function get_uploaded_image($postId) {
+    public function get_uploaded_image($postId)
+    {
 
         $dntDb = new DB();
         $query = "SELECT vendor, nazov, pripona FROM dnt_uploads WHERE id_entity = '" . $postId . "' LIMIT 1";
@@ -142,7 +159,8 @@ class Url {
      * @return type
      * returns static image saved in layouts/theme_name/images/
      */
-    public function get_static_image($img) {
+    public function get_static_image($img)
+    {
 
         //GET INSTANCE
         $dntDb = new DB();
@@ -164,16 +182,16 @@ class Url {
 
         return WWW_CDN_PATH . "" . SYSTEM_NAME . "/layouts/" . $this->layout . "/images/" . $img . $this->get_img_version();
     }
-	
-	
-	public function getPostUrl($url){
-		if(Dnt::in_string("<WWW_PATH>", $url)){
-			return str_replace("<WWW_PATH>", WWW_PATH, $url);
-		}elseif(Dnt::is_external_url($url)){
-			return $url;
-		}else{
-			return WWW_FOLDERS."/".$url;
-		}
-	}
+
+    public function getPostUrl($url)
+    {
+        if (Dnt::in_string("<WWW_PATH>", $url)) {
+            return str_replace("<WWW_PATH>", WWW_PATH, $url);
+        } elseif (Dnt::is_external_url($url)) {
+            return $url;
+        } else {
+            return WWW_FOLDERS . "/" . $url;
+        }
+    }
 
 }

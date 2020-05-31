@@ -1,5 +1,11 @@
 ﻿<?php
 
+namespace DntJobs;
+
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Vendor;
+
 class CompetitorsExportJob
 {
 

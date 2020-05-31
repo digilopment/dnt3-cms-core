@@ -1,5 +1,12 @@
 ﻿<?php
 
+namespace DntJobs;
+
+use DntLibrary\Base\DB;
+use DntLibrary\Base\DntUpload;
+use DntLibrary\Base\Vendor;
+use DntLibrary\Base\Upload;
+
 class createImageFormatsJob
 {
 
@@ -19,7 +26,7 @@ class createImageFormatsJob
         }
 
         foreach ($images as $image) {
-            $dnt = new upload($image);
+            $dnt = new Upload($image);
             if ($dnt->uploaded) {
                 foreach (DntUpload::imageFormats() as $format) {
                     $dnt->image_resize = true;

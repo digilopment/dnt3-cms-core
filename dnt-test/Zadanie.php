@@ -1,5 +1,7 @@
 <?php
 
+namespace DntTest;
+
 class ZadanieTest
 {
 
@@ -34,11 +36,11 @@ class ZadanieTest
     {
         if ($this->axisX($col) == $this->x && $this->axisY($row) == $this->y) {
             return '<td style="background-color:red;border:1px solid #ff0000;">&nbsp;</td>';
-        }elseif($this->axisX($col) >= 1 && $this->axisY($row) == 1){
+        } elseif ($this->axisX($col) >= 1 && $this->axisY($row) == 1) {
             return '<td style=";border-bottom:1px solid #ff0000;">&nbsp;</td>';
-        } elseif($this->axisX($col) >= 1 && $this->axisY($row) == $this->n){
+        } elseif ($this->axisX($col) >= 1 && $this->axisY($row) == $this->n) {
             return '<td style=";border-top:1px solid #ff0000;">&nbsp;</td>';
-        }else {
+        } else {
             return '<td style="border:1px solid #ff0000;">&nbsp;</td>';
         }
     }

@@ -1,10 +1,16 @@
 <?php
 
-class TopPluginControll extends Plugin {
-    
+namespace DntView\Layout\Modul\Plugin;
+
+use DntLibrary\App\Plugin;
+
+class TopPluginControll extends Plugin
+{
+
     protected $loc = __FILE__;
-    
-    public function run() {
+
+    public function run()
+    {
         $this->layout($this->loc, 'tpl', false);
     }
 

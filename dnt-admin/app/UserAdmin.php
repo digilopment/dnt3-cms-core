@@ -1,5 +1,9 @@
 <?php
 
+namespace DntAdmin\App;
+
+use DntLibrary\App\AbstractUser;
+
 class UserAdmin extends AbstractUser
 {
 

@@ -1,5 +1,7 @@
 <?php
 
+namespace DntAdmin\App;
+
 class AdminController
 {
 
@@ -10,14 +12,14 @@ class AdminController
         }
         if (!function_exists('tplData')) {
 
-            function tplData($data, $object)
+            /*function tplData($data, $object)
             {
                 if (isset($data[$object])) {
                     return $data[$object];
                 } else {
                     return false;
                 }
-            }
+            }*/
 
         }
 

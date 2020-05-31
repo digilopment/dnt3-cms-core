@@ -1,12 +1,21 @@
 <?php
 
-class Configurator extends Webhook {
+namespace DntView\Layout;
 
-    public function __construct() {
+use DntLibrary\App\Autoloader;
+use DntLibrary\Base\Vendor;
+use DntLibrary\Base\Webhook;
+
+class Configurator extends Webhook
+{
+
+    public function __construct()
+    {
         (new Autoloader)->addVendroClass(__FILE__, 'Foo');
     }
 
-    public function modulesRegistrator() {
+    public function modulesRegistrator()
+    {
         $modulesRegistrator = array(
             'default' => array_merge(
                     array(), $this->getSitemapModules('default')
@@ -24,7 +33,8 @@ class Configurator extends Webhook {
         return $modulesRegistrator;
     }
 
-    public function modulesConfigurator() {
+    public function modulesConfigurator()
+    {
         return array(
             'default' => array(
                 'service_name' => 'Global 404 (all vendors)'
@@ -41,7 +51,8 @@ class Configurator extends Webhook {
         );
     }
 
-    public function metaSettings() {
+    public function metaSettings()
+    {
         $metaSettings[] = array(
             '`type`' => 'default',
             '`key`' => 'test',

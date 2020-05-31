@@ -1,5 +1,5 @@
 <?php
-
+namespace DntLibrary\App;
 class Render
 {
 

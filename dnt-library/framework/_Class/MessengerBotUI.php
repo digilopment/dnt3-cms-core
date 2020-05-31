@@ -7,7 +7,11 @@
  *  package     dnt3
  *  date        2017
  */
-class MessengerUI {
+
+namespace DntLibrary\Base;
+
+class MessengerUI
+{
 
     public $newArr;
 
@@ -18,7 +22,8 @@ class MessengerUI {
      * @param type $dst_lang
      * @return type
      */
-    public function getTranslate($src_text, $src_lang, $dst_lang) {
+    public function getTranslate($src_text, $src_lang, $dst_lang)
+    {
         $src_text = urlencode($src_text);
         $url = 'http://www.transltr.org/api/translate?text=' . $src_text . '&to=' . $dst_lang . '&from=' . $src_lang;
 
@@ -32,7 +37,8 @@ class MessengerUI {
      * @param type $answer
      * @return type
      */
-    public function translateParser($answer) {
+    public function translateParser($answer)
+    {
         $data = $answer;
         $langData = explode(" ", $data);
         $src_lang = $langData[2];
@@ -49,7 +55,8 @@ class MessengerUI {
      * @param type $arr
      * @return type
      */
-    public function getWordsAsUrl($arr) {
+    public function getWordsAsUrl($arr)
+    {
         $this->newArr = array();
         $arr = explode(" ", $arr);
         foreach ($arr as $item) {
@@ -63,7 +70,8 @@ class MessengerUI {
      * @return type
      * nadavky
      */
-    public function getNadavky() {
+    public function getNadavky()
+    {
         return array(
             "kokot",
             "boha",
@@ -84,7 +92,8 @@ class MessengerUI {
      * 
      * @return type
      */
-    public function getPozdrav() {
+    public function getPozdrav()
+    {
         return array(
             "ahoj",
             "cau",
@@ -111,7 +120,8 @@ class MessengerUI {
      * 
      * @return type
      */
-    public function getBasen() {
+    public function getBasen()
+    {
         return array(
             "Potulne myslienky.Honim teraz, honim zas, budem sa zas s pindom hrať.Prišla noc a s ňou aj chuť,prevetram si vsehochut.Chytím brko pravou rukou, zadumam nad novou kurvou.Už to ide, už to strika,beriem servítku zo stolika.Balík je už prazdny,semeno už neni k mání.V tom tu zazrem záclonu, uz mám za servítku nahradu.",
         );
@@ -121,7 +131,8 @@ class MessengerUI {
      * 
      * @return type
      */
-    public function getVtip() {
+    public function getVtip()
+    {
 
         $this->query = urlencode("SELECT * FROM response_messages where typ = 'joke' order by rand() limit 1");
         $this->xml = simplexml_load_file("http://msg.query.sk/?api=xml&query=" . urldecode($this->query));
@@ -134,7 +145,8 @@ class MessengerUI {
      * 
      * @return type
      */
-    public function randHlaska() {
+    public function randHlaska()
+    {
         return array(
             "Ja som to mal dobre, len som to zle napísal! ",
             "Toto je účet za obed, - pýta sa hosť čašníka, - alebo mi chcete predať reštauráciu?",
@@ -160,7 +172,8 @@ class MessengerUI {
      * 
      * @return type
      */
-    public function getPodakovanie() {
+    public function getPodakovanie()
+    {
         return array(
             "dakujem",
             "vdaka",
@@ -174,7 +187,8 @@ class MessengerUI {
      * @return string
      * this function returning optimal ansewer....
      */
-    public function mainUI($answer) {
+    public function mainUI($answer)
+    {
 
         if (in_string("dnt bot add msg joke", $answer)) {
             $log = new Log;

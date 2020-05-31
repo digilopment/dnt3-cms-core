@@ -1,5 +1,10 @@
 <?php
 
+namespace DntModules\Controllers;
+
+use DntLibrary\App\Modul;
+use DntLibrary\Base\Rest;
+
 class RpcModuleController extends Modul
 {
 

@@ -1,5 +1,10 @@
 <?php
 
+namespace DntJobs;
+
+use DntLibrary\Base\Vendor;
+use DntLibrary\Base\Webhook;
+
 class PrepareCacheByUrlJob
 {
 

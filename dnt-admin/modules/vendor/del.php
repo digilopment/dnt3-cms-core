@@ -1,9 +1,14 @@
 <?php
 
-$install    = new Install();
-$rest    = new Rest();
-$image    = new Image();
-$vendor_id  = $rest->get("vendor_id");
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Image;
+use DntLibrary\Base\Install;
+use DntLibrary\Base\Rest;
+
+$install = new Install();
+$rest = new Rest();
+$image = new Image();
+$vendor_id = $rest->get("vendor_id");
 if ($vendor_id) {
     $tables = array(
         //VSETKY STLPCE

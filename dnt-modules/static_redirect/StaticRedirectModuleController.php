@@ -1,5 +1,10 @@
 <?php
 
+namespace DntModules\Controllers;
+
+use DntLibrary\Base\ArticleView;
+use DntLibrary\Base\Dnt;
+
 class StaticRedirectModuleController
 {
 

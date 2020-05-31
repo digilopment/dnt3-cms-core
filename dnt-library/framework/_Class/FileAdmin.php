@@ -7,13 +7,18 @@
  *  package     dnt3
  *  date        2017
  */
-class FileAdmin {
+
+namespace DntLibrary\Base;
+
+class FileAdmin
+{
 
     /**
      * 
      * @return int
      */
-    public function limit() {
+    public function limit()
+    {
         return 20;
     }
 
@@ -22,8 +27,9 @@ class FileAdmin {
      * @param type $is_limit
      * @return string
      */
-    protected function prepare_query($is_limit) {
-        $db = new Db();
+    protected function prepare_query($is_limit)
+    {
+        $db = new DB();
 
         if (isset($_GET['search'])) {
             $typ = "AND `name` LIKE '%" . Dnt::name_url($_GET['search']) . "%'";
@@ -44,8 +50,9 @@ class FileAdmin {
      * 
      * @return type
      */
-    public function query($noLimit = false) {
-        $db = new Db;
+    public function query($noLimit = false)
+    {
+        $db = new DB;
 
         if (isset($_GET['page'])) {
             $returnPage = "&page=" . $_GET['page'];
@@ -69,11 +76,11 @@ class FileAdmin {
         $next_page = $strana + 1;
         $stranok_round = ceil($stranok);
 
-		if($noLimit){
-			$pager = false;
-		}else{
-			$pager = "LIMIT " . $pociatok . ", " . $limit . "";
-		}
+        if ($noLimit) {
+            $pager = false;
+        } else {
+            $pager = "LIMIT " . $pociatok . ", " . $limit . "";
+        }
         return self::prepare_query($pager);
     }
 
@@ -82,15 +89,16 @@ class FileAdmin {
      * @param type $index
      * @return int
      */
-    public function getPage($index) {
-        $db = new Db;
+    public function getPage($index)
+    {
+        $db = new DB;
 
         if (isset($_GET['page'])) {
             $strana = $_GET['page'];
         } else {
             $strana = 1;
         }
-        
+
         $query = self::prepare_query(false);
         $pocet = $db->num_rows($query);
         $limit = self::limit();
@@ -128,7 +136,8 @@ class FileAdmin {
      * @param type $index
      * @return type
      */
-    public function paginator($index) {
+    public function paginator($index)
+    {
         $adresa = explode("?", WWW_FULL_PATH);
         if (isset($_GET['page'])) {
             $adresa_bez_page = explode("&page=" . $_GET['page'] . "", $adresa[1]);
@@ -150,7 +159,8 @@ class FileAdmin {
      * @param type $page
      * @return type
      */
-    public function url($action, $cat_id, $sub_cat_id, $type, $post_id, $page) {
+    public function url($action, $cat_id, $sub_cat_id, $type, $post_id, $page)
+    {
         if ($action == "filter") {
             return WWW_PATH_ADMIN . "index.php?src=files&filter=$cat_id&sub_cat_id=$sub_cat_id&type=$type";
         } else {
@@ -168,8 +178,9 @@ class FileAdmin {
      * @param type $post_id
      * @return boolean
      */
-    public function getPostParam($column, $post_id) {
-        $db = new Db;
+    public function getPostParam($column, $post_id)
+    {
+        $db = new DB;
 
         $query = "SELECT `$column` FROM dnt_uploads WHERE id = '$post_id'";
         if ($db->num_rows($query) > 0) {
@@ -185,7 +196,8 @@ class FileAdmin {
      * 
      * @return type
      */
-    public function showOrder() {
+    public function showOrder()
+    {
         return (AdminContent::getPage("current") * AdminContent::limit()) - AdminContent::limit() + 1;
     }
 

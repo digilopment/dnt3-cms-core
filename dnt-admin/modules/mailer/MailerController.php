@@ -1,5 +1,16 @@
 <?php
 
+namespace DntAdmin\Moduls;
+
+use DntAdmin\App\AdminController;
+use DntLibrary\Base\AdminMailer;
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Mailer;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Sessions;
+use DntLibrary\Base\Vendor;
+
 class MailerController extends AdminController
 {
 

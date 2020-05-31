@@ -1,5 +1,7 @@
 ﻿<?php
 
+namespace DntJobs;
+
 class VideoarchivWeekStatsJob
 {
 

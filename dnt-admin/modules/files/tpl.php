@@ -1,9 +1,19 @@
+<?php
 
-<?php get_top(); ?>
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\DntUpload;
+use DntLibrary\Base\FileAdmin;
+use DntLibrary\Base\Image;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Vendor;
+
+get_top();
+?>
 <?php get_top_html(); ?>
 <?php
-$db = new Db;
-$rest = new Rest;
+$db = new DB();
+$rest = new Rest();
 $image = new Image;
 ?>
 <!-- BEGIN CUSTOM TABLE -->
@@ -88,14 +98,14 @@ $image = new Image;
                                     <td><?php echo $row['id_entity'] ?></td>
                                     <td style="max-width: 500px;"><b><a target="_blank" href="<?php echo $image->getFileImage($post_id); ?>">
 
-                                                <?php echo $row['name']; ?></a></b>
+                                        <?php echo $row['name']; ?></a></b>
                                         <br>
                                         <?php
                                         foreach (DntUpload::imageFormats() as $format) {
                                             if (Dnt::in_string("image", $type)) {
                                                 ?>
                                                 <span style="font-weight:bold;"><a href="<?php echo "../dnt-view/data/uploads/formats/" . $format . "/" . $imageName ?>" target="_blank">width-<?php echo $format; ?></a> | </span>
-                                            <?php } ?>
+            <?php } ?>
         <?php } ?>
 
                                         <br><br>

@@ -1,8 +1,16 @@
+<?php
 
-<?php get_top(); ?>
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Image;
+use DntLibrary\Base\Meta;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Vendor;
+
+get_top();
+?>
 <?php get_top_html(); ?>
 <?php
-$db = new Db;
+$db = new DB();
 $rest = new Rest;
 $image = new Image();
 ?>
@@ -44,10 +52,10 @@ $image = new Image();
 
                                     $editUrl = "index.php?src=" . $rest->get("src") . "&id=" . $row['id_entity'] . "&action=edit";
                                     $develUrl = "";
-                                    $webUrl = 	WWW_PATH."microsites/".$row['url'];
+                                    $webUrl = WWW_PATH . "microsites/" . $row['url'];
                                     $domainUrl = $row['real_url'];
-                                   // $saveUrl = "index.php?src=" . $rest->get("src") . "&action=save";
-									$urlUpdate = "index.php?src=" . $rest->get('src') . "&id=" . $row['id_entity'] . "&action=update";
+                                    // $saveUrl = "index.php?src=" . $rest->get("src") . "&action=save";
+                                    $urlUpdate = "index.php?src=" . $rest->get('src') . "&id=" . $row['id_entity'] . "&action=update";
                                     ?>
                                     <tr>
                                         <td><?php echo $row['id_entity']; ?></td>
@@ -64,9 +72,9 @@ $image = new Image();
                                         <td>
                                             <?php if ($row['active'] == 1) { ?>
                                                 <i class="fa fa-arrow-right bg-green action"></i> - <a href="<?php echo $row['real_url']; ?>" target="_blank"><?php echo $row['real_url']; ?></a>
-                                            <?php } else { ?>
+        <?php } else { ?>
                                                 <i class="fa fa-times bg-red action"></i> - K tejto súťaži nie je priradená žiadna doména
-                                            <?php } ?>
+        <?php } ?>
                                         </td>
                                         <td style="display: none;">
                                             <span class="text-green">
@@ -118,7 +126,7 @@ $image = new Image();
                                                                                             <label class="col-sm-3 control-label"><b>Zobraziť na vlastnej adrese:</b></label>
 
                                                                                             <div class="col-sm-9 ">
-                                                                                                <?php Meta::setMetaStatus($row['active'], "real_url"); ?>
+        <?php Meta::setMetaStatus($row['active'], "real_url"); ?>
                                                                                                 <br/>
                                                                                             </div>
                                                                                         </div>
@@ -127,7 +135,7 @@ $image = new Image();
                                                                                             <label class="col-sm-3 control-label"><b>Povoliť registráciu:</b></label>
 
                                                                                             <div class="col-sm-9 ">
-                                                                                                <?php Meta::setMetaStatus($row['in_progress'], "in_progress"); ?>
+        <?php Meta::setMetaStatus($row['in_progress'], "in_progress"); ?>
                                                                                                 <br/>
                                                                                             </div>
                                                                                         </div>

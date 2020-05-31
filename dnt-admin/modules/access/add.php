@@ -1,5 +1,13 @@
 
-<?php get_top(); ?>
+<?php
+
+use DntLibrary\Base\AdminUser;
+use DntLibrary\Base\Api;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Rest;
+
+get_top();
+?>
 <?php get_top_html(); ?>
 <?php
 $rest = new Rest;
@@ -64,7 +72,7 @@ $query = "SELECT * FROM dnt_users";
                                                 <input type="text" name="<?php echo $value; ?>" value="" class="form-control">
                                             </div>
                                         <?php } ?>  
-                                    <?php } ?>
+<?php } ?>
                                     <br/>						
                                     <h5><b>Vaše heslo:</b></h5>
                                     <div class="checkbox">
@@ -88,7 +96,7 @@ $query = "SELECT * FROM dnt_users";
                                 <input type="file" name="userfile" class="btn-default btn-lg btn-block">
                                 <div class="padding"></div>
                                 <div class="checkbox">
-                                    <?php echo Dnt::returnInput(); ?>
+<?php echo Dnt::returnInput(); ?>
                                     <input type="submit" name="sent" value="Uložiť" class="btn btn-primary" style="width: 40%;">
                                 </div>
                             </div>

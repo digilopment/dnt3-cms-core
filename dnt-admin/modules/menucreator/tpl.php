@@ -1,8 +1,13 @@
+<?php
 
-<?php get_top(); ?>
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Rest;
+
+get_top();
+?>
 <?php get_top_html(); ?>
 <?php
-$db = new Db;
+$db = new DB();
 $rest = new Rest;
 ?>
 
@@ -80,7 +85,7 @@ $rest = new Rest;
                         }
                         ?>									
                     </tbody>
-                    <input type="submit" name="sent" class="btn btn-primary" value="Odoslať" >
+                    <input type="submit" name="sent" class="btn btn-primary" value="Uložiť" >
                 </form>
             </table>
         </div>

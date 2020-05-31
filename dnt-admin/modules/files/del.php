@@ -1,5 +1,10 @@
 <?php
 
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\DntUpload;
+use DntLibrary\Base\Image;
+use DntLibrary\Base\Vendor;
+
 $image = new Image();
 if (isset($_POST['sent'])) {
 

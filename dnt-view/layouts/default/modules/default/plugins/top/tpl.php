@@ -1,3 +1,7 @@
+<?php
+
+use DntLibrary\Base\Frontend;
+?>
 <!DOCTYPE html> 
 <html lang="<?php echo Frontend::getMetaSetting($data, "language"); ?>">
     <head>

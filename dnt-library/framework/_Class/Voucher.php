@@ -7,9 +7,21 @@
  *  package     dnt3
  *  date        2017
  */
-class Voucher {
 
-    protected function sentEmail($recipientEmail, $voucherValue) {
+namespace DntLibrary\Base;
+
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Frontend;
+use DntLibrary\Base\Mailer;
+use DntLibrary\Base\User;
+use DntLibrary\Base\Vendor;
+
+class Voucher
+{
+
+    protected function sentEmail($recipientEmail, $voucherValue)
+    {
 
 
         $data = Frontend::get();
@@ -26,8 +38,9 @@ class Voucher {
         $dntMailer->sent_email();
     }
 
-    public function assignLastVoucher($userId) {
-        $db = new Db;
+    public function assignLastVoucher($userId)
+    {
+        $db = new DB;
 
         $db->dbTransaction();
         $query = "SELECT * FROM dnt_vouchers WHERE user_id = '0' ORDER BY `order` ASC LIMIT 1";
@@ -49,8 +62,8 @@ class Voucher {
                 $db->update(
                         "dnt_registred_users", //table
                         array(//set
-                    'voucher' => $voucherData,
-                    'datetime_update' => Dnt::datetime(),
+                            'voucher' => $voucherData,
+                            'datetime_update' => Dnt::datetime(),
                         ), array(//where
                     'id_entity' => $userId,
                     'vendor_id' => Vendor::getId(),
@@ -61,8 +74,8 @@ class Voucher {
                 $db->update(
                         "dnt_vouchers", //table
                         array(//set
-                    'user_id' => $userId,
-                    'datetime_update' => Dnt::datetime(),
+                            'user_id' => $userId,
+                            'datetime_update' => Dnt::datetime(),
                         ), array(//where
                     'id_entity' => $v_id_entity,
                     'vendor_id' => Vendor::getId(),

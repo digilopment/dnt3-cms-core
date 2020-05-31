@@ -7,13 +7,26 @@
  *  package     dnt3
  *  date        2017
  */
-class User extends Image {
+
+namespace DntLibrary\Base;
+
+use DntLibrary\Base\Api;
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\DntUpload;
+use DntLibrary\Base\Image;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Vendor;
+
+class User extends Image
+{
 
     /**
      * 
      * @return int
      */
-    public function limit() {
+    public function limit()
+    {
         return 30;
     }
 
@@ -23,13 +36,14 @@ class User extends Image {
      * @param type $is_limit
      * @return string
      */
-    protected function prepare_query($type, $is_limit) {
+    protected function prepare_query($type, $is_limit)
+    {
 
         if ($type == "admin") {
             return array();
         }
 
-        $db = new Db;
+        $db = new DB;
         if ($type) {
             $SQL_type = " type = '" . $type . "' AND ";
         } else {
@@ -55,9 +69,10 @@ class User extends Image {
      * @param type $type
      * @return type
      */
-    public function getUserByType($type = false) {
+    public function getUserByType($type = false)
+    {
 
-        $db = new Db;
+        $db = new DB;
 
         $query = self::prepare_query($type, false);
         $pocet = $db->num_rows($query);
@@ -90,9 +105,10 @@ class User extends Image {
      * @param type $id_entity
      * @return type
      */
-    public function getUser($id_entity) {
+    public function getUser($id_entity)
+    {
 
-        $db = new Db;
+        $db = new DB;
         $query = "SELECT * FROM `dnt_registred_users` WHERE 
 			vendor_id = '" . Vendor::getId() . "' AND
 			id_entity = '" . $id_entity . "' 
@@ -108,7 +124,8 @@ class User extends Image {
      * 
      * @return type
      */
-    public function getImage($imageId) {
+    public function getImage($imageId)
+    {
         return self::getFileImage($imageId);
     }
 
@@ -116,8 +133,9 @@ class User extends Image {
      * 
      * @return type
      */
-    public function getUserTypes() {
-        $db = new Db;
+    public function getUserTypes()
+    {
+        $db = new DB;
         $query = "SELECT DISTINCT type FROM dnt_registred_users WHERE 
 		vendor_id = '" . Vendor::getId() . "'
 		AND type <> 'admin' 
@@ -135,13 +153,14 @@ class User extends Image {
      * @param type $path
      * @return string
      */
-    public function addDefaultUser($type = false, $path = false) {
+    public function addDefaultUser($type = false, $path = false)
+    {
 
         $query = "SELECT * FROM dnt_registred_users";
         $table = "dnt_registred_users";
         $user = new Api;
         $rest = new Rest;
-        $db = new Db;
+        $db = new DB;
 
         foreach ($user->getColumns($query) as $key => $value) {
             if (
@@ -161,12 +180,12 @@ class User extends Image {
             $db->update(
                     $table, //table
                     array(//set
-                'vendor_id' => Vendor::getId(),
-                'status' => 1,
-                'type' => $type,
-                'datetime_creat' => Dnt::datetime(),
-                'datetime_update' => Dnt::datetime(),
-                'datetime_publish' => Dnt::datetime(),
+                        'vendor_id' => Vendor::getId(),
+                        'status' => 1,
+                        'type' => $type,
+                        'datetime_creat' => Dnt::datetime(),
+                        'datetime_update' => Dnt::datetime(),
+                        'datetime_publish' => Dnt::datetime(),
                     ), array(//where
                 'id_entity' => $post_id,
                     )
@@ -175,11 +194,11 @@ class User extends Image {
             $db->update(
                     $table, //table
                     array(//set
-                'vendor_id' => Vendor::getId(),
-                'status' => 1,
-                'datetime_creat' => Dnt::datetime(),
-                'datetime_update' => Dnt::datetime(),
-                'datetime_publish' => Dnt::datetime(),
+                        'vendor_id' => Vendor::getId(),
+                        'status' => 1,
+                        'datetime_creat' => Dnt::datetime(),
+                        'datetime_update' => Dnt::datetime(),
+                        'datetime_publish' => Dnt::datetime(),
                     ), array(//where
                 'id_entity' => $post_id,
                     )
@@ -212,8 +231,9 @@ class User extends Image {
      * @param type $index
      * @return int
      */
-    public function getPage($type, $index) {
-        $db = new Db;
+    public function getPage($type, $index)
+    {
+        $db = new DB;
 
         if (isset($_GET['page'])) {
             $strana = $_GET['page'];
@@ -259,7 +279,8 @@ class User extends Image {
      * @param type $index
      * @return type
      */
-    public function paginator($type, $index) {
+    public function paginator($type, $index)
+    {
         $adresa = explode("?", WWW_FULL_PATH);
         if (isset($_GET['page'])) {
             $adresa_bez_page = explode("&page=" . $_GET['page'] . "", $adresa[1]); //src=obsah&page=2

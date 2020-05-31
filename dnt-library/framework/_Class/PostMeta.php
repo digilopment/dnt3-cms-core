@@ -7,6 +7,14 @@
  *  package     dnt3
  *  date        2017
  */
+
+namespace DntLibrary\Base;
+
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Vendor;
+use DntView\Layout\Modul\Install\MetaServices;
+use function defaultModuleMetaDataConfiguration;
+
 class PostMeta
 {
 
@@ -16,7 +24,7 @@ class PostMeta
      */
     public function getServicePostsMeta($postId, $service)
     {
-        $db = new Db;
+        $db = new DB;
         $query = "SELECT * FROM dnt_posts_meta WHERE `vendor_id` = '" . Vendor::getId() . "' AND service = '" . $service . "' AND post_id = '" . $postId . "'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
@@ -28,9 +36,24 @@ class PostMeta
         return array();
     }
 
+    public function getPostsMeta($postId)
+    {
+        
+        $db = new DB;
+        $query = "SELECT * FROM dnt_posts_meta WHERE `vendor_id` = '" . Vendor::getId() . "' AND post_id IN (" . $postId . ")";
+        if ($db->num_rows($query) > 0) {
+            foreach ($db->get_results($query) as $row) {
+                $arr['keys'][$row['post_id']][$row['key']]['show'] = $row['show'];
+                $arr['keys'][$row['post_id']][$row['key']]['value'] = $row['value'];
+            }
+            return $arr;
+        }
+        return array();
+    }
+
     public function getPostMeta($id_entity)
     {
-        $db = new Db;
+        $db = new DB;
         $query = "SELECT * FROM dnt_posts_meta WHERE `vendor_id` = '" . Vendor::getId() . "' AND id_entity = '" . $id_entity . "'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
@@ -68,7 +91,7 @@ class PostMeta
                     }
                 }
 
-                $db = new Db;
+                $db = new DB;
                 foreach ($arrOfConfigKeys as $key) {
                     $db->insert('dnt_posts_meta', $settingsData[$key]);
                 }
@@ -84,7 +107,7 @@ class PostMeta
     public function loadNewPostMetaFromConf($postId, $service)
     {
 
-       
+
         $conf = "../dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $service . "/install/MetaServices.php";
         if (file_exists($conf)) {
             include $conf;
@@ -107,7 +130,7 @@ class PostMeta
                         continue;
                     }
                 }
-                $db = new Db;
+                $db = new DB;
                 foreach ($arrOfConfigKeys as $key) {
                     $db->insert('dnt_posts_meta', $settingsData[$key]);
                 }

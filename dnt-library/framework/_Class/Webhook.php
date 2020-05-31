@@ -7,6 +7,13 @@
  *  package     dnt3
  *  date        2017
  */
+
+namespace DntLibrary\Base;
+
+use DntLibrary\Base\DB;
+use DntView\Layout\Configurator;
+use function modulesConfig;
+
 class Webhook
 {
 
@@ -16,7 +23,7 @@ class Webhook
      */
     public function getSitemapModules($type = false, $vendorId = false)
     {
-        $db = new Db;
+        $db = new DB();
         $ml = new MultyLanguage;
 
         if ($type == "static_view") {
@@ -96,7 +103,6 @@ class Webhook
             );
         }
         $file = "../dnt-view/layouts/" . Vendor::getLayout() . "/conf.php";
-
         if (!function_exists("modulesConfig")) {
             if (file_exists($file)) {
                 include $file;
@@ -188,7 +194,7 @@ class Webhook
      */
     public function getArticleViewCat()
     {
-        $db = new Db;
+        $db = new DB();
         $arr = array();
         $query = "SELECT `name_url` FROM dnt_posts WHERE `type` = 'sitemap' AND `show` > '0' AND vendor_id = '" . Vendor::getId() . "'";
         if ($db->num_rows($query) > 0) {

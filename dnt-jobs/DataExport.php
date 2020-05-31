@@ -1,4 +1,19 @@
-﻿<?php
+<?php
+
+namespace DntJobs;
+
+use DntLibrary\Base\Cache;
+use DntLibrary\Base\Config;
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\DntLog;
+use DntLibrary\Base\Install;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\XMLgenerator;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use SplFileInfo;
+use ZipArchive;
 
 class DataExportJob
 {
@@ -6,7 +21,7 @@ class DataExportJob
     public function run()
     {
 
-        $rest = new Rest;
+        $rest = new Rest();
         $config = new Config;
         $dntLog = new DntLog;
         $XMLgenerator = new XMLgenerator;
@@ -39,7 +54,7 @@ class DataExportJob
                     RecursiveIteratorIterator::LEAVES_ONLY
             );
 
-            $db = new Db;
+            $db = new DB;
             foreach ($files as $name => $file) {
                 // Skip directories (they would be added automatically)
                 if (!$file->isDir()) {
@@ -71,9 +86,9 @@ class DataExportJob
 
             $url = WWW_PATH . "dnt-backup/" . $vendor_id . "_dnt3.zip";
             echo '<a target="_blank" href="' . $url . '">Download => ' . $url . '</a>';
-        }else{
-			echo 'no vendor';
-		}
+        } else {
+            echo 'no vendor';
+        }
     }
 
 }

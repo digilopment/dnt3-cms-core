@@ -1,5 +1,9 @@
 <?php
 
+namespace DntJobs;
+
+use DntLibrary\Base\Cache;
+
 class DelOldCacheJob
 {
 

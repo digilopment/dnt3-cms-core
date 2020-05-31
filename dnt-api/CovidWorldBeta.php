@@ -1,5 +1,9 @@
 <?php
 
+namespace DntApi;
+
+use DntLibrary\App\Render;
+
 class CovidWorldBetaApi
 {
 

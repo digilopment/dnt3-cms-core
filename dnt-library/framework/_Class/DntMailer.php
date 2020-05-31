@@ -7,7 +7,14 @@
  *  package     dnt3
  *  date        2017
  */
-class Mailer {
+
+namespace DntLibrary\Base;
+
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Settings;
+
+class Mailer
+{
 
     var $recipient; //array
     var $sender_email; //string
@@ -20,8 +27,8 @@ class Mailer {
      * 
      * @return boolean
      */
-
-    public function __construct() {
+    public function __construct()
+    {
         return false;
     }
 
@@ -29,7 +36,8 @@ class Mailer {
      * 
      * @param type $arr
      */
-    public function set_recipient($arr) {
+    public function set_recipient($arr)
+    {
         $this->recipient = $arr;
     }
 
@@ -37,7 +45,8 @@ class Mailer {
      * 
      * @param type $str
      */
-    public function set_sender_email($str) {
+    public function set_sender_email($str)
+    {
         $this->sender_email = $str;
     }
 
@@ -45,7 +54,8 @@ class Mailer {
      * 
      * @param type $str
      */
-    public function set_sender_name($str) {
+    public function set_sender_name($str)
+    {
         $this->sender_name = $str;
     }
 
@@ -53,7 +63,8 @@ class Mailer {
      * 
      * @param type $str
      */
-    public function set_title($str) {
+    public function set_title($str)
+    {
         $this->title = $str;
     }
 
@@ -61,7 +72,8 @@ class Mailer {
      * 
      * @param type $str
      */
-    public function set_msg($str) {
+    public function set_msg($str)
+    {
         $this->msg = $str;
     }
 
@@ -69,7 +81,8 @@ class Mailer {
      * 
      * @param type $str
      */
-    public function set_subject($str) {
+    public function set_subject($str)
+    {
         $this->subject = $str;
     }
 
@@ -77,7 +90,8 @@ class Mailer {
      * 
      * @param type $to
      */
-    public function prepare_mail($to) {
+    public function prepare_mail($to)
+    {
 
         //SENDER
         if ($this->sender_email == false) {
@@ -171,7 +185,8 @@ class Mailer {
     /**
      * sent_email
      */
-    public function sent_email() {
+    public function sent_email()
+    {
         foreach ($this->recipient as $to) {
             $this->prepare_mail($to);
         }

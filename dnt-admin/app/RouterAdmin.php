@@ -1,5 +1,14 @@
 <?php
 
+namespace DntAdmin\App;
+
+use DntLibrary\App\Autoloader;
+use DntLibrary\App\Database;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Sessions;
+use DntLibrary\Base\Vendor;
+
 class RouterAdmin
 {
 
@@ -10,7 +19,7 @@ class RouterAdmin
 
     public function __construct()
     {
-        $this->db = new Db();
+        $this->db = new Database();
         $this->session = new Sessions();
         $this->rest = new Rest();
     }
@@ -51,6 +60,7 @@ class RouterAdmin
         $file = "modules/" . $module . "/" . $classFile;
         if (file_exists($file)) {
             include $file;
+            $className = 'DntAdmin\Moduls\\' . $className;
             $moduleClass = new $className();
             if (method_exists($moduleClass, 'init')) {
                 $moduleClass->init();

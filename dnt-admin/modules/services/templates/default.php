@@ -14,14 +14,14 @@ $actionUrl = "index.php?src=services&included=" . $service . "&filter=" . $rest-
 ?>
 
 <section class="col-xs-12" style="margin-bottom:15px">
-   
+
     <a href="index.php?src=content&included=<?php echo $rest->get("included"); ?>&filter=<?php echo $rest->get("filter"); ?>">
         <span class="label label-primary bg-blue" style="padding:5px;" ><big>PREJSŤ NA ZOZNAM</big></span>
     </a>
     <a href="index.php?src=content&included=<?php echo $rest->get("included"); ?>&filter=<?php echo $rest->get("filter"); ?>&action=add">
         <span class="label label-primary bg-green" style="padding:5px;"><big>PRIDAŤ NOVÝ POST V TEJTO KATEGÓRII</big></span>
     </a>
-     <a href="index.php?src=content&filter=<?php echo $rest->get("filter"); ?>&sub_cat_id=&post_id=<?php echo $postId; ?>&page=1&action=edit&included=<?php echo $rest->get("included"); ?>">
+    <a href="index.php?src=content&filter=<?php echo $rest->get("filter"); ?>&sub_cat_id=&post_id=<?php echo $postId; ?>&page=1&action=edit&included=<?php echo $rest->get("included"); ?>">
         <span class="label label-primary bg-orange" style="padding:5px;"><big>SPAŤ NA DETAIL</big></span>
     </a>
     <?php if ($show > 0) { ?>
@@ -69,9 +69,13 @@ $actionUrl = "index.php?src=services&included=" . $service . "&filter=" . $rest-
                                             foreach ($image->getFileImages($row['value'], true, Image::THUMB) as $file) {
                                                 echo "<a target='_blank' href='" . $file . "'>" . $file . "</a><br/>";
                                             }
+                                        } elseif ($row['content_type'] == "color") {
+                                            ?>
+                                            <input name="key_<?php echo $row['id_entity']; ?>"  value="<?php echo $row['value'] ?>" type="color" class="form-control">
+                                            <?php
                                         } elseif ($row['content_type'] == "content") {
                                             ?>
-                                            <textarea name="key_<?php echo $row['id_entity'] ?>" class="ckeditor" style="min-height: 195px;"><?php echo $row['value'] ?></textarea>
+                                            <textarea name="key_<?php echo $row['id_entity'] ?>" value="<?php echo $row['value'] ?>" class="ckeditor" style="min-height: 195px;"><?php echo $row['value'] ?></textarea>
                                         <?php } else {
                                             ?>
                                             <input type="text" name="key_<?php echo $row['id_entity'] ?>" value='<?php echo $row['value'] ?>' class="form-control" placeholder="">

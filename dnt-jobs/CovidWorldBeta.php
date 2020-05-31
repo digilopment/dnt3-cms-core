@@ -1,5 +1,12 @@
 <?php
 
+namespace DntJobs;
+
+use DateTime;
+use DntLibrary\App\Render;
+use DntLibrary\Base\Dnt;
+use DOMDocument;
+
 class CovidWorldBetaJob
 {
 

@@ -6,9 +6,19 @@
  * http://skeleton.localhost/dnt3/dnt-api/multi/json/?query=SELECT%20*%20FROM%20dnt_users
  *
  * */
-class MultiApi {
 
-    public function run() {
+namespace DntApi;
+
+use DntLibrary\Base\Api;
+use DntLibrary\Base\DntLog;
+use DntLibrary\Base\Rest;
+use Swoole\Http\Client;
+
+class MultiApi
+{
+
+    public function run()
+    {
 
         $rest = new Rest();
         $dntLog = new DntLog();

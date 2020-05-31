@@ -7,7 +7,15 @@
  *  package     dnt3
  *  date        2017
  */
-Class Image
+
+namespace DntLibrary\Base;
+
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Image;
+use DntLibrary\Base\Vendor;
+
+class Image
 {
 
     const THUMB = 150;
@@ -23,7 +31,7 @@ Class Image
      */
     public function get($id_entity, $table = null)
     {
-        $db = new Db;
+        $db = new DB;
         $query = "SELECT img FROM $table WHERE `id_entity` = '" . $id_entity . "' AND vendor_id = '" . Vendor::getId() . "'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
@@ -46,7 +54,7 @@ Class Image
             return $input;
         }
 
-        $db = new Db;
+        $db = new DB;
 
         $imageId = $input;
         //`show` = '0' or `show` = '1' or `show` = '2'";
@@ -83,7 +91,7 @@ Class Image
      */
     public function getFileImages($ids, $path = true, $format = false)
     {
-        $db = new Db;
+        $db = new DB;
 
         if (!is_array($ids)) {
             $ids = explode(",", $ids);
@@ -130,7 +138,7 @@ Class Image
      */
     public function getPostImage($id, $table = null, $format = false)
     {
-        $db = new Db;
+        $db = new DB;
 
         if ($table == true || $table == false || $table === null) {
             $table = "dnt_posts";
@@ -153,7 +161,7 @@ Class Image
      */
     public function getColumnByName($file)
     {
-        $db = new Db;
+        $db = new DB;
 
         $query = "SELECT * FROM dnt_uploads WHERE name = '" . $file . "' LIMIT 1";
         if ($db->num_rows($query) > 0) {
@@ -173,7 +181,7 @@ Class Image
      */
     public function hasVendorDipendency($file)
     {
-        $db = new Db();
+        $db = new DB();
 
         if (!is_numeric($file)) {
             $image_id_entity = self::getColumnByName($file);
@@ -206,7 +214,7 @@ Class Image
      */
     public function hasDipendency($file, $onDelete = true)
     {
-        $db = new Db();
+        $db = new DB();
 
         if (!is_numeric($file)) {
             $image_id_entity = self::getColumnByName($file);
@@ -294,5 +302,4 @@ Class Image
             }
         }
     }
-
 }

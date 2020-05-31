@@ -7,14 +7,26 @@
  *  package     dnt3
  *  date        2017
  */
-class Frontend {
+
+namespace DntLibrary\Base;
+
+use DntLibrary\Base\ArticleView;
+use DntLibrary\Base\MultyLanguage;
+use DntLibrary\Base\Navigation;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Settings;
+use DntLibrary\Base\Vendor;
+
+class Frontend
+{
 
     /**
      * 
      * @param array $custom_data
      * @return type
      */
-    public function get($custom_data = false, $id = false) {
+    public function get($custom_data = false, $id = false)
+    {
 
         $article = new ArticleView;
         $settings = new Settings;
@@ -80,13 +92,19 @@ class Frontend {
         return $data;
     }
 
+    public function addCustomData($data, $customData)
+    {
+        return array_merge($data, $customData);
+    }
+
     /**
      * 
      * @param type $data
      * @param type $key
      * @return boolean
      */
-    public static function getMetaSetting($data, $key) {
+    public static function getMetaSetting($data, $key)
+    {
         if (isset($data['meta_settings']['keys'][$key]['value']) && $data['meta_settings']['keys'][$key]['show'] == 1) {
             return $data['meta_settings']['keys'][$key]['value'];
         } else {
@@ -100,7 +118,8 @@ class Frontend {
      * @param type $key
      * @return boolean
      */
-    public static function getMetaSettingBool($data, $key) {
+    public static function getMetaSettingBool($data, $key)
+    {
         if (isset($data['meta_settings']['keys'][$key]['show']) && $data['meta_settings']['keys'][$key]['show'] == 1) {
             return true;
         } else {
@@ -114,7 +133,8 @@ class Frontend {
      * @param type $key
      * @return boolean
      */
-    public static function getMetaTree($data, $key) {
+    public static function getMetaTree($data, $key)
+    {
         if (isset($data['meta_tree']['keys'][$key]['value']) && $data['meta_tree']['keys'][$key]['show'] == 1) {
             return $data['meta_tree']['keys'][$key]['value'];
         } else {
@@ -122,7 +142,8 @@ class Frontend {
         }
     }
 
-    public static function pluginBridgeVar() {
+    public static function pluginBridgeVar()
+    {
         
     }
 
@@ -132,7 +153,8 @@ class Frontend {
      * @param type $key
      * @return boolean
      */
-    public static function getDeafult($data, $key) {
+    public static function getDeafult($data, $key)
+    {
         if (isset($data[$key])) {
             return $data[$key];
         } else {

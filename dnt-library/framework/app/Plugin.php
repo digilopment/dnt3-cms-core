@@ -1,14 +1,25 @@
 <?php
 
+namespace DntLibrary\App;
+
+use DntLibrary\Base\Settings;
+
 class Plugin
 {
 
     protected $data;
+    protected $settings;
 
     public function __construct($data, $currentPlugin)
     {
+        $this->settings = new Settings();
         $this->data = $data;
         $this->data['ENV'] = $this->envDriver($data, $currentPlugin);
+    }
+
+    protected function modul()
+    {
+        return $this->settings->global()->module;
     }
 
     protected function envDriver($data, $plugin)

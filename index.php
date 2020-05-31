@@ -8,6 +8,12 @@
  *  author: Digilopment
  * 
  */
+
+namespace Index;
+
+use DntLibrary\App\App;
+use DntLibrary\App\Bootstrap;
+
 class Run
 {
 
@@ -23,6 +29,7 @@ class Run
         $app = new App($bootstrap->client);
         $app->run();
     }
+
 }
 
 $run = new Run();

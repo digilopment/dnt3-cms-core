@@ -1,5 +1,10 @@
 <?php
 
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\DntUpload;
+use DntLibrary\Base\Vendor;
+use DntLibrary\Base\Xlsx;
+
 $dnt = new Dnt;
 if (isset($_POST['sent'])) {
     $dntUpload = new DntUpload;

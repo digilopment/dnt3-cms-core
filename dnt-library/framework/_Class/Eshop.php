@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  class       Eshop
  *  author      Tomas Doubek
@@ -6,13 +7,18 @@
  *  package     dnt3
  *  date        2017
  */
-class Eshop {
+
+namespace DntLibrary\Base;
+
+class Eshop
+{
 
     /**
      * 
      * @param type $postId
      */
-    public function addToCart($postId) {
+    public function addToCart($postId)
+    {
         
     }
 

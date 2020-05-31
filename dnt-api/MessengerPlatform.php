@@ -10,9 +10,16 @@
  * @subpackage DntBot
  * @since 2016
  * */
-class MessengerPlatformApi {
 
-    public function run() {
+namespace DntApi;
+
+use DntLibrary\Base\MessengerBot;
+
+class MessengerPlatformApi
+{
+
+    public function run()
+    {
 
         if (isset($_GET['trigger'])) {
 

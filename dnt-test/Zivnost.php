@@ -1,5 +1,9 @@
 <?php
 
+namespace DntTest;
+
+use DntLibrary\Base\Dnt;
+
 class ZivnostTest
 {
 
@@ -43,14 +47,14 @@ class ZivnostTest
             }
             $zdravotka = $odvodyZP * 12;
             $socialka = $odvodySP * 12;
-            
+
             $zakladDane = $rocnaTrzba - $pausalne - $zdravotka - $socialka - $nezdanitelna;
-            if($rocnaTrzba < 30000){
+            if ($rocnaTrzba < 30000) {
                 $dan = $zakladDane / 100 * 15;
-            }else{
+            } else {
                 $dan = $zakladDane / 100 * 19;
             }
-            
+
             $cistyZisk = $rocnaTrzba - $zdravotka - $socialka - $dan;
             return $zakladDane;
         } else {

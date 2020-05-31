@@ -7,13 +7,24 @@
  *  package     dnt3
  *  date        2017
  */
-class Polls {
+
+namespace DntLibrary\Base;
+
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\PollsFrontend;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Vendor;
+
+class Polls
+{
 
     /**
      * 
      * @return type
      */
-    public function getTypes() {
+    public function getTypes()
+    {
         return array(
             "1" => "Kvíz s percentuálnou úspešnosťou (Vedomostný kvíz)",
             "2" => "Kvíz s predpokladaným výsledkom kategorizácie (Priraďovací kvíz)",
@@ -24,7 +35,8 @@ class Polls {
      * 
      * @param type $type
      */
-    public function currentType($type) {
+    public function currentType($type)
+    {
         foreach (self::getTypes() as $key => $value) {
             if ($type == $key)
                 echo "<option value='" . $key . "' selected>" . $value . "</option>";
@@ -38,7 +50,8 @@ class Polls {
      * @param type $type
      * @return type
      */
-    public function currentTypeStr($type) {
+    public function currentTypeStr($type)
+    {
         $types = self::getTypes();
         return $types[$type];
     }
@@ -47,7 +60,8 @@ class Polls {
      * 
      * @param type $poll_id
      */
-    public function is_correct($poll_id) {
+    public function is_correct($poll_id)
+    {
         
     }
 
@@ -55,7 +69,8 @@ class Polls {
      * 
      * @return string
      */
-    public function getPolls() {
+    public function getPolls()
+    {
         return "SELECT * FROM dnt_polls WHERE `show` <> '0' AND `show` <> '3' AND vendor_id = '" . Vendor::getId() . "'";
     }
 
@@ -63,7 +78,8 @@ class Polls {
      * 
      * @return type
      */
-    public function getPollsAdmin() {
+    public function getPollsAdmin()
+    {
         return "SELECT * FROM dnt_polls WHERE vendor_id = '" . Vendor::getId() . "'";
     }
 
@@ -72,8 +88,9 @@ class Polls {
      * @param type $poll_id
      * @return boolean
      */
-    public function __construct($poll_id) {
-        $db = new Db;
+    public function __construct($poll_id)
+    {
+        $db = new DB;
         $query = "SELECT `id_entity` FROM dnt_polls WHERE
 		id 	= " . $poll_id . "";
 
@@ -94,8 +111,9 @@ class Polls {
      * add insert query *add insert query
      * this function generate wrapper of current poll
      */
-    public function generatePoll() {
-        $db = new Db;
+    public function generatePoll()
+    {
+        $db = new DB;
         $rest = new Rest;
         $insertedData = array(
             'vendor_id' => Vendor::getId(),
@@ -121,8 +139,9 @@ class Polls {
      * @return boolean
      * this functionreturn return dnt_polls param.
      */
-    public function getParam($column, $poll_id) {
-        $db = new Db;
+    public function getParam($column, $poll_id)
+    {
+        $db = new DB;
         $query = "SELECT `$column` FROM dnt_polls WHERE
 		vendor_id 	= " . Vendor::getId() . " AND
 		id_entity 	= " . $poll_id . "";
@@ -143,8 +162,9 @@ class Polls {
      * return $integer
      * this functionreturn number of question in one poll.
      */
-    public function getNumberOfQuestions($poll_id) {
-        $db = new Db;
+    public function getNumberOfQuestions($poll_id)
+    {
+        $db = new DB;
         $query = "SELECT * FROM dnt_polls_composer WHERE
 		vendor_id 	= " . Vendor::getId() . " AND
 		poll_id 	= " . $poll_id . " AND
@@ -159,9 +179,10 @@ class Polls {
      * add insert query
      * this function generate polls meta.
      */
-    public function generateDefaultComposer($poll_id) {
+    public function generateDefaultComposer($poll_id)
+    {
         //get instances
-        $db = new Db;
+        $db = new DB;
         $rest = new Rest;
         $question_id = 1;
         $questions = 5;
@@ -226,8 +247,9 @@ class Polls {
      * @param type $poll_id
      * @param type $question_id
      */
-    public function addQuestion($poll_id, $question_id) {
-        $db = new Db;
+    public function addQuestion($poll_id, $question_id)
+    {
+        $db = new DB;
         $count_questions = self::getParam("count_questions", $poll_id);
         $question_id = $question_id + 1;
         $order = false;
@@ -266,8 +288,9 @@ class Polls {
      * @param type $poll_id
      * @param type $question_id
      */
-    public function AddWinningCombination($poll_id, $question_id = 0) {
-        $db = new Db;
+    public function AddWinningCombination($poll_id, $question_id = 0)
+    {
+        $db = new DB;
         $order = false;
         $insertedData = array(
             '`vendor_id`' => Vendor::getId(),
@@ -287,8 +310,9 @@ class Polls {
      * @param type $poll_id
      * @param type $question_id
      */
-    public function delQuestion($poll_id, $question_id) {
-        $db = new Db;
+    public function delQuestion($poll_id, $question_id)
+    {
+        $db = new DB;
         $where = array('question_id' => $question_id, 'poll_id' => $poll_id, 'vendor_id' => Vendor::getId());
         $db->delete('dnt_polls_composer', $where);
     }
@@ -297,8 +321,9 @@ class Polls {
      * 
      * @param type $id
      */
-    public function delComposerInput($id) {
-        $db = new Db;
+    public function delComposerInput($id)
+    {
+        $db = new DB;
         $where = array('id_entity' => $id, 'vendor_id' => Vendor::getId());
         $db->delete('dnt_polls_composer', $where);
     }
@@ -310,9 +335,10 @@ class Polls {
      * no return 
      * this function generate polls meta via copy.
      */
-    public function copyComposer($poll_id, $copy_poll_id) {
+    public function copyComposer($poll_id, $copy_poll_id)
+    {
         //get instances
-        $db = new Db;
+        $db = new DB;
         $query = "SELECT * FROM dnt_polls_composer WHERE
 		vendor_id 	= " . Vendor::getId() . " AND
 		poll_id 	= " . $copy_poll_id . "";
@@ -347,12 +373,12 @@ class Polls {
                 $db->update(
                         $table, //table
                         array(//set
-                    'name' => $row['name'],
-                    'name_url' => $row['name_url'],
-                    'type' => $row['type'],
-                    'img' => $row['img'],
-                    'content' => $row['content'],
-                    'count_questions' => $row['count_questions'],
+                            'name' => $row['name'],
+                            'name_url' => $row['name_url'],
+                            'type' => $row['type'],
+                            'img' => $row['img'],
+                            'content' => $row['content'],
+                            'count_questions' => $row['count_questions'],
                         ), array(//where
                     'id_entity' => $poll_id,
                     '`vendor_id`' => Vendor::getId())
@@ -369,7 +395,8 @@ class Polls {
      * return @string
      * this function returs query included 2 arguments: $poll_id and $question_id
      */
-    public function getCurrentAnsewerData($poll_id, $question_id) {
+    public function getCurrentAnsewerData($poll_id, $question_id)
+    {
         return "SELECT * FROM dnt_polls_composer WHERE
 		vendor_id 	= " . Vendor::getId() . " AND
 		poll_id 	= " . $poll_id . " AND
@@ -383,7 +410,8 @@ class Polls {
      * @param type $question_id
      * @return type
      */
-    public function getQuestions($poll_id, $question_id) {
+    public function getQuestions($poll_id, $question_id)
+    {
         return "SELECT * FROM dnt_polls_composer WHERE
 		vendor_id 	= " . Vendor::getId() . " AND
 		poll_id 	= " . $poll_id . " AND
@@ -398,7 +426,8 @@ class Polls {
      *
      */
 
-    public function getWinningCombinationData($poll_id) {
+    public function getWinningCombinationData($poll_id)
+    {
         return "SELECT * FROM dnt_polls_composer WHERE
 		vendor_id 	= " . Vendor::getId() . " AND
 		poll_id 	= " . $poll_id . " AND
@@ -410,7 +439,8 @@ class Polls {
      * @param type $poll_id
      * @return type
      */
-    public function getPollData($poll_id) {
+    public function getPollData($poll_id)
+    {
         return "SELECT * FROM dnt_polls_composer WHERE
 		vendor_id 	= " . Vendor::getId() . " AND
 		poll_id 	= " . $poll_id . "";
@@ -425,7 +455,8 @@ class Polls {
      * eturn @string
      * this function creat poll <input> name="{key}"
      */
-    public function inputName($prefix, $id, $column) {
+    public function inputName($prefix, $id, $column)
+    {
         return $id . "_" . $prefix . "_" . $column;
     }
 
@@ -437,8 +468,9 @@ class Polls {
      * maximalny pocet bodov v jednej otazke
      * metoda sa pouzije na vypocet MAX points pre kazdu otazku
      */
-    public function getMaxPointInQuestion($poll_id, $question_id) {
-        $db = new Db;
+    public function getMaxPointInQuestion($poll_id, $question_id)
+    {
+        $db = new DB;
         $query = "SELECT MAX(points) FROM dnt_polls_composer WHERE 
 		vendor_id = '" . Vendor::getId() . "' AND 
 		`key` LIKE '%ans%' AND 
@@ -455,9 +487,10 @@ class Polls {
      * return @string
      * this function return integer of MAX POINTS
      */
-    public function getMaxPoint($poll_id) {
+    public function getMaxPoint($poll_id)
+    {
 
-        $db = new Db;
+        $db = new DB;
         $query = "SELECT * FROM dnt_polls_composer WHERE
 		vendor_id 	= " . Vendor::getId() . " AND
 		`key` 	LIKE '%ans%' AND

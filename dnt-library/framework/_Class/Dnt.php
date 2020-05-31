@@ -8,6 +8,13 @@
  *  date        2017
  *  This is std static class
  */
+
+namespace DntLibrary\Base;
+
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Rest;
+use DntLibrary\Base\Vendor;
+
 class Dnt
 {
 
@@ -18,7 +25,7 @@ class Dnt
      */
     public static function getLastId($table, $vendor_id = true)
     {
-        $db = new Db;
+        $db = new DB;
 
         if ($vendor_id) {
             $query = "SELECT MAX(id) FROM " . $table . " WHERE vendor_id = '" . Vendor::getId() . "'";
@@ -46,7 +53,7 @@ class Dnt
      */
     public static function getMaxValueFromColumn($table, $column, $vendor_id = true)
     {
-        $db = new Db;
+        $db = new DB;
 
         if ($vendor_id) {
             $query = "SELECT MAX($column) FROM " . $table . " WHERE vendor_id = '" . Vendor::getId() . "'";
@@ -71,7 +78,7 @@ class Dnt
      */
     public static function getLastIdVendor()
     {
-        $db = new Db;
+        $db = new DB;
         $query = "SELECT MAX(id) FROM dnt_vendors ";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
@@ -105,7 +112,7 @@ class Dnt
      */
     public static function getIdEntity($lastId)
     {
-        $db = new Db;
+        $db = new DB;
         $db->update(
                 'dnt_posts', //table
                 array(//set
@@ -951,7 +958,7 @@ class Dnt
      */
     public static function getPostParam($table, $column, $post_id)
     {
-        $db = new Db;
+        $db = new DB;
         $rest = new Rest;
 
         $query = "SELECT `$column` FROM `$table` WHERE id_entity = $post_id AND  vendor_id = '" . Vendor::getId() . "'";
@@ -972,7 +979,7 @@ class Dnt
      */
     public static function db_current_id($table, $and_where)
     {
-        $db = new Db;
+        $db = new DB;
         $rest = new Rest;
 
         $query = "SELECT `id_entity` FROM `$table` WHERE vendor_id = '" . Vendor::getId() . "' $and_where ORDER BY id_entity asc LIMIT 1";
@@ -994,7 +1001,7 @@ class Dnt
      */
     public static function db_next_id($table, $and_where, $currentId)
     {
-        $db = new Db;
+        $db = new DB;
         $rest = new Rest;
 
         $query = "SELECT `id_entity` FROM `$table` WHERE `id_entity` > '$currentId' AND `vendor_id` = '" . Vendor::getId() . "' $and_where ORDER BY id_entity asc LIMIT 1";
@@ -1225,17 +1232,17 @@ class Dnt
         }
         return $hex;
     }
-	
-	public function uuid()
-	{
-		if (function_exists('com_create_guid') === true)
-			return trim(com_create_guid(), '{}');
 
-		$data = openssl_random_pseudo_bytes(16);
-		$data[6] = chr(ord($data[6]) & 0x0f | 0x40); // set version to 0100
-		$data[8] = chr(ord($data[8]) & 0x3f | 0x80); // set bits 6-7 to 10
-		return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
-	}
+    public function uuid()
+    {
+        if (function_exists('com_create_guid') === true)
+            return trim(com_create_guid(), '{}');
+
+        $data = openssl_random_pseudo_bytes(16);
+        $data[6] = chr(ord($data[6]) & 0x0f | 0x40); // set version to 0100
+        $data[8] = chr(ord($data[8]) & 0x3f | 0x80); // set bits 6-7 to 10
+        return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
+    }
 
     public static function hexToStr($hex)
     {

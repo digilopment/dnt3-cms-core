@@ -1,4 +1,9 @@
 <?php
+namespace DntAdmin\Moduls;
+
+use DntAdmin\App\AdminController;
+use DntLibrary\App\Stream;
+use DntLibrary\Base\Rest;
 
 class TemporaryOnlineController extends AdminController
 {

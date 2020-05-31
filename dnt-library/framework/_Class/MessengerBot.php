@@ -7,7 +7,13 @@
  *  package     dnt3
  *  date        2017
  */
-class MessengerBot {
+
+namespace DntLibrary\Base;
+
+use DntLibrary\Base\Settings;
+
+class MessengerBot
+{
 
     public $bot_access;
     public $input;
@@ -20,7 +26,8 @@ class MessengerBot {
     /**
      * 
      */
-    public function __construct() {
+    public function __construct()
+    {
         $HUB_VERIFY_TOKEN = Settings::get("msg_hub_verify_token");
         $ACCESS_TOKEN = Settings::get("msg_access_token");
     }
@@ -28,7 +35,8 @@ class MessengerBot {
     /**
      * 
      */
-    public function init() {
+    public function init()
+    {
         if ($_REQUEST['hub_verify_token'] === $this->HUB_VERIFY_TOKEN) {
             echo $_REQUEST['hub_challenge'];
             exit;
@@ -62,7 +70,8 @@ class MessengerBot {
      * 
      * @return boolean
      */
-    public function equalHubToken() {
+    public function equalHubToken()
+    {
 
         if (isset($_REQUEST['hub_verify_token'])) {
             if ($_REQUEST['hub_verify_token'] === $this->HUB_VERIFY_TOKEN) {
@@ -79,7 +88,8 @@ class MessengerBot {
      * 
      * @param type $response
      */
-    public function connection($response) {
+    public function connection($response)
+    {
         $this->bot_access = curl_init('https://graph.facebook.com/v2.6/me/messages?access_token=' . $this->ACCESS_TOKEN);
         curl_setopt($this->bot_access, CURLOPT_POST, 1);
         curl_setopt($this->bot_access, CURLOPT_POSTFIELDS, json_encode($response));
@@ -103,7 +113,8 @@ class MessengerBot {
      * 
      * 
      */
-    public function getUserParam($param) {
+    public function getUserParam($param)
+    {
         $userId = $this->getSenderId();
 
         $this->bot_param = curl_init();
@@ -121,7 +132,8 @@ class MessengerBot {
      * 
      * @return type
      */
-    public function getSenderId() {
+    public function getSenderId()
+    {
         $this->input = json_decode(file_get_contents('php://input'), true);
         return $this->input['entry'][0]['messaging'][0]['sender']['id'];
     }
@@ -130,7 +142,8 @@ class MessengerBot {
      * 
      * @return type
      */
-    public function getMessage() {
+    public function getMessage()
+    {
         $this->input = json_decode(file_get_contents('php://input'), true);
         return $this->input['entry'][0]['messaging'][0]['message']['text'];
     }
@@ -139,7 +152,8 @@ class MessengerBot {
      * 
      * @param type $time
      */
-    public function timeout($time) {
+    public function timeout($time)
+    {
         sleep($time);
     }
 
@@ -148,7 +162,8 @@ class MessengerBot {
      * @param type $answer
      * @return type
      */
-    public function addUI($answer) {
+    public function addUI($answer)
+    {
         //return $this->mainUI($answer);
         return "Ahoj";
     }
@@ -157,7 +172,8 @@ class MessengerBot {
      * 
      * @param type $answer
      */
-    public function getResponse($answer) {
+    public function getResponse($answer)
+    {
 
         if (!$this->equalHubToken()) {
 
@@ -209,7 +225,8 @@ class MessengerBot {
      * @param type $answer
      * @param type $senderId
      */
-    public function getResponseTrigger($answer, $senderId) {
+    public function getResponseTrigger($answer, $senderId)
+    {
 
         if (!$this->equalHubToken()) {
             $this->response = array(
@@ -231,7 +248,8 @@ class MessengerBot {
      * 
      * @return type
      */
-    public function run() {
+    public function run()
+    {
         return $this->getResponse($this->addUI($this->getMessage()));
     }
 

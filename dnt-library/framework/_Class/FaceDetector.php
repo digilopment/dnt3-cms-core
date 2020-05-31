@@ -20,8 +20,12 @@
 // @Contributor Maurice Svay
 //              maurice@svay.Com
 
+namespace DntLibrary\Base;
 
-class FaceDetector {
+use DntLibrary\Base\FaceDetector;
+
+class FaceDetector
+{
 
     protected $detection_data;
     protected $canvas;
@@ -38,7 +42,8 @@ class FaceDetector {
      *
      * @throws Exception
      */
-    public function __construct($detection_data = 'detection.dat') {
+    public function __construct($detection_data = 'detection.dat')
+    {
         if (is_array($detection_data)) {
             $this->detection_data = $detection_data;
             return;
@@ -49,14 +54,15 @@ class FaceDetector {
             $detection_data = dirname(__FILE__) . DIRECTORY_SEPARATOR . $detection_data;
 
             if (!is_file($detection_data)) {
-                throw new \Exception("Couldn't load detection data");
+                throw new Exception("Couldn't load detection data");
             }
         }
 
         $this->detection_data = unserialize(file_get_contents($detection_data));
     }
 
-    public function faceDetect($file) {
+    public function faceDetect($file)
+    {
         if (is_resource($file)) {
 
             $this->canvas = $file;
@@ -111,7 +117,8 @@ class FaceDetector {
         return ($this->face['w'] > 0);
     }
 
-    public function toJpeg() {
+    public function toJpeg()
+    {
         $color = imagecolorallocate($this->canvas, 255, 0, 0); //red
 
         imagerectangle(
@@ -131,7 +138,8 @@ class FaceDetector {
      *
      * @throws NoFaceException
      */
-    public function cropFaceToJpeg($outFileName = null) {
+    public function cropFaceToJpeg($outFileName = null)
+    {
         if (empty($this->face)) {
             throw new NoFaceException('No face detected');
         }
@@ -146,15 +154,18 @@ class FaceDetector {
         imagejpeg($canvas, $outFileName);
     }
 
-    public function toJson() {
+    public function toJson()
+    {
         return json_encode($this->face);
     }
 
-    public function getFace() {
+    public function getFace()
+    {
         return $this->face;
     }
 
-    protected function getImgStats($canvas) {
+    protected function getImgStats($canvas)
+    {
         $image_width = imagesx($canvas);
         $image_height = imagesy($canvas);
         $iis = $this->computeII($canvas, $image_width, $image_height);
@@ -166,7 +177,8 @@ class FaceDetector {
         );
     }
 
-    protected function computeII($canvas, $image_width, $image_height) {
+    protected function computeII($canvas, $image_width, $image_height)
+    {
         $ii_w = $image_width + 1;
         $ii_h = $image_height + 1;
         $ii = array();
@@ -201,7 +213,8 @@ class FaceDetector {
         return array('ii' => $ii, 'ii2' => $ii2);
     }
 
-    protected function doDetectGreedyBigToSmall($ii, $ii2, $width, $height) {
+    protected function doDetectGreedyBigToSmall($ii, $ii2, $width, $height)
+    {
         $s_w = $width / 20.0;
         $s_h = $height / 20.0;
         $start_scale = $s_h < $s_w ? $s_h : $s_w;
@@ -224,7 +237,8 @@ class FaceDetector {
         return null;
     }
 
-    protected function detectOnSubImage($x, $y, $scale, $ii, $ii2, $w, $iiw, $inv_area) {
+    protected function detectOnSubImage($x, $y, $scale, $ii, $ii2, $w, $iiw, $inv_area)
+    {
         $mean = ($ii[($y + $w) * $iiw + $x + $w] + $ii[$y * $iiw + $x] - $ii[($y + $w) * $iiw + $x] - $ii[$y * $iiw + $x + $w]) * $inv_area;
 
         $vnorm = ($ii2[($y + $w) * $iiw + $x + $w] + $ii2[$y * $iiw + $x] - $ii2[($y + $w) * $iiw + $x] - $ii2[$y * $iiw + $x + $w]) * $inv_area - ($mean * $mean);
@@ -308,35 +322,41 @@ class FaceDetector {
 
 }
 
-class FaceModify extends FaceDetector {
+class FaceModify extends FaceDetector
+{
 
-    public function Rotate() {
+    public function Rotate()
+    {
         $canvas = imagecreatetruecolor($this->face['w'], $this->face['w']);
         imagecopy($canvas, $this->canvas, 0, 0, $this->face['x'], $this->face['x'], $this->face['w'], $this->face['w']);
         $canvas = imagerotate($canvas, 180, 0);
         $this->_outImage($canvas);
     }
 
-    public function toGrayScale() {
+    public function toGrayScale()
+    {
         $canvas = imagecreatetruecolor($this->face['w'], $this->face['w']);
         imagecopy($canvas, $this->canvas, 0, 0, $this->face['x'], $this->face['x'], $this->face['w'], $this->face['w']);
         imagefilter($canvas, IMG_FILTER_GRAYSCALE);
         $this->_outImage($canvas);
     }
 
-    public function resizeFace($width, $height) {
+    public function resizeFace($width, $height)
+    {
         $canvas = imagecreatetruecolor($width, $width);
         imagecopyresized($canvas, $this->canvas, 0, 0, $this->face['x'], $this->face['y'], $width, $height, $this->face['w'], $this->face['w']);
         $this->_outImage($canvas);
     }
 
-    public function save($width, $height, $path) {
+    public function save($width, $height, $path)
+    {
         $canvas = imagecreatetruecolor($width, $width);
         imagecopyresized($canvas, $this->canvas, 0, 0, $this->face['x'], $this->face['y'], $width, $height, $this->face['w'], $this->face['w']);
         imagejpeg($canvas, $path);
     }
 
-    private function _outImage($canvas) {
+    private function _outImage($canvas)
+    {
         header('Content-type: image/jpeg');
         imagejpeg($canvas);
     }
