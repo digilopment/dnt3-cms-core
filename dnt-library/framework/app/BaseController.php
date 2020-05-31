@@ -25,7 +25,7 @@ class BaseController
     protected function modul()
     {
         $settings = new Settings();
-        return $settings->global()->module;
+        return $settings->getGlobals()->module;
     }
 
     protected function path()
