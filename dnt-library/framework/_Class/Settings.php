@@ -37,7 +37,7 @@ class Settings
         }
     }
 
-    public function global()
+    public function getGlobals()
     {
         $dnt = new Dnt();
         $parsed = [];

@@ -19,7 +19,7 @@ class Plugin
 
     protected function modul()
     {
-        return $this->settings->global()->module;
+        return $this->settings->getGlobals()->module;
     }
 
     protected function envDriver($data, $plugin)
