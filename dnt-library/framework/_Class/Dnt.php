@@ -23,16 +23,15 @@ class Dnt
      * @param type $table
      * @return boolean
      */
-    public static function getLastId($table, $vendor_id = true)
+    public static function getLastId($table, $vendor_id = false)
     {
         $db = new DB;
 
         if ($vendor_id) {
-            $query = "SELECT MAX(id) FROM " . $table . " WHERE vendor_id = '" . Vendor::getId() . "'";
+            $query = "SELECT MAX(id) FROM " . $table . " WHERE vendor_id = " . $vendor_id . "";
         } else {
-            $query = "SELECT MAX(id) FROM " . $table;
+            $query = "SELECT MAX(id) FROM " . $table . " WHERE vendor_id = " . Vendor::getId() . "";
         }
-
 
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
@@ -608,16 +607,23 @@ class Dnt
      * 
      * @param type $presmeruj_url
      */
-    public static function redirect($presmeruj_url)
+    public static function redirect($presmeruj_url = false)
     {
+        if ($presmeruj_url) {
+            $redirect = $presmeruj_url;
+        } else {
+            $redirect = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '/';
+        }
+
+
         if (!headers_sent()) {
-            header('Location: ' . $presmeruj_url);
+            header('Location: ' . $redirect);
             exit;
         } else {
             echo '<script type="text/javascript">';
-            echo 'window.location.href="' . $presmeruj_url . '"';
+            echo 'window.location.href="' . $redirect . '"';
             echo '</script>';
-            echo '<meta http-equiv="refresh" content="0;url=' . $presmeruj_url . '" />';
+            echo '<meta http-equiv="refresh" content="0;url=' . $redirect . '" />';
         }
     }
 
@@ -1113,26 +1119,29 @@ class Dnt
 
     public static function orderby($data, $column = "id", $sort = "ASC")
     {
-        $sortArray = array();
-        foreach ($data as $item) {
-            foreach ($item as $key => $value) {
-                if (!isset($sortArray[$key])) {
-                    $sortArray[$key] = array();
+        if (count($data) > 0) {
+            $sortArray = array();
+            foreach ($data as $item) {
+                foreach ($item as $key => $value) {
+                    if (!isset($sortArray[$key])) {
+                        $sortArray[$key] = array();
+                    }
+                    $sortArray[$key][] = $value;
                 }
-                $sortArray[$key][] = $value;
+                if ($column == "datetime_publish") {
+                    $sortArray['datetime'][] = strtotime($item[$column]);
+                    $orderby = "datetime";
+                }
             }
-            if ($column == "datetime_publish") {
-                $sortArray['datetime'][] = strtotime($item[$column]);
-                $orderby = "datetime";
+
+            $orderby = $column;
+
+            if ($sort == "ASC" || $sort == "asc") {
+                array_multisort($sortArray[$orderby], SORT_ASC, $data);
+            } else {
+                array_multisort($sortArray[$orderby], SORT_DESC, $data);
             }
-        }
-
-        $orderby = $column;
-
-        if ($sort == "ASC" || $sort == "asc") {
-            array_multisort($sortArray[$orderby], SORT_ASC, $data);
-        } else {
-            array_multisort($sortArray[$orderby], SORT_DESC, $data);
+            return $data;
         }
         return $data;
     }
@@ -1208,20 +1217,22 @@ class Dnt
         return $youtube_hash;
     }
 
-    public static function minify($html)
+    public function minify($html)
     {
-        $minify = preg_replace(
-                array(
-                    '/ {2,}/',
-                    '/<!--.*?-->|\t|(?:\r?\n[ \t]*)+/s'
-                ),
-                array(
-                    ' ',
-                    ''
-                ),
-                $html
+
+        $search = array(
+            '/\>[^\S ]+/s', // strip whitespaces after tags, except space
+            '/[^\S ]+\</s', // strip whitespaces before tags, except space
+            '/(\s)+/s', // shorten multiple whitespace sequences
+            '/<!--(.|\s)*?-->/' // Remove HTML comments
         );
-        return $minify;
+        $replace = array(
+            '>',
+            '<',
+            '\\1',
+            ''
+        );
+        return preg_replace($search, $replace, $html);
     }
 
     public static function strToHex($string)

@@ -26,8 +26,16 @@ class NewsletterCampaignTest
         $this->vendor = new Vendor();
     }
 
+    protected function setCampaignId()
+    {
+        if ($this->rest->get('campaignId')) {
+            $this->campaignId = $this->rest->get('campaignId');
+        }
+    }
+
     protected function init()
     {
+        $this->setCampaignId();
         $this->seenQuery();
         $this->getSeenLogs();
         $this->clickQuery();
@@ -131,7 +139,7 @@ class NewsletterCampaignTest
     protected function getTemplate()
     {
         $data['sentEmails'] = $this->sentEmails;
-        $data['baseUrl'] = 'http://85.248.116.69/dnt-markiza/dnt-srv/otazky-a-odpovede/';
+        $data['baseUrl'] = 'http://85.248.116.69/dnt-markiza/forms/';
         $data['logByEmail'] = function($email) {
             return $this->getLogByEmail($email);
         };

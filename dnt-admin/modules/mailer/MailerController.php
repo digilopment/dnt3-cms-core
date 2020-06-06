@@ -2,6 +2,7 @@
 
 namespace DntAdmin\Moduls;
 
+use App\Subscriber;
 use DntAdmin\App\AdminController;
 use DntLibrary\Base\AdminMailer;
 use DntLibrary\Base\DB;
@@ -26,6 +27,7 @@ class MailerController extends AdminController
     protected $countEmails = [];
     protected $sentMailPerRequest = 5;
     protected $sleep = 1;
+    protected $subscriber;
 
     public function __construct()
     {
@@ -36,6 +38,7 @@ class MailerController extends AdminController
         $this->vendor = new Vendor();
         $this->session = new Sessions();
         $this->mailer = new Mailer();
+        $this->subscriber = new Subscriber();
     }
 
     protected function categories()
@@ -194,6 +197,38 @@ class MailerController extends AdminController
         return $title;
     }
 
+    protected function contentConfigurator($content, $recipient)
+    {
+        $this->replacedcontent = false;
+        $this->replacedcontent = str_replace('RECIPIENT_EMAIL_HEX', $this->dnt->strToHex($recipient['email']), $content);
+        $logoutUrl = $this->subscriber->generateUrl($recipient['id_entity'], $recipient['email'], 0, false);
+        $this->replacedcontent = str_replace('<url=UNSUBSCRIBE_URL=>', $logoutUrl, $this->replacedcontent);
+        $this->replacedcontent = $this->dnt->minify($this->replacedcontent);
+        return $this->replacedcontent;
+    }
+
+    protected function checkClick($content, $recipient, $campainId = false)
+    {
+        $search = [];
+        $replace = [];
+        $res = [];
+        $hexEmail = $this->dnt->strToHex($recipient['email']);
+        $campainId = $this->dnt->get_rok() . '-' . $this->dnt->get_mesiac() . '-' . $this->dnt->get_den();
+        $targetUrl = WWW_PATH . 'dnt-api/analytics-newsletters?systemStatus=newsletter_log_click&campainId=' . $campainId . '&email=' . $hexEmail . '&url=';
+        preg_match_all("/<a.*?href\s*=\s*['\"](.*?)['\"]/", $content, $res);
+        foreach ($res[1] as $item) {
+            $search[] = $item;
+            $replace[] = $targetUrl . urlencode($item);
+        }
+        return str_replace($search, $replace, $content);
+    }
+
+    protected function checkSeen($content, $recipient, $campainId = false)
+    {
+        $image = $this->subscriber->seenImage($campainId, $recipient['email'], true);
+        return str_replace('</body>', $image . '</body>', $content);
+    }
+
     protected function sentMail($currentID, $lastId, $catId, $data, $countMails, $hasData, $sendedMails)
     {
         if ($hasData) {
@@ -201,7 +236,7 @@ class MailerController extends AdminController
 
                 $emails[] = $recipient['email'];
 
-                $sender_email = str_replace(" ", "", $recipient['email']);
+                $sender_email = str_replace(' ', '', $recipient['email']);
                 $msg = $this->session->get('message');
                 $template = $this->session->get('template');
                 $subject = $this->session->get('subject');
@@ -212,9 +247,17 @@ class MailerController extends AdminController
                 //KLIENTI MARKIZA JAR 2019
                 $title = $recipient['title'] . ' ' . $recipient['name'] . ' ' . $recipient['surname'];
                 $title = $this->replaceTitle($title, $content);
-
                 $content = str_replace('Dear clients, dear friends', $title, $content);
-                $content = str_replace('RECIPIENT_EMAIL_HEX', $this->dnt->strToHex($recipient['email']), $content);
+
+                //content configurator
+                $content = $this->contentConfigurator($content, $recipient);
+
+                //set click - replace all href
+                $content = $this->checkClick($content, $recipient);
+
+                //set seen - add 1px image
+                $content = $this->checkSeen($content, $recipient);
+
 
                 $this->mailer->set_msg($content);
                 $this->mailer->set_subject($subject);
@@ -238,7 +281,6 @@ class MailerController extends AdminController
     public function sentMailAction()
     {
         $table = 'dnt_mailer_mails';
-
         if ($this->hasPost('sent')) {
             $subject = $this->rest->post('subject');
             $cat_id = $this->rest->post('users');
@@ -258,7 +300,6 @@ class MailerController extends AdminController
             $this->session->set('subject', $subject);
         }
         $cat_id = $this->session->get('cat_id');
-
         /** COUNT ALL MAILS TO SENT * */
         $queryCount = "SELECT * FROM " . $table . " WHERE cat_id = '" . $cat_id . "' AND vendor_id = '" . Vendor::getId() . "'  AND `show` = 1 ORDER BY `id_entity` ASC";
         $countMails = $this->db->num_rows($queryCount);

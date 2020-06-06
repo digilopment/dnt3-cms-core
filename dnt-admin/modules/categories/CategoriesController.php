@@ -200,6 +200,20 @@ class CategoriesController extends AdminController
         $this->dnt->redirect($redirect);
     }
 
+    public function removePostCatAction()
+    {
+        $id_entity = $this->rest->get('post_id');
+        $this->db->update(
+                'dnt_posts',
+                ['post_category_id' => false],
+                [
+                    'id_entity' => $id_entity,
+                    '`vendor_id`' => $this->vendor->getId()
+                ]
+        );
+        $this->dnt->redirect();
+    }
+
     public function removeCatAction()
     {
         $id = $this->rest->get('id');

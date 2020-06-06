@@ -20,7 +20,7 @@ class Autoloader
 
     public function addVendroClass($path, $class)
     {
-        $file = dirname($path) . '/app/' . $class . ".php";
+        $file = dirname($path) . '/app/' . $class . '.php';
         if (!class_exists($class)) {
             if (file_exists($file)) {
                 include_once $file;
@@ -30,7 +30,7 @@ class Autoloader
 
     public function addClass($path, $class, $init = false)
     {
-        $file = dirname($path) . '/' . $class . ".php";
+        $file = dirname($path) . '/' . $class . '.php';
         if (!class_exists($class)) {
             if (file_exists($file)) {
                 include_once $file;
@@ -57,26 +57,28 @@ class Autoloader
          * CONFIG
          */
         if (!defined('WWW_PATH')) {
-            include $path . "dnt-library/framework/_keys/public.php";
+            include $path . 'dnt-library/framework/_keys/public.php';
 
-            if (file_exists($path . "config_pro.dnt")) {
-                include $path . "config_pro.dnt";
+            if (file_exists($path . 'config_pro.dnt')) {
+                include $path . 'config_pro.dnt';
             } else {
-                include $path . "config.dnt";
+                include $path . 'config.dnt';
             }
         }
 
-        $this->fileLoader($path . "dnt-library/framework/app/App.php");
-        $this->fileLoader($path . "dnt-library/framework/app/Db.php");
-        $this->fileLoader($path . "dnt-library/framework/app/Client.php");
-        $this->fileLoader($path . "dnt-library/framework/app/Modul.php");
-        $this->fileLoader($path . "dnt-library/framework/app/Post.php");
-        $this->fileLoader($path . "dnt-library/framework/app/BaseController.php");
-        $this->fileLoader($path . "dnt-library/framework/app/Plugin.php");
-        $this->fileLoader($path . "dnt-library/framework/app/AbstractUser.php");
-        $this->fileLoader($path . "dnt-library/framework/app/Stream.php");
-        $this->fileLoader($path . "dnt-library/framework/app/Render.php");
-        $this->fileLoader($path . "dnt-library/framework/app/Categories.php");
+        $this->fileLoader($path . 'dnt-library/framework/app/App.php');
+        $this->fileLoader($path . 'dnt-library/framework/app/Db.php');
+        $this->fileLoader($path . 'dnt-library/framework/app/Client.php');
+        $this->fileLoader($path . 'dnt-library/framework/app/Modul.php');
+        $this->fileLoader($path . 'dnt-library/framework/app/Post.php');
+        $this->fileLoader($path . 'dnt-library/framework/app/BaseController.php');
+        $this->fileLoader($path . 'dnt-library/framework/app/Plugin.php');
+        $this->fileLoader($path . 'dnt-library/framework/app/AbstractUser.php');
+        $this->fileLoader($path . 'dnt-library/framework/app/Stream.php');
+        $this->fileLoader($path . 'dnt-library/framework/app/Render.php');
+        $this->fileLoader($path . 'dnt-library/framework/app/Categories.php');
+        $this->fileLoader($path . 'dnt-library/framework/app/EasyCrypt.php');
+        $this->fileLoader($path . 'dnt-library/framework/app/Subscriber.php');
     }
 
 }

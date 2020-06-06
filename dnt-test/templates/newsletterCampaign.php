@@ -1,3 +1,5 @@
+<?php
+use DntLibrary\Base\Dnt; ?>
 <!DOCTYPE html>
 <html lang="sk">
     <head>
@@ -31,11 +33,11 @@
             </div>
             <div class="col-md-4">
                 <p>
-                    Počet odoslaných emailov: <b><?php echo $data['countMails']?></b><br/>
-                    Počet respondentov, ktorí email videli: <b><?php echo $data['countSeenEmails']?></b><br/>
-                    Percentuálna úspešnosť videných emailov: <b><?php echo $data['seenPercentage']?>%</b><br/><br/>
-                    Počet respondentov, ktorí klikli na email: <b><?php echo $data['countClickedEmails']?></b><br/>
-                    Percentuálna úspešnosť kliknutia: <b><?php echo $data['clickedPercentage']?>%</b><br/>
+                    Počet odoslaných emailov: <b><?php echo $data['countMails'] ?></b><br/>
+                    Počet respondentov, ktorí email videli: <b><?php echo $data['countSeenEmails'] ?></b><br/>
+                    Percentuálna úspešnosť videných emailov: <b><?php echo $data['seenPercentage'] ?>%</b><br/><br/>
+                    Počet respondentov, ktorí klikli na email: <b><?php echo $data['countClickedEmails'] ?></b><br/>
+                    Percentuálna úspešnosť kliknutia: <b><?php echo $data['clickedPercentage'] ?>%</b><br/>
                 </p>
             </div>
         </div>
@@ -67,7 +69,7 @@
                         </tr>
                     </tfoot>
                     <tbody>
-                        <?php foreach ($data['sentEmails'] as $item) { ?>
+<?php foreach ($data['sentEmails'] as $item) { ?>
                             <tr>
                                 <td> <?php echo $item->id ?></td>
                                 <td> <?php echo $item->name ?> <?php echo $item->surname ?></td>
@@ -75,12 +77,14 @@
                                 <td> <?php echo $data['seen']($item->email) || $data['click']($item->email) >= 1 ? "<b>ÁNO</b>" : "NIE" ?></td>
                                 <td> <?php echo $data['click']($item->email) >= 1 ? "<b>ÁNO</b>" : "NIE" ?></td>
                                 <td> <?php echo $data['countClicks']($item->email) ?></td>
-                                <td> <?php foreach($data['logByEmail']($item->email) as $log){
-                                    echo isset(json_decode($log->msg)->redirectTo) ? "<b>" . $log->timestamp ."</b><br/>". json_decode($log->msg)->redirectTo . "<br/>" : '(undefined)' ."<br/>";
-                                } ?></td>
-                                <td> <?php echo !empty($data['log']($item->email, 'HTTP_USER_AGENT')) ? Dnt::getOS($data['log']($item->email, 'HTTP_USER_AGENT')) : false; ?></td>
+                                <td> <?php
+                                    foreach ($data['logByEmail']($item->email) as $log) {
+                                        echo isset(json_decode($log->msg)->redirectTo) ? "<b>" . $log->timestamp . "</b><br/>" . json_decode($log->msg)->redirectTo . "<br/>" : '(undefined)' . "<br/>";
+                                    }
+                                    ?></td>
+                                <td> <?php echo!empty($data['log']($item->email, 'HTTP_USER_AGENT')) ? Dnt::getOS($data['log']($item->email, 'HTTP_USER_AGENT')) : false; ?></td>
                             </tr>
-                        <?php } ?>
+<?php } ?>
                     </tbody>
                 </table>
             </div>

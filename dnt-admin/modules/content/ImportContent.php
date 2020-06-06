@@ -62,8 +62,12 @@ class ImportContent
         $show = isset($postData['show']) ? $postData['show'] : '0';
         $post_category_id = isset($postData['post_category_id']) ? $postData['post_category_id'] : false;
         $type = isset($postData['type']) ? $postData['type'] : false;
+        $cat_id = isset($postData['cat_id']) ? $postData['cat_id'] : false;
         $vendor_id = isset($postData['vendor_id']) ? $postData['vendor_id'] : Vendor::getId();
         $this->imageUrl = isset($postData['image']) ? $postData['image'] : false;
+
+        $this->service = $service;
+        $this->vendorId = $vendor_id;
 
 
 
@@ -86,11 +90,12 @@ class ImportContent
             'datetime_update' => $this->dnt->datetime(),
             'datetime_publish' => $this->dnt->datetime(),
             'search' => $search,
+            'cat_id' => $cat_id,
             'service' => $service,
             '`show`' => $show,
         ];
 
-        $this->postMetaData = [];
+        $this->postMetaData = $metaData;
     }
 
     protected function insertPost($postData = [], $metaData = [])
@@ -98,7 +103,7 @@ class ImportContent
         $this->db->dbTransaction();
         $this->db->insert('dnt_posts', $this->postData);
         $this->db->dbcommit();
-        $this->lastPostId = $this->dnt->getLastId('dnt_posts');
+        $this->lastPostId = $this->dnt->getLastId('dnt_posts', $this->vendorId);
     }
 
     protected function importImage()
@@ -108,11 +113,11 @@ class ImportContent
             $downloadPath = '../dnt-view/data/downloaded/';
             $fileData = $this->dnt->downloadFile($url, $downloadPath);
             if (isset($fileData['file'])) {
-                $imageData = $this->dntUpload->fromUrl($downloadPath . $fileData['file'], '../dnt-view/data/uploads/');
+                $imageData = $this->dntUpload->fromUrl($downloadPath . $fileData['file'], '../dnt-view/data/uploads/', $this->vendorId);
                 $this->db->update(
                         'dnt_posts',
                         array('img' => $imageData['lastImageId']),
-                        array('id_entity' => $this->lastPostId, '`vendor_id`' => Vendor::getId())
+                        array('id_entity' => $this->lastPostId, '`vendor_id`' => $this->vendorId)
                 );
             }
         }
@@ -120,7 +125,20 @@ class ImportContent
 
     protected function insertPostMeta()
     {
-        echo $this->lastPostId;
+        foreach ($this->postMetaData as $key => $val) {
+            $insertedData = array(
+                'post_id' => $this->lastPostId,
+                'service' => $this->service,
+                '`vendor_id`' => $this->vendorId,
+                '`key`' => $key,
+                '`value`' => $val,
+                '`content_type`' => 'text',
+                '`cat_id`' => '3',
+                '`description`' => 'Meta ' . ucfirst($key),
+                '`show`' => '1'
+            );
+            $this->db->insert('dnt_posts_meta', $insertedData);
+        }
     }
 
     public function createPost($postData, $metaData)

@@ -11,6 +11,7 @@ use DntLibrary\Base\Image;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Vendor;
 use DntLibrary\Base\Webhook;
+use DntAdmin\Moduls\UpdateContent;
 
 class ContentController extends AdminController
 {
@@ -39,6 +40,7 @@ class ContentController extends AdminController
         $this->image = new Image();
         $this->adminContent = new AdminContent();
         $this->dnt = new Dnt();
+        $this->updateContent = new UpdateContent();
         $this->importContent = new ImportContent();
     }
 
@@ -98,7 +100,7 @@ class ContentController extends AdminController
         $whereMeta = array('post_id' => $post_id, 'vendor_id' => Vendor::getId());
         $this->db->delete('dnt_posts_meta', $whereMeta);
 
-        $this->dnt->redirect(WWW_PATH_ADMIN_2 . 'index.php?src=' . $this->rest->get('src') . '&included=' . $this->rest->get('included') . '&filter=' . $this->rest->get('filter') . '');
+        $this->dnt->redirect();
     }
 
     public function moveDownAction()
@@ -124,7 +126,7 @@ class ContentController extends AdminController
                     'vendor_id' => Vendor::getId(),
                 )
         );
-        $this->dnt->redirect(WWW_PATH_ADMIN_2 . 'index.php?src=' . $this->rest->get('src') . '&included=' . $this->rest->get('included') . '&filter=' . $this->rest->get('filter') . '');
+        $this->dnt->redirect();
     }
 
     public function moveUpAction()
@@ -150,7 +152,7 @@ class ContentController extends AdminController
                     'vendor_id' => Vendor::getId(),
                 )
         );
-        $this->dnt->redirect(WWW_PATH_ADMIN_2 . 'index.php?src=' . $this->rest->get('src') . '&included=' . $this->rest->get('included') . '&filter=' . $this->rest->get('filter') . '');
+        $this->dnt->redirect();
     }
 
     public function showHideAction()
@@ -181,7 +183,7 @@ class ContentController extends AdminController
                     'vendor_id' => Vendor::getId(),
                 )
         );
-        $this->dnt->redirect(WWW_PATH_ADMIN_2 . 'index.php?src=' . $this->rest->get('src') . '&included=' . $this->rest->get('included') . '&filter=' . $this->rest->get('filter') . '');
+        $this->dnt->redirect();
     }
 
     public function editCatAction()

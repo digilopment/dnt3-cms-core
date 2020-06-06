@@ -26,7 +26,7 @@ class AnalyticsNewslettersApi extends DntLog
         $systemStatus = $this->rest->get('systemStatus');
 
         if (in_array($systemStatus, $this->availableStatus)) {
-
+            
             $url = urldecode($this->rest->get('url'));
 
             $data = [

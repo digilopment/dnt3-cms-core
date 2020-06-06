@@ -153,6 +153,10 @@ get_top_html();
 
                 }
 
+                .categories .posts .post .item .btn{
+                    font-size: 12px;
+                }
+
                 .categories .posts .dot{
                     height: auto;
                     background-color: #428bca;
@@ -163,16 +167,20 @@ get_top_html();
                     display: block;
                     width: 25px;
                     margin-top: 0px;
+                    margin-left: 10px;
                     cursor: move;
                 }
+
                 .categories .included + .post,
                 .categories .updated + .post{
                     opacity:0.4!important;
                 }
+                .categories .included.dropped + .post{
+                    /*display:none;*/
+                }
                 .categories .posts .post-move.dot.updated{
                     background-color: #f0ad4e;
                 }
-
                 .categories .drop-aera .text{
                     display: block;
                     width: 100%;
@@ -256,24 +264,32 @@ get_top_html();
 
 
                 <?php
-                foreach ($data['getPosts'] as $post) {
+                foreach (DntLibrary\Base\Dnt::orderby($data['getPosts'], 'post_category_id', 'ASC') as $post) {
                     ?>
-                    <span data-id="<?php echo $post->id_entity ?>" title="<?php echo $post->post_category_id ? 'Presunutím na príslušnú kategóriu zmeníte kategóriu produktu' : 'Presunutím na príslušnú kategóriu, produkt vložíte do kategórie' ?>" class="dot post-move <?php echo $post->post_category_id ? 'updated' : false ?>"><i class="fa fa-arrows"></i></span>
-                    <div class="row post <?php echo $post->post_category_id ? 'updated' : false ?>">
-                        <div class="item">
-                            <div class="col-xs-2 col-md-2">
-                                <img class="img-responsive" src="http://placehold.it/120x80" alt="prewiew">
-                            </div>
-                            <div class="col-xs-4 col-md-8">
-                                <h4 class="product-name"><strong><?php echo $post->name ?></strong></h4>
-                                <h4>Kategória: <small><?php echo $data['getElement']($post->post_category_id)['name'] . ' (' . $post->post_category_id . ')' ?> </small></h4>
-                            </div>
-                            <div class="col-md-2">
-                                <a class="btn btn-primary bg-blue" href="index.php?src=content&post_id=<?php echo $post->id_entity ?>&action=edit"><i class="fa fa-pencil bg-blue"></i> Editovať</a>
+                    <div class="row no-padding no-margin">
+                        <div data-id="<?php echo $post->id_entity ?>" title="<?php echo $post->name . ' => ';
+                echo $post->post_category_id ? 'Presunutím na príslušnú kategóriu zmeníte kategóriu produktu' : 'Presunutím na príslušnú kategóriu, produkt vložíte do kategórie';
+                    ?>" 
+                             class="dot post-move <?php echo $post->post_category_id ? 'updated' : false ?> col-md-2"><i class="fa fa-arrows"></i></div>
+                        <div class="col-xs-10 post <?php echo $post->post_category_id ? 'updated' : false ?> no-padding">
+                            <div class="item">
+                                <div class="col-xs-2 col-md-2 ">
+                                    <img class="img-responsive" src="http://placehold.it/120x80" alt="prewiew">
+                                </div>
+                                <div class="col-xs-4 col-md-7">
+                                    <h4 class="product-name"><strong><?php echo $post->name ?></strong></h4>
+                                    <h4>Kategória: <small><?php echo $data['getElement']($post->post_category_id)['name'] . ' (' . $post->post_category_id . ')' ?> </small></h4>
+                                </div>
+                                <div class="col-md-3 row">
+                                    <a class="btn btn-primary bg-blue" href="index.php?src=content&post_id=<?php echo $post->id_entity ?>&action=edit"><i class="fa fa-pencil bg-blue"></i> Editovať</a>
+                                    <?php if ($post->post_category_id) { ?>
+                                        <a class="btn btn-danger bg-red" href="index.php?src=categories&post_id=<?php echo $post->id_entity ?>&action=removePostCat"><i class="fa fa-trash bg-red"></i> Odstrániť z kategórie</a>
+    <?php } ?>
+                                </div>
                             </div>
                         </div>
                     </div>
-                <?php } ?>
+<?php } ?>
 
             </div>
 
@@ -349,6 +365,8 @@ get_top_html();
         <script>
             $(document).ready(function () {
                 $("#saveCat").click(function () {
+                    $('.categories .col-md-6').css('opacity', '0.2');
+
                     var data = [];
                     $('.post-move.included').each(function () {
                         var postId = $(this).attr('data-id');
@@ -361,6 +379,10 @@ get_top_html();
                             dataType: 'json'
                         });
                     });
+                    setTimeout(function () {
+                        $('.categories .col-md-6').fadeOut();
+                        window.location.href = "";
+                    }, 2000);
                 });
             });
         </script>
