@@ -207,13 +207,12 @@ class MailerController extends AdminController
         return $this->replacedcontent;
     }
 
-    protected function checkClick($content, $recipient, $campainId = false)
+    protected function checkClick($content, $recipient, $campainId)
     {
         $search = [];
         $replace = [];
         $res = [];
         $hexEmail = $this->dnt->strToHex($recipient['email']);
-        $campainId = $this->dnt->get_rok() . '-' . $this->dnt->get_mesiac() . '-' . $this->dnt->get_den();
         $targetUrl = WWW_PATH . 'dnt-api/analytics-newsletters?systemStatus=newsletter_log_click&campainId=' . $campainId . '&email=' . $hexEmail . '&url=';
         preg_match_all("/<a.*?href\s*=\s*['\"](.*?)['\"]/", $content, $res);
         foreach ($res[1] as $item) {
@@ -223,7 +222,7 @@ class MailerController extends AdminController
         return str_replace($search, $replace, $content);
     }
 
-    protected function checkSeen($content, $recipient, $campainId = false)
+    protected function checkSeen($content, $recipient, $campainId)
     {
         $image = $this->subscriber->seenImage($campainId, $recipient['email'], true);
         return str_replace('</body>', $image . '</body>', $content);
@@ -252,13 +251,15 @@ class MailerController extends AdminController
                 //content configurator
                 $content = $this->contentConfigurator($content, $recipient);
 
+                $campainId = $this->dnt->get_rok() . '-' . $this->dnt->get_mesiac() . '-' . $this->dnt->get_den();
                 //set click - replace all href
-                $content = $this->checkClick($content, $recipient);
+                $content = $this->checkClick($content, $recipient, $campainId);
 
                 //set seen - add 1px image
-                $content = $this->checkSeen($content, $recipient);
+                $content = $this->checkSeen($content, $recipient, $campainId);
 
-
+                echo $content;
+                exit;
                 $this->mailer->set_msg($content);
                 $this->mailer->set_subject($subject);
                 $this->mailer->set_sender_name(false);
