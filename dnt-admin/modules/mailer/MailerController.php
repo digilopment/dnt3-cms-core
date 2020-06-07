@@ -112,7 +112,7 @@ class MailerController extends AdminController
                 'datetime_update' => $this->dnt->datetime()
             );
             $this->db->insert('dnt_mailer_mails', $insertedData);
-            $this->dnt->redirect(WWW_PATH_ADMIN_2 . '?src=mailer');
+            $this->dnt->redirect();
         } else {
             $this->dnt->redirect(WWW_PATH_ADMIN_2 . '?src=' . DEFAULT_MODUL_ADMIN);
         }
@@ -177,14 +177,14 @@ class MailerController extends AdminController
                     'vendor_id' => $this->vendor->getId(),
                 )
         );
-        $this->dnt->redirect(WWW_PATH_ADMIN_2 . 'index.php?src=' . $this->rest->get('src') . '&included=' . $this->rest->get('included') . '&filter=' . $this->rest->get('filter') . '&page=' . $this->rest->get('page'));
+        $this->dnt->redirect();
     }
 
     public function delMailAction()
     {
         $where = array('id_entity' => $this->rest->get('post_id'), 'vendor_id' => $this->vendor->getId());
         $this->db->delete('dnt_mailer_mails', $where, 1);
-        $this->dnt->redirect(WWW_PATH_ADMIN_2 . '?src=mailer&filter=' . $this->rest->get('filter'));
+        $this->dnt->redirect();
     }
 
     protected function replaceTitle($title, $content)
@@ -228,18 +228,21 @@ class MailerController extends AdminController
         return str_replace('</body>', $image . '</body>', $content);
     }
 
-    protected function sentMail($currentID, $lastId, $catId, $data, $countMails, $hasData, $sendedMails)
+    protected function sentMail($currentID, $lastId, $catId, $recipients, $countMails, $hasData, $sendedMails)
     {
+        $msg = $this->session->get('message');
+        $template = $this->session->get('template');
+        $subject = $this->session->get('subject');
+        $content = $this->session->get('content');
+        $campain = $this->session->get('campain');
+
+        $data['mailingReportUrl'] = WWW_PATH . 'dnt-test/newsletter-campaign?emailCatId=' . $catId . '&campaignId=' . $campain;
         if ($hasData) {
-            foreach ($data as $recipient) {
+            foreach ($recipients as $recipient) {
 
                 $emails[] = $recipient['email'];
 
                 $sender_email = str_replace(' ', '', $recipient['email']);
-                $msg = $this->session->get('message');
-                $template = $this->session->get('template');
-                $subject = $this->session->get('subject');
-                $content = $this->session->get('content');
 
                 $this->mailer->set_recipient(array($sender_email));
 
@@ -251,12 +254,12 @@ class MailerController extends AdminController
                 //content configurator
                 $content = $this->contentConfigurator($content, $recipient);
 
-                $campainId = $this->dnt->get_rok() . '-' . $this->dnt->get_mesiac() . '-' . $this->dnt->get_den();
+
                 //set click - replace all href
-                $content = $this->checkClick($content, $recipient, $campainId);
+                $content = $this->checkClick($content, $recipient, $campain);
 
                 //set seen - add 1px image
-                $content = $this->checkSeen($content, $recipient, $campainId);
+                $content = $this->checkSeen($content, $recipient, $campain);
 
                 $this->mailer->set_msg($content);
                 $this->mailer->set_subject($subject);
@@ -269,6 +272,7 @@ class MailerController extends AdminController
             $data['countMails'] = $countMails;
             $data['emails'] = join('<br/>', $emails);
             $data['sleep'] = $this->sleep;
+
 
             $this->loadTemplate($this->loc, 'sendingMails', $data);
         } else {
@@ -293,10 +297,16 @@ class MailerController extends AdminController
             if ($this->rest->post('message') != '') {
                 $content = $this->rest->post('message');
             }
+            if ($this->rest->post('campain') != '') {
+                $campain = $this->rest->post('campain');
+            } else {
+                $campain = $this->dnt->get_rok() . '-' . $this->dnt->get_mesiac() . '-' . $this->dnt->get_den();
+            }
 
             $this->session->set('content', $content);
             $this->session->set('cat_id', $cat_id);
             $this->session->set('subject', $subject);
+            $this->session->set('campain', $campain);
         }
         $cat_id = $this->session->get('cat_id');
         /** COUNT ALL MAILS TO SENT * */

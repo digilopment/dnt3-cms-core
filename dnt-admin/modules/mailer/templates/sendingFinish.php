@@ -1,4 +1,2 @@
 <?php
-
-$sending_mail = $data['countMails'];
-tpl_sending_finish($sending_mail);
+tpl_sending_finish($data);

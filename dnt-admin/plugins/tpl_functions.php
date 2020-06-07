@@ -819,9 +819,14 @@ function get_top()
        }
    }
    
-   function tpl_sending_mails($to_finish, $sender_email, $next_id, $sleep = 0)
+   function tpl_sending_mails($data)
    {
-       get_top();
+       $to_finish = $data['toFinish'];
+        $sender_email = $data['emails'];
+        $next_id = $data['lastId'];
+        $mailingReportUrl = $data['mailingReportUrl'];
+        $sleep = isset($data['sleep']) ? $data['sleep'] : 0;
+    get_top();
    
        echo '
    <body class="error">
@@ -829,22 +834,19 @@ function get_top()
    	<div class="middle">
    		<div class="inner">
    			<div class="row">
-   				<!-- BEGIN ERROR PAGE -->
+                        
    				<div class="col-lg-12">
-   					<!-- BEGIN ERROR -->
    					<div class="circle">
    						<i class="fa fa-chain-broken bg-blue"></i>
    					<span>' . $to_finish . '</span>
    					</div>
-   					<!-- END ERROR -->
-   					<!-- BEGIN ERROR DESCRIPTION -->
    					<span class="status">...emailov ešte musím odoslať</span>
    					<span class="detail">Teraz odosielam na adresu: 
    						<b><a href="mailto:' . $sender_email . '" target="_blank">' . $sender_email . '</a></b>
    					</span>
-   					<!-- END ERROR DESCRIPTION -->
+                                        <br/>
+                                        <a class="pull-right" target="_blank" href="' . $mailingReportUrl . '"><b>Otvoriť mailing report</b></a>
    				</div>
-   				<!-- END ERROR PAGE -->
    			</div>
    		</div>
    	</div>
@@ -855,8 +857,11 @@ function get_top()
        get_bottom();
    }
    
-   function tpl_sending_finish($sending_mail)
+   function tpl_sending_finish($data)
    {
+       
+        $mailingReportUrl = $data['mailingReportUrl'];
+        $sending_mail = $data['countMails'];
        get_top();
        echo '
    <body class="error">
@@ -876,6 +881,7 @@ function get_top()
    					<span class="status">mailov bolo úspešne odoslaných</span>
    					<br/>
    					<a href="' . WWW_PATH_ADMIN_2 . '?src=mailer">Domov</a>
+                                        <a class="pull-right" target="_blank" href="' . $mailingReportUrl . '"><b>Otvoriť mailing report</b></a>
    					<!-- END ERROR DESCRIPTION -->
    				</div>
    				<!-- END ERROR PAGE -->

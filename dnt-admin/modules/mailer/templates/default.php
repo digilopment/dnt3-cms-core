@@ -146,6 +146,8 @@
                         ?>
                   </select>
                   <br/>
+                  <input type="text" name="campain" class="form-control" placeholder="Názov kampane:"/>
+                  <br/>
                   <textarea  name="message" class="form-control" placeholder="Správa:"/></textarea>
                </div>
                <div class="modal-footer">
