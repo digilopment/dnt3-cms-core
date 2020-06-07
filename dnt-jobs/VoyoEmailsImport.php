@@ -5,14 +5,10 @@ namespace DntJobs;
 use App\EasyCrypt;
 use DntLibrary\Base\DB;
 use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Settings;
 
 class VoyoEmailsImportJob
 {
-
-    const VOYO_SERVICE = 'https://backend.voyo.sk/lbackend/eshop/nl_sync.php';
-    const SERVICE_LOGIN = 'mklepoch';
-    const SERVICE_PSSWD = 'martin 650';
-    const PRIVATE_KEY = 'Voyo2020MarkizaDevTem';
     const CAT_ID = 91;
     const VENDOR_ID = 39;
     const FIRST_AI_EMAIL_ID = 1207453; //vzdy prve ID vo Voyo Service
@@ -23,22 +19,32 @@ class VoyoEmailsImportJob
     protected $db;
     protected $dbEmails = [];
     protected $jsonEmails = [];
+    protected $settings;
+    protected $voyoService;
+    protected $serviceLogin;
+    protected $servicePsswd;
+    protected $decryptedKey;
 
     public function __construct()
     {
+        $this->settings = new Settings();
+        $this->voyoService = $this->settings->getGlobals()->vendor['voyoService'];
+        $this->serviceLogin = $this->settings->getGlobals()->vendor['serviceLogin'];
+        $this->servicePsswd = $this->settings->getGlobals()->vendor['servicePsswd'];
+        $this->decryptedKey = $this->settings->getGlobals()->vendor['decryptedKey'];
         $this->dnt = new Dnt();
-        $this->crypt = new EasyCrypt(self::PRIVATE_KEY);
         $this->db = new DB();
+        $this->crypt = new EasyCrypt($this->decryptedKey);
     }
 
     protected function getData($lastId = false)
     {
 
         $getLastId = ($lastId) ? $lastId : self::FIRST_AI_EMAIL_ID;
-        $login = self::SERVICE_LOGIN;
-        $password = self::SERVICE_PSSWD;
+        $login = $this->serviceLogin;
+        $password = $this->servicePsswd;
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, self::VOYO_SERVICE . '?lastId=' . $getLastId);
+        curl_setopt($ch, CURLOPT_URL, $this->voyoService . '?lastId=' . $getLastId);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
         curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');

@@ -10,6 +10,7 @@ use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Mailer;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Sessions;
+use DntLibrary\Base\Settings;
 use DntLibrary\Base\Vendor;
 
 class MailerController extends AdminController
@@ -28,6 +29,7 @@ class MailerController extends AdminController
     protected $sentMailPerRequest = 5;
     protected $sleep = 1;
     protected $subscriber;
+    protected $settings;
 
     public function __construct()
     {
@@ -39,6 +41,7 @@ class MailerController extends AdminController
         $this->session = new Sessions();
         $this->mailer = new Mailer();
         $this->subscriber = new Subscriber();
+        $this->settings = new Settings();
     }
 
     protected function categories()

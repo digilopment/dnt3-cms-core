@@ -61,9 +61,17 @@ class Subscriber
 
     public function requestValidator($cutomReferers)
     {
+        
+        if(isset($this->settings->getGlobals()->vendor['apiKey'])){
+            $apiKey = $this->settings->getGlobals()->vendor['apiKey'];
+        }else{
+            $apiKey = false;
+        }
         if ($this->allowReferers($cutomReferers)) {
             $this->valid = 1;
         } elseif ($this->dnt->in_string('localhost', SERVER_NAME)) {
+            $this->valid = 1;
+        } elseif ($this->rest->get('api-key') && $this->rest->get('api-key') == $apiKey) {
             $this->valid = 1;
         } else {
             $this->valid = 0;

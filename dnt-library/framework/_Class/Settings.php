@@ -12,8 +12,11 @@ namespace DntLibrary\Base;
 
 use DntLibrary\Base\DB;
 use DntView\Layout\Configurator;
-use DntLibrary\Base\Dnt;
 use function websettings;
+
+/**
+ * GET VENDOR SETTING: $this->settings->getGlobals()->vendor['foo']
+ */
 
 class Settings
 {
@@ -39,7 +42,6 @@ class Settings
 
     public function getGlobals()
     {
-        $dnt = new Dnt();
         $parsed = [];
         foreach (array_keys($GLOBALS) as $key) {
             $parsed[strtolower($key)] = $GLOBALS[$key];
@@ -48,8 +50,26 @@ class Settings
         foreach ($parsed['globals']['GLOBALS'] as $key2 => $val) {
             $final[strtolower($key2)] = $GLOBALS[$key2];
         }
-        
-        return (object) $final;
+
+        $vendorLoadedSettings = [];
+        $file = "../dnt-view/layouts/" . Vendor::getLayout() . "/Configurator.php";
+        if (!class_exists('Configurator')) {
+            if (file_exists($file)) {
+                include_once $file;
+                $configurator = new Configurator();
+                if (method_exists($configurator, 'vendorConfig')) {
+                    $vendorLoadedSettings = $configurator->vendorConfig();
+                }
+            }
+        } else {
+            $configurator = new Configurator();
+            if (method_exists($configurator, 'vendorConfig')) {
+                $vendorLoadedSettings = $configurator->vendorConfig();
+            }
+        }
+        $vendorSettings = ['vendor' => $vendorLoadedSettings];
+
+        return (object) array_merge($final, $vendorSettings);
     }
 
     /**
