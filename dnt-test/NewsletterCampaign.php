@@ -97,7 +97,7 @@ class NewsletterCampaignTest
 
     protected function sentEmails()
     {
-        $query = "SELECT * FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . $this->vendor->getId() . "' AND cat_id = '" . $this->emailCatId . "' ORDER BY `name` ASC";
+        $query = "SELECT * FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . $this->vendor->getId() . "'  AND  cat_id = '" . $this->emailCatId . "' ORDER BY `show` DESC, `name` ASC";
         if ($this->db->num_rows($query) > 0) {
             $this->sentEmails = $this->db->get_results($query, true);
         }
