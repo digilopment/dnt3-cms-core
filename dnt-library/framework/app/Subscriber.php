@@ -24,8 +24,9 @@ class Subscriber
 
     public function generateUrl($id_entity, $email, $status, $domain = false)
     {
-        $url = ($domain) ? $domain : WWW_PATH . 'subscriber/?id=' . $this->dnt->strToHex(urlencode(base64_encode($email))) . '&vendorId=' . $this->dnt->strToHex(urlencode(base64_encode(Vendor::getId()))) . '&status=' . $this->dnt->strToHex(urlencode(base64_encode($status))) . '&idEntity=' . $this->dnt->strToHex(urlencode(base64_encode($id_entity)));
-        return $url;
+        $finalDomain = ($domain) ? $domain : WWW_PATH . 'subscriber/?params=1';
+        $url = '&id=' . $this->dnt->strToHex(urlencode(base64_encode($email))) . '&vendorId=' . $this->dnt->strToHex(urlencode(base64_encode(Vendor::getId()))) . '&status=' . $this->dnt->strToHex(urlencode(base64_encode($status))) . '&idEntity=' . $this->dnt->strToHex(urlencode(base64_encode($id_entity)));
+        return $finalDomain . $url;
     }
 
     public function seenImage($campainId, $email, $fullImage = false)

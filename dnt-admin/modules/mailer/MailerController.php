@@ -201,7 +201,7 @@ class MailerController extends AdminController
     {
         $this->replacedcontent = false;
         $this->replacedcontent = str_replace('RECIPIENT_EMAIL_HEX', $this->dnt->strToHex($recipient['email']), $content);
-        $logoutUrl = $this->subscriber->generateUrl($recipient['id_entity'], $recipient['email'], 0, 'http://odhlasenie.tdoubek.beta.markiza.sk/');
+        $logoutUrl = $this->subscriber->generateUrl($recipient['id_entity'], $recipient['email'], 0, 'http://odhlasenie.tdoubek.beta.markiza.sk/?type=microsite_odhlasenie');
         $this->replacedcontent = str_replace('<url=UNSUBSCRIBE_URL=>', $logoutUrl, $this->replacedcontent);
         $this->replacedcontent = $this->dnt->minify($this->replacedcontent);
         return $this->replacedcontent;
