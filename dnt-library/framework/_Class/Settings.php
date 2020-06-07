@@ -17,7 +17,6 @@ use function websettings;
 /**
  * GET VENDOR SETTING: $this->settings->getGlobals()->vendor['foo']
  */
-
 class Settings
 {
 
@@ -52,7 +51,7 @@ class Settings
         }
 
         $vendorLoadedSettings = [];
-        $file = "../dnt-view/layouts/" . Vendor::getLayout() . "/Configurator.php";
+        $file = __DIR__ . "../../../../dnt-view/layouts/" . Vendor::getLayout() . "/Configurator.php";
         if (!class_exists('Configurator')) {
             if (file_exists($file)) {
                 include_once $file;
@@ -117,7 +116,6 @@ class Settings
     public function getMetaData()
     {
         $db = new DB;
-        ;
         $query = "SELECT * FROM dnt_settings WHERE `type` = 'custom' AND `vendor_id` = '" . Vendor::getId() . "'";
 
         if ($db->num_rows($query) > 0) {
@@ -192,7 +190,7 @@ class Settings
     protected static function settingsConf()
     {
         $settingsData = false;
-        $conf = "../dnt-view/layouts/" . Vendor::getLayout() . "/conf.php";
+        $conf = __DIR__ . "../../../../dnt-view/layouts/" . Vendor::getLayout() . "/conf.php";
         if (!function_exists("websettings")) {
             if (file_exists($conf)) {
                 include $conf;
@@ -207,7 +205,7 @@ class Settings
 
     protected static function settingsConfigurator()
     {
-        $file = "../dnt-view/layouts/" . Vendor::getLayout() . "/Configurator.php";
+        $file = __DIR__ . "../../../../dnt-view/layouts/" . Vendor::getLayout() . "/Configurator.php";
         $modulesRegistrator = false;
         if (!class_exists('Configurator')) {
             if (file_exists($file)) {
