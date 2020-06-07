@@ -5,6 +5,7 @@ namespace App;
 use DntLibrary\Base\DB;
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Rest;
+use DntLibrary\Base\Settings;
 use DntLibrary\Base\Vendor;
 
 class Subscriber
@@ -14,12 +15,14 @@ class Subscriber
     protected $rest;
     public $isSubsscriber;
     protected $dnt;
+    protected $settings;
 
     public function __construct()
     {
         $this->db = new DB();
         $this->rest = new Rest();
         $this->dnt = new Dnt();
+        $this->settings = new Settings();
     }
 
     public function generateUrl($id_entity, $email, $status, $domain = false)
@@ -61,10 +64,10 @@ class Subscriber
 
     public function requestValidator($cutomReferers)
     {
-        
-        if(isset($this->settings->getGlobals()->vendor['apiKey'])){
+
+        if (isset($this->settings->getGlobals()->vendor['apiKey'])) {
             $apiKey = $this->settings->getGlobals()->vendor['apiKey'];
-        }else{
+        } else {
             $apiKey = false;
         }
         if ($this->allowReferers($cutomReferers)) {
