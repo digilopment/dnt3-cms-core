@@ -51,7 +51,7 @@ class Settings
         }
 
         $vendorLoadedSettings = [];
-        $file = __DIR__ . "../../../../dnt-view/layouts/" . Vendor::getLayout() . "/Configurator.php";
+        $file = __DIR__ . "/../../../dnt-view/layouts/" . Vendor::getLayout() . "/Configurator.php";
         if (!class_exists('Configurator')) {
             if (file_exists($file)) {
                 include_once $file;
@@ -190,7 +190,7 @@ class Settings
     protected static function settingsConf()
     {
         $settingsData = false;
-        $conf = __DIR__ . "../../../../dnt-view/layouts/" . Vendor::getLayout() . "/conf.php";
+        $conf = __DIR__ . "/../../../dnt-view/layouts/" . Vendor::getLayout() . "/conf.php";
         if (!function_exists("websettings")) {
             if (file_exists($conf)) {
                 include $conf;
@@ -205,7 +205,7 @@ class Settings
 
     protected static function settingsConfigurator()
     {
-        $file = __DIR__ . "../../../../dnt-view/layouts/" . Vendor::getLayout() . "/Configurator.php";
+        $file = __DIR__ . "/../../../dnt-view/layouts/" . Vendor::getLayout() . "/Configurator.php";
         $modulesRegistrator = false;
         if (!class_exists('Configurator')) {
             if (file_exists($file)) {
