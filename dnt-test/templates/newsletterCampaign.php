@@ -1,4 +1,5 @@
 <?php
+
 use DntLibrary\Base\Dnt; ?>
 <!DOCTYPE html>
 <html lang="sk">
@@ -13,6 +14,10 @@ use DntLibrary\Base\Dnt; ?>
         <script src="<?php echo $data['baseUrl'] ?>media/jquery.dataTables.min.js"></script>
         <!-- CSS code from Bootply.com editor -->
         <style type="text/css">
+            .logouted{
+                opacity: 0.4;
+                background-color: #efefef;
+            }
         </style>
         <script>
             $(document).ready(function () {
@@ -69,8 +74,8 @@ use DntLibrary\Base\Dnt; ?>
                         </tr>
                     </tfoot>
                     <tbody>
-<?php foreach ($data['sentEmails'] as $item) { ?>
-                            <tr>
+                        <?php foreach ($data['sentEmails'] as $item) { ?>
+                            <tr <?php echo ($item->show != 1) ? 'class="logouted"' : false; ?>>
                                 <td> <?php echo $item->id ?></td>
                                 <td> <?php echo $item->name ?> <?php echo $item->surname ?></td>
                                 <td> <?php echo $item->email ?></td>
@@ -84,7 +89,7 @@ use DntLibrary\Base\Dnt; ?>
                                     ?></td>
                                 <td> <?php echo!empty($data['log']($item->email, 'HTTP_USER_AGENT')) ? Dnt::getOS($data['log']($item->email, 'HTTP_USER_AGENT')) : false; ?></td>
                             </tr>
-<?php } ?>
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>
