@@ -234,15 +234,16 @@ class MailerController extends AdminController
 
     protected function sentMail($currentID, $lastId, $catId, $recipients, $countMails, $hasData, $sendedMails)
     {
-        $msg = $this->session->get('message');
-        $template = $this->session->get('template');
-        $subject = $this->session->get('subject');
-        $content = $this->session->get('content');
-        $campain = $this->session->get('campain');
-
+        
         $data['mailingReportUrl'] = WWW_PATH . 'dnt-test/newsletter-campaign?emailCatId=' . $catId . '&campaignId=' . $campain;
         if ($hasData) {
             foreach ($recipients as $recipient) {
+
+                $msg = $this->session->get('message');
+                $template = $this->session->get('template');
+                $subject = $this->session->get('subject');
+                $content = $this->session->get('content');
+                $campain = $this->session->get('campain');
 
                 $emails[] = $recipient['email'];
 
@@ -264,7 +265,7 @@ class MailerController extends AdminController
 
                 //set seen - add 1px image
                 $content = $this->checkSeen($content, $recipient, $campain);
-                
+
                 $this->mailer->set_msg($content);
                 $this->mailer->set_subject($subject);
                 $this->mailer->set_sender_name(false);
