@@ -264,7 +264,7 @@ class MailerController extends AdminController
 
                 //set seen - add 1px image
                 $content = $this->checkSeen($content, $recipient, $campain);
-
+                
                 $this->mailer->set_msg($content);
                 $this->mailer->set_subject($subject);
                 $this->mailer->set_sender_name(false);
