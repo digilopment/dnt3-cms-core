@@ -65,11 +65,12 @@ class VoyoEmailsImportJob
     }
 
     /**
-     * odstrani vsetky emaily ktore su starsie ako 1 rok
+     * odstrani vsetky emaily ktore su starsie ako 1 a su aktivne
+     * tie ktore poziadali o zrusenie z DB nemazem z dovodu udrzania informacie o neodosielani emailov
      */
     protected function deleteOneYearOldEmails()
     {
-        $query = "DELETE FROM `dnt_mailer_mails` WHERE cat_id = '" . self::CAT_ID . "' AND vendor_id = '" . self::VENDOR_ID . "' AND datetime_creat < DATE_SUB(NOW(),INTERVAL 1 YEAR)";
+        $query = "DELETE FROM `dnt_mailer_mails` WHERE cat_id = '" . self::CAT_ID . "' AND `show` = 1 AND vendor_id = '" . self::VENDOR_ID . "' AND datetime_creat < DATE_SUB(NOW(),INTERVAL 1 YEAR)";
         $this->db->query($query);
     }
 
