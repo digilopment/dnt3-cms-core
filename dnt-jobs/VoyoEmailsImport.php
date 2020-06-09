@@ -9,21 +9,22 @@ use DntLibrary\Base\Settings;
 
 class VoyoEmailsImportJob
 {
+
     const CAT_ID = 91;
     const VENDOR_ID = 39;
-    const FIRST_AI_EMAIL_ID = 1207453; //vzdy prve ID vo Voyo Service
     const API_LIMIT = 5000;
 
+    protected $settings;
     protected $dnt;
-    protected $crypt;
     protected $db;
+    protected $crypt;
     protected $dbEmails = [];
     protected $jsonEmails = [];
-    protected $settings;
     protected $voyoService;
     protected $serviceLogin;
     protected $servicePsswd;
     protected $decryptedKey;
+    protected $firstId;
 
     public function __construct()
     {
@@ -39,12 +40,15 @@ class VoyoEmailsImportJob
 
     protected function getData($lastId = false)
     {
-
-        $getLastId = ($lastId) ? $lastId : self::FIRST_AI_EMAIL_ID;
+        if ($lastId === null) {
+            $url = $this->voyoService;
+        } else {
+            $url = $this->voyoService . '?lastId=' . $lastId;
+        }
         $login = $this->serviceLogin;
         $password = $this->servicePsswd;
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->voyoService . '?lastId=' . $getLastId);
+        curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
         curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
@@ -91,17 +95,28 @@ class VoyoEmailsImportJob
     }
 
     /**
+     * nacita prve ID s default JSON-u
+     */
+    protected function initFirstId()
+    {
+        $data = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $this->encryptedJson(false)), true);
+        if (isset($data[0]['id'])) {
+            $this->firstId = (int) $data[0]['id'] - 2;
+        }
+    }
+
+    /**
      * vytiahne vsetky nove emaily z API VOYA
      * data ziskava dovtedy, kym existuje nextId, respektive ak nextId vrati data, dovtedy sa oslovuje VOYO SERVICE
      */
     protected function newEmails()
     {
-        $nexId = self::FIRST_AI_EMAIL_ID;
+        $nexId = $this->firstId;
         while ($nexId > 0) {
             $data = json_decode(preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $this->encryptedJson($nexId)), true);
             if (count($data) > 0) {
                 foreach ($data as $row) {
-                    $this->jsonEmails[] = $row;
+                    $this->jsonEmails[$row['id']] = $row;
                 }
                 $nexId += self::API_LIMIT;
             } else {
@@ -136,6 +151,7 @@ class VoyoEmailsImportJob
 
     protected function init()
     {
+        $this->initFirstId();
         $this->deleteOneYearOldEmails();
         $this->dbEmails();
         $this->newEmails();
