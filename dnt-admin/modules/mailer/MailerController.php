@@ -67,13 +67,16 @@ class MailerController extends AdminController
      */
     public function init()
     {
-        $this->setMailPerRequest();
-        $this->categories();
-        $this->mailerQuery();
+        //$this->setMailPerRequest();
+        //$this->categories();
+        //$this->mailerQuery();
     }
 
     public function indexAction()
     {
+        $this->session->set('sended-mails', 0);
+        $this->mailerQuery();
+        $this->categories();
         $data['db'] = $this->db;
         $data['rest'] = $this->rest;
         $data['adminMailer'] = $this->adminMailer;
@@ -279,7 +282,7 @@ class MailerController extends AdminController
                 $this->mailer->set_subject($subject);
                 $this->mailer->set_sender_name($senderName);
                 $this->mailer->set_sender_email($senderEmail);
-                $this->mailer->sent_email();
+                //$this->mailer->sent_email();
             }
             $data['toFinish'] = ($countMails - $sendedMails);
             $data['currentID'] = $currentID;
@@ -298,7 +301,11 @@ class MailerController extends AdminController
 
     public function sentMailAction()
     {
+        $this->setMailPerRequest();
         $table = 'dnt_mailer_mails';
+
+        $sended = $this->session->get('sended-mails');
+
         if ($this->hasPost('sent')) {
             $subject = $this->rest->post('subject');
             $cat_id = $this->rest->post('users');
@@ -329,20 +336,20 @@ class MailerController extends AdminController
         }
         $cat_id = $this->session->get('cat_id');
         /** COUNT ALL MAILS TO SENT * */
-        $queryCount = "SELECT * FROM " . $table . " WHERE cat_id = '" . $cat_id . "' AND vendor_id = '" . Vendor::getId() . "'  AND `show` = 1 ORDER BY `id_entity` ASC";
-        $countMails = $this->db->num_rows($queryCount);
-
-
+        $queryCount = "SELECT COUNT(id_entity) AS `countMails` FROM " . $table . " WHERE cat_id = '" . $cat_id . "' AND vendor_id = '" . Vendor::getId() . "'  AND `show` = 1";
+        $result = $this->db->get_results($queryCount);
+        $countMails = (int) $result[0]['countMails'];
 
         if (isset($_GET['mail_id'])) {
             $currentID = $this->rest->get('mail_id');
-
             $queryMailId = "SELECT * FROM " . $table . " WHERE cat_id = '" . $cat_id . "' AND vendor_id = '" . Vendor::getId() . "'  AND `show` = 1 AND `id_entity` > '" . $currentID . "' ORDER BY `id_entity` asc LIMIT " . $this->sentMailPerRequest . "";
             $data = $this->db->get_results($queryMailId);
+            $requestSended = count($data);
         } else {
             $currentID = $this->dnt->db_current_id($table, "AND cat_id = '" . $cat_id . "'  AND `show` = 1");
             $query = "SELECT * FROM " . $table . " WHERE cat_id = '" . $cat_id . "' AND vendor_id = '" . Vendor::getId() . "'  AND `show` = 1 AND `id_entity` >= '" . $currentID . "' ORDER BY `id_entity` asc LIMIT " . $this->sentMailPerRequest . "";
             $data = $this->db->get_results($query);
+            $requestSended = count($data);
         }
 
         if (isset($data[0]['id_entity'])) {
@@ -352,11 +359,14 @@ class MailerController extends AdminController
             $lastId = 0;
             $hasData = 0;
         }
+        
+        $newSendedMails = $sended + $requestSended;
+        $this->session->set('sended-mails', $newSendedMails);
 
-        $queryCountSend = "SELECT * FROM " . $table . " WHERE cat_id = '" . $cat_id . "' AND vendor_id = '" . Vendor::getId() . "' AND id_entity <= '$lastId'  AND `show` = 1";
-        $sendedMails = $this->db->num_rows($queryCountSend);
-
-        $this->sentMail($currentID, $lastId, $cat_id, $data, $countMails, $hasData, $sendedMails);
+        //$queryCountSend = "SELECT * FROM " . $table . " WHERE cat_id = '" . $cat_id . "' AND vendor_id = '" . Vendor::getId() . "' AND id_entity <= '$lastId'  AND `show` = 1";
+        //$sendedMails = $this->db->num_rows($queryCountSend);
+        //$newSendedMails = $countMails - ($requestSended * $newSended);
+        $this->sentMail($currentID, $lastId, $cat_id, $data, $countMails, $hasData, $newSendedMails);
     }
 
 }
