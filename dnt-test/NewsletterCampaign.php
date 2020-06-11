@@ -5,6 +5,7 @@ namespace DntTest;
 use DntLibrary\Base\DB;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Vendor;
+use DntLibrary\Base\Dnt;
 
 class NewsletterCampaignTest
 {
@@ -12,6 +13,7 @@ class NewsletterCampaignTest
     protected $campaignId = 'newsletter-spring-2020';
     protected $emailCatId;
     protected $db;
+    protected $dnt;
     protected $vendor;
     protected $rawLogs = [];
     protected $logs = [];
@@ -24,6 +26,7 @@ class NewsletterCampaignTest
         $this->db = new DB();
         $this->rest = new Rest();
         $this->vendor = new Vendor();
+        $this->dnt = new Dnt();
     }
 
     protected function setCampaignId()
@@ -114,6 +117,26 @@ class NewsletterCampaignTest
         $this->logs = $logs;
     }
 
+    protected function getClikedUrls()
+    {
+        $url = [];
+        foreach ($this->logs as $log) {
+            $url[] = json_decode($log->msg)->redirectTo;
+        }
+
+        $countLinks = array_count_values($url);
+        $final = [];
+        foreach ($countLinks as $link => $count) {
+            if ($this->dnt->in_string('plugin=subscriber', $link)) {
+                $email = base64_decode(urldecode($this->dnt->HexToStr(explode('&', explode('id=', $link)[1])[0])));
+                $final['logout'][$email] = (int) $count;
+            } else {
+                $final['default'][$link] = (int) $count;
+            }
+        }
+        return $final;
+    }
+
     protected function getLogByEmail($email)
     {
         $logs = [];
@@ -138,6 +161,7 @@ class NewsletterCampaignTest
 
     protected function getTemplate()
     {
+
         $data['sentEmails'] = $this->sentEmails;
         $data['baseUrl'] = 'http://85.248.116.69/dnt-markiza/forms/';
         $data['logByEmail'] = function($email) {
@@ -182,6 +206,7 @@ class NewsletterCampaignTest
         $data['countSeens'] = function($email) {
             return count($this->getSeenLogByEmail($email));
         };
+        $data['urlCounter'] = $this->getClikedUrls();
         require 'templates/newsletterCampaign.php';
     }
 

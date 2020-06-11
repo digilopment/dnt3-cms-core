@@ -821,39 +821,36 @@ function get_top()
    
    function tpl_sending_mails($data)
    {
-       $to_finish = $data['toFinish'];
+        $to_finish = $data['toFinish'];
         $sender_email = $data['emails'];
         $next_id = $data['lastId'];
         $mailingReportUrl = $data['mailingReportUrl'];
         $sleep = isset($data['sleep']) ? $data['sleep'] : 0;
-    get_top();
-   
-       echo '
-   <body class="error">
-     <div class="outer">
-   	<div class="middle">
-   		<div class="inner">
-   			<div class="row">
-                        
-   				<div class="col-lg-12">
-   					<div class="circle">
-   						<i class="fa fa-chain-broken bg-blue"></i>
-   					<span>' . $to_finish . '</span>
-   					</div>
-   					<span class="status">...emailov ešte musím odoslať</span>
-   					<span class="detail">Teraz odosielam na adresu: 
-   						<b><a href="mailto:' . $sender_email . '" target="_blank">' . $sender_email . '</a></b>
-   					</span>
-                                        <br/>
-                                        <a class="pull-right" target="_blank" href="' . $mailingReportUrl . '"><b>Otvoriť mailing report</b></a>
-   				</div>
-   			</div>
-   		</div>
-   	</div>
-     </div>
-   </div>
-   <meta http-equiv="refresh" content="'.$sleep.';url=' . AdminMailer::sent_next_mail($next_id) . '">
-   ';
+        get_top();
+        echo '
+        <body class="error">
+            <div class="outer">
+                <div class="middle">
+                    <div class="inner">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="circle">
+                                    <i class="fa fa-chain-broken bg-blue"></i><span>' . $to_finish . '</span>
+                                </div>
+                                <span class="status">...emailov ešte musím odoslať</span>
+                                <span class="detail">Teraz odosielam na adresu:
+                                    <a href="mailto:' . $sender_email . '" target="_blank"> <b>' . $sender_email . '</b></a>
+                                </span>
+                                <br/>
+                                <a class="pull-right" target="_blank" href="' . $mailingReportUrl . '"><b>Otvoriť mailing report</b></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <meta http-equiv="refresh" content="'.$sleep.';url=' . AdminMailer::sent_next_mail($next_id) . '">
+       ';
        get_bottom();
    }
    

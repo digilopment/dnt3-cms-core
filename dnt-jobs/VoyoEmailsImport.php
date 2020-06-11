@@ -13,6 +13,7 @@ class VoyoEmailsImportJob
     const CAT_ID = 91;
     const VENDOR_ID = 39;
     const API_LIMIT = 5000;
+    const DELETE_PERIOD = 2;
 
     protected $settings;
     protected $dnt;
@@ -65,12 +66,21 @@ class VoyoEmailsImportJob
     }
 
     /**
+     * vymaze vsetky aktivne emaily[`show` = 1] - v prípade problému ich vieme doimportovat
+     */
+    protected function deleteAll()
+    {
+        $query = "DELETE FROM `dnt_mailer_mails` WHERE cat_id = '" . self::CAT_ID . "' AND vendor_id = '" . self::VENDOR_ID . "' AND `show` = 1";
+        $this->db->query($query);
+    }
+
+    /**
      * odstrani vsetky emaily ktore su starsie ako 1 a su aktivne
      * tie ktore poziadali o zrusenie z DB nemazem z dovodu udrzania informacie o neodosielani emailov
      */
     protected function deleteOneYearOldEmails()
     {
-        $query = "DELETE FROM `dnt_mailer_mails` WHERE cat_id = '" . self::CAT_ID . "' AND `show` = 1 AND vendor_id = '" . self::VENDOR_ID . "' AND datetime_creat < DATE_SUB(NOW(),INTERVAL 1 YEAR)";
+        $query = "DELETE FROM `dnt_mailer_mails` WHERE cat_id = '" . self::CAT_ID . "' AND `show` = 1 AND vendor_id = '" . self::VENDOR_ID . "' AND datetime_creat < DATE_SUB(NOW(),INTERVAL ".self::DELETE_PERIOD." YEAR)";
         $this->db->query($query);
     }
 
@@ -132,22 +142,23 @@ class VoyoEmailsImportJob
      */
     protected function writeToDb($item)
     {
-        $name = $item['name'];
-        $surname = $item['surname'];
+        $name = str_replace('?', 'c', $item['name']);
+        $surname = str_replace('?', 'c', $item['surname']);
+        $nickname = $item['nickname'];
         $email = $item['email'];
 
         $insertedData = array(
             'name' => $name,
             'surname' => $surname,
             'email' => $email,
+            'title' => $nickname,
             'vendor_id' => self::VENDOR_ID,
             'cat_id' => self::CAT_ID,
-            'show' => 1,
+            '`show`' => 1,
             'datetime_creat' => $this->dnt->datetime(),
             'datetime_update' => $this->dnt->datetime()
         );
-
-        //$this->db->insert('dnt_mailer_mails', $insertedData);
+        $this->db->insert('dnt_mailer_mails', $insertedData);
     }
 
     protected function init()
@@ -165,9 +176,9 @@ class VoyoEmailsImportJob
         foreach ($this->jsonEmails as $item) {
             if (!in_array($item['email'], $this->dbEmails)) {
                 $this->writeToDb($item);
-                print ($item['id'] . ' - ' . $item['email'] . ' nie je v databaze a bol zapisany do DB<br/>');
+                print ($item['id'] . ' - ' . $item['nickname'] . ' - ' . $item['email'] . ' nie je v databaze a bol zapisany do DB<br/>');
             } else {
-                print ($item['id'] . ' - ' . $item['email'] . ' EXISTUJE alebo je DUPLIKAT<br/>');
+                print ($item['id'] . ' - ' . $item['nickname'] . ' - ' . $item['email'] . ' EXISTUJE alebo je DUPLIKAT<br/>');
             }
         }
     }

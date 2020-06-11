@@ -52,6 +52,11 @@ class MailerController extends AdminController
         }
     }
 
+    protected function setMailPerRequest()
+    {
+        $this->sentMailPerRequest = isset($this->settings->getGlobals()->vendor['sentMailPerRequest']) ? $this->settings->getGlobals()->vendor['sentMailPerRequest'] : $this->sentMailPerRequest;
+    }
+
     protected function mailerQuery()
     {
         $this->countEmails = $this->db->num_rows($this->adminMailer->getAll());
@@ -62,6 +67,7 @@ class MailerController extends AdminController
      */
     public function init()
     {
+        $this->setMailPerRequest();
         $this->categories();
         $this->mailerQuery();
     }
@@ -234,8 +240,8 @@ class MailerController extends AdminController
 
     protected function sentMail($currentID, $lastId, $catId, $recipients, $countMails, $hasData, $sendedMails)
     {
-        
-        $data['mailingReportUrl'] = WWW_PATH . 'dnt-test/newsletter-campaign?emailCatId=' . $catId . '&campaignId=' . $campain;
+
+        $data['mailingReportUrl'] = WWW_PATH . 'dnt-test/newsletter-campaign?emailCatId=' . $catId . '&campaignId=' . $this->session->get('campain');
         if ($hasData) {
             foreach ($recipients as $recipient) {
 
@@ -244,6 +250,9 @@ class MailerController extends AdminController
                 $subject = $this->session->get('subject');
                 $content = $this->session->get('content');
                 $campain = $this->session->get('campain');
+
+                $senderName = $this->session->get('senderName');
+                $senderEmail = $this->session->get('senderEmail');
 
                 $emails[] = $recipient['email'];
 
@@ -268,7 +277,8 @@ class MailerController extends AdminController
 
                 $this->mailer->set_msg($content);
                 $this->mailer->set_subject($subject);
-                $this->mailer->set_sender_name(false);
+                $this->mailer->set_sender_name($senderName);
+                $this->mailer->set_sender_email($senderEmail);
                 $this->mailer->sent_email();
             }
             $data['toFinish'] = ($countMails - $sendedMails);
@@ -292,6 +302,8 @@ class MailerController extends AdminController
         if ($this->hasPost('sent')) {
             $subject = $this->rest->post('subject');
             $cat_id = $this->rest->post('users');
+            $senderName = $this->rest->post('senderName');
+            $senderEmail = $this->rest->post('senderEmail');
 
             if ($this->rest->post('template') != '') {
                 $content = $this->rest->post('template');
@@ -312,6 +324,8 @@ class MailerController extends AdminController
             $this->session->set('cat_id', $cat_id);
             $this->session->set('subject', $subject);
             $this->session->set('campain', $campain);
+            $this->session->set('senderName', $senderName);
+            $this->session->set('senderEmail', $senderEmail);
         }
         $cat_id = $this->session->get('cat_id');
         /** COUNT ALL MAILS TO SENT * */
