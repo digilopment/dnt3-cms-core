@@ -163,7 +163,7 @@ class NewsletterCampaignTest
     {
 
         $data['sentEmails'] = $this->sentEmails;
-        $data['baseUrl'] = 'http://85.248.116.69/dnt-markiza/forms/';
+        $data['baseUrl'] = 'https://varenypeceny.markiza.sk/dnt-markiza/forms/';
         $data['logByEmail'] = function($email) {
             return $this->getLogByEmail($email);
         };
