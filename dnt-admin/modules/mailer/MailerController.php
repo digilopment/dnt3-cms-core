@@ -282,7 +282,7 @@ class MailerController extends AdminController
                 $this->mailer->set_subject($subject);
                 $this->mailer->set_sender_name($senderName);
                 $this->mailer->set_sender_email($senderEmail);
-                //$this->mailer->sent_email();
+                $this->mailer->sent_email();
             }
             $data['toFinish'] = ($countMails - $sendedMails);
             $data['currentID'] = $currentID;
@@ -359,13 +359,9 @@ class MailerController extends AdminController
             $lastId = 0;
             $hasData = 0;
         }
-        
+
         $newSendedMails = $sended + $requestSended;
         $this->session->set('sended-mails', $newSendedMails);
-
-        //$queryCountSend = "SELECT * FROM " . $table . " WHERE cat_id = '" . $cat_id . "' AND vendor_id = '" . Vendor::getId() . "' AND id_entity <= '$lastId'  AND `show` = 1";
-        //$sendedMails = $this->db->num_rows($queryCountSend);
-        //$newSendedMails = $countMails - ($requestSended * $newSended);
         $this->sentMail($currentID, $lastId, $cat_id, $data, $countMails, $hasData, $newSendedMails);
     }
 
