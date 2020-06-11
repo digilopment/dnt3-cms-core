@@ -31,7 +31,12 @@ function get_top()
          }
       </style>
       <meta name="description" content="">
-      <meta name="author" content="">
+        <meta name="author" content="">
+          <meta http-equiv="cache-control" content="max-age=0" />
+          <meta http-equiv="cache-control" content="no-cache" />
+          <meta http-equiv="expires" content="0" />
+          <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+          <meta http-equiv="pragma" content="no-cache" />
       <title>Systém | Designdnt</title>
       <link rel="icon" href="<?php echo WWW_PATH_ADMIN_2; ?>img/favicon.ico">
       <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -155,6 +160,11 @@ function get_top()
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <meta name="description" content="">
             <meta name="author" content="designdnt">
+            		<meta http-equiv="cache-control" content="max-age=0" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="0" />
+		<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+		<meta http-equiv="pragma" content="no-cache" />
             <title>Systém | Designdnt</title>
             <link rel="icon" href="<?php echo WWW_PATH_ADMIN_2; ?>img/favicon.ico">
             <link rel="stylesheet" href="<?php echo WWW_PATH_ADMIN_2; ?>css/bootstrap.min.css">
