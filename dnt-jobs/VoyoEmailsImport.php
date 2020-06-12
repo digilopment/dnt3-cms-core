@@ -101,7 +101,7 @@ class VoyoEmailsImportJob
     {
         $query = "SELECT email FROM `dnt_mailer_mails` WHERE cat_id = '" . self::CAT_ID . "' AND vendor_id = '" . self::VENDOR_ID . "'";
         foreach ($this->db->get_results($query) as $row) {
-            $this->dbEmails[] = strtolower($row['email']);
+            $this->dbEmails[] = $row['email'];
         }
     }
 
