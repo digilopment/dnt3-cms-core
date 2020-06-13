@@ -45,8 +45,8 @@ use DntLibrary\Base\Dnt; ?>
                 <div class="col-md-4">
                     <p>
                         Počet odoslaných emailov: <b><?php echo $data['countMails'] ?></b><br/>
-                        Počet respondentov, ktorí email videli: <b><?php echo $data['countSeenEmails'] ?></b><br/>
-                        Percentuálna úspešnosť videných emailov: <b><?php echo $data['seenPercentage'] ?>%</b><br/><br/>
+                        Počet respondentov, ktorí email videli: <b><?php echo $data['countSeenEmails'] ?></b> / <?php echo $data['countSeenEmailsExtends'] ?><br/>
+                        Percentuálna úspešnosť videných emailov: <b><?php echo $data['seenPercentage'] ?>%</b> / <?php echo $data['seenPercentageExtends'] ?><br/><br/>
                         Počet respondentov, ktorí klikli na email: <b><?php echo $data['countClickedEmails'] ?></b><br/>
                         Percentuálna úspešnosť kliknutia: <b><?php echo $data['clickedPercentage'] ?>%</b><br/>
                     </p>

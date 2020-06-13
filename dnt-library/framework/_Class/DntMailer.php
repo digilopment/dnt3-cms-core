@@ -16,12 +16,13 @@ use DntLibrary\Base\Settings;
 class Mailer
 {
 
-    var $recipient; //array
-    var $sender_email; //string
-    var $sender_name; //string
-    var $title; //string
-    var $msg; //string
-    var $subject; //string
+    public $recipient; //array
+    public $sender_email; //string
+    public $sender_name; //string
+    public $title; //string
+    public $msg; //string
+    public $subject; //string
+    public $response;
 
     /**
      * 
@@ -104,14 +105,22 @@ class Mailer
         if ($this->subject == false) {
             $predmet = "(no subject)";
         } else {
-            $predmet = Dnt::odstran_diakritiku($this->subject);
+            if (SEND_EMAIL_VIA == "internal") {
+                $predmet = Dnt::odstran_diakritiku($this->subject);
+            } elseif (SEND_EMAIL_VIA == "send_grid") {
+                $predmet = $this->subject;
+            }
         }
 
         //OD MENO
         if ($this->sender_name == false) {
             $od_meno = Settings::get("vendor_company");
         } else {
-            $od_meno = Dnt::odstran_diakritiku($this->sender_name);
+            if (SEND_EMAIL_VIA == "internal") {
+                $od_meno = Dnt::odstran_diakritiku($this->sender_name);
+            } elseif (SEND_EMAIL_VIA == "send_grid") {
+                $od_meno = $this->sender_name;
+            }
         }
 
         //EMAIL SPRAVA
@@ -176,6 +185,7 @@ class Mailer
 
             // obtain response
             $response = curl_exec($session);
+            $this->response = $response;
             //var_dump($response, curl_error($session));
             curl_close($session);
             //SEND GRID END 

@@ -202,7 +202,9 @@ class NewsletterCampaignTest
 
         //SEEN
         $data['countSeenEmails'] = $this->seenEmails();
+        $data['countSeenEmailsExtends'] = $data['countSeenEmails'] / 100 * (100 + 42);
         $data['seenPercentage'] = $data['countMails'] > 0 ? round($data['countSeenEmails'] / $data['countMails'] * 100, 2) : 0;
+        $data['seenPercentageExtends'] = $data['countMails'] > 0 ? round($data['countSeenEmailsExtends'] / $data['countMails'] * 100, 2) : 0;
         $data['countSeens'] = function($email) {
             return count($this->getSeenLogByEmail($email));
         };
