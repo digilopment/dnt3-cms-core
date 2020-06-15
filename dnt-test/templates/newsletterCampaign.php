@@ -1,6 +1,3 @@
-<?php
-
-use DntLibrary\Base\Dnt; ?>
 <!DOCTYPE html>
 <html lang="sk">
     <head>
@@ -44,11 +41,29 @@ use DntLibrary\Base\Dnt; ?>
                 </div>
                 <div class="col-md-4">
                     <p>
-                        Počet odoslaných emailov: <b><?php echo $data['countMails'] ?></b><br/>
-                        Počet respondentov, ktorí email videli: <b><?php echo $data['countSeenEmails'] ?></b> / <?php echo $data['countSeenEmailsExtends'] ?><br/>
-                        Percentuálna úspešnosť videných emailov: <b><?php echo $data['seenPercentage'] ?>%</b> / <?php echo $data['seenPercentageExtends'] ?><br/><br/>
-                        Počet respondentov, ktorí klikli na email: <b><?php echo $data['countClickedEmails'] ?></b><br/>
+                        Počet odoslaných emailov: <b><?php echo $data['countMails'] ?></b><br/><br/>
+                        Celkový počet otvorení: <b><?php echo $data['countSeenEmails'] ?></b><br/>
+                        Percentuálna úspešnosť otvorania: <b><?php echo $data['seenPercentage'] ?>%</b><br/><br/>
+                        Celkový počet kliknutí: <b><?php echo $data['countClickedEmails'] ?></b><br/>
                         Percentuálna úspešnosť kliknutia: <b><?php echo $data['clickedPercentage'] ?>%</b><br/>
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p>
+                        &nbsp;<br/><br/>
+                        Unikátny počet otvorení: <b><?php echo $data['countSeenUnique'] ?></b><br/>
+                        Percentuálna úspešnosť otvorania: <b><?php echo $data['seenUniquePercentage'] ?>%</b><br/><br/>
+                        Unikátny počet kliknutí: <b><?php echo $data['countClickedUnique'] ?></b><br/>
+                        Percentuálna úspešnosť kliknutia: <b><?php echo $data['clickedPercentageUnique'] ?>%</b><br/>
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p>
+                        &nbsp;<br/><br/>
+                        Počet kliknutí na linku (bez odhlásenia): <b><?php echo $data['countDefaultUrl'] ?></b><br/>
+                        Percentuálna úspešnosť otvorania: <b><?php echo $data['percentageDefaultUrl'] ?>%</b><br/><br/>
+                        Počet žiadosí o odhlásenie: <b><?php echo $data['countLogoutedUrl'] ?></b><br/>
+                        Percentuálna úspešnosť odhlásenia: <b><?php echo $data['percentageLogoutedUrl'] ?>%</b><br/>
                     </p>
                 </div>
             </div>
@@ -85,15 +100,31 @@ use DntLibrary\Base\Dnt; ?>
                                     <td> <?php echo $item->id ?></td>
                                     <td> <?php echo $item->name ?> <?php echo $item->surname ?></td>
                                     <td> <?php echo $item->email ?></td>
-                                    <td> <?php echo $data['seen']($item->email) || $data['click']($item->email) >= 1 ? "<b>ÁNO</b>" : "NIE" ?></td>
-                                    <td> <?php echo $data['click']($item->email) >= 1 ? "<b>ÁNO</b>" : "NIE" ?></td>
-                                    <td> <?php echo $data['countClicks']($item->email) ?></td>
+                                    <td> <?php echo isset($data['setLogData'][$item->email]) ? '<b>ÁNO</b>' : 'NIE'; ?></td>
+                                    <td> <?php echo isset($data['setLogData'][$item->email]) ? '<b>' . $data['setLogData'][$item->email]['clicked']() . '</b>' : 'NIE'; ?></td>
+                                    <td> <?php echo isset($data['setLogData'][$item->email]) ? '<b>' . $data['setLogData'][$item->email]['countClick']() . '</b>' : '0'; ?></td>
                                     <td> <?php
-                                        foreach ($data['logByEmail']($item->email) as $log) {
-                                            echo isset(json_decode($log->msg)->redirectTo) ? "<b>" . $log->timestamp . "</b><br/>" . json_decode($log->msg)->redirectTo . "<br/>" : '(undefined)' . "<br/>";
+                                        if (isset($data['setLogData'][$item->email])) {
+                                            foreach ($data['setLogData'][$item->email]['logs'] as $log) {
+                                                if ($log->system_status == 'newsletter_log_click') {
+                                                    echo isset(json_decode($log->msg)->redirectTo) ? "<b>" . $log->timestamp . "</b><br/>" . json_decode($log->msg)->redirectTo . "<br/>" : false . "<br/>";
+                                                } else {
+                                                    echo isset(json_decode($log->msg)->redirectTo) ? "Videl o: <b>" . $log->timestamp . "</b><br/>" : false . "<br/>";
+                                                }
+                                            }
                                         }
                                         ?></td>
-                                    <td> <?php echo!empty($data['log']($item->email, 'HTTP_USER_AGENT')) ? Dnt::getOS($data['log']($item->email, 'HTTP_USER_AGENT')) : false; ?></td>
+                                    <td> <?php
+                                        if (isset($data['setLogData'][$item->email])) {
+                                            foreach ($data['setLogData'][$item->email]['logs'] as $log) {
+                                                if ($log->system_status == 'newsletter_log_click') {
+                                                    echo $data['dnt']->getOs($log->HTTP_USER_AGENT) . "<br/><br/>";
+                                                } else {
+                                                    echo $data['dnt']->getOs($log->HTTP_USER_AGENT) . "<br/>";
+                                                }
+                                            }
+                                        }
+                                        ?></td>
                                 </tr>
                             <?php } ?>
                         </tbody>

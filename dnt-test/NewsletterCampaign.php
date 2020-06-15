@@ -15,11 +15,11 @@ class NewsletterCampaignTest
     protected $db;
     protected $dnt;
     protected $vendor;
-    protected $rawLogs = [];
     protected $logs = [];
     protected $sentEmails = [];
     protected $seenLogs = [];
-    protected $rawSeenLogs = [];
+    protected $uniqueClick = 0;
+    protected $uniqueSeen = 0;
 
     public function __construct()
     {
@@ -38,83 +38,64 @@ class NewsletterCampaignTest
 
     protected function init()
     {
-        $this->setCampaignId();
-        $this->seenQuery();
-        $this->getSeenLogs();
-        $this->clickQuery();
-        $this->getLogs();
         $this->emailCatId = $this->rest->get('emailCatId');
+        $this->setCampaignId();
+        $this->getSeenLogs();
+        $this->getClickLogs();
+        $this->getLogs();
         $this->sentEmails();
+        $this->getClikedUrls();
+        $this->countMailsInCampaing();
+        $this->setUniqueData();
         $this->getTemplate();
-    }
-
-    /** SEEN LOGS * */
-    protected function seenQuery()
-    {
-        $query = ("SELECT * FROM `dnt_logs` WHERE `system_status` = 'newsletter_log_seen' AND vendor_id = '" . $this->vendor->getId() . "'");
-        if ($this->db->num_rows($query) > 0) {
-            $this->rawSeenLogs = $this->db->get_results($query, true);
-        }
     }
 
     protected function getSeenLogs()
     {
+
         $logs = [];
-        foreach ($this->rawSeenLogs as $log) {
-            if (isset(json_decode($log->msg)->campainId) && json_decode($log->msg)->campainId == $this->campaignId) {
-                $logs[] = $log;
-            }
+        $query = "SELECT * FROM `dnt_logs` WHERE `system_status` = 'newsletter_log_seen' AND `msg` LIKE '%" . $this->campaignId . "%' AND vendor_id = '" . $this->vendor->getId() . "'";
+        $this->countSeenLogs = $this->db->num_rows($query);
+        if ($this->countSeenLogs > 0) {
+            $logs = $this->db->get_results($query, true);
         }
         $this->seenLogs = $logs;
     }
 
-    protected function getSeenLogByEmail($email)
+    protected function getClickLogs()
     {
-        $logs = [];
-        foreach ($this->seenLogs as $log) {
-            if (isset(json_decode($log->msg)->email) && json_decode($log->msg)->email == $email) {
-                $logs[] = $log;
-            }
-        }
-        return $logs;
-    }
-
-    protected function seenEmails()
-    {
-        $i = 0;
-        foreach ($this->sentEmails as $email) {
-            if ($this->getSeenLogByEmail($email->email) || $this->getLogByEmail($email->email)) {
-                $i++;
-            }
-        }
-        return $i;
-    }
-
-    protected function clickQuery()
-    {
-        $query = ("SELECT * FROM `dnt_logs` WHERE `system_status` = 'newsletter_log_click' AND vendor_id = '" . $this->vendor->getId() . "'");
-        if ($this->db->num_rows($query) > 0) {
-            $this->rawLogs = $this->db->get_results($query, true);
-        }
-    }
-
-    protected function sentEmails()
-    {
-        $query = "SELECT * FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . $this->vendor->getId() . "'  AND  cat_id = '" . $this->emailCatId . "' ORDER BY `show` DESC, `name` ASC";
-        if ($this->db->num_rows($query) > 0) {
-            $this->sentEmails = $this->db->get_results($query, true);
+        $query = "SELECT * FROM `dnt_logs` WHERE `system_status` = 'newsletter_log_click' AND `msg` LIKE '%" . $this->campaignId . "%' AND vendor_id = '" . $this->vendor->getId() . "'";
+        $this->countClickLogs = $this->db->num_rows($query);
+        if ($this->countClickLogs > 0) {
+            $this->clickLogs = $this->db->get_results($query, true);
         }
     }
 
     protected function getLogs()
     {
         $logs = [];
-        foreach ($this->rawLogs as $log) {
-            if (isset(json_decode($log->msg)->campainId) && json_decode($log->msg)->campainId == $this->campaignId) {
-                $logs[] = $log;
-            }
+        $query = "SELECT * FROM `dnt_logs` WHERE (`system_status` = 'newsletter_log_seen' OR `system_status` = 'newsletter_log_click') AND `msg` LIKE '%" . $this->campaignId . "%' AND vendor_id = '" . $this->vendor->getId() . "'";
+        $this->countLogs = $this->db->num_rows($query);
+        if ($this->countLogs > 0) {
+            $logs = $this->db->get_results($query, true);
         }
         $this->logs = $logs;
+    }
+
+    protected function sentEmails()
+    {
+        $query = "SELECT * FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . $this->vendor->getId() . "'  AND  cat_id = '" . $this->emailCatId . "' ORDER BY `show` DESC, `name` ASC";
+        $this->countAllEmails = $this->db->num_rows($query);
+        if ($this->countAllEmails > 0) {
+            $this->sentEmails = $this->db->get_results($query, true);
+        }
+    }
+
+    protected function countMailsInCampaing()
+    {
+        $this->countSentEmails = 0;
+        $query = "SELECT * FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . $this->vendor->getId() . "'  AND  cat_id = '" . $this->emailCatId . "' AND `show` = 1";
+        $this->countSentEmails = $this->db->num_rows($query);
     }
 
     protected function getClikedUrls()
@@ -123,92 +104,133 @@ class NewsletterCampaignTest
         foreach ($this->logs as $log) {
             $url[] = json_decode($log->msg)->redirectTo;
         }
+        $countLogout = 0;
+        $countDefault = 0;
 
         $countLinks = array_count_values($url);
-        $final = [];
+        $final['logout'] = [];
+        $final['default'] = [];
         foreach ($countLinks as $link => $count) {
             if ($this->dnt->in_string('plugin=subscriber', $link)) {
                 $email = base64_decode(urldecode($this->dnt->HexToStr(explode('&', explode('id=', $link)[1])[0])));
                 $final['logout'][$email] = (int) $count;
+                $countLogout += $count;
             } else {
-                $final['default'][$link] = (int) $count;
+                if (!empty($link)) {
+                    $final['default'][$link] = (int) $count;
+                    $countDefault += $count;
+                }
             }
         }
-        return $final;
+        $this->countLogoutedUrl = $countLogout;
+        $this->countDefaultUrl = $countDefault;
+        $this->clickedUrls = $final;
     }
 
     protected function getLogByEmail($email)
     {
         $logs = [];
         foreach ($this->logs as $log) {
-            if (isset(json_decode($log->msg)->email) && json_decode($log->msg)->email == $email) {
+            if ($this->dnt->in_string(strtolower($email), strtolower($log->msg))) {
                 $logs[] = $log;
             }
         }
         return $logs;
     }
 
-    protected function clickedEmails()
+    protected function setLogData()
     {
-        $i = 0;
-        foreach ($this->sentEmails as $email) {
-            if ($this->getLogByEmail($email->email)) {
-                $i++;
+        $data = [];
+        foreach ($this->logs as $log) {
+            $email = isset(json_decode($log->msg)->email) ? json_decode($log->msg)->email : false;
+            $logsByEmail = $this->getLogByEmail($email);
+            $click = 0;
+            foreach ($logsByEmail as $log) {
+                if (isset(json_decode($log->msg)->redirectTo) && $log->system_status == 'newsletter_log_click') {
+                    $click++;
+                }
+            }
+            $data[$email] = [
+                'seen' => 1,
+                'logs' => $logsByEmail,
+                'clicked' => function() use ($click) {
+                    if ($click > 0) {
+                        return 'ÁNO';
+                    } else {
+                        return 'NIE';
+                    }
+                },
+                'countClick' => function() use ($click) {
+                    return $click;
+                },
+            ];
+        }
+        return $data;
+    }
+
+    protected function setUniqueData()
+    {
+        $dataUniqueClicked = [];
+        $dataUniqueSeen = [];
+        foreach ($this->logs as $log) {
+            if (isset(json_decode($log->msg)->redirectTo) && $log->system_status == 'newsletter_log_click') {
+                $email = isset(json_decode($log->msg)->email) ? json_decode($log->msg)->email : false;
+                $dataUniqueClicked[$email] = $log;
             }
         }
-        return $i;
+        foreach ($this->logs as $log) {
+            if (isset(json_decode($log->msg)->redirectTo) && $log->system_status == 'newsletter_log_seen') {
+                $email = isset(json_decode($log->msg)->email) ? json_decode($log->msg)->email : false;
+                $dataUniqueSeen[$email] = 1;
+            }
+        }
+
+        $this->uniqueClick = count($dataUniqueClicked);
+        $this->uniqueSeen = count($dataUniqueSeen);
     }
 
     protected function getTemplate()
     {
 
+        $data['setLogData'] = $this->setLogData();
         $data['sentEmails'] = $this->sentEmails;
         $data['baseUrl'] = 'https://varenypeceny.markiza.sk/dnt-markiza/forms/';
-        $data['logByEmail'] = function($email) {
-            return $this->getLogByEmail($email);
-        };
-        $data['click'] = function($email) {
-            $click = 0;
-            foreach ($this->getLogByEmail($email) as $email) {
-                if (isset(json_decode($email->msg)->redirectTo)) {
-                    $click++;
-                }
-            }
-            return $click;
-        };
-        $data['seen'] = function($email) {
-            $seen = 0;
-            foreach ($this->getSeenLogByEmail($email) as $email) {
-                if (isset(json_decode($email->msg)->email)) {
-                    $seen++;
-                }
-            }
-            return $seen;
-        };
-        $data['log'] = function ($email, $object) {
-            if (isset($this->getLogByEmail($email)[0]->$object)) {
-                return $this->getLogByEmail($email)[0]->$object;
-            }
-            return false;
-        };
-        $data['countMails'] = count($this->sentEmails);
+        $data['dnt'] = $this->dnt;
+
+        //COUNT MAILS
+        if ($this->rest->get('countMails')) {
+            $data['countMails'] = $this->rest->get('countMails');
+        } else {
+            $data['countMails'] = ($this->countSentEmails + $this->countLogoutedUrl > $this->countAllEmails) ? $this->countAllEmails : $this->countSentEmails + $this->countLogoutedUrl;
+        }
 
         //CLICKED
-        $data['countClickedEmails'] = $this->clickedEmails();
+        $data['countClickedEmails'] = $this->countClickLogs;
         $data['clickedPercentage'] = $data['countMails'] > 0 ? round($data['countClickedEmails'] / $data['countMails'] * 100, 2) : 0;
-        $data['countClicks'] = function($email) {
-            return count($this->getLogByEmail($email));
-        };
+
+        //CLICKED UNIQUE
+        $data['countClickedUnique'] = $this->uniqueClick;
+        $data['clickedPercentageUnique'] = $data['countMails'] > 0 ? round($data['countClickedUnique'] / $data['countMails'] * 100, 2) : 0;
 
         //SEEN
-        $data['countSeenEmails'] = $this->seenEmails();
-        $data['countSeenEmailsExtends'] = $data['countSeenEmails'] / 100 * (100 + 42);
+        $data['countSeenEmails'] = $this->countSeenLogs;
         $data['seenPercentage'] = $data['countMails'] > 0 ? round($data['countSeenEmails'] / $data['countMails'] * 100, 2) : 0;
-        $data['seenPercentageExtends'] = $data['countMails'] > 0 ? round($data['countSeenEmailsExtends'] / $data['countMails'] * 100, 2) : 0;
-        $data['countSeens'] = function($email) {
-            return count($this->getSeenLogByEmail($email));
-        };
-        $data['urlCounter'] = $this->getClikedUrls();
+
+        //SEEN UNIQUE
+        $data['countSeenUnique'] = $this->uniqueSeen;
+        $data['seenUniquePercentage'] = $data['countMails'] > 0 ? round($data['countSeenUnique'] / $data['countMails'] * 100, 2) : 0;
+
+        //URL COUNTER
+        $data['urlCounter'] = $this->clickedUrls;
+
+        //COUNT DEFAULT URL
+        $data['countDefaultUrl'] = $this->countDefaultUrl;
+        $data['percentageDefaultUrl'] = $data['countMails'] > 0 ? round($data['countDefaultUrl'] / $data['countMails'] * 100, 2) : 0;
+
+        //COUNT LOGOUT URL
+        $data['countLogoutedUrl'] = $this->countLogoutedUrl;
+        $data['percentageLogoutedUrl'] = $data['countMails'] > 0 ? round($data['countLogoutedUrl'] / $data['countMails'] * 100, 2) : 0;
+
         require 'templates/newsletterCampaign.php';
     }
 
