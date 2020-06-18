@@ -8,7 +8,7 @@
         <meta http-equiv="expires" content="0" />
         <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
         <meta http-equiv="pragma" content="no-cache" />
-        <title>Marketingové kampane | TV Markíza</title>
+        <title>Marketingové kampane</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <link href="<?php echo $data['baseUrl'] ?>media/bootstrap.min.css" rel="stylesheet">
         <link href="<?php echo $data['baseUrl'] ?>media/jquery.dataTables.min.css" rel="stylesheet">
@@ -37,13 +37,18 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Zoznam emailov z odoslanej kampane</h2>
+                    <h2>Zoznam emailov z kampane <?php echo $data['campaignId']; ?></h2>
+					<h4>Generované: <?php echo $data['datetime'] ?></h4>
+					<hr/>
+						Všetky dáta sú vypočítané voči odoslaným emailom <b>(<?php echo $data['countMails'] ?> / 100%)</b>
+					<hr/>
                 </div>
                 <div class="col-md-4">
                     <p>
-                        Počet odoslaných emailov: <b><?php echo $data['countMails'] ?></b><br/><br/>
+                        Počet odoslaných emailov: <b><?php echo $data['countMails'] ?> (100%)</b><br/>
+						Počet doručených emailov: <b><?php echo $data['countDelivered'] ?> (<?php echo $data['deliveredPercentage'] ?>%)</b><br/>
                         Celkový počet otvorení: <b><?php echo $data['countSeenEmails'] ?></b><br/>
-                        Percentuálna úspešnosť otvorania: <b><?php echo $data['seenPercentage'] ?>%</b><br/><br/>
+                        Percentuálna úspešnosť otvorenia: <b><?php echo $data['seenPercentage'] ?>%</b><br/><br/>
                         Celkový počet kliknutí: <b><?php echo $data['countClickedEmails'] ?></b><br/>
                         Percentuálna úspešnosť kliknutia: <b><?php echo $data['clickedPercentage'] ?>%</b><br/>
                     </p>
@@ -52,7 +57,7 @@
                     <p>
                         &nbsp;<br/><br/>
                         Unikátny počet otvorení: <b><?php echo $data['countSeenUnique'] ?></b><br/>
-                        Percentuálna úspešnosť otvorania: <b><?php echo $data['seenUniquePercentage'] ?>%</b><br/><br/>
+                        Percentuálna úspešnosť otvorenia: <b><?php echo $data['seenUniquePercentage'] ?>%</b><br/><br/>
                         Unikátny počet kliknutí: <b><?php echo $data['countClickedUnique'] ?></b><br/>
                         Percentuálna úspešnosť kliknutia: <b><?php echo $data['clickedPercentageUnique'] ?>%</b><br/>
                     </p>
@@ -61,12 +66,30 @@
                     <p>
                         &nbsp;<br/><br/>
                         Počet kliknutí na linku (bez odhlásenia): <b><?php echo $data['countDefaultUrl'] ?></b><br/>
-                        Percentuálna úspešnosť otvorania: <b><?php echo $data['percentageDefaultUrl'] ?>%</b><br/><br/>
-                        Počet žiadosí o odhlásenie: <b><?php echo $data['countLogoutedUrl'] ?></b><br/>
+                        Percentuálna úspešnosť otvorenia: <b><?php echo $data['percentageDefaultUrl'] ?>%</b><br/><br/>
+                        Počet žiadostí o odhlásenie: <b><?php echo $data['countLogoutedUrlUnique'] ?></b><br/>
                         Percentuálna úspešnosť odhlásenia: <b><?php echo $data['percentageLogoutedUrl'] ?>%</b><br/>
                     </p>
                 </div>
             </div>
+			<div class="row">
+                <div class="col-md-12">
+                    <h3>Kliknuté URL adresy<small>[spolu]</small> bez kliknutia na odhlásenie sa(<?php echo $data['countDefaultUrl']; ?>)</h3>
+                </div>
+                <div class="col-md-12">
+                    <p>
+                        <?php
+                        $defaultLinks = $data['urlCounter']['default'];
+                        foreach ($defaultLinks as $keyUrl => $count) {
+                            ?>
+                            <b><?php echo $count ?></b> => <?php echo $keyUrl ?><br/>
+                        <?php } ?>
+                    </p>
+                </div>
+            </div>
+			<div class="row">
+				<hr/>
+			</div>
             <div class="row">
                 <div class="col-md-12">
                     <table id="example" class="display" cellspacing="0" width="100%">

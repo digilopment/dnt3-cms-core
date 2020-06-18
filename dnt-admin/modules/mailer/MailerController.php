@@ -75,6 +75,7 @@ class MailerController extends AdminController
     public function indexAction()
     {
         $this->session->set('sended-mails', 0);
+        $this->session->set('count-mails', 0);
         $this->mailerQuery();
         $this->categories();
         $data['db'] = $this->db;
@@ -244,7 +245,7 @@ class MailerController extends AdminController
     protected function sentMail($currentID, $lastId, $catId, $recipients, $countMails, $hasData, $sendedMails)
     {
 
-        $data['mailingReportUrl'] = WWW_PATH . 'dnt-test/newsletter-campaign?emailCatId=' . $catId . '&campaignId=' . $this->session->get('campain');
+        $data['mailingReportUrl'] = WWW_PATH . 'dnt-test/newsletter-campaign?emailCatId=' . $catId . 'countMails=' . $countMails . 'delivered=' . $sendedMails . '&campaignId=' . $this->session->get('campain');
         if ($hasData) {
             foreach ($recipients as $recipient) {
 
@@ -336,9 +337,14 @@ class MailerController extends AdminController
         }
         $cat_id = $this->session->get('cat_id');
         /** COUNT ALL MAILS TO SENT * */
-        $queryCount = "SELECT COUNT(id_entity) AS `countMails` FROM " . $table . " WHERE cat_id = '" . $cat_id . "' AND vendor_id = '" . Vendor::getId() . "'  AND `show` = 1";
-        $result = $this->db->get_results($queryCount);
-        $countMails = (int) $result[0]['countMails'];
+        if ($this->session->get('count-mails')) {
+            $countMails = $this->session->get('count-mails');
+        } else {
+            $queryCount = "SELECT COUNT(id_entity) AS `countMails` FROM " . $table . " WHERE cat_id = '" . $cat_id . "' AND vendor_id = '" . Vendor::getId() . "'  AND `show` = 1";
+            $result = $this->db->get_results($queryCount);
+            $countMails = (int) $result[0]['countMails'];
+            $this->session->set('count-mails', $countMails);
+        }
 
         if (isset($_GET['mail_id'])) {
             $currentID = $this->rest->get('mail_id');

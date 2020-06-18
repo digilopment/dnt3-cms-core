@@ -106,6 +106,7 @@ class NewsletterCampaignTest
         }
         $countLogout = 0;
         $countDefault = 0;
+        $countLogoutUnique = 0;
 
         $countLinks = array_count_values($url);
         $final['logout'] = [];
@@ -115,6 +116,7 @@ class NewsletterCampaignTest
                 $email = base64_decode(urldecode($this->dnt->HexToStr(explode('&', explode('id=', $link)[1])[0])));
                 $final['logout'][$email] = (int) $count;
                 $countLogout += $count;
+                $countLogoutUnique ++;
             } else {
                 if (!empty($link)) {
                     $final['default'][$link] = (int) $count;
@@ -123,6 +125,7 @@ class NewsletterCampaignTest
             }
         }
         $this->countLogoutedUrl = $countLogout;
+        $this->countLogoutedUrlUnique = $countLogoutUnique;
         $this->countDefaultUrl = $countDefault;
         $this->clickedUrls = $final;
     }
@@ -196,13 +199,19 @@ class NewsletterCampaignTest
         $data['sentEmails'] = $this->sentEmails;
         $data['baseUrl'] = 'https://varenypeceny.markiza.sk/dnt-markiza/forms/';
         $data['dnt'] = $this->dnt;
+        $data['datetime'] = $this->dnt->datetime();
+        $data['campaignId'] = $this->rest->get('campaignId');
 
         //COUNT MAILS
         if ($this->rest->get('countMails')) {
             $data['countMails'] = $this->rest->get('countMails');
         } else {
-            $data['countMails'] = ($this->countSentEmails + $this->countLogoutedUrl > $this->countAllEmails) ? $this->countAllEmails : $this->countSentEmails + $this->countLogoutedUrl;
+            $data['countMails'] = ($this->countSentEmails + $this->countLogoutedUrlUnique > $this->countAllEmails) ? $this->countAllEmails : $this->countSentEmails + $this->countLogoutedUrlUnique;
         }
+
+        //DELIVERED
+        $data['countDelivered'] = $this->rest->get('delivered');
+        $data['deliveredPercentage'] = $data['countDelivered'] > 0 ? round($data['countDelivered'] / $data['countMails'] * 100, 2) : 0;
 
         //CLICKED
         $data['countClickedEmails'] = $this->countClickLogs;
@@ -228,8 +237,8 @@ class NewsletterCampaignTest
         $data['percentageDefaultUrl'] = $data['countMails'] > 0 ? round($data['countDefaultUrl'] / $data['countMails'] * 100, 2) : 0;
 
         //COUNT LOGOUT URL
-        $data['countLogoutedUrl'] = $this->countLogoutedUrl;
-        $data['percentageLogoutedUrl'] = $data['countMails'] > 0 ? round($data['countLogoutedUrl'] / $data['countMails'] * 100, 2) : 0;
+        $data['countLogoutedUrlUnique'] = $this->countLogoutedUrlUnique;
+        $data['percentageLogoutedUrl'] = $data['countMails'] > 0 ? round($data['countLogoutedUrlUnique'] / $data['countMails'] * 100, 2) : 0;
 
         require 'templates/newsletterCampaign.php';
     }
