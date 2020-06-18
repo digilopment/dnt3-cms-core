@@ -245,7 +245,7 @@ class MailerController extends AdminController
     protected function sentMail($currentID, $lastId, $catId, $recipients, $countMails, $hasData, $sendedMails)
     {
 
-        $data['mailingReportUrl'] = WWW_PATH . 'dnt-test/newsletter-campaign?emailCatId=' . $catId . 'countMails=' . $countMails . 'delivered=' . $sendedMails . '&campaignId=' . $this->session->get('campain');
+        $data['mailingReportUrl'] = WWW_PATH . 'dnt-test/newsletter-campaign?emailCatId=' . $catId . '&countMails=' . $countMails . '&delivered=' . $sendedMails . '&campaignId=' . $this->session->get('campain');
         if ($hasData) {
             foreach ($recipients as $recipient) {
 
