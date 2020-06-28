@@ -475,6 +475,12 @@ class Dnt
         $fotka = $array[key($array)];
 
         $img = $cesta . $fotka;
+        $pripona = explode('.', $fotka);
+        if (!isset($pripona[1])) {
+            //fotka nema v url adrese priponu
+            $fotka = self::name_url($fotka) . '.jpg';
+            $img = $cesta . $fotka;
+        }
         file_put_contents($img, file_get_contents($url));
         return array("file" => $fotka, "path" => $cesta);
     }

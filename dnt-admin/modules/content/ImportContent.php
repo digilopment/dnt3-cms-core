@@ -65,6 +65,19 @@ class ImportContent
         $cat_id = isset($postData['cat_id']) ? $postData['cat_id'] : false;
         $vendor_id = isset($postData['vendor_id']) ? $postData['vendor_id'] : Vendor::getId();
         $this->imageUrl = isset($postData['image']) ? $postData['image'] : false;
+        
+        //$name = str_replace('´', '', $name);
+        //$name = str_replace('`', '', $name);
+        $name = str_replace("'", '', $name);
+        
+        //$perex = str_replace('´', '', $perex);
+        //$perex = str_replace('`', '', $perex);
+        $perex = str_replace("'", '', $perex);
+        
+        //$content = str_replace('´', '', $content);
+        //$content = str_replace('`', '', $content);
+        $content = str_replace("'", '', $content);
+        
 
         $this->service = $service;
         $this->vendorId = $vendor_id;

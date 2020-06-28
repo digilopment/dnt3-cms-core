@@ -230,10 +230,10 @@ class DntUpload
                 }
                 $insertedData['lastImageId'] = Dnt::getLastId('dnt_uploads', $vendorId);
             }
-
+            
             if ($moreFormats === true) {
                 foreach (self::imageFormats() as $format) {
-                    self::makeImageFormat(new Upload($url), $path . "/formats/" . $format, $format, $fileName);
+                    //self::makeImageFormat(new Upload($url), $path . "/formats/" . $format, $format, $fileName);
                 }
             }
         }

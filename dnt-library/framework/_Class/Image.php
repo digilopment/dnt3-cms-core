@@ -138,7 +138,8 @@ class Image
      */
     public function getPostImage($id, $table = null, $format = false)
     {
-        $db = new DB;
+        $db = new DB();
+        $settings = new Settings();
 
         if ($table == true || $table == false || $table === null) {
             $table = "dnt_posts";
@@ -147,7 +148,13 @@ class Image
         }
         $imageId = self::get($id, $table);
         if ($format) {
-            return self::getFileImage($imageId, true, $format);
+            $image = self::getFileImage($imageId, true, $format);
+            if ($image) {
+                return $image;
+            } else {
+                $noImage = $settings->getGlobals()->database['keys']['no_img']['value'];
+                return self::getFileImage($noImage);
+            }
         } else {
             return self::getFileImage($imageId);
         }
@@ -302,4 +309,5 @@ class Image
             }
         }
     }
+
 }

@@ -157,6 +157,151 @@ class CategoriesController extends AdminController
         
     }
 
+    protected function arrayNeighbor($arr, $key, $wrap = false)
+    {
+        $keys = array_keys($arr);
+        $keyIndexes = array_flip($keys);
+
+        $return = array();
+        if (isset($keys[$keyIndexes[$key] - 1])) {
+            $return['prev'] = $keys[$keyIndexes[$key] - 1];
+        } else {
+            $return['prev'] = null;
+        }
+
+        if (isset($keys[$keyIndexes[$key] + 1])) {
+            $return['next'] = $keys[$keyIndexes[$key] + 1];
+        } else {
+            $return['next'] = null;
+        }
+
+        if (false != $wrap && empty($return['prev'])) {
+            $end = end($arr);
+            $return['prev'] = key($arr);
+        }
+
+        if (false != $wrap && empty($return['next'])) {
+            $beginning = reset($arr);
+            $return['next'] = key($arr);
+        }
+
+        return $return;
+    }
+
+    public function moveUpAction()
+    {
+        $id = (int) $this->rest->get('id');
+        $parent = $this->categories->getParentElement($id);
+        $parentId = $parent['id'];
+        $parentCatChildren = $this->categories->getChildren($parentId);
+        ksort($parentCatChildren);
+        $items = [];
+        $current = [];
+
+        $count = count($parentCatChildren);
+        foreach ($parentCatChildren as $child) {
+            if ($id == $child['id_entity']) {
+                $prev = prev($parentCatChildren);
+                $current[$child['id_entity']] = (int) $count;
+            }
+            $items[$child['id_entity']] = (int) $count;
+            $count--;
+        }
+
+        $neighbors = $this->arrayNeighbor($items, array_keys($current)[0]);
+        $prevId = $neighbors['prev'];
+
+        if ($prevId) {
+            $setNewOrderForCurrentItem = $items[$prevId] + 1;
+            $finalItems = [];
+            if (in_array($setNewOrderForCurrentItem, $items)) {
+                foreach ($items as $key => $val) {
+                    if ($val >= $setNewOrderForCurrentItem) {
+                        $finalItems[$key] = $val + 1;
+                    } else {
+                        $finalItems[$key] = $val;
+                    }
+                }
+                $finalItems[$id] = $setNewOrderForCurrentItem;
+            } else {
+                foreach ($items as $key => $val) {
+                    $finalItems[$key] = $val;
+                }
+                $finalItems[$id] = $setNewOrderForCurrentItem;
+            }
+        } else {
+            $finalItems = $items;
+        }
+
+        foreach ($finalItems as $key => $val) {
+            $this->db->update(
+                    'dnt_posts_categories',
+                    [
+                        'order' => $val,
+                    ],
+                    [
+                        'id' => $key,
+                        '`vendor_id`' => $this->vendor->getId()
+                    ]
+            );
+        }
+        $this->dnt->redirect();
+    }
+
+    public function moveDownAction()
+    {
+        $id = (int) $this->rest->get('id');
+        $position = $this->rest->get('position');
+        $parent = $this->categories->getParentElement($id);
+        $parentId = $parent['id'];
+        $parentCatChildren = $this->categories->getChildren($parentId);
+        ksort($parentCatChildren);
+        $items = [];
+        $current = [];
+
+        $count = count($parentCatChildren);
+        foreach ($parentCatChildren as $child) {
+            if ($id == $child['id_entity']) {
+                $current[$child['id_entity']] = (int) $count;
+            }
+            $items[$child['id_entity']] = (int) $count;
+            $count--;
+        }
+
+        $neighbors = $this->arrayNeighbor($items, array_keys($current)[0]);
+        $nextId = $neighbors['next'];
+        $finalItems = [];
+
+        if ($nextId) {
+            $setNewOrderForCurrentItem = $items[$id] + 1;
+            foreach ($items as $key => $val) {
+                if ($val >= $setNewOrderForCurrentItem) {
+                    $finalItems[$key] = $val + 1;
+                    continue;
+                } else {
+                    $finalItems[$key] = $val;
+                }
+            }
+            $finalItems[$nextId] = $setNewOrderForCurrentItem;
+        } else {
+            $finalItems = $items;
+        }
+
+        foreach ($finalItems as $key => $val) {
+            $this->db->update(
+                    'dnt_posts_categories',
+                    [
+                        'order' => $val,
+                    ],
+                    [
+                        'id' => $key,
+                        '`vendor_id`' => $this->vendor->getId()
+                    ]
+            );
+        }
+        $this->dnt->redirect();
+    }
+
     public function moveToAction()
     {
         $id = $this->rest->get('id');

@@ -49,6 +49,8 @@ class Settings
         foreach ($parsed['globals']['GLOBALS'] as $key2 => $val) {
             $final[strtolower($key2)] = $GLOBALS[$key2];
         }
+        
+        $final['database'] = $this->getAllSettings();
 
         $vendorLoadedSettings = [];
         $file = __DIR__ . "/../../../dnt-view/layouts/" . Vendor::getLayout() . "/Configurator.php";

@@ -57,10 +57,12 @@ get_top_html();
                 echo '<li data-id="' . $element['id'] . '" data-charindex="' . $element['char_index'] . '" class="snap ' . $selected . ' ' . $element['id'] . ' ui-sortable-handle">'
                 . '<a href="index.php?src=categories&catId=' . $element['id'] . '"><span class="id"><i class="fa fa-folder" aria-hidden="true"></i>' . $element['id'] . '</span> - ' . $element['name'] . ' <span class="charindex">( ' . $element['char_index'] . ')</span></span></a>'
                 . '<span class="buttons">'
-                . '<span title="Zobraziť obsah kategórie" class="btn btn-success"><i class="fa fa-folder-open-o"></i></span>'
+                //. '<span title="Zobraziť obsah kategórie" class="btn btn-success"><i class="fa fa-folder-open-o"></i></span>'
                 . '<span onclick="createCat(\'' . $element['char_index'] . '\') "title="Vytvoriť novú podkategoriu" class="btn btn-primary"><i class="fa fa-plus"></i></span>'
                 . '<span onclick="setLevelToMove(' . $element['id'] . ')" title="Presuň do inej kategórie" class="btn btn-warning"><i class="fa fa-copy"></i></span>'
                 . '<span onclick="setName(' . $element['id'] . ', \'' . $element['name'] . '\')" title="Premenovať" class="btn btn-warning"><i class="fa fa-edit"></i></span>'
+                . '<a href="index.php?src=categories&action=moveUp&id=' . $element['id'] . '"><span title="Posunúť vyššie" class="btn btn-primary"><i class="fa fa-arrow-up"></i></span></a>'
+                . '<a href="index.php?src=categories&action=moveDown&id=' . $element['id'] . '"><span title="Posunúť vyššie" class="btn btn-primary"><i class="fa fa-arrow-down"></i></span></a>'
                 . '<a href="index.php?src=categories&action=removeCat&id=' . $element['id'] . '"><span title="Odstrániť kategóriu" class="btn btn-danger"><i class="fa fa-trash"></i></span></a>'
                 . '</span>'
                 . ''
@@ -267,9 +269,9 @@ get_top_html();
                 foreach (DntLibrary\Base\Dnt::orderby($data['getPosts'], 'post_category_id', 'ASC') as $post) {
                     ?>
                     <div class="row no-padding no-margin">
-                        <div data-id="<?php echo $post->id_entity ?>" title="<?php echo $post->name . ' => ';
+                        <div data-id="<?php echo $post->id_entity ?>" title='<?php echo $post->name . ' => ';
                 echo $post->post_category_id ? 'Presunutím na príslušnú kategóriu zmeníte kategóriu produktu' : 'Presunutím na príslušnú kategóriu, produkt vložíte do kategórie';
-                    ?>" 
+                    ?>'
                              class="dot post-move <?php echo $post->post_category_id ? 'updated' : false ?> col-md-2"><i class="fa fa-arrows"></i></div>
                         <div class="col-xs-10 post <?php echo $post->post_category_id ? 'updated' : false ?> no-padding">
                             <div class="item">
