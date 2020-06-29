@@ -10,6 +10,7 @@
 
 namespace DntLibrary\Base;
 
+use DntLibrary\App\Navigation as AppNavigation;
 use DntLibrary\Base\ArticleView;
 use DntLibrary\Base\MultyLanguage;
 use DntLibrary\Base\Navigation;
@@ -27,10 +28,11 @@ class Frontend
      */
     public function get($custom_data = false, $id = false)
     {
-
         $article = new ArticleView;
         $settings = new Settings;
         $rest = new Rest;
+        $navigation = new AppNavigation();
+        $navigation->init();
 
 
         if ($custom_data == false) {
@@ -43,14 +45,10 @@ class Frontend
             $post_id = $id;
         }
 
-        $metaArr = array();
-        $menuItems = array();
-
         $metaArr = $article->getMetaData($post_id);
-        $menuItems = Navigation::getParents();
+        $menuItems = $navigation->menuItems();
+        $sitemapItems = $navigation->activeItems();
         $translates = MultyLanguage::getTranslates();
-
-        $metaSettingsArr = array();
         $metaSettingsArr = $settings->getAllSettings();
 
         $articleName = $article->getPostParam("name", $post_id);
@@ -61,8 +59,8 @@ class Frontend
             "post_id" => $post_id,
             "webhook" => $rest->webhook(),
             "meta" => array(
-                '<meta name="keywords" content="' . Settings::get("keywords") . '" />',
-                '<meta name="description" content="' . Settings::get("description") . '" />',
+                '<meta name="keywords" content="' . $metaSettingsArr['keys']['keywords']['value'] . '" />',
+                '<meta name="description" content="' . $metaSettingsArr['keys']['description']['value'] . '" />',
                 '<meta content="' . $articleName . '" property="og:title" />',
                 '<meta content="' . SERVER_NAME . '" property="og:site_name" />',
                 '<meta content="article" property="og:type" />',
@@ -83,13 +81,14 @@ class Frontend
             ),
             "meta_tree" => $metaArr,
             "menu_items" => $menuItems,
+            "sitemap_items" => $sitemapItems,
             "translates" => $translates,
             "meta_settings" => $metaSettingsArr,
             "timestamp" => time(),
         );
 
-        $data = array_merge($data, $custom_data);
-        return $data;
+        $finalData = array_merge($data, $custom_data);
+        return $finalData;
     }
 
     public function addCustomData($data, $customData)

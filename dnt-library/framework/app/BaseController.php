@@ -206,7 +206,6 @@ class BaseController
                 $pluginLayout = $plugin;
             }
         }
-
         $uniqLayout = [];
         foreach ($conf as $uniqPlugin) {
             if ($uniqPlugin['layout'] == 'LAYOUT') {

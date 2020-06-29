@@ -79,6 +79,7 @@ class Autoloader
         $this->fileLoader($path . 'dnt-library/framework/app/Categories.php');
         $this->fileLoader($path . 'dnt-library/framework/app/EasyCrypt.php');
         $this->fileLoader($path . 'dnt-library/framework/app/Subscriber.php');
+        $this->fileLoader($path . 'dnt-library/framework/app/Navigation.php');
     }
 
 }

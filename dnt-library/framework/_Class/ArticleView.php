@@ -174,7 +174,7 @@ class ArticleView extends AdminContent
      * @param type $name_url
      * @return boolean
      */
-    public function  StaticViewParam($column, $name_url, $service = false)
+    public function StaticViewParam($column, $name_url, $service = false)
     {
         $rest = new Rest;
         $db = new DB;
