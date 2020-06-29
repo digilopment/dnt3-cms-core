@@ -13,7 +13,6 @@ namespace DntLibrary\Base;
 use DntLibrary\App\Navigation as AppNavigation;
 use DntLibrary\Base\ArticleView;
 use DntLibrary\Base\MultyLanguage;
-use DntLibrary\Base\Navigation;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Settings;
 use DntLibrary\Base\Vendor;
