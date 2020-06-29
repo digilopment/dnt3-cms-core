@@ -34,7 +34,6 @@ $service = $adminContent->getPostParam("service", $post_id);
 $service_id = $adminContent->getPostParam("service_id", $post_id);
 $imageID = $adminContent->getPostParam("img", $post_id);
 $post_category_id = $adminContent->getPostParam("post_category_id", $post_id);
-
 //osetrenie vstupov
 if ($datetime_publish == "0000-00-00 00:00:00") {
     $datetime_publish = Dnt::datetime();
