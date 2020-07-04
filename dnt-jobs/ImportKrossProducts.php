@@ -15,7 +15,7 @@ class ImportKrossProductsJob
 
     const VENDOR_ID = 56;
     const CAT_ID = 308;
-    const IMPORT_SERVICE = 'http://localhost/kross/importJson.php';
+    const IMPORT_SERVICE = 'http://bike4you.digilopment.com/import/kross/importJson.php';
 
     public function __construct()
     {
