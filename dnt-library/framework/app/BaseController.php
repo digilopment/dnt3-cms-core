@@ -63,16 +63,17 @@ class BaseController
 
         if (isset($plugin['type']) && $plugin['type'] == 'mdl') {
             $clsName = (new Autoloader())->className($plugin['tpl']) . "PluginControll";
-            if (!class_exists($clsName)) {
+            if (!class_exists('\DntView\Layout\Modul\Plugin\\' . $clsName)) {
                 include $this->path() . $pathCompose . $controller;
                 $clsName = '\DntView\Layout\Modul\Plugin\\' . $clsName;
-                $plugin = new $clsName($data, $plugin['id']);
+                $plugin = new $clsName($data, $plugin['id'], $plugin);
                 if (method_exists($plugin, 'init')) {
                     $plugin->init();
                 }
                 $plugin->run();
             } else {
-                $plugin = new $clsName($data, $plugin['id']);
+                $clsName = '\DntView\Layout\Modul\Plugin\\' . $clsName;
+                $plugin = new $clsName($data, $plugin['id'], $plugin);
                 if (method_exists($plugin, 'init')) {
                     $plugin->init();
                 }
@@ -107,6 +108,18 @@ class BaseController
         file_put_contents($this->cachedFile($plugin), $html);
     }
 
+    protected function caheIdProperties($plugin)
+    {
+        if (Dnt::in_string('POST_ID', $plugin['cache_id'])) {
+            return $plugin['data']['post_id'];
+        } elseif (Dnt::in_string('GET{', $plugin['cache_id'])) {
+            $val = str_replace('GET{', '', $plugin['cache_id']);
+            $val = str_replace('}', '', $val);
+            $cacheId = (!empty((new Rest())->get($val)) && $plugin['cache_id'] == 'GET{' . $val . '}') ? str_replace("/", "-", (new Rest())->get($val)) : false;
+            return $cacheId;
+        }
+    }
+
     protected function pluginCacheName($plugin)
     {
 
@@ -116,20 +129,19 @@ class BaseController
 
         $cacheId = false;
         if (isset($plugin['cache_id'])) {
-            if (Dnt::in_string('GET{', $plugin['cache_id'])) {
-                $val = str_replace('GET{', '', $plugin['cache_id']);
-                $val = str_replace('}', '', $val);
-                $cacheId = (!empty((new Rest())->get($val)) && $plugin['cache_id'] == 'GET{' . $val . '}') ? str_replace("/", "-", (new Rest())->get($val)) : false;
-            }
+            $cacheId = $this->caheIdProperties($plugin);
         }
+        $pluginName = isset($plugin['name']) ? $plugin['name'] . '-' : false;
+        $pluginName = isset($plugin['name']) ? $plugin['name'] . '-' : false;
         return
                 md5($this->path() . $file) . "-" .
                 str_replace("/", "-", $file) . "-" .
                 $plugin['level'] . "-" .
-                $plugin['data']['post_id'] . "-" .
+                //$plugin['data']['post_id'] . "-" .
                 $plugin['id'] . "-" .
                 Vendor::getId() . "-" .
                 $cacheId . "-" .
+                $pluginName .
                 $plugin['cache'] . ".generated";
     }
 
@@ -248,11 +260,11 @@ class BaseController
 
     protected function modulConfigurator($data, $modul = false)
     {
-        if (isset($data['article']['service']) && !empty($data['article']['service'])) {
-            $confFile = "dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $data['article']['service'] . "/" . $this->confFile;
-        } elseif ($modul) {
+        if ($modul) {
             $data['article']['service'] = $modul;
             $confFile = "dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $modul . "/" . $this->confFile;
+        }elseif (isset($data['article']['service']) && !empty($data['article']['service'])) {
+            $confFile = "dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $data['article']['service'] . "/" . $this->confFile;
         } else {
             $confFile = false;
         }

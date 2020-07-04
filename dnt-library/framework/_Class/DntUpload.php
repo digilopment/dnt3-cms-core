@@ -211,7 +211,7 @@ class DntUpload
     public function fromUrl($url, $path, $vendorId = false, $insertToDatabase = true, $moreFormats = true)
     {
         $db = new DB;
-        $returnInserted = array();
+        $insertedData = array();
 
         $dntUpload = new Upload($url);
         $fileName = $this->imageName($vendorId);

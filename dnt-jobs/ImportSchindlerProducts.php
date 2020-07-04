@@ -42,7 +42,9 @@ class ImportSchindlerProductsJob
                 $imageId = $row['img'];
                 $imageName = $this->image->getFileImage($imageId, false);
                 $fileName = "../dnt-view/data/uploads/" . $imageName;
-                $this->dnt->deleteFile($fileName);
+                if ($imageName) {
+                    $this->dnt->deleteFile($fileName);
+                }
 
                 //DELETE FROM DB
                 $this->db->query("DELETE FROM dnt_uploads WHERE name = '" . $imageName . "' AND vendor_id = '" . self::VENDOR_ID . "'");

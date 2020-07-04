@@ -904,7 +904,7 @@ function get_top()
    ?>
 <?php function productsChooser($products){ 
     $keyId = 'products';
-    $limit = '100';
+    $limit = '10';
     ?>  
 <link rel="stylesheet" type="text/css" href="<?php echo WWW_PATH_ADMIN_2; ?>css/image-picker.css">
 <script src="<?php echo WWW_PATH_ADMIN_2; ?>js/prettify.js" type="text/javascript"></script>
@@ -993,6 +993,7 @@ function get_top()
        } else {
            $limit = "100000000";
        }
+       $limit = "10";
        ?>   
 <link rel="stylesheet" type="text/css" href="<?php echo WWW_PATH_ADMIN_2; ?>css/image-picker.css">
 <script src="<?php echo WWW_PATH_ADMIN_2; ?>js/prettify.js" type="text/javascript"></script>

@@ -42,7 +42,9 @@ class ImportBenefitczProductsJob
                 $imageId = $row['img'];
                 $imageName = $this->image->getFileImage($imageId, false);
                 $fileName = "../dnt-view/data/uploads/" . $imageName;
-                $this->dnt->deleteFile($fileName);
+                if ($imageName) {
+                    $this->dnt->deleteFile($fileName);
+                }
 
                 //DELETE FROM DB
                 $this->db->query("DELETE FROM dnt_uploads WHERE name = '" . $imageName . "' AND vendor_id = '" . self::VENDOR_ID . "'");
@@ -179,16 +181,17 @@ class ImportBenefitczProductsJob
                 'price' => $item->price,
                 'catalogue_price' => $item->catalogue_price,
                 'purchase_price' => $item->purchase_price,
-                //'variant' => $item->variant,
-                'dataSource' => 'schindler',
+                'variant' => isset($item->variant->{0}) ? $item->variant->{0} : '',
+                'dataSource' => 'benefitCZ',
                 //'code' => $item->code,
-                //'variants' => $item->variants,
+                'variants' => $item->variants,
                 'productId' => $item->id,
                 'groupId' => $item->group,
                 'manufacturer' => $item->manufacturer,
                 //'year' => $item->year,
                 'originalImage' => $item->image,
             ];
+            //var_dump($metaData);
             $this->importContent->createPost($postData, $metaData);
         }
     }

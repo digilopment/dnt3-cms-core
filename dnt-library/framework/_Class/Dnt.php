@@ -481,8 +481,11 @@ class Dnt
             $fotka = self::name_url($fotka) . '.jpg';
             $img = $cesta . $fotka;
         }
-        file_put_contents($img, file_get_contents($url));
-        return array("file" => $fotka, "path" => $cesta);
+        if (file_get_contents($url)) {
+            file_put_contents($img, file_get_contents($url));
+            return array("file" => $fotka, "path" => $cesta);
+        }
+        return false;
     }
 
     function getBrowser($user_agent)

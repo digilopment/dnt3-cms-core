@@ -105,7 +105,7 @@ if ($datetime_publish == "0000-00-00 00:00:00") {
                             </div>
                         </div>
                         <br/>
-                        <?php galleryChooser($post_id, $imageID); ?>
+                        <?php /*galleryChooser($post_id, $imageID);*/?>
                         <input name="userfile" type="file" class="form-control">
                         <br/>
                         <br/>

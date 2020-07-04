@@ -55,7 +55,7 @@ $image = $data['image'];
                   <p>Ak máte eshop a vystavíte faktúru, vaše meno tam bude predvyplnené</p>
                   <img src="<?php echo AdminUser::avatar();?>" style="max-width: 200px; margin: 15px;" alt="" />
                   <input type="file" name="userfile"  class="btn-default btn-lg btn-block" />
-                  <?php galleryChooser("user_avatar"); ?>
+                  <?php /*galleryChooser("user_avatar");*/ ?>
                   <div class="padding"></div>
                   <?php echo Dnt::returnInput();?>
                   <input type="submit" name="sent" class="btn btn-primary btn-radius" value="Upraviť nastavenia" />
@@ -97,7 +97,7 @@ $image = $data['image'];
                                  <?php if($row['content_type'] == "image"){ ?>
                                  <input name="userfile_<?php echo $row['id_entity']; ?>[]" multiple="multipl" type="file" class="form-control">
                                  <?php 
-                                    galleryChooser($row['id_entity']);
+                                    //galleryChooser($row['id_entity']);
                                     foreach($image->getFileImages($row['value'], true, Image::THUMB) as $img){
                                     	
                                     	echo '<img src="'.$img.'" style="height: 55px; margin-left:0px; margin:10px;">';

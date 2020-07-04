@@ -132,7 +132,7 @@ class Modul extends Database
                 }
 
                 if ('/' . $modulUrl == $client->requestNoParam) {
-                    return $index;k;
+                    return $index;
                 }
 
                 if ($modulUrl == $client->route(1)) {
@@ -178,7 +178,6 @@ class Modul extends Database
             }
         }*/
         $module = $this->getPattern($client, $modulesRegistrator);
-
         if ($client->route(1) == '') {
             $default = $client->getSetting('startovaci_modul'); //Settings::get('startovaci_modul');
             $moduleUrl = $this->getSitemapModules($default);

@@ -10,11 +10,12 @@ class Plugin
     protected $data;
     protected $settings;
 
-    public function __construct($data, $currentPlugin)
+    public function __construct($data, $currentPlugin, $plugin = false)
     {
         $this->settings = new Settings();
         $this->data = $data;
-        $this->data['ENV'] = $this->envDriver($data, $currentPlugin);
+        $pluginName = isset($plugin['name']) ? $plugin['name'] : false;
+        $this->data['ENV'] = $this->envDriver($data, $currentPlugin, $pluginName);
     }
 
     protected function modul()
@@ -22,10 +23,12 @@ class Plugin
         return $this->settings->getGlobals()->module;
     }
 
-    protected function envDriver($data, $plugin)
+    protected function envDriver($data, $pluginId, $pluginName = false)
     {
-        if (isset($data['PLUGINS'])) {
-            return (object) $data['PLUGINS'][$plugin];
+        if ($pluginName) {
+            return (object) $data['PLUGINS'][$pluginName];
+        } elseif (isset($data['PLUGINS'])) {
+            return (object) $data['PLUGINS'][$pluginId];
         }
         return false;
     }
