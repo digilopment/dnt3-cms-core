@@ -185,7 +185,7 @@ class ImportKrossProductsJob
 
     public function run()
     {
-        //$this->deleteProducts();
+        $this->deleteProducts();
         $this->import();
     }
 

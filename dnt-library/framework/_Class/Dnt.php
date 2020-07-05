@@ -476,7 +476,7 @@ class Dnt
 
         $img = $cesta . $fotka;
         $pripona = explode('.', $fotka);
-        if (!isset($pripona[1])) {
+        if (!isset($pripona[1]) || $pripona[1] ==  'png')  {
             //fotka nema v url adrese priponu
             $fotka = self::name_url($fotka) . '.jpg';
             $img = $cesta . $fotka;

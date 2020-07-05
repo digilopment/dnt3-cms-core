@@ -216,6 +216,9 @@ class DntUpload
         $dntUpload = new Upload($url);
         $fileName = $this->imageName($vendorId);
         if ($dntUpload->uploaded) {
+            $dntUpload->image_resize = true;
+            $dntUpload->image_x = 1500;
+            $dntUpload->image_ratio_y = true;
             $dntUpload->file_new_name_body = $fileName;
             $dntUpload->Process($path);
             if ($dntUpload->processed) {
@@ -229,8 +232,10 @@ class DntUpload
                     $db->insert('dnt_uploads', $insertedData);
                 }
                 $insertedData['lastImageId'] = Dnt::getLastId('dnt_uploads', $vendorId);
+            }else{
+                echo $url . ' no upload<br/>';
             }
-            
+
             if ($moreFormats === true) {
                 foreach (self::imageFormats() as $format) {
                     //self::makeImageFormat(new Upload($url), $path . "/formats/" . $format, $format, $fileName);
