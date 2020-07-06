@@ -18,8 +18,22 @@ class CreateImageFormatsJob
         $this->vendor = new Vendor();
     }
 
+    protected function removeAllCookies()
+    {
+        if (isset($_SERVER['HTTP_COOKIE'])) {
+            $cookies = explode(';', $_SERVER['HTTP_COOKIE']);
+            foreach ($cookies as $cookie) {
+                $parts = explode('=', $cookie);
+                $name = trim($parts[0]);
+                setcookie($name, '', time() - 1000);
+                setcookie($name, '', time() - 1000, '/');
+            }
+        }
+    }
+
     public function run()
     {
+        $this->removeAllCookies();
         $this->db = new DB();
         $images = [];
         $originalImagePath = self::UPLOAD_PATH;
@@ -34,7 +48,7 @@ class CreateImageFormatsJob
                 $i++;
             }
         }
-        
+
         foreach ($images as $image) {
 
             if (!file_exists(self::UPLOAD_PATH . 'formats/' . DntUpload::imageFormats()[0] . '/' . $image['imageName'])) {
