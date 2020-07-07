@@ -20,7 +20,7 @@ class NewsletterCampaignTest
     protected $seenLogs = [];
     protected $uniqueClick = 0;
     protected $uniqueSeen = 0;
-    protected $howUsers = false;
+    protected $showUsers = false;
 
     public function __construct()
     {
