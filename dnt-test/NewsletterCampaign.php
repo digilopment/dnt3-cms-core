@@ -20,6 +20,7 @@ class NewsletterCampaignTest
     protected $seenLogs = [];
     protected $uniqueClick = 0;
     protected $uniqueSeen = 0;
+    protected $howUsers = false;
 
     public function __construct()
     {
@@ -48,6 +49,7 @@ class NewsletterCampaignTest
         $this->countMailsInCampaing();
         $this->setUniqueData();
         $this->getTemplate();
+        $this->showUsers();
     }
 
     protected function getSeenLogs()
@@ -192,6 +194,13 @@ class NewsletterCampaignTest
         $this->uniqueSeen = count($dataUniqueSeen);
     }
 
+    protected function showUsers()
+    {
+        if ($this->rest->get('showUsers') && $this->rest->get('showUsers') == 1) {
+            $this->showUsers = true;
+        }
+    }
+
     protected function getTemplate()
     {
 
@@ -240,6 +249,7 @@ class NewsletterCampaignTest
         $data['countLogoutedUrlUnique'] = $this->countLogoutedUrlUnique;
         $data['percentageLogoutedUrl'] = $data['countMails'] > 0 ? round($data['countLogoutedUrlUnique'] / $data['countMails'] * 100, 2) : 0;
 
+        $data['showUsers'] = $this->showUsers;
         require 'templates/newsletterCampaign.php';
     }
 

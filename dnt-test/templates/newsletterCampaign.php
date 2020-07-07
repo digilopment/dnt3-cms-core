@@ -38,41 +38,41 @@
             <div class="row">
                 <div class="col-md-12">
                     <h2>Zoznam emailov z kampane <?php echo $data['campaignId']; ?></h2>
-					<h4>Generované: <?php echo $data['datetime'] ?></h4>
-					<hr/>
-						Všetky dáta sú vypočítané voči odoslaným emailom <b>(<?php echo $data['countMails'] ?> / 100%)</b>
-					<hr/>
+                    <h4>Generované: <?php echo $data['datetime'] ?></h4>
+                    <hr/>
+                    Všetky dáta sú vypočítané voči odoslaným emailom <b>(<?php echo $data['countMails'] ?> / 100%)</b>
+                    <hr/>
                 </div>
                 <div class="col-md-4">
                     <p>
                         Počet odoslaných emailov: <b><?php echo $data['countMails'] ?> (100%)</b><br/>
-						Počet doručených emailov: <b><?php echo $data['countDelivered'] ?> (<?php echo $data['deliveredPercentage'] ?>%)</b><br/>
+                        Počet doručených emailov: <b><?php echo $data['countDelivered'] ?> (<?php echo $data['deliveredPercentage'] ?>%)</b><br/>
                         Celkový počet otvorení: <b><?php echo $data['countSeenEmails'] ?></b><br/>
-                        Percentuálna úspešnosť otvorenia: <b><?php echo $data['seenPercentage'] ?>%</b><br/><br/>
+                        Úspešnosť otvorenia: <b><?php echo $data['seenPercentage'] ?>%</b><br/><br/>
                         Celkový počet kliknutí: <b><?php echo $data['countClickedEmails'] ?></b><br/>
-                        Percentuálna úspešnosť kliknutia: <b><?php echo $data['clickedPercentage'] ?>%</b><br/>
+                        Úspešnosť kliknutia: <b><?php echo $data['clickedPercentage'] ?>%</b><br/>
                     </p>
                 </div>
                 <div class="col-md-4">
                     <p>
                         &nbsp;<br/><br/>
                         Unikátny počet otvorení: <b><?php echo $data['countSeenUnique'] ?></b><br/>
-                        Percentuálna úspešnosť otvorenia: <b><?php echo $data['seenUniquePercentage'] ?>%</b><br/><br/>
+                        Unikátna úspešnosť otvorenia: <b><?php echo $data['seenUniquePercentage'] ?>%</b><br/><br/>
                         Unikátny počet kliknutí: <b><?php echo $data['countClickedUnique'] ?></b><br/>
-                        Percentuálna úspešnosť kliknutia: <b><?php echo $data['clickedPercentageUnique'] ?>%</b><br/>
+                        Unikátna úspešnosť kliknutia: <b><?php echo $data['clickedPercentageUnique'] ?>%</b><br/>
                     </p>
                 </div>
                 <div class="col-md-4">
                     <p>
                         &nbsp;<br/><br/>
                         Počet kliknutí na linku (bez odhlásenia): <b><?php echo $data['countDefaultUrl'] ?></b><br/>
-                        Percentuálna úspešnosť otvorenia: <b><?php echo $data['percentageDefaultUrl'] ?>%</b><br/><br/>
+                        Úpešnosť otvorenia (bez odhlásenia): <b><?php echo $data['percentageDefaultUrl'] ?>%</b><br/><br/>
                         Počet žiadostí o odhlásenie: <b><?php echo $data['countLogoutedUrlUnique'] ?></b><br/>
-                        Percentuálna úspešnosť odhlásenia: <b><?php echo $data['percentageLogoutedUrl'] ?>%</b><br/>
+                        Úspešnosť odhlásenia: <b><?php echo $data['percentageLogoutedUrl'] ?>%</b><br/>
                     </p>
                 </div>
             </div>
-			<div class="row">
+            <div class="row">
                 <div class="col-md-12">
                     <h3>Kliknuté URL adresy<small>[spolu]</small> bez kliknutia na odhlásenie sa(<?php echo $data['countDefaultUrl']; ?>)</h3>
                 </div>
@@ -87,101 +87,103 @@
                     </p>
                 </div>
             </div>
-			<div class="row">
-				<hr/>
-			</div>
             <div class="row">
-                <div class="col-md-12">
-                    <table id="example" class="display" cellspacing="0" width="100%">
-                        <thead>
-                            <tr>
-                                <th>id</th>
-                                <th>Meno a priezvisko</th>
-                                <th>email</th>
-                                <th>Videl</th>
-                                <th>Klikol</th>
-                                <th>Počet kliknutí</th>
-                                <th>Kde klikal</th>
-                                <th>System</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th>id</th>
-                                <th>Meno a priezvisko</th>
-                                <th>email</th>
-                                <th>Videl</th>
-                                <th>Klikol</th>
-                                <th>Počet kliknutí</th>
-                                <th>Kde klikal</th>
-                                <th>System</th>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            <?php foreach ($data['sentEmails'] as $item) { ?>
-                                <tr <?php echo ($item->show != 1) ? 'class="logouted"' : false; ?>>
-                                    <td> <?php echo $item->id ?></td>
-                                    <td> <?php echo $item->name ?> <?php echo $item->surname ?></td>
-                                    <td> <?php echo $item->email ?></td>
-                                    <td> <?php echo isset($data['setLogData'][$item->email]) ? '<b>ÁNO</b>' : 'NIE'; ?></td>
-                                    <td> <?php echo isset($data['setLogData'][$item->email]) ? '<b>' . $data['setLogData'][$item->email]['clicked']() . '</b>' : 'NIE'; ?></td>
-                                    <td> <?php echo isset($data['setLogData'][$item->email]) ? '<b>' . $data['setLogData'][$item->email]['countClick']() . '</b>' : '0'; ?></td>
-                                    <td> <?php
-                                        if (isset($data['setLogData'][$item->email])) {
-                                            foreach ($data['setLogData'][$item->email]['logs'] as $log) {
-                                                if ($log->system_status == 'newsletter_log_click') {
-                                                    echo isset(json_decode($log->msg)->redirectTo) ? "<b>" . $log->timestamp . "</b><br/>" . json_decode($log->msg)->redirectTo . "<br/>" : false . "<br/>";
-                                                } else {
-                                                    echo isset(json_decode($log->msg)->redirectTo) ? "Videl o: <b>" . $log->timestamp . "</b><br/>" : false . "<br/>";
-                                                }
-                                            }
-                                        }
-                                        ?></td>
-                                    <td> <?php
-                                        if (isset($data['setLogData'][$item->email])) {
-                                            foreach ($data['setLogData'][$item->email]['logs'] as $log) {
-                                                if ($log->system_status == 'newsletter_log_click') {
-                                                    echo $data['dnt']->getOs($log->HTTP_USER_AGENT) . "<br/><br/>";
-                                                } else {
-                                                    echo $data['dnt']->getOs($log->HTTP_USER_AGENT) . "<br/>";
-                                                }
-                                            }
-                                        }
-                                        ?></td>
+                <hr/>
+            </div>
+            <?php if ($data['showUsers']) { ?>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="example" class="display" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>Meno a priezvisko</th>
+                                    <th>email</th>
+                                    <th>Videl</th>
+                                    <th>Klikol</th>
+                                    <th>Počet kliknutí</th>
+                                    <th>Kde klikal</th>
+                                    <th>System</th>
                                 </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>id</th>
+                                    <th>Meno a priezvisko</th>
+                                    <th>email</th>
+                                    <th>Videl</th>
+                                    <th>Klikol</th>
+                                    <th>Počet kliknutí</th>
+                                    <th>Kde klikal</th>
+                                    <th>System</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                <?php foreach ($data['sentEmails'] as $item) { ?>
+                                    <tr <?php echo ($item->show != 1) ? 'class="logouted"' : false; ?>>
+                                        <td> <?php echo $item->id ?></td>
+                                        <td> <?php echo $item->name ?> <?php echo $item->surname ?></td>
+                                        <td> <?php echo $item->email ?></td>
+                                        <td> <?php echo isset($data['setLogData'][$item->email]) ? '<b>ÁNO</b>' : 'NIE'; ?></td>
+                                        <td> <?php echo isset($data['setLogData'][$item->email]) ? '<b>' . $data['setLogData'][$item->email]['clicked']() . '</b>' : 'NIE'; ?></td>
+                                        <td> <?php echo isset($data['setLogData'][$item->email]) ? '<b>' . $data['setLogData'][$item->email]['countClick']() . '</b>' : '0'; ?></td>
+                                        <td> <?php
+                                            if (isset($data['setLogData'][$item->email])) {
+                                                foreach ($data['setLogData'][$item->email]['logs'] as $log) {
+                                                    if ($log->system_status == 'newsletter_log_click') {
+                                                        echo isset(json_decode($log->msg)->redirectTo) ? "<b>" . $log->timestamp . "</b><br/>" . json_decode($log->msg)->redirectTo . "<br/>" : false . "<br/>";
+                                                    } else {
+                                                        echo isset(json_decode($log->msg)->redirectTo) ? "Videl o: <b>" . $log->timestamp . "</b><br/>" : false . "<br/>";
+                                                    }
+                                                }
+                                            }
+                                            ?></td>
+                                        <td> <?php
+                                            if (isset($data['setLogData'][$item->email])) {
+                                                foreach ($data['setLogData'][$item->email]['logs'] as $log) {
+                                                    if ($log->system_status == 'newsletter_log_click') {
+                                                        echo $data['dnt']->getOs($log->HTTP_USER_AGENT) . "<br/><br/>";
+                                                    } else {
+                                                        echo $data['dnt']->getOs($log->HTTP_USER_AGENT) . "<br/>";
+                                                    }
+                                                }
+                                            }
+                                            ?></td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2>Kliknuté URL adresy <small>[počet=>url]</small>(<?php echo count($data['urlCounter']['default']); ?>)</h2>
+                    </div>
+                    <div class="col-md-6">
+                        <h2>Žiadosti o odhlásenie <small>[počet=>email]</small>(<?php echo count($data['urlCounter']['logout']); ?>)</h2>
+                    </div>
+                    <div class="col-md-6">
+                        <p>
+                            <?php
+                            $defaultLinks = $data['urlCounter']['default'];
+                            foreach ($defaultLinks as $keyUrl => $count) {
+                                ?>
+                                <b><?php echo $count ?></b> => <?php echo $keyUrl ?><br/>
                             <?php } ?>
-                        </tbody>
-                    </table>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>
+                            <?php
+                            $logoutLinks = $data['urlCounter']['logout'];
+                            foreach ($logoutLinks as $keyUrl => $count) {
+                                ?>
+                                <b><?php echo $count ?></b> => <?php echo $keyUrl ?><br/>
+                            <?php } ?>
+                        </p>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <h2>Kliknuté URL adresy <small>[počet=>url]</small>(<?php echo count($data['urlCounter']['default']); ?>)</h2>
-                </div>
-                <div class="col-md-6">
-                    <h2>Žiadosti o odhlásenie <small>[počet=>email]</small>(<?php echo count($data['urlCounter']['logout']); ?>)</h2>
-                </div>
-                <div class="col-md-6">
-                    <p>
-                        <?php
-                        $defaultLinks = $data['urlCounter']['default'];
-                        foreach ($defaultLinks as $keyUrl => $count) {
-                            ?>
-                            <b><?php echo $count ?></b> => <?php echo $keyUrl ?><br/>
-                        <?php } ?>
-                    </p>
-                </div>
-                <div class="col-md-6">
-                    <p>
-                        <?php
-                        $logoutLinks = $data['urlCounter']['logout'];
-                        foreach ($logoutLinks as $keyUrl => $count) {
-                            ?>
-                            <b><?php echo $count ?></b> => <?php echo $keyUrl ?><br/>
-                        <?php } ?>
-                    </p>
-                </div>
-            </div>
+            <?php } ?>
         </div>
     </body>
 </html>
