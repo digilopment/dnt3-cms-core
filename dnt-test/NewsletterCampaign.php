@@ -20,7 +20,7 @@ class NewsletterCampaignTest
     protected $seenLogs = [];
     protected $uniqueClick = 0;
     protected $uniqueSeen = 0;
-    protected $showUsers = false;
+    protected $showUsers = true;
 
     public function __construct()
     {
@@ -196,8 +196,8 @@ class NewsletterCampaignTest
 
     protected function showUsers()
     {
-        if ($this->rest->get('showUsers') && $this->rest->get('showUsers') == 1) {
-            $this->showUsers = true;
+        if ($this->rest->get('showUsers') && $this->rest->get('showUsers') == 0) {
+            $this->showUsers = false;
         }
     }
 
