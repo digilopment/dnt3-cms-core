@@ -112,6 +112,11 @@ class BaseController
     {
         if (Dnt::in_string('POST_ID', $plugin['cache_id'])) {
             return $plugin['data']['post_id'];
+        } elseif (Dnt::in_string('WEBHOOK', $plugin['cache_id'])) {
+            $val = str_replace('WEBHOOK{', '', $plugin['cache_id']);
+            $val = str_replace('}', '', $val);
+            $cacheId = (!empty((new Rest())->webhook($val)) && $plugin['cache_id'] == 'WEBHOOK{' . $val . '}') ? str_replace("/", "-", (new Rest())->webhook($val)) : false;
+            return $cacheId;
         } elseif (Dnt::in_string('GET{', $plugin['cache_id'])) {
             $val = str_replace('GET{', '', $plugin['cache_id']);
             $val = str_replace('}', '', $val);
@@ -263,7 +268,7 @@ class BaseController
         if ($modul) {
             $data['article']['service'] = $modul;
             $confFile = "dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $modul . "/" . $this->confFile;
-        }elseif (isset($data['article']['service']) && !empty($data['article']['service'])) {
+        } elseif (isset($data['article']['service']) && !empty($data['article']['service'])) {
             $confFile = "dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $data['article']['service'] . "/" . $this->confFile;
         } else {
             $confFile = false;
