@@ -22,22 +22,31 @@ class Modul extends Database
 
     public $name;
     public $init;
-    public $sitemapUrl;
+    public $sitemapUrl = [];
     public $modul;
 
-    protected function getSitemap($client)
+    public function getSitemap($client = false)
     {
-        $this->sitemapUrl = '';
         $query = "SELECT id_entity, name_url, type, name, service FROM `dnt_posts` 
             WHERE `dnt_posts`.`type` = 'sitemap' 
             AND `dnt_posts`.`show` > '0' 
-            AND `dnt_posts`.`vendor_id` = '" . $client->id . "' 
+            AND `dnt_posts`.`vendor_id` = '" . Vendor::getId() . "' 
             GROUP BY `dnt_posts`.`name_url`";
 
         if ($this->num_rows($query) > 0) {
             $this->sitemapUrl = $this->get_results($query, true);
         }
     }
+
+    /*public function getSitemapModules($service)
+    {
+        foreach ($this->sitemapUrl as $item) {
+            if ($item->service == $service) {
+                return $item;
+            }
+        }
+        return false;
+    }*/
 
     public function getSitemapModules($type = false)
     {
@@ -158,25 +167,24 @@ class Modul extends Database
         } else {
             $modulesRegistrator = $this->oldModulesRegistrator($client);
         }
+        /* foreach (array_keys($modulesRegistrator) as $index) {
+          foreach ($modulesRegistrator[$index] as $key => $modulUrl) {
+          if ($this->hasPattern($client->requestNoLang, '/' . $modulUrl) == $client->requestNoLang) {
+          $module = $index;
+          break;
+          }
 
-        /*foreach (array_keys($modulesRegistrator) as $index) {
-            foreach ($modulesRegistrator[$index] as $key => $modulUrl) {
-                if ($this->hasPattern($client->requestNoLang, '/' . $modulUrl) == $client->requestNoLang) {
-                    $module = $index;
-                    break;
-                }
+          if ('/' . $modulUrl == $client->requestNoParam) {
+          $module = $index;
+          break;
+          }
 
-                if ('/' . $modulUrl == $client->requestNoParam) {
-                    $module = $index;
-                    break;
-                }
-
-                if ($modulUrl == $client->route(1)) {
-                    $module = $index;
-                    break;
-                }
-            }
-        }*/
+          if ($modulUrl == $client->route(1)) {
+          $module = $index;
+          break;
+          }
+          }
+          } */
         $module = $this->getPattern($client, $modulesRegistrator);
         if ($client->route(1) == '') {
             $default = $client->getSetting('startovaci_modul'); //Settings::get('startovaci_modul');

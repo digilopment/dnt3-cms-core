@@ -15,7 +15,7 @@ use DntLibrary\Base\Settings;
 class App
 {
 
-    protected $client;
+    public $client;
     protected $post;
     protected $dntLog;
     protected $dntCache;
