@@ -40,7 +40,6 @@ class App
         );
         $this->post->init();
         $this->modul->init($this->client);
-
         if ($this->modul->name) {
             $GLOBALS['VENDOR_MODULE'] = $this->modul->name;
             $this->dntLog->add(array(
@@ -49,7 +48,7 @@ class App
                 "msg" => "Web Log 200",
             ));
 
-            if (IS_CACHING && Settings::get("cachovanie") == 1) {
+            if (IS_CACHING && $this->client->getSetting("cachovanie") == 1) {
                 $this->dntCache->start();
                 $this->modul->load($this->client, $this->modul->name);
                 $this->dntCache->end();

@@ -37,17 +37,7 @@ class Modul extends Database
             $this->sitemapUrl = $this->get_results($query, true);
         }
     }
-
-    /*public function getSitemapModules($service)
-    {
-        foreach ($this->sitemapUrl as $item) {
-            if ($item->service == $service) {
-                return $item;
-            }
-        }
-        return false;
-    }*/
-
+    
     public function getSitemapModules($type = false)
     {
 
@@ -216,13 +206,13 @@ class Modul extends Database
         $controller = 'dnt-view/layouts/' . $layout . '/modules/' . $module . '/' . (new Autoloader())->className($module) . 'Controller.php';
         $function = 'dnt-view/layouts/' . $layout . '/modules/' . $module . '/functions.php';
         $webhook = 'dnt-view/layouts/' . $layout . '/modules/' . $module . '/webhook.php';
-
         if (file_exists($controller)) {
             include $controller;
             $clsName = (new Autoloader())->className($module) . 'Controller';
             $clsName = 'DntView\Layout\Modul\\' . $clsName;
             $moduleClass = new $clsName();
             $moduleClass->run();
+            
         } else {
             if (file_exists($function)) {
                 include $function;
