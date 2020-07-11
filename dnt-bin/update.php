@@ -12,3 +12,5 @@ foreach ($files as $file) {
         unlink($file);
     }
 } 
+
+file_get_contents('https://digilopment.com/dnt-jobs/prepare-cache-by-url');
