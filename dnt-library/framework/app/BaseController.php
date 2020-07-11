@@ -110,44 +110,48 @@ class BaseController
 
     protected function caheIdProperties($plugin)
     {
-        if (Dnt::in_string('POST_ID', $plugin['cache_id'])) {
-            return $plugin['data']['post_id'];
-        } elseif (Dnt::in_string('WEBHOOK', $plugin['cache_id'])) {
-            $val = str_replace('WEBHOOK{', '', $plugin['cache_id']);
-            $val = str_replace('}', '', $val);
-            $cacheId = (!empty((new Rest())->webhook($val)) && $plugin['cache_id'] == 'WEBHOOK{' . $val . '}') ? str_replace("/", "-", (new Rest())->webhook($val)) : false;
-            return $cacheId;
-        } elseif (Dnt::in_string('GET{', $plugin['cache_id'])) {
-            $val = str_replace('GET{', '', $plugin['cache_id']);
-            $val = str_replace('}', '', $val);
-            $cacheId = (!empty((new Rest())->get($val)) && $plugin['cache_id'] == 'GET{' . $val . '}') ? str_replace("/", "-", (new Rest())->get($val)) : false;
-            return $cacheId;
+        $cacheIdParams = explode('-', $plugin['cache_id']);
+        $cahedParams = [];
+        foreach ($cacheIdParams as $pluginCacheId) {
+            if (Dnt::in_string('POST_ID', $pluginCacheId)) {
+                $cahedParams[] = $plugin['data']['post_id'];
+            } elseif (Dnt::in_string('WEBHOOK', $pluginCacheId)) {
+                $val = str_replace('WEBHOOK{', '', $pluginCacheId);
+                $val = str_replace('}', '', $val);
+                $cacheId = (!empty((new Rest())->webhook($val)) && $pluginCacheId == 'WEBHOOK{' . $val . '}') ? str_replace("/", "-", (new Rest())->webhook($val)) : false;
+                $cahedParams[] = $cacheId;
+            } elseif (Dnt::in_string('GET{', $pluginCacheId)) {
+                $val = str_replace('GET{', '', $pluginCacheId);
+                $val = str_replace('}', '', $val);
+                $cacheId = (!empty((new Rest())->get($val)) && $pluginCacheId == 'GET{' . $val . '}') ? str_replace("/", "-", (new Rest())->get($val)) : false;
+                $cahedParams[] = $cacheId;
+            }
         }
+        return join('-', $cahedParams);
     }
 
     protected function pluginCacheName($plugin)
     {
 
-        $file = str_replace("../", "", $plugin['tpl']);
-        $file = explode(".", $file);
+        $file = str_replace('../', '', $plugin['tpl']);
+        $file = explode('.', $file);
         $file = current($file);
 
         $cacheId = false;
         if (isset($plugin['cache_id'])) {
-            $cacheId = $this->caheIdProperties($plugin);
+            $cacheId = $this->caheIdProperties($plugin) . '-';
         }
         $pluginName = isset($plugin['name']) ? $plugin['name'] . '-' : false;
-        $pluginName = isset($plugin['name']) ? $plugin['name'] . '-' : false;
+        $filePath = strtoupper(str_replace('/', '.', $this->path() . $file));
         return
-                md5($this->path() . $file) . "-" .
-                str_replace("/", "-", $file) . "-" .
-                $plugin['level'] . "-" .
-                //$plugin['data']['post_id'] . "-" .
-                $plugin['id'] . "-" .
-                Vendor::getId() . "-" .
-                $cacheId . "-" .
+                $filePath . '-' .
+                //str_replace('/', '-', $file) . '-' .
+                $plugin['level'] . '-' .
+                $plugin['id'] . '-' .
+                Vendor::getId() . '-' .
+                $cacheId .
                 $pluginName .
-                $plugin['cache'] . ".generated";
+                $plugin['cache'] . '.generated';
     }
 
     protected function cacheToSeconds($plugin)
