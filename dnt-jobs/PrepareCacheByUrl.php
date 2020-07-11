@@ -24,9 +24,11 @@ class PrepareCacheByUrlJob
             foreach ($defaultModule as $module) {
                 if ($vendor['show_real_url'] == 1) {
                     $realUrl = $vendor['real_url'] . "/" . $module;
+                    echo $realUrl . "<br/>";
                     file_get_contents($realUrl, false, $context);
                 } else {
                     $defaultUrl = HTTP_PROTOCOL . $vendor['name_url'] . "." . DOMAIN . WWW_FOLDERS . "/" . $module;
+                    echo $defaultUrl . "<br/>";
                     file_get_contents($defaultUrl, false, $context);
                 }
             }
