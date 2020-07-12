@@ -22,9 +22,10 @@ class Categories
         $this->vendor = new Vendor();
     }
 
-    protected function getAll()
+    protected function getAll($vendor_id)
     {
-        $query = 'SELECT * FROM dnt_posts_categories WHERE vendor_id = ' . $this->vendor->getId() . ' order by `order` DESC, `id_entity` ASC';
+        $vendorId = ($vendor_id) ? $vendor_id : $this->vendor->getId();
+        $query = 'SELECT * FROM dnt_posts_categories WHERE vendor_id = ' . $vendorId . ' order by `order` DESC, `id_entity` ASC';
         if ($this->db->num_rows($query) > 0) {
             $this->allCategories = $this->db->get_results($query);
         }
@@ -178,9 +179,9 @@ class Categories
         return false;
     }
 
-    public function init()
+    public function init($vendor_id = false)
     {
-        $this->getAll();
+        $this->getAll($vendor_id);
     }
 
 }

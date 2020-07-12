@@ -25,19 +25,20 @@ class Modul extends Database
     public $sitemapUrl = [];
     public $modul;
 
-    public function getSitemap($client = false)
+    public function getSitemap($client = false, $vendor_id = false)
     {
+        $vendorId = ($vendor_id) ? $vendor_id : Vendor::getId();
         $query = "SELECT id_entity, name_url, type, name, service FROM `dnt_posts` 
             WHERE `dnt_posts`.`type` = 'sitemap' 
             AND `dnt_posts`.`show` > '0' 
-            AND `dnt_posts`.`vendor_id` = '" . Vendor::getId() . "' 
+            AND `dnt_posts`.`vendor_id` = '" . $vendorId . "' 
             GROUP BY `dnt_posts`.`name_url`";
 
         if ($this->num_rows($query) > 0) {
             $this->sitemapUrl = $this->get_results($query, true);
         }
     }
-    
+
     public function getSitemapModules($type = false)
     {
 
@@ -212,7 +213,6 @@ class Modul extends Database
             $clsName = 'DntView\Layout\Modul\\' . $clsName;
             $moduleClass = new $clsName();
             $moduleClass->run();
-            
         } else {
             if (file_exists($function)) {
                 include $function;
