@@ -96,7 +96,6 @@ class PrepareCacheByUrlJob
 
     public function initVendor()
     {
-        $this->init();
         foreach ($this->vendors as $vendor) {
             $this->modul->getSitemap(false, $vendor['id']);
             foreach ($this->modul->sitemapUrl as $module) {
@@ -111,7 +110,17 @@ class PrepareCacheByUrlJob
                 }
             }
         }
-        echo join('<br/>', $finalUrl);
+        $this->finaUrls = $finalUrl;
+    }
+
+    public function initVendors()
+    {
+        foreach ($this->getVendors() as $vendor) {
+            $url = HTTP_PROTOCOL . $vendor['name_url'] . '.' . DOMAIN . $_SERVER['REQUEST_URI'];
+            $this->initGetRequest($url);
+            $finalUrl[] = $url;
+        }
+        $this->finaUrls = $finalUrl;
     }
 
     public function run()
@@ -120,11 +129,16 @@ class PrepareCacheByUrlJob
         if ($this->vendorId) {
             $this->initVendor();
         } else {
-            foreach ($this->getVendors() as $vendor) {
-                $url = HTTP_PROTOCOL . $vendor['name_url'] . '.' . DOMAIN . $_SERVER['REQUEST_URI'];
-                $this->initGetRequest($url);
-                $finalUrl[] = $url;
-            }
+            $this->initVendors();
+        }
+
+        if ($this->rest->get('json') == 1) {
+            header('Content-Type: application/json');
+            header('Access-Control-Allow-Origin: *');
+            $data = [
+                'urls' => $this->finaUrls
+            ];
+            json_encode($data);
         }
     }
 
