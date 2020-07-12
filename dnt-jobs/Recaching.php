@@ -81,7 +81,7 @@ class RecachingJob
         $this->init();
         $finalUrl = [];
         foreach ($this->vendors as $vendor) {
-            $url = HTTP_PROTOCOL . $vendor['name_url'] . '.' . DOMAIN . '/prepare-cache-by-url?json=1';
+            $url = HTTP_PROTOCOL . $vendor['name_url'] . '.' . DOMAIN . '/dnt-jobs/prepare-cache-by-url?json=1';
             $this->initGetRequest($url);
             foreach ($this->response['urls'] as $url) {
                 echo $url . '<br/>';
