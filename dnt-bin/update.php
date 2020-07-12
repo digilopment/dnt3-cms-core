@@ -13,4 +13,4 @@ foreach ($files as $file) {
     }
 } 
 
-file_get_contents('https://digilopment.com/dnt-jobs/prepare-cache-by-url');
+file_get_contents('https://bicyklehlohovec.digilopment.com/dnt-jobs/prepare-cache-by-url');
