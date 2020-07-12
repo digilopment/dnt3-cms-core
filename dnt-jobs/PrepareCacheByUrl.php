@@ -138,7 +138,7 @@ class PrepareCacheByUrlJob
             $data = [
                 'urls' => $this->finaUrls
             ];
-            json_encode($data);
+            echo json_encode($data);
         }
     }
 

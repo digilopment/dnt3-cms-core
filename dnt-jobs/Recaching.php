@@ -48,7 +48,8 @@ class RecachingJob
 
     protected function initGetRequest($url)
     {
-        file_get_contents($url);
+        $json = file_get_contents($url);
+        $this->response = json_decode($json);
     }
 
     protected function getVendor()
@@ -82,7 +83,9 @@ class RecachingJob
         foreach ($this->vendors as $vendor) {
             $url = HTTP_PROTOCOL . $vendor['name_url'] . '.' . DOMAIN . '/prepare-cache-by-url?json=1';
             $this->initGetRequest($url);
-            $finalUrl[] = $url;
+            foreach ($this->response['urls'] as $url) {
+                echo $url . '<br/>';
+            }
         }
     }
 
