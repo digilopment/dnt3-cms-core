@@ -286,7 +286,12 @@ class BaseController
         if ($confFile) {
             if (file_exists($confFile)) {
                 $xml = simplexml_load_file($confFile);
-                $allowCache = (string) $xml['cache'];
+                $configCache = (string) $xml['cache'];
+                $databaseCache = (int) $data['meta_settings']['keys']['cachovanie']['value'];
+                $allowCache = 0;
+                if ($configCache && $databaseCache) {
+                    $allowCache = 1;
+                }
                 foreach ($xml as $plugin) {
                     $name = (string) $plugin['name'];
                     foreach ($plugin->VAR as $var) {

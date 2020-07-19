@@ -7,11 +7,12 @@ use DntLibrary\Base\Image;
 use DntLibrary\Base\MultyLanguage;
 use DntLibrary\Base\Settings;
 use DntLibrary\Base\Vendor;
+use DntLibrary\Base\Webhook;
 
 get_top();
 get_top_html();
 $settings = $data['settings'];
-$webhook = $data['webhook'];
+$webhook = new Webhook();
 $rest = $data['rest'];
 $image = $data['image'];
 ?>
@@ -156,9 +157,9 @@ $image = $data['image'];
                         <div class="row">
 
                             <div class="col-md-3">
-                                <p class="lead">Vymazať cache</p>
-                                <p>Vymaže celú cache pre web: <br/><b><?php echo WWW_PATH; ?></b></p>
-                                <a target="_self" href="index.php?src=settings&action=del_cache">
+                                <p class="lead">Revalidovať cache</p>
+                                <p>Revaliduje cahe pre web: <br/><b><?php echo WWW_PATH; ?></b></p>
+                                <a target="_self" href="index.php?src=settings&action=re_cache">
                                     <span class="btn btn-danger btn-radius" >Vymazať cache</span>
                                 </a>
                                 <div class="padding"></div>

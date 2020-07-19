@@ -594,14 +594,33 @@ function get_top()
             <a data-widget="remove" title="Remove"><i class="fa fa-times"></i></a>
          </div>
       </div>
-      <div class="grid-body">
-         <h3>V poriadku! <?php echo $hlaska; ?></h3>
-         <br/>
-         <br/><br/>
-         <p>
-            <a href="<?php echo $kam_presmerovat; ?>"><span type="button" class="btn btn-success">Naspäť</span></a>
-         </p>
-      </div>
+       <div class="grid-body">
+               <?php
+               $cache = 0;
+               $message = '';
+               $settings = new Settings();
+               if ($settings->get('cachovanie') == 1) {
+                   $cache = 1;
+                   $message = '<h4><b>Info!</b> Systém má aktivovanú vyrovnávaciu pamäť cash, ktorá slúži na urýchlenie behu aplikácue. '
+                           . 'Ak chcete, aby sa zmeny, ktoré ste vykonali prejavili v systéme, prosím revalidujte vyrovnávaciu pamäť cache. <br/>'
+                           . 'Revalidácia môže trvať aj niekoľko minút, preto pokiaľ robíte viacero zmien, stačí ak revalidáciu vykonáte po poslednej zmene. </h4>';
+               }
+               ?>
+               <h3>V poriadku! <?php echo $hlaska; ?></h3>
+               <br/>
+               <?php echo $message; ?>
+               <br/><br/>
+               <p>
+                   <a href="<?php echo $kam_presmerovat; ?>"><span type="button" class="btn btn-success"><i class="fa fa-check"></i>  Zavrieť</span></a>
+                   <?php
+                   if ($cache) {
+                       $revalidateCache = WWW_PATH . 'dnt-jobs/recaching?vendorId=' . Vendor::getId();
+                       echo '<a href="'.$revalidateCache.'"><span type="button" class="btn btn-success"><i class="fa fa-recycle"></i> Revalidovať cache teraz</span></a>';
+                   }
+                   ?>
+               </p>
+
+           </div>
    </div>
 </div>
 <?php } ?>

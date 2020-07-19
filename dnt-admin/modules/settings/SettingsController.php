@@ -255,6 +255,15 @@ class SettingsController extends AdminController
         }
     }
 
+    public function reCacheAction()
+    {
+        $url = WWW_PATH . 'dnt-jobs/recaching?vendorId=' . $this->vendor->getId();
+        file_get_contents($url);
+        $data['msg'] = '<br/>Systém sa úspešne precachoval';
+        $data['return'] = 'index.php?src=settings';
+        $this->loadTemplate($this->loc, '../../../plugins/confirmUpdate', $data);
+    }
+
     /**
      * DEL CACHE
      */
