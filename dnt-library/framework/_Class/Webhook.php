@@ -177,9 +177,11 @@ class Webhook
     public function services($postId = false, $config = false)
     {
         $file = "../dnt-view/layouts/" . Vendor::getLayout() . "/Configurator.php";
-        $configurator = new Configurator();
-        if (method_exists($configurator, 'modulesConfigurator')) {
-            return $configurator->modulesConfigurator();
+        if (class_exists('DntView\Layout\Configurator')) {
+            $configurator = new Configurator();
+            if (method_exists($configurator, 'modulesConfigurator')) {
+                return $configurator->modulesConfigurator();
+            }
         } elseif (file_exists($file)) {
             include $file;
             $configurator = new Configurator();

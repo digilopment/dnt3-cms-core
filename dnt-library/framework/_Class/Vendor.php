@@ -15,9 +15,6 @@ use DntLibrary\Base\DB;
 class Vendor
 {
 
-    var $vendor_url; //this vendor URL
-    var $vendor_id; //this vendor ID
-
     /**
      * 
      * @return type
