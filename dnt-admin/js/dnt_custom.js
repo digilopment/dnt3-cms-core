@@ -10,3 +10,10 @@ function dntToggle(hiddenElement) {
 		text.innerHTML = "Hide";    
 	}
 }
+
+$(document).ready(function() {
+	$( ".showContentPreloader" ).click(function() {
+		$('.plugin-loader.loader').fadeIn();
+		$('.right-side').fadeOut();
+	});
+});

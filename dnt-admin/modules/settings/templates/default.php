@@ -155,12 +155,11 @@ $image = $data['image'];
                         <p>Tento jazyk bude ako prednastavený jazyk po načítaní.</p>
                         <div class="padding"></div>
                         <div class="row">
-
                             <div class="col-md-3">
                                 <p class="lead">Revalidovať cache</p>
                                 <p>Revaliduje cahe pre web: <br/><b><?php echo WWW_PATH; ?></b></p>
-                                <a target="_self" href="index.php?src=settings&action=re_cache">
-                                    <span class="btn btn-danger btn-radius" >Vymazať cache</span>
+                                <a class="showContentPreloader" target="_self" href="index.php?src=settings&action=re_cache">
+                                    <span class="btn btn-warning btn-radius" >Revalidovať cache</span>
                                 </a>
                                 <div class="padding"></div>
                             </div>

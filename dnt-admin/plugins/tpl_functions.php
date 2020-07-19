@@ -60,7 +60,7 @@ function get_top()
       <!-- BEGIN CSS TEMPLATE -->
       <link rel="stylesheet" href="<?php echo WWW_PATH_ADMIN_2; ?>css/main.css">
       <link rel="stylesheet" href="<?php echo WWW_PATH_ADMIN_2; ?>css/skins.css">
-      <link rel="stylesheet" href="<?php echo WWW_PATH_ADMIN_2; ?>css/designdnt.css">
+      <link rel="stylesheet" href="<?php echo WWW_PATH_ADMIN_2; ?>css/designdnt.css?time=<?php echo time()?>">
       <!-- END CSS TEMPLATE -->
       <!-- CK EDITOR -->
       <!-- this editor is saved in designdnt library as included module -->
@@ -78,7 +78,7 @@ function get_top()
       <script src="<?php echo WWW_PATH_ADMIN_2; ?>js/jquery.sparkline.min.js"></script>
       <script src="<?php echo WWW_PATH_ADMIN_2; ?>js/icheck.min.js"></script>
       <!--<script src="<?php echo WWW_PATH_ADMIN_2; ?>summernote.min.js"></script>-->
-      <script src="<?php echo WWW_PATH_ADMIN_2; ?>js/dnt_custom.js"></script>
+      <script src="<?php echo WWW_PATH_ADMIN_2; ?>js/dnt_custom.js?time=<?php echo time()?>"></script>
       <!--[if lte IE 8]>
       <script language="javascript" type="text/javascript" src="<?php echo WWW_PATH_ADMIN_2; ?>js/excanvas.min.js"></script>
       <![endif]-->
@@ -134,6 +134,7 @@ function get_top()
          </aside>
          <!-- END SIDEBAR -->
          <!-- BEGIN CONTENT -->
+		 <div class="plugin-loader loader"></div>
          <aside class="right-side">
             <!-- BEGIN CONTENT HEADER -->
             <section class="content-header">
@@ -148,6 +149,8 @@ function get_top()
          <div class="scroll-to-top"></div>
          <!-- END SCROLL TO TOP -->
       </div>
+	  
+	  
       <?php } ?>
       <?php
          function errorAccess($errTitle, $errContent)

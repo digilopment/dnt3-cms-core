@@ -29,14 +29,14 @@ class Vendor
         $host = $hosts[0];
 
         if ($host == "www") {
-            $this->vendor_url = $hosts[1];
+            $vendorUrl = $hosts[1];
         } elseif ($host == @$_SERVER['HTTP_HOST']) { //ak nie je subdomena, tak vrati false
-            $this->vendor_url = false;
+            $vendorUrl = false;
         } else {
-            $this->vendor_url = $host;
+            $vendorUrl = $host;
         }
 
-        return $this->vendor_url;
+        return $vendorUrl;
     }
 
     /**
