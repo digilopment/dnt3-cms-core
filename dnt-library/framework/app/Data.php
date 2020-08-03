@@ -88,7 +88,7 @@ class Data
             $articleTags = $this->postObject->tags;
             $articleImage = $this->articleView->getPostImage($postId);
         }
-        
+
         $metaArr = ($this->postMeta) ? $this->article->getMetaData($postId) : false;
         $menuItems = ($this->menuItems) ? $this->navigation->menuItems() : false;
         $sitemapItems = ($this->sitemapItems) ? $this->navigation->activeItems() : false;
@@ -98,7 +98,7 @@ class Data
 
         $keyWords = isset($metaSettingsArr['keys']['keywords']['value']) ? $metaSettingsArr['keys']['keywords']['value'] : false;
         $description = isset($metaSettingsArr['keys']['description']['value']) ? $metaSettingsArr['keys']['description']['value'] : false;
-
+        $favicon = Settings::getImage($metaSettingsArr['keys']['favicon']['value']);
         $data = array(
             'media_path' => WWW_PATH . 'dnt-view/layouts/' . Vendor::getLayout() . '/',
             'title' => Settings::get('title'),
@@ -111,6 +111,13 @@ class Data
                 '<meta content="' . SERVER_NAME . '" property="og:site_name" />',
                 '<meta content="article" property="og:type" />',
                 '<meta content="' . $articleImage . '" property="og:image" />',
+                '<meta content="#ff0000" name="msapplication-TileColor">',
+                '<meta content="' . $favicon . '" name="msapplication-TileImage">',
+                '<meta content="#ff0000" name="theme-color">',
+                '<meta content="' . $articleName . '" name="apple-mobile-web-app-title">',
+                '<meta content="' . $articleName . '" name="application-name">',
+                '<meta content="yes" name="apple-mobile-web-app-capable">',
+                '<meta content="black" name="apple-mobile-web-app-status-bar-style">',
             ),
             'article' => array(
                 'name' => $articleName,

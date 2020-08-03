@@ -175,7 +175,7 @@ get_top_html();
 
                 .categories .included + .post,
                 .categories .updated + .post{
-                    opacity:0.4!important;
+                    opacity:0.9!important;
                 }
                 .categories .included.dropped + .post{
                     /*display:none;*/
@@ -263,16 +263,13 @@ get_top_html();
                         Ak chcete príspevok vrátiť, presuňteho sem
                     </div>
                 </div>
-
-
                 <?php
                 foreach (DntLibrary\Base\Dnt::orderby($data['getPosts'], 'post_category_id', 'ASC') as $post) {
                     ?>
                     <div class="row no-padding no-margin">
                         <div data-id="<?php echo $post->id_entity ?>" title='<?php echo $post->name . ' => ';
                 echo $post->post_category_id ? 'Presunutím na príslušnú kategóriu zmeníte kategóriu produktu' : 'Presunutím na príslušnú kategóriu, produkt vložíte do kategórie';
-                    ?>'
-                             class="dot post-move <?php echo $post->post_category_id ? 'updated' : false ?> col-md-2"><i class="fa fa-arrows"></i></div>
+                    ?>'class="dot post-move <?php echo $post->post_category_id ? 'updated' : false ?> col-md-2"><i class="fa fa-arrows"></i></div>
                         <div class="col-xs-10 post <?php echo $post->post_category_id ? 'updated' : false ?> no-padding">
                             <div class="item">
                                 <div class="col-xs-2 col-md-2 ">
@@ -283,18 +280,21 @@ get_top_html();
                                     <h4>Kategória: <small><?php echo $data['getElement']($post->post_category_id)['name'] . ' (' . $post->post_category_id . ')' ?> </small></h4>
                                 </div>
                                 <div class="col-md-3 row">
-                                    <a class="btn btn-primary bg-blue" href="index.php?src=content&post_id=<?php echo $post->id_entity ?>&action=edit"><i class="fa fa-pencil bg-blue"></i> Editovať</a>
+                                    
+                                    <a target="_blank" class="btn btn-primary bg-blue" href="index.php?src=content&filter=308&sub_cat_id=&post_id=<?php echo $post->id_entity ?>&page=1&action=edit&included=sitemap"><i class="fa fa-pencil bg-blue"></i> Editovať</a>
+                                    <?php if ($post->service) { ?>
+                                        <a target="_blank" class="btn btn-danger bg-orange" href="?src=services&included=sitemap&filter=308&post_id=<?php echo $post->id_entity ?>&service=<?php echo $post->service ?>"><i class="fa fa-pencil"></i> Upraviť meta parametre</a>
+                                    <?php } ?>
                                     <?php if ($post->post_category_id) { ?>
                                         <a class="btn btn-danger bg-red" href="index.php?src=categories&post_id=<?php echo $post->id_entity ?>&action=removePostCat"><i class="fa fa-trash bg-red"></i> Odstrániť z kategórie</a>
-    <?php } ?>
+                                    <?php } ?>
+                                        
                                 </div>
                             </div>
                         </div>
                     </div>
-<?php } ?>
-
+                <?php } ?>
             </div>
-
         </div>
 
 
