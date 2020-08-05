@@ -617,7 +617,8 @@ function get_top()
                    <a href="<?php echo $kam_presmerovat; ?>"><span type="button" class="btn btn-success"><i class="fa fa-check"></i>  Zavrieť</span></a>
                    <?php
                    if ($cache) {
-                       $revalidateCache = WWW_PATH . 'dnt-jobs/recaching?vendorId=' . Vendor::getId();
+                       //$revalidateCache = WWW_PATH . 'dnt-jobs/recaching?vendorId=' . Vendor::getId();
+                       $revalidateCache = 'index.php?src=settings&action=re_cache';
                        echo '<a href="'.$revalidateCache.'"><span type="button" class="btn btn-success"><i class="fa fa-recycle"></i> Revalidovať cache teraz</span></a>';
                    }
                    ?>
