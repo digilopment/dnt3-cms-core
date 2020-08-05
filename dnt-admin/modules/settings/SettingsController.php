@@ -257,8 +257,8 @@ class SettingsController extends AdminController
 
     public function reCacheAction()
     {
-		$url = 'http://' . $this->vendor->getVendorUrl(). '.'.DOMAIN.WWW_FOLDERS . '/dnt-jobs/recaching?vendorId=' . $this->vendor->getId();
-        file_get_contents($url);
+        $url = 'http://' . $this->vendor->getVendorUrl() . '.' . DOMAIN . WWW_FOLDERS . '/dnt-jobs/recaching?vendorId=' . $this->vendor->getId();
+        @file_get_contents($url);
         $data['msg'] = '<br/>Systém sa úspešne precachoval';
         $data['return'] = 'index.php?src=settings';
         $this->loadTemplate($this->loc, '../../../plugins/confirmUpdate', $data);

@@ -602,7 +602,7 @@ function get_top()
                $cache = 0;
                $message = '';
                $settings = new Settings();
-               if ($settings->get('cachovanie') == 1) {
+               if ($settings->get('cachovanie') == 1 && $_GET['action'] != 're_cache') {
                    $cache = 1;
                    $message = '<h4><b>Info!</b> Systém má aktivovanú vyrovnávaciu pamäť cash, ktorá slúži na urýchlenie behu aplikácue. '
                            . 'Ak chcete, aby sa zmeny, ktoré ste vykonali prejavili v systéme, prosím revalidujte vyrovnávaciu pamäť cache. <br/>'
@@ -619,7 +619,7 @@ function get_top()
                    if ($cache) {
                        //$revalidateCache = WWW_PATH . 'dnt-jobs/recaching?vendorId=' . Vendor::getId();
                        $revalidateCache = 'index.php?src=settings&action=re_cache';
-                       echo '<a href="'.$revalidateCache.'"><span type="button" class="btn btn-success"><i class="fa fa-recycle"></i> Revalidovať cache teraz</span></a>';
+                       echo '<a class="showContentPreloader" href="'.$revalidateCache.'"><span type="button" class="btn btn-success"><i class="fa fa-recycle"></i> Revalidovať cache teraz</span></a>';
                    }
                    ?>
                </p>
