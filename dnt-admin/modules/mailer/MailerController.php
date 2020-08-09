@@ -139,6 +139,8 @@ class MailerController extends AdminController
             $name = $this->rest->post('name');
             $surname = $this->rest->post('surname');
             $email = str_replace(' ', '', $this->rest->post('email'));
+            $sender_name = $this->rest->post('senderName');
+            $sender_email = str_replace(' ', '', $this->rest->post('senderEamil'));
             $cat_id = $this->rest->post('cat_id');
             $return = $this->rest->post('return');
             $table = 'dnt_mailer_mails';
@@ -149,6 +151,8 @@ class MailerController extends AdminController
                         'name' => $name,
                         'surname' => $surname,
                         'email' => $email,
+                        'sender_name' => $sender_name,
+                        'sender_email' => $sender_email,
                         'cat_id' => $cat_id,
                         'datetime_update' => $this->dnt->datetime()
                     ),
@@ -221,6 +225,12 @@ class MailerController extends AdminController
         return $this->replacedcontent;
     }
 
+    protected function stringToSumChar($input)
+    {
+        $value = unpack('H*', $input);
+        return base_convert($value[1], 16, 2);
+    }
+
     protected function checkClick($content, $recipient, $campainId)
     {
         $search = [];
@@ -230,10 +240,23 @@ class MailerController extends AdminController
         $targetUrl = WWW_PATH . 'dnt-api/analytics-newsletters?systemStatus=newsletter_log_click&campainId=' . $campainId . '&email=' . $hexEmail . '&url=';
         preg_match_all("/<a.*?href\s*=\s*['\"](.*?)['\"]/", $content, $res);
         foreach ($res[1] as $item) {
-            $search[] = $item;
-            $replace[] = $targetUrl . urlencode($item);
+            $search[md5($item)] = $item;
+            if (parse_url($item, PHP_URL_QUERY)) {
+                $finalUrl = $item . '&dnt3ClickId=' . $hexEmail;
+            } else {
+                $finalUrl = $item . '?dnt3ClickId=' . $hexEmail;
+            }
+            $replace[md5($item)] = $targetUrl . urlencode($finalUrl);
         }
-        return str_replace($search, $replace, $content);
+        //exit;
+        krsort($search);
+        krsort($replace);
+        //var_dump($search);
+        //var_dump($replace);
+        $return = str_replace($search, $replace, $content);
+        //echo $return;
+        //exit;
+        return $return;
     }
 
     protected function checkSeen($content, $recipient, $campainId)
@@ -248,21 +271,28 @@ class MailerController extends AdminController
         $data['mailingReportUrl'] = WWW_PATH . 'dnt-test/newsletter-campaign?emailCatId=' . $catId . '&countMails=' . $countMails . '&delivered=' . $sendedMails . '&campaignId=' . $this->session->get('campain');
         if ($hasData) {
             foreach ($recipients as $recipient) {
-
                 $msg = $this->session->get('message');
                 $template = $this->session->get('template');
                 $subject = $this->session->get('subject');
                 $content = $this->session->get('content');
                 $campain = $this->session->get('campain');
+                $useSenderFromEmail = $this->session->get('useSenderFromEmail');
 
                 $senderName = $this->session->get('senderName');
+                if (isset($recipient['sender_name']) && !empty($recipient['sender_name']) && $useSenderFromEmail) {
+                    $senderName = $recipient['sender_name'];
+                }
                 $senderEmail = $this->session->get('senderEmail');
+                if (isset($recipient['sender_email']) && !empty($recipient['sender_email']) && $useSenderFromEmail) {
+                    $senderEmail = $recipient['sender_email'];
+                }
 
                 $emails[] = $recipient['email'];
 
-                $sender_email = str_replace(' ', '', $recipient['email']);
+                $recipientEmail = str_replace(' ', '', $recipient['email']);
 
-                $this->mailer->set_recipient(array($sender_email));
+
+                $this->mailer->set_recipient(array($recipientEmail));
 
                 //KLIENTI MARKIZA JAR 2019
                 $title = $recipient['title'] . ' ' . $recipient['name'] . ' ' . $recipient['surname'];
@@ -328,12 +358,19 @@ class MailerController extends AdminController
                 $campain = $this->dnt->get_rok() . '-' . $this->dnt->get_mesiac() . '-' . $this->dnt->get_den();
             }
 
+            if (isset($_POST['useSenderFromEmail'])) {
+                $useSenderFromEmail = true;
+            } else {
+                $useSenderFromEmail = false;
+            }
+
             $this->session->set('content', $content);
             $this->session->set('cat_id', $cat_id);
             $this->session->set('subject', $subject);
             $this->session->set('campain', $campain);
             $this->session->set('senderName', $senderName);
             $this->session->set('senderEmail', $senderEmail);
+            $this->session->set('useSenderFromEmail', $useSenderFromEmail);
         }
         $cat_id = $this->session->get('cat_id');
         /** COUNT ALL MAILS TO SENT * */

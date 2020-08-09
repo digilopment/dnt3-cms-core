@@ -128,6 +128,8 @@ $vendor = $data['vendor'];
                         <input type="text" name="senderName" class="form-control" placeholder="Odosielateľ (<?php echo Settings::get("vendor_company"); ?>)"/>
                         <br/>
                         <input type="text" name="senderEmail" class="form-control" value="" placeholder="Email odosielateľa (<?php echo Settings::get("vendor_email"); ?>)"/>
+                        <br/>
+                        <input type="checkbox" name="useSenderFromEmail" checked=""/> Ak je pri emaile v zozname emailov vyplnený <b>odosielateľ</b> a <b>email odosielateľa</b>, použiť tento email a meno (email odosielateľa a meno odosielateľa) na doručenie konkrétnej emailovej adresy pod týmito doručovacími údajmi.
                         <h4><strong>Šablóna alebo správa</strong></h4>
                         <input type="text" name="url_external" class="form-control" placeholder="Url: vzdialenej šablony"/>
                         <br/>
@@ -192,12 +194,14 @@ $vendor = $data['vendor'];
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th style="width: 10%;">Titul</th>
-                            <th style="width: 20%;">Meno</th>
-                            <th style="width: 20%;">Priezvisko</th>
-                            <th style="width: 20%;">Email</th>
+                            <th style="width: 5%;">Titul</th>
+                            <th style="width: 15%;">Meno</th>
+                            <th style="width: 15%;">Priezvisko</th>
+                            <th style="width: 15%;">Email</th>
+                            <th style="width: 15%;">Odosielateľ</th>
+                            <th style="width: 15%;">Email odosielateľa</th>
                             <!--<th>Dátum pridania</th>-->
-                            <th style="width: 15%;">Kategória</th>
+                            <th style="width: 20%;">Kategória</th>
                             <th></th>
                             <th>Show</th>
                             <th>Vymazať</th>
@@ -221,6 +225,8 @@ $vendor = $data['vendor'];
                                     <td><b><input style="width: 80%;" type="text" name="name" value="<?php echo $row['name']; ?>" /></b></td>
                                     <td><b><input style="width: 80%;" type="text" name="surname" value="<?php echo $row['surname']; ?>" /></b></td>
                                     <td><b><input style="width: 100%;" type="email" name="email" value="<?php echo $row['email']; ?>" /></b></td>
+                                    <td><b><input style="width: 100%;" type="text" name="senderName" value="<?php echo $row['sender_name']; ?>" /></b></td>
+                                    <td><b><input style="width: 100%;" type="text" name="senderEamil" value="<?php echo $row['sender_email']; ?>" /></b></td>
                                     <td>
                                         <select name="cat_id" id="cname" class="form-control" minlength="2" required >
                                             <?php
