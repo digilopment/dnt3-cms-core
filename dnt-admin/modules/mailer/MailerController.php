@@ -233,30 +233,28 @@ class MailerController extends AdminController
 
     protected function checkClick($content, $recipient, $campainId)
     {
-        $search = [];
-        $replace = [];
         $res = [];
+        $final = [];
         $hexEmail = $this->dnt->strToHex($recipient['email']);
         $targetUrl = WWW_PATH . 'dnt-api/analytics-newsletters?systemStatus=newsletter_log_click&campainId=' . $campainId . '&email=' . $hexEmail . '&url=';
-        preg_match_all("/<a.*?href\s*=\s*['\"](.*?)['\"]/", $content, $res);
-        foreach ($res[1] as $item) {
-            $search[md5($item)] = $item;
+        $finalUrl = function($item) use ($hexEmail) {
             if (parse_url($item, PHP_URL_QUERY)) {
-                $finalUrl = $item . '&dnt3ClickId=' . $hexEmail;
-            } else {
-                $finalUrl = $item . '?dnt3ClickId=' . $hexEmail;
+                return $item . '&dnt3ClickId=' . $hexEmail;
             }
-            $replace[md5($item)] = $targetUrl . urlencode($finalUrl);
+            return $item . '?dnt3ClickId=' . $hexEmail;
+        };
+
+        preg_match_all("/<a.*?href\s*=\s*['\"](.*?)['\"]/", $content, $res);
+        if (isset($res[1])) {
+            foreach ($res[1] as $item) {
+                $final[$item] = $targetUrl . urlencode($finalUrl($item));
+            }
         }
-        //exit;
-        krsort($search);
-        krsort($replace);
-        //var_dump($search);
-        //var_dump($replace);
-        $return = str_replace($search, $replace, $content);
-        //echo $return;
-        //exit;
-        return $return;
+
+        uksort($final, function($a, $b) {
+            return strlen($b) <=> strlen($a);
+        });
+        return str_replace(array_keys($final), array_values($final), $content);
     }
 
     protected function checkSeen($content, $recipient, $campainId)
