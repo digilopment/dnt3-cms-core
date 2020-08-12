@@ -45,11 +45,11 @@
                 </div>
                 <div class="col-md-4">
                     <p>
-                        Počet odoslaných emailov: <b><?php echo $data['countMails'] ?> (100%)</b><br/>
+                        <span style="color:#ff0000">Počet odoslaných emailov: <b><?php echo $data['countMails'] ?> (100%)</b></span><br/>
                         Počet doručených emailov: <b><?php echo $data['countDelivered'] ?> (<?php echo $data['deliveredPercentage'] ?>%)</b><br/>
                         Celkový počet otvorení: <b><?php echo $data['countSeenEmails'] ?></b><br/>
                         Úspešnosť otvorenia: <b><?php echo $data['seenPercentage'] ?>%</b><br/><br/>
-                        Celkový počet kliknutí: <b><?php echo $data['countClickedEmails'] ?></b><br/>
+                        <span style="color:#ff0000">Celkový počet kliknutí: <b><?php echo $data['countClickedEmails'] ?></b></span><br/>
                         Úspešnosť kliknutia: <b><?php echo $data['clickedPercentage'] ?>%</b><br/>
                     </p>
                 </div>
@@ -59,7 +59,7 @@
                         Unikátny počet otvorení: <b><?php echo $data['countSeenUnique'] ?></b><br/>
                         Unikátna úspešnosť otvorenia: <b><?php echo $data['seenUniquePercentage'] ?>%</b><br/><br/>
                         Unikátny počet kliknutí: <b><?php echo $data['countClickedUnique'] ?></b><br/>
-                        Unikátna úspešnosť kliknutia: <b><?php echo $data['clickedPercentageUnique'] ?>%</b><br/>
+                        <span style="color:#ff0000">Unikátna úspešnosť kliknutia: <b><?php echo $data['clickedPercentageUnique'] ?>%</b></span><br/>
                     </p>
                 </div>
                 <div class="col-md-4">
@@ -67,7 +67,7 @@
                         &nbsp;<br/><br/>
                         Počet kliknutí na linku (bez odhlásenia): <b><?php echo $data['countDefaultUrl'] ?></b><br/>
                         Úpešnosť otvorenia (bez odhlásenia): <b><?php echo $data['percentageDefaultUrl'] ?>%</b><br/><br/>
-                        Počet žiadostí o odhlásenie: <b><?php echo $data['countLogoutedUrlUnique'] ?></b><br/>
+                        Počet žiadostí o odhlásenie (unikátne): <b><?php echo $data['countLogoutedUrlUnique'] ?></b><br/>
                         Úspešnosť odhlásenia: <b><?php echo $data['percentageLogoutedUrl'] ?>%</b><br/>
                     </p>
                 </div>
