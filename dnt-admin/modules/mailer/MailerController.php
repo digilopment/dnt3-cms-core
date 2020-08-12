@@ -238,10 +238,13 @@ class MailerController extends AdminController
         $hexEmail = $this->dnt->strToHex($recipient['email']);
         $targetUrl = WWW_PATH . 'dnt-api/analytics-newsletters?systemStatus=newsletter_log_click&campainId=' . $campainId . '&email=' . $hexEmail . '&url=';
         $finalUrl = function($item) use ($hexEmail) {
-            if (parse_url($item, PHP_URL_QUERY)) {
-                return $item . '&dnt3ClickId=' . $hexEmail;
+            if ($this->session->get('addUrlIdentificator')) {
+                if (parse_url($item, PHP_URL_QUERY)) {
+                    return $item . '&dnt3ClickId=' . $hexEmail;
+                }
+                return $item . '?dnt3ClickId=' . $hexEmail;
             }
-            return $item . '?dnt3ClickId=' . $hexEmail;
+            return $item;
         };
 
         preg_match_all("/<a.*?href\s*=\s*['\"](.*?)['\"]/", $content, $res);
@@ -361,6 +364,11 @@ class MailerController extends AdminController
             } else {
                 $useSenderFromEmail = false;
             }
+            if (isset($_POST['addUrlIdentificator'])) {
+                $addUrlIdentificator = true;
+            } else {
+                $addUrlIdentificator = false;
+            }
 
             $this->session->set('content', $content);
             $this->session->set('cat_id', $cat_id);
@@ -369,6 +377,7 @@ class MailerController extends AdminController
             $this->session->set('senderName', $senderName);
             $this->session->set('senderEmail', $senderEmail);
             $this->session->set('useSenderFromEmail', $useSenderFromEmail);
+            $this->session->set('addUrlIdentificator', $addUrlIdentificator);
         }
         $cat_id = $this->session->get('cat_id');
         /** COUNT ALL MAILS TO SENT * */

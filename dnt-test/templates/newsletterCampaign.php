@@ -58,7 +58,7 @@
                         &nbsp;<br/><br/>
                         Unikátny počet otvorení: <b><?php echo $data['countSeenUnique'] ?></b><br/>
                         <span style="color:#ff0000">Unikátna úspešnosť otvorenia: <b><?php echo $data['seenUniquePercentage'] ?>%</b></span><br/><br/>
-                        Unikátny počet kliknutí: <b><?php echo $data['countClickedUnique'] ?></b><br/>
+                        Unikátny počet kliknutí (klik/email): <b><?php echo $data['countClickedUnique'] ?></b><br/>
                         Unikátna úspešnosť kliknutia: <b><?php echo $data['clickedPercentageUnique'] ?>%</b><br/>
                     </p>
                 </div>

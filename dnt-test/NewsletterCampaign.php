@@ -117,7 +117,12 @@ class NewsletterCampaignTest
     {
         $url = [];
         foreach ($this->logs as $log) {
-            $url[] = json_decode($log->msg)->redirectTo;
+            $link = json_decode($log->msg)->redirectTo;
+            $checkDnt3 = explode('dnt3ClickId', $link);
+            if (isset($checkDnt3[1])) {
+                $link = substr_replace($checkDnt3[0], "", -1);
+            }
+            $url[] = $link;
         }
         $countLogout = 0;
         $countDefault = 0;
@@ -127,6 +132,10 @@ class NewsletterCampaignTest
         $final['logout'] = [];
         $final['default'] = [];
         foreach ($countLinks as $link => $count) {
+            $checkDnt3 = explode('dnt3ClickId', $link);
+            if (isset($checkDnt3[1])) {
+                $link = substr_replace($checkDnt3[0], "", -1);
+            }
             if ($this->dnt->in_string('plugin=subscriber', $link)) {
                 $email = base64_decode(urldecode($this->dnt->HexToStr(explode('&', explode('id=', $link)[1])[0])));
                 $final['logout'][$email] = (int) $count;

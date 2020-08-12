@@ -130,6 +130,8 @@ $vendor = $data['vendor'];
                         <input type="text" name="senderEmail" class="form-control" value="" placeholder="Email odosielateľa (<?php echo Settings::get("vendor_email"); ?>)"/>
                         <br/>
                         <input type="checkbox" name="useSenderFromEmail" checked=""/> Ak je pri emaile v zozname emailov vyplnený <b>odosielateľ</b> a <b>email odosielateľa</b>, použiť tento email a meno (email odosielateľa a meno odosielateľa) na doručenie konkrétnej emailovej adresy pod týmito doručovacími údajmi.
+                        <br/>
+                        <input type="checkbox" name="addUrlIdentificator"/> Pridať ku cieľovým URL-adresám <b>dnt3ClickId</b> identifikátor.
                         <h4><strong>Šablóna alebo správa</strong></h4>
                         <input type="text" name="url_external" class="form-control" placeholder="Url: vzdialenej šablony"/>
                         <br/>
