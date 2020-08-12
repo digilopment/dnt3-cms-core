@@ -57,16 +57,16 @@
                     <p>
                         &nbsp;<br/><br/>
                         Unikátny počet otvorení: <b><?php echo $data['countSeenUnique'] ?></b><br/>
-                        Unikátna úspešnosť otvorenia: <b><?php echo $data['seenUniquePercentage'] ?>%</b><br/><br/>
+                        <span style="color:#ff0000">Unikátna úspešnosť otvorenia: <b><?php echo $data['seenUniquePercentage'] ?>%</b></span><br/><br/>
                         Unikátny počet kliknutí: <b><?php echo $data['countClickedUnique'] ?></b><br/>
-                        <span style="color:#ff0000">Unikátna úspešnosť kliknutia: <b><?php echo $data['clickedPercentageUnique'] ?>%</b></span><br/>
+                        Unikátna úspešnosť kliknutia: <b><?php echo $data['clickedPercentageUnique'] ?>%</b><br/>
                     </p>
                 </div>
                 <div class="col-md-4">
                     <p>
                         &nbsp;<br/><br/>
                         Počet kliknutí na linku (bez odhlásenia): <b><?php echo $data['countDefaultUrl'] ?></b><br/>
-                        Úpešnosť otvorenia (bez odhlásenia): <b><?php echo $data['percentageDefaultUrl'] ?>%</b><br/><br/>
+                        Úspešnosť otvorenia (bez odhlásenia): <b><?php echo $data['percentageDefaultUrl'] ?>%</b><br/><br/>
                         Počet žiadostí o odhlásenie (unikátne): <b><?php echo $data['countLogoutedUrlUnique'] ?></b><br/>
                         Úspešnosť odhlásenia: <b><?php echo $data['percentageLogoutedUrl'] ?>%</b><br/>
                     </p>
