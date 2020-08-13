@@ -70,9 +70,8 @@ class NewsletterCampaignTest
 
     protected function getClickLogs()
     {
-        $query = "SELECT * FROM `dnt_logs` WHERE 
-		`system_status` = 'newsletter_log_click' 
-		AND  ((`HTTP_ACCEPT` LIKE '%text%' or `HTTP_ACCEPT` LIKE '%image%' or `HTTP_ACCEPT` LIKE '%xml%' or `HTTP_ACCEPT` LIKE '%html%') AND `HTTP_ACCEPT_LANGUAGE` <> '' AND `REMOTE_ADDR` <> '54.71.187.124')
+       $query = "SELECT * FROM `dnt_logs` WHERE 
+		`system_status` = 'newsletter_log_click' AND ( (`HTTP_ACCEPT` LIKE '%text%' or `HTTP_ACCEPT` LIKE '%image%' or `HTTP_ACCEPT` LIKE '%xml%' or `HTTP_ACCEPT` LIKE '%html%') AND `HTTP_ACCEPT_LANGUAGE` <> '' AND `REMOTE_ADDR` <> '54.71.187.124')
 		AND `msg` LIKE '%" . $this->campaignId . "%' 
 		AND vendor_id = '" . $this->vendor->getId() . "' 
 		GROUP BY timestamp";
@@ -87,11 +86,10 @@ class NewsletterCampaignTest
     {
         $logs = [];
         $query = "SELECT * FROM `dnt_logs` WHERE 
-		(`system_status` = 'newsletter_log_click' OR 
+		(`system_status` = 'newsletter_log_seen' OR 
 		(`system_status` = 'newsletter_log_click' AND ( (`HTTP_ACCEPT` LIKE '%text%' or `HTTP_ACCEPT` LIKE '%image%' or `HTTP_ACCEPT` LIKE '%xml%' or `HTTP_ACCEPT` LIKE '%html%') AND `HTTP_ACCEPT_LANGUAGE` <> '' AND `REMOTE_ADDR` <> '54.71.187.124')))
 		AND `msg` LIKE '%" . $this->campaignId . "%' 
-		AND vendor_id = '" . $this->vendor->getId() . "' 
-		GROUP BY timestamp";
+		AND vendor_id = '" . $this->vendor->getId() . "'";
         //$query = "SELECT * FROM `dnt_logs` WHERE (`system_status` = 'newsletter_log_seen' OR `system_status` = 'newsletter_log_click') AND `msg` LIKE '%" . $this->campaignId . "%' AND vendor_id = '" . $this->vendor->getId() . "'";
         $this->countLogs = $this->db->num_rows($query);
         if ($this->countLogs > 0) {
@@ -119,7 +117,7 @@ class NewsletterCampaignTest
     protected function getClikedUrls()
     {
         $url = [];
-        foreach ($this->logs as $log) {
+        foreach ($this->clickLogs as $log) {
             $link = json_decode($log->msg)->redirectTo;
             $checkDnt3 = explode('dnt3ClickId', $link);
             if (isset($checkDnt3[1])) {
@@ -197,11 +195,11 @@ class NewsletterCampaignTest
         }
         return $data;
     }
-
-    protected function setLogSeenData()
+	
+	protected function setLogClickData()
     {
         $data = [];
-        foreach ($this->seenLogs as $log) {
+        foreach ($this->clickLogs as $log) {
             $email = isset(json_decode($log->msg)->email) ? json_decode($log->msg)->email : false;
             $logsByEmail = $this->getLogByEmail($email);
             $click = 0;
@@ -227,12 +225,41 @@ class NewsletterCampaignTest
         }
         return $data;
     }
+    protected function setLogSeenData()
+    {
+        $data = [];
+        foreach ($this->seenLogs as $log) {
+            $email = isset(json_decode($log->msg)->email) ? json_decode($log->msg)->email : false;
+            $logsByEmail = $this->getLogByEmail($email);
+            $click = 0;
+            foreach ($logsByEmail as $log) {
+                if (isset(json_decode($log->msg)->redirectTo) && $log->system_status == 'newsletter_log_seen') {
+                    $click++;
+                }
+            }
+            $data[$email] = [
+                'seen' => 1,
+                'logs' => $logsByEmail,
+                'clicked' => function() use ($click) {
+                    if ($click > 0) {
+                        return 'ÁNO';
+                    } else {
+                        return 'NIE';
+                    }
+                },
+                'countClick' => function() use ($click) {
+                    return $click;
+                },
+            ];
+        }
+        return $data;
+    }
 
     protected function setUniqueData()
     {
         $dataUniqueClicked = [];
         $dataUniqueSeen = [];
-        foreach ($this->logs as $log) {
+        foreach ($this->clickLogs as $log) {
             if (isset(json_decode($log->msg)->redirectTo) && $log->system_status == 'newsletter_log_click') {
                 $email = isset(json_decode($log->msg)->email) ? json_decode($log->msg)->email : false;
                 $dataUniqueClicked[$email] = $log;
@@ -261,6 +288,7 @@ class NewsletterCampaignTest
 
         $data['setLogData'] = $this->setLogData();
         $data['setLogSeenData'] = $this->setLogSeenData();
+        $data['setLogClickData'] = $this->setLogClickData();
         $data['sentEmails'] = $this->sentEmails;
         $data['baseUrl'] = 'https://varenypeceny.markiza.sk/dnt-markiza/forms/';
         $data['dnt'] = $this->dnt;
