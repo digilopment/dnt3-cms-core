@@ -128,13 +128,14 @@
                                         <td> <?php echo isset($data['setLogData'][$item->email]) ? '<b>' . $data['setLogData'][$item->email]['clicked']() . '</b>' : 'NIE'; ?></td>
                                         <td> <?php echo isset($data['setLogData'][$item->email]) ? '<b>' . $data['setLogData'][$item->email]['countClick']() . '</b>' : '0'; ?></td>
                                         <td> <?php
+                                            if (isset($data['setLogSeenData'][$item->email])) {
+                                                foreach ($data['setLogSeenData'][$item->email]['logs'] as $log) {
+                                                    echo isset(json_decode($log->msg)->redirectTo) ? "Videl o: <b>" . $log->timestamp . "</b><br/>" : false . "<br/>";
+                                                }
+                                            }
                                             if (isset($data['setLogData'][$item->email])) {
                                                 foreach ($data['setLogData'][$item->email]['logs'] as $log) {
-                                                    if ($log->system_status == 'newsletter_log_click') {
-                                                        echo isset(json_decode($log->msg)->redirectTo) ? "<b>" . $log->timestamp . "</b><br/>" . json_decode($log->msg)->redirectTo . "<br/>" : false . "<br/>";
-                                                    } else {
-                                                        echo isset(json_decode($log->msg)->redirectTo) ? "Videl o: <b>" . $log->timestamp . "</b><br/>" : false . "<br/>";
-                                                    }
+                                                    echo isset(json_decode($log->msg)->redirectTo) ? "<b>" . $log->timestamp . "</b><br/>" . json_decode($log->msg)->redirectTo . "<br/>" : false . "<br/>";
                                                 }
                                             }
                                             ?></td>
