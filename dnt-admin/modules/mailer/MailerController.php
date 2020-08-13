@@ -327,6 +327,12 @@ class MailerController extends AdminController
             $this->loadTemplate($this->loc, 'sendingMails', $data);
         } else {
             $data['countMails'] = $countMails;
+            $this->mailer->set_recipient(array('thomas.doubek@gmail.com'));
+            $this->mailer->set_msg('<h3>Dobrý deň,<br/><br/>úspešne sme odoslali ' . $countMails . ' emailov z kategrórie ' . $catId . '.<br/><br/></h3><h5>Ďakujeme, že používate platformu novej genrácie.<br/><br/> Dnt3Platform,<br/>powered by Digilopment</h5>');
+            $this->mailer->set_subject('Odosielanie emailov dokončené [' . $countMails . ']');
+            $this->mailer->set_sender_name('Dnt3 Platforma');
+            $this->mailer->set_sender_email('system@digilopment.com');
+            $this->mailer->sent_email();
             $this->loadTemplate($this->loc, 'sendingFinish', $data);
         }
     }
