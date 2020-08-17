@@ -89,7 +89,7 @@ class Data
             $articleImage = $this->articleView->getPostImage($postId);
         }
 
-        $metaArr = ($this->postMeta) ? $this->article->getMetaData($postId) : false;
+        $metaArr = ($this->postMeta) ? $this->articleView->getMetaData($postId) : false;
         $menuItems = ($this->menuItems) ? $this->navigation->menuItems() : false;
         $sitemapItems = ($this->sitemapItems) ? $this->navigation->activeItems() : false;
         $translates = ($this->translates) ? $this->multilanguage->getTranslates() : false;
