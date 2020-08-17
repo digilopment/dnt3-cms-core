@@ -1,4 +1,6 @@
 <?php
+
+use DntLibrary\Base\Image;
 get_top();
 get_top_html();
 

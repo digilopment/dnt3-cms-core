@@ -73,6 +73,8 @@ class ArticleList extends AdminContent
                     `dnt_posts`.`content` AS content,
                     `dnt_posts`.`perex` AS perex,
                     `dnt_posts`.`service` AS service,
+                    `dnt_posts`.`datetime_creat` AS datetime_creat,
+                    `dnt_posts`.`datetime_update` AS datetime_update,
                     `dnt_post_type`.`cat_id` AS cat_id,
                     `dnt_post_type`.`name_url` AS cat_name_url,
                     `dnt_post_type`.`id_entity` AS dnt_post_type_id
