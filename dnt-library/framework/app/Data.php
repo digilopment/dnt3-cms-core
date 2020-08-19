@@ -99,9 +99,11 @@ class Data
         $keyWords = isset($metaSettingsArr['keys']['keywords']['value']) ? $metaSettingsArr['keys']['keywords']['value'] : false;
         $description = isset($metaSettingsArr['keys']['description']['value']) ? $metaSettingsArr['keys']['description']['value'] : false;
         $favicon = Settings::getImage($metaSettingsArr['keys']['favicon']['value']);
+        $title = Settings::get('title');
         $data = array(
             'media_path' => WWW_PATH . 'dnt-view/layouts/' . Vendor::getLayout() . '/',
-            'title' => Settings::get('title'),
+            'title' => $title,
+            'web_title' => $title,
             'post_id' => $postId,
             'webhook' => $this->rest->webhook(),
             'meta' => array(

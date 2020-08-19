@@ -401,7 +401,7 @@ CREATE TABLE IF NOT EXISTS `dnt_post_type` (
   `vendor_id` int(11) NOT NULL,
   `parent_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1320 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1321 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_post_type VALUES
@@ -414,7 +414,8 @@ INSERT INTO dnt_post_type VALUES
 (null,"1078","0","0","navody","video","Návody","1","0","66","0"),
 (null,"1267","3","0","practical-guide","post","Practical guide","1","0","66","0"),
 (null,"1268","3","0","recruit-companies","post","Recruit Companies","1","0","66","0"),
-(null,"1269","3","0","homepage-text","post","Homepage Text","1","0","66","0");
+(null,"1269","3","0","homepage-text","post","Homepage Text","1","0","66","0"),
+(null,"1320","3","0","language-courses","post","Language courses","1","0","66","0");
 
 
 
@@ -450,13 +451,13 @@ CREATE TABLE IF NOT EXISTS `dnt_posts` (
   `vendor_id` int(11) NOT NULL,
   `parent_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33459 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33463 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_posts VALUES
 (null,"13071","","","137","post","Výskum a vývoj","slider-vyskum-a-vyvoj","0","0","","","262","2017-03-01 17:24:45","2017-03-01 17:26:24","2017-03-01 17:24:00","0","<p><span style=\"font-size:14px\">Neust&aacute;le hľad&aacute;me lep&scaron;ie rie&scaron;enia...</span></p>\n\n","","","","","","0","1","","0","66","0"),
 (null,"13369","","","294","article","","","0","0","","","","2017-04-25 09:49:05","2017-04-25 09:49:05","2017-04-25 09:49:05","0","","","","","","","0","0","","0","66","0"),
-(null,"13370","198","","308","product","My first Job","my-first-job","0","0","product_detail","","16657","2017-04-25 09:49:42","2020-08-15 16:48:15","2017-04-25 09:49:00","0","","","","","","","0","1","myfirstjobmyfirstjob20003000juniordoctorsurgeryklinikumpassauinnstr76passaugermany0","0","66","0"),
+(null,"13370","198","","308","product","My first Job","my-first-job","0","0","product_detail","","16657","2017-04-25 09:49:42","2020-08-17 10:54:10","2017-04-25 09:49:00","0","<p>Short job description.</p>\n","<p>At Vero Eos Et Accusamus Et Iusto Odio Dignissimos Ducimus Qui Blanditiis Praesentium Voluptatum Deleniti Atque Corrupti Quos Dolores Et Quas Molestias Excepturi Sint Occaecati Cupiditate Non Provident, Similique Sunt In Culpa Qui Officia Deserunt Mollitia Animi.</p>\n\n<p>Id Est Laborum Et Dolorum Fuga. Et Harum Quidem Rerum Facilis Est Et Expedita Distinctio. Nam Libero Tempore, Cum Soluta Nobis Est Eligendi Optio Cumque Nihil Impedit Quo Minus Id Quod Maxime Placeat Facere Possimus.</p>\n","","","","","0","1","myfirstjobmyfirstjobatveroeosetaccusamusetiustoodiodignissimosducimusquiblanditiispraesentiumvoluptatumdelenitiatquecorruptiquosdoloresetquasmolestiasexcepturisintoccaecaticupiditatenonprovidentsimiliquesuntinculpaquiofficiadeseruntmollitiaanimiidestlaborumetdolorumfugaetharumquidemrerumfacilisestetexpeditadistinctionamliberotemporecumsolutanobisesteligendioptiocumquenihilimpeditquominusidquodmaximeplaceatfacerepossimusshortjobdescription20003000juniordoctorsurgeryklinikumpassauinnstr76passaugermany016231","0","66","0"),
 (null,"14853","","","290","sitemap","Home","home","0","0","homepage","","16656","2019-02-22 21:30:11","2020-08-15 15:07:51","2019-02-22 21:30:00","0","","","","","","","1","1","homehome","0","66","0"),
 (null,"15012","","","290","sitemap","404 stránka nenájdená","404-stranka-nenajdena","0","0","default","","3338","2019-02-28 10:29:08","2019-03-19 15:24:08","2019-02-28 10:29:00","0","<p><span style=\"font-size:20px\">Ľutujeme, ale str&aacute;nku, ktor&uacute; hľad&aacute;te sme nena&scaron;li. Sk&uacute;ste vyhľad&aacute;vanie, alebo si vyberte z menu</span></p>\n","","","","","","0","2","404strankanenajdena404strankanenajdenalutujemealestrankuktoruhladatesmenenasliskustevyhladavaniealebosivybertezmenu","0","66","0"),
 (null,"15019","","","1078","video","Testovacie video","testovacie-video","0","0","","3339","3292","2019-03-09 16:37:02","2019-03-09 16:49:27","2019-03-09 16:37:00","0","","","","","","","0","1","testovacievideotestovacievideo","0","66","0"),
@@ -464,8 +465,8 @@ INSERT INTO dnt_posts VALUES
 (null,"15152","","","1046","post","Svätojurský Blesk 2013","svatojursky-blesk-2013","0","0","gallery_list","","3476","2019-03-16 16:58:01","2019-03-16 21:44:33","2019-03-16 16:58:00","0","","","","","","","0","1","svatojurskyblesk2013svatojurskyblesk20133474347534763477347834793480348134823483348434853486348734883489349034913492349334943495349634973498349935003501350235033504350535063507350835093510351135123513351435153516351735183519352035213522352335243525352635273528352935303531353235333534353535363537353835393540354135423543354435453546354735483549355035513552355335543555355635573558355935603561356235633564356535663567356835693570357135723573","0","66","0"),
 (null,"16227","","","1045","post","Archimeda Info","archimeda-info","0","0","","","5178","2019-06-17 20:15:35","2019-06-17 20:16:30","2019-06-17 20:15:00","0","Evolution of medical talking","<p>Our mission is to simplify patient-doctor communication. Therefore, we have developed a revolutionary application in which you have all your examinations and medical findings. With QR code data can be exchanged between doctor and patient.</p>\n","","","","","0","1","archimedainfoarchimedainfoourmissionistosimplifypatientdoctorcommunicationthereforewehavedevelopedarevolutionaryapplicationinwhichyouhaveallyourexaminationsandmedicalfindingswithqrcodedatacanbeexchangedbetweendoctorandpatientevolutionofmedicaltalking","0","66","0"),
 (null,"16228","","","1269","post","Neurology","neurology","0","0","","","","2019-06-17 20:20:03","2019-06-24 15:30:09","2019-06-17 20:20:00","0","","","","#7d7b7b","","","1600","1","neurologyneurology","0","66","0"),
-(null,"16230","","","1267","post","Cardiology","cardiology","0","0","","","","2019-06-17 20:21:34","2019-06-24 15:18:51","2019-06-17 20:21:00","0","","","","#e7515e","","","1400","1","cardiologycardiology","0","66","0"),
-(null,"16231","","","1268","post","Surgery","surgery","0","0","","","","2019-06-17 20:21:57","2019-06-24 15:24:29","2019-06-17 20:21:00","0","","","","#1978b1","","","1300","1","surgerysurgery","0","66","0"),
+(null,"16230","","","1267","post","Cardiology","cardiology","0","0","","","16659","2019-06-17 20:21:34","2020-08-17 11:38:59","2019-06-17 20:21:00","0","","","","#e7515e","","","1400","1","cardiologycardiology","0","66","0"),
+(null,"16231","","","1268","post","Proffesia","https://www.profesia.sk/","0","0","","","16658","2019-06-17 20:21:57","2020-08-17 10:46:37","2019-06-17 20:21:00","0","","","info@profesia.sk","+421 2 33 00 67 90","","","1300","1","proffesiahttpswwwprofesiask","0","66","0"),
 (null,"16233","","","1268","post","Plastic Surgery","plastic-surgery","0","0","","","","2019-06-17 20:23:35","2019-06-24 15:24:42","2019-06-17 20:23:00","0","","","","#1671a7","","","1100","1","plasticsurgeryplasticsurgery","0","66","0"),
 (null,"16243","","","1267","post","Gastroenterology","gastroenterology","0","0","","","","2019-06-24 07:52:38","2019-06-24 15:19:05","2019-06-24 07:52:00","0","","","","#e7515e","","","0","1","gastroenterologygastroenterology","0","66","0"),
 (null,"16244","","","1267","post","Pneumology","pneumology","0","0","","","","2019-06-24 07:53:12","2019-06-24 15:19:19","2019-06-24 07:53:00","0","","","","#db4752","","","0","1","pneumologypneumology","0","66","0"),
@@ -482,7 +483,11 @@ INSERT INTO dnt_posts VALUES
 (null,"33454","","","290","sitemap","Job Market","job-market","0","0","eshop_list","","","2020-08-15 11:41:11","2020-08-15 11:49:19","2020-08-15 11:41:00","0","","","","","","","2","1","jobmarketjobmarket","0","66","0"),
 (null,"33455","","","290","sitemap","Practical guide","practical-guide","0","0","article_list","1267","","2020-08-15 11:41:33","2020-08-15 12:01:44","2020-08-15 11:41:00","0","","","","","","","3","1","practicalguidepracticalguide","0","66","0"),
 (null,"33456","","","290","sitemap","Recruitment Companies","recruitment-companies","0","0","companies_list","1268","","2020-08-15 11:41:53","2020-08-15 12:17:11","2020-08-15 11:41:00","0","","","","","","","4","1","recruitmentcompaniesrecruitmentcompanies","0","66","0"),
-(null,"33457","","","290","sitemap","Language courses","language-courses","0","0","contact","","","2020-08-15 12:48:38","2020-08-15 12:49:37","2020-08-15 12:48:00","0","","","","","","","5","1","languagecourseslanguagecourses","0","66","0");
+(null,"33457","","","290","sitemap","Language courses","language-courses","0","0","article_list","1320","","2020-08-15 12:48:38","2020-08-18 12:09:18","2020-08-15 12:48:00","0","","","","","","","5","1","languagecourseslanguagecourses","0","66","0"),
+(null,"33459","","","306","post","sdfsdfsfsf, Tomáš Doubek ","sdfsdfsfsf-tomas-doubek","0","0","","","","2020-08-17 10:55:21","2020-08-17 10:55:21","2020-08-17 10:55:21","0","","<h3>sdfsdfsfsf</h3><br/><b>Meno: </b>Tomáš Doubek <br/><b>Telefón: </b>+421904700823<br/><b>Email: </b>thomas.doubek@gmail.com<br/><b>SPRÁVA</b>: vsdfv<br/><br/><b>Kontaktný email odosielateľa: <a href=\"mailto:thomas.doubek@gmail.com\">thomas.doubek@gmail.com</a></b>","","","","","0","0","","0","66","0"),
+(null,"33460","","","1320","post","English language course","english-language-course","0","0","","","16660","2020-08-18 12:04:31","2020-08-18 12:07:57","2020-08-18 12:04:00","0","<p><strong>Lorem Ipsum</strong><span style=\"color:rgb(0, 0, 0); font-family:open sans,arial,sans-serif; font-size:14px\">&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s</span></p>\n","<p><span style=\"color:rgb(0, 0, 0); font-family:open sans,arial,sans-serif; font-size:14px\">When an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span></p>\n","","","","","0","1","englishlanguagecourseenglishlanguagecoursewhenanunknownprintertookagalleyoftypeandscrambledittomakeatypespecimenbookithassurvivednotonlyfivecenturiesbutalsotheleapintoelectronictypesettingremainingessentiallyunchangeditwaspopularisedinthe1960swiththereleaseofletrasetsheetscontainingloremipsumpassagesandmorerecentlywithdesktoppublishingsoftwarelikealduspagemakerincludingversionsofloremipsumloremipsumissimplydummytextoftheprintingandtypesettingindustryloremipsumhasbeentheindustry39sstandarddummytexteversincethe1500s","0","66","0"),
+(null,"33461","","","1320","post","German language course","german-language-course","0","0","","","16661","2020-08-18 12:08:05","2020-08-18 12:09:46","2020-08-18 12:08:00","0","<p><strong>Lorem Ipsum</strong><span style=\"color:rgb(0, 0, 0); font-family:open sans,arial,sans-serif; font-size:14px\">&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s</span></p>\n","<p><span style=\"color:rgb(0, 0, 0); font-family:open sans,arial,sans-serif; font-size:14px\">When an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span></p>\n","","","","","0","1","germanlanguagecoursegermanlanguagecoursewhenanunknownprintertookagalleyoftypeandscrambledittomakeatypespecimenbookithassurvivednotonlyfivecenturiesbutalsotheleapintoelectronictypesettingremainingessentiallyunchangeditwaspopularisedinthe1960swiththereleaseofletrasetsheetscontainingloremipsumpassagesandmorerecentlywithdesktoppublishingsoftwarelikealduspagemakerincludingversionsofloremipsumloremipsumissimplydummytextoftheprintingandtypesettingindustryloremipsumhasbeentheindustry39sstandarddummytexteversincethe1500s","0","66","0"),
+(null,"33462","","","290","sitemap","Signup","signup","0","0","sign_up","","","2020-08-18 12:53:26","2020-08-18 12:57:24","2020-08-18 12:53:00","0","","","","","","","0","2","signupsignup","0","66","0");
 
 
 
@@ -523,7 +528,7 @@ CREATE TABLE IF NOT EXISTS `dnt_posts_meta` (
   `order` int(11) NOT NULL,
   `show` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=178099 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=178100 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_posts_meta VALUES
@@ -539,7 +544,8 @@ INSERT INTO dnt_posts_meta VALUES
 (null,"178095","13370","product_detail","66","company_street","Innstr. 76","text","2","Company street","200","1"),
 (null,"178096","13370","product_detail","66","company_city","Passau","text","2","Company city","200","1"),
 (null,"178097","13370","product_detail","66","company_state","Germany","text","2","Company state","200","1"),
-(null,"178098","13370","product_detail","66","is_premium","0","bool","2","Is premium?","700","0");
+(null,"178098","13370","product_detail","66","is_premium","0","bool","2","Is premium?","700","0"),
+(null,"178099","13370","product_detail","66","recruitment_id","16231","bool","2","Recruitment Company ID","800","1");
 
 
 
@@ -688,7 +694,7 @@ CREATE TABLE IF NOT EXISTS `dnt_translates` (
   `show` int(11) NOT NULL DEFAULT '1',
   `parent_id` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=128856 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=128936 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO dnt_translates VALUES
@@ -1267,11 +1273,6 @@ INSERT INTO dnt_translates VALUES
 (null,"126416","66","sk","internal_medicine","static","","Internal Medicine","1","0"),
 (null,"126418","66","sk","surgery","static","","Surgery","1","0"),
 (null,"126420","66","sk","independent","static","","Independent","1","0"),
-(null,"126426","66","sk","16230","name","dnt_posts","","1","0"),
-(null,"126427","66","sk","16230","name_url","dnt_posts","","1","0"),
-(null,"126428","66","sk","16230","perex","dnt_posts","","1","0"),
-(null,"126429","66","sk","16230","content","dnt_posts","","1","0"),
-(null,"126430","66","sk","16230","tags","dnt_posts","","1","0"),
 (null,"126431","66","sk","16243","name","dnt_posts","","1","0"),
 (null,"126432","66","sk","16243","name_url","dnt_posts","","1","0"),
 (null,"126433","66","sk","16243","perex","dnt_posts","","1","0"),
@@ -1296,23 +1297,18 @@ INSERT INTO dnt_translates VALUES
 (null,"126452","66","sk","16247","name_url","dnt_posts","","1","0"),
 (null,"126453","66","sk","16247","perex","dnt_posts","","1","0"),
 (null,"126454","66","sk","16247","content","dnt_posts","","1","0"),
-(null,"126455","66","sk","16247","tags","dnt_posts","","1","0");
-INSERT INTO dnt_translates VALUES
+(null,"126455","66","sk","16247","tags","dnt_posts","","1","0"),
 (null,"126456","66","sk","16248","name","dnt_posts","","1","0"),
 (null,"126457","66","sk","16248","name_url","dnt_posts","","1","0"),
 (null,"126458","66","sk","16248","perex","dnt_posts","","1","0"),
 (null,"126459","66","sk","16248","content","dnt_posts","","1","0"),
-(null,"126460","66","sk","16248","tags","dnt_posts","","1","0"),
+(null,"126460","66","sk","16248","tags","dnt_posts","","1","0");
+INSERT INTO dnt_translates VALUES
 (null,"126461","66","sk","16249","name","dnt_posts","","1","0"),
 (null,"126462","66","sk","16249","name_url","dnt_posts","","1","0"),
 (null,"126463","66","sk","16249","perex","dnt_posts","","1","0"),
 (null,"126464","66","sk","16249","content","dnt_posts","","1","0"),
 (null,"126465","66","sk","16249","tags","dnt_posts","","1","0"),
-(null,"126466","66","sk","16231","name","dnt_posts","","1","0"),
-(null,"126467","66","sk","16231","name_url","dnt_posts","","1","0"),
-(null,"126468","66","sk","16231","perex","dnt_posts","","1","0"),
-(null,"126469","66","sk","16231","content","dnt_posts","","1","0"),
-(null,"126470","66","sk","16231","tags","dnt_posts","","1","0"),
 (null,"126471","66","sk","16233","name","dnt_posts","","1","0"),
 (null,"126472","66","sk","16233","name_url","dnt_posts","","1","0"),
 (null,"126473","66","sk","16233","perex","dnt_posts","","1","0"),
@@ -1397,8 +1393,7 @@ INSERT INTO dnt_translates VALUES
 (null,"126569","66","sk","years","static","","years","1","0"),
 (null,"126570","66","sk","16232","name","dnt_posts","","1","0"),
 (null,"126571","66","sk","16232","name_url","dnt_posts","","1","0"),
-(null,"126572","66","sk","16232","perex","dnt_posts","","1","0");
-INSERT INTO dnt_translates VALUES
+(null,"126572","66","sk","16232","perex","dnt_posts","","1","0"),
 (null,"126573","66","sk","16232","content","dnt_posts","","1","0"),
 (null,"126574","66","sk","16232","tags","dnt_posts","","1","0"),
 (null,"126578","66","sk","have_account","static","","Do you have an account? <br/> Please go to process login","1","0"),
@@ -1408,7 +1403,8 @@ INSERT INTO dnt_translates VALUES
 (null,"126587","66","sk","go_to_form","static","","Go to form","1","0"),
 (null,"128771","66","sk","33454","name","dnt_posts","","1","0"),
 (null,"128772","66","sk","33454","name_url","dnt_posts","","1","0"),
-(null,"128773","66","sk","33454","perex","dnt_posts","","1","0"),
+(null,"128773","66","sk","33454","perex","dnt_posts","","1","0");
+INSERT INTO dnt_translates VALUES
 (null,"128774","66","sk","33454","content","dnt_posts","","1","0"),
 (null,"128775","66","sk","33454","tags","dnt_posts","","1","0"),
 (null,"128776","66","sk","33455","name","dnt_posts","","1","0"),
@@ -1421,11 +1417,6 @@ INSERT INTO dnt_translates VALUES
 (null,"128798","66","sk","33456","perex","dnt_posts","","1","0"),
 (null,"128799","66","sk","33456","content","dnt_posts","","1","0"),
 (null,"128800","66","sk","33456","tags","dnt_posts","","1","0"),
-(null,"128816","66","sk","33457","name","dnt_posts","","1","0"),
-(null,"128817","66","sk","33457","name_url","dnt_posts","","1","0"),
-(null,"128818","66","sk","33457","perex","dnt_posts","","1","0"),
-(null,"128819","66","sk","33457","content","dnt_posts","","1","0"),
-(null,"128820","66","sk","33457","tags","dnt_posts","","1","0"),
 (null,"128826","66","sk","33453","name","dnt_posts","","1","0"),
 (null,"128827","66","sk","33453","name_url","dnt_posts","","1","0"),
 (null,"128828","66","sk","33453","perex","dnt_posts","","1","0"),
@@ -1436,11 +1427,41 @@ INSERT INTO dnt_translates VALUES
 (null,"128843","66","sk","14853","perex","dnt_posts","","1","0"),
 (null,"128844","66","sk","14853","content","dnt_posts","","1","0"),
 (null,"128845","66","sk","14853","tags","dnt_posts","","1","0"),
-(null,"128851","66","sk","13370","name","dnt_posts","","1","0"),
-(null,"128852","66","sk","13370","name_url","dnt_posts","","1","0"),
-(null,"128853","66","sk","13370","perex","dnt_posts","","1","0"),
-(null,"128854","66","sk","13370","content","dnt_posts","","1","0"),
-(null,"128855","66","sk","13370","tags","dnt_posts","","1","0");
+(null,"128876","66","sk","16231","name","dnt_posts","","1","0"),
+(null,"128877","66","sk","16231","name_url","dnt_posts","","1","0"),
+(null,"128878","66","sk","16231","perex","dnt_posts","","1","0"),
+(null,"128879","66","sk","16231","content","dnt_posts","","1","0"),
+(null,"128880","66","sk","16231","tags","dnt_posts","","1","0"),
+(null,"128881","66","sk","13370","name","dnt_posts","","1","0"),
+(null,"128882","66","sk","13370","name_url","dnt_posts","","1","0"),
+(null,"128883","66","sk","13370","perex","dnt_posts","","1","0"),
+(null,"128884","66","sk","13370","content","dnt_posts","","1","0"),
+(null,"128885","66","sk","13370","tags","dnt_posts","","1","0"),
+(null,"128886","66","sk","16230","name","dnt_posts","","1","0"),
+(null,"128887","66","sk","16230","name_url","dnt_posts","","1","0"),
+(null,"128888","66","sk","16230","perex","dnt_posts","","1","0"),
+(null,"128889","66","sk","16230","content","dnt_posts","","1","0"),
+(null,"128890","66","sk","16230","tags","dnt_posts","","1","0"),
+(null,"128896","66","sk","33460","name","dnt_posts","","1","0"),
+(null,"128897","66","sk","33460","name_url","dnt_posts","","1","0"),
+(null,"128898","66","sk","33460","perex","dnt_posts","","1","0"),
+(null,"128899","66","sk","33460","content","dnt_posts","","1","0"),
+(null,"128900","66","sk","33460","tags","dnt_posts","","1","0"),
+(null,"128911","66","sk","33457","name","dnt_posts","","1","0"),
+(null,"128912","66","sk","33457","name_url","dnt_posts","","1","0"),
+(null,"128913","66","sk","33457","perex","dnt_posts","","1","0"),
+(null,"128914","66","sk","33457","content","dnt_posts","","1","0"),
+(null,"128915","66","sk","33457","tags","dnt_posts","","1","0"),
+(null,"128916","66","sk","33461","name","dnt_posts","","1","0"),
+(null,"128917","66","sk","33461","name_url","dnt_posts","","1","0"),
+(null,"128918","66","sk","33461","perex","dnt_posts","","1","0"),
+(null,"128919","66","sk","33461","content","dnt_posts","","1","0"),
+(null,"128920","66","sk","33461","tags","dnt_posts","","1","0"),
+(null,"128931","66","sk","33462","name","dnt_posts","","1","0"),
+(null,"128932","66","sk","33462","name_url","dnt_posts","","1","0"),
+(null,"128933","66","sk","33462","perex","dnt_posts","","1","0"),
+(null,"128934","66","sk","33462","content","dnt_posts","","1","0"),
+(null,"128935","66","sk","33462","tags","dnt_posts","","1","0");
 
 
 
@@ -1455,18 +1476,18 @@ CREATE TABLE IF NOT EXISTS `dnt_uploads` (
   `show` int(11) NOT NULL DEFAULT '1',
   `parent_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16658 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=16662 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
 INSERT INTO dnt_uploads VALUES
-(null,"5189","66","59_91d58c29f7dd9f3730063b9f1d9dd97f_o.png","2019-06-17 20:02:57","image/png","1","0"),
-(null,"5193","66","59_a507c2cd204c61eae89b8f532a8fc126_o.png","2019-07-03 10:54:37","image/png","1","0"),
-(null,"5178","66","59_9a319e5994f2dfd39492fb24e8686a0c_o.svg","2019-06-16 17:17:30","image/svg+xml","1","0"),
-(null,"5184","66","59_2c5a953138b14e7a99c8b4aada22a1d6_o.png","2019-06-16 20:04:56","image/png","1","0"),
 (null,"5187","66","59_9d680009a800464d6f4123047af2bdef_o.jpg","2019-06-17 19:57:33","image/jpeg","1","0"),
 (null,"16651","66","66_3523ad4abc0546d2091cbd132cf93dd9_o.png","2020-08-15 14:17:22","image/png","1","0"),
+(null,"16658","66","66_765317dfd5f1b1b1d54c80b402fd2ce6_o.png","2020-08-16 12:05:58","image/png","1","0"),
 (null,"16657","66","66_1081eceaa3bc7c5e964bfb704301e2e8_o.jpg","2020-08-15 16:48:15","image/jpeg","1","0"),
-(null,"16656","66","66_272157b3c113efd5906ce34ade424ec7_o.jpg","2020-08-15 15:07:51","image/jpeg","1","0");
+(null,"16659","66","66_7d2c48b02d9641d0386f69d4653b0e6d_o.jpg","2020-08-17 11:38:59","image/jpeg","1","0"),
+(null,"16656","66","66_272157b3c113efd5906ce34ade424ec7_o.jpg","2020-08-15 15:07:51","image/jpeg","1","0"),
+(null,"16660","66","66_f5e02df4ab67f94fb37d104966d53988_o.jpg","2020-08-18 12:07:18","image/jpeg","1","0"),
+(null,"16661","66","66_7a402943aadbca7f07144c72467c1bfa_o.jpg","2020-08-18 12:08:39","image/jpeg","1","0");
 
 
 
@@ -1514,7 +1535,7 @@ CREATE TABLE IF NOT EXISTS `dnt_users` (
 
 INSERT INTO dnt_users VALUES
 (null,"229","66","","admin","Magdalena","Zubowicz","archimeda","","","","0","","","2a7b6fefa242977ede9fdd560322d1d0","zubowicz.magda@gmail.com","","","","0","0","0","0","2019-06-17 20:00:08","2019-06-17 20:00:27","2019-06-17 20:00:08","","","","","","5188","1","0","","0"),
-(null,"97","66","","admin","Tomáš","Doubek","osmos","","","","0","","","b69a84481c97f320c80020b01d5620b5","thomas.doubek@gmail.com","","","","0","0","0","0","0000-00-00 00:00:00","2020-08-15 11:31:18","0000-00-00 00:00:00","","","0","","","5187","1","0","","0");
+(null,"97","66","","admin","Tomáš","Doubek","osmos","","","","0","","","b69a84481c97f320c80020b01d5620b5","thomas.doubek@gmail.com","","","","0","0","0","0","0000-00-00 00:00:00","2020-08-18 12:03:58","0000-00-00 00:00:00","","","0","","","5187","1","0","","0");
 
 
 

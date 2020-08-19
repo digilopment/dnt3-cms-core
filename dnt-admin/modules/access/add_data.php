@@ -29,17 +29,17 @@ if (isset($_POST['sent'])) {
             }
         }
         $db->insert($table, $insertedData);
-        $post_id = Dnt::getLastId($table, false);
+        $post_id = Dnt::getLastId($table, Vendor::getId());
 
         $db->update(
                 $table, //table
                 array(//set
-            'vendor_id' => Vendor::getId(),
-            'status' => 1,
-            'pass' => md5($pass),
-            'datetime_creat' => Dnt::datetime(),
-            'datetime_update' => Dnt::datetime(),
-            'datetime_publish' => Dnt::datetime(),
+                    'vendor_id' => Vendor::getId(),
+                    'status' => 1,
+                    'pass' => md5($pass),
+                    'datetime_creat' => Dnt::datetime(),
+                    'datetime_update' => Dnt::datetime(),
+                    'datetime_publish' => Dnt::datetime(),
                 ), array(//where
             'id_entity' => $post_id,
                 )
