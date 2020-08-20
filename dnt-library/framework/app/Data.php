@@ -74,7 +74,7 @@ class Data
             $articleService = $this->postObject->service;
             $articleServiceId = $this->postObject->service_id;
             $articleTags = $this->postObject->tags;
-            $articleImage = $this->articleView->getPostImage($this->postObject->post_id);
+            $articleImage = $this->articleView->getPostImage($this->postObject->id_entity);
         } else {
             $this->postObject = $this->getPostObject($postId);
             $articleName = $this->postObject->name;
