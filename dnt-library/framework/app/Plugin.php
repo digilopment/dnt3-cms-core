@@ -35,8 +35,8 @@ class Plugin
 
     public function env($env)
     {
-        if (isset($this->data['ENV']->$env)) {
-            return $this->data['ENV']->$env;
+        if (isset($this->data['PLUGINS'][$this->pluginId][$env])) {
+            return $this->data['PLUGINS'][$this->pluginId][$env];
         }
         return false;
     }
