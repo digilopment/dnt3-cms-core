@@ -38,7 +38,7 @@ class PostMeta
 
     public function getPostsMeta($postId)
     {
-        
+
         $db = new DB;
         $query = "SELECT * FROM dnt_posts_meta WHERE `vendor_id` = '" . Vendor::getId() . "' AND post_id IN (" . $postId . ")";
         if ($db->num_rows($query) > 0) {
@@ -124,15 +124,35 @@ class PostMeta
                 }
                 $diffedArray = array_diff($configKeys, $existingKey);
                 $arrOfConfigKeys = array();
+                $arrOfConfigKeysUpdate = [];
                 foreach ($configKeys as $key => $value) {
                     if (in_array($value, $diffedArray)) {
                         $arrOfConfigKeys[] = $key;
                         continue;
+                    } else {
+                        $arrOfConfigKeysUpdate[$key] = $value;
                     }
                 }
+                //var_dump($arrOfConfigKeysUpdate);
                 $db = new DB;
                 foreach ($arrOfConfigKeys as $key) {
                     $db->insert('dnt_posts_meta', $settingsData[$key]);
+                }
+
+                foreach ($arrOfConfigKeysUpdate as $key => $val) {
+                    $db->update(
+                        'dnt_posts_meta',
+                        array(
+                            'order' => $settingsData[$key]['`order`'],
+                            //'show' => $settingsData[$key]['`show`'],
+                            'content_type' => $settingsData[$key]['`content_type`'],
+                            'description' => $settingsData[$key]['`description`'],
+                        ),
+                        array(
+                            '`key`' => $settingsData[$key]['`key`'],
+                            '`post_id`' => $postId,
+                            '`vendor_id`' => Vendor::getId())
+                    );
                 }
             }
         } else {

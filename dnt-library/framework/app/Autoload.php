@@ -82,6 +82,7 @@ class Autoloader
         $this->fileLoader($path . 'dnt-library/framework/app/Navigation.php');
         $this->fileLoader($path . 'dnt-library/framework/app/Data.php');
         $this->fileLoader($path . 'dnt-library/framework/app/AggrBuilder.php');
+        $this->fileLoader($path . 'dnt-library/framework/app/OpenSslCrypt.php');
     }
 
 }

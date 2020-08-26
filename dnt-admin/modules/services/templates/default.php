@@ -36,8 +36,8 @@ $actionUrl = "index.php?src=services&included=" . $service . "&filter=" . $rest-
     <div class="row">
         <div class="row" style="background-color: #fff;padding: 5px;margin: 0px;">
             <label class="col-sm-2 control-label"><b>Názov vstupu</b></label>
-            <label class="col-sm-1 control-label"><b>Zobraziť na webe?</b></label>
-            <label class="col-sm-1 control-label"><b>Nastavenie hodnoty</b></label>
+            <label class="col-sm-2 control-label"><b>Použiť hodnotu?</b></label>
+            <label class="col-sm-8 control-label"><b>Nastavenie hodnoty</b></label>
         </div>
         <div class="row">
             <form enctype='multipart/form-data'action="<?php echo $actionUrl; ?>" method="POST">
@@ -75,7 +75,11 @@ $actionUrl = "index.php?src=services&included=" . $service . "&filter=" . $rest-
                                             ?>
                                             <input name="key_<?php echo $row['id_entity']; ?>"  value="<?php echo $row['value'] ?>" type="color" class="form-control">
                                             <?php
-                                        } elseif ($row['content_type'] == "content") {
+                                        } elseif ($row['content_type'] == "bool") {
+                                            ?>
+                                            <input name="key_<?php echo $row['id_entity']; ?>"  value="" type="hidden" class="form-control">
+                                            <?php
+                                        }elseif ($row['content_type'] == "content") {
                                             ?>
                                             <textarea name="key_<?php echo $row['id_entity'] ?>" value="<?php echo $row['value'] ?>" class="ckeditor" style="min-height: 195px;"><?php echo $row['value'] ?></textarea>
                                         <?php } else {
