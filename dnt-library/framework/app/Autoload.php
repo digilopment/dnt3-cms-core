@@ -71,6 +71,7 @@ class Autoloader
         $this->fileLoader($path . 'dnt-library/framework/app/Client.php');
         $this->fileLoader($path . 'dnt-library/framework/app/Modul.php');
         $this->fileLoader($path . 'dnt-library/framework/app/Post.php');
+        $this->fileLoader($path . 'dnt-library/framework/app/PostVariants.php');
         $this->fileLoader($path . 'dnt-library/framework/app/BaseController.php');
         $this->fileLoader($path . 'dnt-library/framework/app/Plugin.php');
         $this->fileLoader($path . 'dnt-library/framework/app/AbstractUser.php');
@@ -83,6 +84,7 @@ class Autoloader
         $this->fileLoader($path . 'dnt-library/framework/app/Data.php');
         $this->fileLoader($path . 'dnt-library/framework/app/AggrBuilder.php');
         $this->fileLoader($path . 'dnt-library/framework/app/OpenSslCrypt.php');
+        $this->fileLoader($path . 'dnt-library/framework/app/Cart.php');
     }
 
 }

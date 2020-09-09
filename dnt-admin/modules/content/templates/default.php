@@ -181,9 +181,13 @@ $dnt = $data['dnt'];
                                     <?php
                                     if ($row['protected'] == 1) {
                                         echo "<i class='fa fa-times bg-red action' style='opacity: 0.1' title='Chránené proti zmazaniu'></i>";
+                                    } elseif ($row['show'] == 0) {
+                                        ?>
+                                        <a <?php echo $dnt->confirmMsg("Naozaj chcete vymazať tento post?"); ?> href="<?php echo $adminContent->url("del", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>"><i class="fa fa-trash bg-red action"></i></a>
+                                        <?php
                                     } else {
                                         ?>
-                                        <a <?php echo $dnt->confirmMsg("Naozaj chcete vymazať tento post?"); ?> href="<?php echo $adminContent->url("del", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
+                                        <a <?php echo $dnt->confirmMsg("Naozaj chcete vymazať tento post?"); ?> href="<?php echo $adminContent->url("trash", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>"><i class="fa fa-trash bg-red action"></i></a>
                                     <?php } ?>
                                 </td>
                             </tr>

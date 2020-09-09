@@ -128,6 +128,33 @@ function configMenuItems()
         '`show`' => '0',
         '`parent_id`' => '0',
     );
+
+    $insertedData[] = array(
+        '`vendor_id`' => Vendor::getId(),
+        '`type`' => "submenu",
+        '`included`' => "",
+        '`ico`' => "fa fa-product-hunt",
+        '`order`' => "70",
+        '`name`' => "Kategórie produktov",
+        '`name_url`' => 'invoices',
+        '`name_url_sub`' => 'categories&type=product',
+        '`show`' => '0',
+        '`parent_id`' => '0',
+    );
+
+    $insertedData[] = array(
+        '`vendor_id`' => Vendor::getId(),
+        '`type`' => "submenu",
+        '`included`' => "",
+        '`ico`' => "fa fa-product-hunt",
+        '`order`' => "70",
+        '`name`' => "Kategórie variantov produktu",
+        '`name_url`' => 'invoices',
+        '`name_url_sub`' => 'categories&type=variant',
+        '`show`' => '0',
+        '`parent_id`' => '0',
+    );
+
     $insertedData[] = array(
         '`vendor_id`' => Vendor::getId(),
         '`type`' => "submenu",
@@ -140,7 +167,7 @@ function configMenuItems()
         '`show`' => '0',
         '`parent_id`' => '0',
     );
-    
+
     $insertedData[] = array(
         '`vendor_id`' => Vendor::getId(),
         '`type`' => "menu",
@@ -514,6 +541,22 @@ function configMenuItems()
         '`show`' => '1',
         '`parent_id`' => '0',
     );
+    
+
+    $insertedData[] = array(
+        '`vendor_id`' => Vendor::getId(),
+        '`type`' => "menu",
+        '`included`' => "",
+        '`ico`' => "fa fa-trash",
+        '`order`' => "50",
+        '`name`' => "Odstránené príspevky",
+        '`name_url`' => 'content&postParam=show-0',
+        '`name_url_sub`' => '',
+        '`show`' => '1',
+        '`parent_id`' => '0',
+    );
+    
+    
     $insertedData[] = array(
         '`vendor_id`' => Vendor::getId(),
         '`type`' => "menu",

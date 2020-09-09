@@ -74,6 +74,7 @@ class Data
             $articleService = $this->postObject->service;
             $articleServiceId = $this->postObject->service_id;
             $articleTags = $this->postObject->tags;
+            $articleShow = $this->postObject->show;
             $articleImage = $this->articleView->getPostImage($this->postObject->id_entity);
         } else {
             $this->postObject = $this->getPostObject($postId);
@@ -86,6 +87,7 @@ class Data
             $articleService = $this->postObject->service;
             $articleServiceId = $this->postObject->service_id;
             $articleTags = $this->postObject->tags;
+            $articleShow = $this->postObject->show;
             $articleImage = $this->articleView->getPostImage($postId);
         }
 
@@ -133,6 +135,7 @@ class Data
                 'service_id' => $articleServiceId,
                 'tags' => $articleTags,
                 'img' => $articleImage,
+                'show' => $articleShow,
             ),
             'meta_tree' => $metaArr,
             'menu_items' => $menuItems,

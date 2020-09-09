@@ -68,7 +68,7 @@ class Post extends Client
     protected function postsNavigation()
     {
         foreach ($this->postsModel as $model) {
-            if ($model->type == "sitemap" && $model->show > 0 && $model->sub_cat_id == "") {
+            if ($model->type == "sitemap" && ($model->show >= 1 && $model->show <=2) && $model->sub_cat_id == "") {
                 $this->postsNavigation[] = $model;
             }
         }
@@ -80,7 +80,7 @@ class Post extends Client
     protected function postsSubNavigation()
     {
         foreach ($this->postsModel as $model) {
-            if ($model->type == "sitemap" && $model->show > 0 && $model->sub_cat_id != "") {
+            if ($model->type == "sitemap" && ($model->show >= 1 && $model->show <=2) && $model->sub_cat_id != "") {
                 $this->postsSubNavigation[] = $model;
             }
         }

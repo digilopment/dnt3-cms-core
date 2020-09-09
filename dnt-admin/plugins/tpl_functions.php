@@ -736,17 +736,19 @@ function get_top()
 <?php
    function admin_zobrazenie_stav($zobrazenie)
    {
-       if ($zobrazenie == 1)
-           $return = "fa fa-arrow-right bg-green action";
-       elseif ($zobrazenie == 2) {
-           $return = "fa fa-arrow-down bg-blue action";
-       } else {
-           $return = "fa fa-times bg-red action";
-       }
-       return $return;
-   }
-   
-   function getParamUrl()
+        if ($zobrazenie == 1)
+            $return = "fa fa-eye bg-green action";
+        elseif ($zobrazenie == 2) {
+            $return = "fa fa-eye bg-blue action";
+        } elseif ($zobrazenie == 3) {
+            $return = "fa fa-eye bg-orange action";
+        } else {
+            $return = "fa fa-trash bg-red action";
+        }
+        return $return;
+    }
+
+function getParamUrl()
    {
        $adresa = explode("?", WWW_FULL_PATH);
        if (isset($_GET['page'])) {

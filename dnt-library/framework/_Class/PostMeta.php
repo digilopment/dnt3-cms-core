@@ -51,14 +51,23 @@ class PostMeta
         return array();
     }
 
-    public function getPostMeta($id_entity)
+    public function getPostMeta($postId)
     {
         $db = new DB;
-        $query = "SELECT * FROM dnt_posts_meta WHERE `vendor_id` = '" . Vendor::getId() . "' AND id_entity = '" . $id_entity . "'";
+        $query = "SELECT * FROM dnt_posts_meta WHERE `vendor_id` = '" . Vendor::getId() . "' AND post_id = '" . $postId . "'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 $arr['keys'][$row['key']]['show'] = $row['show'];
                 $arr['keys'][$row['key']]['value'] = $row['value'];
+                $arr['keys'][$row['key']]['id_entity'] = $row['id_entity'];
+                $arr['keys'][$row['key']]['post_id'] = $row['post_id'];
+                $arr['keys'][$row['key']]['service'] = $row['service'];
+                $arr['keys'][$row['key']]['key'] = $row['key'];
+                $arr['keys'][$row['key']]['content_type'] = $row['content_type'];
+                $arr['keys'][$row['key']]['cat_id'] = $row['cat_id'];
+                $arr['keys'][$row['key']]['description'] = $row['description'];
+                $arr['keys'][$row['key']]['order'] = $row['order'];
+                $arr['keys'][$row['key']]['vendor_id'] = $row['vendor_id'];
             }
             return $arr;
         }
@@ -141,17 +150,17 @@ class PostMeta
 
                 foreach ($arrOfConfigKeysUpdate as $key => $val) {
                     $db->update(
-                        'dnt_posts_meta',
-                        array(
-                            'order' => $settingsData[$key]['`order`'],
-                            //'show' => $settingsData[$key]['`show`'],
-                            'content_type' => $settingsData[$key]['`content_type`'],
-                            'description' => $settingsData[$key]['`description`'],
-                        ),
-                        array(
-                            '`key`' => $settingsData[$key]['`key`'],
-                            '`post_id`' => $postId,
-                            '`vendor_id`' => Vendor::getId())
+                            'dnt_posts_meta',
+                            array(
+                                'order' => $settingsData[$key]['`order`'],
+                                //'show' => $settingsData[$key]['`show`'],
+                                'content_type' => $settingsData[$key]['`content_type`'],
+                                'description' => $settingsData[$key]['`description`'],
+                            ),
+                            array(
+                                '`key`' => $settingsData[$key]['`key`'],
+                                '`post_id`' => $postId,
+                                '`vendor_id`' => Vendor::getId())
                     );
                 }
             }

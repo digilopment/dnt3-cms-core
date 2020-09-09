@@ -3,15 +3,18 @@
 namespace DntAdmin\Moduls;
 
 use DntAdmin\App\AdminController;
+use DntAdmin\Moduls\UpdateContent;
 use DntLibrary\App\Autoloader;
+use DntLibrary\App\Post;
+use DntLibrary\App\PostVariants;
 use DntLibrary\Base\AdminContent;
 use DntLibrary\Base\DB;
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Image;
+use DntLibrary\Base\PostMeta;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Vendor;
 use DntLibrary\Base\Webhook;
-use DntAdmin\Moduls\UpdateContent;
 
 class ContentController extends AdminController
 {
@@ -27,6 +30,7 @@ class ContentController extends AdminController
     protected $vendor;
     protected $updateContent;
     protected $importContent;
+    protected $finalItems;
 
     public function __construct()
     {
@@ -40,6 +44,9 @@ class ContentController extends AdminController
         $this->image = new Image();
         $this->adminContent = new AdminContent();
         $this->dnt = new Dnt();
+        $this->postVariants = new PostVariants();
+        $this->post = new Post();
+        $this->postMeta = new PostMeta();
         $this->updateContent = new UpdateContent();
         $this->importContent = new ImportContent();
     }
@@ -74,7 +81,32 @@ class ContentController extends AdminController
         $this->db->insert('dnt_posts', $insertedData);
         $this->db->dbcommit();
         $lastId = $this->dnt->getLastId('dnt_posts');
+        if ($this->rest->get('post_id')) {
+            $groupId = $this->rest->get('post_id');
+        } else {
+            $groupId = $lastId;
+        }
+        $this->db->update(
+                'dnt_posts',
+                array(
+                    'group_id' => $groupId,
+                ),
+                array(
+                    'id_entity' => $lastId,
+                    'vendor_id' => Vendor::getId(),
+                )
+        );
+
+
         $redirect = WWW_PATH_ADMIN_2 . 'index.php?src=content&filter=' . $this->rest->get('filter') . '&sub_cat_id=' . $this->rest->get('sub_cat_id') . '&post_id=' . $lastId . '&page=1&action=edit&included=' . $this->rest->get('included') . '';
+        $this->dnt->redirect($redirect);
+    }
+
+    public function addVariantAction()
+    {
+        $postId = $this->rest->get('post_id');
+        $lastId = $this->postVariants->createVariantFromPost($postId);
+        $redirect = WWW_PATH_ADMIN_2 . 'index.php?src=content&filter=' . $this->rest->get('filter') . '&sub_cat_id=' . $this->rest->get('sub_cat_id') . '&post_id=' . $lastId . '&page=1&action=edit&included=variant';
         $this->dnt->redirect($redirect);
     }
 
@@ -99,6 +131,24 @@ class ContentController extends AdminController
 
         $whereMeta = array('post_id' => $post_id, 'vendor_id' => Vendor::getId());
         $this->db->delete('dnt_posts_meta', $whereMeta);
+
+        $this->dnt->redirect();
+    }
+
+    public function trashAction()
+    {
+        $post_id = $this->rest->get('post_id');
+        $table = 'dnt_posts';
+        $this->db->update(
+                $table, //table
+                array(//set
+                    'show' => 0,
+                ),
+                array(//where
+                    'id_entity' => $post_id,
+                    'vendor_id' => Vendor::getId(),
+                )
+        );
 
         $this->dnt->redirect();
     }
@@ -165,12 +215,12 @@ class ContentController extends AdminController
             }
         }
 
-        if ($show == 0) {
+        if ($show == 3 || $show == 0) {
             $set_show = 1;
         } elseif ($show == 1) {
             $set_show = 2;
         } else {
-            $set_show = 0;
+            $set_show = 3;
         }
         $table = 'dnt_posts';
         $this->db->update(
@@ -240,8 +290,57 @@ class ContentController extends AdminController
         $this->dnt->redirect($redirect);
     }
 
+    protected function postsWithMetaData($sourceItems)
+    {
+        $ids = [];
+        $metaData = [];
+        //$this->finalItems = $this->postVariants->getVariants($group_id, false);
+        foreach ($sourceItems as $item) {
+            $ids[] = $item['id_entity'];
+        }
+        $idsIn = join(',', $ids);
+        if ($idsIn) {
+            $metaData = $this->postMeta->getPostsMeta($idsIn);
+        }
+
+        $final = [];
+        foreach ($sourceItems as $key => $item) {
+            $final[$key] = $item;
+            $postId = $item['id_entity'];
+            $final[$key]['variant'] = isset($metaData['keys'][$postId]['variant']) && $metaData['keys'][$postId]['variant']['show'] == 1 ? $metaData['keys'][$postId]['variant']['value'] : false;
+        }
+        //$sourceItems = $final;
+        return $final;
+    }
+
     public function editAction()
     {
+        $post_id = $this->rest->get("post_id");
+        $group_id = $this->adminContent->getPostParam("group_id", $post_id);
+        if ($group_id == 0) {
+            $this->db->update(
+                    'dnt_posts',
+                    array(
+                        'group_id' => $post_id,
+                    ),
+                    array(
+                        'id_entity' => $post_id,
+                        'vendor_id' => Vendor::getId(),
+                    )
+            );
+        }
+
+        $config = [
+            'group_id' => $group_id,
+            'add_hide' => 1,
+        ];
+        $variantsItems = $this->postVariants->getVariants($config, false);
+        $data['variants'] = $this->postsWithMetaData($variantsItems);
+        $postParentItem[] = (array) $this->post->getPost($group_id, false);
+        $data['parentItem'] = $this->postsWithMetaData($postParentItem);
+
+        $postItem[] = (array) $this->post->getPost($post_id, false);
+        $data['item'] = $this->postsWithMetaData($postItem);
         $data['rest'] = $this->rest;
         $data['webhook'] = $this->webhook;
         $data['dnt'] = $this->dnt;

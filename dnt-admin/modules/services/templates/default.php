@@ -1,10 +1,12 @@
 <?php
 
 use DntLibrary\Base\Image;
+
 get_top();
 get_top_html();
 
 $postId = $data['post_id'];
+$groupId = $data['item'][0]['group_id'];
 $rest = $data['rest'];
 $dnt = $data['dnt'];
 $article = $data['article'];
@@ -27,7 +29,7 @@ $actionUrl = "index.php?src=services&included=" . $service . "&filter=" . $rest-
         <span class="label label-primary bg-orange" style="padding:5px;"><big>SPAŤ NA DETAIL</big></span>
     </a>
     <?php if ($show > 0) { ?>
-        <a  href="<?php echo WWW_PATH . "a/" . $postId; ?>" target="_blank" style="float:right">
+        <a  href="<?php echo WWW_PATH . "a/" . $groupId; ?>" target="_blank" style="float:right">
             <span class="label label-primary bg-blue" style="padding:5px;"><big><i class="fa fa-external-link-square"></i> OTVORIŤ POST NA WEBE</big></span>
         </a>
     <?php } ?>
@@ -43,7 +45,26 @@ $actionUrl = "index.php?src=services&included=" . $service . "&filter=" . $rest-
             <form enctype='multipart/form-data'action="<?php echo $actionUrl; ?>" method="POST">
                 <div class="col-md-12">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#sutaz" data-toggle="tab"><?php echo $postId; ?></a></li>
+                        <?php
+                        foreach ($data['item'] as $variant) {
+                            $srvUrl = 'index.php?src=services&included=' . $variant['type'] . '&filter=' . $variant['cat_id'] . '&post_id=' . $variant['id_entity'] . '&service=' . $variant['service'] . '';
+                            ?>
+                            <li class="<?php echo ($variant['id_entity'] == $postId) ? 'active' : false; ?>">
+                                <a href="<?php echo $srvUrl; ?>"><?php echo $variant['name']; ?> <br/> <?php echo $variant['variant']; ?>
+                                    - <small class="text-center"><?php echo $variant['type']; ?></small>
+                                </a>
+                            </li>
+                        <?php } ?>
+                        <?php
+                        foreach ($data['variants'] as $variant) {
+                            $srvUrl = 'index.php?src=services&included=' . $variant['type'] . '&filter=' . $variant['cat_id'] . '&post_id=' . $variant['id_entity'] . '&service=' . $variant['service'] . '';
+                            ?>
+                            <li class="<?php echo ($variant['id_entity'] == $postId) ? 'active' : false; ?>">
+                                <a href="<?php echo $srvUrl; ?>"><?php echo $variant['name']; ?> <br/> <?php echo $variant['variant']; ?>
+                                    - <small><?php echo $variant['type']; ?></small>
+                                </a>
+                            </li>
+                        <?php } ?>
                     </ul>
                     <div class=" tab-content">
                         <!-- base settings -->
@@ -79,7 +100,7 @@ $actionUrl = "index.php?src=services&included=" . $service . "&filter=" . $rest-
                                             ?>
                                             <input name="key_<?php echo $row['id_entity']; ?>"  value="" type="hidden" class="form-control">
                                             <?php
-                                        }elseif ($row['content_type'] == "content") {
+                                        } elseif ($row['content_type'] == "content") {
                                             ?>
                                             <textarea name="key_<?php echo $row['id_entity'] ?>" value="<?php echo $row['value'] ?>" class="ckeditor" style="min-height: 195px;"><?php echo $row['value'] ?></textarea>
                                         <?php } else {

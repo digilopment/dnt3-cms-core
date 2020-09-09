@@ -40,6 +40,7 @@ class AdminContent extends MultyLanguage
             "video" => "Video",
             "gallery" => "Galérie",
             "product" => "Produkt",
+            "variant" => "Variant",
         );
     }
 
@@ -85,17 +86,21 @@ class AdminContent extends MultyLanguage
     protected function prepare_query($is_limit)
     {
         $db = new DB();
-
-        if (isset($_GET['included']) && $_GET['included'] == "article") {
-            $typ = "AND sub_cat_id = '" . $_GET['filter'] . "'";
+        if (isset($_GET['postParam'])) {
+            $params = explode('-', $_GET['postParam']);
+            if (isset($params[0]) && isset($params[1])) {
+                $typ = "AND `$params[0]` = '" . $params[1] . "'";
+            }
+        } elseif (isset($_GET['included']) && $_GET['included'] == "article") {
+            $typ = "AND sub_cat_id = '" . $_GET['filter'] . "' AND `show` > 0 ";
         } elseif (isset($_GET['included']) && isset($_GET['filter'])) {
-            $typ = "AND cat_id = '" . $_GET['filter'] . "'";
+            $typ = "AND cat_id = '" . $_GET['filter'] . "' AND `show` > 0 ";
         } elseif (isset($_GET['included'])) {
             $typ = "AND type = '" . $_GET['included'] . "'";
         } elseif (isset($_GET['search'])) {
             $typ = "AND `name_url` LIKE '%" . Dnt::name_url($_GET['search']) . "%'";
         } else {
-            $typ = false;
+            $typ = "AND `show` > 0 ";
         }
         if ($is_limit == false)
             $limit = false;
@@ -126,7 +131,7 @@ class AdminContent extends MultyLanguage
           $limit = $is_limit;
          */
 
-        $query = "SELECT * FROM `dnt_posts` WHERE  `vendor_id` = '" . Vendor::getId() . "' " . $typ . " ORDER BY `order` DESC " . $limit . "";
+        $query = "SELECT * FROM `dnt_posts` WHERE  `vendor_id` = '" . Vendor::getId() . "' " . $typ . " ORDER BY `order` DESC, `id_entity` DESC " . $limit . "";
         return $query;
     }
 

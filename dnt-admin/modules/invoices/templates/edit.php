@@ -241,11 +241,11 @@ if ($data['order']['datetime_publish'] == "0000-00-00 00:00:00") {
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <tbody>
-<?php foreach ($data['orderProducts'] as $product) { ?>
+                            <?php foreach ($data['orderProducts'] as $product) { ?>
                                 <tr>
                                     <!-- id -->
                                     <td class="number text-center">
-    <?php echo $product['id_entity']; ?>													
+                                        <?php echo $product['id_entity']; ?>													
                                     </td>
                                     <!--nazov a popis -->
                                     <td class="">
@@ -281,7 +281,8 @@ if ($data['order']['datetime_publish'] == "0000-00-00 00:00:00") {
                                         </a>											
                                     </td>
                                 </tr>
-<?php } ?>
+
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>

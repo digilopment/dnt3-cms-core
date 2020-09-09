@@ -3,6 +3,8 @@
 namespace DntAdmin\Moduls;
 
 use DntAdmin\App\AdminController;
+use DntLibrary\App\Post;
+use DntLibrary\App\PostVariants;
 use DntLibrary\Base\AdminContent;
 use DntLibrary\Base\ArticleView;
 use DntLibrary\Base\DB;
@@ -34,6 +36,9 @@ class ServicesController extends AdminController
         $this->articleView = new ArticleView();
         $this->db = new DB();
         $this->dntUpload = new DntUpload();
+        $this->postVariants = new PostVariants();
+        $this->post = new Post();
+        $this->postMeta = new PostMeta();
     }
 
     protected function checkMetaServicesConfigurator()
@@ -47,6 +52,30 @@ class ServicesController extends AdminController
         }
     }
 
+    protected function postsWithMetaData($sourceItems)
+    {
+        $ids = [];
+        $metaData = [];
+        foreach ($sourceItems as $item) {
+            $ids[] = $item['id_entity'];
+        }
+        $idsIn = join(',', $ids);
+        if ($idsIn) {
+            $metaData = $this->postMeta->getPostsMeta($idsIn);
+        }
+
+        $final = [];
+        foreach ($sourceItems as $key => $item) {
+            $final[$key] = $item;
+            $postId = $item['id_entity'];
+            $final[$key]['price'] = isset($metaData['keys'][$postId]['price']) && $metaData['keys'][$postId]['price']['show'] == 1 ? $metaData['keys'][$postId]['price']['value'] : false;
+            $final[$key]['isInStock'] = isset($metaData['keys'][$postId]['isInStock']) && $metaData['keys'][$postId]['isInStock']['show'] == 1 ? $metaData['keys'][$postId]['isInStock']['value'] : false;
+            $final[$key]['variant'] = isset($metaData['keys'][$postId]['variant']) && $metaData['keys'][$postId]['variant']['show'] == 1 ? $metaData['keys'][$postId]['variant']['value'] : false;
+        }
+        //$sourceItems = $final;
+        return $final;
+    }
+
     public function indexAction()
     {
         $data['image'] = $this->image;
@@ -58,9 +87,17 @@ class ServicesController extends AdminController
         $data['service'] = $this->rest->get('service');
         $data['show'] = $this->adminContent->getPostParam('show', $this->rest->get('post_id'));
         $data['msg'] = 'Tento modul nemá žiadne meta dáta. <br/>Pre vytvorenie nových meta dát prosím vytvorte konfiguráciu v module.';
+        
+        $post_id = $this->rest->get('post_id');
+                
+        $group_id = $this->adminContent->getPostParam("group_id", $post_id);
+        $variantsItems = $this->postVariants->getVariants($group_id, false);
+        $data['variants'] = $this->postsWithMetaData($variantsItems);
+        $postItem[] = (array) $this->post->getPost($group_id, false);
+        $data['item'] = $this->postsWithMetaData($postItem);
 
         if ($this->checkMetaServicesConfigurator()) {
-            PostMeta::loadNewPostMetaFromConf($this->rest->get('post_id'), $this->rest->get('service'));
+            PostMeta::loadNewPostMetaFromConf($post_id, $this->rest->get('service'));
             $this->loadTemplate($this->loc, 'default', $data);
         } else {
             $this->loadTemplate($this->loc, 'error', $data);

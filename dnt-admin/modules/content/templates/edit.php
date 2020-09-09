@@ -15,38 +15,53 @@ $image = $data['image'];
 
 $post_id = $rest->get("post_id");
 $page = $rest->get("page");
-
-$cat_id = $adminContent->getPostParam("cat_id", $post_id);
-$sub_cat_id = $adminContent->getPostParam("sub_cat_id", $post_id);
-$type = $adminContent->getPostParam("type", $post_id);
-$show = $adminContent->getPostParam("show", $post_id);
-$protected = $adminContent->getPostParam("protected", $post_id);
-$name = $adminContent->getPostParam("name", $post_id);
-$name_url = $adminContent->getPostParam("name_url", $post_id);
-$datetime_creat = $adminContent->getPostParam("datetime_creat", $post_id);
-$datetime_update = $adminContent->getPostParam("datetime_update", $post_id);
-$datetime_publish = $adminContent->getPostParam("datetime_publish", $post_id);
-$perex = $adminContent->getPostParam("perex", $post_id);
-$content = $adminContent->getPostParam("content", $post_id);
-$embed = $adminContent->getPostParam("embed", $post_id);
-$tags = $adminContent->getPostParam("tags", $post_id);
-$service = $adminContent->getPostParam("service", $post_id);
-$service_id = $adminContent->getPostParam("service_id", $post_id);
-$imageID = $adminContent->getPostParam("img", $post_id);
-$post_category_id = $adminContent->getPostParam("post_category_id", $post_id);
-//osetrenie vstupov
+$group_id = $data['item'][0]['group_id'];
+$cat_id = $data['item'][0]['cat_id'];
+$sub_cat_id = $data['item'][0]['sub_cat_id'];
+$type = $data['item'][0]['type'];
+$show = $data['item'][0]['show'];
+$protected = $data['item'][0]['protected'];
+$name = $data['item'][0]['name'];
+$name_url = $data['item'][0]['name_url'];
+$datetime_creat = $data['item'][0]['datetime_creat'];
+$datetime_update = $data['item'][0]['datetime_update'];
+$datetime_publish = $data['item'][0]['datetime_publish'];
+$perex = $data['item'][0]['perex'];
+$content = $data['item'][0]['content'];
+$embed = $data['item'][0]['embed'];
+$tags = $data['item'][0]['tags'];
+$service = $data['item'][0]['service'];
+$service_id = $data['item'][0]['service_id'];
+$imageID = $data['item'][0]['img'];
+$post_category_id = $data['item'][0]['post_category_id'];
+$variant = $data['item'][0]['variant'];
 if ($datetime_publish == "0000-00-00 00:00:00") {
     $datetime_publish = Dnt::datetime();
 }
 ?>
 
 <!-- BEGIN CUSTOM TABLE -->
+<style>
+    table.table tr.active td,
+    table.table tr.active td:hover,
+    table.table tr:hover,
+    table.table tr td:hover,
+    table.table tr td:hover,
+    table.table tr:hover
+    {
+        background: #f5f5f5;
+        color: #f5f5f5;
+    }
+</style>
 <section class="col-xs-12" style="margin-bottom:15px">
     <a href="index.php?src=content&included=<?php echo $rest->get("included"); ?>&filter=<?php echo $rest->get("filter"); ?>">
         <span class="label label-primary bg-blue" style="padding:5px;" ><big>PREJSŤ NA ZOZNAM</big></span>
     </a>
     <a href="index.php?src=content&included=<?php echo $rest->get("included"); ?>&filter=<?php echo $rest->get("filter"); ?>&action=add">
         <span class="label label-primary bg-green" style="padding:5px;"><big>PRIDAŤ NOVÝ POST V TEJTO KATEGÓRII</big></span>
+    </a>
+    <a href="index.php?src=content&included=variant&filter=<?php echo $rest->get("filter"); ?>&action=addVariant&post_id=<?php echo $rest->get("post_id"); ?>">
+        <span class="label label-primary bg-orange" style="padding:5px;"><big>PRIDAŤ VARIANT</big></span>
     </a>
     <?php if ($rest->get("included") == "sitemap" && $service) { ?>
         <a <?php echo Dnt::confirmMsg("Pred prejdením na službu sa prosím uistite, či máte uložte všetky zmeny."); ?> 
@@ -60,9 +75,6 @@ if ($datetime_publish == "0000-00-00 00:00:00") {
             <span class="label label-primary bg-blue" style="padding:5px;"><big><i class="fa fa-external-link-square"></i> OTVORIŤ POST NA WEBE</big></span>
         </a>
     <?php } ?>
-
-
-
 </section>	
 <section class="content">
     <div class="row">
@@ -73,14 +85,72 @@ if ($datetime_publish == "0000-00-00 00:00:00") {
                 <!-- lava strana-->
                 <div class="col-md-4">
                     <div class="col" style="text-align: left;">
-                        <h3>Nastavenia postu pre defaultný jazyk</h3>
+                        <h3>Varianty postu</h3><br/>
+                        <table class="table table-hover">
+                            <?php
+                            $editUrl = 'index.php?src=content&amp;post_id=' . $group_id . '&amp;page=1&amp;action=edit&amp;included=' . $type . '&service=' . $service;
+                            ?>
+                            <tr class="<?php echo ($data['parentItem'][0]['id_entity'] == $post_id) ? 'active' : false; ?>">
+                                <td style="width:60%">
+                                    <a href="<?php echo $editUrl; ?>">
+                                        <?php echo $data['parentItem'][0]['name'] ?> <br/> 
+                                        <b><?php echo $data['parentItem'][0]['variant'] ?></b> <small><small><i>post</i></small></small>
+                                    </a>
+                                </td>
+                                <td style="width:40%">
+                                    <a href="<?php echo $editUrl; ?>">
+                                        <i class="fa fa-pencil bg-blue action"></i>
+                                    </a>
+                                    <a href="index.php?src=services&included=<?php echo $rest->get("included"); ?>&filter=<?php echo $rest->get("filter"); ?>&post_id=<?php echo $rest->get("post_id"); ?>&service=<?php echo $service; ?>">
+                                        <i class="fa fa-pencil bg-orange action"></i>
+                                    </a>
+                                    <a href="<?php echo $adminContent->url('show_hide', $data['parentItem'][0]['cat_id'], $data['parentItem'][0]['sub_cat_id'], $data['parentItem'][0]['type'], $data['parentItem'][0]['id_entity'], $page) ?>">
+                                        <i class="<?php echo admin_zobrazenie_stav($data['parentItem'][0]['show']); ?>"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <?php
+                            foreach ($data['variants'] as $variant) {
+                                $editUrl = 'index.php?src=content&amp;post_id=' . $variant['id_entity'] . '&amp;page=1&amp;action=edit&amp;included=variant&service=' . $variant['service'];
+                                $editMetaUrl = 'index.php?src=services&amp;included=' . $variant['type'] . '&amp;filter=' . $variant['cat_id'] . '&amp;post_id=' . $variant['id_entity'] . '&amp;service=' . $variant['service'];
+                                $deleteUrl = 'index.php?src=content&amp;post_id=' . $variant['id_entity'] . '&amp;page=1&amp;action=trash&amp;included=' . $variant['type'] . '';
+                                ?>
+                                <tr class="<?php echo ($variant['id_entity'] == $post_id) ? 'active' : false; ?>">
+                                    <td style="width:60%">
+                                        <a href="<?php echo $editUrl; ?>">
+                                            <?php echo $variant['name'] ?><br/>
+                                            <b><?php echo $variant['variant'] ?></b> <small><small><i>variant</i></small></small>
+                                        </a>
+                                    </td>
+                                    <td style="width:40%">
+                                        <a href="<?php echo $editUrl; ?>">
+                                            <i class="fa fa-pencil bg-blue action"></i>
+                                        </a>
+                                        <a href="<?php echo $editMetaUrl; ?>">
+                                            <i class="fa fa-pencil bg-orange action"></i>
+                                        </a>
+                                        <a href="<?php echo $adminContent->url('show_hide', $variant['cat_id'], $variant['sub_cat_id'], $variant['type'], $variant['id_entity'], $page) ?>">
+                                            <i class="<?php echo admin_zobrazenie_stav($variant['show']); ?>"></i>
+                                        </a>
+                                            <!--<a href="<?php echo $setVisibleUrl; ?>">
+                                                <i class="fa fa-eye bg-green action"></i>
+                                            </a>-->
+                                        <a onclick="return confirm('Naozaj chcete vymazať tento post?');" href="<?php echo $deleteUrl; ?>">
+                                            <i class="fa fa-times bg-red action"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </table>
+                    </div>
+                    <div class="col" style="text-align: left;">
+                        <h3>Nastavenia postu</h3>
                         <hr/>
                         <?php get_typ_zaradenie($cat_id, $sub_cat_id, $type); ?>
-                        
                         <h5><b>Zaradiť post do categories</b> <a class="btn btn-success" href="index.php?src=categories&productId=<?php echo $post_id; ?>" target="">(zobraziť strom kategorii)</a>:<br/></h5>
                         Vložiť <b>ID ručne</b><br/> 
                         <input type='text' name="post_category_id" value="<?php echo $post_category_id; ?>" class="form-control" />
-               
+
                         <br/>
                         <div class="row">
                             <div class="col-xs-8">
@@ -105,7 +175,7 @@ if ($datetime_publish == "0000-00-00 00:00:00") {
                             </div>
                         </div>
                         <br/>
-                        <?php /*galleryChooser($post_id, $imageID);*/?>
+                        <?php /* galleryChooser($post_id, $imageID); */ ?>
                         <input name="userfile" type="file" class="form-control">
                         <br/>
                         <br/>

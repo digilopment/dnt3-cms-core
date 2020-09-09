@@ -70,10 +70,12 @@ class ArticleList extends AdminContent
                     `dnt_posts`.`type` AS type, 
                     `dnt_posts`.`name_url` AS name_url,
                     `dnt_posts`.`name` AS name,
+                    `dnt_posts`.`show` AS `show`,
                     `dnt_posts`.`content` AS content,
                     `dnt_posts`.`perex` AS perex,
                     `dnt_posts`.`service` AS service,
                     `dnt_posts`.`datetime_creat` AS datetime_creat,
+                    `dnt_posts`.`datetime_publish` AS datetime_publish,
                     `dnt_posts`.`datetime_update` AS datetime_update,
                     `dnt_post_type`.`cat_id` AS cat_id,
                     `dnt_post_type`.`name_url` AS cat_name_url,
@@ -88,13 +90,13 @@ class ArticleList extends AdminContent
                     `dnt_posts`.`vendor_id` 	= '" . Vendor::getId() . "' AND 
                     `dnt_post_type`.`vendor_id` = '" . Vendor::getId() . "' 
             AND
-                    `dnt_posts`.`show` 			<> '0'
+                    `dnt_posts`.`show` <> '0'
             " . $typArticle . " 
             " . $typ . " 
             GROUP BY 
                     `dnt_posts`.`id_entity`
             ORDER BY 
-                    `dnt_posts`.`order` DESC " . $limit . "";
+                    `dnt_posts`.`datetime_publish` DESC, `dnt_posts`.`order` DESC " . $limit . "";
         return $query;
     }
 
