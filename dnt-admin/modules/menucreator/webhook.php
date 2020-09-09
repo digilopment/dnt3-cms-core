@@ -591,25 +591,33 @@ function menuQuery()
     return $query;
 }
 
+function createKey($key){
+	$dnt = new Dnt();
+	return str_replace('-', '', $dnt->name_url($key));
+}
+
 function addToMenu()
 {
     $db = new DB();
     $query = menuQuery();
-    foreach ($db->get_results($query) as $row) {
-        //var_dump($row);	
-    }
+	$menuData = configMenuItems();
+		/*foreach ($db->get_results($query) as $row) {
+			//var_dump($row);	
+		}
 
-    $menuData = configMenuItems();
-    foreach ($menuData as $data) {
-        //var_dump($data);
-    }
-
+		$menuData = configMenuItems();
+		foreach ($menuData as $data) {
+			//var_dump($data);
+		}
+	*/
+	$configKeys = [];
     foreach ($menuData as $key => $value) {
-        $configKeys[] = $value['`name_url_sub`'];
+        $configKeys[] = createKey($value['`name`'].$value['`name_url`'].$value['`name_url_sub`']);
     }
 
+	$existingKey = [];
     foreach ($db->get_results($query) as $row) {
-        $existingKey[] = $row['name_url_sub'];
+        $existingKey[] = createKey($row['name'].$row['name_url'].$row['name_url_sub']);
     }
 
     $diffedArray = array_diff($configKeys, $existingKey);

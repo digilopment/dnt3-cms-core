@@ -142,7 +142,7 @@ class JsonVariantsToPostVariantsJob
     public function run()
     {
         //$this->removeAllPostsVariants();
-        //exit;
+		//exit;
         $this->init();
         //exit;
         foreach ($this->finalItems as $post) {
@@ -150,6 +150,7 @@ class JsonVariantsToPostVariantsJob
                 $variants = $post['variants'];
                 $postId = $post['id_entity'];
                 $arrVariants = $this->jsonDecode($variants);
+				//var_dump($variants);
                 print($post['name'] . ' - ');
                 if (is_array($arrVariants) && count($arrVariants) > 0) {
                     $i = 0;
@@ -162,7 +163,8 @@ class JsonVariantsToPostVariantsJob
                             //$lastId = $this->postVariants->createVariantFromPost($postId);
                             //$this->updateMeta($variant, $lastId, $post);
                             //FASTER OPTION - 1000 products - 5min
-                            $lastId = $this->postVariants->createVariantFromPost($postId, false);
+                            
+							$lastId = $this->postVariants->createVariantFromPost($postId, false);
                             $this->createMeta($variant, $lastId, $post);
                             $i++;
                         }

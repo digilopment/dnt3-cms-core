@@ -13,4 +13,9 @@ RewriteRule  ^([^_][a-zA-Z0-9\ _/:\-%]+)$     index.php?src=$1   [L]
 #Redirect 301 /rss /dnt-view/api/xml/rss/
 #Redirect 301 /sitemaps /dnt-view/api/xml/sitemaps/
 
+php_flag xcache.cacher Off
+php_flag xcache.size 0
+php_flag xcache.stat Off
+php_value opcache.enable 0
+
 #deny from 188.138.9.49
