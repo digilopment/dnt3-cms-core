@@ -10,7 +10,7 @@ use DntLibrary\Base\Cache;
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\DntLog;
 use DntLibrary\Base\Rest;
-use DntLibrary\Base\Settings;
+use DntLibrary\Base\Vendor;
 
 class App
 {
@@ -28,6 +28,7 @@ class App
         $this->dntLog = new DntLog();
         $this->dntCache = new Cache;
         $this->modul = new Modul();
+        $this->vendor = new Vendor();
     }
 
     public function run()
@@ -106,8 +107,16 @@ class App
                 die($type . ' file does not exists');
             }
         }
-        
-        if (file_exists($file)) {
+
+        $layout = $this->vendor->getLayout();
+        $fileVendor = '';
+        if ($layout != 'default') {
+            $fileVendor = '../dnt-view/layouts/' . $layout . '/dnt-jobs/' . $classFile . '.php';
+        }
+
+        if (file_exists($fileVendor)) {
+            include_once $fileVendor;
+        } elseif (file_exists($file)) {
             include_once $file;
         }
         $className = $nameSpace . $className;

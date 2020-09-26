@@ -94,30 +94,31 @@ $image = new Image;
                                 $imageName = $image->getFileImage($post_id, false, false);
                                 ?>
                                 <tr>
-                                    <td><?php echo $i++; ?></td>
-                                    <td><?php echo $row['id_entity'] ?></td>
+                                    <td>
+                                        <?php echo $i++; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row['id_entity'] ?>
+                                    </td>
                                     <td style="max-width: 500px;"><b><a target="_blank" href="<?php echo $image->getFileImage($post_id); ?>">
-
-                                        <?php echo $row['name']; ?></a></b>
+                                                <?php echo $row['name']; ?></a></b>
                                         <br>
                                         <?php
                                         foreach (DntUpload::imageFormats() as $format) {
                                             if (Dnt::in_string("image", $type)) {
                                                 ?>
                                                 <span style="font-weight:bold;"><a href="<?php echo "../dnt-view/data/uploads/formats/" . $format . "/" . $imageName ?>" target="_blank">width-<?php echo $format; ?></a> | </span>
-            <?php } ?>
-        <?php } ?>
-
+                                            <?php } ?>
+                                        <?php } ?>
                                         <br><br>
                                         <input style="width: 250px" type="text" value="<?php echo $image->getFileImage($post_id); ?>">
-
-
                                     </td>
                                     <td>
-        <?php echo FileAdmin::getPostParam("type", $row['id_entity']); ?>
+                                        <?php echo FileAdmin::getPostParam("type", $row['id_entity']); ?>
                                     </td>
-                                    <td><b><?php echo $row['datetime']; ?></b></td>
-
+                                    <td>
+                                        <b><?php echo $row['datetime']; ?></b>
+                                    </td>
                                     <td><b>
                                             <?php
                                             echo '<a target="_blank" href="' . $image->getFileImage($post_id) . '">';
@@ -128,7 +129,8 @@ $image = new Image;
                                             }
                                             echo '</a>';
                                             ?>
-                                        </b></td>
+                                        </b>
+                                    </td>
                                     <td>
                                         <a href="<?php echo FileAdmin::url("show_hide", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>">
                                             <i class="<?php echo admin_zobrazenie_stav($row['show']); ?>"></i>
@@ -171,12 +173,12 @@ $image = new Image;
         </li>
         <li>
             <a href="<?php echo FileAdmin::paginator("first"); ?>">
-<?php echo FileAdmin::getPage("first"); ?>
+                <?php echo FileAdmin::getPage("first"); ?>
             </a>
         </li>
         <li>
             <a href="<?php echo FileAdmin::paginator("last"); ?>">
-<?php echo FileAdmin::getPage("last"); ?>
+                <?php echo FileAdmin::getPage("last"); ?>
             </a>
         </li>
         <li>

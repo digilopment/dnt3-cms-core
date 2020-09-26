@@ -68,7 +68,7 @@
                         Počet kliknutí na linku (bez odhlásenia): <b><?php echo $data['countDefaultUrl'] ?></b><br/>
                         Úspešnosť otvorenia (bez odhlásenia): <b><?php echo $data['percentageDefaultUrl'] ?>%</b><br/><br/>
                         Počet žiadostí o odhlásenie (unikátne): <b><?php echo $data['countLogoutedUrlUnique'] ?></b><br/>
-                        Úspešnosť odhlásenia: <b><?php echo $data['percentageLogoutedUrl'] ?>%</b><br/>
+                        Percentuálny počet odhlásení: <b><?php echo $data['percentageLogoutedUrl'] ?>%</b><br/>
                     </p>
                 </div>
             </div>

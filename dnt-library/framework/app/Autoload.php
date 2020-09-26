@@ -85,6 +85,7 @@ class Autoloader
         $this->fileLoader($path . 'dnt-library/framework/app/AggrBuilder.php');
         $this->fileLoader($path . 'dnt-library/framework/app/OpenSslCrypt.php');
         $this->fileLoader($path . 'dnt-library/framework/app/Cart.php');
+        $this->fileLoader($path . 'dnt-library/framework/app/Files.php');
     }
 
 }

@@ -31,7 +31,7 @@ class Post extends Client
         $this->vendor = new Vendor();
     }
 
-    protected function order($data, $column = "id", $sort = "ASC")
+    protected function order($data, $column = 'id', $sort = 'ASC')
     {
         $sortArray = array();
         foreach ($data as $item) {

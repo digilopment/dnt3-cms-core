@@ -1037,11 +1037,13 @@ function getParamUrl()
                <select name="gallery" id="gallery_key_<?php echo $keyId; ?>_s" class="image-picker show-html" data-limit="<?php echo $limit; ?>" multiple="multiple" 
                   style="display:nones;" >
                <?php
-                  $query = FileAdmin::query(true);
+                  $query = FileAdmin::query(100);
                   if ($db->num_rows($query) > 0) {
                       foreach ($db->get_results($query) as $row) {
                           if (Dnt::in_string("image", $row['type'])) {
-                              echo '<option data-img-src="' . $image->getFileImage($row['id_entity'], true, Image::SMALL) . '" value="' . $row['id_entity'] . '">Cute Kitten 1</option>';
+                              //echo '<option data-img-src="' . $image->getFileImage($row['id_entity'], true, Image::SMALL) . '" value="' . $row['id_entity'] . '">Cute Kitten 1</option>';
+                              $name = $row['name'];
+                              echo '<option data-img-src="'.WWW_PATH.'/dnt-view/data/uploads/formats/'.Image::SMALL.'/' . $row['name'] . '" value="' . $name . '">' . $name . '</option>';
                           }
                       }
                   }
