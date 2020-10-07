@@ -27,7 +27,7 @@ class User extends Image
      */
     public function limit()
     {
-        return 30;
+        return 20;
     }
 
     /**

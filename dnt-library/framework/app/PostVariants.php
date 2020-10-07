@@ -65,6 +65,7 @@ class PostVariants
     public function getVariants($config, $addDefaultPost = false)
     {
 
+        $data = [];
         $setShow = 'AND (`show` = 1 or `show` = 2)';
         $groupId = $config;
         if (is_array($config)) {

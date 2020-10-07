@@ -88,9 +88,9 @@ $date_time_format = date("d") . "-" . date("m") . "-" . date("Y");
                                     echo '<a href="' . $image . '" target="_blank"><i class="fa fa-picture-o bg-green action"></i>';
                                 } ?></td>
                                 <td>
-    <?php if ($voucherId) { ?>
+                                    <?php if ($voucherId) { ?>
                                         <i title="Voucher je priradený" class="fa fa-check bg-green action"></i></td>
-    <?php } else { ?>
+                                    <?php } else { ?>
                             <a href="<?php echo $voucherAssigneUrl; ?>"><i title="Voucher čaká na priradenie, kliknutím priradíte." class="fa fa-times bg-blue action"></i></a>
                         <?php } ?>
                         </td>
@@ -99,10 +99,10 @@ $date_time_format = date("d") . "-" . date("m") . "-" . date("Y");
                             <a <?php echo Dnt::confirmMsg("Naozaj chcete vymazať tohoto používateľa?"); ?> title="Zmazať používateľa" href="index.php?src=user&action=del&post_id=<?php echo $row['id_entity'] ?>"><i class="fa fa-times bg-red action"></i></a>
                         </td>
                         </tr>
-    <?php
-    $i++;
-}
-?>									
+                            <?php
+                            $i++;
+                        }
+                        ?>									
                     </tbody>
                 </table>
             </div>
@@ -121,7 +121,7 @@ $date_time_format = date("d") . "-" . date("m") . "-" . date("Y");
             </li>
             <li>
                 <a href="<?php echo User::paginator($type, "last"); ?>">
-<?php echo User::getPage($type, "last"); ?>
+                    <?php echo User::getPage($type, "last"); ?>
                 </a>
             </li>
             <li>
