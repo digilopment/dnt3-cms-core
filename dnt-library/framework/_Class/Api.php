@@ -1,8 +1,5 @@
 <?php
 
-use DntLibrary\Base\DB;
-use DntLibrary\Base\Vendor;
-
 /**
  *  class       Api
  *  author      Tomas Doubek
@@ -12,6 +9,10 @@ use DntLibrary\Base\Vendor;
  */
 
 namespace DntLibrary\Base;
+
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Vendor;
+use SimpleXMLElement;
 
 class Api
 {
