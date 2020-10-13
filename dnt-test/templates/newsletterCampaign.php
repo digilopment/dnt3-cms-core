@@ -99,6 +99,7 @@
                                     <th>id</th>
                                     <th>Meno a priezvisko</th>
                                     <th>email</th>
+                                    <th>registrácia</th>
                                     <th>Videl</th>
                                     <th>Klikol</th>
                                     <th>Počet kliknutí</th>
@@ -111,6 +112,7 @@
                                     <th>id</th>
                                     <th>Meno a priezvisko</th>
                                     <th>email</th>
+                                    <th>registrácia</th>
                                     <th>Videl</th>
                                     <th>Klikol</th>
                                     <th>Počet kliknutí</th>
@@ -124,6 +126,7 @@
                                         <td> <?php echo $item->id ?></td>
                                         <td> <?php echo $item->name ?> <?php echo $item->surname ?></td>
                                         <td> <?php echo $item->email ?></td>
+                                        <td> <?php echo $item->datetime_creat ?></td>
                                         <td> <?php echo isset($data['setLogData'][$item->email]) ? '<b>ÁNO</b>' : 'NIE'; ?></td>
                                         <td> <?php echo isset($data['setLogData'][$item->email]) ? '<b>' . $data['setLogData'][$item->email]['clicked']() . '</b>' : 'NIE'; ?></td>
                                         <td> <?php echo isset($data['setLogData'][$item->email]) ? '<b>' . $data['setLogData'][$item->email]['countClick']() . '</b>' : '0'; ?></td>

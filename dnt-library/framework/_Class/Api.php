@@ -1,5 +1,8 @@
 <?php
 
+use DntLibrary\Base\DB;
+use DntLibrary\Base\Vendor;
+
 /**
  *  class       Api
  *  author      Tomas Doubek
@@ -10,11 +13,10 @@
 
 namespace DntLibrary\Base;
 
-use DntLibrary\Base\DB;
-use DntLibrary\Base\Vendor;
-
 class Api
 {
+
+    protected $columns;
 
     /**
      * 
@@ -49,9 +51,9 @@ class Api
                     $i++;
                 }
             }
-            return $arr;
+            $this->columns = $arr;
         } else {
-            return false;
+            $this->columns = false;
         }
     }
 
@@ -85,13 +87,15 @@ class Api
      */
     public function getXmlData($query)
     {
-        $xml = new SimpleXMLElement('<xml/>');
+        $xml = new SimpleXMLElement('<items/>');
         $db = new DB;
+        $this->getColumns($query);
+        $count = $db->num_rows($query);
 
-        if ($db->num_rows($query) > 0) {
+        if ($count > 0) {
             foreach ($db->get_results($query) as $row) {
                 $track = $xml->addChild('item');
-                foreach ($this->getColumns($query) as $column) {
+                foreach ($this->columns as $column) {
                     $track->addChild($column, html_entity_decode($row[$column]));
                 }
             }
@@ -106,25 +110,11 @@ class Api
     public function getJsonData($query)
     {
         $db = new DB;
+        $count = $db->num_rows($query);
 
-        if ($db->num_rows($query) > 0) {
-            echo '{ "items": [';
-            foreach ($db->get_results($query) as $row) {
-                echo '{';
-                foreach ($this->getColumns($query) as $column) {
-                    if ($column == @end($this->getColumns($query))) {
-                        echo '"' . $column . '":"' . html_entity_decode($row[$column]) . '"';
-                    } else {
-                        echo '"' . $column . '":"' . html_entity_decode($row[$column]) . '",';
-                    }
-                }
-                if ($row === @end($db->get_results($query))) {
-                    echo '}';
-                } else {
-                    echo '},';
-                }
-            }
-            echo ' ] }';
+        if ($count > 0) {
+            $data['items'] = $db->get_results($query);
+            echo json_encode($data);
         }
     }
 
