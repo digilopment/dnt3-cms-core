@@ -72,7 +72,7 @@ class ServicesController extends AdminController
             $final[$key]['isInStock'] = isset($metaData['keys'][$postId]['isInStock']) && $metaData['keys'][$postId]['isInStock']['show'] == 1 ? $metaData['keys'][$postId]['isInStock']['value'] : false;
             $final[$key]['variant'] = isset($metaData['keys'][$postId]['variant']) && $metaData['keys'][$postId]['variant']['show'] == 1 ? $metaData['keys'][$postId]['variant']['value'] : false;
         }
-        //$sourceItems = $final;
+//$sourceItems = $final;
         return $final;
     }
 
@@ -87,9 +87,9 @@ class ServicesController extends AdminController
         $data['service'] = $this->rest->get('service');
         $data['show'] = $this->adminContent->getPostParam('show', $this->rest->get('post_id'));
         $data['msg'] = 'Tento modul nemá žiadne meta dáta. <br/>Pre vytvorenie nových meta dát prosím vytvorte konfiguráciu v module.';
-        
+
         $post_id = $this->rest->get('post_id');
-                
+
         $group_id = $this->adminContent->getPostParam("group_id", $post_id);
         $variantsItems = $this->postVariants->getVariants($group_id, false);
         $data['variants'] = $this->postsWithMetaData($variantsItems);
@@ -112,7 +112,7 @@ class ServicesController extends AdminController
             $return = $this->rest->post('return');
             foreach ($this->articleView->getPostsMeta($postId, $this->rest->get('service')) as $row) {
 
-                if ($row['content_type'] == 'image' or $row['content_type'] == 'file') {
+                if ($row['content_type'] == 'image' || $row['content_type'] == 'file') {
 
                     if ($this->rest->post('gallery_key_' . $row['id_entity'])) {
                         if ($this->rest->post('gallery_key_' . $row['id_entity']) == 'del') {
