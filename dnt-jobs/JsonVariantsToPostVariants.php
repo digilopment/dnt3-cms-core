@@ -25,7 +25,7 @@ class JsonVariantsToPostVariantsJob
         $query = "SELECT * FROM dnt_posts WHERE "
                 . "type = 'product' AND "
                 . "`show` = '1' AND "
-                . "vendor_id = '" . $this->vendor->getId() . "' "
+                . "vendor_id = '" . $this->vendor->getId() . "'"
                 . "ORDER BY id ASC ";
         $this->finalItems = $this->db->get_results($query);
     }
@@ -111,6 +111,16 @@ class JsonVariantsToPostVariantsJob
         }
     }
 
+    protected function noVariants($post)
+    {
+        $query = "SELECT * FROM dnt_posts WHERE vendor_id = '" . $this->vendor->getId() . "' AND `type` = 'variant'  AND group_id = '" . $post['id_entity'] . "'";
+        if ($this->db->num_rows($query) == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     protected function removeUnusedMeta()
     {
         $query = "DELETE FROM `dnt_posts_meta` WHERE "
@@ -142,15 +152,17 @@ class JsonVariantsToPostVariantsJob
     public function run()
     {
         //$this->removeAllPostsVariants();
-		//exit;
+        //exit;
         $this->init();
         //exit;
+        //var_dump(count($this->finalItems));
+        //exit;
         foreach ($this->finalItems as $post) {
-            if ($post['variants'] && $post['variants'] != '[]') { //&& $post['id_entity'] == 31138
+            if ($post['variants'] && $post['variants'] != '[]' && $this->noVariants($post)) { //&& $post['id_entity'] == 31138
                 $variants = $post['variants'];
                 $postId = $post['id_entity'];
                 $arrVariants = $this->jsonDecode($variants);
-				//var_dump($variants);
+                //var_dump($variants);
                 print($post['name'] . ' - ');
                 if (is_array($arrVariants) && count($arrVariants) > 0) {
                     $i = 0;
@@ -163,8 +175,7 @@ class JsonVariantsToPostVariantsJob
                             //$lastId = $this->postVariants->createVariantFromPost($postId);
                             //$this->updateMeta($variant, $lastId, $post);
                             //FASTER OPTION - 1000 products - 5min
-                            
-							$lastId = $this->postVariants->createVariantFromPost($postId, false);
+                            $lastId = $this->postVariants->createVariantFromPost($postId, false);
                             $this->createMeta($variant, $lastId, $post);
                             $i++;
                         }
