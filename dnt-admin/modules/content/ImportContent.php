@@ -65,19 +65,19 @@ class ImportContent
         $cat_id = isset($postData['cat_id']) ? $postData['cat_id'] : false;
         $vendor_id = isset($postData['vendor_id']) ? $postData['vendor_id'] : Vendor::getId();
         $this->imageUrl = isset($postData['image']) ? $postData['image'] : false;
-        
+
         //$name = str_replace('´', '', $name);
         //$name = str_replace('`', '', $name);
         $name = str_replace("'", '', $name);
-        
+
         //$perex = str_replace('´', '', $perex);
         //$perex = str_replace('`', '', $perex);
         $perex = str_replace("'", '', $perex);
-        
+
         //$content = str_replace('´', '', $content);
         //$content = str_replace('`', '', $content);
         $content = str_replace("'", '', $content);
-        
+
 
         $this->service = $service;
         $this->vendorId = $vendor_id;
@@ -117,6 +117,11 @@ class ImportContent
         $this->db->insert('dnt_posts', $this->postData);
         $this->db->dbcommit();
         $this->lastPostId = $this->dnt->getLastId('dnt_posts', $this->vendorId);
+        $this->db->update(
+                'dnt_posts',
+                array('group_id' => $this->lastPostId),
+                array('id_entity' => $this->lastPostId, '`vendor_id`' => $this->vendorId)
+        );
     }
 
     protected function importImage()
