@@ -131,7 +131,7 @@ class AdminContent extends MultyLanguage
           $limit = $is_limit;
          */
 
-        $query = "SELECT * FROM `dnt_posts` WHERE  `vendor_id` = '" . Vendor::getId() . "' " . $typ . " ORDER BY `order` DESC, `id_entity` DESC " . $limit . "";
+        $query = "SELECT * FROM `dnt_posts` WHERE  `type` <> 'variant' AND `vendor_id` = '" . Vendor::getId() . "' " . $typ . " ORDER BY `order` DESC, `id_entity` DESC " . $limit . "";
         return $query;
     }
 
