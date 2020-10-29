@@ -96,6 +96,8 @@ class UsaVidgetJob
     public function run()
     {
         $this->init();
+        header('Access-Control-Allow-Origin: *');
+        header('Content-Type: application/json');
         print $this->getActualData();
     }
 
