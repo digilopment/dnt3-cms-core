@@ -4,10 +4,10 @@ namespace DntApi;
 
 use DntLibrary\App\Render;
 
-class CovidApi
+class UsaVidgetApi
 {
 
-    protected $serviceUrl = '../dnt-jobs/data/covid.json';
+    protected $serviceUrl = '../dnt-jobs/data/usa-vidget.json';
     protected $content;
 
     public function __construct()
