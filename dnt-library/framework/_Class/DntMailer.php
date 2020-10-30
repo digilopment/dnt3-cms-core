@@ -192,13 +192,116 @@ class Mailer
         }
     }
 
+    public function prepare_mail_v3($to)
+    {
+
+        //SENDER
+        if ($this->sender_email == false) {
+            $od_email = Settings::get("vendor_email");
+        } else {
+            $od_email = $this->sender_email;
+        }
+
+        //PREDMET
+        if ($this->subject == false) {
+            $predmet = "(no subject)";
+        } else {
+            if (SEND_EMAIL_VIA == "internal") {
+                $predmet = Dnt::odstran_diakritiku($this->subject);
+            } elseif (SEND_EMAIL_VIA == "send_grid") {
+                $predmet = $this->subject;
+            }
+        }
+
+        //OD MENO
+        if ($this->sender_name == false) {
+            $od_meno = Settings::get("vendor_company");
+        } else {
+            if (SEND_EMAIL_VIA == "internal") {
+                $od_meno = Dnt::odstran_diakritiku($this->sender_name);
+            } elseif (SEND_EMAIL_VIA == "send_grid") {
+                $od_meno = $this->sender_name;
+            }
+        }
+
+        //EMAIL SPRAVA
+        if ($this->msg == false) {
+            $email_sprava = false;
+        } else {
+            $email_sprava = $this->msg;
+        }
+
+        if (Settings::show("send_grid_api_key") == true && Settings::show("send_grid_api_template_id") == true) {
+            $SEND_GRID_API_KEY = Settings::get("send_grid_api_key");
+            $SEND_GRID_API_TEMPLATE_ID = Settings::get("send_grid_api_template_id");
+        } else {
+            $SEND_GRID_API_KEY = SEND_GRID_API_KEY;
+            $SEND_GRID_API_TEMPLATE_ID = SEND_GRID_API_TEMPLATE_ID;
+        }
+
+        $params = [
+            "from" => [
+                "email" => $od_email,
+                "name" => $od_meno,
+            ],
+            "subject" => $predmet,
+            "template_id" => $SEND_GRID_API_TEMPLATE_ID,
+            "content" => [
+                [
+                    "type" => "text/html",
+                    "value" => $email_sprava
+                ]
+            ],
+            "personalizations" => [
+                [
+                    "to" => [
+                        [
+                            "email" => $to,
+                            "name" => $to,
+                        ]
+                    ],
+                    "send_at" => time()
+                ]
+            ],
+            "tracking_settings" => [
+                'click_tracking' => [
+                    "enable" => false,
+                    "enable_text" => false,
+                ],
+                'click_tracking' => [
+                    "enable" => false,
+                    "enable_text" => false,
+                ]
+            ]
+        ];
+
+
+        $data = json_encode($params);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.sendgrid.com/v3/mail/send');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+        $headers = array();
+        $headers[] = 'Authorization: Bearer ' . $SEND_GRID_API_KEY;
+        $headers[] = 'Content-Type: application/json';
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $response = curl_exec($ch);
+        $this->response = $response;
+        curl_close($ch);
+    }
+
     /**
      * sent_email
      */
     public function sent_email()
     {
         foreach ($this->recipient as $to) {
-            $this->prepare_mail($to);
+            $this->prepare_mail_v3($to);
         }
     }
 
