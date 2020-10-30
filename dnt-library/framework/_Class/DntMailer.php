@@ -240,44 +240,42 @@ class Mailer
         }
 
         $params = [
-            "from" => [
-                "email" => $od_email,
-                "name" => $od_meno,
+            'from' => [
+                'email' => $od_email,
+                'name' => $od_meno,
             ],
-            "subject" => $predmet,
-            "template_id" => $SEND_GRID_API_TEMPLATE_ID,
-            "content" => [
+            'subject' => $predmet,
+            'template_id' => $SEND_GRID_API_TEMPLATE_ID,
+            'content' => [
                 [
-                    "type" => "text/html",
-                    "value" => $email_sprava
+                    'type' => 'text/html',
+                    'value' => $email_sprava
                 ]
             ],
-            "personalizations" => [
+            'personalizations' => [
                 [
-                    "to" => [
+                    'to' => [
                         [
-                            "email" => $to,
-                            "name" => $to,
+                            'email' => $to,
+                            'name' => $to,
                         ]
                     ],
-                    "send_at" => time()
+                    'send_at' => time()
                 ]
             ],
-            "tracking_settings" => [
+            'tracking_settings' => [
                 'click_tracking' => [
-                    "enable" => false,
-                    "enable_text" => false,
+                    'enable' => false,
+                    'enable_text' => false,
                 ],
-                'click_tracking' => [
-                    "enable" => false,
-                    "enable_text" => false,
+                'open_tracking' => [
+                    'enable' => false,
+                    'enable_text' => false,
                 ]
             ]
         ];
 
-
         $data = json_encode($params);
-
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://api.sendgrid.com/v3/mail/send');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
