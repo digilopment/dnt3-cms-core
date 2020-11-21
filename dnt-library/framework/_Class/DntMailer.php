@@ -192,10 +192,10 @@ class Mailer
         }
     }
 
-    public function prepare_mail_v3($to)
+    public function prepare_mail_v3($to, $messages = false)
     {
 
-		//SENDER
+        //SENDER
         if ($this->sender_email == false) {
             $od_email = Settings::get("vendor_email");
         } else {
@@ -250,52 +250,28 @@ class Mailer
 					];
             }
         } else {
-            $emailTo[] = [
+            $emailTo = [
                 "email" => $to,
                 "name" => $to,
             ];
-			 $messageTo[]	 = [
+			 $messageTo	 = [
 					'type' => "text/html",
 					'value' => $email_sprava,
 					];
         }
-		
-		
-		/*
-		$emailTo = [];
-		$messageTo = [];
-		
-		$emailTo[] = [
-			'email' => 'thomas.doubek@gmail.com',
-			'name' => 'Sample 1'
-		];
-		$emailTo[] = [
-			'email' => 'doubek.tomas@markiza.sk',
-			'name' => 'Sample 2'
-		];
-		
-		$messageTo[] = [
-			'type' => "text/html",
-			'value' => 'Ahoj -name-',
-		];*/
-	
         $params = [
             "from" => [
                 "email" => $od_email,
                 "name" => $od_meno,
-            ], 
-			"substitutions" => [
-                "-name-",
             ],
             "subject" => $predmet,
             "template_id" => $SEND_GRID_API_TEMPLATE_ID,
 			"content" => $messageTo,
             "personalizations" => [
                 [
-                    "to" =>  $emailTo,
-					"sub" => [
-						'-name-' => ['Tomáš', 'Jano']
-					],
+                    "to" => [
+                        $emailTo
+                    ],
                     "send_at" => time()
                 ]
             ],
@@ -327,7 +303,6 @@ class Mailer
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
         $response = curl_exec($ch);
-		var_dump($response);
         $this->response = $response;
         curl_close($ch);
     }
