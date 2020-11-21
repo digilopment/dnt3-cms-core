@@ -195,7 +195,7 @@ class Mailer
     public function prepare_mail_v3($to)
     {
 
-        //SENDER
+		//SENDER
         if ($this->sender_email == false) {
             $od_email = Settings::get("vendor_email");
         } else {
@@ -239,43 +239,81 @@ class Mailer
             $SEND_GRID_API_TEMPLATE_ID = SEND_GRID_API_TEMPLATE_ID;
         }
 
+        if (is_array($to) && is_array($messages)) {
+            $emailTo = [];
+            $messageTo = [];
+            foreach ($to as $singl) {
+                $emailTo[] = ['email' => $singl];
+                $messageTo[] = [
+					'type' => "text/html",
+					'value' => $email_sprava,
+					];
+            }
+        } else {
+            $emailTo[] = [
+                "email" => $to,
+                "name" => $to,
+            ];
+			 $messageTo[]	 = [
+					'type' => "text/html",
+					'value' => $email_sprava,
+					];
+        }
+		
+		
+		/*
+		$emailTo = [];
+		$messageTo = [];
+		
+		$emailTo[] = [
+			'email' => 'thomas.doubek@gmail.com',
+			'name' => 'Sample 1'
+		];
+		$emailTo[] = [
+			'email' => 'doubek.tomas@markiza.sk',
+			'name' => 'Sample 2'
+		];
+		
+		$messageTo[] = [
+			'type' => "text/html",
+			'value' => 'Ahoj -name-',
+		];*/
+	
         $params = [
-            'from' => [
-                'email' => $od_email,
-                'name' => $od_meno,
+            "from" => [
+                "email" => $od_email,
+                "name" => $od_meno,
+            ], 
+			"substitutions" => [
+                "-name-",
             ],
-            'subject' => $predmet,
-            'template_id' => $SEND_GRID_API_TEMPLATE_ID,
-            'content' => [
+            "subject" => $predmet,
+            "template_id" => $SEND_GRID_API_TEMPLATE_ID,
+			"content" => $messageTo,
+            "personalizations" => [
                 [
-                    'type' => 'text/html',
-                    'value' => $email_sprava
+                    "to" =>  $emailTo,
+					"sub" => [
+						'-name-' => ['Tomáš', 'Jano']
+					],
+                    "send_at" => time()
                 ]
             ],
-            'personalizations' => [
-                [
-                    'to' => [
-                        [
-                            'email' => $to,
-                            'name' => $to,
-                        ]
-                    ],
-                    'send_at' => time()
-                ]
-            ],
-            'tracking_settings' => [
+            "tracking_settings" => [
                 'click_tracking' => [
-                    'enable' => false,
-                    'enable_text' => false,
+                    "enable" => false,
+                    "enable_text" => false,
                 ],
-                'open_tracking' => [
-                    'enable' => false,
-                    'enable_text' => false,
+                'click_tracking' => [
+                    "enable" => false,
+                    "enable_text" => false,
                 ]
             ]
         ];
 
+
         $data = json_encode($params);
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://api.sendgrid.com/v3/mail/send');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -289,6 +327,7 @@ class Mailer
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
         $response = curl_exec($ch);
+		var_dump($response);
         $this->response = $response;
         curl_close($ch);
     }
@@ -299,7 +338,7 @@ class Mailer
     public function sent_email()
     {
         foreach ($this->recipient as $to) {
-            $this->prepare_mail_v3($to);
+            $this->prepare_mail($to);
         }
     }
 

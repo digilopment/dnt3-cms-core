@@ -60,7 +60,7 @@ class NewsletterCampaignTest
           AND `msg` LIKE '%" . $this->campaignId . "%'
           AND vendor_id = '" . $this->vendor->getId() . "' AND `REMOTE_ADDR` <> '54.71.187.124'";
           //GROUP BY timestamp"; */
-        $query = "SELECT * FROM `dnt_logs` WHERE `system_status` = 'newsletter_log_seen' AND `msg` LIKE '%" . $this->campaignId . "%' AND vendor_id = '" . $this->vendor->getId() . "'";
+        $query = "SELECT msg, system_status FROM `dnt_logs` WHERE `system_status` = 'newsletter_log_seen' AND `msg` LIKE '%" . $this->campaignId . "%' AND vendor_id = '" . $this->vendor->getId() . "'";
         $this->countSeenLogs = $this->db->num_rows($query);
         if ($this->countSeenLogs > 0) {
             $logs = $this->db->get_results($query, true);
@@ -76,7 +76,7 @@ class NewsletterCampaignTest
           AND `msg` LIKE '%" . $this->campaignId . "%'
           AND vendor_id = '" . $this->vendor->getId() . "'";
           //GROUP BY timestamp"; */
-        $query = "SELECT * FROM `dnt_logs` WHERE `system_status` = 'newsletter_log_click' AND `msg` LIKE '%" . $this->campaignId . "%' AND vendor_id = '" . $this->vendor->getId() . "'";
+        $query = "SELECT msg, system_status FROM `dnt_logs` WHERE `system_status` = 'newsletter_log_click' AND `msg` LIKE '%" . $this->campaignId . "%' AND vendor_id = '" . $this->vendor->getId() . "'";
         $this->countClickLogs = $this->db->num_rows($query);
         if ($this->countClickLogs > 0) {
             $this->clickLogs = $this->db->get_results($query, true);
@@ -91,7 +91,7 @@ class NewsletterCampaignTest
           (`system_status` = 'newsletter_log_click' AND ( (`HTTP_ACCEPT` LIKE '%text%' or `HTTP_ACCEPT` LIKE '%image%' or `HTTP_ACCEPT` LIKE '%xml%' or `HTTP_ACCEPT` LIKE '%html%') AND `HTTP_ACCEPT_LANGUAGE` <> '' AND `REMOTE_ADDR` <> '54.71.187.124')))
           AND `msg` LIKE '%" . $this->campaignId . "%'
           AND vendor_id = '" . $this->vendor->getId() . "'"; */
-        $query = "SELECT * FROM `dnt_logs` WHERE (`system_status` = 'newsletter_log_seen' OR `system_status` = 'newsletter_log_click') AND `msg` LIKE '%" . $this->campaignId . "%' AND vendor_id = '" . $this->vendor->getId() . "'";
+        $query = "SELECT msg, system_status FROM `dnt_logs` WHERE (`system_status` = 'newsletter_log_seen' OR `system_status` = 'newsletter_log_click') AND `msg` LIKE '%" . $this->campaignId . "%' AND vendor_id = '" . $this->vendor->getId() . "'";
         $this->countLogs = $this->db->num_rows($query);
         if ($this->countLogs > 0) {
             $logs = $this->db->get_results($query, true);
@@ -101,7 +101,7 @@ class NewsletterCampaignTest
 
     protected function sentEmails()
     {
-        $query = "SELECT * FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . $this->vendor->getId() . "'  AND  cat_id = '" . $this->emailCatId . "' ORDER BY `show` DESC, `name` ASC";
+        $query = "SELECT id_entity, name, surname, email, datetime_creat FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . $this->vendor->getId() . "'  AND  cat_id = '" . $this->emailCatId . "' ORDER BY `show` DESC, `name` ASC";
         $this->countAllEmails = $this->db->num_rows($query);
         if ($this->countAllEmails > 0) {
             $this->sentEmails = $this->db->get_results($query, true);
@@ -111,7 +111,7 @@ class NewsletterCampaignTest
     protected function countMailsInCampaing()
     {
         $this->countSentEmails = 0;
-        $query = "SELECT * FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . $this->vendor->getId() . "'  AND  cat_id = '" . $this->emailCatId . "' AND `show` = 1";
+        $query = "SELECT `show` FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . $this->vendor->getId() . "'  AND  cat_id = '" . $this->emailCatId . "' AND `show` = 1";
         $this->countSentEmails = $this->db->num_rows($query);
     }
 

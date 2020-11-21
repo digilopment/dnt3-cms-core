@@ -43,7 +43,12 @@ class AnalyticsNewslettersApi extends DntLog
                 'system_status' => $data['systemStatus'],
                 'status' => http_response_code(),
             ];
-
+			
+			if($data['campainId'] == 'newsletter-qr-open-spring-2021'){
+				$this->dnt->redirect('http://85.248.116.69/dnt-markiza/forms/?action=redirector&nameUrl=spring-claim-2021-pdf&v2=true');
+				exit();
+			}
+			
             $this->add($arr);
             if ($systemStatus == 'newsletter_log_click') {
                 $this->dnt->redirect($url);

@@ -24,7 +24,7 @@ class MultiApi
         $dntLog = new DntLog();
         $api = new Api();
         
-        if (!isset($_SERVER['PHP_AUTH_USER'])) {
+        /*if (!isset($_SERVER['PHP_AUTH_USER'])) {
             header('WWW-Authenticate: Basic dnt3Platform="20Dnt3Platform20"');
             header('HTTP/1.0 401 Unauthorized');
 
@@ -47,7 +47,7 @@ class MultiApi
                 echo '{"header": {"domain": "' . DOMAIN . '","engine": "dnt3-platform","TypeID": "multi","request": { "code": "HTTP/1.0 401 Unauthorized"}},"message": "Službu nebolo možné spustiť"}';
             }
             exit;
-        }
+        }*/
 
 
 
