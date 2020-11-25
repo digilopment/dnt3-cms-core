@@ -264,6 +264,7 @@ $vendor = $data['vendor'];
                     </tbody>
                 </table>
             </div>
+			<?php /*
             <ul class="pagination">
                 <li class="">
                     <a href="<?php echo $adminMailer->paginator("prev"); ?>">
@@ -286,6 +287,7 @@ $vendor = $data['vendor'];
                     </a>
                 </li>
             </ul>
+			*/?>
             <!-- END PAGINATION -->
         </div>
         <div class="tab-pane " id="kat">
