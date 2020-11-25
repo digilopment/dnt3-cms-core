@@ -17,10 +17,17 @@ class NewsletterCampaignTest
     protected $vendor;
     protected $logs = [];
     protected $sentEmails = [];
+    protected $clickedUrls = [];
     protected $seenLogs = [];
     protected $uniqueClick = 0;
     protected $uniqueSeen = 0;
     protected $showUsers = true;
+    protected $countSentEmails = 0;
+    protected $countLogoutedUrlUnique = 0;
+    protected $countAllEmails = 0;
+    protected $countClickLogs = 0;
+    protected $countSeenLogs = 0;
+    protected $countDefaultUrl = 0;
 
     public function __construct()
     {
@@ -41,15 +48,44 @@ class NewsletterCampaignTest
     {
         $this->emailCatId = $this->rest->get('emailCatId');
         $this->setCampaignId();
-        $this->getSeenLogs();
-        $this->getClickLogs();
-        $this->getLogs();
-        $this->sentEmails();
-        $this->getClikedUrls();
-        $this->countMailsInCampaing();
-        $this->setUniqueData();
+
+        if (empty($this->rest->get('source'))) {
+            $this->getSeenLogs();
+            $this->getClickLogs();
+            $this->getLogs();
+            $this->sentEmails();
+            $this->countMailsInCampaing();
+        } else {
+            $this->dataFromRemote();
+            $this->seenLogs = $this->json->seenLogs;
+            $this->clickLogs = $this->json->clickLogs;
+            $this->logs = $this->json->logs;
+            $this->sentEmails = $this->json->sentEmails;
+            $this->countSentEmails = $this->json->countSentEmails;
+            $this->countAllEmails = $this->json->countSentEmails;
+
+            $this->countSeenLogs = count($this->json->seenLogs);
+            $this->countClickLogs = count($this->json->clickLogs);
+            $this->countLogs = count($this->json->logs);
+        }
+
+        if ($this->rest->get('layout') != 'api') {
+            $this->getClikedUrls();
+            $this->setUniqueData();
+            $this->showUsers();
+        }
         $this->getTemplate();
-        $this->showUsers();
+    }
+
+    protected function dataFromRemote()
+    {
+        $source = $this->rest->get('source');
+        $apiUrl = $source . '?emailCatId=' . $this->emailCatId . '&countMails=131907&delivered=131907&campaignId=' . $this->campaignId . '&layout=api';
+        file_get_contents($apiUrl);
+        $apiUrl = 'https://digilopment.com/dnt-view/data/json/' . $this->campaignId . '.json';
+        $data = file_get_contents($apiUrl);
+        $json = json_decode($data);
+        $this->json = $json;
     }
 
     protected function getSeenLogs()
@@ -110,7 +146,6 @@ class NewsletterCampaignTest
 
     protected function countMailsInCampaing()
     {
-        $this->countSentEmails = 0;
         $query = "SELECT `show` FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . $this->vendor->getId() . "'  AND  cat_id = '" . $this->emailCatId . "' AND `show` = 1";
         $this->countSentEmails = $this->db->num_rows($query);
     }
@@ -288,56 +323,70 @@ class NewsletterCampaignTest
     protected function getTemplate()
     {
 
-        $data['setLogData'] = $this->setLogData();
-        $data['setLogSeenData'] = $this->setLogSeenData();
-        $data['setLogClickData'] = $this->setLogClickData();
-        $data['sentEmails'] = $this->sentEmails;
-        $data['baseUrl'] = 'https://varenypeceny.markiza.sk/dnt-markiza/forms/';
-        $data['dnt'] = $this->dnt;
-        $data['datetime'] = $this->dnt->datetime();
         $data['campaignId'] = $this->rest->get('campaignId');
+        if ($this->rest->get('layout') != 'api') {
 
-        //COUNT MAILS
-        if ($this->rest->get('countMails')) {
-            $data['countMails'] = $this->rest->get('countMails');
-        } else {
-            $data['countMails'] = ($this->countSentEmails + $this->countLogoutedUrlUnique > $this->countAllEmails) ? $this->countAllEmails : $this->countSentEmails + $this->countLogoutedUrlUnique;
+            if (empty($this->rest->get('layout'))) {
+                $data['setLogData'] = $this->setLogData();
+                $data['setLogSeenData'] = $this->setLogSeenData();
+                $data['setLogClickData'] = $this->setLogClickData();
+            }
+
+            $data['sentEmails'] = $this->sentEmails;
+            $data['baseUrl'] = 'https://varenypeceny.markiza.sk/dnt-markiza/forms/';
+            $data['dnt'] = $this->dnt;
+            $data['datetime'] = $this->dnt->datetime();
+
+
+            //COUNT MAILS
+            if ($this->rest->get('countMails')) {
+                $data['countMails'] = $this->rest->get('countMails');
+            } else {
+                $data['countMails'] = ($this->countSentEmails + $this->countLogoutedUrlUnique > $this->countAllEmails) ? $this->countAllEmails : $this->countSentEmails + $this->countLogoutedUrlUnique;
+            }
+
+            //DELIVERED
+            $data['countDelivered'] = $this->rest->get('delivered');
+            $data['deliveredPercentage'] = $data['countDelivered'] > 0 ? round($data['countDelivered'] / $data['countMails'] * 100, 2) : 0;
+
+            //CLICKED
+            $data['countClickedEmails'] = $this->countClickLogs;
+            $data['clickedPercentage'] = $data['countMails'] > 0 ? round($data['countClickedEmails'] / $data['countMails'] * 100, 2) : 0;
+
+            //CLICKED UNIQUE
+            $data['countClickedUnique'] = $this->uniqueClick;
+            $data['clickedPercentageUnique'] = $data['countMails'] > 0 ? round($data['countClickedUnique'] / $data['countMails'] * 100, 2) : 0;
+
+            //SEEN
+            $data['countSeenEmails'] = $this->countSeenLogs;
+            $data['seenPercentage'] = $data['countMails'] > 0 ? round($data['countSeenEmails'] / $data['countMails'] * 100, 2) : 0;
+
+            //SEEN UNIQUE
+            $data['countSeenUnique'] = $this->uniqueSeen;
+            $data['seenUniquePercentage'] = $data['countMails'] > 0 ? round($data['countSeenUnique'] / $data['countMails'] * 100, 2) : 0;
+
+            //URL COUNTER
+            $data['urlCounter'] = $this->clickedUrls;
+
+            //COUNT DEFAULT URL
+            $data['countDefaultUrl'] = $this->countDefaultUrl;
+            $data['percentageDefaultUrl'] = $data['countMails'] > 0 ? round($data['countDefaultUrl'] / $data['countMails'] * 100, 2) : 0;
+
+            //COUNT LOGOUT URL
+            $data['countLogoutedUrlUnique'] = $this->countLogoutedUrlUnique;
+            $data['percentageLogoutedUrl'] = $data['countMails'] > 0 ? round($data['countLogoutedUrlUnique'] / $data['countMails'] * 100, 2) : 0;
+
+            $data['showUsers'] = $this->showUsers;
         }
-
-        //DELIVERED
-        $data['countDelivered'] = $this->rest->get('delivered');
-        $data['deliveredPercentage'] = $data['countDelivered'] > 0 ? round($data['countDelivered'] / $data['countMails'] * 100, 2) : 0;
-
-        //CLICKED
-        $data['countClickedEmails'] = $this->countClickLogs;
-        $data['clickedPercentage'] = $data['countMails'] > 0 ? round($data['countClickedEmails'] / $data['countMails'] * 100, 2) : 0;
-
-        //CLICKED UNIQUE
-        $data['countClickedUnique'] = $this->uniqueClick;
-        $data['clickedPercentageUnique'] = $data['countMails'] > 0 ? round($data['countClickedUnique'] / $data['countMails'] * 100, 2) : 0;
-
-        //SEEN
-        $data['countSeenEmails'] = $this->countSeenLogs;
-        $data['seenPercentage'] = $data['countMails'] > 0 ? round($data['countSeenEmails'] / $data['countMails'] * 100, 2) : 0;
-
-        //SEEN UNIQUE
-        $data['countSeenUnique'] = $this->uniqueSeen;
-        $data['seenUniquePercentage'] = $data['countMails'] > 0 ? round($data['countSeenUnique'] / $data['countMails'] * 100, 2) : 0;
-
-        //URL COUNTER
-        $data['urlCounter'] = $this->clickedUrls;
-
-        //COUNT DEFAULT URL
-        $data['countDefaultUrl'] = $this->countDefaultUrl;
-        $data['percentageDefaultUrl'] = $data['countMails'] > 0 ? round($data['countDefaultUrl'] / $data['countMails'] * 100, 2) : 0;
-
-        //COUNT LOGOUT URL
-        $data['countLogoutedUrlUnique'] = $this->countLogoutedUrlUnique;
-        $data['percentageLogoutedUrl'] = $data['countMails'] > 0 ? round($data['countLogoutedUrlUnique'] / $data['countMails'] * 100, 2) : 0;
-
-        $data['showUsers'] = $this->showUsers;
         if ($this->rest->get('layout') == 'preview') {
             require 'templates/newsletterCampaignPreview.php';
+        } elseif ($this->rest->get('layout') == 'api') {
+            $data['seenLogs'] = $this->seenLogs;
+            $data['clickLogs'] = $this->clickLogs;
+            $data['logs'] = $this->logs;
+            $data['sentEmails'] = $this->sentEmails;
+            $data['countSentEmails'] = $this->countSentEmails;
+            require 'templates/newsletterCampaignApi.php';
         } else {
             require 'templates/newsletterCampaign.php';
         }
