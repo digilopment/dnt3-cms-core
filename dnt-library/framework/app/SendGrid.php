@@ -3,6 +3,7 @@
 namespace DntLibrary\App;
 
 use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Settings;
 
 class SendGrid
 {
@@ -12,14 +13,16 @@ class SendGrid
 
     public function __construct()
     {
-        $this->senGridApiKey = SEND_GRID_API_KEY;
-        $this->senGridTemplateKey = SEND_GRID_API_TEMPLATE_ID;
-        $this->senGridService = SEND_GRID_API_REQUEST;
         $this->dnt = new Dnt();
+        $this->settings = new Settings();
     }
 
     public function setup($data)
     {
+        $this->senGridService = SEND_GRID_API_REQUEST;
+        $this->senGridApiKey = $this->settings->get('send_grid_api_key');
+        $this->senGridTemplateKey = $this->settings->get('send_grid_api_template_id');
+
 
         $data['js'] = array(
             'filters' => array(
