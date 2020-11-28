@@ -212,8 +212,8 @@ $vendor = $data['vendor'];
                     <tbody>
                         <?php
                         $query = $adminMailer->query();
-                        $i = $adminMailer->showOrder();
-                        $page = $adminMailer->getPage("current");
+                        //$i = $adminMailer->showOrder();
+                        //$page = $adminMailer->getPage("current");
                         if ($db->num_rows($query) > 0) {
                             foreach ($db->get_results($query) as $row) {
                                 $cat_id = $row['cat_id'];
