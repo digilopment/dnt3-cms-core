@@ -86,6 +86,7 @@ class Autoloader
         $this->fileLoader($path . 'dnt-library/framework/app/OpenSslCrypt.php');
         $this->fileLoader($path . 'dnt-library/framework/app/Cart.php');
         $this->fileLoader($path . 'dnt-library/framework/app/Files.php');
+        $this->fileLoader($path . 'dnt-library/framework/app/SendGrid.php');
     }
 
 }

@@ -874,7 +874,7 @@ function getParamUrl()
                                 </div>
                                 <span class="status">...emailov ešte musím odoslať</span>
                                 <span class="detail">Teraz odosielam na adresu:
-                                    <a href="mailto:' . $sender_email . '" target="_blank"> <b>' . $sender_email . '</b></a>
+                                    <b>' . $sender_email . '</b>
                                 </span>
                                 <br/>
                                 <a class="pull-right" target="_blank" href="' . $mailingReportUrl . '"><b>Otvoriť mailing report</b></a>
