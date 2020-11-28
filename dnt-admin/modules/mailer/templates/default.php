@@ -9,6 +9,7 @@ $rest = $data['rest'];
 $adminMailer = $data['adminMailer'];
 $dnt = $data['dnt'];
 $vendor = $data['vendor'];
+$countPages = $data['countPages'];
 ?>
 <section class="row content-header">
     <ul >
@@ -211,9 +212,10 @@ $vendor = $data['vendor'];
                     </thead>
                     <tbody>
                         <?php
-                        $query = $adminMailer->query();
+                        $query = $adminMailer->query();			
                         //$i = $adminMailer->showOrder();
                         //$page = $adminMailer->getPage("current");
+						$i = $data['page'] * $data['pageLimit'] - $data['pageLimit'] + 1;
                         if ($db->num_rows($query) > 0) {
                             foreach ($db->get_results($query) as $row) {
                                 $cat_id = $row['cat_id'];
@@ -257,6 +259,7 @@ $vendor = $data['vendor'];
                             </form>
                             <?php
                         }
+									
                     } else {
                         no_results();
                     }
@@ -264,30 +267,29 @@ $vendor = $data['vendor'];
                     </tbody>
                 </table>
             </div>
-			<?php /*
+	
             <ul class="pagination">
                 <li class="">
-                    <a href="<?php echo $adminMailer->paginator("prev"); ?>">
+                    <a href="<?php echo $adminMailer->paginator("prev", $countPages); ?>">
                         &laquo;
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo $adminMailer->paginator("first"); ?>">
-                        <?php echo $adminMailer->getPage("first", $data['countMails']); ?>
+                    <a href="<?php echo $adminMailer->paginator("first", $countPages); ?>">
+                        <?php echo $adminMailer->getPage("first", $countPages); ?>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo $adminMailer->paginator("last"); ?>">
-                        <?php echo $adminMailer->getPage("last", $data['countMails']); ?>
+                    <a href="<?php echo $adminMailer->paginator("last", $countPages); ?>">
+                        <?php echo $adminMailer->getPage("last", $countPages); ?>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo $adminMailer->paginator("next"); ?>">
+                    <a href="<?php echo $adminMailer->paginator("next", $countPages); ?>">
                         &raquo;
                     </a>
                 </li>
             </ul>
-			*/?>
             <!-- END PAGINATION -->
         </div>
         <div class="tab-pane " id="kat">

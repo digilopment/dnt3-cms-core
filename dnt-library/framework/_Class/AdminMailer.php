@@ -74,10 +74,8 @@ class AdminMailer
      * @param type $is_limit
      * @return string
      */
-    protected function prepare_query($is_limit)
+    public function prepare_query($is_limit)
     {
-        $db = new DB();
-
         if (isset($_GET['filter']) && $_GET['filter'] != "")
             $typ = "AND cat_id = '" . $_GET['filter'] . "'";
         elseif (isset($_GET['search']) && $_GET['src'] == "mailer")
@@ -87,12 +85,16 @@ class AdminMailer
         } else
             $typ = false;
 
-        if ($is_limit == false)
+        if ($is_limit == false){
             $limit = false;
-        else
+			$query = "SELECT parent_id FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . Vendor::getId() . "' " . $typ . " " . $limit . "";
+		}
+        else{
             $limit = $is_limit;
+			$query = "SELECT * FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . Vendor::getId() . "' " . $typ . " ORDER BY `id` DESC " . $limit . "";
+		}
 
-        $query = "SELECT * FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . Vendor::getId() . "' " . $typ . " ORDER BY `id` DESC " . $limit . "";
+        
         return $query;
     }
 
@@ -115,8 +117,8 @@ class AdminMailer
             $returnPage = false;
         }
 
-        $query = self::prepare_query(false);
-        $pocet = $db->num_rows($query);
+        //$query = self::prepare_query(false);
+        //$pocet = $db->num_rows($query);
         $limit = self::limit();
 
         if (isset($_GET['page']))
@@ -124,12 +126,12 @@ class AdminMailer
         else
             $strana = 1;
 
-        $stranok = $pocet / $limit;
+        //$stranok = $pocet / $limit;
         $pociatok = ($strana * $limit) - $limit;
 
         $prev_page = $strana - 1;
         $next_page = $strana + 1;
-        $stranok_round = ceil($stranok);
+        //$stranok_round = ceil($stranok);
 
         $pager = "LIMIT " . $pociatok . ", " . $limit . "";
         return self::prepare_query($pager);
@@ -191,7 +193,7 @@ class AdminMailer
      * @param type $index
      * @return type
      */
-    public function paginator($index)
+    public function paginator($index, $countPages)
     {
         $adresa = explode("?", WWW_FULL_PATH);
         if (isset($_GET['page'])) {
@@ -201,7 +203,7 @@ class AdminMailer
             $return = $adresa[1]; //this function return an array
         }
 
-        return WWW_PATH_ADMIN . "index.php?" . $return . "&page=" . self::getPage($index);
+        return WWW_PATH_ADMIN . "index.php?" . $return . "&page=" . self::getPage($index, $countPages);
     }
 
     /**

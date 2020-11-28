@@ -76,7 +76,7 @@ class MailerController extends AdminController
     {
         $this->session->set('sended-mails', 0);
         $this->session->set('count-mails', 0);
-        $this->mailerQuery();
+        //$this->mailerQuery();
         $this->categories();
         $data['db'] = $this->db;
         $data['rest'] = $this->rest;
@@ -85,7 +85,12 @@ class MailerController extends AdminController
         $data['vendor'] = $this->vendor;
         $data['categories'] = $this->categories;
         $data['countMails'] = $this->countEmails;
+        $data['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
+        $data['pageLimit'] = $this->adminMailer->limit();
+		$q = $this->adminMailer->prepare_query(false);
+		$data['countPages'] = $this->db->num_rows($q);
         $this->loadTemplate($this->loc, 'default', $data);
+	
     }
 
     public function addCatAction()
