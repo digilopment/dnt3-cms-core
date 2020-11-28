@@ -87,10 +87,9 @@ class MailerController extends AdminController
         $data['countMails'] = $this->countEmails;
         $data['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
         $data['pageLimit'] = $this->adminMailer->limit();
-		$q = $this->adminMailer->prepare_query(false);
-		$data['countPages'] = $this->db->num_rows($q);
+        $q = $this->adminMailer->prepare_query(false);
+        $data['countPages'] = $this->db->num_rows($q);
         $this->loadTemplate($this->loc, 'default', $data);
-	
     }
 
     public function addCatAction()
