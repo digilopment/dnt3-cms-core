@@ -266,11 +266,19 @@ class Mailer
             ],
             "subject" => $predmet,
             "template_id" => $SEND_GRID_API_TEMPLATE_ID,
-			"content" => $messageTo,
-            "personalizations" => [
+			"content" => [
+                [
+                    "type" => "text/html",
+                    "value" => $email_sprava,
+                ]
+            ],
+			"personalizations" => [
                 [
                     "to" => [
-                        $emailTo
+                        [
+                            "email" => $to,
+                            "name" => $to,
+                        ]
                     ],
                     "send_at" => time()
                 ]
@@ -304,6 +312,7 @@ class Mailer
 
         $response = curl_exec($ch);
         $this->response = $response;
+		var_dump($this->response);
         curl_close($ch);
     }
 

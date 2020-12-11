@@ -225,6 +225,15 @@ class MailerController extends AdminController
         $domain = $this->settings->getGlobals()->vendor['unsubscribeDomain'] ?? false;
         $logoutUrl = $this->subscriber->generateUrl($recipient['id_entity'], $recipient['email'], 0, $domain);
         $this->replacedcontent = str_replace('<url=UNSUBSCRIBE_URL=>', $logoutUrl, $this->replacedcontent);
+		if(!empty($recipient['name'])){
+			$this->replacedcontent = str_replace('<macro=NAME/>', $recipient['name'], $this->replacedcontent);
+		}
+		else{
+			$this->replacedcontent = str_replace('<macro=NAME/>', 'Milý fanúšik', $this->replacedcontent);
+		}
+		$this->replacedcontent = str_replace('<macro=SURNAME/>', $recipient['surname'], $this->replacedcontent);
+		$this->replacedcontent = str_replace('<macro=EMAIL/>', $recipient['email'], $this->replacedcontent);
+		$this->replacedcontent = str_replace('<macro=TITLE/>', $recipient['title'], $this->replacedcontent);
         $this->replacedcontent = $this->dnt->minify($this->replacedcontent);
         return $this->replacedcontent;
     }
@@ -239,6 +248,9 @@ class MailerController extends AdminController
     {
         $res = [];
         $final = [];
+		$content = $this->dnt->minify($content);
+		$content = str_replace('href="#"', 'href=""', $content);
+		$content = str_replace("href='#'", "href=''", $content);
         $hexEmail = $this->dnt->strToHex($recipient['email']);
         $targetUrl = WWW_PATH . 'dnt-api/analytics-newsletters?systemStatus=newsletter_log_click&campainId=' . $campainId . '&email=' . $hexEmail . '&url=';
         $finalUrl = function($item) use ($hexEmail) {
@@ -257,7 +269,6 @@ class MailerController extends AdminController
                 $final[$item] = $targetUrl . urlencode($finalUrl($item));
             }
         }
-
         uksort($final, function($a, $b) {
             return strlen($b) <=> strlen($a);
         });
@@ -313,7 +324,13 @@ class MailerController extends AdminController
 
                 //set seen - add 1px image
                 $content = $this->checkSeen($content, $recipient, $campain);
-
+				
+				if(empty($recipient['name'])){
+					$subject = str_replace('<macro=NAME/>', 'Milý fanúšik', $subject);
+				}else{
+					$subject = str_replace('<macro=NAME/>', $recipient['name'], $subject);
+				}
+				
                 $this->mailer->set_msg($content);
                 $this->mailer->set_subject($subject);
                 $this->mailer->set_sender_name($senderName);
@@ -359,6 +376,8 @@ class MailerController extends AdminController
             }
             if ($this->rest->post('url_external') != '') {
                 $content = file_get_contents($this->rest->post('url_external'));
+				//$content = $this->dnt->minify($content);
+				//$content = str_replace("\xEF\xBB\xBF",'',$content);
             }
             if ($this->rest->post('message') != '') {
                 $content = $this->rest->post('message');
@@ -379,7 +398,6 @@ class MailerController extends AdminController
             } else {
                 $addUrlIdentificator = false;
             }
-
             $this->session->set('content', $content);
             $this->session->set('cat_id', $cat_id);
             $this->session->set('subject', $subject);
