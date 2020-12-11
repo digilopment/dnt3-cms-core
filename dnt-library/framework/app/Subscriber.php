@@ -27,7 +27,7 @@ class Subscriber
 
     public function generateUrl($id_entity, $email, $status, $domain = false)
     {
-        $finalDomain = ($domain) ? $domain.'?plugin=subscriber' : WWW_PATH . 'subscriber/?plugin=subscriber';
+        $finalDomain = ($domain) ? $domain . '?plugin=subscriber' : WWW_PATH . 'subscriber/?plugin=subscriber';
         $url = '&id=' . $this->dnt->strToHex(urlencode(base64_encode($email))) . '&vendorId=' . $this->dnt->strToHex(urlencode(base64_encode(Vendor::getId()))) . '&status=' . $this->dnt->strToHex(urlencode(base64_encode($status))) . '&idEntity=' . $this->dnt->strToHex(urlencode(base64_encode($id_entity)));
         return $finalDomain . $url;
     }
@@ -37,7 +37,7 @@ class Subscriber
         $emailHex = $this->dnt->strToHex($email);
         $imageUrl = WWW_PATH . 'dnt-api/analytics-newsletters?systemStatus=newsletter_log_seen&campainId=' . $campainId . '&email=' . $emailHex;
         if ($fullImage) {
-            return '<img src="' . $imageUrl . '" alt="logo" class="dnt3-stat-logo" width="1" height="1" border="0" style="height:1px!important;width:1px!important;border-width:0!important;margin-top:0!important;margin-bottom:0!important;margin-right:0!important;margin-left:0!important;padding-top:0!important;padding-bottom:0!important;padding-right:0!important;padding-left:0!important" />';
+            return '<img src="' . $imageUrl . '" alt="logo" class="dnt3-stat-logo" width="1" height="1" border="0" style="height:1px!important;width:1px!important;border-width:0!important;margin-top:0!important;margin-bottom:0!important;margin-right:0!important;margin-left:0!important;padding-top:0!important;padding-bottom:0!important;padding-right:0!important;padding-left:0!important;float:left;" />';
         } else {
             return $imageUrl;
         }
@@ -70,7 +70,7 @@ class Subscriber
         } else {
             $apiKey = false;
         }
-        
+
         if ($this->allowReferers($cutomReferers)) {
             $this->valid = 1;
         } elseif ($this->dnt->in_string('localhosst', SERVER_NAME)) {

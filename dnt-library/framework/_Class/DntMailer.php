@@ -245,19 +245,19 @@ class Mailer
             foreach ($to as $singl) {
                 $emailTo[] = ['email' => $singl];
                 $messageTo[] = [
-					'type' => "text/html",
-					'value' => $email_sprava,
-					];
+                    'type' => "text/html",
+                    'value' => $email_sprava,
+                ];
             }
         } else {
             $emailTo = [
                 "email" => $to,
                 "name" => $to,
             ];
-			 $messageTo	 = [
-					'type' => "text/html",
-					'value' => $email_sprava,
-					];
+            $messageTo = [
+                'type' => "text/html",
+                'value' => $email_sprava,
+            ];
         }
         $params = [
             "from" => [
@@ -266,11 +266,19 @@ class Mailer
             ],
             "subject" => $predmet,
             "template_id" => $SEND_GRID_API_TEMPLATE_ID,
-			"content" => $messageTo,
+            "content" => [
+                [
+                    "type" => "text/html",
+                    "value" => $email_sprava,
+                ]
+            ],
             "personalizations" => [
                 [
                     "to" => [
-                        $emailTo
+                        [
+                            "email" => $to,
+                            "name" => $to,
+                        ]
                     ],
                     "send_at" => time()
                 ]
@@ -304,6 +312,7 @@ class Mailer
 
         $response = curl_exec($ch);
         $this->response = $response;
+        var_dump($this->response);
         curl_close($ch);
     }
 
