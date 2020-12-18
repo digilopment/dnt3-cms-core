@@ -22,6 +22,8 @@ class AbstractUser
     {
 
         $this->db = new DB();
+        $this->cookie = new Cookie();
+        $this->vendor = new Vendor();
 
         $this->table = $conf['table'];
         $this->type = $conf['type'];
@@ -37,9 +39,9 @@ class AbstractUser
 
         $email = $session->get($this->sessionId);
         if (empty($email)) {
-            $email = Cookie::Get($this->sessionId);
+            $email = $this->cookie->Get($this->sessionId);
         }
-        $query = "SELECT * FROM " . $this->table . " WHERE type = '" . $this->type . "' AND email = '" . $email . "' AND vendor_id = '" . Vendor::getId() . "'";
+        $query = "SELECT * FROM " . $this->table . " WHERE type = '" . $this->type . "' AND email = '" . $email . "' AND vendor_id = '" . $this->vendor->getId() . "'";
         if ($this->db->num_rows($query) > 0) {
             $this->data = $this->db->get_results($query, true);
         }
@@ -49,7 +51,7 @@ class AbstractUser
     public function logged()
     {
         $session = new Sessions();
-        if ($session->get($this->sessionStatus) || (Cookie::Get($this->sessionStatus) == 1 && Cookie::Get($this->sessionId) != "")) {
+        if ($session->get($this->sessionStatus) || ($this->cookie->Get($this->sessionStatus) == 1 && $this->cookie->Get($this->sessionId) != "")) {
             return true;
         } else {
             return false;
@@ -59,7 +61,7 @@ class AbstractUser
     public function validProcessLogin($email, $pass)
     {
         $db = new DB;
-        $query = "SELECT pass FROM " . $this->table . " WHERE type = '" . $this->type . "' AND email = '" . $email . "' AND vendor_id = '" . Vendor::getId() . "'";
+        $query = "SELECT pass FROM " . $this->table . " WHERE type = '" . $this->type . "' AND email = '" . $email . "' AND vendor_id = '" . $this->vendor->getId() . "'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 $db_pass = $row['pass'];

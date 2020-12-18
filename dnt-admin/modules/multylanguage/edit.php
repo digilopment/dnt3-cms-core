@@ -30,10 +30,7 @@ get_top(); ?>
                <!-- tabs begin here! -->
                <div class="tab-content" style="border: 0px solid; padding: 0px;">
                   <?php
-                     /*$query = "SELECT * FROM dnt_translates WHERE 
-                     translate_id = '".$rest->get('translate_id')."' AND
-                     vendor_id = '".Vendor::getId()."' order by lang_id desc";*/
-					 $query = MultyLanguage::getLangs(true);
+					 $query = $multiLanguage->getLangs(true);
                      if($db->num_rows($query) > 0){
                      	foreach($db->get_results($query) as $row){
 							$data = array("translate_id"=>$rest->get('translate_id'),'lang_id'=>$row['slug'],'type'=>'static');
@@ -50,7 +47,7 @@ get_top(); ?>
                                  </p>
                               </label>
                               <div class="col-sm-4">
-                                 <input type="text" value="<?php echo MultyLanguage::getTranslateLang($data);?>" name="translate_<?php echo $row['slug']; ?>" class="form-control" placeholder="Názov:">
+                                 <input type="text" value="<?php echo $multiLanguage->getTranslateLang($data);?>" name="translate_<?php echo $row['slug']; ?>" class="form-control" placeholder="Názov:">
                                  <br>
                               </div>
 							  
@@ -71,11 +68,11 @@ get_top(); ?>
 				 </p>
 			  </label>
 			   <div class="col-sm-4">
-				 <input type="text" value="<?php echo MultyLanguage::getTranslateLang($data, "translate_id");?>" name="translate_id" class="form-control" placeholder="Názov:">
+				 <input type="text" value="<?php echo $multiLanguage->getTranslateLang($data, "translate_id");?>" name="translate_id" class="form-control" placeholder="Názov:">
 				 <br>
 			  </div>
                <!-- end here -->
-               <?php echo Dnt::returnInput();?>
+               <?php echo $dnt->returnInput();?>
                <input type="submit" name="sent" class="btn btn-primary btn-lg btn-block" value="Upraviť">
             </div>
          </div>

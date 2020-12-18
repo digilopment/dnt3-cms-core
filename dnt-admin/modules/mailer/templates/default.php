@@ -9,6 +9,7 @@ $rest = $data['rest'];
 $adminMailer = $data['adminMailer'];
 $dnt = $data['dnt'];
 $vendor = $data['vendor'];
+$settings = $data['settings'];
 $countPages = $data['countPages'];
 ?>
 <section class="row content-header">
@@ -126,9 +127,9 @@ $countPages = $data['countPages'];
                         <h4><strong>Nastavenia odosielateľa</strong></h4>
                         <input type="text" name="subject" class="form-control" placeholder="Predmet:"/>
                         <br/>
-                        <input type="text" name="senderName" class="form-control" placeholder="Odosielateľ (<?php echo Settings::get("vendor_company"); ?>)"/>
+                        <input type="text" name="senderName" class="form-control" placeholder="Odosielateľ (<?php echo $settings->get("vendor_company"); ?>)"/>
                         <br/>
-                        <input type="text" name="senderEmail" class="form-control" value="" placeholder="Email odosielateľa (<?php echo Settings::get("vendor_email"); ?>)"/>
+                        <input type="text" name="senderEmail" class="form-control" value="" placeholder="Email odosielateľa (<?php echo $settings->get("vendor_email"); ?>)"/>
                         <br/>
                         <input type="checkbox" name="useSenderFromEmail" checked=""/> Ak je pri emaile v zozname emailov vyplnený <b>odosielateľ</b> a <b>email odosielateľa</b>, použiť tento email a meno (email odosielateľa a meno odosielateľa) na doručenie konkrétnej emailovej adresy pod týmito doručovacími údajmi.
                         <br/>

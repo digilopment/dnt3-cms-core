@@ -19,17 +19,17 @@ if (isset($_POST['sent'])) {
 		$imageName = $image->getFileImage($imageId, false);
 		if (!$image->hasVendorDipendency($imageId)) {
             $fileName = "../dnt-view/data/uploads/" . $imageName;
-            Dnt::deleteFile($fileName);
+            $dnt->deleteFile($fileName);
 			
 			//OTHER FORMAT
-			foreach(DntUpload::imageFormats() as $format){
-				Dnt::deleteFile("../dnt-view/data/uploads/formats/".$format."/" . $imageName);
+			foreach($dntUpload->imageFormats() as $format){
+				$dnt->deleteFile("../dnt-view/data/uploads/formats/".$format."/" . $imageName);
 			}
         }
 	}
 	
     $ids = implode(",", $ids);
-    $db->query("DELETE FROM dnt_uploads WHERE id_entity IN ($ids) AND vendor_id = '" . Vendor::getId() . "'");
+    $db->query("DELETE FROM dnt_uploads WHERE id_entity IN ($ids) AND vendor_id = '" . $vendor->getId() . "'");
 } else {
     $post_id = $rest->get("post_id");
     if ($post_id) {
@@ -37,14 +37,14 @@ if (isset($_POST['sent'])) {
         $imageName = $image->getFileImage($post_id, false);
         if (!$image->hasVendorDipendency($post_id)) {
             $fileName = "../dnt-view/data/uploads/" . $imageName;
-            Dnt::deleteFile($fileName);
+            $dnt->deleteFile($fileName);
 			
 			//OTHER FORMAT
-			foreach(DntUpload::imageFormats() as $format){
-				Dnt::deleteFile("../dnt-view/data/uploads/formats/".$format."/" . $imageName);
+			foreach($dntUpload->imageFormats() as $format){
+				$dnt->deleteFile("../dnt-view/data/uploads/formats/".$format."/" . $imageName);
 			}
         }
-        $where = array('id_entity' => $post_id, 'vendor_id' => Vendor::getId());
+        $where = array('id_entity' => $post_id, 'vendor_id' => $vendor->getId());
         $db->delete('dnt_uploads', $where);
         $image->cleanIndependentFiles();
     }

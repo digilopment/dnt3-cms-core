@@ -35,8 +35,9 @@ class Cache
     /**
      * 
      */
-    function __construct()
+    public function __construct()
     {
+		$this->dnt = new Dnt();
         $this->cacheFile = base64_encode(@$_SERVER['HTTP_HOST'] . @$_SERVER['REQUEST_URI']);
         $this->cacheFileName = $this->cacheDir . '/' . $this->cacheFile . '.txt';
         $this->cacheLogFile = $this->cacheDir . "/log.txt";
@@ -51,7 +52,7 @@ class Cache
     /**
      * 
      */
-    function start()
+    public function start()
     {
         $dntLog = new DntLog;
         $location = array_slice(explode('/', @$_SERVER['HTTP_HOST'] . @$_SERVER['REQUEST_URI']), 2);
@@ -80,7 +81,7 @@ class Cache
      * 
      * @return boolean
      */
-    function end()
+    public function end()
     {
         if ($this->caching) {
             @file_put_contents($this->cacheFileName, ob_get_contents());
@@ -96,7 +97,7 @@ class Cache
      * @param type $location
      * @return boolean
      */
-    function purge($location)
+    public function purge($location)
     {
         $location = base64_encode($location);
         $this->cacheLog[$location] = 0;
@@ -155,7 +156,7 @@ class Cache
      * 
      * @return boolean
      */
-    function purge_all()
+    public function purge_all()
     {
         if (file_exists($this->cacheLogFile)) {
             foreach ($this->cacheLog as $key => $value)
@@ -205,7 +206,7 @@ class Cache
         if (is_dir($dir)) {
             if ($dh = opendir($dir)) {
                 while (($filename = readdir($dh)) !== false) {
-                    if (Dnt::in_string($domain, $filename)) {
+                    if ($this->dnt->in_string($domain, $filename)) {
                         @unlink($dir . $filename);
                     }
                 }

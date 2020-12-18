@@ -21,7 +21,7 @@ if (isset($_POST['sent'])) {
     $return = $rest->post("return");
     $vendor_movde_to = $rest->post("vendor_id_move");
 
-    $currentVendorUrl = Vendor::getColumn("name_url");
+    $currentVendorUrl = $vendor->getColumn("name_url");
 
     $db->update(
             "dnt_vendors", //table
@@ -41,7 +41,7 @@ if (isset($_POST['sent'])) {
     if ($vendor_movde_to != $vendor_id) {
 
         $vendorId = array();
-        foreach (Vendor::getAll() as $vendor) {
+        foreach ($vendor->getAll() as $vendor) {
             $vendorId[] = $vendor['id'];
         }
 
@@ -82,7 +82,7 @@ if (isset($_POST['sent'])) {
         }
     }
 
-    if ($url != $currentVendorUrl && ($vendor_id == Vendor::getId())) {
+    if ($url != $currentVendorUrl && ($vendor_id == $vendor->getId())) {
 
         get_top();
         get_top_html();

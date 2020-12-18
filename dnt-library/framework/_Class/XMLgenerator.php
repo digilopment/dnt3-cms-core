@@ -12,11 +12,14 @@ namespace DntLibrary\Base;
 
 use DntLibrary\Base\DB;
 use DntLibrary\Base\Dnt;
-use DntLibrary\Base\Image;
 
 class XMLgenerator
 {
 
+	public function __construct(){
+		$this->db = new DB();
+		$this->dnt = new Dnt();
+	}
     /**
      * 
      * @param type $array
@@ -35,10 +38,8 @@ class XMLgenerator
      */
     public function getTableColumns($table, $columns)
     {
-
-        $db = new DB();
         $query = ("SELECT $columns FROM $table");
-        if ($db->num_rows($query) > 0) {
+        if ($this->db->num_rows($query) > 0) {
             $columns = str_replace(" ", "", $columns);
             $array = explode(",", $columns);
             return $array;
@@ -55,8 +56,6 @@ class XMLgenerator
      */
     public function getSQLData($table, $andWhere)
     {
-        $db = new DB();
-
         if ($andWhere) {
             $andWhere;
         } else {
@@ -64,8 +63,8 @@ class XMLgenerator
         }
 
         $query = "SELECT id_entity FROM $table WHERE parent_id = 0 $andWhere ";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 $id[] = $row['id'];
             }
         } else {
@@ -83,12 +82,11 @@ class XMLgenerator
      */
     public function getTableRows($table, $columns, $id_entity)
     {
-        $db = new DB();
         $query = "SELECT $columns FROM $table WHERE id_entity = $id_entity";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 foreach ($this->getTableColumns($table, $columns) as $index => $value) {
-                    $arr[] = Dnt::odstran_diakritiku($row[$index]);
+                    $arr[] = $this->dnt->odstran_diakritiku($row[$index]);
                 }
             }
         } else {
@@ -164,12 +162,10 @@ class XMLgenerator
      */
     public function creatCsvFile($table, $columns, $where, $fileName, $columnsName = false)
     {
-        $db = new DB();
-        $image = new Image();
         $data = false;
         $data = chr(0xEF) . chr(0xBB) . chr(0xBF); //diakritika pod UTF 8
         $query = "SELECT $columns FROM $table WHERE parent_id = 0 $where";
-        if ($db->num_rows($query) > 0) {
+        if ($this->db->num_rows($query) > 0) {
 
             $pocetStlpcov = count($this->getTableColumns($table, $columns));
 
@@ -179,7 +175,7 @@ class XMLgenerator
                 $data .= implode(";", $this->getTableColumns($table, $columns)) . "\n";
             }
 
-            foreach ($db->get_results($query) as $row) {
+            foreach ($this->db->get_results($query) as $row) {
                 $i = 1;
                 foreach ($this->getTableColumns($table, $columns) as $column) {
                     $data .= $row[$column];
@@ -209,11 +205,10 @@ class XMLgenerator
      */
     public function creatCsvFileStatic($table, $columns, $where, $fileName, $columnsName = false)
     {
-        $db = new DB();
         $data = false;
         $data = chr(0xEF) . chr(0xBB) . chr(0xBF); //diakritika pod UTF 8
         $query = "SELECT $columns FROM $table WHERE parent_id = 0 $where";
-        if ($db->num_rows($query) > 0) {
+        if ($this->db->num_rows($query) > 0) {
             $data .= str_replace(" ", ";", $columns);
 
             if ($columnsName) {
@@ -223,7 +218,7 @@ class XMLgenerator
             }
 
             $data .= "\n";
-            foreach ($db->get_results($query) as $row) {
+            foreach ($this->db->get_results($query) as $row) {
                 $data .= $row['id_entity'] . ";" . $row['vendor_id'] . ";" . $row['name'] . ";" . $row['surname'] . ";" . $row['session_id'] . ";" . $row['mesto'] . ";" . $row['psc'] . ";" . $row['email'] . ";" . $row['content'] . ";" . $row['news'] . ";" . $row['news_2'] . ";" . $row['perex'] . ";" . $row['podmienky'] . "\n";
             }
         }

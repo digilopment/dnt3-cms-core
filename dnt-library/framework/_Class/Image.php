@@ -23,6 +23,12 @@ class Image
     const MEDIUM = 600;
     const LARGE = 950;
 
+	public function __construct(){
+		$this->db = new DB();
+		$this->dnt = new Dnt();
+		$this->vendor = new Vendor();
+		$this->settings = new Settings();
+	}
     /**
      * 
      * @param type $id
@@ -31,10 +37,9 @@ class Image
      */
     public function get($id_entity, $table = null)
     {
-        $db = new DB;
-        $query = "SELECT img FROM $table WHERE `id_entity` = '" . $id_entity . "' AND vendor_id = '" . Vendor::getId() . "'";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        $query = "SELECT img FROM $table WHERE `id_entity` = '" . $id_entity . "' AND vendor_id = '" . $this->vendor->getId() . "'";
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 return $row['img'];
             }
         } else {
@@ -53,16 +58,13 @@ class Image
         if (!is_numeric($input)) {
             return $input;
         }
-
-        $db = new DB;
-
         $imageId = $input;
         //`show` = '0' or `show` = '1' or `show` = '2'";
         $query = "SELECT name FROM dnt_uploads WHERE 
 		`id_entity` = '" . $imageId . "' AND 
-		`vendor_id` = '" . Vendor::getId() . "'";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+		`vendor_id` = '" . $this->vendor->getId() . "'";
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 if ($path == true) {
                     $imageFileFormat = "dnt-view/data/uploads/formats/" . $format . "/" . $row['name'];
                     $imageFile = WWW_PATH . "dnt-view/data/uploads/" . $row['name'];
@@ -91,8 +93,6 @@ class Image
      */
     public function getFileImages($ids, $path = true, $format = false)
     {
-        $db = new DB;
-
         if (!is_array($ids)) {
             $ids = explode(",", $ids);
         } else {
@@ -103,10 +103,10 @@ class Image
             foreach ($ids as $imageId) {
                 $query = "SELECT name FROM dnt_uploads WHERE 
 				`id_entity` = '" . $imageId . "' AND 
-				`vendor_id` = '" . Vendor::getId() . "' AND 
-				" . Dnt::showStatus("show") . "";
-                if ($db->num_rows($query) > 0) {
-                    foreach ($db->get_results($query) as $row) {
+				`vendor_id` = '" . $this->vendor->getId() . "' AND 
+				" . $this->dnt->showStatus("show") . "";
+                if ($this->db->num_rows($query) > 0) {
+                    foreach ($this->db->get_results($query) as $row) {
                         $imageFileFormat = "dnt-view/data/uploads/formats/" . $format . "/" . $row['name'];
                         $imageFile = WWW_PATH . "dnt-view/data/uploads/" . $row['name'];
                         if ($format) {
@@ -138,25 +138,22 @@ class Image
      */
     public function getPostImage($id, $table = null, $format = false)
     {
-        $db = new DB();
-        $settings = new Settings();
-
         if ($table == true || $table == false || $table === null) {
             $table = "dnt_posts";
         } else {
             $table = $table;
         }
-        $imageId = self::get($id, $table);
+        $imageId = $this->get($id, $table);
         if ($format) {
-            $image = self::getFileImage($imageId, true, $format);
+            $image = $this->getFileImage($imageId, true, $format);
             if ($image) {
                 return $image;
             } else {
-                $noImage = $settings->getGlobals()->database['keys']['no_img']['value'];
-                return self::getFileImage($noImage);
+                $noImage = $this->settings->getGlobals()->database['keys']['no_img']['value'];
+                return $this->getFileImage($noImage);
             }
         } else {
-            return self::getFileImage($imageId);
+            return $this->getFileImage($imageId);
         }
     }
 
@@ -168,11 +165,9 @@ class Image
      */
     public function getColumnByName($file)
     {
-        $db = new DB;
-
         $query = "SELECT * FROM dnt_uploads WHERE name = '" . $file . "' LIMIT 1";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 return $row['id_entity'];
             }
         } else {
@@ -188,10 +183,8 @@ class Image
      */
     public function hasVendorDipendency($file)
     {
-        $db = new DB();
-
         if (!is_numeric($file)) {
-            $image_id_entity = self::getColumnByName($file);
+            $image_id_entity = $this->getColumnByName($file);
         } else {
             $image_id_entity = $file;
         }
@@ -203,7 +196,7 @@ class Image
          */
         if ($image_id_entity) {
             $query = "SELECT * FROM dnt_uploads WHERE id_entity = '" . $image_id_entity . "'";
-            if ($db->num_rows($query) > 1) {
+            if ($this->db->num_rows($query) > 1) {
                 $data = true;
             }
         }
@@ -221,10 +214,8 @@ class Image
      */
     public function hasDipendency($file, $onDelete = true)
     {
-        $db = new DB();
-
         if (!is_numeric($file)) {
-            $image_id_entity = self::getColumnByName($file);
+            $image_id_entity = $this->getColumnByName($file);
         } else {
             $image_id_entity = $file;
         }
@@ -248,8 +239,8 @@ class Image
             $onDelete = $onDelete + 1 - 1; //to integer
             if ($onDelete != 3) {
                 $query = "SELECT * FROM dnt_uploads WHERE id_entity = '" . $image_id_entity . "'";
-                if ($db->num_rows($query) > $defaultUploadDipendency) {
-                    foreach ($db->get_results($query) as $row) {
+                if ($this->db->num_rows($query) > $defaultUploadDipendency) {
+                    foreach ($this->db->get_results($query) as $row) {
                         $data[] = array(
                             "image" => $image_id_entity,
                             "image_url" => $row['name'],
@@ -273,8 +264,8 @@ class Image
 
             foreach ($tables as $table => $column) {
                 $query = "SELECT * FROM $table WHERE `$column` = '" . $image_id_entity . "'";
-                if ($db->num_rows($query) > 0) {
-                    foreach ($db->get_results($query) as $row) {
+                if ($this->db->num_rows($query) > 0) {
+                    foreach ($this->db->get_results($query) as $row) {
                         $data[] = array(
                             "image" => $image_id_entity,
                             "image_url" => $file,
@@ -294,13 +285,12 @@ class Image
      */
     public function cleanIndependentFiles()
     {
-        $image = new Image;
         $path = "../dnt-view/data/uploads/";
         $files = glob($path . "*");
         foreach ($files as $file) {
             $fileName = str_replace($path, "", $file);
             if (filetype($file) == "file") {
-                if (!$image->hasDipendency($fileName, false)) {
+                if (!$this->hasDipendency($fileName, false)) {
                     if (file_exists($path . $fileName)) {
                         unlink($path . $fileName);
                         //echo 'Deleted: <a href="' . $path . '' . $fileName . '">' . $fileName . "</a><br/>";

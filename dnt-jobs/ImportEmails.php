@@ -19,6 +19,7 @@ class ImportEmailsJob
         $this->vendorId = 52;
         $this->catId = 88;
         $this->importFile = 'pyhrn-pirel-cz';
+        $this->dnt = new Dnt();
     }
 
     protected function countEmails()
@@ -44,8 +45,8 @@ class ImportEmailsJob
             'email' => $email,
             'vendor_id' => $this->vendorId,
             'cat_id' => $this->catId,
-            'datetime_creat' => Dnt::datetime(),
-            'datetime_update' => Dnt::datetime()
+            'datetime_creat' => $this->dnt->datetime(),
+            'datetime_update' => $this->dnt->datetime()
         );
 
         $db->insert('dnt_mailer_mails', $insertedData);

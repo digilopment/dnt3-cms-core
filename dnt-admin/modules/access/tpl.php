@@ -34,7 +34,7 @@ get_top(); ?>
                         $query = "SELECT * FROM `dnt_users` WHERE 
                    parent_id = '0' AND
                    type = 'admin' AND
-                   vendor_id = '" . Vendor::getId() . "' ORDER BY id_entity desc";
+                   vendor_id = '" . $vendor->getId() . "' ORDER BY id_entity desc";
                         $pocet_aktivne = $db->num_rows($query);
                         if ($db->num_rows($query) > 0) {
                             foreach ($db->get_results($query) as $row) {
@@ -64,10 +64,10 @@ get_top(); ?>
                                     <td>
                                         <a href="<?php echo WWW_PATH_ADMIN_2 . "index.php?src=" . $rest->get('src') . "&action=edit&post_id=" . $row['id_entity']; ?>"><i class="fa fa-pencil bg-blue action"></i></a>
                                         <?php
-                                        //var_dump($row['id_entity'], AdminUser::data("admin", "id_entity"));
-                                        if (AdminUser::data("admin", "id_entity") != $row['id_entity']) {
+                                        //var_dump($row['id_entity'], $adminUser->data("admin", "id_entity"));
+                                        if ($adminUser->data("admin", "id_entity") != $row['id_entity']) {
                                             ?>
-                                            <a <?php echo Dnt::confirmMsg("Naozaj chcete zmazať tohoto používateľa?"); ?> href="<?php echo WWW_PATH_ADMIN_2 . "index.php?src=" . $rest->get('src') . "&action=del&post_id=" . $row['id_entity']; ?>"><i class="fa fa-times bg-red action"></i></a>
+                                            <a <?php echo $dnt->confirmMsg("Naozaj chcete zmazať tohoto používateľa?"); ?> href="<?php echo WWW_PATH_ADMIN_2 . "index.php?src=" . $rest->get('src') . "&action=del&post_id=" . $row['id_entity']; ?>"><i class="fa fa-times bg-red action"></i></a>
                                                 <?php
                                             } else {
                                                 echo '<a href="#" title="Nie je možné vymazať aktívny účet, pod ktorým ste prihlásený"><i class="fa fa-minus-square bg-red action"></i></a>';

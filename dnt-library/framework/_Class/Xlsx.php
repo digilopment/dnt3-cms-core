@@ -14,7 +14,7 @@ use DntLibrary\Base\Vendor;
 
 class Xlsx
 {
-
+	
     /**
      * 
      * @param type $path
@@ -24,7 +24,6 @@ class Xlsx
      */
     public function read($path, $fileName)
     {
-        $vendor = new Vendor;
         $filePath = $path . "dnt-view/data/uploads/" . $fileName;
         $excel_data = false;
         date_default_timezone_set('Europe/Paris');

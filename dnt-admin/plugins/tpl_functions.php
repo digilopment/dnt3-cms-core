@@ -99,6 +99,8 @@ function get_top()
       <?php
          get_header();
          $rest = new Rest();
+         $AdminUser = new AdminUser();
+         $vendor = new Vendor();
          ?>
       <!-- END HEADER -->
       <div class="wrapper row-offcanvas row-offcanvas-left">
@@ -107,15 +109,15 @@ function get_top()
             <section class="sidebar">
                <div class="user-panel">
                   <div class="pull-left image">
-                     <img style="cursor:pointer" onclick="location.href = 'index.php?src=access&action=edit&post_id=<?php echo AdminUser::data("admin", "id") . ""; ?>'" src="<?php echo AdminUser::avatar(); ?>" class="img-circle" alt="<?php echo AdminUser::data("admin", "name") . " " . AdminUser::data("admin", "surname"); ?>">
+                     <img style="cursor:pointer" onclick="location.href = 'index.php?src=access&action=edit&post_id=<?php echo $AdminUser->data("admin", "id") . ""; ?>'" src="<?php echo $AdminUser->avatar(); ?>" class="img-circle" alt="<?php echo $AdminUser->data("admin", "name") . " " . $AdminUser->data("admin", "surname"); ?>">
                   </div>
                   <div class="pull-left info">
-                     <p><strong style="cursor:pointer" onclick="location.href = 'index.php?src=access&action=edit&post_id=<?php echo AdminUser::data("admin", "id") . ""; ?>'" ><?php echo AdminUser::data("admin", "name") . " " . AdminUser::data("admin", "surname"); ?></strong></p>
+                     <p><strong style="cursor:pointer" onclick="location.href = 'index.php?src=access&action=edit&post_id=<?php echo $AdminUser->data("admin", "id") . ""; ?>'" ><?php echo $AdminUser->data("admin", "name") . " " . $AdminUser->data("admin", "surname"); ?></strong></p>
                      <span ><i class="fa fa-circle text-green"></i> Online</span>
                   </div>
                </div>
                <form action="<?php echo WWW_PATH_ADMIN_2; ?>index.php?src=<?php echo $rest->get("src") ?>" method="GET" class="sidebar-form">
-                  <div class="web-title">web: <b><a target="_blank" href="<?php echo WWW_PATH; ?>"><?php echo Vendor::getColumn("name") ?></a></b></div>
+                  <div class="web-title">web: <b><a target="_blank" href="<?php echo WWW_PATH; ?>"><?php echo $vendor->getColumn("name") ?></a></b></div>
                   <div class="input-group">
                      <input type="hidden" name="src" value="<?php echo $rest->get("src") ?>">
                      <?php
@@ -332,11 +334,13 @@ function get_top()
        $admin = new AdminUser;
        $andWhere = false;
        $reset = new Rest;
+	   $AdminUser = new AdminUser();
+	   $vendor = new Vendor();
    
        $query = "SELECT * FROM `dnt_admin_menu` WHERE 
       `type` = 'menu' AND 
       `show` = '1' " . $andWhere . " AND 
-      `vendor_id` = '" . Vendor::getId() . "' ORDER BY `order`";
+      `vendor_id` = '" . $vendor->getId() . "' ORDER BY `order`";
        if ($db->num_rows($query) > 0) {
            ?>
 <ul class="sidebar-menu">
@@ -361,7 +365,7 @@ function get_top()
             WHERE 
             `show` = '1' AND 
             `admin_cat` = '" . $row['included'] . "' AND 
-            `vendor_id` = '" . Vendor::getId() . "' ORDER BY `order` desc";
+            `vendor_id` = '" . $vendor->getId() . "' ORDER BY `order` desc";
             if ($db->num_rows($query2) > 0) {
                 foreach ($db->get_results($query2) as $row2) {
                     ?>
@@ -399,19 +403,6 @@ function get_top()
             &nbsp;&nbsp;<i style="text-align: right;" class="fa "></i>
             </a>
          </li>
-         <!--<?php
-            //$admin->getUserColumns();
-            foreach ($admin->getUserTypes() as $row2) {
-                ?>
-            <li>
-                   <a href="<?php echo WWW_PATH_ADMIN_2 . "index.php?src=" . $row['name_url'] . "&type=" . $row2['name_url']; ?>">
-                   <span><?php echo $row2['name']; ?></span>
-                   &nbsp;&nbsp;<i style="text-align: right;" class="fa fa-laptop"></i>
-                   </a>
-            </li>
-            <?php
-               }
-               ?>-->
       </ul>
    </li>
    <?php
@@ -423,7 +414,7 @@ function get_top()
       WHERE type = 'submenu' AND 
       `show` = '1' AND 
       `name_url` = '" . $row['name_url'] . "' AND
-      `vendor_id` = '" . Vendor::getId() . "' ORDER BY  `order` desc";
+      `vendor_id` = '" . $vendor->getId() . "' ORDER BY  `order` desc";
       
       if ($db->num_rows($query2) > 0) {
           ?>
@@ -475,6 +466,7 @@ function get_top()
 <?php
    function get_header()
    {
+	   $AdminUser = new AdminUser();
        ?>
 <header class="header">
    <!-- BEGIN LOGO -->
@@ -546,7 +538,7 @@ function get_top()
          <li class="dropdown profile-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <i class="fa fa-cog fa-lg"></i>
-            <span class="username"><?php echo AdminUser::data("admin", "name") . " " . AdminUser::data("admin", "surname"); ?></span>
+            <span class="username"><?php echo $AdminUser->data("admin", "name") . " " . $AdminUser->data("admin", "surname"); ?></span>
             <i class="caret"></i>
             </a>
             <ul class="dropdown-menu box profile">
@@ -554,7 +546,7 @@ function get_top()
                   <div class="up-arrow"></div>
                </li>
                <li class="border-top">
-                  <a href="index.php?src=access&action=edit&post_id=<?php echo AdminUser::data("admin", "id") . ""; ?>"><i class="fa fa-user"></i>Môj účet</a>
+                  <a href="index.php?src=access&action=edit&post_id=<?php echo $AdminUser->data("admin", "id") . ""; ?>"><i class="fa fa-user"></i>Môj účet</a>
                </li>
                <?php /* <li>
                   <a href="index.php?src=content&add"><i class="fa fa-laptop"></i>Pridať post</a>
@@ -586,6 +578,7 @@ function get_top()
 <?php
    function getConfirmMessage($kam_presmerovat, $hlaska)
    {
+	   $vendor = new Vendor();
        ?>
 <div class="row" style="padding: 0px 30px;">
    <div class="grid">
@@ -617,7 +610,7 @@ function get_top()
                    <a href="<?php echo $kam_presmerovat; ?>"><span type="button" class="btn btn-success"><i class="fa fa-check"></i>  Zavrieť</span></a>
                    <?php
                    if ($cache) {
-                       //$revalidateCache = WWW_PATH . 'dnt-jobs/recaching?vendorId=' . Vendor::getId();
+                       //$revalidateCache = WWW_PATH . 'dnt-jobs/recaching?vendorId=' . $vendor->getId();
                        $revalidateCache = 'index.php?src=settings&action=re_cache';
                        echo '<a class="showContentPreloader" href="'.$revalidateCache.'"><span type="button" class="btn btn-success"><i class="fa fa-recycle"></i> Revalidovať cache teraz</span></a>';
                    }
@@ -763,11 +756,13 @@ function getParamUrl()
    function get_typ_zaradenie($cat_id, $sub_cat_id, $type)
    {
        $db = new DB;
+       $vendor = new Vendor();
+       $AdminContent = new AdminContent();
        ?>
 <h5>Zaradenie postu v rámci typu:<br/></h5>
 <select name="type" id="cname" class="form-control" minlength="2" required style="">
 <?php
-   foreach (AdminContent::primaryCat() as $key => $value) {
+   foreach ($AdminContent->primaryCat() as $key => $value) {
        if ($key == $type)
            echo '<option value="' . $key . '" selected>' . $value . '</option>';
        else
@@ -780,10 +775,10 @@ function getParamUrl()
 <select name="cat_id" id="cname" class="form-control" minlength="2" required style="">
 <?php
    echo '<option value="">(nezaradené)</option>';
-   foreach (AdminContent::primaryCat() as $key => $value) {
+   foreach ($AdminContent->primaryCat() as $key => $value) {
        $query = "SELECT * FROM `dnt_post_type` WHERE 
    `show` = '1'  AND 
-   `vendor_id` = '" . Vendor::getId() . "' AND 
+   `vendor_id` = '" . $vendor->getId() . "' AND 
    `admin_cat` = '" . $key . "'";
    
        if ($db->num_rows($query) > 0) {
@@ -804,11 +799,11 @@ function getParamUrl()
 <select name="sub_cat_id" id="cname" class="form-control">
 <?php
    echo '<option value="">(nezaradené)</option>';
-   foreach (AdminContent::primaryCat() as $key => $value) {
+   foreach ($AdminContent->primaryCat() as $key => $value) {
        $query = "SELECT * FROM `dnt_posts` WHERE 
    `show` = '1'  AND 
-   `vendor_id` = '" . Vendor::getId() . "' AND 
-   `cat_id` = '" . AdminContent::getCatId($key) . "'";
+   `vendor_id` = '" . $vendor->getId() . "' AND 
+   `cat_id` = '" . $AdminContent->getCatId($key) . "'";
        if ($key == "sitemap") {
            if ($db->num_rows($query) > 0) {
                foreach ($db->get_results($query) as $row) {
@@ -823,7 +818,7 @@ function getParamUrl()
        } elseif ($key == "article") {
            $query = "SELECT * FROM `dnt_post_type` WHERE 
    `show` = '1'  AND 
-   `vendor_id` = '" . Vendor::getId() . "' AND 
+   `vendor_id` = '" . $vendor->getId() . "' AND 
    `admin_cat` = 'article'";
            if ($db->num_rows($query) > 0) {
                foreach ($db->get_results($query) as $row) {
@@ -846,7 +841,8 @@ function getParamUrl()
 <?php
    function getZobrazenie($stav)
    {
-       foreach (Settings::showStatus() as $key => $value) {
+	   $settings = new Settings();
+       foreach ($settings->showStatus() as $key => $value) {
            if ($stav == $key)
                echo "<option value='" . $key . "' selected>" . $value . "</option>";
            else
@@ -856,6 +852,7 @@ function getParamUrl()
    
    function tpl_sending_mails($data)
    {
+		$AdminMailer = new AdminMailer();
         $to_finish = $data['toFinish'];
         $sender_email = $data['emails'];
         $next_id = $data['lastId'];
@@ -884,7 +881,7 @@ function getParamUrl()
                 </div>
             </div>
         </div>
-        <meta http-equiv="refresh" content="'.$sleep.';url=' . AdminMailer::sent_next_mail($next_id) . '">
+        <meta http-equiv="refresh" content="'.$sleep.';url=' . $AdminMailer->sent_next_mail($next_id) . '">
        ';
        get_bottom();
    }
@@ -1012,7 +1009,9 @@ function getParamUrl()
    {
        $rest = new Rest;
        $db = new DB;
+       $dnt = new Dnt;
        $image = new Image;
+       $FileAdmin = new FileAdmin();
        if ($limit) {
            $limit = $limit;
        } else {
@@ -1037,10 +1036,10 @@ function getParamUrl()
                <select name="gallery" id="gallery_key_<?php echo $keyId; ?>_s" class="image-picker show-html" data-limit="<?php echo $limit; ?>" multiple="multiple" 
                   style="display:nones;" >
                <?php
-                  $query = FileAdmin::query(100);
+                  $query = $FileAdmin->query(100);
                   if ($db->num_rows($query) > 0) {
                       foreach ($db->get_results($query) as $row) {
-                          if (Dnt::in_string("image", $row['type'])) {
+                          if ($dnt->in_string("image", $row['type'])) {
                               //echo '<option data-img-src="' . $image->getFileImage($row['id_entity'], true, Image::SMALL) . '" value="' . $row['id_entity'] . '">Cute Kitten 1</option>';
                               $name = $row['name'];
                               echo '<option data-img-src="'.WWW_PATH.'/dnt-view/data/uploads/formats/'.Image::SMALL.'/' . $row['name'] . '" value="' . $name . '">' . $name . '</option>';

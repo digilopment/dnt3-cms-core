@@ -24,22 +24,22 @@ if (isset($_POST['sent'])) {
                     $insertedData["`type`"] = "admin";
                 }
                 if ($rest->post("login") == "") {
-                    $insertedData["`login`"] = Vendor::getColumn("name_url");
+                    $insertedData["`login`"] = $vendor->getColumn("name_url");
                 }
             }
         }
-        $insertedData['`vendor_id`'] = Vendor::getId();
+        $insertedData['`vendor_id`'] = $vendor->getId();
         $db->insert($table, $insertedData);
-        $post_id = Dnt::getLastId($table, Vendor::getId());
+        $post_id = $dnt->getLastId($table, $vendor->getId());
 
         $db->update(
                 $table, //table
                 array(//set
                     'status' => 1,
                     'pass' => md5($pass),
-                    'datetime_creat' => Dnt::datetime(),
-                    'datetime_update' => Dnt::datetime(),
-                    'datetime_publish' => Dnt::datetime(),
+                    'datetime_creat' => $dnt->datetime(),
+                    'datetime_update' => $dnt->datetime(),
+                    'datetime_publish' => $dnt->datetime(),
                 ), array(//where
             'id' => $post_id,
                 )

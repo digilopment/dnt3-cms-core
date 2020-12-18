@@ -9,6 +9,9 @@ use DntLibrary\Base\Vendor;
 class AddTranslateJob
 {
 
+	public function __construct(){
+		$this->multiLanguage = new MultyLanguage();
+	}
     public function run()
     {
 
@@ -32,7 +35,7 @@ class AddTranslateJob
         foreach ($translates as $translate) {
             $vendor = new Vendor;
             foreach ($vendor->getAll() as $vendor) {
-                $query = MultyLanguage::getLangs(true);
+                $query = $this->multiLanguage->getLangs(true);
                 if ($db->num_rows($query) > 0) {
                     foreach ($db->get_results($query) as $row) {
                         $queryTranslate = "SELECT * FROM dnt_translates WHERE translate_id = '" . $translate['translate_id'] . "' AND `vendor_id` = '" . $vendor['id'] . "'";

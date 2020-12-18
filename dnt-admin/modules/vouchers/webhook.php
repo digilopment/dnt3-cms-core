@@ -9,6 +9,8 @@ $rest = new Rest;
 $session = new Sessions;
 $dnt = new Dnt;
 $db = new DB();
+$xlsx = new Xlsx();
+$vendor = new Vendor();
 
 if ($rest->get("action") == "add") {
     include "upload.php";

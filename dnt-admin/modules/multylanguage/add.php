@@ -11,7 +11,7 @@ $db = new DB();
 
 
 
-$query = MultyLanguage::getLangs(true);
+$query = $multiLanguage->getLangs(true);
 if ($db->num_rows($query) > 0) {
     foreach ($db->get_results($query) as $row) {
 
@@ -19,7 +19,7 @@ if ($db->num_rows($query) > 0) {
             '`translate`' => $rest->post("translate_" . $row['slug']),
             '`lang_id`' => $row['slug'],
             '`translate_id`' => $translate_id,
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $vendor->getId(),
             '`type`' => 'static',
             '`table`' => '',
             '`show`' => '1',

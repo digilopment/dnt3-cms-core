@@ -10,22 +10,31 @@
 
 namespace DntLibrary\Base;
 
+use DntLibrary\Base\DB;
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Image;
 use DntLibrary\Base\Sessions;
 use DntLibrary\Base\Vendor;
 use DntLibrary\Base\XMLgenerator;
-use DntLibrary\Base\DB;
 
 class AdminUser extends Image
 {
 
+	public function __construct()
+    {
+        $this->db = new DB();
+        $this->dnt = new Dnt();
+        $this->image = new Image();
+        $this->sessions = new Sessions();
+        $this->vendor = new Vendor();
+        $this->xml = new XMLgenerator();
+    }
+	
     public function validProcessLogin($type, $email, $pass)
     {
-        $db = new DB;
         $query = "SELECT pass FROM dnt_users WHERE type = '$type' AND email = '" . $email . "' AND vendor_id = '" . Vendor::getId() . "'";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 $db_pass = $row['pass'];
             }
             if ($db_pass == md5($pass)) {
@@ -40,12 +49,10 @@ class AdminUser extends Image
 
     public function updateDatetime($vendor_id, $email)
     {
-        $db = new DB;
-
-        $db->update(
+        $this->db->update(
                 "dnt_users", //table
                 array(//set
-                    'datetime_update' => Dnt::datetime()
+                    'datetime_update' => $this->dnt->datetime()
                 ), array(//where
             'vendor_id' => $vendor_id,
             'email' => $email
@@ -55,9 +62,8 @@ class AdminUser extends Image
 
     public function emailExists($email, $vendor_id)
     {
-        $db = new DB;
         $query = "SELECT email FROM dnt_users WHERE email = '" . $email . "' AND vendor_id = '" . $vendor_id . "'";
-        if ($db->num_rows($query) > 0) {
+        if ($this->db->num_rows($query) > 0) {
             return true;
         } else {
             return false;
@@ -66,9 +72,7 @@ class AdminUser extends Image
 
     public function updatePassword($vendor_id, $email, $pass)
     {
-        $db = new DB;
-
-        $db->update(
+        $this->db->update(
                 "dnt_users", //table
                 array(//set
                     'pass' => md5($pass)
@@ -81,12 +85,11 @@ class AdminUser extends Image
 
     public function getUserTypes()
     {
-        $db = new DB;
         $query = "SELECT * FROM dnt_post_type WHERE 
 		admin_cat = 'user' AND
-		vendor_id = '" . Vendor::getId() . "'";
-        if ($db->num_rows($query) > 0) {
-            return $db->get_results($query);
+		vendor_id = '" . $this->vendor->getId() . "'";
+        if ($this->db->num_rows($query) > 0) {
+            return $this->db->get_results($query);
         } else {
             return array(false);
         }
@@ -94,17 +97,14 @@ class AdminUser extends Image
 
     public function getUserColumns()
     {
-        $columns = new XMLgenerator;
-        return $columns->getTableColumns("dnt_users", "*");
+        return $this->xml->getTableColumns("dnt_users", "*");
     }
 
     public function data($type, $column)
     {
-        $db = new DB;
-        $session = new Sessions();
-        $query = "SELECT $column FROM dnt_users WHERE type = '$type' AND email = '" . $session->get("admin_id") . "' AND vendor_id = '" . Vendor::getId() . "'";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        $query = "SELECT $column FROM dnt_users WHERE type = '$type' AND email = '" . $this->sessions->get("admin_id") . "' AND vendor_id = '" . $this->vendor->getId() . "'";
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 return $row[$column];
             }
         } else {
@@ -114,22 +114,20 @@ class AdminUser extends Image
 
     public function avatar()
     {
-        $imageId = self::data("admin", "img");
-        return self::getFileImage($imageId);
+        $imageId = $this->data("admin", "img");
+        return $this->getFileImage($imageId);
     }
 
     public function dataById($type = false, $column, $email)
     {
-        $db = new DB;
-        $session = new Sessions();
         if ($type) {
             $andType = "AND type = '" . $type . "'";
         } else {
             $andType = false;
         }
-        $query = "SELECT $column FROM dnt_users WHERE email = '" . $email . "' " . $andType . " AND vendor_id = '" . Vendor::getId() . "'";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        $query = "SELECT $column FROM dnt_users WHERE email = '" . $email . "' " . $andType . " AND vendor_id = '" . $this->vendor->getId() . "'";
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 return $row[$column];
             }
         } else {
@@ -139,8 +137,8 @@ class AdminUser extends Image
 
     public function avatarById($id)
     {
-        $imageId = self::dataById("admin", "img", $id);
-        return self::getFileImage($imageId);
+        $imageId = $this->dataById("admin", "img", $id);
+        return $this->getFileImage($imageId);
     }
 
 }

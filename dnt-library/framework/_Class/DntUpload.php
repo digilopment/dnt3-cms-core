@@ -20,6 +20,14 @@ use DntLibrary\Base\Vendor;
 class DntUpload
 {
 
+
+	public function __construct(){
+			$this->db = new DB();
+			$this->dnt = new Dnt();
+			$this->image = new Image();
+			$this->faceModify = new FaceModify();
+			$this->vendor = new Vendor();
+		}
     /**
      *
      * image name
@@ -30,7 +38,7 @@ class DntUpload
         if ($prefix) {
             return $prefix . "_" . md5(time()) . "_o";
         }
-        return Vendor::getId() . "_" . md5(time()) . "_o";
+        return $this->vendor->getId() . "_" . md5(time()) . "_o";
     }
 
     public function imageFormats()
@@ -43,10 +51,10 @@ class DntUpload
         );
     }
 
-    protected static function makeImageFormat($dntUpload, $path, $image_x, $fileName)
+    protected function makeImageFormat($dntUpload, $path, $image_x, $fileName)
     {
 
-        if (Dnt::in_string("image", $dntUpload->file_src_mime)) {
+        if ($this->dnt->in_string("image", $dntUpload->file_src_mime)) {
             $dntUpload->file_new_name_body = $fileName;
             $dntUpload->image_resize = true;
             $dntUpload->image_ratio_y = true;
@@ -68,9 +76,7 @@ class DntUpload
     public function addDefaultImage($file, $table, $setColumn, $updateColumn, $updateValue, $path)
     {
         $dntUpload = new Upload(@$_FILES[$file]);
-        $db = new DB();
-
-
+		
         if (is_file($_FILES[$file]['tmp_name'])) {
             $insertedData = array();
             if ($dntUpload->uploaded) {
@@ -80,26 +86,26 @@ class DntUpload
                 if ($dntUpload->processed) {
                     //insert to files table of files
                     $insertedData = array(
-                        'vendor_id' => Vendor::getId(),
+                        'vendor_id' => $this->vendor->getId(),
                         'name' => $dntUpload->file_dst_name,
                         'type' => $dntUpload->file_src_mime
                     );
-                    $db->dbTransaction();
-                    $db->insert('dnt_uploads', $insertedData);
+                    $this->db->dbTransaction();
+                    $this->db->insert('dnt_uploads', $insertedData);
 
                     //get last ID of this file
-                    $imgId = Dnt::getLastId('dnt_uploads');
+                    $imgId = $this->dnt->getLastId('dnt_uploads');
 
                     //update settings columns
-                    $db->update(
+                    $this->db->update(
                             $table, //table 
                             array($setColumn => $imgId), //set
-                            array($updateColumn => $updateValue, '`vendor_id`' => Vendor::getId())//where
+                            array($updateColumn => $updateValue, '`vendor_id`' => $this->vendor->getId())//where
                     );
-                    $db->dbCommit();
+                    $this->db->dbCommit();
                 }
-                foreach (self::imageFormats() as $format) {
-                    self::makeImageFormat(new Upload(@$_FILES[$file]), $path . "/formats/" . $format, $format, $fileName);
+                foreach ($this->imageFormats() as $format) {
+                    $this->makeImageFormat(new Upload(@$_FILES[$file]), $path . "/formats/" . $format, $format, $fileName);
                 }
                 return $insertedData;
             }
@@ -118,7 +124,6 @@ class DntUpload
     {
 
         $dntUpload = new Upload(@$_FILES[$file]);
-        $db = new DB;
         $returnData = array();
         if (is_file($_FILES[$file]['tmp_name'])) {
 
@@ -130,18 +135,18 @@ class DntUpload
                     $face_detect->faceDetect($path . "/" . $dntUpload->file_dst_name);
                     $face_detect->save($width, $width, $path . "/" . $dntUpload->file_dst_name);
                     $insertedData = array(
-                        'vendor_id' => Vendor::getId(),
+                        'vendor_id' => $this->vendor->getId(),
                         'name' => $dntUpload->file_dst_name,
                         'type' => $dntUpload->file_src_mime
                     );
-                    $db->insert('dnt_uploads', $insertedData);
+                    $this->db->insert('dnt_uploads', $insertedData);
                     $returnData = array(
                         "file_dst_name" => $dntUpload->file_dst_name,
                         "file_src_mime" => $dntUpload->file_src_mime,
                     );
                 }
-                foreach (self::imageFormats() as $format) {
-                    self::makeImageFormat(new Upload($file), $path . "/formats/" . $format, $format, $dntUpload->file_dst_name);
+                foreach ($this->imageFormats() as $format) {
+                    $this->makeImageFormat(new Upload($file), $path . "/formats/" . $format, $format, $dntUpload->file_dst_name);
                 }
             }
             return $returnData;
@@ -175,7 +180,6 @@ class DntUpload
      */
     public function multypleUpload($files, $path, $insertToDatabase = true, $moreFormats = true)
     {
-        $db = new DB;
         $files_arr = $this->arrayFiles($files);
         $returnInserted = array();
 
@@ -188,19 +192,19 @@ class DntUpload
                 if ($dntUpload->processed) {
                     //insert to files table of files
                     $insertedData = array(
-                        'vendor_id' => Vendor::getId(),
+                        'vendor_id' => $this->vendor->getId(),
                         'name' => $dntUpload->file_dst_name,
                         'type' => $dntUpload->file_src_mime
                     );
                     if ($insertToDatabase) {
-                        $db->insert('dnt_uploads', $insertedData);
+                        $this->db->insert('dnt_uploads', $insertedData);
                     }
                     $returnInserted[] = $insertedData;
                 }
 
                 if ($moreFormats === true) {
-                    foreach (self::imageFormats() as $format) {
-                        self::makeImageFormat(new Upload($file), $path . "/formats/" . $format, $format, $fileName);
+                    foreach ($this->imageFormats() as $format) {
+                        $this->makeImageFormat(new Upload($file), $path . "/formats/" . $format, $format, $fileName);
                     }
                 }
             }
@@ -210,7 +214,6 @@ class DntUpload
 
     public function fromUrl($url, $path, $vendorId = false, $insertToDatabase = true, $moreFormats = true)
     {
-        $db = new DB;
         $insertedData = array();
 
         $dntUpload = new Upload($url);
@@ -224,20 +227,20 @@ class DntUpload
             if ($dntUpload->processed) {
                 //insert to files table of files
                 $insertedData = array(
-                    'vendor_id' => ($vendorId) ? $vendorId : Vendor::getId(),
+                    'vendor_id' => ($vendorId) ? $vendorId : $this->vendor->getId(),
                     'name' => $dntUpload->file_dst_name,
                     'type' => $dntUpload->file_src_mime
                 );
                 if ($insertToDatabase) {
-                    $db->insert('dnt_uploads', $insertedData);
+                    $this->db->insert('dnt_uploads', $insertedData);
                 }
-                $insertedData['lastImageId'] = Dnt::getLastId('dnt_uploads', $vendorId);
+                $insertedData['lastImageId'] = $this->dnt->getLastId('dnt_uploads', $vendorId);
             }else{
                 echo $url . ' no upload<br/>';
             }
 
             if ($moreFormats === true) {
-                foreach (self::imageFormats() as $format) {
+                foreach ($this->imageFormats() as $format) {
                     //self::makeImageFormat(new Upload($url), $path . "/formats/" . $format, $format, $fileName);
                 }
             }
@@ -256,7 +259,6 @@ class DntUpload
      */
     public function multypleUploadFiles($files, $table, $setColumn, $updateColumn, $updateValue, $path)
     {
-        $db = new DB;
         $files_arr = $this->arrayFiles($files);
         $uploadedID = array();
         foreach ($files_arr as $file) {
@@ -269,16 +271,16 @@ class DntUpload
                 if ($dntUpload->processed) {
                     //insert to files table of files
                     $insertedData = array(
-                        'vendor_id' => Vendor::getId(),
+                        'vendor_id' => $this->vendor->getId(),
                         'name' => $dntUpload->file_dst_name,
                         'type' => $dntUpload->file_src_mime
                     );
 
-                    $db->insert('dnt_uploads', $insertedData);
-                    $uploadedID[] = Dnt::getLastId('dnt_uploads');
+                    $this->db->insert('dnt_uploads', $insertedData);
+                    $uploadedID[] = $this->dnt->getLastId('dnt_uploads');
                 }
-                foreach (self::imageFormats() as $format) {
-                    self::makeImageFormat(new Upload($file), $path . "/formats/" . $format, $format, $fileName);
+                foreach ($this->imageFormats() as $format) {
+                    $this->makeImageFormat(new Upload($file), $path . "/formats/" . $format, $format, $fileName);
                 }
             }
         } //end foreach
@@ -287,10 +289,10 @@ class DntUpload
             $imgId = implode(",", $uploadedID);
 
             //update settings columns
-            $db->update(
+            $this->db->update(
                     $table, //table 
                     array($setColumn => $imgId), //set
-                    array($updateColumn => $updateValue, '`vendor_id`' => Vendor::getId())//where
+                    array($updateColumn => $updateValue, '`vendor_id`' => $this->vendor->getId())//where
             );
         }
     }

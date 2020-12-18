@@ -41,6 +41,7 @@ class InvoicesController extends AdminController
         $this->image = new Image();
         $this->invoicePath = 'dnt-view/data/invoices/';
         $this->pdf = new Pdf();
+        $this->vendor = new Vendor();
     }
 
     public function addAction()
@@ -52,10 +53,10 @@ class InvoicesController extends AdminController
     {
         $id = $this->rest->get('id_entity');
 
-        $where1 = ['id_entity' => $id, 'vendor_id' => Vendor::getId()];
+        $where1 = ['id_entity' => $id, 'vendor_id' => $this->vendor->getId()];
         $this->db->delete('dnt_orders', $where1);
 
-        $where2 = ['order_id_entity' => $id, 'vendor_id' => Vendor::getId()];
+        $where2 = ['order_id_entity' => $id, 'vendor_id' => $this->vendor->getId()];
         $this->db->delete('dnt_basket', $where2);
 
         $redirect = WWW_PATH_ADMIN_2 . 'index.php?src=invoices';
@@ -67,7 +68,7 @@ class InvoicesController extends AdminController
         $id = $this->rest->get('product_id');
         $orderId = $this->rest->get('order_id');
 
-        $where = ['order_id_entity' => $orderId, 'vendor_id' => Vendor::getId(), 'product_id' => $id];
+        $where = ['order_id_entity' => $orderId, 'vendor_id' => $this->vendor->getId(), 'product_id' => $id];
         $this->db->delete('dnt_basket', $where);
 
         $redirect = WWW_PATH_ADMIN_2 . 'index.php?src=invoices&action=edit&id_entity=' . $orderId;
@@ -84,6 +85,7 @@ class InvoicesController extends AdminController
         $data['orderProducts'] = $this->invoices->getOrderProductsById($data['products'], $this->rest->get('id_entity'));
         $data['orderSum'] = $this->invoices->orderSum($data['orderProducts']);
         $data['toBePaid'] = $data['orderSum'] - ($data['order']['from_cash'] + $data['order']['from_account']);
+        $data['dnt'] = $this->dnt;
         $this->loadTemplate($this->loc, 'edit', $data);
     }
 
@@ -137,9 +139,14 @@ class InvoicesController extends AdminController
         }
         $data['orderSumText'] = $this->invoices->numToText($eur) . ' eur, ' . $this->invoices->numToText($cent) . ' centov';
         $data['orderSum'] = $orderSum;
+        $data['dnt'] = $this->dnt;
 
         $data['vendor'] = function ($key) use ($settings) {
-            return $settings['keys'][$key]['value'];
+			if(isset($settings['keys'][$key]['value'])){
+				return $settings['keys'][$key]['value'];
+			}else{
+				return false;
+			}
         };
 
         $data['image'] = function ($id) {
@@ -157,7 +164,7 @@ class InvoicesController extends AdminController
         if (isset($arr[1])) {
             $cent = $arr[1];
         }
-        $data['pdf_file'] = '../' . $this->invoicePath . Vendor::getId() . '_' . $data['order']['order_id'] . '.pdf';
+        $data['pdf_file'] = '../' . $this->invoicePath . $this->vendor->getId() . '_' . $data['order']['order_id'] . '.pdf';
         $data['finalDiscountSumText'] = $this->invoices->numToText($eur) . ' eur, ' . $this->invoices->numToText($cent) . ' centov';
 
         ob_start();
@@ -173,7 +180,7 @@ class InvoicesController extends AdminController
     {
         if ($this->hasPost('invoiceHtml')) {
             $path = $this->invoicePath;
-            $invoiceName = Vendor::getId() . '_' . $this->rest->post('order_id') . '.pdf';
+            $invoiceName = $this->vendor->getId() . '_' . $this->rest->post('order_id') . '.pdf';
             $html = $this->rest->post('invoiceHtml');
             $this->pdf->prepareHtmlToRender($path, $invoiceName, $html);
             $this->dnt->redirect(WWW_PATH . $path . $invoiceName);

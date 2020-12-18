@@ -18,6 +18,13 @@ use DntLibrary\Base\DB;
 class AdminContent extends MultyLanguage
 {
 
+	public function __construct(){
+			$this->multiLanguage = new MultyLanguage();
+			$this->db = new DB();
+			$this->dnt = new Dnt();
+			$this->vendor = new Vendor();
+		}
+		
     /**
      * 
      * @return int
@@ -51,10 +58,9 @@ class AdminContent extends MultyLanguage
      */
     public function getCatId($type)
     {
-        $db = new DB;
-        $query = "SELECT id_entity FROM dnt_post_type WHERE name_url = '" . $type . "' AND `vendor_id` = '" . Vendor::getId() . "'";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        $query = "SELECT id_entity FROM dnt_post_type WHERE name_url = '" . $type . "' AND `vendor_id` = '" . $this->vendor->getId() . "'";
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 return $row['id_entity'];
             }
         } else {
@@ -69,10 +75,9 @@ class AdminContent extends MultyLanguage
      */
     public function getCatData($id_entity)
     {
-        $db = new DB;
-        $query = "SELECT * FROM dnt_post_type WHERE id_entity = '" . $id_entity . "' AND `vendor_id` = '" . Vendor::getId() . "'";
-        if ($db->num_rows($query) > 0) {
-            return $db->get_results($query);
+        $query = "SELECT * FROM dnt_post_type WHERE id_entity = '" . $id_entity . "' AND `vendor_id` = '" . $this->vendor->getId() . "'";
+        if ($this->db->num_rows($query) > 0) {
+            return $this->db->get_results($query);
         } else {
             return array();
         }
@@ -85,7 +90,7 @@ class AdminContent extends MultyLanguage
      */
     protected function prepare_query($is_limit)
     {
-        $db = new DB();
+
         if (isset($_GET['postParam'])) {
             $params = explode('-', $_GET['postParam']);
             if (isset($params[0]) && isset($params[1])) {
@@ -98,7 +103,7 @@ class AdminContent extends MultyLanguage
         } elseif (isset($_GET['included'])) {
             $typ = "AND type = '" . $_GET['included'] . "'";
         } elseif (isset($_GET['search'])) {
-            $typ = "AND `name_url` LIKE '%" . Dnt::name_url($_GET['search']) . "%'";
+            $typ = "AND `name_url` LIKE '%" . $this->dnt->name_url($_GET['search']) . "%'";
         } else {
             $typ = "AND `show` > 0 ";
         }
@@ -121,7 +126,7 @@ class AdminContent extends MultyLanguage
           $typ = "AND sub_cat_id = '" . $_GET['filter'] . "'";
 
           elseif (isset($_GET['search'])) {
-          $typ = "AND `name_url` LIKE '%" . Dnt::name_url($_GET['search']) . "%'";
+          $typ = "AND `name_url` LIKE '%" . $this->dnt->name_url($_GET['search']) . "%'";
           } else
           $typ = false;
 
@@ -131,7 +136,7 @@ class AdminContent extends MultyLanguage
           $limit = $is_limit;
          */
 
-        $query = "SELECT * FROM `dnt_posts` WHERE  `type` <> 'variant' AND `vendor_id` = '" . Vendor::getId() . "' " . $typ . " ORDER BY `order` DESC, `id_entity` DESC " . $limit . "";
+        $query = "SELECT * FROM `dnt_posts` WHERE  `type` <> 'variant' AND `vendor_id` = '" . $this->vendor->getId() . "' " . $typ . " ORDER BY `order` DESC, `id_entity` DESC " . $limit . "";
         return $query;
     }
 
@@ -141,7 +146,6 @@ class AdminContent extends MultyLanguage
      */
     public function query()
     {
-        $db = new DB;
 
         if (isset($_GET['page'])) {
             $returnPage = "&page=" . $_GET['page'];
@@ -149,9 +153,9 @@ class AdminContent extends MultyLanguage
             $returnPage = false;
         }
 
-        $query = self::prepare_query(false);
-        $pocet = $db->num_rows($query);
-        $limit = self::limit();
+        $query = $this->prepare_query(false);
+        $pocet = $this->db->num_rows($query);
+        $limit = $this->limit();
 
         if (isset($_GET['page']))
             $strana = $_GET['page'];
@@ -166,7 +170,7 @@ class AdminContent extends MultyLanguage
         $stranok_round = ceil($stranok);
 
         $pager = "LIMIT " . $pociatok . ", " . $limit . "";
-        return self::prepare_query($pager);
+        return $this->prepare_query($pager);
     }
 
     /**
@@ -176,7 +180,7 @@ class AdminContent extends MultyLanguage
      */
     public function getPage($index)
     {
-        $db = new DB;
+
 
         if (isset($_GET['page'])) {
             $strana = $_GET['page'];
@@ -184,9 +188,9 @@ class AdminContent extends MultyLanguage
             $strana = 1;
         }
 
-        $query = self::prepare_query(false);
-        $pocet = $db->num_rows($query);
-        $limit = self::limit();
+        $query = $this->prepare_query(false);
+        $pocet = $this->db->num_rows($query);
+        $limit = $this->limit();
         $stranok = $pocet / $limit;
         $pociatok = ($strana * $limit) - $limit;
 
@@ -231,7 +235,7 @@ class AdminContent extends MultyLanguage
             $return = $adresa[1]; //this function return an array
         }
 
-        return WWW_PATH_ADMIN . "index.php?" . $return . "&page=" . self::getPage($index);
+        return WWW_PATH_ADMIN . "index.php?" . $return . "&page=" . $this->getPage($index);
     }
 
     /**
@@ -267,11 +271,10 @@ class AdminContent extends MultyLanguage
      */
     public function getPostParam($column, $post_id)
     {
-        $db = new DB;
 
-        $query = "SELECT `$column` FROM dnt_posts WHERE id_entity = '$post_id' AND vendor_id = '" . Vendor::getId() . "'";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        $query = "SELECT `$column` FROM dnt_posts WHERE id_entity = '$post_id' AND vendor_id = '" . $this->vendor->getId() . "'";
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 return $row[$column];
             }
         } else {
@@ -285,7 +288,7 @@ class AdminContent extends MultyLanguage
      */
     public function showOrder()
     {
-        return (AdminContent::getPage("current") * AdminContent::limit()) - AdminContent::limit() + 1;
+        return ($this->getPage("current") * $this->limit()) - $this->limit() + 1;
     }
 
     /**

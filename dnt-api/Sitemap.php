@@ -12,6 +12,9 @@ use DntLibrary\Base\Rest;
 class SitemapApi
 {
 
+	public function __construct(){
+		$this->navigation = new Navigation();
+	}
     public function run()
     {
 
@@ -38,7 +41,7 @@ class SitemapApi
     xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 
-        foreach (Navigation::getParents() as $row) {
+        foreach ($this->navigation->getParents() as $row) {
             $name_url_1 = WWW_PATH . "" . $row['name_url'];
             echo '<url>';
             echo '<loc>' . $name_url_1 . '</loc>';
@@ -46,8 +49,8 @@ class SitemapApi
             echo '<changefreq>hourly</changefreq>';
             echo '<priority>' . $NAV_NAVIGATION . '</priority>';
             echo '</url>';
-            if (Navigation::hasChild($row['id'])) {
-                foreach (Navigation::getChildren($row['id']) as $row2) {
+            if ($this->navigation->hasChild($row['id'])) {
+                foreach ($this->navigation->getChildren($row['id']) as $row2) {
                     $name_url_2 = WWW_PATH . "" . $row2['name_url'];
                     ;
                     echo '<url>';

@@ -11,6 +11,7 @@
 namespace DntLibrary\Base;
 
 use DntLibrary\App\Stream;
+use DntLibrary\Base\Dnt;
 use DOMPDF;
 
 class Pdf
@@ -24,6 +25,7 @@ class Pdf
     public function __construct()
     {
         $this->stream = new Stream();
+        $this->dnt = new Dnt();
     }
 
     /**
@@ -124,7 +126,7 @@ class Pdf
     public function prepareHtmlToRender($path, $fileName, $html)
     {
         $converAs = 'html';
-        $streamResponse = $this->stream->streamIn($html, Dnt::getFileName($fileName), $converAs);
+        $streamResponse = $this->stream->streamIn($html, $this->dnt->getFileName($fileName), $converAs);
         $mergePageUrl = $streamResponse['url'];
         $output = file_get_contents('https://api.html2pdf.app/v1/generate?url=' . $mergePageUrl . '&apiKey=' . $this->html2pdfAppKey . '');
         unlink($streamResponse['tmpFile']);

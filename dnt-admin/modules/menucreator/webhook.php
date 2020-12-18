@@ -7,9 +7,9 @@ use DntLibrary\Base\Vendor;
 
 function configMenuItems()
 {
-
+	$vendor = new Vendor();
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "menu",
         '`included`' => "",
         '`ico`' => "fa-gears",
@@ -21,7 +21,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "menu",
         '`included`' => "post",
         '`ico`' => "fa-laptop",
@@ -33,7 +33,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "fa-plus",
@@ -45,7 +45,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "",
@@ -57,7 +57,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "menu",
         '`included`' => "",
         '`ico`' => "fa-user",
@@ -69,7 +69,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "",
@@ -81,7 +81,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "menu",
         '`included`' => "",
         '`ico`' => "fa fa-home",
@@ -93,7 +93,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "menu",
         '`included`' => "",
         '`ico`' => "fa fa-shopping-cart",
@@ -105,7 +105,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "fa fa-shopping-cart",
@@ -117,7 +117,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "fa fa-product-hunt",
@@ -130,7 +130,7 @@ function configMenuItems()
     );
 
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "fa fa-product-hunt",
@@ -143,7 +143,7 @@ function configMenuItems()
     );
 
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "fa fa-product-hunt",
@@ -156,7 +156,7 @@ function configMenuItems()
     );
 
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "fa fa-file-text-o",
@@ -169,7 +169,7 @@ function configMenuItems()
     );
 
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "menu",
         '`included`' => "",
         '`ico`' => "fa fa-list-alt",
@@ -182,7 +182,7 @@ function configMenuItems()
     );
 
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "menu",
         '`included`' => "",
         '`ico`' => "fa-envelope",
@@ -194,7 +194,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "",
@@ -206,7 +206,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "fa-plus",
@@ -218,7 +218,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "",
@@ -230,7 +230,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "fa-plus",
@@ -242,7 +242,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "",
@@ -254,7 +254,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "",
@@ -266,7 +266,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "",
@@ -278,7 +278,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "menu",
         '`included`' => "",
         '`ico`' => "fa-language",
@@ -290,7 +290,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "",
@@ -302,7 +302,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "",
@@ -314,7 +314,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "menu",
         '`included`' => "sitemap",
         '`ico`' => "fa fa-list",
@@ -326,7 +326,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "menu",
         '`included`' => "",
         '`ico`' => "fa-pie-chart",
@@ -338,7 +338,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "",
@@ -350,7 +350,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "",
@@ -362,7 +362,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "menu",
         '`included`' => "",
         '`ico`' => "fa-file",
@@ -374,7 +374,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "menu",
         '`included`' => "",
         '`ico`' => "fa-gears",
@@ -386,7 +386,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "fa-gears",
@@ -398,7 +398,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "fa-gears",
@@ -410,7 +410,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "menu",
         '`included`' => "",
         '`ico`' => "fa-globe",
@@ -422,7 +422,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "",
@@ -434,7 +434,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "",
@@ -446,7 +446,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "fa-user",
@@ -458,7 +458,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "fa-user",
@@ -470,7 +470,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "menu",
         '`included`' => "",
         '`ico`' => "fa-user",
@@ -482,7 +482,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "menu",
         '`included`' => "",
         '`ico`' => "fa fa-line-chart",
@@ -494,7 +494,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "menu",
         '`included`' => "",
         '`ico`' => "fa fa-image",
@@ -506,7 +506,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "menu",
         '`included`' => "",
         '`ico`' => "fa-file-excel-o",
@@ -518,7 +518,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "submenu",
         '`included`' => "",
         '`ico`' => "",
@@ -530,7 +530,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "menu",
         '`included`' => "video",
         '`ico`' => "fa fa-video-camera",
@@ -544,7 +544,7 @@ function configMenuItems()
     
 
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "menu",
         '`included`' => "",
         '`ico`' => "fa fa-trash",
@@ -558,7 +558,7 @@ function configMenuItems()
     
     
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "menu",
         '`included`' => "product",
         '`ico`' => "fa fa-product-hunt",
@@ -570,7 +570,7 @@ function configMenuItems()
         '`parent_id`' => '0',
     );
     $insertedData[] = array(
-        '`vendor_id`' => Vendor::getId(),
+        '`vendor_id`' => $vendor->getId(),
         '`type`' => "menu",
         '`included`' => "gallery",
         '`ico`' => "fa fa-list",
@@ -587,7 +587,7 @@ function configMenuItems()
 
 function menuQuery()
 {
-    $query = "SELECT * FROM `dnt_admin_menu` WHERE `vendor_id` = " . Vendor::getId() . " ORDER BY `type`, `order`";
+    $query = "SELECT * FROM `dnt_admin_menu` WHERE `vendor_id` = " . $vendor->getId() . " ORDER BY `type`, `order`";
     return $query;
 }
 
@@ -710,7 +710,7 @@ function sql2Arr()
         }
         //@var_dump($fill[9+$x]);
         echo '$insertedData[] = array(
-					\'`vendor_id`\' 	=> Vendor::getId(), 
+					\'`vendor_id`\' 	=> $vendor->getId(), 
 					\'`type`\' 			=> "' . @$fill[3 + $x] . '", 
 					\'`included`\' 		=> "' . @$fill[4 + $x] . '", 
 					\'`ico`\' 			=> "' . @$fill[5 + $x] . '", 
@@ -728,6 +728,8 @@ function sql2Arr()
 
 $rest = new Rest();
 $db = new DB();
+$dnt = new Dnt();
+$vendor = new Vendor();
 if ($rest->get("action") == "sql2Arr") {
     sql2Arr();
 } elseif ($rest->get("action") == "addToMenu") {

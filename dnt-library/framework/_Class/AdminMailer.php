@@ -18,6 +18,12 @@ use DntLibrary\Base\Vendor;
 class AdminMailer
 {
 
+	public function __construct(){
+		$this->adminContent = new AdminContent();
+		$this->db = new DB();
+		$this->dnt = new Dnt();
+		$this->vendor = new Vendor();
+	}
     /**
      * 
      * @return int
@@ -33,7 +39,7 @@ class AdminMailer
      */
     public function catQuery()
     {
-        return "SELECT * FROM `dnt_mailer_type` WHERE vendor_id = '" . Vendor::getId() . "'";
+        return "SELECT * FROM `dnt_mailer_type` WHERE vendor_id = '" . $this->vendor->getId() . "'";
     }
 
     /**
@@ -79,19 +85,19 @@ class AdminMailer
         if (isset($_GET['filter']) && $_GET['filter'] != "")
             $typ = "AND cat_id = '" . $_GET['filter'] . "'";
         elseif (isset($_GET['search']) && $_GET['src'] == "mailer")
-            $typ = "AND `email` LIKE '%" . Dnt::name_url($_GET['search']) . "%'";
+            $typ = "AND `email` LIKE '%" . $this->dnt->name_url($_GET['search']) . "%'";
         elseif (isset($_GET['search'])) {
-            $typ = "AND `name_url` LIKE '%" . Dnt::name_url($_GET['search']) . "%'";
+            $typ = "AND `name_url` LIKE '%" . $this->dnt->name_url($_GET['search']) . "%'";
         } else
             $typ = false;
 
         if ($is_limit == false){
             $limit = false;
-			$query = "SELECT parent_id FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . Vendor::getId() . "' " . $typ . " " . $limit . "";
+			$query = "SELECT parent_id FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . $this->vendor->getId() . "' " . $typ . " " . $limit . "";
 		}
         else{
             $limit = $is_limit;
-			$query = "SELECT * FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . Vendor::getId() . "' " . $typ . " ORDER BY `id` DESC " . $limit . "";
+			$query = "SELECT * FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . $this->vendor->getId() . "' " . $typ . " ORDER BY `id` DESC " . $limit . "";
 		}
 
         
@@ -100,7 +106,7 @@ class AdminMailer
 
     public function getAll()
     {
-        return self::prepare_query(false);
+        return $this->prepare_query(false);
     }
 
     /**
@@ -109,17 +115,15 @@ class AdminMailer
      */
     public function query()
     {
-        $db = new DB;
-
         if (isset($_GET['page'])) {
             $returnPage = "&page=" . $_GET['page'];
         } else {
             $returnPage = false;
         }
 
-        //$query = self::prepare_query(false);
-        //$pocet = $db->num_rows($query);
-        $limit = self::limit();
+        //$query = $this->prepare_query(false);
+        //$pocet = $this->db->num_rows($query);
+        $limit = $this->limit();
 
         if (isset($_GET['page']))
             $strana = $_GET['page'];
@@ -134,7 +138,7 @@ class AdminMailer
         //$stranok_round = ceil($stranok);
 
         $pager = "LIMIT " . $pociatok . ", " . $limit . "";
-        return self::prepare_query($pager);
+        return $this->prepare_query($pager);
     }
 
     /**
@@ -144,8 +148,6 @@ class AdminMailer
      */
     public function getPage($index, $countPages = false)
     {
-        $db = new DB;
-
         if (isset($_GET['page'])) {
             $strana = $_GET['page'];
         } else {
@@ -153,12 +155,12 @@ class AdminMailer
         }
 
         if ($countPages == false) {
-            $query = self::prepare_query(false);
-            $pocet = $db->num_rows($query);
+            $query = $this->prepare_query(false);
+            $pocet = $this->db->num_rows($query);
         } else {
             $pocet = $countPages;
         }
-        $limit = self::limit();
+        $limit = $this->limit();
         $stranok = $pocet / $limit;
         $pociatok = ($strana * $limit) - $limit;
 
@@ -203,7 +205,7 @@ class AdminMailer
             $return = $adresa[1]; //this function return an array
         }
 
-        return WWW_PATH_ADMIN . "index.php?" . $return . "&page=" . self::getPage($index, $countPages);
+        return WWW_PATH_ADMIN . "index.php?" . $return . "&page=" . $this->getPage($index, $countPages);
     }
 
     /**
@@ -212,7 +214,7 @@ class AdminMailer
      */
     public function showOrder()
     {
-        return (AdminContent::getPage("current") * AdminContent::limit()) - AdminContent::limit() + 1;
+        return ($this->adminContent->getPage("current") * $this->adminContent->limit()) - $this->adminContent->limit() + 1;
     }
 
 }

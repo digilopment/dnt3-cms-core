@@ -56,6 +56,7 @@ class Api
         } else {
             $this->columns = false;
         }
+		return $this->columns;
     }
 
     /**

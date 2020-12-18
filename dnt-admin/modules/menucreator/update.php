@@ -6,7 +6,7 @@ use DntLibrary\Base\Vendor;
 if (isset($_POST['sent'])) {
     $ids = array();
     foreach (array_keys($_POST) as $id) {
-        if (Dnt::in_string("name_", $id)) {
+        if ($dnt->in_string("name_", $id)) {
             $ids[] = str_replace("name_", "", $id);
         }
     }
@@ -23,12 +23,12 @@ if (isset($_POST['sent'])) {
                     'type' => $rest->post("type_" . $id),
                 ),
                 array(//where
-                    '`vendor_id`' => Vendor::getId(),
+                    '`vendor_id`' => $vendor->getId(),
                     '`id_entity`' => $id
                 )
         );
     }
-    Dnt::redirect(WWW_PATH_ADMIN_2 . "?src=menucreator");
+    $dnt->redirect(WWW_PATH_ADMIN_2 . "?src=menucreator");
 } else {
-    Dnt::redirect(WWW_PATH_ADMIN_2 . "?src=" . DEFAULT_MODUL_ADMIN);
+    $dnt->redirect(WWW_PATH_ADMIN_2 . "?src=" . DEFAULT_MODUL_ADMIN);
 }

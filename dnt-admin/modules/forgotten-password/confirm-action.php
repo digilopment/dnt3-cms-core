@@ -6,7 +6,7 @@ use DntLibrary\Base\Vendor;
 $email = base64_decode(urldecode($rest->get("email")));
 $vendorId = base64_decode(urldecode($rest->get("vendor")));
 $datetime = base64_decode(urldecode($rest->get("datetime")));
-$datetime_update = AdminUser::dataById("admin", "datetime_update", $email);
+$datetime_update = $adminUser->dataById("admin", "datetime_update", $email);
 $d1 = new DateTime($datetime);
 $d2 = new DateTime($datetime_update);
 
@@ -17,13 +17,13 @@ if (isset($_POST['sent'])) {
     $p_email = $rest->post("email");
 
 
-    if ($vendorId == Vendor::getId()) {
+    if ($vendorId == $vendor->getId()) {
         if ($pass == $re_pass) {
             if ($email == $p_email) {
-                if (AdminUser::emailExists($email, $vendorId)) {
+                if ($adminUser->emailExists($email, $vendorId)) {
                     if ($d1 > $d2) {
-                        AdminUser::updatePassword($vendorId, $email, $pass);
-                        AdminUser::updateDatetime(Vendor::getId(), $email);
+                        $adminUser->updatePassword($vendorId, $email, $pass);
+                        $adminUser->updateDatetime($vendor->getId(), $email);
                         $message = 'Vaše heslo sa úspešne zmenilo, môžete sa prihlásiť novým heslom.
 						<br/><br/><a href="index.php?src=login"><h3><strong>Prejsť na Login</strong></h3></a>';
                         $errTitle = "Heslo úspešne zmenené";

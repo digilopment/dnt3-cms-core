@@ -47,7 +47,7 @@ class MessengerUI
         $textData = explode("dnt tl $src_lang to $dst_lang ", $data);
         $src_text = $textData[1];
 
-        return self::getTranslate($src_text, $src_lang, $dst_lang);
+        return $this->getTranslate($src_text, $src_lang, $dst_lang);
     }
 
     /**
@@ -223,7 +223,7 @@ class MessengerUI
         if (in_string("akosamas", set_url_adresa($answer))) {
             return set_url_adresa($answer) . "Ďakujem za opýtanie " . $this->getUserParam('first_name') . ". Újde to a čo ty?";
         } elseif (in_string("dnt tl", $answer)) {
-            return self::translateParser($answer);
+            return $this->translateParser($answer);
         }
         //elseif($answer == "dnt bot add msg joke"){
         elseif (in_string("vtip", set_url_adresa($answer))) {

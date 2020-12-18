@@ -27,7 +27,7 @@ class Cookie
      * @param string $name
      * @return bool
      */
-    static public function Exists($name)
+    public function Exists($name)
     {
         return isset($_COOKIE[$name]);
     }
@@ -39,7 +39,7 @@ class Cookie
      * @param string $name
      * @return bool
      */
-    static public function IsEmpty($name)
+    public function IsEmpty($name)
     {
         return empty($_COOKIE[$name]);
     }
@@ -52,7 +52,7 @@ class Cookie
      * @param string $default
      * @return mixed
      */
-    static public function Get($name, $default = '')
+    public function Get($name, $default = '')
     {
         return (isset($_COOKIE[$name]) ? $_COOKIE[$name] : $default);
     }
@@ -97,7 +97,7 @@ class Cookie
      * @param bool $remove_from_global Set to true to remove this cookie from this request.
      * @return bool
      */
-    static public function Delete($name, $path = '/', $domain = false, $remove_from_global = false)
+    public function Delete($name, $path = '/', $domain = false, $remove_from_global = false)
     {
         $retval = false;
         if (!headers_sent()) {

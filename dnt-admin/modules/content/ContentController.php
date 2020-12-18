@@ -68,7 +68,7 @@ class ContentController extends AdminController
     public function addAction()
     {
         $insertedData = array(
-            'vendor_id' => Vendor::getId(),
+            'vendor_id' => $this->vendor->getId(),
             'cat_id' => $this->rest->get('filter'),
             '`type`' => $this->rest->get('included'),
             'datetime_creat' => $this->dnt->datetime(),
@@ -93,7 +93,7 @@ class ContentController extends AdminController
                 ),
                 array(
                     'id_entity' => $lastId,
-                    'vendor_id' => Vendor::getId(),
+                    'vendor_id' => $this->vendor->getId(),
                 )
         );
 
@@ -126,10 +126,10 @@ class ContentController extends AdminController
     public function delAction()
     {
         $post_id = $this->rest->get('post_id');
-        $wherePosts = array('id_entity' => $post_id, 'vendor_id' => Vendor::getId());
+        $wherePosts = array('id_entity' => $post_id, 'vendor_id' => $this->vendor->getId());
         $this->db->delete('dnt_posts', $wherePosts);
 
-        $whereMeta = array('post_id' => $post_id, 'vendor_id' => Vendor::getId());
+        $whereMeta = array('post_id' => $post_id, 'vendor_id' => $this->vendor->getId());
         $this->db->delete('dnt_posts_meta', $whereMeta);
 
         $this->dnt->redirect();
@@ -146,7 +146,7 @@ class ContentController extends AdminController
                 ),
                 array(//where
                     'id_entity' => $post_id,
-                    'vendor_id' => Vendor::getId(),
+                    'vendor_id' => $this->vendor->getId(),
                 )
         );
 
@@ -156,7 +156,7 @@ class ContentController extends AdminController
     public function moveDownAction()
     {
         $post_id = $this->rest->get('post_id');
-        $query = "SELECT `order` FROM dnt_posts WHERE id_entity = '" . $post_id . "' AND vendor_id = '" . Vendor::getId() . "'";
+        $query = "SELECT `order` FROM dnt_posts WHERE id_entity = '" . $post_id . "' AND vendor_id = '" . $this->vendor->getId() . "'";
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
                 $order = $row['order'];
@@ -173,7 +173,7 @@ class ContentController extends AdminController
                 ),
                 array(//where
                     'id_entity' => $post_id,
-                    'vendor_id' => Vendor::getId(),
+                    'vendor_id' => $this->vendor->getId(),
                 )
         );
         $this->dnt->redirect();
@@ -182,7 +182,7 @@ class ContentController extends AdminController
     public function moveUpAction()
     {
         $post_id = $this->rest->get('post_id');
-        $query = "SELECT `order` FROM dnt_posts WHERE id_entity = '" . $post_id . "' AND vendor_id = '" . Vendor::getId() . "'";
+        $query = "SELECT `order` FROM dnt_posts WHERE id_entity = '" . $post_id . "' AND vendor_id = '" . $this->vendor->getId() . "'";
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
                 $order = $row['order'];
@@ -199,7 +199,7 @@ class ContentController extends AdminController
                 ),
                 array(
                     'id_entity' => $post_id,
-                    'vendor_id' => Vendor::getId(),
+                    'vendor_id' => $this->vendor->getId(),
                 )
         );
         $this->dnt->redirect();
@@ -208,7 +208,7 @@ class ContentController extends AdminController
     public function showHideAction()
     {
         $post_id = $this->rest->get('post_id');
-        $query = "SELECT `show` FROM dnt_posts WHERE id_entity = '" . $post_id . "' AND vendor_id = '" . Vendor::getId() . "'";
+        $query = "SELECT `show` FROM dnt_posts WHERE id_entity = '" . $post_id . "' AND vendor_id = '" . $this->vendor->getId() . "'";
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
                 $show = $row['show'];
@@ -230,7 +230,7 @@ class ContentController extends AdminController
                 ),
                 array(
                     'id_entity' => $post_id,
-                    'vendor_id' => Vendor::getId(),
+                    'vendor_id' => $this->vendor->getId(),
                 )
         );
         $this->dnt->redirect();
@@ -241,7 +241,7 @@ class ContentController extends AdminController
         $redirect = $this->rest->post('return');
 
         $name = $this->rest->post('name');
-        $name_url = Dnt::name_url($name);
+        $name_url = $this->dnt->name_url($name);
         $id_entity = $this->rest->post('id_entity');
 
         $this->db->update(
@@ -252,7 +252,7 @@ class ContentController extends AdminController
                 ),
                 array(
                     'id_entity' => $id_entity,
-                    '`vendor_id`' => Vendor::getId())
+                    '`vendor_id`' => $this->vendor->getId())
         );
         $this->dnt->redirect($redirect);
     }
@@ -262,7 +262,7 @@ class ContentController extends AdminController
         $redirect = $this->rest->post('return');
 
         $name = $this->rest->post('name');
-        $name_url = Dnt::name_url($name);
+        $name_url = $this->dnt->name_url($name);
         $admin_cat = $this->rest->post('admin_cat');
 
         if ($name != '') {
@@ -282,7 +282,7 @@ class ContentController extends AdminController
                 'name' => $name,
                 '`show`' => '1',
                 '`order`' => '0',
-                'vendor_id' => Vendor::getId(),
+                'vendor_id' => $this->vendor->getId(),
             );
 
             $this->db->insert('dnt_post_type', $insertedData);
@@ -325,7 +325,7 @@ class ContentController extends AdminController
                     ),
                     array(
                         'id_entity' => $post_id,
-                        'vendor_id' => Vendor::getId(),
+                        'vendor_id' => $this->vendor->getId(),
                     )
             );
         }

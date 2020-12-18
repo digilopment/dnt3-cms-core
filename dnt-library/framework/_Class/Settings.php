@@ -11,6 +11,7 @@
 namespace DntLibrary\Base;
 
 use DntLibrary\Base\DB;
+use DntLibrary\Base\Vendor;
 use DntView\Layout\Configurator;
 use function websettings;
 
@@ -20,18 +21,20 @@ use function websettings;
 class Settings
 {
 
+	public function __construct(){
+		$this->db = new DB();
+		$this->vendor = new Vendor();
+	}
     /**
      * 
      * @param type $key
      * @return boolean
      */
-    public static function get($key)
+    public function get($key)
     {
-        $db = new DB;
-        ;
-        $query = "SELECT value FROM dnt_settings WHERE `key` = '" . $key . "' AND `vendor_id` = '" . Vendor::getId() . "'";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        $query = "SELECT value FROM dnt_settings WHERE `key` = '" . $key . "' AND `vendor_id` = '" . $this->vendor->getId() . "'";
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 return $row['value'];
             }
         } else {
@@ -53,7 +56,7 @@ class Settings
         $final['database'] = $this->getAllSettings();
 
         $vendorLoadedSettings = [];
-        $file = __DIR__ . "/../../../dnt-view/layouts/" . Vendor::getLayout() . "/Configurator.php";
+        $file = __DIR__ . "/../../../dnt-view/layouts/" . $this->vendor->getLayout() . "/Configurator.php";
         if (!class_exists('Configurator')) {
             if (file_exists($file)) {
                 include_once $file;
@@ -78,12 +81,10 @@ class Settings
      * @param type $key
      * @return boolean
      */
-    public static function show($key)
+    public function show($key)
     {
-        $db = new DB;
-        ;
-        $query = "SELECT * FROM dnt_settings WHERE `key` = '" . $key . "' AND `vendor_id` = '" . Vendor::getId() . "' AND `show` = '1'";
-        if ($db->num_rows($query) > 0) {
+        $query = "SELECT * FROM dnt_settings WHERE `key` = '" . $key . "' AND `vendor_id` = '" . $this->vendor->getId() . "' AND `show` = '1'";
+        if ($this->db->num_rows($query) > 0) {
             return true;
         } else {
             return false;
@@ -97,15 +98,13 @@ class Settings
      */
     public function customMeta($catId = false)
     {
-        $db = new DB;
-        ;
         if ($catId) {
-            $query = "SELECT * FROM dnt_settings WHERE `type` = '$catId' AND `vendor_id` = '" . Vendor::getId() . "' ORDER BY `order`";
+            $query = "SELECT * FROM dnt_settings WHERE `type` = '$catId' AND `vendor_id` = '" . $this->vendor->getId() . "' ORDER BY `order`";
         } else {
-            $query = "SELECT * FROM dnt_settings WHERE `type` = 'custom' AND `vendor_id` = '" . Vendor::getId() . "' ORDER BY `order`";
+            $query = "SELECT * FROM dnt_settings WHERE `type` = 'custom' AND `vendor_id` = '" . $this->vendor->getId() . "' ORDER BY `order`";
         }
-        if ($db->num_rows($query) > 0) {
-            return $db->get_results($query);
+        if ($this->db->num_rows($query) > 0) {
+            return $this->db->get_results($query);
         } else {
             return false;
         }
@@ -117,11 +116,10 @@ class Settings
      */
     public function getMetaData()
     {
-        $db = new DB;
-        $query = "SELECT * FROM dnt_settings WHERE `type` = 'custom' AND `vendor_id` = '" . Vendor::getId() . "'";
+        $query = "SELECT * FROM dnt_settings WHERE `type` = 'custom' AND `vendor_id` = '" . $this->vendor->getId() . "'";
 
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 $arr['keys'][$row['key']]['show'] = $row['show'];
                 $arr['keys'][$row['key']]['value'] = $row['value'];
             }
@@ -136,11 +134,10 @@ class Settings
      */
     public function getAllSettings()
     {
-        $db = new DB;
-        $query = "SELECT * FROM dnt_settings WHERE `vendor_id` = '" . Vendor::getId() . "'";
+        $query = "SELECT * FROM dnt_settings WHERE `vendor_id` = '" . $this->vendor->getId() . "'";
 
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 $arr['keys'][$row['key']]['show'] = $row['show'];
                 $arr['keys'][$row['key']]['value'] = $row['value'];
             }
@@ -154,11 +151,8 @@ class Settings
      * @param type $key
      * @return boolean
      */
-    public static function getImage($key)
+    public function getImage($key)
     {
-
-        $db = new DB;
-        ;
         if (is_numeric($key)) {
             $imageId = $key;
         } else {
@@ -166,8 +160,8 @@ class Settings
         }
 
         $query = "SELECT name FROM dnt_uploads WHERE `id_entity` = '" . $imageId . "'";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 return Url::get("WWW_PATH_FILES") . "" . $row['name'];
             }
         } else {
@@ -179,7 +173,7 @@ class Settings
      * 
      * @return type
      */
-    public static function showStatus()
+    public function showStatus()
     {
         return array(
             "0" => "Vymazať",
@@ -189,10 +183,10 @@ class Settings
         );
     }
 
-    protected static function settingsConf()
+    protected function settingsConf()
     {
         $settingsData = false;
-        $conf = __DIR__ . "/../../../dnt-view/layouts/" . Vendor::getLayout() . "/conf.php";
+        $conf = __DIR__ . "/../../../dnt-view/layouts/" . $this->vendor->getLayout() . "/conf.php";
         if (!function_exists("websettings")) {
             if (file_exists($conf)) {
                 include $conf;
@@ -205,9 +199,9 @@ class Settings
         return $settingsData;
     }
 
-    protected static function settingsConfigurator()
+    protected function settingsConfigurator()
     {
-        $file = __DIR__ . "/../../../dnt-view/layouts/" . Vendor::getLayout() . "/Configurator.php";
+        $file = __DIR__ . "/../../../dnt-view/layouts/" . $this->vendor->getLayout() . "/Configurator.php";
         $modulesRegistrator = false;
         if (!class_exists('Configurator')) {
             if (file_exists($file)) {
@@ -244,8 +238,7 @@ class Settings
             foreach ($settingsData as $key => $value) {
                 $configKeys[] = $value['`key`'];
             }
-            $settings = new Settings;
-            foreach ($settings->getAllSettings() as $key => $value) {
+            foreach ($this->getAllSettings() as $key => $value) {
                 $existingKey = array_keys($value);
             }
 
@@ -259,10 +252,8 @@ class Settings
                     continue;
                 }
             }
-            $db = new DB;
-            ;
             foreach ($arrOfConfigKeys as $key) {
-                $db->insert('dnt_settings', $settingsData[$key]);
+                $this->db->insert('dnt_settings', $settingsData[$key]);
             }
         }
     }

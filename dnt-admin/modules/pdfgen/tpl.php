@@ -25,45 +25,45 @@ get_top(); ?>
                <form id="obchod" action="<?php echo WWW_PATH_ADMIN_2."index.php?src=settings&pa=2&action=update ";?>" method="post">
                   <p class="lead">Nastavte <b>meno </b> Vašej firmy</p>
                   <p>Tento údaj sa bude zobrazovať všade tam, kde budete prezentovať Vašu firmu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_company" value="<?php echo Settings::get("vendor_company"); ?>" />
+                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_company" value="<?php echo $settings->get("vendor_company"); ?>" />
                   <div class="padding"></div>
                   <p class="lead">Nastavte <b>sídlo</b> Vašej firmy</p>
                   <p>Tento údaj sa bude zobrazovať všade tam, kde budete prezentovať Vašu firmu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_street" value="<?php echo  Settings::get("vendor_street"); ?>" />
+                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_street" value="<?php echo  $settings->get("vendor_street"); ?>" />
                   <div class="padding"></div>
                   <p class="lead">Nastavte <b>psč</b> firmy</p>
                   <p>Tento údaj sa bude zobrazovať všade tam, kde budete prezentovať Vašu firmu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_psc" value="<?php echo  Settings::get("vendor_psc"); ?>" />
+                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_psc" value="<?php echo  $settings->get("vendor_psc"); ?>" />
                   <div class="padding"></div>
                   <p class="lead">Nastavte <b>mesto</b> firmy</p>
                   <p>Tento údaj sa bude zobrazovať všade tam, kde budete prezentovať Vašu firmu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_city" value="<?php echo  Settings::get("vendor_city"); ?>" />
+                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_city" value="<?php echo  $settings->get("vendor_city"); ?>" />
                   <div class="padding"></div>
                   <p class="lead">Nastavte <b>telefón</b> firmy</p>
                   <p>Tento údaj sa bude zobrazovať všade tam, kde budete prezentovať Vašu firmu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_tel" value="<?php echo  Settings::get("vendor_tel"); ?>" />
+                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_tel" value="<?php echo  $settings->get("vendor_tel"); ?>" />
                   <div class="padding"></div>
                   <p class="lead">Nastavte <b>fax</b> firmy</p>
                   <p>Tento údaj sa bude zobrazovať všade tam, kde budete prezentovať Vašu firmu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_fax" value="<?php echo  Settings::get("vendor_fax"); ?>" />
+                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_fax" value="<?php echo  $settings->get("vendor_fax"); ?>" />
                   <div class="padding"></div>
                   <p class="lead">Nastavte <b>email</b> firmy</p>
                   <p>Sem budú chodiť všetky notifikácie ohľadom firmy</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_email" value="<?php echo  Settings::get("vendor_email"); ?>" />
+                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_email" value="<?php echo  $settings->get("vendor_email"); ?>" />
                   <div class="padding"></div>
                   <p class="lead">Nastavte <b>ičo</b> firmy</p>
                   <p>Tento údaj sa bude zobrazovať všade tam, kde budete prezentovať Vašu firmu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_ico" value="<?php echo  Settings::get("vendor_ico"); ?>" />
+                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_ico" value="<?php echo  $settings->get("vendor_ico"); ?>" />
                   <div class="padding"></div>
                   <p class="lead">Nastavte <b>dič</b> firmy</p>
                   <p>Tento údaj sa bude zobrazovať všade tam, kde budete prezentovať Vašu firmu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_dic" value="<?php echo  Settings::get("vendor_dic"); ?>" />
+                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_dic" value="<?php echo  $settings->get("vendor_dic"); ?>" />
                   <div class="padding"></div>
                   <p class="lead">Nastavte <b>iban</b> firmy</p>
                   <p>Tento údaj sa bude zobrazovať všade tam, kde budete prezentovať Vašu firmu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_iban" value="<?php echo  Settings::get("vendor_iban"); ?>" />
+                  <input type="text" class="btn-default btn-lg btn-block" name="vendor_iban" value="<?php echo  $settings->get("vendor_iban"); ?>" />
                   <div class="padding"></div>
-                  <?php echo Dnt::returnInput();?>
+                  <?php echo $dnt->returnInput();?>
                   <input type="submit" name="sent_3" class="btn btn-danger btn-radius" value="Upraviť nastavenia" />
                   <div class="padding"></div>
                </form>
@@ -88,9 +88,9 @@ get_top(); ?>
                <div class="padding"></div>
                <p class="lead">Nastavte hodnotu <b>DPH</b></p>
                <p>Aktuálna cena DPH sa bude prepočítavať podľa aktuálnej hodnoty DPH</p>
-               <input type="text" name="dph" class="btn-default btn-lg btn-block" value="<?php echo Settings::get("vendor_dph"); ?>" />
+               <input type="text" name="dph" class="btn-default btn-lg btn-block" value="<?php echo $settings->get("vendor_dph"); ?>" />
                <div class="padding"></div>
-               <?php echo Dnt::returnInput();?>
+               <?php echo $dnt->returnInput();?>
                <input type="submit" name="sent_4" class="btn btn-warning btn-radius" value="Upraviť nastavenia" />
             </form>
             <!-- end is here! -->
@@ -102,10 +102,10 @@ get_top(); ?>
                   <form id="obchod" enctype='multipart/form-data' action="<?php echo WWW_PATH_ADMIN_2."index.php?src=settings&pa=4&action=update ";?>" method="post">
                      <p class="lead">Nastavte logo <b>vašej firmy</b></p>
                      <p>Ak máte eshop a vystavíte faktúru, vaše logo bude v hlavičke faktúry</p>
-                     <img src="<?php echo Settings::getImage("logo_firmy");?>" style="max-width: 200px; margin: 15px;" alt="" />
+                     <img src="<?php echo $settings->getImage("logo_firmy");?>" style="max-width: 200px; margin: 15px;" alt="" />
                      <input type="file" name="userfile"  class="btn-default btn-lg btn-block" />
                      <div class="padding"></div>
-                     <?php echo Dnt::returnInput();?>
+                     <?php echo $dnt->returnInput();?>
                      <input type="submit" name="odoslat_logo" class="btn btn-warning btn-radius" value="Upraviť nastavenia" />
                   </form>
                </div>
@@ -113,10 +113,10 @@ get_top(); ?>
                   <form id="obchod" enctype='multipart/form-data' action="<?php echo WWW_PATH_ADMIN_2."index.php?src=settings&pa=4&action=update";?>" method="post">
                      <p class="lead">Nastavte defaultný <b>obrázok</b></p>
                      <p>Tento obrázok sa zobrazí všade tam, kde nenastavíte vlastný obrázok</p>
-                     <img src="<?php echo Settings::getImage("no_img");?>" style="max-width: 200px; margin: 15px;" alt="" />
+                     <img src="<?php echo $settings->getImage("no_img");?>" style="max-width: 200px; margin: 15px;" alt="" />
                      <input type="file" name="userfile"  class="btn-default btn-lg btn-block" />
                      <div class="padding"></div>
-                     <?php echo Dnt::returnInput();?>
+                     <?php echo $dnt->returnInput();?>
                      <input type="submit" name="odoslat_noimage" class="btn btn-warning btn-radius" value="Upraviť nastavenia" />
                   </form>
                </div>
@@ -129,29 +129,29 @@ get_top(); ?>
                   <p>Nastavenie emailu: 
                      <b>Tento email bude fungovať ako <br/> notifakčný email a bude Vás kontaktovať, ak to bude potrebné</b>
                   </p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="notifikacny_email" value="<?php echo Settings::get("notifikacny_email"); ?>" />
+                  <input type="text" class="btn-default btn-lg btn-block" name="notifikacny_email" value="<?php echo $settings->get("notifikacny_email"); ?>" />
                   <div class="padding"></div>
                   <p class="lead">Máte vlastnú Facebook Stránku? Nastavte si ju</p>
                   <p>Na Vašej stránke sa budeme vždy odvolávať na Vašu zadanú adresu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="facebook_page" value="<?php echo Settings::get("facebook_page"); ?>" />
+                  <input type="text" class="btn-default btn-lg btn-block" name="facebook_page" value="<?php echo $settings->get("facebook_page"); ?>" />
                   <div class="padding"></div>
                   <p class="lead">Máte vlastnú Twitter Stránku? Nastavte si ju</p>
                   <p>Na Vašej stránke sa budeme vždy odvolávať na Vašu zadanú adresu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="twitter" value="<?php echo Settings::get("twitter"); ?>" />
+                  <input type="text" class="btn-default btn-lg btn-block" name="twitter" value="<?php echo $settings->get("twitter"); ?>" />
                   <div class="padding"></div>
                   <p class="lead">Máte vlastnú Youtube Stránku? Nastavte si ju</p>
                   <p>Na Vašej stránke sa budeme vždy odvolávať na Vašu zadanú adresu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="youtube" value="<?php echo Settings::get("youtube"); ?>" />
+                  <input type="text" class="btn-default btn-lg btn-block" name="youtube" value="<?php echo $settings->get("youtube"); ?>" />
                   <div class="padding"></div>
                   <p class="lead">Máte vlastnú Flickr Stránku? Nastavte si ju</p>
                   <p>Na Vašej stránke sa budeme vždy odvolávať na Vašu zadanú adresu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="flickr" value="<?php echo Settings::get("flickr"); ?>" />
+                  <input type="text" class="btn-default btn-lg btn-block" name="flickr" value="<?php echo $settings->get("flickr"); ?>" />
                   <div class="padding"></div>
                   <p class="lead">Používate Google mapy? Nastavte si ich</p>
                   <p>Vložením URL adresy z google sa Vám automaticky vygeneruje mapa</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="google_map" value="<?php echo Settings::get("google_map"); ?>" />
+                  <input type="text" class="btn-default btn-lg btn-block" name="google_map" value="<?php echo $settings->get("google_map"); ?>" />
                   <div class="padding"></div>
-                  <?php echo Dnt::returnInput();?>
+                  <?php echo $dnt->returnInput();?>
                   <input type="submit" name="sent_2" class="btn btn-warning btn-radius" value="Upraviť nastavenia" />
                   <div class="padding"></div>
                </form>
@@ -160,15 +160,15 @@ get_top(); ?>
             <div class="grid-body">
                <div class="row">
                   <div class="col-md-6">
-                     <form enctype='multipart/form-data' id="pristupy" action="<?php echo WWW_PATH_ADMIN_2."index.php?src=access&action=update&post_id=".AdminUser::data("admin", "id")."";?>" method="post">
-                        <input type="hidden" name="id" value="<?php echo AdminUser::data("admin", "id");?>" />
+                     <form enctype='multipart/form-data' id="pristupy" action="<?php echo WWW_PATH_ADMIN_2."index.php?src=access&action=update&post_id=".$adminUser->data("admin", "id")."";?>" method="post">
+                        <input type="hidden" name="id" value="<?php echo $adminUser->data("admin", "id");?>" />
                         <p class="lead">Nastavte Vaše <b>meno</b></p>
                         <p>Ak máte eshop a vystavíte faktúru, vaše meno tam bude predvyplnené</p>
-                        <input type="text" class="btn-default btn-lg btn-block" name="name" value="<?php echo AdminUser::data("admin", "name");?>" />
+                        <input type="text" class="btn-default btn-lg btn-block" name="name" value="<?php echo $adminUser->data("admin", "name");?>" />
                         <div class="padding"></div>
                         <p class="lead">Nastavte Vaše <b>priezvisko</b></p>
                         <p>Ak máte eshop a vystavíte faktúru, vaše meno tam bude predvyplnené</p>
-                        <input type="text" class="btn-default btn-lg btn-block" name="surname" value="<?php echo AdminUser::data("admin", "surname");?>" />
+                        <input type="text" class="btn-default btn-lg btn-block" name="surname" value="<?php echo $adminUser->data("admin", "surname");?>" />
                         <div class="padding"></div>
 						<p>Zadajte heslo na overenie totožnosti:</p>
                         <input type="password" class="btn-default btn-lg btn-block" name="pass" value="" />
@@ -177,11 +177,11 @@ get_top(); ?>
                   <div class="col-md-6">									
                   <p class="lead">Vyberte si jedinečnú <b>fotografiu</b></p>
                   <p>Ak máte eshop a vystavíte faktúru, vaše meno tam bude predvyplnené</p>
-                  <img src="<?php echo AdminUser::avatar();?>" style="max-width: 200px; margin: 15px;" alt="" />
+                  <img src="<?php echo $adminUser->avatar();?>" style="max-width: 200px; margin: 15px;" alt="" />
                   <input type="file" name="userfile"  class="btn-default btn-lg btn-block" />
                   <div class="padding"></div>
                   
-				  <?php echo Dnt::returnInput();?>
+				  <?php echo $dnt->returnInput();?>
 				  
                   <input type="submit" name="sent" class="btn btn-primary btn-radius" value="Upraviť nastavenia" />
                   <div class="padding"></div>
@@ -218,7 +218,7 @@ get_top(); ?>
 				  <div class="col-md-4">
 					  <p class="lead">Exportovať len moje dáta z databázy</p>
 					  <p>Exportujú sa všetky moje dáta, teda dáta zobrazujúce sa na stránke <b><?php echo WWW_PATH; ?></b></p>
-					  <a target="_blank" href="<?php echo WWW_PATH;?>dnt-jobs/dbExport.php?vendor_id=<?php echo Vendor::getId();?>&time=<?php echo Dnt::timestamp();?>">
+					  <a target="_blank" href="<?php echo WWW_PATH;?>dnt-jobs/dbExport.php?vendor_id=<?php echo $vendor->getId();?>&time=<?php echo $dnt->timestamp();?>">
 						<span type="submit" name="sent_4" class="btn btn-danger btn-radius" >Exportovať moje dáta</span>
 					  </a>
 					  <div class="padding"></div>
@@ -227,7 +227,7 @@ get_top(); ?>
 					<div class="col-md-4">
 					  <p class="lead">Exportovať vetky dáta z databázy</p>
 					  <p>Exportujú sa všetky moje dáta, a tak isto aj dáta ostatných používateľov<b><br/><br/></b></p>
-					  <a  target="_blank"  href="<?php echo WWW_PATH;?>dnt-jobs/dbExport.php?time=<?php echo Dnt::timestamp();?>">
+					  <a  target="_blank"  href="<?php echo WWW_PATH;?>dnt-jobs/dbExport.php?time=<?php echo $dnt->timestamp();?>">
 						<span type="submit" name="sent_4" class="btn btn-danger btn-radius" >Exportovať všetky dáta</span>
 					  </a>
 					  <div class="padding"></div>
@@ -236,7 +236,7 @@ get_top(); ?>
 					<div class="col-md-4">
 					  <p class="lead">Exportovať skeleton dáta</p>
 					  <p>Exportujú sa všetky aktuálne dáta pre skeleton aplikáciu <b><br/><br/></b></p>
-					  <a  target="_blank"  href="<?php echo WWW_PATH;?>dnt-jobs/dbExport.php?vendor_id=1&time=<?php echo Dnt::timestamp();?>">
+					  <a  target="_blank"  href="<?php echo WWW_PATH;?>dnt-jobs/dbExport.php?vendor_id=1&time=<?php echo $dnt->timestamp();?>">
 						<span type="submit" name="sent_4" class="btn btn-danger btn-radius" >Exportovať skeletón dáta</span>
 					  </a>
 					  <div class="padding"></div>
@@ -252,7 +252,7 @@ get_top(); ?>
                   </p>
                   <select name="cachovanie" class="btn-default btn-lg btn-block" type="text" size="1">
                   <?php
-                     if(Settings::get("cachovanie") == "0"){
+                     if($settings->get("cachovanie") == "0"){
                      	echo "<option value='0' selected>Cachovanie zapnuté</option>";
                      	echo "<option value='1'>Cachovanie nastavené</option>";
                      }
@@ -266,17 +266,17 @@ get_top(); ?>
 				  
 				  <p class="lead">Nadpis stránky</p>
                   <p>Nadpis sa zobrazí v hlavičke vygenerovaného HTML dokumentu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="title" value="<?php echo Settings::get("title"); ?>" />
+                  <input type="text" class="btn-default btn-lg btn-block" name="title" value="<?php echo $settings->get("title"); ?>" />
                   <div class="padding"></div>
 				  
                   <p class="lead">Description webu</p>
                   <p>Zadajte tie krátky popis vášho webu</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="description" value="<?php echo Settings::get("description"); ?>" />
+                  <input type="text" class="btn-default btn-lg btn-block" name="description" value="<?php echo $settings->get("description"); ?>" />
                   <div class="padding"></div>
 				  
 				  <p class="lead">Kľúčové slová</p>
                   <p>Zadajte tie najkľúčovejšie slová pre vašu stránku (slová oddeľujte čiarkou)</p>
-                  <input type="text" class="btn-default btn-lg btn-block" name="keywords" value="<?php echo Settings::get("keywords"); ?>" />
+                  <input type="text" class="btn-default btn-lg btn-block" name="keywords" value="<?php echo $settings->get("keywords"); ?>" />
                   <div class="padding"></div>
 				  
                  
@@ -300,7 +300,7 @@ get_top(); ?>
                   <p>Nastavte otváranie odkazov netýkajucích sa Vašej stránky</p>
                   <select name="target" class="btn-default btn-lg btn-block" type="text" size="1">
                   <?php
-                     if(Settings::get("target") == "_blank"){
+                     if($settings->get("target") == "_blank"){
                      	echo "<option value='_blank' selected>Otvárať v novom okne</option>";
                      	echo "<option value='_blank'>Otvárať v tom istom okne</option>";
                      }
@@ -311,7 +311,7 @@ get_top(); ?>
                      ?>
                   </select>
                   <div class="padding"></div>
-                  <?php echo Dnt::returnInput();?>
+                  <?php echo $dnt->returnInput();?>
                   <input type="submit" name="sent_1" class="btn btn-success btn-radius" value="Upraviť nastavenia" />
                   <div class="padding"></div>
                </form>

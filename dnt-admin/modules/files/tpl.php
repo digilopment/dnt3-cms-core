@@ -35,11 +35,11 @@ $image = new Image;
         <span class="label label-primary bg-blue" style="padding:5px;margin-right:20px;"><big>všetky</big></span>
     </a>
     <?php
-    $query = "SELECT DISTINCT name FROM dnt_uploads WHERE vendor_id = '" . Vendor::getId() . "'";
+    $query = "SELECT DISTINCT name FROM dnt_uploads WHERE vendor_id = '" . $vendor->getId() . "'";
     $formats = array();
     if ($db->num_rows($query) > 0) {
         foreach ($db->get_results($query) as $row) {
-            $type = Dnt::getPripona($row['name']);
+            $type = $dnt->getPripona($row['name']);
             $formats[$type] = $type;
         }
     }
@@ -81,15 +81,15 @@ $image = new Image;
                     </thead>
                     <tbody>
                         <?php
-                        $query = FileAdmin::query();
-                        $i = FileAdmin::showOrder();
+                        $query = $fileAdmin->query();
+                        $i = $fileAdmin->showOrder();
                         if ($db->num_rows($query) > 0) {
                             foreach ($db->get_results($query) as $row) {
                                 $cat_id = false;
                                 $post_id = $row['id_entity'];
                                 $sub_cat_id = false;
                                 $type = $row['type'];
-                                $page = FileAdmin::getPage("current");
+                                $page = $fileAdmin->getPage("current");
 
                                 $imageName = $image->getFileImage($post_id, false, false);
                                 ?>
@@ -104,8 +104,8 @@ $image = new Image;
                                                 <?php echo $row['name']; ?></a></b>
                                         <br>
                                         <?php
-                                        foreach (DntUpload::imageFormats() as $format) {
-                                            if (Dnt::in_string("image", $type)) {
+                                        foreach ($dntUpload->imageFormats() as $format) {
+                                            if ($dnt->in_string("image", $type)) {
                                                 ?>
                                                 <span style="font-weight:bold;"><a href="<?php echo "../dnt-view/data/uploads/formats/" . $format . "/" . $imageName ?>" target="_blank">width-<?php echo $format; ?></a> | </span>
                                             <?php } ?>
@@ -114,7 +114,7 @@ $image = new Image;
                                         <input style="width: 250px" type="text" value="<?php echo $image->getFileImage($post_id); ?>">
                                     </td>
                                     <td>
-                                        <?php echo FileAdmin::getPostParam("type", $row['id_entity']); ?>
+                                        <?php echo $fileAdmin->getPostParam("type", $row['id_entity']); ?>
                                     </td>
                                     <td>
                                         <b><?php echo $row['datetime']; ?></b>
@@ -122,7 +122,7 @@ $image = new Image;
                                     <td><b>
                                             <?php
                                             echo '<a target="_blank" href="' . $image->getFileImage($post_id) . '">';
-                                            if (Dnt::in_string("image", $row['type'])) {
+                                            if ($dnt->in_string("image", $row['type'])) {
                                                 echo '<img style="width: 100px;" src="' . $image->getFileImage($post_id, true, Image::SMALL) . '"/>';
                                             } else {
                                                 echo "Súbor";
@@ -132,12 +132,12 @@ $image = new Image;
                                         </b>
                                     </td>
                                     <td>
-                                        <a href="<?php echo FileAdmin::url("show_hide", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>">
+                                        <a href="<?php echo $fileAdmin->url("show_hide", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>">
                                             <i class="<?php echo admin_zobrazenie_stav($row['show']); ?>"></i>
                                         </a>
                                     </td>
                                     <td>
-                                        <a <?php echo Dnt::confirmMsg("Naozaj chcete vymazať tento post?"); ?> href="<?php echo FileAdmin::url("del", $cat_id, $sub_cat_id, "image", $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
+                                        <a <?php echo $dnt->confirmMsg("Naozaj chcete vymazať tento post?"); ?> href="<?php echo $fileAdmin->url("del", $cat_id, $sub_cat_id, "image", $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
                                         <input type="checkbox" name="del_<?php echo $post_id; ?>">
                                     </td>
                                 </tr>
@@ -167,22 +167,22 @@ $image = new Image;
     </div>
     <ul class="pagination">
         <li class="">
-            <a href="<?php echo FileAdmin::paginator("prev"); ?>">
+            <a href="<?php echo $fileAdmin->paginator("prev"); ?>">
                 &laquo;
             </a>
         </li>
         <li>
-            <a href="<?php echo FileAdmin::paginator("first"); ?>">
-                <?php echo FileAdmin::getPage("first"); ?>
+            <a href="<?php echo $fileAdmin->paginator("first"); ?>">
+                <?php echo $fileAdmin->getPage("first"); ?>
             </a>
         </li>
         <li>
-            <a href="<?php echo FileAdmin::paginator("last"); ?>">
-                <?php echo FileAdmin::getPage("last"); ?>
+            <a href="<?php echo $fileAdmin->paginator("last"); ?>">
+                <?php echo $fileAdmin->getPage("last"); ?>
             </a>
         </li>
         <li>
-            <a href="<?php echo FileAdmin::paginator("next"); ?>">
+            <a href="<?php echo $fileAdmin->paginator("next"); ?>">
                 &raquo;
             </a>
         </li>

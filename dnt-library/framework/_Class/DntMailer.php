@@ -30,7 +30,8 @@ class Mailer
      */
     public function __construct()
     {
-        return false;
+        $this->dnt = new Dnt();
+        $this->settings = new Settings();
     }
 
     /**
@@ -96,7 +97,7 @@ class Mailer
 
         //SENDER
         if ($this->sender_email == false) {
-            $od_email = Settings::get("vendor_email");
+            $od_email = $this->settings->get("vendor_email");
         } else {
             $od_email = $this->sender_email;
         }
@@ -106,7 +107,7 @@ class Mailer
             $predmet = "(no subject)";
         } else {
             if (SEND_EMAIL_VIA == "internal") {
-                $predmet = Dnt::odstran_diakritiku($this->subject);
+                $predmet = $this->dnt->odstran_diakritiku($this->subject);
             } elseif (SEND_EMAIL_VIA == "send_grid") {
                 $predmet = $this->subject;
             }
@@ -114,10 +115,10 @@ class Mailer
 
         //OD MENO
         if ($this->sender_name == false) {
-            $od_meno = Settings::get("vendor_company");
+            $od_meno = $this->settings->get("vendor_company");
         } else {
             if (SEND_EMAIL_VIA == "internal") {
-                $od_meno = Dnt::odstran_diakritiku($this->sender_name);
+                $od_meno = $this->dnt->odstran_diakritiku($this->sender_name);
             } elseif (SEND_EMAIL_VIA == "send_grid") {
                 $od_meno = $this->sender_name;
             }
@@ -140,9 +141,9 @@ class Mailer
         $headers .= 'To:  <' . $to . '>' . "\r\n"; // dalsi mail sa oddeluje ciarkou
         $headers .= 'From: ' . $od_meno . ' <' . $od_email . '>' . "\r\n";
 
-        if (Settings::show("send_grid_api_key") == true && Settings::show("send_grid_api_template_id") == true) {
-            $SEND_GRID_API_KEY = Settings::get("send_grid_api_key");
-            $SEND_GRID_API_TEMPLATE_ID = Settings::get("send_grid_api_template_id");
+        if ($this->settings->show("send_grid_api_key") == true && $this->settings->show("send_grid_api_template_id") == true) {
+            $SEND_GRID_API_KEY = $this->settings->get("send_grid_api_key");
+            $SEND_GRID_API_TEMPLATE_ID = $this->settings->get("send_grid_api_template_id");
         } else {
             $SEND_GRID_API_KEY = SEND_GRID_API_KEY;
             $SEND_GRID_API_TEMPLATE_ID = SEND_GRID_API_TEMPLATE_ID;
@@ -164,7 +165,7 @@ class Mailer
                 'from' => $od_email,
                 'fromname' => $od_meno,
                 'subject' => $predmet,
-                'text' => Dnt::not_html($email_sprava),
+                'text' => $this->dnt->not_html($email_sprava),
                 'html' => $email_sprava,
                 'x-smtpapi' => json_encode($js),
             );
@@ -197,7 +198,7 @@ class Mailer
 
         //SENDER
         if ($this->sender_email == false) {
-            $od_email = Settings::get("vendor_email");
+            $od_email = $this->settings->get("vendor_email");
         } else {
             $od_email = $this->sender_email;
         }
@@ -207,7 +208,7 @@ class Mailer
             $predmet = "(no subject)";
         } else {
             if (SEND_EMAIL_VIA == "internal") {
-                $predmet = Dnt::odstran_diakritiku($this->subject);
+                $predmet = $this->dnt->odstran_diakritiku($this->subject);
             } elseif (SEND_EMAIL_VIA == "send_grid") {
                 $predmet = $this->subject;
             }
@@ -215,10 +216,10 @@ class Mailer
 
         //OD MENO
         if ($this->sender_name == false) {
-            $od_meno = Settings::get("vendor_company");
+            $od_meno = $this->settings->get("vendor_company");
         } else {
             if (SEND_EMAIL_VIA == "internal") {
-                $od_meno = Dnt::odstran_diakritiku($this->sender_name);
+                $od_meno = $this->dnt->odstran_diakritiku($this->sender_name);
             } elseif (SEND_EMAIL_VIA == "send_grid") {
                 $od_meno = $this->sender_name;
             }
@@ -231,9 +232,9 @@ class Mailer
             $email_sprava = $this->msg;
         }
 
-        if (Settings::show("send_grid_api_key") == true && Settings::show("send_grid_api_template_id") == true) {
-            $SEND_GRID_API_KEY = Settings::get("send_grid_api_key");
-            $SEND_GRID_API_TEMPLATE_ID = Settings::get("send_grid_api_template_id");
+        if ($this->settings->show("send_grid_api_key") == true && $this->settings->show("send_grid_api_template_id") == true) {
+            $SEND_GRID_API_KEY = $this->settings->get("send_grid_api_key");
+            $SEND_GRID_API_TEMPLATE_ID = $this->settings->get("send_grid_api_template_id");
         } else {
             $SEND_GRID_API_KEY = SEND_GRID_API_KEY;
             $SEND_GRID_API_TEMPLATE_ID = SEND_GRID_API_TEMPLATE_ID;

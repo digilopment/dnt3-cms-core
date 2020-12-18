@@ -16,18 +16,18 @@ if (isset($_POST['sent'])) {
 
 
 
-    $query = MultyLanguage::getLangs(true);
+    $query = $multiLanguage->getLangs(true);
     if ($db->num_rows($query) > 0) {
         foreach ($db->get_results($query) as $row) {
 
-            $where = array('translate_id' => $translate_id, 'vendor_id' => Vendor::getId(), 'lang_id' => $row['slug'],);
+            $where = array('translate_id' => $translate_id, 'vendor_id' => $this->vendor->getId(), 'lang_id' => $row['slug'],);
             $db->delete($table, $where);
 
             $insertedData = array(
                 '`translate`' => $rest->post("translate_" . $row['slug']),
                 '`lang_id`' => $row['slug'],
                 '`translate_id`' => $translate_idUpdate,
-                '`vendor_id`' => Vendor::getId(),
+                '`vendor_id`' => $this->vendor->getId(),
                 '`type`' => 'static',
                 '`table`' => '',
                 '`show`' => '1',

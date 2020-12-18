@@ -264,7 +264,7 @@ get_top_html();
                     </div>
                 </div>
                 <?php
-                foreach (DntLibrary\Base\Dnt::orderby($data['getPosts'], 'post_category_id', 'ASC') as $post) {
+                foreach ($data['dnt']->orderby($data['getPosts'], 'post_category_id', 'ASC') as $post) {
                     ?>
                     <div class="row no-padding no-margin">
                         <div data-id="<?php echo $post->id_entity ?>" title='<?php echo $post->name . ' => ';
@@ -277,7 +277,9 @@ get_top_html();
                                 </div>
                                 <div class="col-xs-4 col-md-7">
                                     <h4 class="product-name"><strong><?php echo $post->name ?></strong></h4>
+									<?php if($post->post_category_id) { ?>
                                     <h4>Kategória: <small><?php echo $data['getElement']($post->post_category_id)['name'] . ' (' . $post->post_category_id . ')' ?> </small></h4>
+									<?php } ?>
                                 </div>
                                 <div class="col-md-3 row">
                                     

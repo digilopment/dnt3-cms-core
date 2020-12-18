@@ -28,7 +28,7 @@ $image = new Image;
             <span class="bg-blue action text-center padding"><a href="#" style="color:#fff;" data-toggle="modal" data-target="#addVoucherManualy"><b>Pridať ručne</b></a></span>
         </li>
         <li class="post_type" style="display:block;margin-top: 7px;">
-            <span class="bg-red action text-center padding"><a <?php echo Dnt::confirmMsg("Naozaj chcete vymazať všetky vouchre, ktoré nie sú priradené používateľovi?"); ?> style="color:#fff;" href="index.php?src=vouchers&post_id=0&action=del-all"><b>Zmazať všetky</b></a></span>
+            <span class="bg-red action text-center padding"><a <?php echo $dnt->confirmMsg("Naozaj chcete vymazať všetky vouchre, ktoré nie sú priradené používateľovi?"); ?> style="color:#fff;" href="index.php?src=vouchers&post_id=0&action=del-all"><b>Zmazať všetky</b></a></span>
         </li>
     </ul>
 
@@ -89,7 +89,7 @@ $image = new Image;
                     </thead>
                     <tbody>
                         <?php
-                        $query = "SELECT * FROM dnt_vouchers WHERE vendor_id = '" . Vendor::getId() . "' order by `order`";
+                        $query = "SELECT * FROM dnt_vouchers WHERE vendor_id = '" . $vendor->getId() . "' order by `order`";
                         if ($db->num_rows($query) > 0) {
                             foreach ($db->get_results($query) as $row) {
                                 $postId = $row['id_entity'];
@@ -113,7 +113,7 @@ $image = new Image;
                                     <td><?php echo $value ?></td>
                                     <td><a href="../dnt-view/data/uploads/<?php echo $fileName ?>"><?php echo $fileName ?></a></td>
                                     <td><?php echo $imported ?><br/><b><?php echo $used ?></b></td>
-                                    <td><a <?php echo Dnt::confirmMsg("Naozaj chcete vymazať tento voucher?"); ?> href="<?php echo $delUrl ?>"><i class="fa fa-times bg-red action"></i></a></td>
+                                    <td><a <?php echo $dnt->confirmMsg("Naozaj chcete vymazať tento voucher?"); ?> href="<?php echo $delUrl ?>"><i class="fa fa-times bg-red action"></i></a></td>
                                     <td>
         <?php if ($userId) { ?>
                                             <i title="Voucher je priradený" class="fa fa-check bg-green action"></i></td>
@@ -138,7 +138,6 @@ $image = new Image;
     </div>
 </div>
 
-<?php /* echo Xlsx::read("../", "39_b50072fbe38c292d4f0cfdf59246fcaa_o.csv") */ ?>
 <!-- BEGIN PAGINATION -->
 <!-- END CUSTOM TABLE -->
 <?php get_bottom_html(); ?>

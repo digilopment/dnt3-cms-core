@@ -21,6 +21,16 @@ use DntLibrary\Base\Vendor;
 class User extends Image
 {
 
+	public function __construct(){
+		parent::__construct();
+		$this->db = new DB();
+		$this->dnt = new Dnt();
+		$this->vendor = new Vendor();
+		$this->rest = new Rest();
+		$this->api = new Api;
+		$this->dntUpload = new DntUpload;
+		
+	}
     /**
      * 
      * @return int
@@ -43,7 +53,7 @@ class User extends Image
             return array();
         }
 
-        $db = new DB;
+        
         if ($type) {
             $SQL_type = " type = '" . $type . "' AND ";
         } else {
@@ -59,7 +69,7 @@ class User extends Image
 			parent_id = '0' AND
 			status > 0 AND
 			$SQL_type
-			vendor_id = '" . Vendor::getId() . "' ORDER BY id_entity desc " . $limit . " ";
+			vendor_id = '" . $this->vendor->getId() . "' ORDER BY id_entity desc " . $limit . " ";
 
         return $query;
     }
@@ -71,12 +81,9 @@ class User extends Image
      */
     public function getUserByType($type = false)
     {
-
-        $db = new DB;
-
-        $query = self::prepare_query($type, false);
-        $pocet = $db->num_rows($query);
-        $limit = self::limit();
+        $query = $this->prepare_query($type, false);
+        $pocet = $this->db->num_rows($query);
+        $limit = $this->limit();
 
         if (isset($_GET['page']))
             $strana = $_GET['page'];
@@ -92,9 +99,9 @@ class User extends Image
 
         $pager = "LIMIT " . $pociatok . ", " . $limit . "";
 
-        $query = self::prepare_query($type, $pager);
-        if ($db->num_rows($query) > 0) {
-            return $db->get_results($query);
+        $query = $this->prepare_query($type, $pager);
+        if ($this->db->num_rows($query) > 0) {
+            return $this->db->get_results($query);
         } else {
             return array();
         }
@@ -107,14 +114,12 @@ class User extends Image
      */
     public function getUser($id_entity)
     {
-
-        $db = new DB;
         $query = "SELECT * FROM `dnt_registred_users` WHERE 
-			vendor_id = '" . Vendor::getId() . "' AND
+			vendor_id = '" . $this->vendor->getId() . "' AND
 			id_entity = '" . $id_entity . "' 
 			ORDER BY id_entity desc";
-        if ($db->num_rows($query) > 0) {
-            return $db->get_results($query);
+        if ($this->db->num_rows($query) > 0) {
+            return $this->db->get_results($query);
         } else {
             return array();
         }
@@ -126,7 +131,7 @@ class User extends Image
      */
     public function getImage($imageId)
     {
-        return self::getFileImage($imageId);
+        return $this->getFileImage($imageId);
     }
 
     /**
@@ -135,13 +140,12 @@ class User extends Image
      */
     public function getUserTypes()
     {
-        $db = new DB;
         $query = "SELECT DISTINCT type FROM dnt_registred_users WHERE 
-		vendor_id = '" . Vendor::getId() . "'
+		vendor_id = '" . $this->vendor->getId() . "'
 		AND type <> 'admin' 
 		";
-        if ($db->num_rows($query) > 0) {
-            return $db->get_results($query);
+        if ($this->db->num_rows($query) > 0) {
+            return $this->db->get_results($query);
         } else {
             return array();
         }
@@ -155,65 +159,60 @@ class User extends Image
      */
     public function addDefaultUser($type = false, $path = false)
     {
-
         $query = "SELECT * FROM dnt_registred_users";
         $table = "dnt_registred_users";
-        $user = new Api;
-        $rest = new Rest;
-        $db = new DB;
 
-        foreach ($user->getColumns($query) as $key => $value) {
+        foreach ($this->api->getColumns($query) as $key => $value) {
             if (
                     $value != "id" &&
                     $value != "id_entity" &&
                     $value != "vendor_id"
             ) {
-                $insertedData["`" . $value . "`"] = $rest->post($value);
-                $insertedData["`vendor_id`"] = Vendor::getId();
+                $insertedData["`" . $value . "`"] = $this->rest->post($value);
+                $insertedData["`vendor_id`"] = $this->vendor->getId();
             }
         }
 
-        $db->insert($table, $insertedData);
-        $post_id = Dnt::getLastId($table);
+        $this->db->insert($table, $insertedData);
+        $post_id = $this->dnt->getLastId($table);
 
         if ($type) {
-            $db->update(
+            $this->db->update(
                     $table, //table
                     array(//set
-                        'vendor_id' => Vendor::getId(),
+                        'vendor_id' => $this->vendor->getId(),
                         'status' => 1,
                         'type' => $type,
-                        'datetime_creat' => Dnt::datetime(),
-                        'datetime_update' => Dnt::datetime(),
-                        'datetime_publish' => Dnt::datetime(),
+                        'datetime_creat' => $this->dnt->datetime(),
+                        'datetime_update' => $this->dnt->datetime(),
+                        'datetime_publish' => $this->dnt->datetime(),
                     ), array(//where
                 'id_entity' => $post_id,
                     )
             );
         } else {
-            $db->update(
+            $this->db->update(
                     $table, //table
                     array(//set
-                        'vendor_id' => Vendor::getId(),
+                        'vendor_id' => $this->vendor->getId(),
                         'status' => 1,
-                        'datetime_creat' => Dnt::datetime(),
-                        'datetime_update' => Dnt::datetime(),
-                        'datetime_publish' => Dnt::datetime(),
+                        'datetime_creat' => $this->dnt->datetime(),
+                        'datetime_update' => $this->dnt->datetime(),
+                        'datetime_publish' => $this->dnt->datetime(),
                     ), array(//where
                 'id_entity' => $post_id,
                     )
             );
         }
 
-        $return = "index.php?src=" . $rest->get("src") . "&action=edit&post_id=$post_id";
+        $return = "index.php?src=" . $this->rest->get("src") . "&action=edit&post_id=$post_id";
 
         if ($path) {
             $getPath = $path;
         } else {
             $getPath = "../dnt-view/data/uploads";
         }
-        $dntUpload = new DntUpload;
-        $dntUpload->addDefaultImage(
+        $this->dntUpload->addDefaultImage(
                 "userfile", //input type file
                 $table, //update table
                 "img", //update table column
@@ -233,7 +232,7 @@ class User extends Image
      */
     public function getPage($type, $index)
     {
-        $db = new DB;
+        
 
         if (isset($_GET['page'])) {
             $strana = $_GET['page'];
@@ -241,9 +240,9 @@ class User extends Image
             $strana = 1;
         }
 
-        $query = self::prepare_query($type, false);
-        $pocet = $db->num_rows($query);
-        $limit = self::limit();
+        $query = $this->prepare_query($type, false);
+        $pocet = $this->db->num_rows($query);
+        $limit = $this->limit();
         $stranok = $pocet / $limit;
         $pociatok = ($strana * $limit) - $limit;
 
@@ -289,7 +288,7 @@ class User extends Image
             $return = $adresa[1]; //this function return an array
         }
 
-        return WWW_PATH_ADMIN . "index.php?" . $return . "&page=" . self::getPage($type, $index);
+        return WWW_PATH_ADMIN . "index.php?" . $return . "&page=" . $this->getPage($type, $index);
     }
 
 }

@@ -28,8 +28,9 @@ class MessengerBot
      */
     public function __construct()
     {
-        $HUB_VERIFY_TOKEN = Settings::get("msg_hub_verify_token");
-        $ACCESS_TOKEN = Settings::get("msg_access_token");
+		$this->settings = new Settings();
+        $this->hubVerifyToken = $this->settings->get("msg_hub_verify_token");
+        $this->accessToken = $this->settings->get("msg_access_token");
     }
 
     /**
@@ -37,7 +38,7 @@ class MessengerBot
      */
     public function init()
     {
-        if ($_REQUEST['hub_verify_token'] === $this->HUB_VERIFY_TOKEN) {
+        if ($_REQUEST['hub_verify_token'] === $this->hubVerifyToken) {
             echo $_REQUEST['hub_challenge'];
             exit;
         }
@@ -57,7 +58,7 @@ class MessengerBot
             'message' => ['text' => $answer]
         ];
 
-        $ch = curl_init('https://graph.facebook.com/v2.6/me/messages?access_token=' . $this->ACCESS_TOKEN);
+        $ch = curl_init('https://graph.facebook.com/v2.6/me/messages?access_token=' . $this->accessToken);
 
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($response));
@@ -74,7 +75,7 @@ class MessengerBot
     {
 
         if (isset($_REQUEST['hub_verify_token'])) {
-            if ($_REQUEST['hub_verify_token'] === $this->HUB_VERIFY_TOKEN) {
+            if ($_REQUEST['hub_verify_token'] === $this->hubVerifyToken) {
                 return true;
             } else {
                 return false;
@@ -90,7 +91,7 @@ class MessengerBot
      */
     public function connection($response)
     {
-        $this->bot_access = curl_init('https://graph.facebook.com/v2.6/me/messages?access_token=' . $this->ACCESS_TOKEN);
+        $this->bot_access = curl_init('https://graph.facebook.com/v2.6/me/messages?access_token=' . $this->accessToken);
         curl_setopt($this->bot_access, CURLOPT_POST, 1);
         curl_setopt($this->bot_access, CURLOPT_POSTFIELDS, json_encode($response));
         curl_setopt($this->bot_access, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
@@ -120,7 +121,7 @@ class MessengerBot
         $this->bot_param = curl_init();
         curl_setopt($this->bot_param, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($this->bot_param, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($this->bot_param, CURLOPT_URL, 'https://graph.facebook.com/v2.6/' . $userId . '?fields=first_name,last_name&access_token=' . $this->ACCESS_TOKEN . '');
+        curl_setopt($this->bot_param, CURLOPT_URL, 'https://graph.facebook.com/v2.6/' . $userId . '?fields=first_name,last_name&access_token=' . $this->accessToken . '');
         $this->result = curl_exec($this->bot_param);
         curl_close($this->bot_param);
 

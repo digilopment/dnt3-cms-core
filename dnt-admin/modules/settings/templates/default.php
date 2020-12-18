@@ -13,6 +13,12 @@ get_top();
 get_top_html();
 $settings = $data['settings'];
 $webhook = new Webhook();
+$settings = new Settings();
+$AdminUser = new AdminUser();
+$vendor = new Vendor();
+$multiLanguage = new MultyLanguage();
+$helper = new Helper();
+$dnt = new Dnt();
 $rest = $data['rest'];
 $image = $data['image'];
 ?>
@@ -37,15 +43,15 @@ $image = $data['image'];
             <div class="grid-body">
                <div class="row">
                   <div class="col-md-6">
-                     <form enctype='multipart/form-data' id="pristupy" action="<?php echo "index.php?src=access&action=update&post_id=".AdminUser::data("admin", "id_entity")."";?>" method="post">
-                        <input type="hidden" name="id" value="<?php echo AdminUser::data("admin", "id_entity");?>" />
+                     <form enctype='multipart/form-data' id="pristupy" action="<?php echo "index.php?src=access&action=update&post_id=".$AdminUser->data("admin", "id_entity")."";?>" method="post">
+                        <input type="hidden" name="id" value="<?php echo $AdminUser->data("admin", "id_entity");?>" />
                         <p class="lead">Nastavte Vaše <b>meno</b></p>
                         <p>Ak máte eshop a vystavíte faktúru, vaše meno tam bude predvyplnené</p>
-                        <input type="text" class="btn-default btn-lg btn-block" name="name" value="<?php echo AdminUser::data("admin", "name");?>" />
+                        <input type="text" class="btn-default btn-lg btn-block" name="name" value="<?php echo $AdminUser->data("admin", "name");?>" />
                         <div class="padding"></div>
                         <p class="lead">Nastavte Vaše <b>priezvisko</b></p>
                         <p>Ak máte eshop a vystavíte faktúru, vaše meno tam bude predvyplnené</p>
-                        <input type="text" class="btn-default btn-lg btn-block" name="surname" value="<?php echo AdminUser::data("admin", "surname");?>" />
+                        <input type="text" class="btn-default btn-lg btn-block" name="surname" value="<?php echo $AdminUser->data("admin", "surname");?>" />
                         <div class="padding"></div>
                         <p>Zadajte heslo na overenie totožnosti:</p>
                         <input type="password" class="btn-default btn-lg btn-block" name="pass" value="" />
@@ -54,11 +60,11 @@ $image = $data['image'];
                   <div class="col-md-6">									
                   <p class="lead">Vyberte si jedinečnú <b>fotografiu</b></p>
                   <p>Ak máte eshop a vystavíte faktúru, vaše meno tam bude predvyplnené</p>
-                  <img src="<?php echo AdminUser::avatar();?>" style="max-width: 200px; margin: 15px;" alt="" />
+                  <img src="<?php echo $AdminUser->avatar();?>" style="max-width: 200px; margin: 15px;" alt="" />
                   <input type="file" name="userfile"  class="btn-default btn-lg btn-block" />
                   <?php /*galleryChooser("user_avatar");*/ ?>
                   <div class="padding"></div>
-                  <?php echo Dnt::returnInput();?>
+                  <?php echo $dnt->returnInput();?>
                   <input type="submit" name="sent" class="btn btn-primary btn-radius" value="Upraviť nastavenia" />
                   <div class="padding"></div>
                   </form>
@@ -88,7 +94,7 @@ $image = $data['image'];
                            <div class="row form">
                               <label class="col-sm-2 control-label"><b><?php echo $row['description'] ?></b></label>
                               <label class="col-sm-2 control-label">
-                              <?php Dnt::setMetaStatus($row['show'], $row['id_entity']); ?>
+                              <?php $dnt->setMetaStatus($row['show'], $row['id_entity']); ?>
                               </label>
                               <div class="col-sm-8 text-left">
                                  <!--
@@ -117,7 +123,7 @@ $image = $data['image'];
                                     }elseif($row['content_type'] == "font"){ ?>
                                  <select name="key_<?php echo $row['id_entity'] ?>" class="btn-default btn-lg btn-block" type="text" size="1">
                                  <?php
-                                    $myFonts = Helper::fonts();
+                                    $myFonts = $helper->fonts();
                                     echo  '<option value="" >Vyberte font</option>';
                                     foreach($myFonts as $key => $font){
                                     	if($key == $row['value']){
@@ -167,7 +173,7 @@ $image = $data['image'];
                             <div class="col-md-3">
                                 <p class="lead">Exportovať len moje dáta z databázy</p>
                                 <p>Exportujú sa všetky moje dáta, teda dáta zobrazujúce sa na stránke <b><?php echo WWW_PATH; ?></b></p>
-                                <a target="_blank" href="<?php echo WWW_PATH; ?>dnt-jobs/dbExport.php?vendor_id=<?php echo Vendor::getId(); ?>&time=<?php echo Dnt::timestamp(); ?>">
+                                <a target="_blank" href="<?php echo WWW_PATH; ?>dnt-jobs/dbExport.php?vendor_id=<?php echo $vendor->getId(); ?>&time=<?php echo $dnt->timestamp(); ?>">
                                     <span type="submit" class="btn btn-danger btn-radius" >Exportovať moje dáta</span>
                                 </a>
                                 <div class="padding"></div>
@@ -175,7 +181,7 @@ $image = $data['image'];
                             <div class="col-md-3">
                                 <p class="lead">Exportovať vetky dáta z databázy</p>
                                 <p>Exportujú sa všetky moje dáta, a tak isto aj dáta ostatných používateľov<b><br/><br/></b></p>
-                                <a  target="_blank"  href="<?php echo WWW_PATH; ?>dnt-jobs/dbExport.php?time=<?php echo Dnt::timestamp(); ?>">
+                                <a  target="_blank"  href="<?php echo WWW_PATH; ?>dnt-jobs/dbExport.php?time=<?php echo $dnt->timestamp(); ?>">
                                     <span type="submit" class="btn btn-danger btn-radius" >Exportovať všetky dáta</span>
                                 </a>
                                 <div class="padding"></div>
@@ -184,7 +190,7 @@ $image = $data['image'];
                             <div class="col-md-3">
                                 <p class="lead">Exportovať tento web</p>
                                 <p>Exportujú sa všetky dáta s databázou pre web: <br/><b><?php echo WWW_PATH; ?></b></p>
-                                <a target="_blank" href="<?php echo WWW_PATH; ?>dnt-jobs/dataExport.php?vendor_id=<?php echo Vendor::getId(); ?>&time=<?php echo Dnt::timestamp(); ?>">
+                                <a target="_blank" href="<?php echo WWW_PATH; ?>dnt-jobs/dataExport.php?vendor_id=<?php echo $vendor->getId(); ?>&time=<?php echo $dnt->timestamp(); ?>">
                                     <span type="submit" class="btn btn-danger btn-radius" >Exportovať moje dáta</span>
                                 </a>
                                 <div class="padding"></div>
@@ -192,21 +198,21 @@ $image = $data['image'];
                         </div>
             <p class="lead">Nadpis stránky</p>
             <p>Nadpis sa zobrazí v hlavičke vygenerovaného HTML dokumentu</p>
-            <input type="text" class="btn-default btn-lg btn-block" name="title" value="<?php echo Settings::get("title"); ?>" />
+            <input type="text" class="btn-default btn-lg btn-block" name="title" value="<?php echo $settings->get("title"); ?>" />
             <div class="padding"></div>
             <p class="lead">Description webu</p>
             <p>Zadajte krátky popis vášho webu</p>
-            <input type="text" class="btn-default btn-lg btn-block" name="description" value="<?php echo Settings::get("description"); ?>" />
+            <input type="text" class="btn-default btn-lg btn-block" name="description" value="<?php echo $settings->get("description"); ?>" />
             <div class="padding"></div>
             <p class="lead">Kľúčové slová</p>
             <p>Zadajte kľúčové slová pre vašu stránku (slová oddeľujte čiarkou)</p>
-            <input type="text" class="btn-default btn-lg btn-block" name="keywords" value="<?php echo Settings::get("keywords"); ?>" />
+            <input type="text" class="btn-default btn-lg btn-block" name="keywords" value="<?php echo $settings->get("keywords"); ?>" />
             <div class="padding"></div>
             <p class="lead">Štartovací modul</p>
             <p>Vyberte modul, ktorý sa ako prvý zobrazí pri načítaní Vašej stránky</p>
             <select name="startovaci_modul" class="btn-default btn-lg btn-block" type="text" size="1">
             <?php 
-               $service = Settings::get("startovaci_modul");
+               $service = $settings->get("startovaci_modul");
                echo '<option selected value="">Default (z konfigu)</option>';
                
                foreach($webhook->services() as $key => $serviceIndex){
@@ -225,8 +231,8 @@ $image = $data['image'];
                 <br/>V tomto nastavení sa definuje, ak jazyk bude používať konkrétne tento web.</p>
             <select name="language" class="btn-default btn-lg btn-block" type="text" size="1">
             <?php 
-               $currentLang = Settings::get("language");
-               foreach(MultyLanguage::getLanguages() as $row){
+               $currentLang = $settings->get("language");
+               foreach($multiLanguage->getLanguages() as $row){
                $value = $row['slug'];
                $name = $row['name'];
                if ($currentLang == $value) {
@@ -247,7 +253,7 @@ $image = $data['image'];
             </p>
             <select name="cachovanie" class="btn-default btn-lg btn-block" type="text" size="1">
             <?php
-               if(Settings::get("cachovanie") == "0"){
+               if($settings->get("cachovanie") == "0"){
                	echo "<option value='0' selected>Cachovanie vypnuté</option>";
                	echo "<option value='1'>Cachovanie zapnuté</option>";
                }
@@ -266,7 +272,7 @@ $image = $data['image'];
             </p>
             <select name="still_redirect_to_domain" class="btn-default btn-lg btn-block" type="text" size="1">
             <?php
-               if(Settings::get("still_redirect_to_domain") == "0"){
+               if($settings->get("still_redirect_to_domain") == "0"){
                	echo "<option value='0' selected>Nepresmerovať</option>";
                	echo "<option value='1'>Presmerovať</option>";
                }
@@ -277,7 +283,7 @@ $image = $data['image'];
                ?>
             </select>
             <div class="padding"></div>
-            <?php echo Dnt::returnInput();?>
+            <?php echo $dnt->returnInput();?>
             <input type="submit" name="Pa1" class="btn btn-success btn-radius" value="Upraviť nastavenia" />
             <div class="padding"></div>
             </form>

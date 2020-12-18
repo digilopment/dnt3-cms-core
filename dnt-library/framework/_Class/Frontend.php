@@ -20,6 +20,15 @@ use DntLibrary\Base\Vendor;
 class Frontend
 {
 
+
+	public function __construct(){
+		$this->article = new ArticleView();
+        $this->settings = new Settings();
+        $this->rest = new Rest();
+        $this->navigation = new AppNavigation();
+        $this->multiLanguage = new MultyLanguage();
+        $this->vendor = new Vendor();
+	}
     /**
      * 
      * @param array $custom_data
@@ -27,11 +36,8 @@ class Frontend
      */
     public function get($custom_data = false, $id = false)
     {
-        $article = new ArticleView;
-        $settings = new Settings;
-        $rest = new Rest;
-        $navigation = new AppNavigation();
-        $navigation->init();
+       
+        $this->navigation->init();
 
 
         if ($custom_data == false) {
@@ -39,24 +45,24 @@ class Frontend
         }
 
         if ($id == false) {
-            $post_id = isset($custom_data['post_id']) ? $custom_data['post_id'] : $article->getStaticId();
+            $post_id = isset($custom_data['post_id']) ? $custom_data['post_id'] : $this->article->getStaticId();
         } else {
             $post_id = $id;
         }
 
-        $metaArr = $article->getMetaData($post_id);
-        $menuItems = $navigation->menuItems();
-        $sitemapItems = $navigation->activeItems();
-        $translates = MultyLanguage::getTranslates();
-        $metaSettingsArr = $settings->getAllSettings();
+        $metaArr = $this->article->getMetaData($post_id);
+        $menuItems = $this->navigation->menuItems();
+        $sitemapItems = $this->navigation->activeItems();
+        $translates = $this->multiLanguage->getTranslates();
+        $metaSettingsArr = $this->settings->getAllSettings();
 
-        $articleName = $article->getPostParam("name", $post_id);
-        $articleImage = $article->getPostImage($post_id);
+        $articleName = $this->article->getPostParam("name", $post_id);
+        $articleImage = $this->article->getPostImage($post_id);
         $data = array(
-            "media_path" => WWW_PATH . "dnt-view/layouts/" . Vendor::getLayout() . "/",
-            "title" => Settings::get("title"),
+            "media_path" => WWW_PATH . "dnt-view/layouts/" . $this->vendor->getLayout() . "/",
+            "title" => $this->settings->get("title"),
             "post_id" => $post_id,
-            "webhook" => $rest->webhook(),
+            "webhook" => $this->rest->webhook(),
             "meta" => array(
                 '<meta name="keywords" content="' . $metaSettingsArr['keys']['keywords']['value'] . '" />',
                 '<meta name="description" content="' . $metaSettingsArr['keys']['description']['value'] . '" />',
@@ -67,15 +73,15 @@ class Frontend
             ),
             "article" => array(
                 "name" => $articleName,
-                "name_url" => $article->getPostParam("name_url", $post_id),
-                "perex" => $article->getPostParam("perex", $post_id),
-                "content" => $article->getPostParam("content", $post_id),
-                "embed" => $article->getPostParam("embed", $post_id),
-                "datetime_publish" => $article->getPostParam("datetime_publish", $post_id),
+                "name_url" => $this->article->getPostParam("name_url", $post_id),
+                "perex" => $this->article->getPostParam("perex", $post_id),
+                "content" => $this->article->getPostParam("content", $post_id),
+                "embed" => $this->article->getPostParam("embed", $post_id),
+                "datetime_publish" => $this->article->getPostParam("datetime_publish", $post_id),
                 "name" => $articleName,
-                "service" => $article->getPostParam("service", $post_id),
-                "service_id" => $article->getPostParam("service_id", $post_id),
-                "tags" => $article->getPostTags($post_id),
+                "service" => $this->article->getPostParam("service", $post_id),
+                "service_id" => $this->article->getPostParam("service_id", $post_id),
+                "tags" => $this->article->getPostTags($post_id),
                 "img" => $articleImage,
             ),
             "meta_tree" => $metaArr,

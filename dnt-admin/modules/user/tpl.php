@@ -21,7 +21,7 @@ $date_time_format = date("d") . "-" . date("m") . "-" . date("Y");
         <div class="grid no-border">
             <div class="grid-header">
                 <i class="fa fa-file-excel-o"></i>
-                <h5><a href="../dnt-view/data/uploads/generated-files/<?php echo $date_time_format; ?>/competition_<?php echo Vendor::getId(); ?>_competitors.csv?8169">Vygenerovať štatistiku do XLS</a></h5>
+                <h5><a href="../dnt-view/data/uploads/generated-files/<?php echo $date_time_format; ?>/competition_<?php echo $vendor->getId(); ?>_competitors.csv?8169">Vygenerovať štatistiku do XLS</a></h5>
                 <i class="fa fa-table"></i>
                 <span class="grid-title">Používatelia</span>
                 <div class="pull-right grid-tools">
@@ -68,7 +68,7 @@ $date_time_format = date("d") . "-" . date("m") . "-" . date("Y");
                     <tbody>
                         <?php
                         //$i = 1;
-                        $i = FileAdmin::showOrder();
+                        $i = $fileAdmin->showOrder();
                         foreach ($user->getUserByType($rest->get("type")) as $row) {
                             $image = $user->getImage($row['img']);
                             $voucherId = $row['voucher'];
@@ -96,7 +96,7 @@ $date_time_format = date("d") . "-" . date("m") . "-" . date("Y");
                         </td>
                         <td>
                             <a title="Editovať používateľa" href="index.php?src=user&action=edit&post_id=<?php echo $row['id_entity'] ?>"><i class="fa fa-pencil bg-blue action"></i></a>
-                            <a <?php echo Dnt::confirmMsg("Naozaj chcete vymazať tohoto používateľa?"); ?> title="Zmazať používateľa" href="index.php?src=user&action=del&post_id=<?php echo $row['id_entity'] ?>"><i class="fa fa-times bg-red action"></i></a>
+                            <a <?php echo $dnt->confirmMsg("Naozaj chcete vymazať tohoto používateľa?"); ?> title="Zmazať používateľa" href="index.php?src=user&action=del&post_id=<?php echo $row['id_entity'] ?>"><i class="fa fa-times bg-red action"></i></a>
                         </td>
                         </tr>
                             <?php
@@ -110,22 +110,22 @@ $date_time_format = date("d") . "-" . date("m") . "-" . date("Y");
 
         <ul class="pagination">
             <li class="">
-                <a href="<?php echo User::paginator($type, "prev"); ?>">
+                <a href="<?php echo $user->paginator($type, "prev"); ?>">
                     &laquo;
                 </a>
             </li>
             <li>
-                <a href="<?php echo User::paginator($type, "first"); ?>">
-                    <?php echo User::getPage($type, "first"); ?>
+                <a href="<?php echo $user->paginator($type, "first"); ?>">
+                    <?php echo $user->getPage($type, "first"); ?>
                 </a>
             </li>
             <li>
-                <a href="<?php echo User::paginator($type, "last"); ?>">
-                    <?php echo User::getPage($type, "last"); ?>
+                <a href="<?php echo $user->paginator($type, "last"); ?>">
+                    <?php echo $user->getPage($type, "last"); ?>
                 </a>
             </li>
             <li>
-                <a href="<?php echo User::paginator($type, "next"); ?>">
+                <a href="<?php echo $user->paginator($type, "next"); ?>">
                     &raquo;
                 </a>
             </li>

@@ -27,7 +27,7 @@ if (isset($_POST['sent'])) {
                 $setData, //set 
                 array(//where
             'id_entity' => $post_id,
-            '`vendor_id`' => Vendor::getId())
+            '`vendor_id`' => $vendor->getId())
         );
 
         if ($rest->post("gallery_key_user_avatar")) {
@@ -37,7 +37,7 @@ if (isset($_POST['sent'])) {
                 'img' => $rest->post("gallery_key_user_avatar"),
                     ), array(//where
                 'id_entity' => $post_id,
-                '`vendor_id`' => Vendor::getId()));
+                '`vendor_id`' => $vendor->getId()));
         } else {
             $dntUpload = new DntUpload;
             $dntUpload->addDefaultImage(

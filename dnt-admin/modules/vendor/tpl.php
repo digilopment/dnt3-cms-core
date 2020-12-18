@@ -43,7 +43,7 @@ get_top(); ?>
                      $webUrl 	= HTTP_PROTOCOL.$row['name_url'].".".DOMAIN.WWW_FOLDERS;
                      $develUrl 	= HTTP_PROTOCOL."devel.".$row['name_url'].".".DOMAIN.WWW_FOLDERS;
                      $realUrl 	= $row['real_url'];
-					 $email     = AdminUser::data("admin", "email");
+					 $email     = $adminUser->data("admin", "email");
 					 $vendorId  = $row['id_entity'];
                      $adminUrl 	= $webUrl."/".ADMIN_URL_2."/index.php?src=login&action=auto-login&domain_change=1&admin_id=".$email."&id_entity=".$vendorId;
                      ?>
@@ -135,14 +135,14 @@ get_top(); ?>
                                                          <div class="form-group">
                                                             <label class="col-sm-3 control-label"><b>Zobraziť na vlastnej adrese:</b></label>
                                                             <div class="col-sm-9 ">
-                                                               <?php Dnt::setMetaStatus($row['show_real_url'], "show_real_url");?>
+                                                               <?php $dnt->setMetaStatus($row['show_real_url'], "show_real_url");?>
                                                                <br/>
                                                             </div>
                                                          </div>
                                                          <div class="form-group">
                                                             <label class="col-sm-3 control-label"><b>Povoliť registráciu:</b></label>
                                                             <div class="col-sm-9 ">
-                                                               <?php Dnt::setMetaStatus($row['in_progress'], "in_progress");?>
+                                                               <?php $dnt->setMetaStatus($row['in_progress'], "in_progress");?>
                                                                <br/>
                                                             </div>
                                                          </div>
@@ -160,7 +160,7 @@ get_top(); ?>
                                              </div>
                                              <!-- end here -->
                                              <input type="hidden"  value="<?php echo $row['id_entity']; ?>" name="vendor_id">
-                                             <?php echo Dnt::returnInput(); ?>
+                                             <?php echo $dnt->returnInput(); ?>
                                              <input type="submit" name="sent" class="btn btn-primary btn-lg btn-block" value="Upraviť" />
                                           </div>
                                        </div>
@@ -172,10 +172,10 @@ get_top(); ?>
                         <!-- END MODAL -->
                      </td>
                      <td>
-						<?php if(Vendor::getId() == $row['id_entity'] || DELETING_VENDORS == false){
+						<?php if($vendor->getId() == $row['id_entity'] || DELETING_VENDORS == false){
 							echo '<i title="Nemôžete vymazať web, v ktorom ste prihlásený." class="fa fa-times bg-red action" style="opacity:0.3;border:2px solid red "></i>';
 						}else{?>
-                         <a <?php echo Dnt::confirmMsg("Naozaj chcete vymazať tento web?"); ?> href="index.php?src=vendor&action=del&vendor_id=<?php echo $row['id_entity']; ?>"><i class="fa fa-times bg-red action"></i></a>
+                         <a <?php echo $dnt->confirmMsg("Naozaj chcete vymazať tento web?"); ?> href="index.php?src=vendor&action=del&vendor_id=<?php echo $row['id_entity']; ?>"><i class="fa fa-times bg-red action"></i></a>
 						<?php } ?>
                      </td>
                   </tr>

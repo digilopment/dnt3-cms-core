@@ -12,39 +12,42 @@ use DntLibrary\App\Client;
 class AutoRedirectModuleController extends Client
 {
 
+	public function __construct(){
+		 $this->articleList = new ArticleList();
+        $this->articleView = new ArticleView();
+        $this->rest = new Rest();
+        $this->webhook = new Webhook();
+	}
     public function run()
     {
         $this->init();
-        $articleList = new ArticleList();
-        $articleView = new ArticleView();
-        $rest = new Rest();
-        $articleId = $rest->webhook(2);
-        $name_url = $articleList->getArticleUrl($articleId, false);
+        $articleId = $this->rest->webhook(2);
+        $name_url = $this->articleList->getArticleUrl($articleId, false);
         $url = $this->wwwPath . $this->lang . "/" . $name_url;
 
-        $type = $articleView->getPostParam("type", $articleId);
+        $type = $this->articleView->getPostParam("type", $articleId);
         //internal redirect
-        if (Dnt::in_string("<WWW_PATH>", $name_url)) {
-            Dnt::redirect(str_replace("<WWW_PATH>", WWW_PATH, $name_url));
+        if ($this->dnt->in_string("<WWW_PATH>", $name_url)) {
+            $this->dnt->redirect(str_replace("<WWW_PATH>", WWW_PATH, $name_url));
         }
 
         //external redirect
-        if (Dnt::in_string(":\/\/", $name_url)) {
-            Dnt::redirect($name_url);
+        if ($this->dnt->in_string(":\/\/", $name_url)) {
+            $this->dnt->redirect($name_url);
         }
 
         //sitemap redirect
-        foreach (Webhook::getSitemapModules() as $modul) {
+        foreach ($this->webhook->getSitemapModules() as $modul) {
             if ($modul == $name_url) {
-                Dnt::redirect($url);
+                $this->dnt->redirect($url);
             }
         }
 
 
         if ($type == "video") {
-            Dnt::redirect($articleList->getArticleUrl($articleId, true, $type));
+            $this->dnt->redirect($this->articleList->getArticleUrl($articleId, true, $type));
         } else {
-            Dnt::redirect($articleList->getArticleUrl($articleId));
+            $this->dnt->redirect($this->articleList->getArticleUrl($articleId));
         }
     }
 

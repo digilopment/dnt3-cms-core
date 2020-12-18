@@ -33,7 +33,7 @@ get_top();
                         <?php
                         $query = "SELECT * FROM `dnt_languages` WHERE 
                    parent_id = '0' AND
-                   vendor_id = '" . Vendor::getId() . "' ORDER BY `show` desc";
+                   vendor_id = '" . $vendor->getId() . "' ORDER BY `show` desc";
                         $pocet_aktivne = $db->num_rows($query);
                         if ($db->num_rows($query) > 0) {
                             foreach ($db->get_results($query) as $row) {
