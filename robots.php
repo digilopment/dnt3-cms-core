@@ -22,6 +22,7 @@ use DntLibrary\Base\Vendor;
         require 'dnt-library/framework/app/Bootstrap.php';
         $bootstrap = new Bootstrap(__FILE__);
         $bootstrap->boot();
+        $this->vendor = new Vendor();
     }
 
     public function template()
@@ -54,7 +55,7 @@ use DntLibrary\Base\Vendor;
         $text .= 'Disallow: composer.json\n';
         $text .= 'Disallow: robots.php\n';
         $text .= 'Disallow: config.dnt\n';
-        $layout = Vendor::getLayout();
+        $layout = $this->vendor->getLayout();
         if (file_exists('dnt-view/layouts/' . $layout . '/modules/rpc/sitemap.php')) {
             $text .= 'Sitemap: ' . WWW_PATH . 'rpc/xml/sitemap';
         } else {
