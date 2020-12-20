@@ -3,7 +3,7 @@
 namespace DntAdmin\App;
 
 use DntLibrary\App\Autoloader;
-use DntLibrary\App\Database;
+use DntLibrary\Base\Db;
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Sessions;
@@ -19,7 +19,7 @@ class RouterAdmin
 
     public function __construct()
     {
-        $this->db = new Database();
+        $this->db = new DB();
         $this->dnt = new Dnt();
         $this->session = new Sessions();
         $this->rest = new Rest();

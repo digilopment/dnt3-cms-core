@@ -22,8 +22,8 @@ class Url
 	
 	public function __construct(){
 		$this->db = new DB();
-		 $this->dnt = new Dnt();
-		 $this->multiLanguage = new MultyLanguage();
+		$this->dnt = new Dnt();
+		$this->multiLanguage = new MultyLanguage();
         $this->sessions = new Sessions();
 	}
 	
@@ -56,6 +56,7 @@ class Url
      */
     public function get($url)
     {
+		$r = false;
         if ($url == "WWW_PATH") {
             $lang =  $this->multiLanguage->getLang();
             if ($lang == DEAFULT_LANG || MULTY_LANGUAGE == false) {
@@ -65,7 +66,7 @@ class Url
             }
             $r = WWW_PATH . "" . $lg;
         } elseif ($url == 'WWW_PATH_FILES') {
-            return WWW_CDN_PATH . "dnt-view/data/uploads/";
+            $r = WWW_CDN_PATH . "dnt-view/data/uploads/";
         }
 
         return $r;

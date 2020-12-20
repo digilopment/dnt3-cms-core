@@ -10,7 +10,7 @@
 
 namespace DntLibrary\Base;
 
-use DntLibrary\Base\DB;
+use DntLibrary\Base\Db;
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Image;
 use DntLibrary\Base\Sessions;
@@ -22,17 +22,16 @@ class AdminUser extends Image
 
 	public function __construct()
     {
-        $this->db = new DB();
         $this->dnt = new Dnt();
-        $this->image = new Image();
         $this->sessions = new Sessions();
         $this->vendor = new Vendor();
         $this->xml = new XMLgenerator();
+		$this->db = new DB();
     }
 	
     public function validProcessLogin($type, $email, $pass)
     {
-        $query = "SELECT pass FROM dnt_users WHERE type = '$type' AND email = '" . $email . "' AND vendor_id = '" . Vendor::getId() . "'";
+        $query = "SELECT pass FROM dnt_users WHERE type = '$type' AND email = '" . $email . "' AND vendor_id = '" . $this->vendor->getId() . "'";
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
                 $db_pass = $row['pass'];

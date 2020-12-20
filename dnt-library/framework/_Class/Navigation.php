@@ -20,6 +20,7 @@ class Navigation
 	public function __construct(){
 		$this->db = new DB();
 		$this->vendor = new Vendor();
+		$this->adminContent = new AdminContent();
 	}
     /**
      * 
@@ -29,7 +30,7 @@ class Navigation
     {
         $query = "SELECT * FROM dnt_posts WHERE 
 		type = 'sitemap' AND 
-		cat_id = '" . AdminContent::getCatId("sitemap") . "' AND 
+		cat_id = '" . $this->adminContent->getCatId("sitemap") . "' AND 
 		vendor_id = '" . $this->vendor->getId() . "' AND 
 		`show` = '1' ORDER BY `order` DESC";
         if ($this->db->num_rows($query) > 0) {

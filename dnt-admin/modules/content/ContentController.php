@@ -46,6 +46,7 @@ class ContentController extends AdminController
         $this->dnt = new Dnt();
         $this->postVariants = new PostVariants();
         $this->post = new Post();
+        $this->vendor = new Vendor();
         $this->postMeta = new PostMeta();
         $this->updateContent = new UpdateContent();
         $this->importContent = new ImportContent();
@@ -61,7 +62,6 @@ class ContentController extends AdminController
         $data['image'] = $this->image;
         $data['adminContent'] = $this->adminContent;
         $data['dnt'] = $this->dnt;
-
         $this->loadTemplate($this->loc, 'default', $data);
     }
 

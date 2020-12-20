@@ -13,10 +13,12 @@ class AutoRedirectModuleController extends Client
 {
 
 	public function __construct(){
-		 $this->articleList = new ArticleList();
+		parent::__construct();
+		$this->articleList = new ArticleList();
         $this->articleView = new ArticleView();
         $this->rest = new Rest();
         $this->webhook = new Webhook();
+        $this->dnt = new Dnt();
 	}
     public function run()
     {

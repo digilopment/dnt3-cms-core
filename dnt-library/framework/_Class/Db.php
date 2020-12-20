@@ -53,7 +53,7 @@ use function mb_internal_encoding;
 class DB
 {
 
-    private $link = null;
+    public $link = null;
     public $filter;
     static $inst = null;
     public static $counter = 0;
@@ -92,30 +92,38 @@ class DB
 
     public function __construct($config = false)
     {
-        mb_internal_encoding('UTF-8');
-        mb_regex_encoding('UTF-8');
-        mysqli_report(MYSQLI_REPORT_STRICT);
-        try {
-            if (is_array($config)) {
-                $dbHost = isset($config['db_host']) ? $config['db_host'] : DB_HOST;
-                $dbUser = isset($config['db_user']) ? $config['db_user'] : DB_USER;
-                $dbPass = isset($config['db_pass']) ? $config['db_pass'] : DB_PASS;
-                $dbName = isset($config['db_name']) ? $config['db_name'] : DB_NAME;
-                $this->link = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
-            } else {
-                $this->link = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-            }
-            $this->link->set_charset("utf8");
-        } catch (Exception $e) {
-            die('Unable to connect to database');
-        }
+		if ($GLOBALS['DATABASE'] == false) {
+			mb_internal_encoding('UTF-8');
+			mb_regex_encoding('UTF-8');
+			mysqli_report(MYSQLI_REPORT_STRICT);
+			try {
+				if (is_array($config)) {
+					$dbHost = isset($config['db_host']) ? $config['db_host'] : DB_HOST;
+					$dbUser = isset($config['db_user']) ? $config['db_user'] : DB_USER;
+					$dbPass = isset($config['db_pass']) ? $config['db_pass'] : DB_PASS;
+					$dbName = isset($config['db_name']) ? $config['db_name'] : DB_NAME;
+					$this->link = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
+				} else {
+					$this->link = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+				}
+				$this->link->set_charset("utf8");
+				$GLOBALS['DATABASE'] = $this->link;
+			} catch (Exception $e) {
+				die('Unable to connect to database');
+			}
+			
+		}else{
+			$this->link = $GLOBALS['DATABASE'];
+			//var_dump('running', $this->link);
+		}
     }
 
     public function __destruct()
     {
+		/*var_dump('sss');
         if ($this->link) {
             $this->disconnect();
-        }
+        }*/
     }
 
     /**

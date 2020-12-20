@@ -215,7 +215,7 @@ $countPages = $data['countPages'];
                         <?php
                         $query = $adminMailer->query();			
                         //$i = $adminMailer->showOrder();
-                        //$page = $adminMailer->getPage("current");
+                        $page = $adminMailer->getPage("current");
 						$i = $data['page'] * $data['pageLimit'] - $data['pageLimit'] + 1;
                         if ($db->num_rows($query) > 0) {
                             foreach ($db->get_results($query) as $row) {

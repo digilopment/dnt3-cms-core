@@ -90,13 +90,21 @@ class Database
         }
     }
 
-    public function __construct()
+    public function __construct($config = false)
     {
         mb_internal_encoding('UTF-8');
         mb_regex_encoding('UTF-8');
         mysqli_report(MYSQLI_REPORT_STRICT);
         try {
-            $this->link = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+            if (is_array($config)) {
+                $dbHost = isset($config['db_host']) ? $config['db_host'] : DB_HOST;
+                $dbUser = isset($config['db_user']) ? $config['db_user'] : DB_USER;
+                $dbPass = isset($config['db_pass']) ? $config['db_pass'] : DB_PASS;
+                $dbName = isset($config['db_name']) ? $config['db_name'] : DB_NAME;
+                $this->link = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
+            } else {
+                $this->link = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+            }
             $this->link->set_charset("utf8");
         } catch (Exception $e) {
             die('Unable to connect to database');

@@ -466,6 +466,7 @@ function get_top()
 <?php
    function get_header()
    {
+
 	   $AdminUser = new AdminUser();
        ?>
 <header class="header">

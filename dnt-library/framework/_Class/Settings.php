@@ -156,13 +156,13 @@ class Settings
         if (is_numeric($key)) {
             $imageId = $key;
         } else {
-            $imageId = Settings::get($key);
+            $imageId = $this->get($key);
         }
 
         $query = "SELECT name FROM dnt_uploads WHERE `id_entity` = '" . $imageId . "'";
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
-                return Url::get("WWW_PATH_FILES") . "" . $row['name'];
+                return WWW_CDN_PATH . "dnt-view/data/uploads/" . $row['name'];
             }
         } else {
             return false;
@@ -225,10 +225,10 @@ class Settings
      */
     public function loadNewSettingsFromConf()
     {
-        if (self::settingsConfigurator()) {
-            $settingsData = self::settingsConfigurator();
+        if ($this->settingsConfigurator()) {
+            $settingsData = $this->settingsConfigurator();
         } else {
-            $settingsData = self::settingsConf();
+            $settingsData = $this->settingsConf();
         }
         if ($settingsData) {
 

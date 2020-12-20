@@ -141,7 +141,7 @@ class Rest
 		$this->globals;
     }
 
-    public static function getModulUrl($module)
+    public function getModulUrl($module)
     {
         $url = $this->webhook->getSitemapModules($module);
         return $url[0];

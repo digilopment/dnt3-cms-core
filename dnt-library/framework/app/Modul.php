@@ -11,13 +11,13 @@
 namespace DntLibrary\App;
 
 use DntLibrary\App\Autoloader;
-use DntLibrary\App\Database;
+use DntLibrary\Base\DB;
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Vendor;
 use DntView\Layout\Configurator;
 use function custom_modules;
 
-class Modul extends Database
+class Modul
 {
 
     public $name;
@@ -29,7 +29,7 @@ class Modul extends Database
     {
         $this->vendor = new Vendor();
         $this->dnt = new Dnt();
-        $this->db = new Database();
+        $this->db = new DB();
     }
 	
     public function getSitemap($client = false, $vendor_id = false)
