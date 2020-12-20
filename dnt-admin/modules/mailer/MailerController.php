@@ -33,6 +33,7 @@ class MailerController extends AdminController
 
     public function __construct()
     {
+		parent::__construct();
         $this->db = new DB();
         $this->rest = new Rest();
         $this->adminMailer = new AdminMailer();
@@ -174,7 +175,7 @@ class MailerController extends AdminController
     public function showHideAction()
     {
         $post_id = $this->rest->get('post_id');
-        $query = "SELECT `show` FROM dnt_mailer_mails WHERE id_entity = '" . $post_id . "' AND vendor_id = '" . $vendor->getId() . "'";
+        $query = "SELECT `show` FROM dnt_mailer_mails WHERE id_entity = '" . $post_id . "' AND vendor_id = '" . $this->vendor->getId() . "'";
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
                 $show = $row['show'];
@@ -412,7 +413,7 @@ class MailerController extends AdminController
         if ($this->session->get('count-mails')) {
             $countMails = $this->session->get('count-mails');
         } else {
-            $queryCount = "SELECT COUNT(id_entity) AS `countMails` FROM " . $table . " WHERE cat_id = '" . $cat_id . "' AND vendor_id = '" . $vendor->getId() . "'  AND `show` = 1";
+            $queryCount = "SELECT COUNT(id_entity) AS `countMails` FROM " . $table . " WHERE cat_id = '" . $cat_id . "' AND vendor_id = '" . $this->vendor->getId() . "'  AND `show` = 1";
             $result = $this->db->get_results($queryCount);
             $countMails = (int) $result[0]['countMails'];
             $this->session->set('count-mails', $countMails);
@@ -420,12 +421,12 @@ class MailerController extends AdminController
 
         if (isset($_GET['mail_id'])) {
             $currentID = $this->rest->get('mail_id');
-            $queryMailId = "SELECT * FROM " . $table . " WHERE cat_id = '" . $cat_id . "' AND vendor_id = '" . $vendor->getId() . "'  AND `show` = 1 AND `id_entity` > '" . $currentID . "' ORDER BY `id_entity` asc LIMIT " . $this->sentMailPerRequest . "";
+            $queryMailId = "SELECT * FROM " . $table . " WHERE cat_id = '" . $cat_id . "' AND vendor_id = '" . $this->vendor->getId() . "'  AND `show` = 1 AND `id_entity` > '" . $currentID . "' ORDER BY `id_entity` asc LIMIT " . $this->sentMailPerRequest . "";
             $data = $this->db->get_results($queryMailId);
             $requestSended = count($data);
         } else {
             $currentID = $this->dnt->db_current_id($table, "AND cat_id = '" . $cat_id . "'  AND `show` = 1");
-            $query = "SELECT * FROM " . $table . " WHERE cat_id = '" . $cat_id . "' AND vendor_id = '" . $vendor->getId() . "'  AND `show` = 1 AND `id_entity` >= '" . $currentID . "' ORDER BY `id_entity` asc LIMIT " . $this->sentMailPerRequest . "";
+            $query = "SELECT * FROM " . $table . " WHERE cat_id = '" . $cat_id . "' AND vendor_id = '" . $this->vendor->getId() . "'  AND `show` = 1 AND `id_entity` >= '" . $currentID . "' ORDER BY `id_entity` asc LIMIT " . $this->sentMailPerRequest . "";
             $data = $this->db->get_results($query);
             $requestSended = count($data);
         }

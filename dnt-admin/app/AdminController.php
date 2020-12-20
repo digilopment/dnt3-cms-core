@@ -5,6 +5,10 @@ namespace DntAdmin\App;
 class AdminController
 {
 
+	public function __construct(){
+		
+	}
+	
     public function loadTemplate($path, $tpl, $data = false)
     {
         if (!function_exists('adminFunctionsExists')) {

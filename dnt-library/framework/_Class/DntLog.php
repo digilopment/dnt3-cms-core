@@ -53,7 +53,7 @@ class DntLog
     /**
      * get session ID
      */
-    function getID()
+    public function getID()
     {
         $this->sessions->init();
         $this->sessions->set("page_id", $this->dnt->set_rand_string(10));
