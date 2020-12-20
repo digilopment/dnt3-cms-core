@@ -5,10 +5,11 @@ use DntLibrary\Base\Rest;
 
 get_top();
 get_top_html();
+$dnt = $data['dnt'];
 $name = !empty($data['order']['company_name']) ? $data['order']['company_name'] : $data['order']['name'] . ' ' . $data['order']['surname'];
 //osetrenie vstupov
 if ($data['order']['datetime_publish'] == "0000-00-00 00:00:00") {
-    $datetime_publish = Dnt::datetime();
+    $datetime_publish = $dnt->datetime();
 } else {
     $datetime_publish = $data['order']['datetime_publish'];
 }
@@ -41,7 +42,7 @@ if ($data['order']['datetime_publish'] == "0000-00-00 00:00:00") {
     <a href="index.php?src=invoices&action=add">
         <span class="label label-primary bg-orange" style="padding:5px;"><big>NOVÁ OBJEDNÁVKA</big></span>
     </a>
-    <a style="float:right" <?php echo Dnt::confirmMsg("Naozaj chcete vymazať túto objednávku? Operáciu už nebude možné vrátiť späť"); ?> href="index.php?src=invoices&action=del&id_entity=<?php echo (new Rest())->get('id_entity') ?>">
+    <a style="float:right" <?php echo $dnt->confirmMsg("Naozaj chcete vymazať túto objednávku? Operáciu už nebude možné vrátiť späť"); ?> href="index.php?src=invoices&action=del&id_entity=<?php echo (new Rest())->get('id_entity') ?>">
         <span class="label label-primary bg-red" style="padding:5px;"><big>VYMAZAŤ OBJEDNÁVKU</big></span>
     </a>
 </section>

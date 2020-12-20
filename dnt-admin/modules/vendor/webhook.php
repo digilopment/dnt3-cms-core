@@ -5,12 +5,16 @@ use DntLibrary\Base\DB;
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Sessions;
+use DntLibrary\Base\Install;
+use DntLibrary\Base\Vendor;
 
 $rest = new Rest;
 $session = new Sessions;
 $dnt = new Dnt;
 $adminUser = new AdminUser;
 $db = new DB();
+$install = new Install();
+$vendor = new Vendor();
 
 if ($rest->get("action") == "update") {
     include "update.php";

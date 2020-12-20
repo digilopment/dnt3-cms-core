@@ -18,19 +18,15 @@ use DntLibrary\Base\Sessions;
 class Url
 {
 
-    /** OLD * */
-    var $url;
-    var $modul_name;
-    var $modul_img;
-    var $photo;
-    var $photo_pripona;
-    var $vendor;
-    var $query;
-    var $nazov;
-    var $pripona;
-    var $layoutId;
-    var $layout;
 
+	
+	public function __construct(){
+		$this->db = new DB();
+		$this->dnt = new Dnt();
+		$this->multiLanguage = new MultyLanguage();
+        $this->sessions = new Sessions();
+	}
+	
     /**
      * 
      * @param type $file
@@ -60,8 +56,9 @@ class Url
      */
     public function get($url)
     {
+		$r = false;
         if ($url == "WWW_PATH") {
-            $lang = MultyLanguage::getLang();
+            $lang =  $this->multiLanguage->getLang();
             if ($lang == DEAFULT_LANG || MULTY_LANGUAGE == false) {
                 $lg = false;
             } else {
@@ -69,7 +66,7 @@ class Url
             }
             $r = WWW_PATH . "" . $lg;
         } elseif ($url == 'WWW_PATH_FILES') {
-            return WWW_CDN_PATH . "dnt-view/data/uploads/";
+            $r = WWW_CDN_PATH . "dnt-view/data/uploads/";
         }
 
         return $r;
@@ -93,15 +90,15 @@ class Url
      */
     protected function p_query($type, $postId, $column)
     {
-        $dntDb = new DB();
-
+  
+		$db = false;
         if ($type == false || "dnt_posts") {
-            $this->query = "SELECT " . $column . " FROM dnt_posts WHERE id_entity = '" . $postId . "' LIMIT 1";
+            $db = "SELECT " . $column . " FROM dnt_posts WHERE id_entity = '" . $postId . "' LIMIT 1";
         } elseif ($type == "obchod_produkty") {
-            $this->query = "SELECT " . $column . " FROM obchod_produkty  WHERE id_entity = '" . $postId . "' LIMIT 1";
+            $db = "SELECT " . $column . " FROM obchod_produkty  WHERE id_entity = '" . $postId . "' LIMIT 1";
         }
 
-        return $this->query;
+        return $db;
     }
 
     /**
@@ -113,10 +110,9 @@ class Url
      */
     protected function p_img_property($type, $postId, $column)
     {
-        $dntDb = new DB();
         $query = $this->p_query($type, $postId, $column);
-        foreach ($dntDb->get_results($query) as $row) {
-            return $this->vendor = $row[$column];
+        foreach ($this->db->get_results($query) as $row) {
+            return $row[$column];
         }
     }
 
@@ -142,15 +138,14 @@ class Url
     public function get_uploaded_image($postId)
     {
 
-        $dntDb = new DB();
         $query = "SELECT vendor, nazov, pripona FROM dnt_uploads WHERE id_entity = '" . $postId . "' LIMIT 1";
-        foreach ($dntDb->get_results($query) as $row) {
-            $this->vendor = $row['vendor'];
-            $this->nazov = $row['nazov'];
-            $this->pripona = $row['pripona'];
+        foreach ($this->db->get_results($query) as $row) {
+            $vendor = $row['vendor'];
+            $nazov = $row['nazov'];
+            $pripona = $row['pripona'];
         }
 
-        return WWW_CDN_PATH . "" . SYSTEM_NAME . "/data/" . $this->vendor . "/uploads/" . $this->nazov . "." . $this->pripona . $this->get_img_version();
+        return WWW_CDN_PATH . "" . SYSTEM_NAME . "/data/" . $vendor . "/uploads/" . $nazov . "." . $pripona . $this->get_img_version();
     }
 
     /**
@@ -162,32 +157,28 @@ class Url
     public function get_static_image($img)
     {
 
-        //GET INSTANCE
-        $dntDb = new DB();
-        $dntSs = new Sessions();
 
-
-        $vendorId = $dntSs->get_session_data("getVendorId");
+        $vendorId = $this->sessions->get_session_data("getVendorId");
         //SELECT LAYOUT ID
         $query = "SELECT layout FROM dnt_vendors WHERE id_entity = '" . $vendorId . "' LIMIT 1";
-        foreach ($dntDb->get_results($query) as $row) {
-            $this->layoutId = $row['layout'];
+        foreach ($this->db->get_results($query) as $row) {
+            $layout = $row['layout'];
         }
 
         //SELECT LAYOUT NAMR
-        $query = "SELECT url FROM dnt_layouts WHERE id_entity = '" . $this->layoutId . "' LIMIT 1";
-        foreach ($dntDb->get_results($query) as $row) {
-            $this->layout = $row['url'];
+        $query = "SELECT url FROM dnt_layouts WHERE id_entity = '" . $layout . "' LIMIT 1";
+        foreach ($this->db->get_results($query) as $row) {
+            $layoutUrl = $row['url'];
         }
 
-        return WWW_CDN_PATH . "" . SYSTEM_NAME . "/layouts/" . $this->layout . "/images/" . $img . $this->get_img_version();
+        return WWW_CDN_PATH . "" . SYSTEM_NAME . "/layouts/" . $layoutUrl . "/images/" . $img . $this->get_img_version();
     }
 
     public function getPostUrl($url)
     {
-        if (Dnt::in_string("<WWW_PATH>", $url)) {
+        if ($this->dnt->in_string("<WWW_PATH>", $url)) {
             return str_replace("<WWW_PATH>", WWW_PATH, $url);
-        } elseif (Dnt::is_external_url($url)) {
+        } elseif ($this->dnt->is_external_url($url)) {
             return $url;
         } else {
             return WWW_FOLDERS . "/" . $url;

@@ -21,6 +21,7 @@ class CreateOrder
         $this->db = new DB();
         $this->dnt = new Dnt();
         $this->rest = new Rest();
+        $this->vendor = new Vendor();
         $this->data = $data;
     }
 
@@ -28,7 +29,7 @@ class CreateOrder
     {
 
         $insert = [
-            'vendor_id' => Vendor::getId(),
+            'vendor_id' => $this->vendor->getId(),
             'user_id' => 1,
             'datetime_creat' => $this->dnt->datetime(),
             'datetime_update' => $this->dnt->datetime(),
@@ -47,10 +48,10 @@ class CreateOrder
 
         $id = $this->rest->get('id_entity');
 
-        $where1 = ['id_entity' => $id, 'vendor_id' => Vendor::getId()];
+        $where1 = ['id_entity' => $id, 'vendor_id' => $this->vendor->getId()];
         $this->db->delete('dnt_orders', $where1);
 
-        $where2 = ['order_id_entity' => $id, 'vendor_id' => Vendor::getId()];
+        $where2 = ['order_id_entity' => $id, 'vendor_id' => $this->vendor->getId()];
         $this->db->delete('dnt_basket', $where2);
 
         $redirect = WWW_PATH_ADMIN_2 . 'index.php?src=invoices';

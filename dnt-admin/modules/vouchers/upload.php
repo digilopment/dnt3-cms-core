@@ -19,11 +19,11 @@ if (isset($_POST['sent'])) {
             $fileName = false;
         }
 
-        $parsedData = Xlsx::toArray(false, false, $fileName);
+        $parsedData = $xlsx->toArray(false, false, $fileName);
 
         $db->dbTransaction();
 
-        $order = Dnt::getMaxValueFromColumn("dnt_vouchers", "`order`");
+        $order = $dnt->getMaxValueFromColumn("dnt_vouchers", "`order`");
         if (!$order) {
             $order = 1;
         } else {
@@ -31,12 +31,12 @@ if (isset($_POST['sent'])) {
         }
         foreach ($parsedData as $row) {
             $insertedData = array(
-                'vendor_id' => Vendor::getId(),
+                'vendor_id' => $vendor->getId(),
                 'user_id' => "",
                 'value' => $row,
                 'file_name' => $file['name'],
-                'datetime_creat' => Dnt::datetime(),
-                'datetime_update' => Dnt::datetime(),
+                'datetime_creat' => $dnt->datetime(),
+                'datetime_update' => $dnt->datetime(),
                 '`show`' => '1',
                 '`order`' => $order
             );

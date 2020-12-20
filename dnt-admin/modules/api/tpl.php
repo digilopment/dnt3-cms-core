@@ -8,7 +8,7 @@ use DntLibrary\Base\Vendor;
 get_top_html();
 $api = new Api;
 $SQL_LOG_FILES = array();
-$folderOfQueries = "../dnt-logs/" . Vendor::getId() . "/sql/";
+$folderOfQueries = "../dnt-logs/" . $vendor->getId() . "/sql/";
 $files = glob($folderOfQueries . "*.{csv}", GLOB_BRACE);
 foreach ($files as $file) {
     $SQL_LOG_FILES[] = (basename($file));

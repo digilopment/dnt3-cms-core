@@ -172,7 +172,6 @@ class Client extends Database
                 $this->routes = $data;
                 $this->lang = $this->urlLang();
             } else {
-                //$this->lang = Settings::get("language");
                 $this->lang = $this->getSetting("language");
                 $this->routes = array_merge(array(
                     $this->lang

@@ -21,6 +21,7 @@ class Invoices
         $this->db = new DB();
         $this->rest = new Rest();
         $this->dnt = new Dnt();
+        $this->vendor = new Vendor();
     }
 
     public function numToText($cislo)
@@ -151,7 +152,7 @@ class Invoices
     public function getAll()
     {
         $data = [];
-        $query = "SELECT * FROM dnt_orders WHERE vendor_id = '" . Vendor::getId() . "'";
+        $query = "SELECT * FROM dnt_orders WHERE vendor_id = '" . $this->vendor->getId() . "'";
         if ($this->db->num_rows($query) > 0) {
             $data = $this->db->get_results($query);
         }
@@ -161,7 +162,7 @@ class Invoices
     public function findById($id)
     {
         $data = [];
-        $query = "SELECT * FROM dnt_orders WHERE vendor_id = '" . Vendor::getId() . "' AND id_entity = '" . $id . "'";
+        $query = "SELECT * FROM dnt_orders WHERE vendor_id = '" . $this->vendor->getId() . "' AND id_entity = '" . $id . "'";
         if ($this->db->num_rows($query) > 0) {
             $data = $this->db->get_results($query)[0];
         }
@@ -172,7 +173,7 @@ class Invoices
     {
         $current = 0;
         $query = "SELECT product_id, count FROM dnt_basket WHERE "
-                . "vendor_id = '" . Vendor::getId() . "' AND "
+                . "vendor_id = '" . $this->vendor->getId() . "' AND "
                 . "order_id_entity = '" . $orderId . "' AND "
                 . "product_id = '" . $produktId . "'";
         if ($this->db->num_rows($query) > 0) {
@@ -190,7 +191,7 @@ class Invoices
                 ],
                 [
                     'product_id' => $produktId,
-                    '`vendor_id`' => Vendor::getId()
+                    '`vendor_id`' => $this->vendor->getId()
                 ]
         );
     }
@@ -198,7 +199,7 @@ class Invoices
     public function insertToCart($produktId, $count, $orderId)
     {
         $insert = [
-            'vendor_id' => Vendor::getId(),
+            'vendor_id' => $this->vendor->getId(),
             'user_id' => 1,
             'product_id' => $produktId,
             'order_id_entity' => $orderId,
@@ -244,7 +245,7 @@ class Invoices
         $basketProducts = [];
         $basketProductData = [];
         $return = [];
-        $query = "SELECT product_id, count, order_id_entity FROM dnt_basket WHERE vendor_id = '" . Vendor::getId() . "' AND order_id_entity = '" . $orderId . "'";
+        $query = "SELECT product_id, count, order_id_entity FROM dnt_basket WHERE vendor_id = '" . $this->vendor->getId() . "' AND order_id_entity = '" . $orderId . "'";
         if ($this->db->num_rows($query) > 0) {
             $data = $this->db->get_results($query);
             foreach ($data as $item) {
@@ -276,7 +277,7 @@ class Invoices
         $rawMeta = [];
         $metaData = [];
 
-        $query = "SELECT * FROM dnt_posts WHERE `vendor_id` = '" . Vendor::getId() . "' AND type = 'product'";
+        $query = "SELECT * FROM dnt_posts WHERE `vendor_id` = '" . $this->vendor->getId() . "' AND type = 'product'";
         if ($this->db->num_rows($query) > 0) {
             $dataProducts = $this->db->get_results($query);
 
@@ -286,7 +287,7 @@ class Invoices
             }
             $ids = join(',', $idsArr);
 
-            $query2 = "SELECT * FROM dnt_posts_meta WHERE `vendor_id` = '" . Vendor::getId() . "' AND post_id IN (" . $ids . ")";
+            $query2 = "SELECT * FROM dnt_posts_meta WHERE `vendor_id` = '" . $this->vendor->getId() . "' AND post_id IN (" . $ids . ")";
 
             if ($this->db->num_rows($query2) > 0) {
                 $rawMeta = $this->db->get_results($query2);
@@ -336,7 +337,7 @@ class Invoices
 
     public function update($id)
     {
-        $datetimePublish = Dnt::timeToDbFormat('.', $this->rest->post('datetime_publish'));
+        $datetimePublish = $this->dnt->timeToDbFormat('.', $this->rest->post('datetime_publish'));
         $this->db->update(
                 'dnt_orders',
                 [
@@ -377,7 +378,7 @@ class Invoices
                 ],
                 [
                     'id_entity' => $id,
-                    '`vendor_id`' => Vendor::getId()
+                    '`vendor_id`' => $this->vendor->getId()
                 ]
         );
     }

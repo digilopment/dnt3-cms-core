@@ -7,9 +7,9 @@ use DntLibrary\Base\Vendor;
 
 if (isset($_POST['sent'])) {
     $email = $rest->post("email");
-    $vendorId = Vendor::getId();
-    if (AdminUser::emailExists($email, $vendorId)) {
-        $changePasswordUrl = WWW_PATH . "" . ADMIN_URL_2 . "/index.php?src=forgotten-password&action=confirm&email=" . urlencode(base64_encode($email)) . "&vendor=" . urlencode(base64_encode($vendorId)) . "&datetime=" . urlencode(base64_encode(Dnt::datetime()));
+    $vendorId = $vendor->getId();
+    if ($adminUseremailExists($email, $vendorId)) {
+        $changePasswordUrl = WWW_PATH . "" . ADMIN_URL_2 . "/index.php?src=forgotten-password&action=confirm&email=" . urlencode(base64_encode($email)) . "&vendor=" . urlencode(base64_encode($vendorId)) . "&datetime=" . urlencode(base64_encode($dnt->datetime()));
 
         //echo base64_decode(urldecode(    urlencode(base64_encode($email))    ));
         //echo $changePasswordUrl;

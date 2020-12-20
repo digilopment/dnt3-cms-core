@@ -28,15 +28,15 @@ $post_id = $rest->get("post_id");
                                 <span style="font-weight: bold;">
                                     <h5>Meno:</h5>
                                     <div class="checkbox">
-                                        <input type="text" name="name" value="<?php echo AdminUser::dataById("admin", "name", $post_id); ?>" class="form-control">
+                                        <input type="text" name="name" value="<?php echo $adminUser->dataById("admin", "name", $post_id); ?>" class="form-control">
                                     </div>
                                     <h5>Priezvisko:</h5>
                                     <div class="checkbox">
-                                        <input type="text" name="surname" value="<?php echo AdminUser::dataById("admin", "surname", $post_id); ?>" class="form-control">
+                                        <input type="text" name="surname" value="<?php echo $adminUser->dataById("admin", "surname", $post_id); ?>" class="form-control">
                                     </div>
                                     <h5>Email:</h5>
                                     <div class="checkbox">
-                                        <input type="text" name="email" value="<?php echo AdminUser::dataById("admin", "email", $post_id); ?>" class="form-control">
+                                        <input type="text" name="email" value="<?php echo $adminUser->dataById("admin", "email", $post_id); ?>" class="form-control">
                                     </div>
                                     <h5>Aktívny prístup?</h5>
                                     <div class="checkbox">
@@ -55,13 +55,13 @@ $post_id = $rest->get("post_id");
                                 <hr>
                                 <p class="lead">Vyberte si jedinečnú <b>fotografiu</b></p>
                                 <p>Ak máte eshop a vystavíte faktúru, vaše meno tam bude predvyplnené</p>
-                                <img src="<?php echo AdminUser::avatarById($post_id); ?>" style="max-width: 200px; margin: 15px;" alt="">
+                                <img src="<?php echo $adminUser->avatarById($post_id); ?>" style="max-width: 200px; margin: 15px;" alt="">
                                 <input type="file" name="userfile" class="btn-default btn-lg btn-block">
 <?php galleryChooser("user_avatar"); ?>
                                 <div class="padding"></div>
                                 <div class="checkbox">
-<?php echo Dnt::returnInput(); ?>
-                                    <input type="hidden" name="group" value="<?php echo AdminUser::dataById("admin", "type", $post_id); ?>" class="form-control">
+<?php echo $dnt->returnInput(); ?>
+                                    <input type="hidden" name="group" value="<?php echo $adminUser->dataById("admin", "type", $post_id); ?>" class="form-control">
                                     <input type="submit" name="sent" value="Uložiť" class="btn btn-primary" style="width: 40%;">
                                 </div>
                             </div>

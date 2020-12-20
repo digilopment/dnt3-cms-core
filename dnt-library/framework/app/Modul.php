@@ -11,13 +11,13 @@
 namespace DntLibrary\App;
 
 use DntLibrary\App\Autoloader;
-use DntLibrary\App\Database;
+use DntLibrary\Base\DB;
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Vendor;
 use DntView\Layout\Configurator;
 use function custom_modules;
 
-class Modul extends Database
+class Modul
 {
 
     public $name;
@@ -25,17 +25,24 @@ class Modul extends Database
     public $sitemapUrl = [];
     public $modul;
 
+	public function __construct()
+    {
+        $this->vendor = new Vendor();
+        $this->dnt = new Dnt();
+        $this->db = new DB();
+    }
+	
     public function getSitemap($client = false, $vendor_id = false)
     {
-        $vendorId = ($vendor_id) ? $vendor_id : Vendor::getId();
+        $vendorId = ($vendor_id) ? $vendor_id : $this->vendor->getId();
         $query = "SELECT id_entity, name_url, type, name, service FROM `dnt_posts` 
             WHERE `dnt_posts`.`type` = 'sitemap' 
             AND `dnt_posts`.`show` > '0' 
             AND `dnt_posts`.`vendor_id` = '" . $vendorId . "' 
             GROUP BY `dnt_posts`.`name_url`";
 
-        if ($this->num_rows($query) > 0) {
-            $this->sitemapUrl = $this->get_results($query, true);
+        if ($this->db->num_rows($query) > 0) {
+            $this->sitemapUrl = $this->db->get_results($query, true);
         }
     }
 
@@ -178,7 +185,7 @@ class Modul extends Database
           } */
         $module = $this->getPattern($client, $modulesRegistrator);
         if ($client->route(1) == '') {
-            $default = $client->getSetting('startovaci_modul'); //Settings::get('startovaci_modul');
+            $default = $client->getSetting('startovaci_modul');
             $moduleUrl = $this->getSitemapModules($default);
             if ($default && isset($moduleUrl[0])) {
                 if ($client->urlLang()) {
@@ -186,7 +193,7 @@ class Modul extends Database
                 } else {
                     $redirect = $client->wwwPath . $moduleUrl[0];
                 }
-                Dnt::redirect($redirect);
+                $this->dnt->redirect($redirect);
             } else {
                 $module = DEAFULT_MODUL;
             }
@@ -203,7 +210,7 @@ class Modul extends Database
 
     public function loadVendorModul($module)
     {
-        $layout = Vendor::getLayout();
+        $layout = $this->vendor->getLayout();
         $controller = 'dnt-view/layouts/' . $layout . '/modules/' . $module . '/' . (new Autoloader())->className($module) . 'Controller.php';
         $function = 'dnt-view/layouts/' . $layout . '/modules/' . $module . '/functions.php';
         $webhook = 'dnt-view/layouts/' . $layout . '/modules/' . $module . '/webhook.php';

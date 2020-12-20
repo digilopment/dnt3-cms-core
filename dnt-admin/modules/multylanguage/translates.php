@@ -7,6 +7,8 @@ use DntLibrary\Base\Rest;
 get_top(); ?>
 <?php get_top_html(); 
 $rest = new Rest;
+$dnt = new Dnt;
+$multiLanguage = new MultyLanguage;
 ?>
  
  <section class="content-header">
@@ -56,7 +58,7 @@ $rest = new Rest;
                      <tbody>
 					 
 					 <?php 
-					 $query = MultyLanguage::query();
+					 $query = $multiLanguage->query();
 					 
 					 if($rest->get("page")){
 						$nextPage =  ceil($rest->get("page") +1);
@@ -85,7 +87,7 @@ $rest = new Rest;
                            <td><b><?php if(MULTY_LANGUAGE == false) echo ""; else echo $row['lang_id']; ?></b></td>
                            <td><b><?php echo $row['translate_id']; ?></b></td>
                            <td>
-                              <a <?php echo Dnt::confirmMsg("Naozaj chcete zmazať tento preklad?"); ?> href="<?php echo WWW_PATH_ADMIN_2."index.php?src=multylanguage&action=del&translate_id=".$row['translate_id']."";?>">
+                              <a <?php echo $dnt->confirmMsg("Naozaj chcete zmazať tento preklad?"); ?> href="<?php echo WWW_PATH_ADMIN_2."index.php?src=multylanguage&action=del&translate_id=".$row['translate_id']."";?>">
                               <i class="fa fa-times bg-red action"></i>
                               </a>
                            </td>

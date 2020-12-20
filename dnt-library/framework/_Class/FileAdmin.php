@@ -10,9 +10,22 @@
 
 namespace DntLibrary\Base;
 
+use DntLibrary\Base\AdminContent;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Vendor;
+use DntLibrary\Base\DB;
+
 class FileAdmin
 {
 
+
+
+	public function __construct(){
+			$this->db = new DB();
+			$this->dnt = new Dnt();
+			$this->adminContent = new AdminContent();
+			$this->vendor = new Vendor();
+		}
     /**
      * 
      * @return int
@@ -29,10 +42,9 @@ class FileAdmin
      */
     protected function prepare_query($is_limit)
     {
-        $db = new DB();
 
         if (isset($_GET['search'])) {
-            $typ = "AND `name` LIKE '%" . Dnt::name_url($_GET['search']) . "%'";
+            $typ = "AND `name` LIKE '%" . $this->dnt->name_url($_GET['search']) . "%'";
         } else {
             $typ = false;
         }
@@ -42,7 +54,7 @@ class FileAdmin
         else
             $limit = $is_limit;
 
-        $query = "SELECT * FROM `dnt_uploads` WHERE  `vendor_id` = '" . Vendor::getId() . "' " . $typ . " ORDER BY `id` DESC " . $limit . "";
+        $query = "SELECT * FROM `dnt_uploads` WHERE  `vendor_id` = '" . $this->vendor->getId() . "' " . $typ . " ORDER BY `id` DESC " . $limit . "";
         return $query;
     }
 
@@ -52,7 +64,6 @@ class FileAdmin
      */
     public function query($noLimit = false)
     {
-        $db = new DB;
 
         if (isset($_GET['page'])) {
             $returnPage = "&page=" . $_GET['page'];
@@ -60,9 +71,9 @@ class FileAdmin
             $returnPage = false;
         }
 
-        $query = self::prepare_query(false);
-        $pocet = $db->num_rows($query);
-        $limit = self::limit();
+        $query = $this->prepare_query(false);
+        $pocet = $this->db->num_rows($query);
+        $limit = $this->limit();
 
         if (isset($_GET['page']))
             $strana = $_GET['page'];
@@ -81,7 +92,7 @@ class FileAdmin
         } else {
             $pager = "LIMIT " . $pociatok . ", " . $limit . "";
         }
-        return self::prepare_query($pager);
+        return $this->prepare_query($pager);
     }
 
     /**
@@ -91,7 +102,6 @@ class FileAdmin
      */
     public function getPage($index)
     {
-        $db = new DB;
 
         if (isset($_GET['page'])) {
             $strana = $_GET['page'];
@@ -99,9 +109,9 @@ class FileAdmin
             $strana = 1;
         }
 
-        $query = self::prepare_query(false);
-        $pocet = $db->num_rows($query);
-        $limit = self::limit();
+        $query = $this->prepare_query(false);
+        $pocet = $this->db->num_rows($query);
+        $limit = $this->limit();
         $stranok = $pocet / $limit;
         $pociatok = ($strana * $limit) - $limit;
 
@@ -146,7 +156,7 @@ class FileAdmin
             $return = $adresa[1];
         }
 
-        return WWW_PATH_ADMIN . "index.php?" . $return . "&page=" . self::getPage($index);
+        return WWW_PATH_ADMIN . "index.php?" . $return . "&page=" . $this->getPage($index);
     }
 
     /**
@@ -180,11 +190,10 @@ class FileAdmin
      */
     public function getPostParam($column, $post_id)
     {
-        $db = new DB;
 
         $query = "SELECT `$column` FROM dnt_uploads WHERE id = '$post_id'";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 return $row[$column];
             }
         } else {
@@ -198,7 +207,7 @@ class FileAdmin
      */
     public function showOrder()
     {
-        return (AdminContent::getPage("current") * AdminContent::limit()) - AdminContent::limit() + 1;
+        return ($this->adminContent->getPage("current") * $this->adminContent->limit()) - $this->adminContent->limit() + 1;
     }
 
 }

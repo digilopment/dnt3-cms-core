@@ -17,7 +17,11 @@ use ZipArchive;
 
 class DataExportJob
 {
-
+ public function __construct()
+    {
+        $this->dnt = new Dnt();
+        $this->install = new Install();
+    }
     public function run()
     {
 
@@ -38,7 +42,7 @@ class DataExportJob
             $DbName = DB_NAME;
             $tables = false;
             $backup_name = "../dnt-install/install.sql";
-            Install::Export_Database($mysqlHostName, $mysqlUserName, $mysqlPassword, $DbName, $tables = false, $backup_name, $vendor_id);
+            $this->install->Export_Database($mysqlHostName, $mysqlUserName, $mysqlPassword, $DbName, $tables = false, $backup_name, $vendor_id);
 
             // Get real path for our folder
             $rootPath = realpath('../');
@@ -63,18 +67,18 @@ class DataExportJob
                     $relativePath = substr($filePath, strlen($rootPath) + 1);
 
                     if (
-                            Dnt::in_string("dnt-view", $relativePath) ||
-                            Dnt::in_string("dnt-install", $relativePath)
+                            $this->dnt->in_string("dnt-view", $relativePath) ||
+                            $this->dnt->in_string("dnt-install", $relativePath)
                     ) {
                         $query = "SELECT name FROM dnt_uploads WHERE vendor_id = $vendor_id";
                         if ($db->num_rows($query) > 0) {
                             foreach ($db->get_results($query) as $row) {
-                                if (Dnt::in_string($row['name'], $relativePath)) {
+                                if ($this->dnt->in_string($row['name'], $relativePath)) {
                                     $zip->addFile($filePath, $relativePath);
                                 }
                             }
                         }
-                        if (Dnt::in_string("dnt-install", $relativePath)) {
+                        if ($this->dnt->in_string("dnt-install", $relativePath)) {
                             $zip->addFile($filePath, $relativePath);
                         }
                     }

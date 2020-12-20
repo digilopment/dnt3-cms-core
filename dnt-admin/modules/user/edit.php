@@ -100,7 +100,7 @@ foreach ($user->getUser($id_entity) as $row) {
                                 <?php
                                 $datetime_publish = $row['datetime_publish'];
                                 if ($datetime_publish == "0000-00-00 00:00:00") {
-                                    $datetime_publish = Dnt::datetime();
+                                    $datetime_publish = $this->dnt->datetime();
                                 }
                                 ?>
                                 <script type="text/javascript">
@@ -153,7 +153,7 @@ foreach ($user->getUser($id_entity) as $row) {
                                 <input name="userfile" type="file" class="form-control">
                                 <br/>
     <?php galleryChooser("user_avatar_" . $id_entity); ?>
-    <?php echo Dnt::returnInput(); ?>
+    <?php echo $this->dnt->returnInput(); ?>
                                 <br/><br/>
 
 

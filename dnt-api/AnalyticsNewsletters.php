@@ -17,6 +17,7 @@ class AnalyticsNewslettersApi extends DntLog
 
     public function __construct()
     {
+		parent::__construct();
         $this->rest = new Rest();
         $this->dnt = new Dnt();
     }

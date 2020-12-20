@@ -26,16 +26,16 @@ if (isset($_POST['sent'])) {
         if (file_exists($sqlFile)) {
             $src = "../dnt-install/_temp/" . $random_digit . '/dnt-view/data/';
             $dst = '../dnt-view/data/';
-            Dnt::recurse_copy($src, $dst);
-            Install::addInstallation($sqlFile);
-            Dnt::rrmdir("../dnt-install/_temp/");
+            $dnt->recurse_copy($src, $dst);
+            $install->addInstallation($sqlFile);
+            $dnt->rrmdir("../dnt-install/_temp/");
             $dnt->redirect(WWW_PATH_ADMIN_2 . "index.php?src=vendor");
         } else {
             $redirectUrl = "index.php?src=vendor&action=import";
             $urlString = '<a href="' . $redirectUrl . '">Prosím použite iný súbor</a>';
             $customMessage = "<b>.zip</b>, ktorý sa pokúšate importovať ako nový web, nie je platná verzia platformy <b>dnt3</b>.<br><br>$urlString";
         }
-        Dnt::deleteFile($zipFile);
+        $dnt->deleteFile($zipFile);
     } else {
         $redirectUrl = "index.php?src=vendor&action=import";
         $urlString = '<a href="' . $redirectUrl . '">Prosím použite platný <b>.zip</b> súbor</a>';

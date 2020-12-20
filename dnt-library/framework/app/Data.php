@@ -100,10 +100,10 @@ class Data
 
         $keyWords = isset($metaSettingsArr['keys']['keywords']['value']) ? $metaSettingsArr['keys']['keywords']['value'] : false;
         $description = isset($metaSettingsArr['keys']['description']['value']) ? $metaSettingsArr['keys']['description']['value'] : false;
-        $favicon = Settings::getImage($metaSettingsArr['keys']['favicon']['value']);
-        $title = Settings::get('title');
+        $favicon = $this->settings->getImage($metaSettingsArr['keys']['favicon']['value']);
+        $title = $this->settings->get('title');
         $data = array(
-            'media_path' => WWW_PATH . 'dnt-view/layouts/' . Vendor::getLayout() . '/',
+            'media_path' => WWW_PATH . 'dnt-view/layouts/' . $this->vendor->getLayout() . '/',
             'title' => $title,
             'web_title' => $title,
             'post_id' => $postId,

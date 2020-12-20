@@ -26,6 +26,7 @@ class NewsletterCampaignTest
     protected $countLogoutedUrlUnique = 0;
     protected $countAllEmails = 0;
     protected $countClickLogs = 0;
+    protected $clickLogs = [];
     protected $countSeenLogs = 0;
     protected $countDefaultUrl = 0;
 

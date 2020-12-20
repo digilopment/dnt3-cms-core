@@ -9,6 +9,9 @@ use DntLibrary\Base\Vendor;
 class CompetitorsExportJob
 {
 
+public function __construct(){
+		$this->dnt = new Dnt();
+	}
     protected function creatCsvFileStatic($table, $columns, $where, $fileName, $columnsName = false)
     {
         $db = new DB();
@@ -32,7 +35,7 @@ class CompetitorsExportJob
         }
 
         if (!is_readable(dirname($fileName))) {
-            Dnt::rmkdir(dirname($fileName));
+            $this->dnt->rmkdir(dirname($fileName));
         }
         file_put_contents($fileName, $data);
     }

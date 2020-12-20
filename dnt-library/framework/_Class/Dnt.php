@@ -18,23 +18,26 @@ use DntLibrary\Base\Vendor;
 class Dnt
 {
 
+	public function __construct(){
+		$this->db = new DB();
+		$this->vendor = new Vendor();
+	}
     /**
      * 
      * @param type $table
      * @return boolean
      */
-    public static function getLastId($table, $vendor_id = false)
+    public function getLastId($table, $vendor_id = false)
     {
-        $db = new DB;
-
+       
         if ($vendor_id) {
             $query = "SELECT MAX(id) FROM " . $table . " WHERE vendor_id = " . $vendor_id . "";
         } else {
-            $query = "SELECT MAX(id) FROM " . $table . " WHERE vendor_id = " . Vendor::getId() . "";
+            $query = "SELECT MAX(id) FROM " . $table . " WHERE vendor_id = " . $this->vendor->getId() . "";
         }
 
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 $return = $row['MAX(id)'];
             }
         } else {
@@ -50,19 +53,19 @@ class Dnt
      * @param type $vendor_id
      * @return boolean
      */
-    public static function getMaxValueFromColumn($table, $column, $vendor_id = true)
+    public function getMaxValueFromColumn($table, $column, $vendor_id = true)
     {
-        $db = new DB;
+        
 
         if ($vendor_id) {
-            $query = "SELECT MAX($column) FROM " . $table . " WHERE vendor_id = '" . Vendor::getId() . "'";
+            $query = "SELECT MAX($column) FROM " . $table . " WHERE vendor_id = '" . $this->vendor->getId() . "'";
         } else {
             $query = "SELECT MAX($column) FROM " . $table;
         }
 
 
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 $return = $row["MAX($column)"];
             }
         } else {
@@ -75,12 +78,12 @@ class Dnt
      * 
      * @return boolean
      */
-    public static function getLastIdVendor()
+    public function getLastIdVendor()
     {
-        $db = new DB;
+        
         $query = "SELECT MAX(id) FROM dnt_vendors ";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 $return = $row['MAX(id)'];
             }
         } else {
@@ -109,10 +112,10 @@ class Dnt
      * 
      * @param type $lastId
      */
-    public static function getIdEntity($lastId)
+    public function getIdEntity($lastId)
     {
-        $db = new DB;
-        $db->update(
+        
+        $this->db->update(
                 'dnt_posts', //table
                 array(//set
                     'id_entity' => $lastId
@@ -127,7 +130,7 @@ class Dnt
      * @param type $link
      * @return type
      */
-    public static function cislo($link)
+    public function cislo($link)
     {
         return preg_replace("/[^0-9]/", "", $link);
     }
@@ -150,9 +153,9 @@ class Dnt
      * @param type $column
      * @return type
      */
-    public static function showStatus($column)
+    public function showStatus($column)
     {
-        $rest = new Rest;
+        $rest = new Rest();
         if ($rest->isAdmin()) {
             //return "`show` = '1' or `show` = '2'";
             return "`$column` >= '0'";
@@ -165,7 +168,7 @@ class Dnt
      * 
      * @return type
      */
-    public static function datetime()
+    public function datetime()
     {
         return date("Y-m-d H:i:s");
     }
@@ -174,7 +177,7 @@ class Dnt
      * 
      * @param type $file
      */
-    public static function deleteFile($file)
+    public function deleteFile($file)
     {
         if (file_exists($file)) {
             unlink($file);
@@ -202,7 +205,7 @@ class Dnt
      * 
      * @return type
      */
-    public static function timestamp()
+    public function timestamp()
     {
         return time();
     }
@@ -213,7 +216,7 @@ class Dnt
      * @param type $time
      * @return type
      */
-    public static function timeToDbFormat($separator, $time)
+    public function timeToDbFormat($separator, $time)
     {
         $dateAndTime = explode(" ", $time);
         $data = explode($separator, $dateAndTime[0]);
@@ -226,7 +229,7 @@ class Dnt
      * @param type $format
      * @return type
      */
-    public static function formatTime($time, $format)
+    public function formatTime($time, $format)
     {
         $date = date_create($time);
         return date_format($date, $format);
@@ -237,7 +240,7 @@ class Dnt
      * @param type $cislo
      * @return type
      */
-    public static function dvojcifernyDatum($cislo)
+    public function dvojcifernyDatum($cislo)
     {
         if (strlen($cislo) > 2) {
             $return = $cislo;
@@ -257,7 +260,7 @@ class Dnt
      * @param type $str
      * @return type
      */
-    public static function in_string($pharse, $str)
+    public function in_string($pharse, $str)
     {
         return preg_match('/' . $pharse . '/', $str);
         //return preg_match("/".$pharse."\b/i", "".$str."");
@@ -268,7 +271,7 @@ class Dnt
      * @param type $link
      * @return type
      */
-    public static function desatinne_cislo($link)
+    public function desatinne_cislo($link)
     {
         $link = str_replace(",", ".", $link);
         return preg_replace("/[^0-9\.]/", "", $link);
@@ -279,7 +282,7 @@ class Dnt
      * @param type $pocetZnakov
      * @return type
      */
-    public static function generujHeslo($pocetZnakov)
+    public function generujHeslo($pocetZnakov)
     {
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         return substr(str_shuffle($chars), 0, $pocetZnakov);
@@ -289,7 +292,7 @@ class Dnt
      * 
      * @return type
      */
-    public static function microtimeSec()
+    public function microtimeSec()
     {
         list($usec, $sec) = explode(" ", microtime());
         $tmp = ((float) $usec + (float) $sec);
@@ -302,7 +305,7 @@ class Dnt
      * 
      * @return type
      */
-    public static function is_mobile()
+    public function is_mobile()
     {
         return preg_match("/(android|iPhone|iPod|iPad|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
     }
@@ -312,14 +315,14 @@ class Dnt
      * @param type $file
      * @return type
      */
-    public static function getPripona($file)
+    public function getPripona($file)
     {
         return pathinfo($file, PATHINFO_EXTENSION);
     }
 
-    public static function getFileName($file)
+    public function getFileName($file)
     {
-        return self::name_url(pathinfo($file, PATHINFO_FILENAME));
+        return $this->name_url(pathinfo($file, PATHINFO_FILENAME));
     }
 
     /**
@@ -327,14 +330,14 @@ class Dnt
      * @param type $src
      * @param type $dst
      */
-    public static function recurse_copy($src, $dst)
+    public function recurse_copy($src, $dst)
     {
         $dir = opendir($src);
         @mkdir($dst);
         while (false !== ( $file = readdir($dir))) {
             if (( $file != '.' ) && ( $file != '..' )) {
                 if (is_dir($src . '/' . $file)) {
-                    self::recurse_copy($src . '/' . $file, $dst . '/' . $file);
+                    $this->recurse_copy($src . '/' . $file, $dst . '/' . $file);
                 } else {
                     copy($src . '/' . $file, $dst . '/' . $file);
                 }
@@ -347,7 +350,7 @@ class Dnt
      * 
      * @return type
      */
-    public static function get_datum()
+    public function get_datum()
     {
         return $get_datum = "" . date("d") . "." . date("m") . "." . date("Y") . "";
     }
@@ -356,7 +359,7 @@ class Dnt
      * 
      * @return type
      */
-    public static function get_rok()
+    public function get_rok()
     {
         return $get_rok = date("Y");
     }
@@ -365,7 +368,7 @@ class Dnt
      * 
      * @return type
      */
-    public static function get_mesiac()
+    public function get_mesiac()
     {
         return $get_mesiac = date("m");
     }
@@ -374,7 +377,7 @@ class Dnt
      * 
      * @return type
      */
-    public static function get_ip()
+    public function get_ip()
     {
         return $_SERVER['REMOTE_ADDR'];
     }
@@ -383,7 +386,7 @@ class Dnt
      * 
      * @return type
      */
-    public static function get_den()
+    public function get_den()
     {
         return $get_den = date("d");
     }
@@ -392,7 +395,7 @@ class Dnt
      * 
      * @return type
      */
-    public static function get_cas()
+    public function get_cas()
     {
         return $get_cas = date('H:i:s');
     }
@@ -401,7 +404,7 @@ class Dnt
      * 
      * @return string
      */
-    public static function get_os($external = false)
+    public function get_os($external = false)
     {
         if ($exteral) {
             $agent = $external;
@@ -463,7 +466,7 @@ class Dnt
         return $os_platform;
     }
 
-    public static function downloadFile($url, $cesta)
+    public function downloadFile($url, $cesta)
     {
         $img = explode("/", $url);
         $array = $img;
@@ -478,7 +481,7 @@ class Dnt
         $pripona = explode('.', $fotka);
         if (!isset($pripona[1]) || $pripona[1] ==  'png')  {
             //fotka nema v url adrese priponu
-            $fotka = self::name_url($fotka) . '.jpg';
+            $fotka = $this->name_url($fotka) . '.jpg';
             $img = $cesta . $fotka;
         }
         if (file_get_contents($url)) {
@@ -518,7 +521,7 @@ class Dnt
      * @param type $dlzka
      * @return type
      */
-    public static function set_rand_string($dlzka = 10)
+    public function set_rand_string($dlzka = 10)
     {
         $retazec = "";
         $nahodne = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
@@ -534,7 +537,7 @@ class Dnt
      * 
      * @return type
      */
-    public static function set_four_one()
+    public function set_four_one()
     {
         return "" . rand(1, 9) . "" . rand(1, 9) . "" . rand(1, 9) . "" . rand(1, 9) . "";
     }
@@ -544,7 +547,7 @@ class Dnt
      * @param type $url_adresa
      * @return type
      */
-    public static function name_url($url_adresa)
+    public function name_url($url_adresa)
     {
         # všetky znaky, ktoré v unicode nie sú písmená, čísla alebo podtržítka nahradíme pomlčkou
         $url_adresa = preg_replace('/[^\pL0-9_]+/u', '-', $url_adresa);
@@ -565,18 +568,18 @@ class Dnt
      * @param type $name_url
      * @return boolean
      */
-    public static function is_external_url($name_url)
+    public function is_external_url($name_url)
     {
         //$name_url = str_replace("/", "\/", $name_url);
-        if (self::in_string("http:\/\/", $name_url)) {
+        if ($this->in_string("http:\/\/", $name_url)) {
             $return = true;
         }
         //https protocol
-        elseif (self::in_string("https:\/\/", $name_url)) {
+        elseif ($this->in_string("https:\/\/", $name_url)) {
             $return = true;
         }
         //protocol relative
-        elseif (self::in_string("\/\/", $name_url)) {
+        elseif ($this->in_string("\/\/", $name_url)) {
             $return = true;
         } else {
             $return = false;
@@ -590,25 +593,25 @@ class Dnt
      * @param type $name_url
      * @return type
      */
-    public static function creat_name_url($name, $name_url)
+    public function creat_name_url($name, $name_url)
     {
 
-        if (self::in_string("<WWW_PATH>", $name_url)) {
+        if ($this->in_string("<WWW_PATH>", $name_url)) {
             $name_url = explode("WWW_PATH", $name_url);
-            $name_url = "<WWW_PATH>" . self::name_url($name_url[1]);
+            $name_url = "<WWW_PATH>" . $this->name_url($name_url[1]);
             return $name_url;
         }
 
         if (empty($name_url)) {
-            return self::name_url($name);
-        } elseif (self::in_string("#", $name_url)) {
+            return $this->name_url($name);
+        } elseif ($this->in_string("#", $name_url)) {
             return $name_url;
         }
         //http is_external_url
-        elseif (self::is_external_url($name_url)) {
+        elseif ($this->is_external_url($name_url)) {
             return $name_url;
         } else {
-            return self::name_url($name_url);
+            return $this->name_url($name_url);
         }
     }
 
@@ -616,7 +619,7 @@ class Dnt
      * 
      * @param type $presmeruj_url
      */
-    public static function redirect($presmeruj_url = false)
+    public function redirect($presmeruj_url = false)
     {
         if ($presmeruj_url) {
             $redirect = $presmeruj_url;
@@ -640,7 +643,7 @@ class Dnt
      * 
      * @param type $presmeruj_url
      */
-    public static function presmeruj_url_by_js($presmeruj_url)
+    public function presmeruj_url_by_js($presmeruj_url)
     {
         echo '<script type="text/javascript">';
         echo 'window.location.href="' . $presmeruj_url . '"';
@@ -653,7 +656,7 @@ class Dnt
      * @param type $str
      * @return type
      */
-    public static function safe($str)
+    public function safe($str)
     {
         if (is_array($str))
             return array_map(__METHOD__, $str);
@@ -671,7 +674,7 @@ class Dnt
      * @param type $zobraz_znakov
      * @return string
      */
-    public static function obsah_uvod($str, $zobraz_znakov)
+    public function obsah_uvod($str, $zobraz_znakov)
     {
         //return htmlspecialchars($str); 
         if (strlen($str) > $zobraz_znakov)
@@ -689,7 +692,7 @@ class Dnt
      * @param type $maxChars
      * @return type
      */
-    public static function get_perex($input, $maxWords, $maxChars)
+    public function get_perex($input, $maxWords, $maxChars)
     {
         $words = preg_split('/\s+/', $input);
         $words = array_slice($words, 0, $maxWords);
@@ -723,7 +726,7 @@ class Dnt
      * @param type $maxPocetSlov
      * @return type
      */
-    public static function perex($str, $maxPocetSlov)
+    public function perex($str, $maxPocetSlov)
     {
         $str = not_html($str);
         $slova = explode(" ", $str);
@@ -741,7 +744,7 @@ class Dnt
      * @param type $str
      * @return type
      */
-    public static function not_html($str)
+    public function not_html($str)
     {
         //return htmlspecialchars($str); 
         $str = strip_tags($str);
@@ -754,7 +757,7 @@ class Dnt
      * @param type $email
      * @return boolean
      */
-    public static function is_email($email)
+    public function is_email($email)
     {
         if ($email == "")
             return true;
@@ -769,7 +772,7 @@ class Dnt
      * @param type $iban
      * @return boolean
      */
-    public static function is_iban($iban)
+    public function is_iban($iban)
     {
         $iban = strtolower(str_replace(' ', '', $iban));
         $Countries = array('al' => 28, 'ad' => 24, 'at' => 20, 'az' => 28, 'bh' => 22, 'be' => 16, 'ba' => 20, 'br' => 29, 'bg' => 22, 'cr' => 21, 'hr' => 21, 'cy' => 28, 'cz' => 24, 'dk' => 18, 'do' => 28, 'ee' => 20, 'fo' => 18, 'fi' => 18, 'fr' => 27, 'ge' => 22, 'de' => 22, 'gi' => 23, 'gr' => 27, 'gl' => 18, 'gt' => 28, 'hu' => 28, 'is' => 26, 'ie' => 22, 'il' => 23, 'it' => 27, 'jo' => 30, 'kz' => 20, 'kw' => 30, 'lv' => 21, 'lb' => 28, 'li' => 21, 'lt' => 20, 'lu' => 20, 'mk' => 19, 'mt' => 31, 'mr' => 27, 'mu' => 30, 'mc' => 27, 'md' => 24, 'me' => 22, 'nl' => 18, 'no' => 15, 'pk' => 24, 'ps' => 29, 'pl' => 28, 'pt' => 25, 'qa' => 29, 'ro' => 24, 'sm' => 27, 'sa' => 24, 'rs' => 22, 'sk' => 24, 'si' => 19, 'es' => 24, 'se' => 24, 'ch' => 21, 'tn' => 24, 'tr' => 26, 'ae' => 23, 'gb' => 22, 'vg' => 24);
@@ -809,7 +812,7 @@ class Dnt
      * @param type $facebook_profil
      * @return boolean
      */
-    public static function is_facebook_profil($facebook_profil)
+    public function is_facebook_profil($facebook_profil)
     {
         list($facebook_url, $facebook_user) = explode(".com/", $facebook_profil);
         if ($facebook_profil == "") {
@@ -826,7 +829,7 @@ class Dnt
      * @param type $text
      * @return type
      */
-    public static function odstran_diakritiku($text)
+    public function odstran_diakritiku($text)
     {
         $prevodni_tabulka = Array(
             'ä' => 'a',
@@ -927,13 +930,13 @@ class Dnt
      * @param string $od_email
      * @param type $email_sprava
      */
-    public static function my_email($predmet, $komu, $od_meno, $od_email, $email_sprava)
+    public function my_email($predmet, $komu, $od_meno, $od_email, $email_sprava)
     {
 
         $od_email = "info@query.sk";
         // carriage return type (we use a PHP end of line constant)
-        $predmet = self::odstran_diakritiku($predmet);
-        $od_meno = self::odstran_diakritiku($od_meno);
+        $predmet = $this->odstran_diakritiku($predmet);
+        $od_meno = $this->odstran_diakritiku($od_meno);
         $to = $komu; // note the comma
         $subject = iconv('UTF-8', 'windows-1250', $predmet);
         $title = 'Html Email';
@@ -949,7 +952,7 @@ class Dnt
         mail($to, $subject, $message, $headers);
     }
 
-    public static function returnInput()
+    public function returnInput()
     {
         echo "<input type='hidden' name='return' value='" . WWW_FULL_PATH . "' />";
     }
@@ -959,7 +962,7 @@ class Dnt
      * @param type $msg
      * @return type
      */
-    public static function confirmMsg($msg)
+    public function confirmMsg($msg)
     {
         return " onclick=\"return confirm('$msg');\" ";
     }
@@ -971,14 +974,11 @@ class Dnt
      * @param type $post_id
      * @return boolean
      */
-    public static function getPostParam($table, $column, $post_id)
+    public function getPostParam($table, $column, $post_id)
     {
-        $db = new DB;
-        $rest = new Rest;
-
-        $query = "SELECT `$column` FROM `$table` WHERE id_entity = $post_id AND  vendor_id = '" . Vendor::getId() . "'";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        $query = "SELECT `$column` FROM `$table` WHERE id_entity = $post_id AND  vendor_id = '" . $this->vendor->getId() . "'";
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 return $row[$column];
             }
         } else {
@@ -992,14 +992,11 @@ class Dnt
      * @param type $and_where
      * @return boolean
      */
-    public static function db_current_id($table, $and_where)
+    public function db_current_id($table, $and_where)
     {
-        $db = new DB;
-        $rest = new Rest;
-
-        $query = "SELECT `id_entity` FROM `$table` WHERE vendor_id = '" . Vendor::getId() . "' $and_where ORDER BY id_entity asc LIMIT 1";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        $query = "SELECT `id_entity` FROM `$table` WHERE vendor_id = '" . $this->vendor->getId() . "' $and_where ORDER BY id_entity asc LIMIT 1";
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 return $row['id_entity'];
             }
         } else {
@@ -1014,14 +1011,11 @@ class Dnt
      * @param type $currentId
      * @return boolean
      */
-    public static function db_next_id($table, $and_where, $currentId)
+    public function db_next_id($table, $and_where, $currentId)
     {
-        $db = new DB;
-        $rest = new Rest;
-
-        $query = "SELECT `id_entity` FROM `$table` WHERE `id_entity` > '$currentId' AND `vendor_id` = '" . Vendor::getId() . "' $and_where ORDER BY id_entity asc LIMIT 1";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        $query = "SELECT `id_entity` FROM `$table` WHERE `id_entity` > '$currentId' AND `vendor_id` = '" . $this->vendor->getId() . "' $and_where ORDER BY id_entity asc LIMIT 1";
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 return $row['id_entity'];
             }
         } else {
@@ -1029,7 +1023,7 @@ class Dnt
         }
     }
 
-    public static function setMetaStatus($value, $meta)
+    public function setMetaStatus($value, $meta)
     {
         if ($value == 1) {
             $ano = 'selected';
@@ -1086,7 +1080,7 @@ class Dnt
         return $output;
     }
 
-    public static function colorInverse($color)
+    public function colorInverse($color)
     {
         $color = str_replace('#', '', $color);
         if (strlen($color) != 6) {
@@ -1119,14 +1113,14 @@ class Dnt
         return $hash . $R . $G . $B;
     }
 
-    public static function rmkdir($path)
+    public function rmkdir($path)
     {
         if (@mkdir($path) or file_exists($path))
             return true;
-        return (self::rmkdir(dirname($path)) and mkdir($path));
+        return ($this->rmkdir(dirname($path)) and mkdir($path));
     }
 
-    public static function orderby($data, $column = "id", $sort = "ASC")
+    public function orderby($data, $column = "id", $sort = "ASC")
     {
         if (count($data) > 0) {
             $sortArray = array();
@@ -1170,7 +1164,7 @@ class Dnt
     {
 
         //VYTVOR FOLDER AK NIE JE
-        self::rmkdir(dirname($fileName));
+        $this->rmkdir(dirname($fileName));
 
         //NACITANIE STARYCH DAT ZO SUBORU
         $data = @file_get_contents($fileName);
@@ -1205,7 +1199,7 @@ class Dnt
         file_put_contents($fileName, $putData);
     }
 
-    public static function getCountryCode($ip)
+    public function getCountryCode($ip)
     {
         return strtolower(@file_get_contents(GEO_IP_SERVICE . '' . $ip . ''));
     }
@@ -1215,7 +1209,7 @@ class Dnt
      *
      *
      * */
-    public static function youtubeVideoToEmbed($video)
+    public function youtubeVideoToEmbed($video)
     {
         if (count(explode('?v=', $video)) > 1) {
             $video = explode("?v=", $video);
@@ -1244,7 +1238,7 @@ class Dnt
         return preg_replace($search, $replace, $html);
     }
 
-    public static function strToHex($string)
+    public function strToHex($string)
     {
         $hex = '';
         for ($i = 0; $i < strlen($string); $i++) {
@@ -1264,7 +1258,7 @@ class Dnt
         return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
     }
 
-    public static function hexToStr($hex)
+    public function hexToStr($hex)
     {
         $string = '';
         for ($i = 0; $i < strlen($hex) - 1; $i += 2) {

@@ -17,20 +17,24 @@ use DntLibrary\Base\Vendor;
 class Navigation
 {
 
+	public function __construct(){
+		$this->db = new DB();
+		$this->vendor = new Vendor();
+		$this->adminContent = new AdminContent();
+	}
     /**
      * 
      * @return type
      */
     public function getParents()
     {
-        $db = new DB;
         $query = "SELECT * FROM dnt_posts WHERE 
 		type = 'sitemap' AND 
-		cat_id = '" . AdminContent::getCatId("sitemap") . "' AND 
-		vendor_id = '" . Vendor::getId() . "' AND 
+		cat_id = '" . $this->adminContent->getCatId("sitemap") . "' AND 
+		vendor_id = '" . $this->vendor->getId() . "' AND 
 		`show` = '1' ORDER BY `order` DESC";
-        if ($db->num_rows($query) > 0) {
-            return $db->get_results($query);
+        if ($this->db->num_rows($query) > 0) {
+            return $this->db->get_results($query);
         } else {
             return array(false);
         }
@@ -43,13 +47,12 @@ class Navigation
      */
     public function hasChild($parentId)
     {
-        $db = new DB;
         $query = "SELECT * FROM `dnt_posts` WHERE 
 		type = 'sitemap' AND 
 		`show` = '1' AND 
 		sub_cat_id = '" . $parentId . "' 
-		AND vendor_id = '" . Vendor::getId() . "'";
-        if ($db->num_rows($query) > 0) {
+		AND vendor_id = '" . $this->vendor->getId() . "'";
+        if ($this->db->num_rows($query) > 0) {
             return true;
         } else {
             return false;
@@ -63,14 +66,13 @@ class Navigation
      */
     public function getChildren($parentId)
     {
-        $db = new DB;
         $query = "SELECT * FROM `dnt_posts` WHERE 
 		type = 'sitemap' AND 
 		`show` = '1' AND 
 		sub_cat_id = '" . $parentId . "' 
-		AND vendor_id = '" . Vendor::getId() . "'  ORDER BY `order` DESC";
-        if ($db->num_rows($query) > 0) {
-            return $db->get_results($query);
+		AND vendor_id = '" . $this->vendor->getId() . "'  ORDER BY `order` DESC";
+        if ($this->db->num_rows($query) > 0) {
+            return $this->db->get_results($query);
         } else {
             return array(false);
         }

@@ -16,18 +16,21 @@ use DntLibrary\Base\Vendor;
 
 class Gallery extends ArticleView
 {
-
+	
+	public function __construct(){
+		$this->db = new DB();
+		$this->vendor = new Vendor();
+	}
     public function getGalleriesIds($postId = false)
     {
-        $db = new DB;
         $data = array();
         $query = "SELECT value FROM dnt_posts_meta WHERE 
             `service` = 'gallery_list' AND 
-            `vendor_id` = '" . Vendor::getId() . "' AND `show` > 0
+            `vendor_id` = '" . $this->vendor->getId() . "' AND `show` > 0
 			ORDER by `order` asc";
 
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 $data[] = $row['value'];
             }
             $tmp = join(",", $data);

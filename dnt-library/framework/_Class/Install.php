@@ -17,19 +17,20 @@ use DntLibrary\Base\Dnt;
 class Install
 {
 
+	public function __construct(){
+		$this->dbMysqli = new mysqli(DB_HOST, DB_USER, DB_PASS);
+		$this->db = new DB();
+		$this->dnt = new Dnt();
+	}
     /**
      * 
      * @return boolean
      */
-    public static function db_exists()
+    public function db_exists()
     {
-
-        //$conn = new mysqli(DB_HOST, DB_USER, DB_PASS);
-
-        $db = new mysqli(DB_HOST, DB_USER, DB_PASS);
         $database = DB_NAME;
         $query = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME=?";
-        $stmt = $db->prepare($query);
+        $stmt = $this->dbMysqli->prepare($query);
         $stmt->bind_param('s', $database);
         $stmt->execute();
         $stmt->bind_result($data);
@@ -46,12 +47,12 @@ class Install
      * @param type $query
      * @return boolean
      */
-    public static function getColumns($query)
+    public function getColumns($query)
     {
-        $db = new DB();
+        
         $i = 1;
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $childArr) {
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $childArr) {
                 if ($i == 1) {
                     foreach ($childArr as $key => $value) {
                         if ($key != "id" && $key != "vendor_id") {
@@ -73,17 +74,17 @@ class Install
      * @param type $VENDOR_NAME
      * @param type $COPY_FROM
      */
-    public static function addVendor($tables, $VENDOR_NAME, $COPY_FROM, $VENDOR_LAYOUT = false, $DELETE_DATA = 1)
+    public function addVendor($tables, $VENDOR_NAME, $COPY_FROM, $VENDOR_LAYOUT = false, $DELETE_DATA = 1)
     {
-        $db = new DB;
+        
         $COPY_FROM = $COPY_FROM;
         $vendor_name = $VENDOR_NAME;
-        $vendor_name_url = Dnt::name_url($VENDOR_NAME);
+        $vendor_name_url = $this->dnt->name_url($VENDOR_NAME);
 
         if ($VENDOR_LAYOUT) {
             $vendor_layout = $VENDOR_LAYOUT;
         } else {
-            $vendor_layout = Dnt::name_url($VENDOR_NAME);
+            $vendor_layout = $this->dnt->name_url($VENDOR_NAME);
         }
 
 
@@ -94,19 +95,19 @@ class Install
             'is_default' => 0,
         );
 
-        $db->insert('dnt_vendors', $insertedData);
-        $NEW_VENDOR_ID = Dnt::getLastIdVendor();
+        $this->db->insert('dnt_vendors', $insertedData);
+        $NEW_VENDOR_ID = $this->dnt->getLastIdVendor();
 
         foreach ($tables as $table) {
             $query = "SELECT * FROM $table WHERE vendor_id = '$COPY_FROM'";
-            if ($db->num_rows($query) > 0) {
+            if ($this->db->num_rows($query) > 0) {
                 $data = array();
-                foreach ($db->get_results($query) as $row) {
+                foreach ($this->db->get_results($query) as $row) {
                     foreach (self::getColumns($query) as $column) {
                         $data["`" . $column . "`"] = $row[$column];
                         $data["vendor_id"] = $NEW_VENDOR_ID;
                     }
-                    $db->insert($table, $data, false);
+                    $this->db->insert($table, $data, false);
                 }
             }
         }
@@ -117,17 +118,17 @@ class Install
      * @param type $id
      * @param type $tables
      */
-    public static function delVendor($id, $tables)
+    public function delVendor($id, $tables)
     {
 
-        $db = new DB;
+        
 
         foreach ($tables as $table) {
             $where = array('vendor_id' => $id);
-            $db->delete($table, $where);
+            $this->db->delete($table, $where);
         }
         $query = "DELETE FROM `dnt_vendors` WHERE `dnt_vendors`.`id` = '$id'";
-        $db->query($query);
+        $this->db->query($query);
     }
 
     /**
@@ -136,15 +137,15 @@ class Install
      * @param type $move_to
      * @param type $tables
      */
-    public static function moveVendor($id, $move_to, $tables)
+    public function moveVendor($id, $move_to, $tables)
     {
 
-        $db = new DB;
+        
 
         foreach ($tables as $table) {
             $where = array('vendor_id' => $id);
 
-            $db->update(
+            $this->db->update(
                     $table, //table
                     array(//set
                         'vendor_id' => $move_to,
@@ -154,22 +155,22 @@ class Install
         }
 
         $query = "UPDATE `dnt_vendors` SET `id` = '" . $move_to . "' WHERE `dnt_vendors`.`id` = $id";
-        $db->query($query);
+        $this->db->query($query);
         $query = "UPDATE `dnt_vendors` SET `id_entity` = '" . $move_to . "' WHERE `dnt_vendors`.`id_entity` = $id";
-        $db->query($query);
+        $this->db->query($query);
         return "Updated";
     }
 
     public function updateIdEntity($tables)
     {
-        $db = new DB;
+        
         foreach ($tables as $table) {
             $query = "SELECT * FROM $table WHERE 1";
-            if ($db->num_rows($query) > 0) {
+            if ($this->db->num_rows($query) > 0) {
                 $data = array();
-                foreach ($db->get_results($query) as $row) {
+                foreach ($this->db->get_results($query) as $row) {
 
-                    $db->update(
+                    $this->db->update(
                             $table, //table
                             array(//set
                                 'id_entity' => $row['id'],
@@ -180,7 +181,7 @@ class Install
                     );
 
                     $qU = "UPDATE `$table` SET id_entity = '" . $row['id'] . "' WHERE id_entity = 0 AND id = '" . $row['id'] . "'";
-                    $db->query($qU);
+                    $this->db->query($qU);
                 }
             }
         }
@@ -189,25 +190,25 @@ class Install
     /**
      * installation
      */
-    public static function installation()
+    public function installation()
     {
 
         //CREAT TABLE
-        $conn = new mysqli(DB_HOST, DB_USER, DB_PASS);
+        //$conn = new mysqli(DB_HOST, DB_USER, DB_PASS);
         // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
+        if ($this->dbMysqli->connect_error) {
+            die("Connection failed: " . $this->dbMysqli->connect_error);
         }
         // Create database
         $sql = "CREATE DATABASE " . DB_NAME . "";
-        if ($conn->query($sql) === TRUE) {
+        if ($this->dbMysqli->query($sql) === TRUE) {
             echo "Database created successfully";
         } else {
-            echo "Error creating database: " . $conn->error;
+            echo "Error creating database: " . $this->dbMysqli->error;
         }
-        $conn->close();
+        $this->dbMysqli->close();
 
-        $db = new DB;
+        
 
 
         //INSERT DATA
@@ -226,14 +227,14 @@ class Install
             $templine .= $line;
             // If it has a semicolon at the end, it's the end of the query
             if (substr(trim($line), -1, 1) == ';') {
-                $db->query($templine);
+                $this->db->query($templine);
                 $templine = '';
             }
         }
 
         $addVendor = "INSERT INTO `dnt_vendors` (`id`, `name`, `name_url`, `layout`, `is_default`) VALUES
 		(1, 'Skeleton', 'skeleton', 'skeleton', 1);";
-        $db->query($addVendor);
+        $this->db->query($addVendor);
 
         echo "Data imported, vendor created";
     }
@@ -242,11 +243,11 @@ class Install
      * 
      * @param type $sqlFile
      */
-    public static function addInstallation($sqlFile)
+    public function addInstallation($sqlFile)
     {
 
 
-        $db = new DB;
+        
 
 
         //INSERT DATA
@@ -265,7 +266,7 @@ class Install
             $templine .= $line;
             // If it has a semicolon at the end, it's the end of the query
             if (substr(trim($line), -1, 1) == ';') {
-                $db->query($templine);
+                $this->db->query($templine);
                 $templine = '';
             }
         }
@@ -281,7 +282,7 @@ class Install
      * @param type $backup_name
      * @param type $vendor_id
      */
-    public static function Export_Database($host, $user, $pass, $name, $tables = false, $backup_name = false, $vendor_id = false)
+    public function Export_Database($host, $user, $pass, $name, $tables = false, $backup_name = false, $vendor_id = false)
     {
 
         $mysqli = new mysqli($host, $user, $pass, $name);
@@ -406,7 +407,7 @@ class Install
             $templine .= $line;
             // If it has a semicolon at the end, it's the end of the query
             if (substr(trim($line), -1, 1) == ';') {
-                $db->query($templine);
+                $this->db->query($templine);
                 $templine = '';
             }
         }

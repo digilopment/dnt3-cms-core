@@ -136,7 +136,7 @@ class Vendor
     {
         $db = new DB;
         $query = "SELECT `" . $column . "` FROM `dnt_vendors` WHERE 
-			`id_entity` = '" . Vendor::getId() . "'
+			`id_entity` = '" . $this->getId() . "'
 			";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {

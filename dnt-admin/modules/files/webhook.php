@@ -5,12 +5,18 @@ use DntLibrary\Base\DB;
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Sessions;
+use DntLibrary\Base\Vendor;
+use DntLibrary\Base\FileAdmin;
+use DntLibrary\Base\DntUpload;
 
 $rest = new Rest();
 $session = new Sessions();
 $dnt = new Dnt;
 $adminUser = new AdminUser();
 $db = new DB;
+$vendor = new Vendor;
+$fileAdmin = new FileAdmin;
+$dntUpload = new DntUpload;
 
 if ($rest->get("action") == "show_hide") {
     //default article view action add

@@ -11,12 +11,16 @@
 namespace DntLibrary\Base;
 
 use DntLibrary\Base\DB;
+use DntLibrary\Base\Vendor;
 use DntView\Layout\Configurator;
 use function modulesConfig;
 
 class Webhook
 {
 
+	public function __construct(){
+		$this->vendor = new Vendor();
+	}
     /**
      * 
      * @return type
@@ -39,7 +43,7 @@ class Webhook
         if ($vendorId) {
             $vendorId = $vendorId;
         } else {
-            $vendorId = Vendor::getId();
+            $vendorId = $this->vendor->getId();
         }
 
         $query = "
@@ -102,7 +106,7 @@ class Webhook
                 ),
             );
         }
-        $file = "../dnt-view/layouts/" . Vendor::getLayout() . "/conf.php";
+        $file = "../dnt-view/layouts/" . $this->vendor->getLayout() . "/conf.php";
         if (!function_exists("modulesConfig")) {
             if (file_exists($file)) {
                 include $file;
@@ -118,34 +122,34 @@ class Webhook
                 "homepage" => array(
                     "service_name" => "Homepage",
                     "sql" => "
-                        (null, $postId, 'homepage', '" . Vendor::getId() . "', 'name', 'uvod', 'content', '1', 'Url adresa', 1),
-                        (null, $postId, 'homepage', '" . Vendor::getId() . "', 'name_url', 'Úvod', 'content', '1','Nazov sekcie', 1),
-                        (null, $postId, 'homepage', '" . Vendor::getId() . "', 'info', 'Toto je info', 'content', '1','Informácie', 1),
-                        (null, $postId, 'homepage', '" . Vendor::getId() . "', 'add', 'Toto je info', 'content', '1','Informácie', 1),
-                        (null, $postId, 'homepage', '" . Vendor::getId() . "', 'test', 'Toto je test', 'content', '1','Testovacia zóna', 0);
+                        (null, $postId, 'homepage', '" . $this->vendor->getId() . "', 'name', 'uvod', 'content', '1', 'Url adresa', 1),
+                        (null, $postId, 'homepage', '" . $this->vendor->getId() . "', 'name_url', 'Úvod', 'content', '1','Nazov sekcie', 1),
+                        (null, $postId, 'homepage', '" . $this->vendor->getId() . "', 'info', 'Toto je info', 'content', '1','Informácie', 1),
+                        (null, $postId, 'homepage', '" . $this->vendor->getId() . "', 'add', 'Toto je info', 'content', '1','Informácie', 1),
+                        (null, $postId, 'homepage', '" . $this->vendor->getId() . "', 'test', 'Toto je test', 'content', '1','Testovacia zóna', 0);
                     "),
                 //contact
                 "contact" => array(
                     "service_name" => "Kontakt",
                     "sql" => "
-                        (null, $postId, 'contact', '" . Vendor::getId() . "', 'info', 'Toto je info', 'content', '1','Informácie', 1),
-                        (null, $postId, 'contact', '" . Vendor::getId() . "', 'info_url', 'Toto je info url', 'content', '1','Informácie url', 1),
-                        (null, $postId, 'contact', '" . Vendor::getId() . "', 'new', 'Toto je info url', 'content', '1','Informácie url', 1),
-                        (null, $postId, 'contact', '" . Vendor::getId() . "', 'test', 'Toto je test', 'content', '1','Testovacia zóna', 0);
+                        (null, $postId, 'contact', '" . $this->vendor->getId() . "', 'info', 'Toto je info', 'content', '1','Informácie', 1),
+                        (null, $postId, 'contact', '" . $this->vendor->getId() . "', 'info_url', 'Toto je info url', 'content', '1','Informácie url', 1),
+                        (null, $postId, 'contact', '" . $this->vendor->getId() . "', 'new', 'Toto je info url', 'content', '1','Informácie url', 1),
+                        (null, $postId, 'contact', '" . $this->vendor->getId() . "', 'test', 'Toto je test', 'content', '1','Testovacia zóna', 0);
                     "),
                 //about-us
                 "about-us" => array(
                     "service_name" => "O nás",
                     "sql" => "
-                        (null, $postId, 'about-us', '" . Vendor::getId() . "', 'about-us', 'Toto je about-us', 'content', '1','about-us', 1),
-                        (null, $postId, 'about-us', '" . Vendor::getId() . "', 'test', 'Toto je about-us', 'content', '1','about-us zóna', 0);
+                        (null, $postId, 'about-us', '" . $this->vendor->getId() . "', 'about-us', 'Toto je about-us', 'content', '1','about-us', 1),
+                        (null, $postId, 'about-us', '" . $this->vendor->getId() . "', 'test', 'Toto je about-us', 'content', '1','about-us zóna', 0);
                        "),
                 //partneri
                 "partners" => array(
                     "service_name" => "Partnetri",
                     "sql" => "
-                        (null, $postId, 'partners', '" . Vendor::getId() . "', 'partners', 'Toto je partnerss', 'content', '1', 'partners', 1),
-                        (null, $postId, 'partners', '" . Vendor::getId() . "', 'test', 'Toto je partners', 'content', '1', 'partners zóna', 0);
+                        (null, $postId, 'partners', '" . $this->vendor->getId() . "', 'partners', 'Toto je partnerss', 'content', '1', 'partners', 1),
+                        (null, $postId, 'partners', '" . $this->vendor->getId() . "', 'test', 'Toto je partners', 'content', '1', 'partners zóna', 0);
                     "),
                 //partneri
                 "article_list" => array(
@@ -166,8 +170,8 @@ class Webhook
                 "wp_hotely" => array(
                     "service_name" => "WP Hotely",
                     "sql" => "
-                        (null, $postId, 'wp_hotely', '" . Vendor::getId() . "', 'hotel_', 'Toto je partnerss', 'content', '1', 'partners', 1),
-                        (null, $postId, 'wp_hotely', '" . Vendor::getId() . "', 'test', 'Toto je partners', 'content', '1', 'partners zóna', 0);
+                        (null, $postId, 'wp_hotely', '" . $this->vendor->getId() . "', 'hotel_', 'Toto je partnerss', 'content', '1', 'partners', 1),
+                        (null, $postId, 'wp_hotely', '" . $this->vendor->getId() . "', 'test', 'Toto je partners', 'content', '1', 'partners zóna', 0);
                     "
                 ),
             );
@@ -176,7 +180,7 @@ class Webhook
 
     public function services($postId = false, $config = false)
     {
-        $file = "../dnt-view/layouts/" . Vendor::getLayout() . "/Configurator.php";
+        $file = "../dnt-view/layouts/" . $this->vendor->getLayout() . "/Configurator.php";
         if (class_exists('DntView\Layout\Configurator')) {
             $configurator = new Configurator();
             if (method_exists($configurator, 'modulesConfigurator')) {
@@ -201,7 +205,7 @@ class Webhook
     {
         $db = new DB();
         $arr = array();
-        $query = "SELECT `name_url` FROM dnt_posts WHERE `type` = 'sitemap' AND `show` > '0' AND vendor_id = '" . Vendor::getId() . "'";
+        $query = "SELECT `name_url` FROM dnt_posts WHERE `type` = 'sitemap' AND `show` > '0' AND vendor_id = '" . $this->vendor->getId() . "'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 $arr[] = $row['name_url'];

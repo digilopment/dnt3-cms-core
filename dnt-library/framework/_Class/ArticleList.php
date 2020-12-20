@@ -21,6 +21,15 @@ use DntLibrary\Base\Vendor;
 class ArticleList extends AdminContent
 {
 
+
+		public function __construct(){
+			$this->articleView = new ArticleView();
+			$this->frontend = new Frontend();
+			$this->rest = new Rest();
+			$this->db = new DB();
+			$this->dnt = new Dnt();
+			$this->vendor = new Vendor();
+		}
     /**
      * 
      * @param type $is_limit
@@ -29,9 +38,8 @@ class ArticleList extends AdminContent
     public function prepare_query($is_limit, $postId = false, $servicesIDsStatic = false)
     {
 
-        $servicesIDs = Frontend::get();
-        $db = new DB();
-        $rest = new Rest();
+        $servicesIDs = $this->frontend->get();
+
 
         $servicesIDs = $servicesIDs['article']['service_id'];
         $servicesIDs = str_replace(",", "', '", $servicesIDs);
@@ -40,9 +48,9 @@ class ArticleList extends AdminContent
         }
 
         if (isset($_GET['search'])) {
-            $typ = "AND `name_url` LIKE '%" . Dnt::name_url($_GET['search']) . "%'";
-        } elseif ($rest->get("q")) {
-            $pharse = str_replace("-", "", Dnt::name_url(urldecode($rest->get("q"))));
+            $typ = "AND `name_url` LIKE '%" . $this->dnt->name_url($_GET['search']) . "%'";
+        } elseif ($this->rest->get("q")) {
+            $pharse = str_replace("-", "", $this->dnt->name_url(urldecode($this->rest->get("q"))));
             $typ = "AND `dnt_posts`.`search` LIKE '%" . $pharse . "%'";
         } else {
             $typ = "AND `dnt_post_type`.`id_entity` IN('" . $servicesIDs . "')";
@@ -87,8 +95,8 @@ class ArticleList extends AdminContent
             ON 
                     `dnt_posts`.`cat_id` = `dnt_post_type`.`id_entity` 
             WHERE 
-                    `dnt_posts`.`vendor_id` 	= '" . Vendor::getId() . "' AND 
-                    `dnt_post_type`.`vendor_id` = '" . Vendor::getId() . "' 
+                    `dnt_posts`.`vendor_id` 	= '" . $this->vendor->getId() . "' AND 
+                    `dnt_post_type`.`vendor_id` = '" . $this->vendor->getId() . "' 
             AND
                     `dnt_posts`.`show` <> '0'
             " . $typArticle . " 
@@ -106,8 +114,7 @@ class ArticleList extends AdminContent
      */
     public function query($postId = false, $servicesIDsStatic = false)
     {
-        $db = new DB;
-
+ 
         if (isset($_GET['page'])) {
             $returnPage = "&page=" . $_GET['page'];
         } else {
@@ -115,13 +122,13 @@ class ArticleList extends AdminContent
         }
 
         if ($postId) {
-            $query = self::prepare_query(false, $postId, $servicesIDsStatic);
+            $query = $this->prepare_query(false, $postId, $servicesIDsStatic);
             return $query;
         }
 
-        $query = self::prepare_query(false, $postId, $servicesIDsStatic);
-        $pocet = $db->num_rows($query);
-        $limit = self::limit();
+        $query = $this->prepare_query(false, $postId, $servicesIDsStatic);
+        $pocet = $this->db->num_rows($query);
+        $limit = $this->limit();
 
         if (isset($_GET['page']))
             $strana = $_GET['page'];
@@ -136,7 +143,7 @@ class ArticleList extends AdminContent
         $stranok_round = ceil($stranok);
 
         $pager = "LIMIT " . $pociatok . ", " . $limit . "";
-        return self::prepare_query($pager, $postId, $servicesIDsStatic);
+        return $this->prepare_query($pager, $postId, $servicesIDsStatic);
     }
 
     /**
@@ -146,17 +153,16 @@ class ArticleList extends AdminContent
      */
     public function getArticleUrl($postId, $fullPath = true, $type = false)
     {
-        $db = new DB;
-        $articleView = new ArticleView;
 
-        $query = self::query($postId);
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+
+        $query = $this->query($postId);
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 if ($fullPath) {
                     if ($type) {
-                        $url = $articleView->detailUrl($row['cat_name_url'], $row['id'], $row['name_url'], $type);
+                        $url = $this->articleView->detailUrl($row['cat_name_url'], $row['id'], $row['name_url'], $type);
                     } else {
-                        $url = $articleView->detailUrl($row['cat_name_url'], $row['id'], $row['name_url']);
+                        $url = $this->articleView->detailUrl($row['cat_name_url'], $row['id'], $row['name_url']);
                     }
                 } else {
                     $url = $row['name_url'];
@@ -176,10 +182,10 @@ class ArticleList extends AdminContent
      */
     public function data($postId, $servicesIDsStatic)
     {
-        $db = new DB;
-        $query = self::query($postId, $servicesIDsStatic);
-        if ($db->num_rows($query) > 0) {
-            return $db->get_results($query);
+
+        $query = $this->query($postId, $servicesIDsStatic);
+        if ($this->db->num_rows($query) > 0) {
+            return $this->db->get_results($query);
         } else {
             return array();
         }

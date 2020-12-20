@@ -4,7 +4,7 @@ use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Vendor;
 
 $post_id = $rest->get("id");
-$query = "SELECT `show` FROM dnt_admin_menu WHERE id_entity = '" . $post_id . "' AND vendor_id = '" . Vendor::getId() . "'";
+$query = "SELECT `show` FROM dnt_admin_menu WHERE id_entity = '" . $post_id . "' AND vendor_id = '" . $vendor->getId() . "'";
 if ($db->num_rows($query) > 0) {
     foreach ($db->get_results($query) as $row) {
         $show = $row['show'];
@@ -24,10 +24,10 @@ $db->update(
         ),
         array(//where
             'id_entity' => $post_id,
-            'vendor_id' => Vendor::getId(),
+            'vendor_id' => $vendor->getId(),
         )
 );
-Dnt::redirect(WWW_PATH_ADMIN_2 . "index.php?src=" . $rest->get("src") . "");
+$dnt->redirect(WWW_PATH_ADMIN_2 . "index.php?src=" . $rest->get("src") . "");
 
 
 

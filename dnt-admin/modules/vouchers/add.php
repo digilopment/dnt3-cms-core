@@ -7,19 +7,19 @@ if (isset($_POST['sent'])) {
     $voucherValue = $rest->post("voucher");
     if ($voucherValue) {
         $db->dbTransaction();
-        $order = Dnt::getMaxValueFromColumn("dnt_vouchers", "`order`");
+        $order = $dnt->getMaxValueFromColumn("dnt_vouchers", "`order`");
         if (!$order) {
             $order = 1;
         } else {
             $order = $order + 1;
         }
         $insertedData = array(
-            'vendor_id' => Vendor::getId(),
+            'vendor_id' => $vendor->getId(),
             'user_id' => "",
             'value' => $voucherValue,
             'file_name' => "",
-            'datetime_creat' => Dnt::datetime(),
-            'datetime_update' => Dnt::datetime(),
+            'datetime_creat' => $dnt->datetime(),
+            'datetime_update' => $dnt->datetime(),
             '`show`' => '1',
             '`order`' => $order
         );

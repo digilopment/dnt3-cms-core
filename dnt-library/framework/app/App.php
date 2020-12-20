@@ -29,6 +29,7 @@ class App
         $this->dntCache = new Cache;
         $this->modul = new Modul();
         $this->vendor = new Vendor();
+        $this->dnt = new Dnt();
     }
 
     public function run()
@@ -75,8 +76,8 @@ class App
         $cdir = scandir($dir);
         foreach ($cdir as $key => $value) {
             if (!in_array($value, array(".", ".."))) {
-                if (!is_dir($dir . DIRECTORY_SEPARATOR . $value) && !Dnt::in_string('index.php', $value)) {
-                    if (Dnt::in_string('.php', $value)) {
+                if (!is_dir($dir . DIRECTORY_SEPARATOR . $value) && !$this->dnt->in_string('index.php', $value)) {
+                    if ($this->dnt->in_string('.php', $value)) {
                         $result[] = $value;
                     }
                 }

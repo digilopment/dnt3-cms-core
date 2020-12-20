@@ -3,10 +3,14 @@
 use DntLibrary\Base\DB;
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Rest;
+use DntLibrary\Base\MultyLanguage;
+use DntLibrary\Base\Vendor;
 
 $rest = new Rest();
 $dnt = new Dnt();
 $db = new DB();
+$multiLanguage = new MultyLanguage();
+$vendor = new Vendor();
 
 if ($rest->get("action") == "edit") {
     include "edit.php";

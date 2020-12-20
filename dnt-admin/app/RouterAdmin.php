@@ -3,7 +3,7 @@
 namespace DntAdmin\App;
 
 use DntLibrary\App\Autoloader;
-use DntLibrary\App\Database;
+use DntLibrary\Base\Db;
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Sessions;
@@ -19,18 +19,20 @@ class RouterAdmin
 
     public function __construct()
     {
-        $this->db = new Database();
+        $this->db = new DB();
+        $this->dnt = new Dnt();
         $this->session = new Sessions();
         $this->rest = new Rest();
+        $this->vendor = new Vendor();
     }
 
     protected function redirect()
     {
         if (WWW_PATH_ADMIN_2 == HTTP_PROTOCOL . DOMAIN . WWW_FOLDERS . "/" . ADMIN_URL_2 . "/") {
-            $vendors = Vendor::getAll();
+            $vendors =  $this->vendor->getAll();
             $lastVendor = end($vendors);
             $url = HTTP_PROTOCOL . $lastVendor['name_url'] . "." . DOMAIN . WWW_FOLDERS . "/" . ADMIN_URL_2 . "/";
-            Dnt::redirect($url);
+             $this->dnt->redirect($url);
         }
     }
 
@@ -85,7 +87,7 @@ class RouterAdmin
 
     protected function navigation()
     {
-        $query = "SELECT * FROM `dnt_admin_menu` WHERE `parent_id` = '0' AND `show` = '1' AND `type` = 'menu' AND vendor_id = " . Vendor::getId() . "";
+        $query = "SELECT * FROM `dnt_admin_menu` WHERE `parent_id` = '0' AND `show` = '1' AND `type` = 'menu' AND vendor_id = " . $this->vendor->getId() . "";
         $this->navigation = $this->db->get_results($query);
         array_push(
                 $this->navigation,
@@ -114,7 +116,7 @@ class RouterAdmin
         $this->navigation();
 
         if ($this->session->get("admin_logged") && empty($this->rest->get('src'))) {
-            Dnt::redirect('index.php?src=' . DEFAULT_MODUL_ADMIN);
+            $this->dnt->redirect('index.php?src=' . DEFAULT_MODUL_ADMIN);
         } elseif ($this->session->get("admin_logged")) {
             $getRequest = $this->rest->get('src');
             if (in_array($getRequest, $this->getNameUrlFromMenu())) {

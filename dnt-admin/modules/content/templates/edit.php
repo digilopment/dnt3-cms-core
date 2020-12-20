@@ -36,7 +36,7 @@ $imageID = $data['item'][0]['img'];
 $post_category_id = $data['item'][0]['post_category_id'];
 $variant = $data['item'][0]['variant'];
 if ($datetime_publish == "0000-00-00 00:00:00") {
-    $datetime_publish = Dnt::datetime();
+    $datetime_publish = $dnt->datetime();
 }
 ?>
 
@@ -64,7 +64,7 @@ if ($datetime_publish == "0000-00-00 00:00:00") {
         <span class="label label-primary bg-orange" style="padding:5px;"><big>PRIDAŤ VARIANT</big></span>
     </a>
     <?php if ($rest->get("included") == "sitemap" && $service) { ?>
-        <a <?php echo Dnt::confirmMsg("Pred prejdením na službu sa prosím uistite, či máte uložte všetky zmeny."); ?> 
+        <a <?php echo $dnt->confirmMsg("Pred prejdením na službu sa prosím uistite, či máte uložte všetky zmeny."); ?> 
             href="index.php?src=services&included=<?php echo $rest->get("included"); ?>&filter=<?php echo $rest->get("filter"); ?>&post_id=<?php echo $rest->get("post_id"); ?>&service=<?php echo $service; ?>">
             <span class="label label-primary bg-orange" style="padding:5px;"><big>PREJSŤ NA SLUŽBU</big></span>
         </a>
@@ -282,7 +282,7 @@ if ($datetime_publish == "0000-00-00 00:00:00") {
                             <?php if (MULTY_LANGUAGE != false) contentLanguagesVariations(); /* getTabLanguages(true, true, true, $post['id'], "dnt_posts", $dntDb); */ ?>
                         </div>
                         <!-- end here -->
-                        <?php echo Dnt::returnInput(); ?>
+                        <?php echo $dnt->returnInput(); ?>
                         <input type="submit" name="sent" class="btn btn-primary btn-lg btn-block" value="Upraviť" />
 
                     </div>

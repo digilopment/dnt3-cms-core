@@ -51,14 +51,14 @@ class SettingsController extends AdminController
         $language = $rest->post('language');
         $still_redirect_to_domain = $rest->post('still_redirect_to_domain');
 
-        $db->update('dnt_settings', array('value' => $default_lang), array('`key`' => 'default_lang', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $description), array('`key`' => 'description', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $keywords), array('`key`' => 'keywords', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $nadpis_stranky), array('`key`' => 'title', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $startovaci_modul), array('`key`' => 'startovaci_modul', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $cachovanie), array('`key`' => 'cachovanie', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $language), array('`key`' => 'language', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $still_redirect_to_domain), array('`key`' => 'still_redirect_to_domain', '`vendor_id`' => Vendor::getId()));
+        $db->update('dnt_settings', array('value' => $default_lang), array('`key`' => 'default_lang', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $description), array('`key`' => 'description', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $keywords), array('`key`' => 'keywords', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $nadpis_stranky), array('`key`' => 'title', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $startovaci_modul), array('`key`' => 'startovaci_modul', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $cachovanie), array('`key`' => 'cachovanie', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $language), array('`key`' => 'language', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $still_redirect_to_domain), array('`key`' => 'still_redirect_to_domain', '`vendor_id`' => $this->vendor->getId()));
 
         return $return;
     }
@@ -80,15 +80,15 @@ class SettingsController extends AdminController
         $linked_in = $rest->post('linked_in');
         $google_plus = $rest->post('google_plus');
 
-        $db->update('dnt_settings', array('value' => $notifikacny_email), array('`key`' => 'notifikacny_email', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $facebook_page), array('`key`' => 'facebook_page', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $twitter), array('`key`' => 'twitter', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $youtube), array('`key`' => 'youtube', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $flickr), array('`key`' => 'flickr', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $google_map), array('`key`' => 'google_map', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $instagram), array('`key`' => 'instagram', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $linked_in), array('`key`' => 'linked_in', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $google_plus), array('`key`' => 'google_plus', '`vendor_id`' => Vendor::getId()));
+        $db->update('dnt_settings', array('value' => $notifikacny_email), array('`key`' => 'notifikacny_email', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $facebook_page), array('`key`' => 'facebook_page', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $twitter), array('`key`' => 'twitter', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $youtube), array('`key`' => 'youtube', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $flickr), array('`key`' => 'flickr', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $google_map), array('`key`' => 'google_map', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $instagram), array('`key`' => 'instagram', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $linked_in), array('`key`' => 'linked_in', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $google_plus), array('`key`' => 'google_plus', '`vendor_id`' => $this->vendor->getId()));
 
         return $return;
     }
@@ -111,16 +111,16 @@ class SettingsController extends AdminController
         $vendor_iban = $rest->post('vendor_iban');
         $return = ['url' => $rest->post('return')];
 
-        $db->update('dnt_settings', array('value' => $vendor_company), array('`key`' => 'vendor_company', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $vendor_street), array('`key`' => 'vendor_street', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $vendor_psc), array('`key`' => 'vendor_psc', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $vendor_city), array('`key`' => 'vendor_city', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $vendor_tel), array('`key`' => 'vendor_tel', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $vendor_fax), array('`key`' => 'vendor_fax', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $vendor_email), array('`key`' => 'vendor_email', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $vendor_ico), array('`key`' => 'vendor_ico', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $vendor_dic), array('`key`' => 'vendor_dic', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $vendor_iban), array('`key`' => 'vendor_iban', '`vendor_id`' => Vendor::getId()));
+        $db->update('dnt_settings', array('value' => $vendor_company), array('`key`' => 'vendor_company', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $vendor_street), array('`key`' => 'vendor_street', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $vendor_psc), array('`key`' => 'vendor_psc', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $vendor_city), array('`key`' => 'vendor_city', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $vendor_tel), array('`key`' => 'vendor_tel', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $vendor_fax), array('`key`' => 'vendor_fax', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $vendor_email), array('`key`' => 'vendor_email', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $vendor_ico), array('`key`' => 'vendor_ico', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $vendor_dic), array('`key`' => 'vendor_dic', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $vendor_iban), array('`key`' => 'vendor_iban', '`vendor_id`' => $this->vendor->getId()));
 
         return $return;
     }
@@ -137,10 +137,10 @@ class SettingsController extends AdminController
         $dph = $rest->post('dph');
         $return = ['url' => $rest->post('return')];
 
-        $db->update('dnt_settings', array('value' => $platca_dph), array('`key`' => 'platca_dph', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $znak_meny), array('`key`' => 'znak_meny', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $nazov_meny), array('`key`' => 'nazov_meny', '`vendor_id`' => Vendor::getId()));
-        $db->update('dnt_settings', array('value' => $dph), array('`key`' => 'dph', '`vendor_id`' => Vendor::getId()));
+        $db->update('dnt_settings', array('value' => $platca_dph), array('`key`' => 'platca_dph', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $znak_meny), array('`key`' => 'znak_meny', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $nazov_meny), array('`key`' => 'nazov_meny', '`vendor_id`' => $this->vendor->getId()));
+        $db->update('dnt_settings', array('value' => $dph), array('`key`' => 'dph', '`vendor_id`' => $this->vendor->getId()));
 
         return $return;
     }
@@ -273,7 +273,7 @@ class SettingsController extends AdminController
         $dbDomain = $GLOBALS['DB_DOMAIN'];
         $this->cache->deleteCacheByDomain("../dnt-cache/", $originDomain);
         $this->cache->deleteCacheByDomain("../dnt-cache/", $dbDomain);
-        Dnt::redirect("index.php?src=settings");
+        $this->dnt->redirect("index.php?src=settings");
     }
 
 }

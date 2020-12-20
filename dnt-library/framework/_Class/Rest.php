@@ -11,15 +11,21 @@
 namespace DntLibrary\Base;
 
 use DntView\Layout\Configurator;
+use DntLibrary\Base\Dnt;
+use DntLibrary\Base\Webhook;
+use DntLibrary\Base\Settings;
 use function custom_modules;
 
 class Rest
 {
-
-    var $get; //variable of get result
-    var $post; //variable of get post
-    var $escape; //variable of get escape
-
+	
+	
+	public function __construct(){
+		$this->dnt = new Dnt();
+		$this->webhook = new Webhook();
+		$this->settings = new Settings();
+	}
+	
     /**
      * 
      * @param type $get
@@ -75,7 +81,7 @@ class Rest
                         $request = false;
                     }
                     $return = $GLOBALS['DB_PROTOCOL'] . $db_domain . $request;
-                    Dnt::redirect($return);
+                    $this->dnt->redirect($return);
                     exit;
                 }
             }
@@ -87,7 +93,7 @@ class Rest
             $ORIGIN_DOMAIN_ONLY = $ORIGIN_DOMAIN_ONLY[0];
 
             if (($GLOBALS['ORIGIN_PROTOCOL'] != $GLOBALS['DB_PROTOCOL']) &&
-                    (($GLOBALS['ORIGIN_DOMAIN'] == $GLOBALS['DB_DOMAIN']) || Dnt::in_string($ORIGIN_DOMAIN_ONLY, $DB_DOMAIN_ONLY))
+                    (($GLOBALS['ORIGIN_DOMAIN'] == $GLOBALS['DB_DOMAIN']) || $this->dnt->in_string($ORIGIN_DOMAIN_ONLY, $DB_DOMAIN_ONLY))
             ) {
                 $db_domain = $GLOBALS['DB_DOMAIN'];
                 $origin_domain = $GLOBALS['ORIGIN_PROTOCOL'] . $GLOBALS['ORIGIN_DOMAIN'];
@@ -98,9 +104,9 @@ class Rest
                     $request = false;
                 }
                 $return = $GLOBALS['DB_PROTOCOL'] . $db_domain . $request;
-                Dnt::redirect($return);
+                $this->dnt->redirect($return);
                 exit;
-            } elseif (Dnt::in_string("www.", $DB_DOMAIN_ONLY) && !Dnt::in_string("www.", WWW_FULL_PATH)) {
+            } elseif ($this->dnt->in_string("www.", $DB_DOMAIN_ONLY) && ! $this->dnt->in_string("www.", WWW_FULL_PATH)) {
                 $db_domain = $GLOBALS['DB_DOMAIN'];
                 $origin_domain = $GLOBALS['ORIGIN_PROTOCOL'] . $GLOBALS['ORIGIN_DOMAIN'];
                 $request = explode($origin_domain, WWW_FULL_PATH);
@@ -110,7 +116,7 @@ class Rest
                     $request = false;
                 }
                 $return = $GLOBALS['DB_PROTOCOL'] . $db_domain . $request;
-                Dnt::redirect($return);
+                $this->dnt->redirect($return);
                 exit;
             }
         }
@@ -132,12 +138,12 @@ class Rest
                 return false;
             }
         }
+		$this->globals;
     }
 
-    public static function getModulUrl($module)
+    public function getModulUrl($module)
     {
-        $webhook = new Webhook();
-        $url = $webhook->getSitemapModules($module);
+        $url = $this->webhook->getSitemapModules($module);
         return $url[0];
     }
 
@@ -147,7 +153,7 @@ class Rest
      */
     protected function oldModulesRegistrator()
     {
-        $file = "dnt-view/layouts/" . Vendor::getLayout() . "/conf.php";
+        $file = "dnt-view/layouts/" .  $this->vendor->getLayout() . "/conf.php";
         if (file_exists($file)) {
             include_once $file;
             if (function_exists("custom_modules")) {
@@ -167,7 +173,7 @@ class Rest
             return $GLOBALS['GET_MODUL'];
         }
         $return = false;
-        $file = "dnt-view/layouts/" . Vendor::getLayout() . "/Configurator.php";
+        $file = "dnt-view/layouts/" .  $this->vendor->getLayout() . "/Configurator.php";
         if (file_exists($file)) {
             include $file;
             $configurator = new Configurator();
@@ -180,11 +186,10 @@ class Rest
             $modulesRegistrator = $this->oldModulesRegistrator();
         }
 
-        $webhook = new Webhook();
-        $this->webhook = $webhook->get($modulesRegistrator);
-        foreach (array_keys($this->webhook) as $this->index) {
-            foreach ($this->webhook[$this->index] as $this->key => $this->value) {
-                if ($this->webhook(2) == "detail") { //detail only as article_view 
+        $webhook = $this->webhook->get($modulesRegistrator);
+        foreach (array_keys($webhook) as $index) {
+            foreach ($webhook[$index] as $this->key => $value) {
+                if ($webhook(2) == "detail") { //detail only as article_view 
                     $return = "article_view";
                     /* if ($this->value == $this->webhook(1)) {
                       $return = $this->index;
@@ -192,28 +197,26 @@ class Rest
                       }else{
                       $return = "article_view";
                       } */
-                } elseif ($this->webhook(1) == "embed" && $this->webhook(2) == "video") {
+                } elseif ($webhook(1) == "embed" && $webhook(2) == "video") {
                     return "video_embed";
                     exit;
-                } elseif ($this->webhook(2) == "video") {
+                } elseif ($webhook(2) == "video") {
                     $return = "video_view";
                 } else {
-                    if ($this->webhook(1) == "") {
-                        $default = Settings::get("startovaci_modul");
+                    if ($webhook(1) == "") {
+                        $default = $this->settings->get("startovaci_modul");
                         if ($default) {
-                            $redirect = $webhook->getSitemapModules($default);
+                            $redirect = $this->webhook->getSitemapModules($default);
                             $domain = $GLOBALS['ORIGIN_DOMAIN_LNG'] . "/";
-                            //var_dump($domain.$redirect[0]);
-                            //exit;
-                            Dnt::redirect($domain . $redirect[0]);
+                            $this->dnt->redirect($domain . $redirect[0]);
                             exit;
                             $return = $default;
                         } else {
                             $return = DEAFULT_MODUL;
                         }
                     }
-                    if ($this->value == $this->webhook(1)) {
-                        $return = $this->index;
+                    if ($value == $webhook(1)) {
+                        $return = $index;
                     }
                 }
             }
@@ -231,7 +234,7 @@ class Rest
         $module = $this->getModul();
         //$function = "dnt-modules/" . $module . "/functions.php";
 
-        $layout = Vendor::getLayout();
+        $layout = $this->vendor->getLayout();
         $function = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/functions.php";
         $webhookModule = "dnt-modules/" . $module . "/webhook.php";
         $template = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/webhook.php";
@@ -250,9 +253,9 @@ class Rest
      */
     public function loadDefault()
     {
-        $layout = Vendor::getLayout();
+        $layout =  $this->vendor->getLayout();
         if ($layout) {
-            include "dnt-view/layouts/" . Vendor::getLayout() . "/modules/default/webhook.php";
+            include "dnt-view/layouts/" .  $this->vendor->getLayout() . "/modules/default/webhook.php";
         } else {
             include "dnt-view/layouts/default/modules/default/webhook.php";
         }
@@ -264,7 +267,7 @@ class Rest
      */
     public function loadMyModul($module)
     {
-        $layout = Vendor::getLayout();
+        $layout =  $this->vendor->getLayout();
         $function = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/functions.php";
         $template = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/webhook.php";
         $webhookModule = "dnt-modules/" . $module . "/webhook.php";
@@ -325,7 +328,7 @@ class Rest
      */
     public function isAdmin()
     {
-        if (Dnt::in_string("dnt-admin", WWW_FULL_PATH)) {
+        if ($this->dnt->in_string("dnt-admin", WWW_FULL_PATH)) {
             return true;
         } else {
             return false;

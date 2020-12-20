@@ -23,12 +23,13 @@ class Subscriber
         $this->rest = new Rest();
         $this->dnt = new Dnt();
         $this->settings = new Settings();
+        $this->vendor = new Vendor();
     }
 
     public function generateUrl($id_entity, $email, $status, $domain = false)
     {
         $finalDomain = ($domain) ? $domain . '?plugin=subscriber' : WWW_PATH . 'subscriber/?plugin=subscriber';
-        $url = '&id=' . $this->dnt->strToHex(urlencode(base64_encode($email))) . '&vendorId=' . $this->dnt->strToHex(urlencode(base64_encode(Vendor::getId()))) . '&status=' . $this->dnt->strToHex(urlencode(base64_encode($status))) . '&idEntity=' . $this->dnt->strToHex(urlencode(base64_encode($id_entity)));
+        $url = '&id=' . $this->dnt->strToHex(urlencode(base64_encode($email))) . '&vendorId=' . $this->dnt->strToHex(urlencode(base64_encode($this->vendor->getId()))) . '&status=' . $this->dnt->strToHex(urlencode(base64_encode($status))) . '&idEntity=' . $this->dnt->strToHex(urlencode(base64_encode($id_entity)));
         return $finalDomain . $url;
     }
 

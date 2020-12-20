@@ -22,6 +22,10 @@ class BaseController
     protected $confFile = 'Plugins.shell';
     protected $settinhs;
 
+	public function __construct(){
+		$this->dnt = new Dnt();
+		$this->vendor = new Vendor();
+	}
     protected function modul()
     {
         $settings = new Settings();
@@ -30,7 +34,7 @@ class BaseController
 
     protected function path()
     {
-        return "dnt-view/layouts/" . Vendor::getLayout() . "/plugins/";
+        return "dnt-view/layouts/" . $this->vendor->getLayout() . "/plugins/";
     }
 
     protected function cachedFile($plugin)
@@ -113,14 +117,14 @@ class BaseController
         $cacheIdParams = explode('-', $plugin['cache_id']);
         $cahedParams = [];
         foreach ($cacheIdParams as $pluginCacheId) {
-            if (Dnt::in_string('POST_ID', $pluginCacheId)) {
+            if ($this->dnt->in_string('POST_ID', $pluginCacheId)) {
                 $cahedParams[] = $plugin['data']['post_id'];
-            } elseif (Dnt::in_string('WEBHOOK', $pluginCacheId)) {
+            } elseif ($this->dnt->in_string('WEBHOOK', $pluginCacheId)) {
                 $val = str_replace('WEBHOOK{', '', $pluginCacheId);
                 $val = str_replace('}', '', $val);
                 $cacheId = (!empty((new Rest())->webhook($val)) && $pluginCacheId == 'WEBHOOK{' . $val . '}') ? str_replace("/", "-", (new Rest())->webhook($val)) : false;
                 $cahedParams[] = $cacheId;
-            } elseif (Dnt::in_string('GET{', $pluginCacheId)) {
+            } elseif ($this->dnt->in_string('GET{', $pluginCacheId)) {
                 $val = str_replace('GET{', '', $pluginCacheId);
                 $val = str_replace('}', '', $val);
                 $cacheId = (!empty((new Rest())->get($val)) && $pluginCacheId == 'GET{' . $val . '}') ? str_replace("/", "-", (new Rest())->get($val)) : false;
@@ -148,7 +152,7 @@ class BaseController
                 //str_replace('/', '-', $file) . '-' .
                 $plugin['level'] . '-' .
                 $plugin['id'] . '-' .
-                Vendor::getId() . '-' .
+                $this->vendor->getId() . '-' .
                 $cacheId .
                 $pluginName .
                 $plugin['cache'] . '.generated';
@@ -204,7 +208,7 @@ class BaseController
     public function bodyParser($conf, $pluginKeys, $allowCache, $data)
     {
 
-        $tplFunctions = "dnt-view/layouts/" . Vendor::getLayout() . "/tpl_functions.php";
+        $tplFunctions = "dnt-view/layouts/" . $this->vendor->getLayout() . "/tpl_functions.php";
         if (file_exists($tplFunctions)) {
             include $tplFunctions;
         }
@@ -269,18 +273,19 @@ class BaseController
 
     protected function modulConfigurator($data, $modul = false)
     {
+		//var_dump('sss');exit;
         if ($modul) {
             $data['article']['service'] = $modul;
-            $confFile = "dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $modul . "/" . $this->confFile;
+            $confFile = "dnt-view/layouts/" . $this->vendor->getLayout() . "/modules/" . $modul . "/" . $this->confFile;
         } elseif (isset($data['article']['service']) && !empty($data['article']['service'])) {
-            $confFile = "dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $data['article']['service'] . "/" . $this->confFile;
+            $confFile = "dnt-view/layouts/" . $this->vendor->getLayout() . "/modules/" . $data['article']['service'] . "/" . $this->confFile;
         } else {
             $confFile = false;
         }
         /* if ($modul) {
-          $confFile = "dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $modul . "/" . $this->confFile;
+          $confFile = "dnt-view/layouts/" . $this->vendor->getLayout() . "/modules/" . $modul . "/" . $this->confFile;
           } else {
-          $confFile = "dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $data['article']['service'] . "/" . $this->confFile;
+          $confFile = "dnt-view/layouts/" . $this->vendor->getLayout() . "/modules/" . $data['article']['service'] . "/" . $this->confFile;
           } */
         $conf = [];
         if ($confFile) {
@@ -318,7 +323,7 @@ class BaseController
 
     protected function modulLoader($data, $file)
     {
-        include "dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $data['article']['service'] . "/" . $file;
+        include "dnt-view/layouts/" . $this->vendor->getLayout() . "/modules/" . $data['article']['service'] . "/" . $file;
     }
 
 }

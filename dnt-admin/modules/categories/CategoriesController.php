@@ -90,6 +90,7 @@ class CategoriesController extends AdminController
         $data['primaryCat'] = $this->adminContent->primaryCat();
 
         $data['getPosts'] = $this->postFilter();
+        $data['dnt'] = $this->dnt;
 
         $this->loadTemplate($this->loc, 'default', $data);
     }

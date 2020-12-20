@@ -12,14 +12,14 @@ if (isset($_POST['sent'])) {
 
 
     $langs = array();
-    $query = MultyLanguage::getLangs(true);
+    $query = $multiLanguage->getLangs(true);
     if ($db->num_rows($query) > 0) {
         foreach ($db->get_results($query) as $row) {
             $langs[] = $row['slug'];
         }
     }
 
-    foreach (MultyLanguage::getTranslates() as $item) {
+    foreach ($multiLanguage->getTranslates() as $item) {
         if (in_array($item['lang_id'], $langs)) {
             $db->update(
                     "dnt_translates", //table
@@ -27,7 +27,7 @@ if (isset($_POST['sent'])) {
                         'translate' => $rest->post("translate_" . $item['id_entity'])
                     ),
                     array(//where
-                        '`vendor_id`' => Vendor::getId(),
+                        '`vendor_id`' => $vendor->getId(),
                         '`id_entity`' => $item['id_entity']
                     )
             );

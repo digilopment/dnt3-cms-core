@@ -9,6 +9,11 @@ use DntLibrary\Base\Rest;
 class DbExportJob
 {
 
+ public function __construct()
+    {
+        $this->dnt = new Dnt();
+        $this->install = new Install();
+    }
     public function run()
     {
         $rest = new Rest;
@@ -28,7 +33,7 @@ class DbExportJob
             $backup_name = "../dnt-install/install.sql";
             //echo "Database was exported. - ".$backup_name;
         } elseif ($vendor_id) {
-            $backup_name = "../dnt-backup/" . $rest->get("vendor_id") . "-" . Dnt::name_url(Dnt::datetime()) . "-" . $DbName . ".sql";
+            $backup_name = "../dnt-backup/" . $rest->get("vendor_id") . "-" . $this->dnt->name_url($this->dnt->datetime()) . "-" . $DbName . ".sql";
             //echo "Database was exported. - ".$backup_name;
         } else {
             $vendor_id = false;
@@ -36,7 +41,7 @@ class DbExportJob
             //echo "Database was exported. - ".$backup_name;
         }
 
-        Install::Export_Database($mysqlHostName, $mysqlUserName, $mysqlPassword, $DbName, $tables = false, $backup_name, $vendor_id);
+        $this->install->Export_Database($mysqlHostName, $mysqlUserName, $mysqlPassword, $DbName, $tables = false, $backup_name, $vendor_id);
     }
 
 }

@@ -26,9 +26,12 @@ class UpdateContent
         $this->rest = new Rest();
         $this->cache = new Cache();
         $this->articleView = new ArticleView();
+        $this->articleList = new ArticleList();
         $this->db = new DB();
         $this->multiLanguage = new MultyLanguage();
         $this->dntUpload = new DntUpload();
+        $this->dnt = new Dnt();
+        $this->vendor = new Vendor();
     }
 
     public function init()
@@ -50,8 +53,8 @@ class UpdateContent
         $show = $rest->post('show');
         $protected = $rest->post('protected');
         $name = $rest->post('name');
-        $name_url = Dnt::creat_name_url($rest->post('name'), $rest->post('name_url'));
-        $datetime_publish = Dnt::timeToDbFormat('.', $rest->post('datetime_publish'));
+        $name_url = $this->dnt->creat_name_url($rest->post('name'), $rest->post('name_url'));
+        $datetime_publish = $this->dnt->timeToDbFormat('.', $rest->post('datetime_publish'));
         $perex = $rest->post('perex');
         $content = $rest->post('content');
         $embed = $rest->post('embed');
@@ -72,8 +75,8 @@ class UpdateContent
 
         $search = $name . $name_url . $content . $perex . $searchMeta;
         $search = html_entity_decode($search);
-        $search = Dnt::not_html($search);
-        $search = Dnt::name_url($search);
+        $search = $this->dnt->not_html($search);
+        $search = $this->dnt->name_url($search);
         $search = str_replace('-', '', $search);
 
         $db->update(
@@ -93,18 +96,18 @@ class UpdateContent
                     'search' => $search,
                     'embed' => $embed,
                     'tags' => $tags,
-                    'datetime_update' => Dnt::datetime(),
+                    'datetime_update' => $this->dnt->datetime(),
                     'datetime_publish' => $datetime_publish,
                     'service' => $service,
                     'service_id' => $service_id,
                 ),
                 array(//where
                     'id_entity' => $post_id,
-                    '`vendor_id`' => Vendor::getId())
+                    '`vendor_id`' => $this->vendor->getId())
         );
 
 
-        $cat_name_url = ArticleList::getArticleUrl($post_id);
+        $cat_name_url = $this->articleList->getArticleUrl($post_id);
         $cat_name_url = (str_replace(WWW_PATH, '', $cat_name_url));
 
         //delete as sitemap
@@ -134,7 +137,7 @@ class UpdateContent
                  * name
                  */
                 $insertedData = array(
-                    '`vendor_id`' => Vendor::getId(),
+                    '`vendor_id`' => $this->vendor->getId(),
                     '`lang_id`' => $row['slug'],
                     '`translate_id`' => $post_id,
                     '`type`' => 'name',
@@ -149,7 +152,7 @@ class UpdateContent
                  * name_url
                  */
                 $insertedData = array(
-                    '`vendor_id`' => Vendor::getId(),
+                    '`vendor_id`' => $this->vendor->getId(),
                     '`lang_id`' => $row['slug'],
                     '`translate_id`' => $post_id,
                     '`type`' => 'name_url',
@@ -164,7 +167,7 @@ class UpdateContent
                  * perex
                  */
                 $insertedData = array(
-                    '`vendor_id`' => Vendor::getId(),
+                    '`vendor_id`' => $this->vendor->getId(),
                     '`lang_id`' => $row['slug'],
                     '`translate_id`' => $post_id,
                     '`type`' => 'perex',
@@ -179,7 +182,7 @@ class UpdateContent
                  * content
                  */
                 $insertedData = array(
-                    '`vendor_id`' => Vendor::getId(),
+                    '`vendor_id`' => $this->vendor->getId(),
                     '`lang_id`' => $row['slug'],
                     '`translate_id`' => $post_id,
                     '`type`' => 'content',
@@ -194,7 +197,7 @@ class UpdateContent
                  * tags
                  */
                 $insertedData = array(
-                    '`vendor_id`' => Vendor::getId(),
+                    '`vendor_id`' => $this->vendor->getId(),
                     '`lang_id`' => $row['slug'],
                     '`translate_id`' => $post_id,
                     '`type`' => 'tags',
@@ -221,7 +224,7 @@ class UpdateContent
                     ),
                     array(
                         'id_entity' => $post_id,
-                        '`vendor_id`' => Vendor::getId())
+                        '`vendor_id`' => $this->vendor->getId())
             );
         } else {
             $dntUpload->addDefaultImage(

@@ -39,12 +39,13 @@ class ServicesController extends AdminController
         $this->postVariants = new PostVariants();
         $this->post = new Post();
         $this->postMeta = new PostMeta();
+        $this->vendor = new Vendor();
     }
 
     protected function checkMetaServicesConfigurator()
     {
-        $file = '../dnt-view/layouts/' . Vendor::getLayout() . "/modules/" . $this->rest->get('service') . "/install/install.php";
-        $class = '../dnt-view/layouts/' . Vendor::getLayout() . "/modules/" . $this->rest->get('service') . "/install/MetaServices.php";
+        $file = '../dnt-view/layouts/' . $this->vendor->getLayout() . "/modules/" . $this->rest->get('service') . "/install/install.php";
+        $class = '../dnt-view/layouts/' . $this->vendor->getLayout() . "/modules/" . $this->rest->get('service') . "/install/MetaServices.php";
         if (file_exists($class) || file_exists($file)) {
             return true;
         } else {
@@ -97,7 +98,7 @@ class ServicesController extends AdminController
         $data['item'] = $this->postsWithMetaData($postItem);
 
         if ($this->checkMetaServicesConfigurator()) {
-            PostMeta::loadNewPostMetaFromConf($post_id, $this->rest->get('service'));
+            $this->postMeta->loadNewPostMetaFromConf($post_id, $this->rest->get('service'));
             $this->loadTemplate($this->loc, 'default', $data);
         } else {
             $this->loadTemplate($this->loc, 'error', $data);
@@ -128,7 +129,7 @@ class ServicesController extends AdminController
                                 array(
                                     'id_entity' => $row['id_entity'],
                                     'service' => $this->rest->get('service'),
-                                    '`vendor_id`' => Vendor::getId()
+                                    '`vendor_id`' => $this->vendor->getId()
                                 )
                         );
                     } else {
@@ -145,12 +146,12 @@ class ServicesController extends AdminController
                     $this->db->update(
                             'dnt_posts_meta',
                             array(
-                                'value' => Dnt::youtubeVideoToEmbed($this->rest->post('key_' . $row['id_entity'])),
+                                'value' => $this->dnt->youtubeVideoToEmbed($this->rest->post('key_' . $row['id_entity'])),
                             ),
                             array(
                                 'id_entity' => $row['id_entity'],
                                 'service' => $this->rest->get('service'),
-                                '`vendor_id`' => Vendor::getId())
+                                '`vendor_id`' => $this->vendor->getId())
                     );
                 } else {
                     $this->db->update(
@@ -161,7 +162,7 @@ class ServicesController extends AdminController
                             array(
                                 'id_entity' => $row['id_entity'],
                                 'service' => $this->rest->get('service'),
-                                '`vendor_id`' => Vendor::getId())
+                                '`vendor_id`' => $this->vendor->getId())
                     );
                 }
 
@@ -173,7 +174,7 @@ class ServicesController extends AdminController
                         array(
                             'id_entity' => $row['id_entity'],
                             'service' => $this->rest->get('service'),
-                            '`vendor_id`' => Vendor::getId())
+                            '`vendor_id`' => $this->vendor->getId())
                 );
 
 
@@ -190,8 +191,8 @@ class ServicesController extends AdminController
             $perex = $this->articleView->getPostParam('perex', $postId);
             $search = $name . $name_url . $content . $perex . $searchMeta;
             $search = html_entity_decode($search);
-            $search = Dnt::not_html($search);
-            $search = Dnt::name_url($search);
+            $search = $this->dnt->not_html($search);
+            $search = $this->dnt->name_url($search);
             $search = str_replace('-', '', $search);
 
 
@@ -202,7 +203,7 @@ class ServicesController extends AdminController
                     ),
                     array(
                         'id_entity' => $postId,
-                        '`vendor_id`' => Vendor::getId())
+                        '`vendor_id`' => $this->vendor->getId())
             );
 
             $data['url'] = $return;

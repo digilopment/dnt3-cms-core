@@ -34,24 +34,6 @@ class ImportContent
         $this->dnt = new Dnt();
     }
 
-    /* public function downloadAndUpload()
-      {
-      foreach ($images as $image) {
-      $dnt = new upload($image);
-      if ($dnt->uploaded) {
-      foreach (DntUpload::imageFormats() as $format) {
-      $dnt->image_resize = true;
-      $dnt->image_x = $format;
-      $dnt->image_ratio_y = true;
-      $dnt->process("../dnt-view/data/uploads/formats/" . $format);
-      $dnt->processed;
-      }
-      } else {
-      echo $image . " sa nedá resiznut<br/>";
-      }
-      }
-      } */
-
     protected function setData($postData = [], $metaData = [])
     {
         $name = isset($postData['name']) ? $postData['name'] : 'Product Name';
@@ -63,7 +45,7 @@ class ImportContent
         $post_category_id = isset($postData['post_category_id']) ? $postData['post_category_id'] : false;
         $type = isset($postData['type']) ? $postData['type'] : false;
         $cat_id = isset($postData['cat_id']) ? $postData['cat_id'] : false;
-        $vendor_id = isset($postData['vendor_id']) ? $postData['vendor_id'] : Vendor::getId();
+        $vendor_id = isset($postData['vendor_id']) ? $postData['vendor_id'] : $this->vendor->getId();
         $this->imageUrl = isset($postData['image']) ? $postData['image'] : false;
 
         //$name = str_replace('´', '', $name);
@@ -86,8 +68,8 @@ class ImportContent
 
         $search = $name . $nameUrl . $content . $perex;
         $search = html_entity_decode($search);
-        $search = Dnt::not_html($search);
-        $search = Dnt::name_url($search);
+        $search = $this->dnt->not_html($search);
+        $search = $this->dnt->name_url($search);
         $search = str_replace('-', '', $search);
 
 

@@ -16,6 +16,7 @@ class CreateImageFormatsJob
     {
         $this->db = new DB();
         $this->vendor = new Vendor();
+        $this->dntUpload = new DntUpload();
     }
 
     protected function removeAllCookies()
@@ -51,10 +52,10 @@ class CreateImageFormatsJob
 
         foreach ($images as $image) {
 
-            if (!file_exists(self::UPLOAD_PATH . 'formats/' . DntUpload::imageFormats()[0] . '/' . $image['imageName'])) {
+            if (!file_exists(self::UPLOAD_PATH . 'formats/' . $this->dntUpload->imageFormats()[0] . '/' . $image['imageName'])) {
                 $upload = new Upload($image['pathImage']);
                 if ($upload->uploaded) {
-                    foreach (DntUpload::imageFormats() as $format) {
+                    foreach ($this->dntUpload->imageFormats() as $format) {
                         $formatPath = self::UPLOAD_PATH . 'formats/' . $format;
                         $upload->image_resize = true;
                         $upload->image_x = $format;

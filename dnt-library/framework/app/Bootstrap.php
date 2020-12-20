@@ -27,7 +27,10 @@ class Bootstrap
     {
         $this->path = dirname($path) . "/";
     }
-
+	
+	protected function registerDefaultGlobals(){
+		$GLOBALS['DATABASE'] = '';
+	}
     protected function registerGlobals($client)
     {
         $GLOBALS['VENDOR_LAYOUT'] = $client->layout;
@@ -51,13 +54,16 @@ class Bootstrap
 
     public function boot()
     {
+		$this->registerDefaultGlobals();
         $path = $this->path;
         include $path . "dnt-library/framework/_Class/Autoload.php";
         include $path . "dnt-library/framework/app/Autoload.php";
         $autoload = new Autoload();
         $autoload->load($path);
-        if (!Install::db_exists()) {
-            Dnt::redirect("dnt-install/index.php");
+		$this->dnt = new Dnt();
+        $this->install = new Install();
+        if (!$this->install->db_exists()) {
+            $this->dnt->redirect("dnt-install/index.php");
         }
         $autoloader = new Autoloader();
         $autoloader->load($path);

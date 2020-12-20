@@ -14,6 +14,10 @@ class AplicationInstall
     protected $web;
     protected $adm;
 
+	public function __construct(){
+		$this->url = new Url();
+		$this->dnt = new Dnt();
+	}
     protected function template()
     {
         print ('<!DOCTYPE html>
@@ -40,9 +44,9 @@ class AplicationInstall
     public function run()
     {
         $install = new Install();
-        $this->web = Url::get("WWW_PATH") . "?t=" . Dnt::timestamp();
-        $this->skel = Url::get("WWW_PATH") . "skeleton?t=" . Dnt::timestamp();
-        $this->adm = WWW_PATH_ADMIN . "?t=" . Dnt::timestamp();
+        $this->web = $this->url->get("WWW_PATH") . "?t=" . $this->dnt->timestamp();
+        $this->skel = $this->url->get("WWW_PATH") . "skeleton?t=" . $this->dnt->timestamp();
+        $this->adm = WWW_PATH_ADMIN . "?t=" . $this->dnt->timestamp();
 
         if (Install::db_exists()) {
             $this->template();

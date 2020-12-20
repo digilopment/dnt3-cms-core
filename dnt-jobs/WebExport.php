@@ -13,6 +13,11 @@ use ZipArchive;
 class webExportJob
 {
 
+	public function __construct()
+    {
+        $this->dnt = new Dnt();
+        $this->install = new Install();
+    }
     public function run()
     {
 
@@ -29,7 +34,7 @@ class webExportJob
             $DbName = DB_NAME;
             $tables = false;
             $backup_name = "../dnt-install/install.sql";
-            Install::Export_Database($mysqlHostName, $mysqlUserName, $mysqlPassword, $DbName, $tables, $backup_name, $vendor_id);
+            $this->install->Export_Database($mysqlHostName, $mysqlUserName, $mysqlPassword, $DbName, $tables, $backup_name, $vendor_id);
 
             // Get real path for our folder
             $rootPath = realpath('../');
@@ -51,19 +56,19 @@ class webExportJob
                     $relativePath = substr($filePath, strlen($rootPath) + 1);
 
                     if (
-                            Dnt::in_string("dnt-backup", $relativePath) ||
-                            Dnt::in_string("dnt-cache", $relativePath) ||
-                            Dnt::in_string("nbproject", $relativePath) ||
-                            Dnt::in_string("external-uploads", $relativePath) ||
-                            Dnt::in_string("generated-files", $relativePath) ||
-                            Dnt::in_string(".git", $relativePath) ||
-                            Dnt::in_string("data", $relativePath)
+                            $this->dnt->in_string("dnt-backup", $relativePath) ||
+                            $this->dnt->in_string("dnt-cache", $relativePath) ||
+                            $this->dnt->in_string("nbproject", $relativePath) ||
+                            $this->dnt->in_string("external-uploads", $relativePath) ||
+                            $this->dnt->in_string("generated-files", $relativePath) ||
+                            $this->dnt->in_string(".git", $relativePath) ||
+                            $this->dnt->in_string("data", $relativePath)
                     ) {
 
                         $query = "SELECT name FROM dnt_uploads WHERE vendor_id = $vendor_id";
                         if ($db->num_rows($query) > 0) {
                             foreach ($db->get_results($query) as $row) {
-                                if (Dnt::in_string($row['name'], $relativePath)) {
+                                if ($this->dnt->in_string($row['name'], $relativePath)) {
                                     $zip->addFile($filePath, $relativePath);
                                 }
                             }

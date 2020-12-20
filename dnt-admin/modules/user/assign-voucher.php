@@ -4,9 +4,9 @@ use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Voucher;
 
 $post_id = $rest->get("post_id");
-if (Voucher::assignLastVoucher($post_id)) {
+if ($voucher->assignLastVoucher($post_id)) {
     $url = "index.php?src=" . $rest->get("src") . "&type=" . $rest->get("type") . "";
-    Dnt::redirect($url);
+    $dnt->redirect($url);
 } else {
 
     get_top();

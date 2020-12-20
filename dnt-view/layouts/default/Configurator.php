@@ -11,6 +11,7 @@ class Configurator extends Webhook
 
     public function __construct()
     {
+		$this->vendor = new Vendor();
         (new Autoloader)->addVendroClass(__FILE__, 'Foo');
     }
 
@@ -59,7 +60,7 @@ class Configurator extends Webhook
             '`value`' => '',
             '`content_type`' => 'text',
             '`description`' => 'Testovacie nastavenie, meta nastavení zbehli úspešne',
-            '`vendor_id`' => Vendor::getId(),
+            '`vendor_id`' => $this->vendor->getId(),
             '`show`' => '0',
             '`order`' => '10',
         );

@@ -73,7 +73,7 @@ $post_id = $rest->get("post_id");
                                                 <input type="text" name="<?php echo $value; ?>" value="" class="form-control">
                                             </div>
                                         <?php } ?>  
-<?php } ?>
+									<?php } ?>
                                     <br/>						
 
                                 </span>
@@ -84,11 +84,11 @@ $post_id = $rest->get("post_id");
                                 <hr>
                                 <p class="lead">Vyberte si jedinečnú <b>fotografiu</b></p>
                                 <p>Ak máte eshop a vystavíte faktúru, vaše meno tam bude predvyplnené</p>
-                                <img src="<?php echo AdminUser::avatarById($post_id); ?>" style="max-width: 200px; margin: 15px;" alt="">
+                                <img src="<?php echo $admin->avatarById($post_id); ?>" style="max-width: 200px; margin: 15px;" alt="">
                                 <input type="file" name="userfile" class="btn-default btn-lg btn-block">
                                 <div class="padding"></div>
                                 <div class="checkbox">
-                                    <?php echo Dnt::returnInput(); ?>
+                                    <?php echo $dnt->returnInput(); ?>
                                     <input type="submit" name="sent" value="Uložiť" class="btn btn-primary" style="width: 40%;">
                                 </div>
                             </div>

@@ -18,16 +18,19 @@ use function defaultModuleMetaDataConfiguration;
 class PostMeta
 {
 
+	public function __construct(){
+		$this->db = new DB();
+		$this->vendor = new Vendor();
+	}
     /**
      * 
      * @return type
      */
     public function getServicePostsMeta($postId, $service)
     {
-        $db = new DB;
-        $query = "SELECT * FROM dnt_posts_meta WHERE `vendor_id` = '" . Vendor::getId() . "' AND service = '" . $service . "' AND post_id = '" . $postId . "'";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        $query = "SELECT * FROM dnt_posts_meta WHERE `vendor_id` = '" . $this->vendor->getId() . "' AND service = '" . $service . "' AND post_id = '" . $postId . "'";
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 $arr['keys'][$row['key']]['show'] = $row['show'];
                 $arr['keys'][$row['key']]['value'] = $row['value'];
             }
@@ -38,11 +41,9 @@ class PostMeta
 
     public function getPostsMeta($postId)
     {
-
-        $db = new DB;
-        $query = "SELECT * FROM dnt_posts_meta WHERE `vendor_id` = '" . Vendor::getId() . "' AND post_id IN (" . $postId . ")";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        $query = "SELECT * FROM dnt_posts_meta WHERE `vendor_id` = '" . $this->vendor->getId() . "' AND post_id IN (" . $postId . ")";
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 $arr['keys'][$row['post_id']][$row['key']]['show'] = $row['show'];
                 $arr['keys'][$row['post_id']][$row['key']]['value'] = $row['value'];
             }
@@ -53,10 +54,9 @@ class PostMeta
 
     public function getPostMeta($postId)
     {
-        $db = new DB;
-        $query = "SELECT * FROM dnt_posts_meta WHERE `vendor_id` = '" . Vendor::getId() . "' AND post_id = '" . $postId . "'";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        $query = "SELECT * FROM dnt_posts_meta WHERE `vendor_id` = '" . $this->vendor->getId() . "' AND post_id = '" . $postId . "'";
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 $arr['keys'][$row['key']]['show'] = $row['show'];
                 $arr['keys'][$row['key']]['value'] = $row['value'];
                 $arr['keys'][$row['key']]['id_entity'] = $row['id_entity'];
@@ -76,7 +76,7 @@ class PostMeta
 
     protected function loadNewPostMetaFromInstallConf($postId, $service)
     {
-        $conf = "../dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $service . "/install/install.php";
+        $conf = "../dnt-view/layouts/" . $this->vendor->getLayout() . "/modules/" . $service . "/install/install.php";
         if (file_exists($conf)) {
             include $conf;
             if (function_exists("defaultModuleMetaDataConfiguration")) {
@@ -86,7 +86,7 @@ class PostMeta
                 foreach ($settingsData as $key => $value) {
                     $configKeys[] = $value['`key`'];
                 }
-                foreach (self::getServicePostsMeta($postId, $service) as $key => $value) {
+                foreach ($this->getServicePostsMeta($postId, $service) as $key => $value) {
                     $existingKey = array_keys($value);
                 }
 
@@ -100,9 +100,8 @@ class PostMeta
                     }
                 }
 
-                $db = new DB;
                 foreach ($arrOfConfigKeys as $key) {
-                    $db->insert('dnt_posts_meta', $settingsData[$key]);
+                    $this->db->insert('dnt_posts_meta', $settingsData[$key]);
                 }
             }
         }
@@ -117,7 +116,7 @@ class PostMeta
     {
 
 
-        $conf = "../dnt-view/layouts/" . Vendor::getLayout() . "/modules/" . $service . "/install/MetaServices.php";
+        $conf = "../dnt-view/layouts/" . $this->vendor->getLayout() . "/modules/" . $service . "/install/MetaServices.php";
         if (file_exists($conf)) {
             include $conf;
             $metaServices = new MetaServices();
@@ -128,7 +127,7 @@ class PostMeta
                 foreach ($settingsData as $key => $value) {
                     $configKeys[] = $value['`key`'];
                 }
-                foreach (self::getServicePostsMeta($postId, $service) as $key => $value) {
+                foreach ($this->getServicePostsMeta($postId, $service) as $key => $value) {
                     $existingKey = array_keys($value);
                 }
                 $diffedArray = array_diff($configKeys, $existingKey);
@@ -143,13 +142,12 @@ class PostMeta
                     }
                 }
                 //var_dump($arrOfConfigKeysUpdate);
-                $db = new DB;
                 foreach ($arrOfConfigKeys as $key) {
-                    $db->insert('dnt_posts_meta', $settingsData[$key]);
+                    $this->db->insert('dnt_posts_meta', $settingsData[$key]);
                 }
 
                 foreach ($arrOfConfigKeysUpdate as $key => $val) {
-                    $db->update(
+                    $this->db->update(
                             'dnt_posts_meta',
                             array(
                                 'order' => $settingsData[$key]['`order`'],
@@ -160,12 +158,12 @@ class PostMeta
                             array(
                                 '`key`' => $settingsData[$key]['`key`'],
                                 '`post_id`' => $postId,
-                                '`vendor_id`' => Vendor::getId())
+                                '`vendor_id`' => $this->vendor->getId())
                     );
                 }
             }
         } else {
-            self::loadNewPostMetaFromInstallConf($postId, $service);
+            $this->loadNewPostMetaFromInstallConf($postId, $service);
         }
     }
 

@@ -15,7 +15,7 @@ get_top(); ?>
    }
    
 	$langs = array();
-	$query = MultyLanguage::getLangs(true);
+	$query = $multiLanguage->getLangs(true);
 	if($db->num_rows($query) > 0){
 		foreach($db->get_results($query) as $row){			
 		 $langs[] = $row['slug'];
@@ -42,7 +42,7 @@ get_top(); ?>
                <div class="tab-content" style="border: 0px solid; padding: 0px;">
                   <?php
 				  
-				  foreach(MultyLanguage::getTranslates() as $item) {
+				  foreach($multiLanguage->getTranslates() as $item) {
 				  if(in_array($item['lang_id'], $langs)){
 					  ?>
 					<div class="row" style="border-bottom:1px solid #cccccc;padding-top:15px;">
@@ -65,7 +65,7 @@ get_top(); ?>
 				  ?>
                </div>
                <!-- end here -->
-               <?php echo Dnt::returnInput();?>
+               <?php echo $dnt->returnInput();?>
                <input type="submit" name="sent" class="btn btn-primary btn-lg btn-block" value="Upraviť">
             </div>
          </div>

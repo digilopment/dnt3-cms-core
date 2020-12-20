@@ -7,7 +7,7 @@ $post_id = $rest->get("post_id");
  $query = "SELECT * FROM `dnt_languages` WHERE 
                    parent_id = '0' AND
 				   id_entity = '".$post_id."' AND
-                   vendor_id = '".Vendor::getId()."' ORDER BY id_entity asc"; 
+                   vendor_id = '".$vendor->getId()."' ORDER BY id_entity asc"; 
 if($db->num_rows($query)>0){
  foreach($db->get_results($query) as $row){
      $show = $row['show'];
@@ -29,7 +29,7 @@ $db->update(
         ), 
     array(     //where
         'id_entity' => $post_id,
-        'vendor_id' => Vendor::getId(),
+        'vendor_id' => $vendor->getId(),
         )
     );
 $dnt->redirect(WWW_PATH_ADMIN_2."index.php?src=".$rest->get("src")."&included=".$rest->get("included")."&filter=".$rest->get("filter")."");

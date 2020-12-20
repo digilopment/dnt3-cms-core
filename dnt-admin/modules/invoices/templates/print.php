@@ -5,7 +5,7 @@ use DntLibrary\Base\Rest;
 
 get_top();
 get_top_html();
-
+$dnt = $data['dnt'];
 $name = !empty($data['order']['company_name']) ? $data['order']['company_name'] : $data['order']['name'] . ' ' . $data['order']['surname'];
 $street = !empty($data['order']['company_street']) ? $data['order']['company_street'] : $data['order']['street'];
 $gate_number = !empty($data['order']['company_gate_number']) ? $data['order']['company_gate_number'] : $data['order']['gate_number'];
@@ -14,7 +14,7 @@ $city = !empty($data['order']['company_city']) ? $data['order']['company_city'] 
 $country = !empty($data['order']['company_country']) ? $data['order']['company_country'] : $data['order']['country'];
 $telephone = !empty($data['order']['company_phone_number']) ? $data['order']['company_phone_number'] : $data['order']['phone_number'];
 if ($data['order']['datetime_publish'] == "0000-00-00 00:00:00") {
-    $datetimePublish = Dnt::datetime();
+    $datetimePublish = $dnt->datetime();
 } else {
     $datetimePublish = $data['order']['datetime_publish'];
 }
