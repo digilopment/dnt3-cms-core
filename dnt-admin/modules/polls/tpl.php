@@ -1,6 +1,7 @@
 <?php 
 use DntLibrary\Base\Polls;
 
+$polls = new Polls();
 get_top(); ?>
 <?php get_top_html(); ?>
 
@@ -37,14 +38,14 @@ get_top(); ?>
                         <tbody>
 						
 						<?php
-						$query = Polls::getPollsAdmin();
+						$query = $polls->getPollsAdmin();
 						 if($db->num_rows($query)>0){
 							 foreach($db->get_results($query) as $row){
 						?>
                            <tr>
                               <td><?php echo $row['id_entity']?></td>
                               <td style="max-width: 500px;"><b><a href="index.php?src=polls&action=edit_poll&post_id=<?php echo $row['id_entity']?>"><?php echo $row['name']?></a></b></td>
-                              <td><?php echo Polls::currentTypeStr($row['type']);?></td>
+                              <td><?php echo $polls->currentTypeStr($row['type']);?></td>
                               <td style="text-align: center;">
                                  <a href="index.php?src=polls&action=edit_poll&post_id=<?php echo $row['id_entity']?>"><i class="fa fa-arrow-right bg-blue action"></i></a>
                               </td>

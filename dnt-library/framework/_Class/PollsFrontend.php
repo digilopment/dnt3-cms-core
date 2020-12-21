@@ -20,6 +20,14 @@ use DntLibrary\Base\Vendor;
 class PollsFrontend extends Polls
 {
 
+	public function __construct(){
+		parent::__construct();
+		$this->db = new DB();
+		$this->dnt = new Dnt();
+		$this->vendor = new Vendor();
+		$this->rest = new Rest();
+		$this->cookie = new Cookie();
+	}
     /**
      * 
      * @param type $index
@@ -29,20 +37,17 @@ class PollsFrontend extends Polls
      */
     public function url($index, $poll_id, $question_id)
     {
-        $db = new DB;
-        $rest = new Rest;
-
         $result_url = "result";
         $next_question = false;
         $prev_question = false;
 
         //first question 
         $query = "SELECT `question_id` FROM dnt_polls_composer WHERE
-		vendor_id 	= " . Vendor::getId() . " AND
+		vendor_id 	= " . $this->vendor->getId() . " AND
 		`key`       = 'question' AND
 		poll_id 	= '" . $poll_id . "' LIMIT 1";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 $first_question = $row['question_id'];
             }
         } else {
@@ -51,12 +56,12 @@ class PollsFrontend extends Polls
 
         //next question
         $query = "SELECT `question_id` FROM dnt_polls_composer WHERE
-		vendor_id 	= " . Vendor::getId() . " AND
+		vendor_id 	= " . $this->vendor->getId() . " AND
 		`key`       = 'question' AND
 		`question_id` > '" . $question_id . "' AND
 		poll_id 	= '" . $poll_id . "' LIMIT 1";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 $next_question = $row['question_id'];
             }
         } else {
@@ -65,12 +70,12 @@ class PollsFrontend extends Polls
 
         //prev question
         $query = "SELECT `question_id` FROM dnt_polls_composer WHERE
-		vendor_id 	= " . Vendor::getId() . " AND
+		vendor_id 	= " . $this->vendor->getId() . " AND
 		`key`       = 'question' AND
 		`question_id` < '" . $question_id . "' AND
 		poll_id 	= '" . $poll_id . "' LIMIT 1";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 $prev_question = $row['question_id'];
             }
         } else {
@@ -95,14 +100,13 @@ class PollsFrontend extends Polls
      */
     public function getCurrentQuestions($poll_id, $question_id)
     {
-        $db = new DB;
         $query = "SELECT `value` FROM dnt_polls_composer WHERE
-		vendor_id 	= " . Vendor::getId() . " AND
+		vendor_id 	= " . $this->vendor->getId() . " AND
 		poll_id 	= " . $poll_id . " AND
 		question_id 	= " . $question_id . " AND
 		`key`       = 'question'";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 return $row['value'];
             }
         } else {
@@ -112,40 +116,16 @@ class PollsFrontend extends Polls
 
     public function getValueByInputId($input, $id)
     {
-        $db = new DB;
         $query = "SELECT `$input` FROM dnt_polls_composer WHERE
-		vendor_id 	= " . Vendor::getId() . " AND
+		vendor_id 	= " . $this->vendor->getId() . " AND
 		id_entity = $id";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 return $row[$input];
             }
         } else {
             return false;
         }
-    }
-
-    /**
-     * 
-     * @param type $poll_id
-     * @return int
-     */
-    public function getPollsIds($poll_id)
-    {
-        $db = new DB;
-        $arr = array();
-        $query = "SELECT `question_id` FROM dnt_polls_composer WHERE
-		vendor_id 	= " . Vendor::getId() . " AND
-		`key`       = 'question' AND
-		poll_id 	= '" . $poll_id . "'";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
-                $arr[] = $row['question_id'];
-            }
-        } else {
-            $arr[] = 0;
-        }
-        return $arr;
     }
 
     /**
@@ -156,13 +136,12 @@ class PollsFrontend extends Polls
      */
     public function getCorrectOpinion($vendor_ansewer_id)
     {
-        $db = new DB;
         $query = "SELECT `is_correct` FROM dnt_polls_composer WHERE
-		vendor_id 	= " . Vendor::getId() . " AND
+		vendor_id 	= " . $this->vendor->getId() . " AND
 		is_correct 	= '1' AND
 		id_entity 	= '" . $vendor_ansewer_id . "'";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 return $row['is_correct'];
             }
         } else {
@@ -179,10 +158,10 @@ class PollsFrontend extends Polls
     public function getCorrectAnsewers($poll_id)
     {
         $correct = 0;
-        foreach (self::getPollsIds($poll_id) as $i) {
-            $vendor_ansewer_id = Cookie::Get("poll_" . $poll_id . "_" . $i);
-            self::getCorrectOpinion($vendor_ansewer_id);
-            if (self::getCorrectOpinion($vendor_ansewer_id)) {
+        foreach ($this->getPollsIds($poll_id) as $i) {
+            $vendor_ansewer_id = $this->cookie->Get("poll_" . $poll_id . "_" . $i);
+            $this->getCorrectOpinion($vendor_ansewer_id);
+            if ($this->getCorrectOpinion($vendor_ansewer_id)) {
                 $correct++;
             }
         }
@@ -197,7 +176,7 @@ class PollsFrontend extends Polls
      */
     public function getResultPercent($poll_id)
     {
-        return (100 * self::getCorrectAnsewers($poll_id)) / self::getNumberOfQuestions($poll_id);
+        return (100 * $this->getCorrectAnsewers($poll_id)) / $this->getNumberOfQuestions($poll_id);
     }
 
     /**
@@ -209,12 +188,12 @@ class PollsFrontend extends Polls
     public function getProgressPercent($poll_id, $question_id)
     {
         $current = -1;
-        foreach (self::getPollsIds($poll_id) as $currentQuestionId) {
+        foreach ($this->getPollsIds($poll_id) as $currentQuestionId) {
             if ($currentQuestionId <= $question_id) {
                 $current++;
             }
         }
-        return (100 * $current) / self::getNumberOfQuestions($poll_id);
+        return (100 * $current) / $this->getNumberOfQuestions($poll_id);
     }
 
     /**
@@ -225,12 +204,11 @@ class PollsFrontend extends Polls
      */
     public function getVendorAnsewerPoints($vendor_ansewer_id)
     {
-        $db = new DB;
         $query = "SELECT `points` FROM dnt_polls_composer WHERE
-		vendor_id 	= " . Vendor::getId() . " AND
+		vendor_id 	= " . $this->vendor->getId() . " AND
 		id_entity 	= '" . $vendor_ansewer_id . "'";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 return $row['points'];
             }
         } else {
@@ -246,11 +224,11 @@ class PollsFrontend extends Polls
     public function getVendorPoints($poll_id)
     {
         $correct = 0;
-        foreach (self::getPollsIds($poll_id) as $i) {
-            $vendor_ansewer_id = Cookie::Get("poll_" . $poll_id . "_" . $i);
-            self::getVendorAnsewerPoints($vendor_ansewer_id);
-            if (self::getVendorAnsewerPoints($vendor_ansewer_id)) {
-                $correct += self::getVendorAnsewerPoints($vendor_ansewer_id);
+        foreach ($this->getPollsIds($poll_id) as $i) {
+            $vendor_ansewer_id = $this->cookie->Get("poll_" . $poll_id . "_" . $i);
+            $this->getVendorAnsewerPoints($vendor_ansewer_id);
+            if ($this->getVendorAnsewerPoints($vendor_ansewer_id)) {
+                $correct += $this->getVendorAnsewerPoints($vendor_ansewer_id);
             }
         }
         return $correct;
@@ -263,15 +241,14 @@ class PollsFrontend extends Polls
      */
     public function getVendorResultPointsRange($poll_id)
     {
-        $db = new DB;
-        $points = self::getVendorPoints($poll_id);
+        $points = $this->getVendorPoints($poll_id);
         $data = array(false);
         $points_MAX = 0;
         $points_MIN = 0;
 
-        $query = self::getWinningCombinationData($poll_id);
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+        $query = $this->getWinningCombinationData($poll_id);
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 //ziska maximum z rozsahu
                 if ($row['points'] >= $points) {
                     $points_MAX = $row['points'];
@@ -279,7 +256,7 @@ class PollsFrontend extends Polls
                 }
             }
 
-            foreach ($db->get_results($query) as $row) {
+            foreach ($this->db->get_results($query) as $row) {
                 //ziska minimum z rozsah
                 if ($row['points'] < $points) {
                     $points_MIN = $row['points'];
@@ -300,18 +277,17 @@ class PollsFrontend extends Polls
      */
     public function getVendorResultPointsCat($poll_id)
     {
-        $db = new DB;
-        $points_range = self::getVendorResultPointsRange($poll_id);
+        $points_range = $this->getVendorResultPointsRange($poll_id);
         $poins_max = $points_range['max'];
-        //$points_range = self::getVendorResultPointsRange($poll_id);
+        //$points_range = $this->getVendorResultPointsRange($poll_id);
 
         $query = "SELECT * FROM dnt_polls_composer WHERE 
 		`poll_id` = '$poll_id' AND
 		`points` = '$poins_max' AND
 		`key` = 'winning_combination' AND
-		`vendor_id` = '" . Vendor::getId() . "'";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+		`vendor_id` = '" . $this->vendor->getId() . "'";
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 $points = $row['id'];
             }
         } else {
@@ -329,12 +305,11 @@ class PollsFrontend extends Polls
      */
     public function getComposerDataById($column, $id)
     {
-        $db = new DB;
         $query = "SELECT `$column` FROM dnt_polls_composer WHERE 
 		`id_entity` = '$id' AND
-		`vendor_id` = '" . Vendor::getId() . "'";
-        if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
+		`vendor_id` = '" . $this->vendor->getId() . "'";
+        if ($this->db->num_rows($query) > 0) {
+            foreach ($this->db->get_results($query) as $row) {
                 $return = $row[$column];
             }
         } else {
@@ -349,8 +324,8 @@ class PollsFrontend extends Polls
      */
     public function deleteCookies($poll_id)
     {
-        foreach (PollsFrontend::getPollsIds($poll_id) as $i) {
-            Cookie::Delete("poll_" . $poll_id . "_" . $i);
+        foreach ($this->getPollsIds($poll_id) as $i) {
+            $this->cookie->Delete("poll_" . $poll_id . "_" . $i);
         }
     }
 
