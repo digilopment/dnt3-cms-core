@@ -5,6 +5,10 @@ use DntLibrary\Base\DB;
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Sessions;
+use DntLibrary\Base\Image;
+use DntLibrary\Base\Vendor;
+use DntLibrary\Base\Polls;
+use DntLibrary\Base\PollsFrontend;
 
 
 $rest = new Rest;
@@ -12,6 +16,10 @@ $session = new Sessions;
 $dnt = new Dnt;
 $adminUser = new AdminUser;
 $db = new DB();
+$polls = new Polls();
+$pollsFrontend = new PollsFrontend();
+$image = new Image();
+$vendor = new Vendor();
 
 if($rest->get("action") == "add_poll"){
 	include "add_poll.php";

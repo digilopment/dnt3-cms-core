@@ -28,7 +28,7 @@ get_top();
                         <label class="col-sm-2 control-label"><b>Typ ankety</b></label>
                         <div class="col-sm-6">
                             <select class="form-control" name="poll_type" style="">
-<?php Polls::currentType(Polls::getParam("type", $poll_id)); ?>
+<?php $polls->currentType($polls->getParam("type", $poll_id)); ?>
                             </select>
                             <br>
                         </div>
@@ -46,7 +46,7 @@ get_top();
                             <select class="form-control" name="poll_id">
                                 <option value="0">(nekopírovať, ale použiť základné nastavenie ankety)</option>
                                 <?php
-                                $query = Polls::getPollsAdmin();
+                                $query = $polls->getPollsAdmin();
                                 if ($db->num_rows($query) > 0) {
                                     foreach ($db->get_results($query) as $row) {
                                         echo '<option value="' . $row['id_entity'] . '">' . $row['name'] . '</option>';
