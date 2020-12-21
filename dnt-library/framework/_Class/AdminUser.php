@@ -117,14 +117,21 @@ class AdminUser extends Image
         return $this->getFileImage($imageId);
     }
 
-    public function dataById($type = false, $column, $email)
+    public function dataById($type = false, $column = false, $email = false)
     {
         if ($type) {
             $andType = "AND type = '" . $type . "'";
         } else {
             $andType = false;
         }
-        $query = "SELECT $column FROM dnt_users WHERE email = '" . $email . "' " . $andType . " AND vendor_id = '" . $this->vendor->getId() . "'";
+		
+		if ($column) {
+            $getColumn = $column;
+        } else {
+            $getColumn = '*';
+        }
+		
+        $query = "SELECT $getColumn FROM dnt_users WHERE email = '" . $email . "' " . $andType . " AND vendor_id = '" . $this->vendor->getId() . "'";
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
                 return $row[$column];
