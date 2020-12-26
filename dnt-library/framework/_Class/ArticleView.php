@@ -10,7 +10,6 @@
 
 namespace DntLibrary\Base;
 
-use DntLibrary\App\Navigation;
 use DntLibrary\Base\AdminContent;
 use DntLibrary\Base\DB;
 use DntLibrary\Base\Dnt;
@@ -29,7 +28,6 @@ class ArticleView extends AdminContent
 		$this->db = new DB();
         $this->settings = new Settings();
         $this->rest = new Rest();
-        $this->navigation = new Navigation();
         $this->multiLanguage = new MultyLanguage();
         $this->vendor = new Vendor();
         $this->url = new Url();
@@ -66,7 +64,7 @@ class ArticleView extends AdminContent
         $query = "SELECT * FROM dnt_posts WHERE 
             `show`      > '0' AND 
             " . $andPost . "
-            `vendor_id` = '" . $this->vendor::getId() . "' $limit $orderByStr";
+            `vendor_id` = '" . $this->vendor->getId() . "' $limit $orderByStr";
         if ($this->db->num_rows($query) > 0) {
             return $this->db->get_results($query);
         } else {
