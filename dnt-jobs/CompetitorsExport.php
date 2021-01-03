@@ -9,9 +9,11 @@ use DntLibrary\Base\Vendor;
 class CompetitorsExportJob
 {
 
-public function __construct(){
-		$this->dnt = new Dnt();
-	}
+    public function __construct()
+    {
+        $this->dnt = new Dnt();
+    }
+
     protected function creatCsvFileStatic($table, $columns, $where, $fileName, $columnsName = false)
     {
         $db = new DB();
