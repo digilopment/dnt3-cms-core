@@ -1,5 +1,9 @@
 <?php
 
+namespace DntAdmin\Moduls;
+
+use DntAdmin\App\AdminController;
+
 class DefaultController extends AdminController
 {
 

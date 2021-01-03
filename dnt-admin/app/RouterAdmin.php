@@ -3,7 +3,7 @@
 namespace DntAdmin\App;
 
 use DntLibrary\App\Autoloader;
-use DntLibrary\Base\Db;
+use DntLibrary\Base\DB;
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Sessions;
@@ -29,10 +29,10 @@ class RouterAdmin
     protected function redirect()
     {
         if (WWW_PATH_ADMIN_2 == HTTP_PROTOCOL . DOMAIN . WWW_FOLDERS . "/" . ADMIN_URL_2 . "/") {
-            $vendors =  $this->vendor->getAll();
+            $vendors = $this->vendor->getAll();
             $lastVendor = end($vendors);
             $url = HTTP_PROTOCOL . $lastVendor['name_url'] . "." . DOMAIN . WWW_FOLDERS . "/" . ADMIN_URL_2 . "/";
-             $this->dnt->redirect($url);
+            $this->dnt->redirect($url);
         }
     }
 
