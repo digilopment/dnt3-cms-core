@@ -6,7 +6,7 @@ class ExceptionThrower
 {
 
     static $IGNORE_DEPRECATED = true;
-	
+
     /**
      * Start redirecting PHP errors
      * @param int $level PHP Error level to catch (Default = E_ALL & ~E_DEPRECATED)

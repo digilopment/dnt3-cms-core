@@ -8,9 +8,11 @@ use DntLibrary\Base\Dnt;
 class WeekNumberTest
 {
 
-	public function __construct(){
-		$this->dnt = new Dnt();
-	}
+    public function __construct()
+    {
+        $this->dnt = new Dnt();
+    }
+
     public function run()
     {
         $date = new DateTime($this->dnt->datetime());

@@ -18,9 +18,11 @@ use function modulesConfig;
 class Webhook
 {
 
-	public function __construct(){
-		$this->vendor = new Vendor();
-	}
+    public function __construct()
+    {
+        $this->vendor = new Vendor();
+    }
+
     /**
      * 
      * @return type

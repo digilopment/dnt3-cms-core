@@ -18,14 +18,14 @@ use DntLibrary\Base\DB;
 class FileAdmin
 {
 
+    public function __construct()
+    {
+        $this->db = new DB();
+        $this->dnt = new Dnt();
+        $this->adminContent = new AdminContent();
+        $this->vendor = new Vendor();
+    }
 
-
-	public function __construct(){
-			$this->db = new DB();
-			$this->dnt = new Dnt();
-			$this->adminContent = new AdminContent();
-			$this->vendor = new Vendor();
-		}
     /**
      * 
      * @return int

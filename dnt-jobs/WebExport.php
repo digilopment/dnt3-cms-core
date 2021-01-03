@@ -13,11 +13,12 @@ use ZipArchive;
 class webExportJob
 {
 
-	public function __construct()
+    public function __construct()
     {
         $this->dnt = new Dnt();
         $this->install = new Install();
     }
+
     public function run()
     {
 

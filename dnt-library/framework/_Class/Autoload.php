@@ -25,7 +25,7 @@ class Autoload
         } else {
             include $path . "config.dnt";
         }
-        
+
         /**
          * CLASS
          */

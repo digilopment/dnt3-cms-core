@@ -12,34 +12,20 @@ namespace DntLibrary\Base;
 
 use DntLibrary\Base\DB;
 use DntLibrary\Base\Dnt;
-use DntLibrary\Base\PollsFrontend;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Vendor;
 
 class Polls
 {
 
-	public function __construct(){
-		$this->db = new DB();
-		$this->dnt = new Dnt();
-		$this->vendor = new Vendor();
-		$this->rest = new Rest();
-	}
-	
-	 /*public function init($poll_id)
+    public function __construct()
     {
-        $query = "SELECT `id_entity` FROM dnt_polls WHERE
-		id 	= " . $poll_id . "";
+        $this->db = new DB();
+        $this->dnt = new Dnt();
+        $this->vendor = new Vendor();
+        $this->rest = new Rest();
+    }
 
-        if ($this->db->num_rows($query) > 0) {
-            foreach ($this->db->get_results($query) as $row) {
-                $id_entity = $row['id_entity'];
-            }
-        } else {
-            $id_entity = false;
-        }
-        return $id_entity;
-    }*/
     /**
      * 
      * @return type
@@ -103,7 +89,6 @@ class Polls
     {
         return "SELECT * FROM dnt_polls WHERE vendor_id = '" . $this->vendor->getId() . "'";
     }
-
 
     /**
      * 
@@ -233,7 +218,7 @@ class Polls
                 $this->db->insert('dnt_polls_composer', $insertedData);
             }
             $question_id++;
-            $order --;
+            $order--;
         }
     }
 
@@ -468,8 +453,8 @@ class Polls
         $max = $this->db->get_row($query);
         return $max[0];
     }
-	
-	public function getPollsIds($poll_id)
+
+    public function getPollsIds($poll_id)
     {
         $arr = array();
         $query = "SELECT `question_id` FROM dnt_polls_composer WHERE
@@ -485,7 +470,7 @@ class Polls
         }
         return $arr;
     }
-	
+
     /**
      * 
      * @param type $poll_id

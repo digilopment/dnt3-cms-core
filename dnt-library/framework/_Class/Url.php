@@ -18,15 +18,14 @@ use DntLibrary\Base\Sessions;
 class Url
 {
 
-
-	
-	public function __construct(){
-		$this->db = new DB();
-		$this->dnt = new Dnt();
-		$this->multiLanguage = new MultyLanguage();
+    public function __construct()
+    {
+        $this->db = new DB();
+        $this->dnt = new Dnt();
+        $this->multiLanguage = new MultyLanguage();
         $this->sessions = new Sessions();
-	}
-	
+    }
+
     /**
      * 
      * @param type $file
@@ -56,9 +55,9 @@ class Url
      */
     public function get($url)
     {
-		$r = false;
+        $r = false;
         if ($url == "WWW_PATH") {
-            $lang =  $this->multiLanguage->getLang();
+            $lang = $this->multiLanguage->getLang();
             if ($lang == DEAFULT_LANG || MULTY_LANGUAGE == false) {
                 $lg = false;
             } else {
@@ -90,8 +89,8 @@ class Url
      */
     protected function p_query($type, $postId, $column)
     {
-  
-		$db = false;
+
+        $db = false;
         if ($type == false || "dnt_posts") {
             $db = "SELECT " . $column . " FROM dnt_posts WHERE id_entity = '" . $postId . "' LIMIT 1";
         } elseif ($type == "obchod_produkty") {

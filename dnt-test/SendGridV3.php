@@ -2,7 +2,6 @@
 
 namespace DntTest;
 
-use DntLibrary\Base\Dnt;
 use SendGrid\Mail\Mail;
 
 class SendGridV3Test

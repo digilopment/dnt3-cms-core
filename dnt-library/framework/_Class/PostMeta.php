@@ -18,10 +18,12 @@ use function defaultModuleMetaDataConfiguration;
 class PostMeta
 {
 
-	public function __construct(){
-		$this->db = new DB();
-		$this->vendor = new Vendor();
-	}
+    public function __construct()
+    {
+        $this->db = new DB();
+        $this->vendor = new Vendor();
+    }
+
     /**
      * 
      * @return type

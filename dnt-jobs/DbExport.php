@@ -9,11 +9,12 @@ use DntLibrary\Base\Rest;
 class DbExportJob
 {
 
- public function __construct()
+    public function __construct()
     {
         $this->dnt = new Dnt();
         $this->install = new Install();
     }
+
     public function run()
     {
         $rest = new Rest;

@@ -19,6 +19,11 @@ class Api
 
     protected $columns;
 
+    public function __construct()
+    {
+        $this->vendor = new Vendor();
+    }
+
     /**
      * 
      * @return type
@@ -26,7 +31,7 @@ class Api
     public function getAll()
     {
         $db = new DB();
-        $query = "SELECT * FROM dnt_api WHERE vendor_id = '" . Vendor::getId() . "'";
+        $query = "SELECT * FROM dnt_api WHERE vendor_id = '" . $this->vendor->getId() . "'";
         if ($db->num_rows($query) > 0) {
             return $db->get_results($query);
         } else {
@@ -56,7 +61,7 @@ class Api
         } else {
             $this->columns = false;
         }
-		return $this->columns;
+        return $this->columns;
     }
 
     /**
@@ -72,7 +77,7 @@ class Api
             return urldecode($getQuery);
         } else {
             $db = new DB();
-            $query = "SELECT query FROM dnt_api WHERE `id_entity` = '$id' AND `name_url` = '$name_url' AND vendor_id = '" . Vendor::getId() . "'";
+            $query = "SELECT query FROM dnt_api WHERE `id_entity` = '$id' AND `name_url` = '$name_url' AND vendor_id = '" . $this->vendor->getId() . "'";
             if ($db->num_rows($query) > 0) {
                 foreach ($db->get_results($query) as $row) {
                     return $row['query'];

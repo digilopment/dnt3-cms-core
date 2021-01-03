@@ -21,16 +21,17 @@ use DntLibrary\Base\Vendor;
 class User extends Image
 {
 
-	public function __construct(){
-		parent::__construct();
-		$this->db = new DB();
-		$this->dnt = new Dnt();
-		$this->vendor = new Vendor();
-		$this->rest = new Rest();
-		$this->api = new Api;
-		$this->dntUpload = new DntUpload;
-		
-	}
+    public function __construct()
+    {
+        parent::__construct();
+        $this->db = new DB();
+        $this->dnt = new Dnt();
+        $this->vendor = new Vendor();
+        $this->rest = new Rest();
+        $this->api = new Api;
+        $this->dntUpload = new DntUpload;
+    }
+
     /**
      * 
      * @return int
@@ -53,7 +54,7 @@ class User extends Image
             return array();
         }
 
-        
+
         if ($type) {
             $SQL_type = " type = '" . $type . "' AND ";
         } else {
@@ -232,7 +233,7 @@ class User extends Image
      */
     public function getPage($type, $index)
     {
-        
+
 
         if (isset($_GET['page'])) {
             $strana = $_GET['page'];

@@ -17,7 +17,7 @@ class AnalyticsNewslettersApi extends DntLog
 
     public function __construct()
     {
-		parent::__construct();
+        parent::__construct();
         $this->rest = new Rest();
         $this->dnt = new Dnt();
     }
@@ -27,7 +27,7 @@ class AnalyticsNewslettersApi extends DntLog
         $systemStatus = $this->rest->get('systemStatus');
 
         if (in_array($systemStatus, $this->availableStatus)) {
-            
+
             $url = urldecode($this->rest->get('url'));
 
             $data = [
@@ -44,12 +44,12 @@ class AnalyticsNewslettersApi extends DntLog
                 'system_status' => $data['systemStatus'],
                 'status' => http_response_code(),
             ];
-			
-			if($data['campainId'] == 'newsletter-qr-open-spring-2021'){
-				$this->dnt->redirect('http://85.248.116.69/dnt-markiza/forms/?action=redirector&nameUrl=spring-claim-2021-pdf&v2=true');
-				exit();
-			}
-			
+
+            if ($data['campainId'] == 'newsletter-qr-open-spring-2021') {
+                $this->dnt->redirect('http://85.248.116.69/dnt-markiza/forms/?action=redirector&nameUrl=spring-claim-2021-pdf&v2=true');
+                exit();
+            }
+
             $this->add($arr);
             if ($systemStatus == 'newsletter_log_click') {
                 $this->dnt->redirect($url);

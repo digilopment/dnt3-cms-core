@@ -37,7 +37,7 @@ class Cache
      */
     public function __construct()
     {
-		$this->dnt = new Dnt();
+        $this->dnt = new Dnt();
         $this->cacheFile = base64_encode(@$_SERVER['HTTP_HOST'] . @$_SERVER['REQUEST_URI']);
         $this->cacheFileName = $this->cacheDir . '/' . $this->cacheFile . '.txt';
         $this->cacheLogFile = $this->cacheDir . "/log.txt";

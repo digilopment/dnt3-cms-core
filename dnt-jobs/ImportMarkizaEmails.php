@@ -14,10 +14,11 @@ class ImportMarkizaEmailsJob
     protected $catId = 55;
     protected $vendorId = 39;
 
-public function __construct()
+    public function __construct()
     {
         $this->dnt = new Dnt();
     }
+
     protected function countEmails()
     {
         $db = new DB;
@@ -42,7 +43,7 @@ public function __construct()
             'email' => $email,
             'vendor_id' => $this->vendorId,
             'cat_id' => $this->catId,
-           'datetime_creat' => $this->dnt->datetime(),
+            'datetime_creat' => $this->dnt->datetime(),
             'datetime_update' => $this->dnt->datetime()
         );
 

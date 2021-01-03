@@ -14,10 +14,12 @@ class AplicationInstall
     protected $web;
     protected $adm;
 
-	public function __construct(){
-		$this->url = new Url();
-		$this->dnt = new Dnt();
-	}
+    public function __construct()
+    {
+        $this->url = new Url();
+        $this->dnt = new Dnt();
+    }
+
     protected function template()
     {
         print ('<!DOCTYPE html>

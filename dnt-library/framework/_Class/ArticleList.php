@@ -21,15 +21,16 @@ use DntLibrary\Base\Vendor;
 class ArticleList extends AdminContent
 {
 
+    public function __construct()
+    {
+        $this->articleView = new ArticleView();
+        $this->frontend = new Frontend();
+        $this->rest = new Rest();
+        $this->db = new DB();
+        $this->dnt = new Dnt();
+        $this->vendor = new Vendor();
+    }
 
-		public function __construct(){
-			$this->articleView = new ArticleView();
-			$this->frontend = new Frontend();
-			$this->rest = new Rest();
-			$this->db = new DB();
-			$this->dnt = new Dnt();
-			$this->vendor = new Vendor();
-		}
     /**
      * 
      * @param type $is_limit
@@ -114,7 +115,7 @@ class ArticleList extends AdminContent
      */
     public function query($postId = false, $servicesIDsStatic = false)
     {
- 
+
         if (isset($_GET['page'])) {
             $returnPage = "&page=" . $_GET['page'];
         } else {

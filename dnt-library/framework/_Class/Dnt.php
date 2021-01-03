@@ -18,10 +18,12 @@ use DntLibrary\Base\Vendor;
 class Dnt
 {
 
-	public function __construct(){
-		$this->db = new DB();
-		$this->vendor = new Vendor();
-	}
+    public function __construct()
+    {
+        $this->db = new DB();
+        $this->vendor = new Vendor();
+    }
+
     /**
      * 
      * @param type $table
@@ -29,7 +31,7 @@ class Dnt
      */
     public function getLastId($table, $vendor_id = false)
     {
-       
+
         if ($vendor_id) {
             $query = "SELECT MAX(id) FROM " . $table . " WHERE vendor_id = " . $vendor_id . "";
         } else {
@@ -55,7 +57,7 @@ class Dnt
      */
     public function getMaxValueFromColumn($table, $column, $vendor_id = true)
     {
-        
+
 
         if ($vendor_id) {
             $query = "SELECT MAX($column) FROM " . $table . " WHERE vendor_id = '" . $this->vendor->getId() . "'";
@@ -80,7 +82,7 @@ class Dnt
      */
     public function getLastIdVendor()
     {
-        
+
         $query = "SELECT MAX(id) FROM dnt_vendors ";
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
@@ -114,7 +116,7 @@ class Dnt
      */
     public function getIdEntity($lastId)
     {
-        
+
         $this->db->update(
                 'dnt_posts', //table
                 array(//set
@@ -479,7 +481,7 @@ class Dnt
 
         $img = $cesta . $fotka;
         $pripona = explode('.', $fotka);
-        if (!isset($pripona[1]) || $pripona[1] ==  'png')  {
+        if (!isset($pripona[1]) || $pripona[1] == 'png') {
             //fotka nema v url adrese priponu
             $fotka = $this->name_url($fotka) . '.jpg';
             $img = $cesta . $fotka;

@@ -20,15 +20,16 @@ use DntLibrary\Base\Vendor;
 class Frontend
 {
 
-
-	public function __construct(){
-		$this->article = new ArticleView();
+    public function __construct()
+    {
+        $this->article = new ArticleView();
         $this->settings = new Settings();
         $this->rest = new Rest();
         $this->navigation = new AppNavigation();
         $this->multiLanguage = new MultyLanguage();
         $this->vendor = new Vendor();
-	}
+    }
+
     /**
      * 
      * @param array $custom_data
@@ -36,7 +37,7 @@ class Frontend
      */
     public function get($custom_data = false, $id = false)
     {
-       
+
         $this->navigation->init();
 
 

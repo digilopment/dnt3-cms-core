@@ -20,14 +20,15 @@ use DntLibrary\Base\Vendor;
 class DntUpload
 {
 
+    public function __construct()
+    {
+        $this->db = new DB();
+        $this->dnt = new Dnt();
+        $this->image = new Image();
+        $this->faceModify = new FaceModify();
+        $this->vendor = new Vendor();
+    }
 
-	public function __construct(){
-			$this->db = new DB();
-			$this->dnt = new Dnt();
-			$this->image = new Image();
-			$this->faceModify = new FaceModify();
-			$this->vendor = new Vendor();
-		}
     /**
      *
      * image name
@@ -76,7 +77,7 @@ class DntUpload
     public function addDefaultImage($file, $table, $setColumn, $updateColumn, $updateValue, $path)
     {
         $dntUpload = new Upload(@$_FILES[$file]);
-		
+
         if (is_file($_FILES[$file]['tmp_name'])) {
             $insertedData = array();
             if ($dntUpload->uploaded) {
@@ -235,7 +236,7 @@ class DntUpload
                     $this->db->insert('dnt_uploads', $insertedData);
                 }
                 $insertedData['lastImageId'] = $this->dnt->getLastId('dnt_uploads', $vendorId);
-            }else{
+            } else {
                 echo $url . ' no upload<br/>';
             }
 

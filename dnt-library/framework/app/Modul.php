@@ -25,13 +25,13 @@ class Modul
     public $sitemapUrl = [];
     public $modul;
 
-	public function __construct()
+    public function __construct()
     {
         $this->vendor = new Vendor();
         $this->dnt = new Dnt();
         $this->db = new DB();
     }
-	
+
     public function getSitemap($client = false, $vendor_id = false)
     {
         $vendorId = ($vendor_id) ? $vendor_id : $this->vendor->getId();

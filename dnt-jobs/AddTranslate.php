@@ -9,9 +9,11 @@ use DntLibrary\Base\Vendor;
 class AddTranslateJob
 {
 
-	public function __construct(){
-		$this->multiLanguage = new MultyLanguage();
-	}
+    public function __construct()
+    {
+        $this->multiLanguage = new MultyLanguage();
+    }
+
     public function run()
     {
 

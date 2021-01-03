@@ -17,11 +17,13 @@ use DntLibrary\Base\Dnt;
 class Install
 {
 
-	public function __construct(){
-		$this->dbMysqli = new mysqli(DB_HOST, DB_USER, DB_PASS);
-		$this->db = new DB();
-		$this->dnt = new Dnt();
-	}
+    public function __construct()
+    {
+        $this->dbMysqli = new mysqli(DB_HOST, DB_USER, DB_PASS);
+        $this->db = new DB();
+        $this->dnt = new Dnt();
+    }
+
     /**
      * 
      * @return boolean
@@ -49,7 +51,7 @@ class Install
      */
     public function getColumns($query)
     {
-        
+
         $i = 1;
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $childArr) {
@@ -76,7 +78,7 @@ class Install
      */
     public function addVendor($tables, $VENDOR_NAME, $COPY_FROM, $VENDOR_LAYOUT = false, $DELETE_DATA = 1)
     {
-        
+
         $COPY_FROM = $COPY_FROM;
         $vendor_name = $VENDOR_NAME;
         $vendor_name_url = $this->dnt->name_url($VENDOR_NAME);
@@ -121,7 +123,7 @@ class Install
     public function delVendor($id, $tables)
     {
 
-        
+
 
         foreach ($tables as $table) {
             $where = array('vendor_id' => $id);
@@ -140,7 +142,7 @@ class Install
     public function moveVendor($id, $move_to, $tables)
     {
 
-        
+
 
         foreach ($tables as $table) {
             $where = array('vendor_id' => $id);
@@ -163,7 +165,7 @@ class Install
 
     public function updateIdEntity($tables)
     {
-        
+
         foreach ($tables as $table) {
             $query = "SELECT * FROM $table WHERE 1";
             if ($this->db->num_rows($query) > 0) {
@@ -208,7 +210,7 @@ class Install
         }
         $this->dbMysqli->close();
 
-        
+
 
 
         //INSERT DATA
@@ -247,7 +249,7 @@ class Install
     {
 
 
-        
+
 
 
         //INSERT DATA

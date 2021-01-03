@@ -12,7 +12,6 @@ namespace DntLibrary\Base;
 
 use DntLibrary\Base\DB;
 use DntLibrary\Base\Dnt;
-use DntLibrary\Base\Image;
 use DntLibrary\Base\Vendor;
 
 class Image
@@ -23,12 +22,14 @@ class Image
     const MEDIUM = 600;
     const LARGE = 950;
 
-	public function __construct(){
-		$this->db = new DB();
-		$this->dnt = new Dnt();
-		$this->vendor = new Vendor();
-		$this->settings = new Settings();
-	}
+    public function __construct()
+    {
+        $this->db = new DB();
+        $this->dnt = new Dnt();
+        $this->vendor = new Vendor();
+        $this->settings = new Settings();
+    }
+
     /**
      * 
      * @param type $id

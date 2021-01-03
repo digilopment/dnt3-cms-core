@@ -16,10 +16,12 @@ use DntLibrary\Base\Dnt;
 class XMLgenerator
 {
 
-	public function __construct(){
-		$this->db = new DB();
-		$this->dnt = new Dnt();
-	}
+    public function __construct()
+    {
+        $this->db = new DB();
+        $this->dnt = new Dnt();
+    }
+
     /**
      * 
      * @param type $array

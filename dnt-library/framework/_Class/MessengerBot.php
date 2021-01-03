@@ -28,7 +28,7 @@ class MessengerBot
      */
     public function __construct()
     {
-		$this->settings = new Settings();
+        $this->settings = new Settings();
         $this->hubVerifyToken = $this->settings->get("msg_hub_verify_token");
         $this->accessToken = $this->settings->get("msg_access_token");
     }

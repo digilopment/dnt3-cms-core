@@ -21,10 +21,12 @@ use function websettings;
 class Settings
 {
 
-	public function __construct(){
-		$this->db = new DB();
-		$this->vendor = new Vendor();
-	}
+    public function __construct()
+    {
+        $this->db = new DB();
+        $this->vendor = new Vendor();
+    }
+
     /**
      * 
      * @param type $key
@@ -52,7 +54,7 @@ class Settings
         foreach ($parsed['globals']['GLOBALS'] as $key2 => $val) {
             $final[strtolower($key2)] = $GLOBALS[$key2];
         }
-        
+
         $final['database'] = $this->getAllSettings();
 
         $vendorLoadedSettings = [];

@@ -18,16 +18,15 @@ use DntLibrary\Base\Vendor;
 class MultyLanguage
 {
 
-
-
     public $countActiveLangs = false;
-	
-	public function __construct(){
-		$this->db = new DB();
-		$this->dnt = new Dnt();
-		$this->rest = new Rest();
-		$this->vendor = new Vendor();
-	}
+
+    public function __construct()
+    {
+        $this->db = new DB();
+        $this->dnt = new Dnt();
+        $this->rest = new Rest();
+        $this->vendor = new Vendor();
+    }
 
     /**
      * 
@@ -126,7 +125,7 @@ class MultyLanguage
      */
     public function getLang()
     {
-		return $this->rest->webhook(0);
+        return $this->rest->webhook(0);
     }
 
     /**
@@ -267,7 +266,7 @@ class MultyLanguage
         $table = isset($data['table']) ? $data['table'] : false;
         //$default 		= isset($data['default']) ? $data['default'] : false;
         $lang_id = isset($data['lang_id']) ? $data['lang_id'] : false;
-		
+
         if ($column) {
             $dbColumn = $column;
         } else {

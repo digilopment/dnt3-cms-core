@@ -178,7 +178,7 @@ class NewsletterCampaignTest
                 $email = base64_decode(urldecode($this->dnt->HexToStr(explode('&', explode('id=', $link)[1])[0])));
                 $final['logout'][$email] = (int) $count;
                 $countLogout += $count;
-                $countLogoutUnique ++;
+                $countLogoutUnique++;
             } else {
                 if (!empty($link)) {
                     $final['default'][$link] = (int) $count;

@@ -18,13 +18,14 @@ use DntLibrary\Base\Vendor;
 class Meta
 {
 
+    public function __construct()
+    {
+        $this->db = new DB();
+        $this->dnt = new Dnt();
+        $this->vendor = new Vendor();
+        $this->rest = new Rest();
+    }
 
-	public function __construct(){
-		$this->db = new DB();
-		$this->dnt = new Dnt();
-		$this->vendor = new Vendor();
-		$this->rest = new Rest();
-	}
     /**
      * 
      * @return type
@@ -280,7 +281,7 @@ class Meta
      */
     public function getCompetitionMetaByInput($key, $competition_id)
     {
-        
+
         $query = "SELECT `value` FROM `dnt_microsites_composer` WHERE 
 				`vendor_id` = '" . $this->vendor->getId() . "' AND 
 				`competition_id` = '" . $competition_id . "' AND
@@ -406,7 +407,7 @@ class Meta
             foreach ($this->db->get_results($query) as $row) {
                 $indexes[] = $row['meta'];
                 $values[] = $row['value'];
-                $i ++;
+                $i++;
             }
 
             $return = array_combine($indexes, $values);

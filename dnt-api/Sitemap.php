@@ -12,9 +12,11 @@ use DntLibrary\Base\Rest;
 class SitemapApi
 {
 
-	public function __construct(){
-		$this->navigation = new Navigation();
-	}
+    public function __construct()
+    {
+        $this->navigation = new Navigation();
+    }
+
     public function run()
     {
 

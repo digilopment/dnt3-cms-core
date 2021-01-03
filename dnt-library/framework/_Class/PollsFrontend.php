@@ -13,21 +13,22 @@ namespace DntLibrary\Base;
 use DntLibrary\Base\Cookie;
 use DntLibrary\Base\DB;
 use DntLibrary\Base\Polls;
-use DntLibrary\Base\PollsFrontend;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Vendor;
 
 class PollsFrontend extends Polls
 {
 
-	public function __construct(){
-		parent::__construct();
-		$this->db = new DB();
-		$this->dnt = new Dnt();
-		$this->vendor = new Vendor();
-		$this->rest = new Rest();
-		$this->cookie = new Cookie();
-	}
+    public function __construct()
+    {
+        parent::__construct();
+        $this->db = new DB();
+        $this->dnt = new Dnt();
+        $this->vendor = new Vendor();
+        $this->rest = new Rest();
+        $this->cookie = new Cookie();
+    }
+
     /**
      * 
      * @param type $index

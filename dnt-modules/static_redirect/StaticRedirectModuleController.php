@@ -8,9 +8,11 @@ use DntLibrary\Base\Dnt;
 class StaticRedirectModuleController
 {
 
-	public function __construct(){
-		 $this->dnt = new Dnt();
-	}
+    public function __construct()
+    {
+        $this->dnt = new Dnt();
+    }
+
     public function run()
     {
         $article = new ArticleView();

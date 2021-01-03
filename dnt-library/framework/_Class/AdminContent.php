@@ -2,11 +2,10 @@
 
 namespace DntLibrary\Base;
 
-use DntLibrary\Base\AdminContent;
+use DntLibrary\Base\DB;
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\MultyLanguage;
 use DntLibrary\Base\Vendor;
-use DntLibrary\Base\DB;
 
 /**
  *  class       AdminContent
@@ -18,13 +17,14 @@ use DntLibrary\Base\DB;
 class AdminContent extends MultyLanguage
 {
 
-	public function __construct(){
-			$this->multiLanguage = new MultyLanguage();
-			$this->db = new DB();
-			$this->dnt = new Dnt();
-			$this->vendor = new Vendor();
-		}
-		
+    public function __construct()
+    {
+        $this->multiLanguage = new MultyLanguage();
+        $this->db = new DB();
+        $this->dnt = new Dnt();
+        $this->vendor = new Vendor();
+    }
+
     /**
      * 
      * @return int

@@ -18,14 +18,14 @@ use function custom_modules;
 
 class Rest
 {
-	
-	
-	public function __construct(){
-		$this->dnt = new Dnt();
-		$this->webhook = new Webhook();
-		$this->settings = new Settings();
-	}
-	
+
+    public function __construct()
+    {
+        $this->dnt = new Dnt();
+        $this->webhook = new Webhook();
+        $this->settings = new Settings();
+    }
+
     /**
      * 
      * @param type $get
@@ -106,7 +106,7 @@ class Rest
                 $return = $GLOBALS['DB_PROTOCOL'] . $db_domain . $request;
                 $this->dnt->redirect($return);
                 exit;
-            } elseif ($this->dnt->in_string("www.", $DB_DOMAIN_ONLY) && ! $this->dnt->in_string("www.", WWW_FULL_PATH)) {
+            } elseif ($this->dnt->in_string("www.", $DB_DOMAIN_ONLY) && !$this->dnt->in_string("www.", WWW_FULL_PATH)) {
                 $db_domain = $GLOBALS['DB_DOMAIN'];
                 $origin_domain = $GLOBALS['ORIGIN_PROTOCOL'] . $GLOBALS['ORIGIN_DOMAIN'];
                 $request = explode($origin_domain, WWW_FULL_PATH);
@@ -138,7 +138,7 @@ class Rest
                 return false;
             }
         }
-		$this->globals;
+        $this->globals;
     }
 
     public function getModulUrl($module)
@@ -153,7 +153,7 @@ class Rest
      */
     protected function oldModulesRegistrator()
     {
-        $file = "dnt-view/layouts/" .  $this->vendor->getLayout() . "/conf.php";
+        $file = "dnt-view/layouts/" . $this->vendor->getLayout() . "/conf.php";
         if (file_exists($file)) {
             include_once $file;
             if (function_exists("custom_modules")) {
@@ -173,7 +173,7 @@ class Rest
             return $GLOBALS['GET_MODUL'];
         }
         $return = false;
-        $file = "dnt-view/layouts/" .  $this->vendor->getLayout() . "/Configurator.php";
+        $file = "dnt-view/layouts/" . $this->vendor->getLayout() . "/Configurator.php";
         if (file_exists($file)) {
             include $file;
             $configurator = new Configurator();
@@ -253,9 +253,9 @@ class Rest
      */
     public function loadDefault()
     {
-        $layout =  $this->vendor->getLayout();
+        $layout = $this->vendor->getLayout();
         if ($layout) {
-            include "dnt-view/layouts/" .  $this->vendor->getLayout() . "/modules/default/webhook.php";
+            include "dnt-view/layouts/" . $this->vendor->getLayout() . "/modules/default/webhook.php";
         } else {
             include "dnt-view/layouts/default/modules/default/webhook.php";
         }
@@ -267,7 +267,7 @@ class Rest
      */
     public function loadMyModul($module)
     {
-        $layout =  $this->vendor->getLayout();
+        $layout = $this->vendor->getLayout();
         $function = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/functions.php";
         $template = "dnt-view/layouts/" . $layout . "/modules/" . $module . "/webhook.php";
         $webhookModule = "dnt-modules/" . $module . "/webhook.php";

@@ -21,13 +21,14 @@ class DntLog
 {
 
     public $results;
-	
-	public function __construct(){
-		$this->db = new DB();
-		$this->dnt = new Dnt();
-		$this->vendor = new Vendor();
-		$this->sessions = new Sessions();
-	}
+
+    public function __construct()
+    {
+        $this->db = new DB();
+        $this->dnt = new Dnt();
+        $this->vendor = new Vendor();
+        $this->sessions = new Sessions();
+    }
 
     /**
      * 
@@ -89,7 +90,7 @@ class DntLog
         } else {
             $headerMsgCache = "no-cache";
         }
-		
+
         $this->sessions->init();
         if (isset($arr['http_response'])) {
             if ($http_request == $httpCacheStatus) {
@@ -165,7 +166,7 @@ class DntLog
         if (isset($arr['http_response'])) {
             $this->get_http_header(array("http_response" => $arr['http_response']));
         }
-		
+
         $this->sessions->init();
 
         if (isset($arr['msg'])) {

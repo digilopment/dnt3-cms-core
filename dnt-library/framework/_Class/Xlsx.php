@@ -14,7 +14,7 @@ use DntLibrary\Base\Vendor;
 
 class Xlsx
 {
-	
+
     /**
      * 
      * @param type $path

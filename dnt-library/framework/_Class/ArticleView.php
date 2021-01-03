@@ -24,9 +24,9 @@ use DntLibrary\Base\Webhook;
 class ArticleView extends AdminContent
 {
 
-
-	public function __construct(){
-		$this->db = new DB();
+    public function __construct()
+    {
+        $this->db = new DB();
         $this->settings = new Settings();
         $this->rest = new Rest();
         $this->navigation = new Navigation();
@@ -36,7 +36,8 @@ class ArticleView extends AdminContent
         $this->image = new Image();
         $this->dnt = new Dnt();
         $this->webhook = new Webhook();
-	}
+    }
+
     /**
      * 
      * @param type $post_type
@@ -62,7 +63,7 @@ class ArticleView extends AdminContent
         } else {
             $andPost = "`cat_id` = '" . $this->getCatId($post_type) . "' AND ";
         }
-		
+
         $query = "SELECT * FROM dnt_posts WHERE 
             `show`      > '0' AND 
             " . $andPost . "
@@ -266,7 +267,7 @@ class ArticleView extends AdminContent
     public function getPostParam($column, $post_id, $full_url = false, $default = false)
     {
 
- 
+
 
         if (DEAFULT_LANG == $this->multiLanguage->getLang() || MULTY_LANGUAGE == false) {
             $Q_column = $column;

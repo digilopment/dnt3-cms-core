@@ -72,7 +72,7 @@ class PostVariants
             $groupId = $config['group_id'];
             $setShow = ($config['add_hide'] == 1) ? 'AND `show` > 0' : 'AND (`show` = 1 or `show` = 2)';
         }
-        $query = "SELECT * FROM dnt_posts WHERE `group_id` = $groupId AND vendor_id = '" . $this->vendor->getId() . "' ".$setShow;
+        $query = "SELECT * FROM dnt_posts WHERE `group_id` = $groupId AND vendor_id = '" . $this->vendor->getId() . "' " . $setShow;
         if ($this->db->num_rows($query) > 0) {
             $data = $this->db->get_results($query);
         }

@@ -18,12 +18,14 @@ use DntLibrary\Base\Vendor;
 class AdminMailer
 {
 
-	public function __construct(){
-		$this->adminContent = new AdminContent();
-		$this->db = new DB();
-		$this->dnt = new Dnt();
-		$this->vendor = new Vendor();
-	}
+    public function __construct()
+    {
+        $this->adminContent = new AdminContent();
+        $this->db = new DB();
+        $this->dnt = new Dnt();
+        $this->vendor = new Vendor();
+    }
+
     /**
      * 
      * @return int
@@ -91,16 +93,15 @@ class AdminMailer
         } else
             $typ = false;
 
-        if ($is_limit == false){
+        if ($is_limit == false) {
             $limit = false;
-			$query = "SELECT parent_id FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . $this->vendor->getId() . "' " . $typ . " " . $limit . "";
-		}
-        else{
+            $query = "SELECT parent_id FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . $this->vendor->getId() . "' " . $typ . " " . $limit . "";
+        } else {
             $limit = $is_limit;
-			$query = "SELECT * FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . $this->vendor->getId() . "' " . $typ . " ORDER BY `id` DESC " . $limit . "";
-		}
+            $query = "SELECT * FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . $this->vendor->getId() . "' " . $typ . " ORDER BY `id` DESC " . $limit . "";
+        }
 
-        
+
         return $query;
     }
 

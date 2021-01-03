@@ -17,11 +17,13 @@ use DntLibrary\Base\Vendor;
 class Navigation
 {
 
-	public function __construct(){
-		$this->db = new DB();
-		$this->vendor = new Vendor();
-		$this->adminContent = new AdminContent();
-	}
+    public function __construct()
+    {
+        $this->db = new DB();
+        $this->vendor = new Vendor();
+        $this->adminContent = new AdminContent();
+    }
+
     /**
      * 
      * @return type

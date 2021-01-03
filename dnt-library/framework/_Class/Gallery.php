@@ -16,11 +16,13 @@ use DntLibrary\Base\Vendor;
 
 class Gallery extends ArticleView
 {
-	
-	public function __construct(){
-		$this->db = new DB();
-		$this->vendor = new Vendor();
-	}
+
+    public function __construct()
+    {
+        $this->db = new DB();
+        $this->vendor = new Vendor();
+    }
+
     public function getGalleriesIds($postId = false)
     {
         $data = array();

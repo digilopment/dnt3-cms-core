@@ -10,7 +10,7 @@
 
 namespace DntLibrary\Base;
 
-use DntLibrary\Base\Db;
+use DntLibrary\Base\DB;
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Image;
 use DntLibrary\Base\Sessions;
@@ -20,15 +20,15 @@ use DntLibrary\Base\XMLgenerator;
 class AdminUser extends Image
 {
 
-	public function __construct()
+    public function __construct()
     {
         $this->dnt = new Dnt();
         $this->sessions = new Sessions();
         $this->vendor = new Vendor();
         $this->xml = new XMLgenerator();
-		$this->db = new DB();
+        $this->db = new DB();
     }
-	
+
     public function validProcessLogin($type, $email, $pass)
     {
         $query = "SELECT pass FROM dnt_users WHERE type = '$type' AND email = '" . $email . "' AND vendor_id = '" . $this->vendor->getId() . "'";
@@ -124,13 +124,13 @@ class AdminUser extends Image
         } else {
             $andType = false;
         }
-		
-		if ($column) {
+
+        if ($column) {
             $getColumn = $column;
         } else {
             $getColumn = '*';
         }
-		
+
         $query = "SELECT $getColumn FROM dnt_users WHERE email = '" . $email . "' " . $andType . " AND vendor_id = '" . $this->vendor->getId() . "'";
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {

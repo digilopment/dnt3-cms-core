@@ -20,14 +20,16 @@ use DntLibrary\Base\Vendor;
 class Voucher
 {
 
-	public function __construct(){
-		$this->db = new Db();
-		$this->frontend = new Frontend();
-		$this->dnt = new Dnt();
-		$this->mailer = new Mailer();
-		$this->user = new User();
-		$this->vendor = new Vendor();
-	}
+    public function __construct()
+    {
+        $this->db = new DB();
+        $this->frontend = new Frontend();
+        $this->dnt = new Dnt();
+        $this->mailer = new Mailer();
+        $this->user = new User();
+        $this->vendor = new Vendor();
+    }
+
     protected function sentEmail($recipientEmail, $voucherValue)
     {
 
