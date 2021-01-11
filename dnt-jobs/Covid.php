@@ -94,6 +94,11 @@ class CovidJob
             'latest' => $this->getValue('covid-died-today'),
             'new' => $this->getValue('covid-died-new'),
         ];
+		$final['injected'] = [
+            'updatedFormated' => $updated,
+            'latest' => $this->getValue('covid-injected-today'),
+            'new' => $this->getValue('covid-injected-new'),
+        ];
         return $final;
     }
 
