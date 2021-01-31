@@ -205,8 +205,22 @@ class AdminMailer
         } else {
             $return = $adresa[1]; //this function return an array
         }
+		
+		if($index == 'next'){
+			$pageId = isset($_GET['page']) ? $_GET['page'] + 1 : 2;
+		}elseif($index == 'first'){
+			$pageId = 1;
+		}elseif($index == 'last'){
+			$pageId = 100;
+		}elseif($index == 'prev'){
+			$pageId = ($_GET['page'] - 1 >= 1)?$_GET['page'] - 1 : 1;
+		}
+		elseif ($index == "current") {
+            $pageId = $_GET['page'];
+        }
 
-        return WWW_PATH_ADMIN . "index.php?" . $return . "&page=" . $this->getPage($index, $countPages);
+        //return WWW_PATH_ADMIN . "index.php?" . $return . "&page=" . $this->getPage($index, $countPages);
+        return WWW_PATH_ADMIN . "index.php?" . $return . "&page=" . $pageId;
     }
 
     /**

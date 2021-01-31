@@ -12,6 +12,7 @@ use DntLibrary\Base\Rest;
 use DntLibrary\Base\Sessions;
 use DntLibrary\Base\Settings;
 use DntLibrary\Base\Vendor;
+use DntLibrary\App\Post;
 
 class MailerController extends AdminController
 {
@@ -43,6 +44,7 @@ class MailerController extends AdminController
         $this->mailer = new Mailer();
         $this->subscriber = new Subscriber();
         $this->settings = new Settings();
+        $this->post = new Post();
     }
 
     protected function categories()
@@ -89,8 +91,8 @@ class MailerController extends AdminController
         $data['countMails'] = $this->countEmails;
         $data['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
         $data['pageLimit'] = $this->adminMailer->limit();
-        $q = $this->adminMailer->prepare_query(false);
-        $data['countPages'] = $this->db->num_rows($q);
+        //$q = $this->adminMailer->prepare_query(false);
+        $data['countPages'] = 1; //$this->db->num_rows($q);
         $this->loadTemplate($this->loc, 'default', $data);
     }
 
@@ -373,7 +375,10 @@ class MailerController extends AdminController
             $senderEmail = $this->rest->post('senderEmail');
 
             if ($this->rest->post('template') != '') {
-                $content = $this->rest->post('template');
+                $id = $this->rest->post('template');
+				$part = $this->post->getPost($id);
+				$content = $part->content;
+				//var_dump($content);
             }
             if ($this->rest->post('url_external') != '') {
                 $content = file_get_contents($this->rest->post('url_external'));

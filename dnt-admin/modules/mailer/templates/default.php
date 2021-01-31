@@ -121,7 +121,7 @@ $countPages = $data['countPages'];
                 <div class="modal-content">
                     <div class="modal-header bg-blue">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel8">Pridať email do zoznamu</h4>
+                        <h4 class="modal-title" id="myModalLabel8">Odoslať hromadný email</h4>
                     </div>
                     <div class="modal-body">
                         <h4><strong>Nastavenia odosielateľa</strong></h4>
@@ -140,10 +140,10 @@ $countPages = $data['countPages'];
                         <select name="template" id="cname" class="form-control" minlength="2" required="">
                             <option value="NULL">(vyberte šablonu)</option>
                             <?php
-                            $query = "SELECT * FROM dnt_posts WHERE cat_id = '293' AND vendor_id = '" . $vendor->getId() . "'";
+                            $query = "SELECT * FROM dnt_posts WHERE cat_id = '293' AND vendor_id = '" . $vendor->getId() . " AND `show` = 1'";
                             if ($db->num_rows($query) > 0) {
                                 foreach ($db->get_results($query) as $row) {
-                                    echo"<option value='" . $row['cat_id'] . "'>" . $row['name'] . "</option>";
+                                    echo"<option value='" . $row['id_entity'] . "'>" . $row['name'] . "</option>";
                                 }
                             }
                             ?>
@@ -215,7 +215,7 @@ $countPages = $data['countPages'];
                         <?php
                         $query = $adminMailer->query();			
                         //$i = $adminMailer->showOrder();
-                        $page = $adminMailer->getPage("current");
+                        $page = 1; //$adminMailer->getPage("current");
 						$i = $data['page'] * $data['pageLimit'] - $data['pageLimit'] + 1;
                         if ($db->num_rows($query) > 0) {
                             foreach ($db->get_results($query) as $row) {
@@ -235,6 +235,7 @@ $countPages = $data['countPages'];
                                     <td>
                                         <select name="cat_id" id="cname" class="form-control" minlength="2" required >
                                             <?php
+											echo '<option value="" >(bez kategórie)</option>';
                                             foreach ($data['categories'] as $cat) {
                                                 if ($cat['id_entity'] == $row['cat_id'])
                                                     echo"<option value='" . $cat['id_entity'] . "' selected>" . $cat['name'] . "</option>";
@@ -269,6 +270,25 @@ $countPages = $data['countPages'];
                 </table>
             </div>
 	
+			<ul class="pagination">
+                <li class="">
+                    <a href="<?php echo $adminMailer->paginator("prev", $countPages); ?>">
+                        &laquo;
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $adminMailer->paginator("current", $countPages); ?>">
+                        <?php echo isset($_GET['page']) ? $_GET['page'] : 1 ?>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $adminMailer->paginator("next", $countPages); ?>">
+                        &raquo;
+                    </a>
+                </li>
+            </ul>
+			
+			<?php /*
             <ul class="pagination">
                 <li class="">
                     <a href="<?php echo $adminMailer->paginator("prev", $countPages); ?>">
@@ -291,6 +311,7 @@ $countPages = $data['countPages'];
                     </a>
                 </li>
             </ul>
+			*/?>
             <!-- END PAGINATION -->
         </div>
         <div class="tab-pane " id="kat">
