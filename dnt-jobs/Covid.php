@@ -78,26 +78,45 @@ class CovidJob
             'latest' => $this->getValue('covid-test-today'),
             'new' => $this->getValue('covid-test-new'),
         ];
+		 $final['testedAG'] = [
+            'updatedFormated' => $updated,
+            'latest' => $this->getValue('covid-testAG-today'),
+            'new' => $this->getValue('covid-testAG-new'),
+        ];
         $final['infected'] = [
             'updatedFormated' => $updated,
             'latest' => $this->getValue('covid-infected-today'),
             'new' => $this->getValue('covid-infected-new'),
         ];
-
-        $final['recovered'] = [
+		$final['inficatedAG'] = [
             'updatedFormated' => $updated,
-            'latest' => $this->getValue('covid-recovered-today'),
-            'new' => $this->getValue('covid-recovered-new'),
+            'latest' => $this->getValue('covid-inficatedAG-today'),
+            'new' => $this->getValue('covid-inficatedAG-new'),
         ];
         $final['died'] = [
             'updatedFormated' => $updated,
             'latest' => $this->getValue('covid-died-today'),
             'new' => $this->getValue('covid-died-new'),
         ];
+		 $final['hospital'] = [
+            'updatedFormated' => $updated,
+            'latest' => $this->getValue('covid-hospital-today', false),
+            'new' => $this->getValue('covid-hospital-new', false),
+        ];
 		$final['injected'] = [
             'updatedFormated' => $updated,
             'latest' => $this->getValue('covid-injected-today'),
             'new' => $this->getValue('covid-injected-new'),
+        ];
+		$final['injectedFirst'] = [
+            'updatedFormated' => $updated,
+            'latest' => $this->getValue('covid-injectedFirst-today'),
+            'new' => $this->getValue('covid-injectedFirst-new'),
+        ];
+		$final['injectedSecond'] = [
+            'updatedFormated' => $updated,
+            'latest' => $this->getValue('covid-injectedSecond-today'),
+            'new' => $this->getValue('covid-injectedSecond-new'),
         ];
         return $final;
     }
