@@ -34,7 +34,7 @@ class MailerController extends AdminController
 
     public function __construct()
     {
-		parent::__construct();
+        parent::__construct();
         $this->db = new DB();
         $this->rest = new Rest();
         $this->adminMailer = new AdminMailer();
@@ -231,8 +231,10 @@ class MailerController extends AdminController
         $this->replacedcontent = str_replace('<url=UNSUBSCRIBE_URL=>', $logoutUrl, $this->replacedcontent);
         if (!empty($recipient['name'])) {
             $this->replacedcontent = str_replace('<macro=NAME/>', $recipient['name'], $this->replacedcontent);
+            $this->replacedcontent = str_replace('<macro=NAME_COMMA/>', $recipient['name'] . ', ', $this->replacedcontent);
         } else {
             $this->replacedcontent = str_replace('<macro=NAME/>', 'Milý fanúšik', $this->replacedcontent);
+            $this->replacedcontent = str_replace('<macro=NAME_COMMA/>', 'Milý fanúšik, ', $this->replacedcontent);
         }
         $this->replacedcontent = str_replace('<macro=SURNAME/>', $recipient['surname'], $this->replacedcontent);
         $this->replacedcontent = str_replace('<macro=EMAIL/>', $recipient['email'], $this->replacedcontent);
@@ -245,6 +247,15 @@ class MailerController extends AdminController
     {
         $value = unpack('H*', $input);
         return base_convert($value[1], 16, 2);
+    }
+
+    protected function createNameFromEmail($email)
+    {
+        $arr = explode('@', $email);
+        if (isset($arr[0])) {
+            return $arr[0];
+        }
+        return $email;
     }
 
     protected function checkClick($content, $recipient, $campainId)
@@ -296,7 +307,11 @@ class MailerController extends AdminController
                 $content = $this->session->get('content');
                 $campain = $this->session->get('campain');
                 $useSenderFromEmail = $this->session->get('useSenderFromEmail');
-
+                
+                if (!$recipient['name']) {
+                    $recipient['name'] = $this->createNameFromEmail($recipient['email']);
+                }
+                
                 $senderName = $this->session->get('senderName');
                 if (isset($recipient['sender_name']) && !empty($recipient['sender_name']) && $useSenderFromEmail) {
                     $senderName = $recipient['sender_name'];
@@ -330,8 +345,10 @@ class MailerController extends AdminController
 
                 if (empty($recipient['name'])) {
                     $subject = str_replace('<macro=NAME/>', 'Milý fanúšik', $subject);
+                    $subject = str_replace('<macro=NAME_COMMA/>', 'Milý fanúšik, ', $subject);
                 } else {
                     $subject = str_replace('<macro=NAME/>', $recipient['name'], $subject);
+                    $subject = str_replace('<macro=NAME_COMMA/>', $recipient['name'] . ', ', $subject);
                 }
 
                 $this->mailer->set_msg($content);
@@ -376,9 +393,9 @@ class MailerController extends AdminController
 
             if ($this->rest->post('template') != '') {
                 $id = $this->rest->post('template');
-				$part = $this->post->getPost($id);
-				$content = $part->content;
-				//var_dump($content);
+                $part = $this->post->getPost($id);
+                $content = $part->content;
+                //var_dump($content);
             }
             if ($this->rest->post('url_external') != '') {
                 $content = file_get_contents($this->rest->post('url_external'));

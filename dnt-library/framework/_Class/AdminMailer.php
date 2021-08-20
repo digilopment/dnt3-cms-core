@@ -200,23 +200,25 @@ class AdminMailer
     {
         $adresa = explode("?", WWW_FULL_PATH);
         if (isset($_GET['page'])) {
+            $page = $_GET['page'];
             $adresa_bez_page = explode("&page=" . $_GET['page'] . "", $adresa[1]); //src=obsah&page=2
             $return = $adresa_bez_page[0];
         } else {
             $return = $adresa[1]; //this function return an array
+            $page = 1;
         }
 		
 		if($index == 'next'){
-			$pageId = isset($_GET['page']) ? $_GET['page'] + 1 : 2;
+			$pageId = isset($page) ? $page + 1 : 2;
 		}elseif($index == 'first'){
 			$pageId = 1;
 		}elseif($index == 'last'){
 			$pageId = 100;
 		}elseif($index == 'prev'){
-			$pageId = ($_GET['page'] - 1 >= 1)?$_GET['page'] - 1 : 1;
+			$pageId = ($page - 1 >= 1)?$page - 1 : 1;
 		}
 		elseif ($index == "current") {
-            $pageId = $_GET['page'];
+            $pageId = $page;
         }
 
         //return WWW_PATH_ADMIN . "index.php?" . $return . "&page=" . $this->getPage($index, $countPages);
