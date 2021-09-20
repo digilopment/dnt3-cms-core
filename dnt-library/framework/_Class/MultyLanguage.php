@@ -78,9 +78,9 @@ class MultyLanguage
             $limit = false;
         else
             $limit = $is_limit;
-
+		//DEAFULT_LANG
         $query = "SELECT * FROM dnt_translates WHERE 
-			 lang_id = '" . DEAFULT_LANG . "' AND
+			 lang_id = '" . $GLOBALS['ORIGIN_DOMAIN_LNG'] . "' AND
 			 vendor_id = '" . $this->vendor->getId() . "'
 			 " . $typ . " ORDER BY `id` DESC " . $limit . "";
 
@@ -175,7 +175,7 @@ class MultyLanguage
     public function getLangs($frontend = false)
     {
         if (MULTY_LANGUAGE == false) {
-            return "SELECT * FROM dnt_languages WHERE `slug` = '" . DEAFULT_LANG . "' AND vendor_id = '" . $this->vendor->getId() . "'";
+            return "SELECT * FROM dnt_languages WHERE `slug` = '" . $GLOBALS['ORIGIN_DOMAIN_LNG'] . "' AND vendor_id = '" . $this->vendor->getId() . "'";
         } else {
             if ($frontend == true) {
                 return "SELECT * FROM dnt_languages WHERE `show` = '1' AND vendor_id = '" . $this->vendor->getId() . "'";

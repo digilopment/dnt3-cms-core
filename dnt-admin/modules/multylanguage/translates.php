@@ -59,7 +59,6 @@ $multiLanguage = new MultyLanguage;
 					 
 					 <?php 
 					 $query = $multiLanguage->query();
-					 
 					 if($rest->get("page")){
 						$nextPage =  ceil($rest->get("page") +1);
 						$prevPage =  ceil($rest->get("page") -1);
