@@ -2,18 +2,11 @@
 
 namespace DntTest;
 
-use SendGrid\Mail\Mail;
-
 class SendGridV3Test
 {
 
     protected $dnt;
-
-    public function __construct()
-    {
-        $this->sendgrid = $email = new Mail();
-    }
-
+	
     public function run()
     {
         $SEND_GRID_API_TEMPLATE_ID = '21118ecf-c7b2-48fc-bc5d-2751472db4a3';

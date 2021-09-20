@@ -7,7 +7,7 @@ use DntLibrary\Base\Vendor;
 
 function configMenuItems()
 {
-	$vendor = new Vendor();
+    $vendor = new Vendor();
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
         '`type`' => "menu",
@@ -541,7 +541,7 @@ function configMenuItems()
         '`show`' => '1',
         '`parent_id`' => '0',
     );
-    
+
 
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
@@ -555,8 +555,8 @@ function configMenuItems()
         '`show`' => '1',
         '`parent_id`' => '0',
     );
-    
-    
+
+
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
         '`type`' => "menu",
@@ -587,37 +587,39 @@ function configMenuItems()
 
 function menuQuery()
 {
+    $vendor = new Vendor();
     $query = "SELECT * FROM `dnt_admin_menu` WHERE `vendor_id` = " . $vendor->getId() . " ORDER BY `type`, `order`";
     return $query;
 }
 
-function createKey($key){
-	$dnt = new Dnt();
-	return str_replace('-', '', $dnt->name_url($key));
+function createKey($key)
+{
+    $dnt = new Dnt();
+    return str_replace('-', '', $dnt->name_url($key));
 }
 
 function addToMenu()
 {
     $db = new DB();
     $query = menuQuery();
-	$menuData = configMenuItems();
-		/*foreach ($db->get_results($query) as $row) {
-			//var_dump($row);	
-		}
+    $menuData = configMenuItems();
+    /* foreach ($db->get_results($query) as $row) {
+      //var_dump($row);
+      }
 
-		$menuData = configMenuItems();
-		foreach ($menuData as $data) {
-			//var_dump($data);
-		}
-	*/
-	$configKeys = [];
+      $menuData = configMenuItems();
+      foreach ($menuData as $data) {
+      //var_dump($data);
+      }
+     */
+    $configKeys = [];
     foreach ($menuData as $key => $value) {
-        $configKeys[] = createKey($value['`name`'].$value['`name_url`'].$value['`name_url_sub`']);
+        $configKeys[] = createKey($value['`name`'] . $value['`name_url`'] . $value['`name_url_sub`']);
     }
 
-	$existingKey = [];
+    $existingKey = [];
     foreach ($db->get_results($query) as $row) {
-        $existingKey[] = createKey($row['name'].$row['name_url'].$row['name_url_sub']);
+        $existingKey[] = createKey($row['name'] . $row['name_url'] . $row['name_url_sub']);
     }
 
     $diffedArray = array_diff($configKeys, $existingKey);
