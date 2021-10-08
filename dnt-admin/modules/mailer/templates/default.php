@@ -134,6 +134,12 @@ $countPages = $data['countPages'];
                         <input type="checkbox" name="useSenderFromEmail" checked=""/> Ak je pri emaile v zozname emailov vyplnený <b>odosielateľ</b> a <b>email odosielateľa</b>, použiť tento email a meno (email odosielateľa a meno odosielateľa) na doručenie konkrétnej emailovej adresy pod týmito doručovacími údajmi.
                         <br/>
                         <input type="checkbox" name="addUrlIdentificator"/> Pridať ku cieľovým URL-adresám <b>dnt3ClickId</b> identifikátor.
+                        <h4><strong>Metóda odosielania</strong></h4>
+                        <select name="senderMethod" id="cname" class="form-control" minlength="2" required="">
+                            <option value="sendGrid">Send Grid</option>
+                            <option value="sendGridV3">Send Grid V3</option>
+                            <option value="smtp">Smtp Server</option>
+                        </select>
                         <h4><strong>Šablóna alebo správa</strong></h4>
                         <input type="text" name="url_external" class="form-control" placeholder="Url: vzdialenej šablony"/>
                         <br/>

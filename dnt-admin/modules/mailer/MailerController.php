@@ -300,18 +300,26 @@ class MailerController extends AdminController
 
         $data['mailingReportUrl'] = WWW_PATH . 'dnt-test/newsletter-campaign?emailCatId=' . $catId . '&countMails=' . $countMails . '&delivered=' . $sendedMails . '&campaignId=' . $this->session->get('campain') . '&layout=preview';
         if ($hasData) {
+            $configHost = [
+                'host' => $this->settings->get('smtp_host'),
+                'username' => $this->settings->get('smtp_username'),
+                'password' => $this->settings->get('smtp_password'),
+                'send_grid_api_key' => $this->settings->get('send_grid_api_key'),
+                'send_grid_api_template_id' => $this->settings->get('send_grid_api_template_id'),
+            ];
             foreach ($recipients as $recipient) {
                 $msg = $this->session->get('message');
                 $template = $this->session->get('template');
                 $subject = $this->session->get('subject');
+                $senderMethod = $this->session->get('senderMethod');
                 $content = $this->session->get('content');
                 $campain = $this->session->get('campain');
                 $useSenderFromEmail = $this->session->get('useSenderFromEmail');
-                
+
                 if (!$recipient['name']) {
                     $recipient['name'] = $this->createNameFromEmail($recipient['email']);
                 }
-                
+
                 $senderName = $this->session->get('senderName');
                 if (isset($recipient['sender_name']) && !empty($recipient['sender_name']) && $useSenderFromEmail) {
                     $senderName = $recipient['sender_name'];
@@ -326,8 +334,7 @@ class MailerController extends AdminController
                 $recipientEmail = str_replace(' ', '', $recipient['email']);
 
 
-                $this->mailer->set_recipient(array($recipientEmail));
-
+                //$this->mailer->set_recipient(array($recipientEmail));
                 //KLIENTI MARKIZA JAR 2019
                 $title = $recipient['title'] . ' ' . $recipient['name'] . ' ' . $recipient['surname'];
                 $title = $this->replaceTitle($title, $content);
@@ -351,11 +358,25 @@ class MailerController extends AdminController
                     $subject = str_replace('<macro=NAME_COMMA/>', $recipient['name'] . ', ', $subject);
                 }
 
-                $this->mailer->set_msg($content);
-                $this->mailer->set_subject($subject);
-                $this->mailer->set_sender_name($senderName);
-                $this->mailer->set_sender_email($senderEmail);
-                $this->mailer->sent_email();
+                $configEmail = [
+                    'senderEmail' => $senderEmail,
+                    'senderName' => $senderName,
+                    'recipientEmail' => $recipientEmail,
+                    'recipientName' => $recipientEmail,
+                    'message' => $content,
+                    'subject' => $subject,
+                ];
+
+                $config = array_merge($configEmail, $configHost);
+                var_dump($config);
+
+                if ($senderMethod == 'smtp') {
+                    $this->mailer->methodSmtp($config);
+                } elseif ($senderMethod == 'sendGridV3') {
+                    $this->mailer->methodSendGridV3($config);
+                } else {
+                    $this->mailer->methodSendGrid($config);
+                }
             }
             $data['toFinish'] = ($countMails - $sendedMails);
             $data['currentID'] = $currentID;
@@ -388,14 +409,16 @@ class MailerController extends AdminController
         if ($this->hasPost('sent')) {
             $subject = $this->rest->post('subject');
             $cat_id = $this->rest->post('users');
+            $senderMethod = $this->rest->post('senderMethod');
             $senderName = $this->rest->post('senderName');
             $senderEmail = $this->rest->post('senderEmail');
 
             if ($this->rest->post('template') != '') {
                 $id = $this->rest->post('template');
                 $part = $this->post->getPost($id);
-                $content = $part->content;
-                //var_dump($content);
+                if ($part) {
+                    $content = $part->content;
+                }
             }
             if ($this->rest->post('url_external') != '') {
                 $content = file_get_contents($this->rest->post('url_external'));
@@ -422,6 +445,7 @@ class MailerController extends AdminController
                 $addUrlIdentificator = false;
             }
             $this->session->set('content', $content);
+            $this->session->set('senderMethod', $senderMethod);
             $this->session->set('cat_id', $cat_id);
             $this->session->set('subject', $subject);
             $this->session->set('campain', $campain);

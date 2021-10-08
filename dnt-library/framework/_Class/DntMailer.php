@@ -12,6 +12,7 @@ namespace DntLibrary\Base;
 
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Settings;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class Mailer
 {
@@ -86,6 +87,173 @@ class Mailer
     public function set_subject($str)
     {
         $this->subject = $str;
+    }
+
+    public function methodSmtp($config)
+    {
+        $senderEmail = $config['senderEmail'];
+        $senderName = $config['senderName'];
+        $recipientEmail = $config['recipientEmail'];
+        $recipientName = $config['recipientName'];
+        $subject = $config['subject'];
+        $message = $config['message'];
+
+        $host = isset($config['host']) ? $config['host'] : $this->settings->get('smtp_host');
+        $username = isset($config['username']) ? $config['username'] : $this->settings->get('smtp_username');
+        $password = isset($config['password']) ? $config['password'] : $this->settings->get('smtp_password');
+
+        $mail = new PHPMailer(true);
+        //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
+        $mail->isSMTP();
+        $mail->CharSet = 'UTF-8';
+        $mail->Encoding = 'base64';
+        $mail->Host = $host;
+        $mail->SMTPAuth = true;
+        $mail->Username = $username;
+        $mail->Password = $password;
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->Port = 465;
+
+        $mail->setFrom($username, $senderName);
+        $mail->addAddress($recipientEmail, $recipientName);
+
+        //$mail->addAttachment('data/sample.pdf');    //Add attachments
+        //Content
+        $mail->isHTML(true);
+        $mail->Subject = $subject;
+        $mail->Body = $message;
+
+        $mail->send();
+    }
+
+    public function methodSendGridV3($config)
+    {
+
+        $senderEmail = $config['senderEmail'];
+        $senderName = $config['senderName'];
+        $recipientEmail = $config['recipientEmail'];
+        $msg = $config['message'];
+        $sbj = $config['subject'];
+        $SEND_GRID_API_KEY = isset($config['send_grid_api_key']) ? $config['send_grid_api_key'] : $this->settings->get("send_grid_api_key");
+        $SEND_GRID_API_TEMPLATE_ID = isset($config['send_grid_api_template_id']) ? $config['send_grid_api_template_id'] : $this->settings->get("send_grid_api_template_id");
+
+        if (is_array($recipientEmail) && is_array($msg)) {
+            $emailTo = [];
+            $messageTo = [];
+            foreach ($recipientEmail as $singl) {
+                $emailTo[] = ['email' => $singl];
+                $messageTo[] = [
+                    'type' => "text/html",
+                    'value' => $msg,
+                ];
+            }
+        } else {
+            $emailTo = [
+                "email" => $recipientEmail,
+                "name" => $recipientEmail,
+            ];
+            $messageTo = [
+                'type' => "text/html",
+                'value' => $msg,
+            ];
+        }
+        $params = [
+            "from" => [
+                "email" => $senderEmail,
+                "name" => $senderName,
+            ],
+            "subject" => $sbj,
+            "template_id" => $SEND_GRID_API_TEMPLATE_ID,
+            "content" => [
+                [
+                    "type" => "text/html",
+                    "value" => $msg,
+                ]
+            ],
+            "personalizations" => [
+                [
+                    "to" => [
+                        [
+                            "email" => $recipientEmail,
+                            "name" => $recipientEmail,
+                        ]
+                    ],
+                    "send_at" => time()
+                ]
+            ],
+            "tracking_settings" => [
+                'click_tracking' => [
+                    "enable" => false,
+                    "enable_text" => false,
+                ],
+                'click_tracking' => [
+                    "enable" => false,
+                    "enable_text" => false,
+                ]
+            ]
+        ];
+
+
+        $data = json_encode($params);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.sendgrid.com/v3/mail/send');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+        $headers = array();
+        $headers[] = 'Authorization: Bearer ' . $SEND_GRID_API_KEY;
+        $headers[] = 'Content-Type: application/json';
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $response = curl_exec($ch);
+        $this->response = $response;
+        //var_dump($this->response);
+        curl_close($ch);
+    }
+
+    public function methodSendGrid($config)
+    {
+
+        $senderEmail = $config['senderEmail'];
+        $senderName = $config['senderName'];
+        $recipientEmail = $config['recipientEmail'];
+        $msg = $config['message'];
+        $sbj = $config['subject'];
+        $SEND_GRID_API_KEY = isset($config['send_grid_api_key']) ? $config['send_grid_api_key'] : $this->settings->get("send_grid_api_key");
+        $SEND_GRID_API_TEMPLATE_ID = isset($config['send_grid_api_template_id']) ? $config['send_grid_api_template_id'] : $this->settings->get("send_grid_api_template_id");
+
+        $js = array(
+            'sub' => array(':name' => array('Elmer')),
+            'filters' => array('templates' => array('settings' => array('enable' => 1, 'template_id' => $SEND_GRID_API_TEMPLATE_ID)))
+        );
+
+        $params = array(
+            'to' => str_replace(' ', '', $recipientEmail),
+            'toname' => $recipientEmail,
+            'from' => str_replace(' ', '', $senderEmail),
+            'fromname' => $senderName,
+            'subject' => $sbj,
+            'text' => $this->dnt->not_html($msg),
+            'html' => $msg,
+            'x-smtpapi' => json_encode($js),
+        );
+
+        // Generate curl request
+        $session = curl_init(SEND_GRID_API_REQUEST);
+        curl_setopt($session, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($session, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $SEND_GRID_API_KEY));
+        curl_setopt($session, CURLOPT_POST, true);
+        curl_setopt($session, CURLOPT_POSTFIELDS, $params);
+        curl_setopt($session, CURLOPT_HEADER, false);
+        curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+
+        // obtain response
+        $response = curl_exec($session);
+        $this->response = $response;
+        curl_close($session);
     }
 
     /**
@@ -190,6 +358,8 @@ class Mailer
             //var_dump($response, curl_error($session));
             curl_close($session);
             //SEND GRID END 
+        } elseif (SEND_EMAIL_VIA == "smtp") {
+            
         }
     }
 

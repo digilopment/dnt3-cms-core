@@ -89,6 +89,11 @@ class Autoloader
         $this->fileLoader($path . 'dnt-library/framework/app/Cart.php');
         $this->fileLoader($path . 'dnt-library/framework/app/Files.php');
         $this->fileLoader($path . 'dnt-library/framework/app/SendGrid.php');
+        $this->fileLoader($path . 'dnt-library/framework/app/phpmailer/Exception.php');
+        $this->fileLoader($path . 'dnt-library/framework/app/phpmailer/OAuth.php');
+        $this->fileLoader($path . 'dnt-library/framework/app/phpmailer/PHPMailer.php');
+        $this->fileLoader($path . 'dnt-library/framework/app/phpmailer/POP3.php');
+        $this->fileLoader($path . 'dnt-library/framework/app/phpmailer/SMTP.php');
     }
 
 }
