@@ -368,7 +368,7 @@ class MailerController extends AdminController
                 ];
 
                 $config = array_merge($configEmail, $configHost);
-                var_dump($config);
+                //var_dump($config);
 
                 if ($senderMethod == 'smtp') {
                     $this->mailer->methodSmtp($config);
