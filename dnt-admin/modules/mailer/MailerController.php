@@ -300,8 +300,9 @@ class MailerController extends AdminController
 
         $data['mailingReportUrl'] = WWW_PATH . 'dnt-test/newsletter-campaign?emailCatId=' . $catId . '&countMails=' . $countMails . '&delivered=' . $sendedMails . '&campaignId=' . $this->session->get('campain') . '&layout=preview';
         if ($hasData) {
+            $senderMethod = $this->session->get('senderMethod');
             $configHost = [
-                'method' => 'SendGridV2',
+                'method' => $senderMethod,
                 'host' => $this->settings->get('smtp_host'),
                 'username' => $this->settings->get('smtp_username'),
                 'password' => $this->settings->get('smtp_password'),
@@ -312,7 +313,6 @@ class MailerController extends AdminController
                 $msg = $this->session->get('message');
                 $template = $this->session->get('template');
                 $subject = $this->session->get('subject');
-                $senderMethod = $this->session->get('senderMethod');
                 $content = $this->session->get('content');
                 $campain = $this->session->get('campain');
                 $useSenderFromEmail = $this->session->get('useSenderFromEmail');
