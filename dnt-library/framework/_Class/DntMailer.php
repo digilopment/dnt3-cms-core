@@ -10,6 +10,7 @@
 
 namespace DntLibrary\Base;
 
+use DntLibrary\App\SendGrid;
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Settings;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -117,8 +118,16 @@ class Mailer
         $mail->setFrom($username, $senderName);
         $mail->addAddress($recipientEmail, $recipientName);
 
-        //$mail->addAttachment('data/sample.pdf');    //Add attachments
-        //Content
+        if (isset($config['stringAttachment']) && !empty($config['stringAttachment'])) {
+            $stringAttachment = $config['stringAttachment'];
+            $mail->addStringAttachment(file_get_contents($stringAttachment), basename($stringAttachment));
+        }
+
+        if (isset($config['attachment']) && !empty($config['attachment'])) {
+            $attachment = $config['attachment'];
+            $mail->addAttachment($attachment);
+        }
+
         $mail->isHTML(true);
         $mail->Subject = $subject;
         $mail->Body = $message;
@@ -219,41 +228,170 @@ class Mailer
 
         $senderEmail = $config['senderEmail'];
         $senderName = $config['senderName'];
+        $recipientName = ($config['recipientName']) ? $config['recipientName'] : $config['recipientEmail'];
         $recipientEmail = $config['recipientEmail'];
         $msg = $config['message'];
         $sbj = $config['subject'];
         $SEND_GRID_API_KEY = isset($config['send_grid_api_key']) ? $config['send_grid_api_key'] : $this->settings->get("send_grid_api_key");
         $SEND_GRID_API_TEMPLATE_ID = isset($config['send_grid_api_template_id']) ? $config['send_grid_api_template_id'] : $this->settings->get("send_grid_api_template_id");
 
-        $js = array(
-            'sub' => array(':name' => array('Elmer')),
-            'filters' => array('templates' => array('settings' => array('enable' => 1, 'template_id' => $SEND_GRID_API_TEMPLATE_ID)))
-        );
-
-        $params = array(
-            'to' => str_replace(' ', '', $recipientEmail),
-            'toname' => $recipientEmail,
-            'from' => str_replace(' ', '', $senderEmail),
-            'fromname' => $senderName,
+        $this->sendGrid = new SendGrid();
+        $data = [
+            'to' => $recipientEmail,
+            'toName' => $recipientName,
+            'from' => $senderEmail,
+            'fromName' => $senderName,
             'subject' => $sbj,
-            'text' => $this->dnt->not_html($msg),
-            'html' => $msg,
-            'x-smtpapi' => json_encode($js),
-        );
+            'message' => $msg,
+            'send_grid_api_key' => $SEND_GRID_API_KEY,
+            'send_grid_api_template_id' => $SEND_GRID_API_TEMPLATE_ID,
+        ];
 
-        // Generate curl request
-        $session = curl_init(SEND_GRID_API_REQUEST);
-        curl_setopt($session, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($session, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $SEND_GRID_API_KEY));
-        curl_setopt($session, CURLOPT_POST, true);
-        curl_setopt($session, CURLOPT_POSTFIELDS, $params);
-        curl_setopt($session, CURLOPT_HEADER, false);
-        curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+        if (isset($config['attachment']) && !empty($config['attachment'])) {
+            $attachment = $config['attachment'];
+            $data['attachements'] = [
+                basename($attachment) => $attachment,
+            ];
+        }
+        if (isset($config['stringAttachment']) && !empty($config['stringAttachment'])) {
+            file_put_contents('../dnt-cache/temp/' . basename($config['stringAttachment']), file_get_contents($config['stringAttachment']));
+            $data['attachements'] = [
+                basename(basename($config['stringAttachment'])) => '../dnt-cache/temp/' . basename($config['stringAttachment']),
+            ];
+        }
 
-        // obtain response
-        $response = curl_exec($session);
-        $this->response = $response;
-        curl_close($session);
+        $this->sendGrid->setup($data);
+        $this->sendGrid->sent();
+        if (isset($config['stringAttachment']) && !empty($config['stringAttachment'])) {
+            unlink('../dnt-cache/temp/' . basename($config['stringAttachment']));
+        }
+        return 1;
+        /*
+          $senderEmail = $config['senderEmail'];
+          $senderName = $config['senderName'];
+          $recipientEmail = $config['recipientEmail'];
+          $msg = $config['message'];
+          $sbj = $config['subject'];
+          $SEND_GRID_API_KEY = isset($config['send_grid_api_key']) ? $config['send_grid_api_key'] : $this->settings->get("send_grid_api_key");
+          $SEND_GRID_API_TEMPLATE_ID = isset($config['send_grid_api_template_id']) ? $config['send_grid_api_template_id'] : $this->settings->get("send_grid_api_template_id");
+
+          $js = array(
+          'sub' => array(':name' => array('Elmer')),
+          'filters' => array('templates' => array('settings' => array('enable' => 1, 'template_id' => $SEND_GRID_API_TEMPLATE_ID)))
+          );
+
+          $params = array(
+          'to' => str_replace(' ', '', $recipientEmail),
+          'toname' => $recipientEmail,
+          'from' => str_replace(' ', '', $senderEmail),
+          'fromname' => $senderName,
+          'subject' => $sbj,
+          'text' => $this->dnt->not_html($msg),
+          'html' => $msg,
+          'x-smtpapi' => json_encode($js),
+          );
+
+          // Generate curl request
+          $session = curl_init(SEND_GRID_API_REQUEST);
+          curl_setopt($session, CURLOPT_SSL_VERIFYPEER, false);
+          curl_setopt($session, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $SEND_GRID_API_KEY));
+          curl_setopt($session, CURLOPT_POST, true);
+          curl_setopt($session, CURLOPT_POSTFIELDS, $params);
+          curl_setopt($session, CURLOPT_HEADER, false);
+          curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+
+          // obtain response
+          $response = curl_exec($session);
+          $this->response = $response;
+          curl_close($session);
+         * */
+    }
+
+    public function methodNativePHPMailer($config)
+    {
+        $senderEmail = $config['senderEmail'];
+        $senderName = iconv('UTF-8', 'windows-1250', ($config['senderName']) ? $config['senderName'] : $config['senderEmail']);
+        $recipientName = iconv('UTF-8', 'windows-1250', ($config['recipientName']) ? $config['recipientName'] : $config['recipientEmail']);
+        $recipientEmail = $config['recipientEmail'];
+        $subject = iconv('UTF-8', 'windows-1250', $config['subject']);
+        $message = iconv('UTF-8', 'windows-1250', $config['message']);
+
+        $mail = new PHPMailer(true);
+        $mail->isSendmail();
+        $mail->CharSet = 'UTF-8';
+        $mail->Encoding = 'base64';
+        $mail->setFrom($senderEmail, $senderName);
+        $mail->addAddress($recipientEmail, $recipientName);
+        $mail->Subject = $subject;
+        $mail->msgHTML($message);
+
+        if (isset($config['stringAttachment']) && !empty($config['stringAttachment'])) {
+            $stringAttachment = $config['stringAttachment'];
+            $mail->addStringAttachment(file_get_contents($stringAttachment), basename($stringAttachment));
+        }
+
+        if (isset($config['attachment']) && !empty($config['attachment'])) {
+            $attachment = $config['attachment'];
+            $mail->addAttachment($attachment);
+        }
+        $mail->send();
+    }
+
+    public function methodNative($config)
+    {
+        $senderEmail = $config['senderEmail'];
+        $senderName = iconv('UTF-8', 'windows-1250', ($config['senderName']) ? $config['senderName'] : $config['senderEmail']);
+        $recipientEmail = $config['recipientEmail'];
+        $subject = iconv('UTF-8', 'windows-1250', $config['subject']);
+
+        if (strtoupper(substr(PHP_OS, 0, 3) == 'WIN')) {
+            $eol = "\r\n";
+        } elseif (strtoupper(substr(PHP_OS, 0, 3) == 'MAC')) {
+            $eol = "\r";
+        } else {
+            $eol = "\n";
+        }
+
+        # Common Headers
+        $headers = '';
+        $headers .= 'MIME-Version: 1.0' . "\r\n";
+        $headers .= 'From: ' . $senderName . ' <' . $senderEmail . '>' . $eol;
+        $headers .= 'To: <' . $recipientEmail . '>' . $eol;
+        $headers .= 'Return-Path: ' . $senderName . ' <' . $senderEmail . '>' . $eol;
+        $headers .= "Message-ID:<TheSystem@" . $_SERVER['SERVER_NAME'] . ">" . $eol;
+        $headers .= "X-Mailer: PHP v" . phpversion() . $eol;
+        $headers .= 'MIME-Version: 1.0' . $eol;
+        $headers .= 'X-MS-Exchange-Organization-AuthSource: VE1PR05MB7229.eurprd05.prod.outlook.com' . $eol;
+        $headers .= 'Content-type: text/html; charset=windows-1250' . "\r\n";
+
+        $message = '';
+        $message .= iconv('UTF-8', 'windows-1250', $config['message']) . $eol . $eol;
+        @mail($recipientEmail, $subject, $message, $headers);
+    }
+
+    public function sent($config)
+    {
+        if (is_array($config) && isset($config['method'])) {
+            switch ($config['method']) {
+                case 'SendGridV2':
+                    $this->methodSendGrid($config);
+                    break;
+                case 'SendGridV3':
+                    $this->methodSendGridV3($config);
+                    break;
+                case 'Smtp':
+                    $this->methodSmtp($config);
+                    break;
+                case 'NativePHPMailer':
+                    $this->methodNativePHPMailer($config);
+                    break;
+                case 'NativeMail':
+                    $this->methodNative($config);
+                    break;
+            }
+        } else {
+            die('co config file');
+        }
     }
 
     /**

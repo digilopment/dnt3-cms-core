@@ -136,9 +136,10 @@ $countPages = $data['countPages'];
                         <input type="checkbox" name="addUrlIdentificator"/> Pridať ku cieľovým URL-adresám <b>dnt3ClickId</b> identifikátor.
                         <h4><strong>Metóda odosielania</strong></h4>
                         <select name="senderMethod" id="cname" class="form-control" minlength="2" required="">
-                            <option value="sendGrid">Send Grid</option>
-                            <option value="sendGridV3">Send Grid V3</option>
-                            <option value="smtp">Smtp Server</option>
+                            <option value="SendGridV2">Send Grid V2 (verzia API v2)</option>
+                            <option value="SendGridV3">Send Grid V3 (verzia API v3)</option>
+                            <option value="Smtp">Smtp Server (nakonfigurovaný mailový smtp server v nastaveniach)</option>
+                            <option value="NativePHPMailer">Natívny mailer (použite existujúcu emailovu adresu pre túto doménu)</option>
                         </select>
                         <h4><strong>Šablóna alebo správa</strong></h4>
                         <input type="text" name="url_external" class="form-control" placeholder="Url: vzdialenej šablony"/>

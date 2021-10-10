@@ -20,8 +20,12 @@ class SendGrid
     public function setup($data)
     {
         $this->senGridService = SEND_GRID_API_REQUEST;
-        $this->senGridApiKey = $this->settings->get('send_grid_api_key');
-        $this->senGridTemplateKey = $this->settings->get('send_grid_api_template_id');
+
+        $SEND_GRID_API_KEY = isset($data['send_grid_api_key']) ? $data['send_grid_api_key'] : $this->settings->get("send_grid_api_key");
+        $SEND_GRID_API_TEMPLATE_ID = isset($data['send_grid_api_template_id']) ? $data['send_grid_api_template_id'] : $this->settings->get("send_grid_api_template_id");
+
+        $this->senGridApiKey = $SEND_GRID_API_KEY;
+        $this->senGridTemplateKey = $SEND_GRID_API_TEMPLATE_ID;
 
 
         $data['js'] = array(
@@ -43,7 +47,7 @@ class SendGrid
         $this->text = $this->dnt->not_html($data['message']);
         $this->html = $data['message'];
         $this->xSmtpApi = json_encode($data['js']);
-
+        
         if (isset($data['attachements']) && count($data['attachements']) > 0) {
             $this->attachements = $data['attachements'];
         }
@@ -72,7 +76,7 @@ class SendGrid
             'html' => $this->html,
             'x-smtpapi' => $this->xSmtpApi,
         ];
-
+        
         $curlHandler = curl_init();
         $this->curlCustomPostfields($curlHandler, $assoc, $files);
         $response = curl_exec($curlHandler);
@@ -120,7 +124,7 @@ class SendGrid
         // add final boundary
         $body[] = "--{$boundary}--";
         $body[] = "";
-
+        
         // set options
         return curl_setopt_array($ch, array(
             CURLOPT_URL => $this->senGridService,

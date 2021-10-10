@@ -301,6 +301,7 @@ class MailerController extends AdminController
         $data['mailingReportUrl'] = WWW_PATH . 'dnt-test/newsletter-campaign?emailCatId=' . $catId . '&countMails=' . $countMails . '&delivered=' . $sendedMails . '&campaignId=' . $this->session->get('campain') . '&layout=preview';
         if ($hasData) {
             $configHost = [
+                'method' => 'SendGridV2',
                 'host' => $this->settings->get('smtp_host'),
                 'username' => $this->settings->get('smtp_username'),
                 'password' => $this->settings->get('smtp_password'),
@@ -332,9 +333,7 @@ class MailerController extends AdminController
                 $emails[] = $recipient['email'];
 
                 $recipientEmail = str_replace(' ', '', $recipient['email']);
-
-
-                //$this->mailer->set_recipient(array($recipientEmail));
+                
                 //KLIENTI MARKIZA JAR 2019
                 $title = $recipient['title'] . ' ' . $recipient['name'] . ' ' . $recipient['surname'];
                 $title = $this->replaceTitle($title, $content);
@@ -368,15 +367,7 @@ class MailerController extends AdminController
                 ];
 
                 $config = array_merge($configEmail, $configHost);
-                //var_dump($config);
-
-                if ($senderMethod == 'smtp') {
-                    $this->mailer->methodSmtp($config);
-                } elseif ($senderMethod == 'sendGridV3') {
-                    $this->mailer->methodSendGridV3($config);
-                } else {
-                    $this->mailer->methodSendGrid($config);
-                }
+                $this->mailer->sent($config);
             }
             $data['toFinish'] = ($countMails - $sendedMails);
             $data['currentID'] = $currentID;

@@ -2594,7 +2594,6 @@ class PHPMailer
 
         //mail() sets the subject itself
         if ('mail' !== $this->Mailer) {
-            var_dump($this->encodeHeader($this->secureHeader($this->Subject)));
             //$result .= $this->headerLine('Subject', $this->Subject);
             $result .= $this->headerLine('Subject', $this->secureHeader($this->Subject));
             //$result .= $this->headerLine('Subject', $this->encodeHeader($this->secureHeader($this->Subject)));
