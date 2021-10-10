@@ -314,7 +314,7 @@ class Mailer
         $recipientName = iconv('UTF-8', 'windows-1250', ($config['recipientName']) ? $config['recipientName'] : $config['recipientEmail']);
         $recipientEmail = $config['recipientEmail'];
         $subject = iconv('UTF-8', 'windows-1250', $config['subject']);
-        $message = iconv('UTF-8', 'windows-1250', $config['message']);
+        $message = $config['message'];
 
         $mail = new PHPMailer(true);
         $mail->isSendmail();
