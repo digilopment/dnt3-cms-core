@@ -2,6 +2,8 @@
 
 namespace DntLibrary\App;
 
+use UI\Exception\RuntimeException;
+
 class Curl
 {
 
