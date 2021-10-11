@@ -8,14 +8,18 @@ class Curl
     private $url;
     private $options;
 
-    public function __construct($url, array $options = [])
+    public function __construct($url = false, array $options = [])
     {
         $this->url = $url;
         $this->options = $options;
     }
 
-    public function post(array $post)
+    public function post(array $post, $url = false)
     {
+
+        if ($url) {
+            $this->url = $url;
+        }
         $ch = curl_init($this->url);
 
         foreach ($this->options as $key => $val) {
