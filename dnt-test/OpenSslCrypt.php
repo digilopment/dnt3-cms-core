@@ -2,7 +2,7 @@
 
 namespace DntTest;
 
-use App\OpenSslCrypt;
+use DntLibrary\App\OpenSslCrypt;
 
 class OpenSslCryptTest
 {

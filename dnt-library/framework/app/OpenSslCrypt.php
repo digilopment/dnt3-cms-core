@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace DntLibrary\App;
 
 use DntLibrary\Base\Dnt;
 

@@ -95,6 +95,7 @@ class Autoloader
         $this->fileLoader($path . 'dnt-library/framework/app/phpmailer/POP3.php');
         $this->fileLoader($path . 'dnt-library/framework/app/phpmailer/SMTP.php');
         $this->fileLoader($path . 'dnt-library/framework/app/Curl.php');
+        $this->fileLoader($path . 'dnt-library/framework/app/Dnt3Oauth.php');
     }
 
 }
