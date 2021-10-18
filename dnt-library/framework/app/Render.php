@@ -17,4 +17,11 @@ class Render
         print $this->data;
     }
 
+    public function renderWithJson()
+    {
+        header('Access-Control-Allow-Origin: *');
+        header('Content-Type: application/json');
+        print $this->data;
+    }
+
 }

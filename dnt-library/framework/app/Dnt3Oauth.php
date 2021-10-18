@@ -23,7 +23,6 @@ class Dnt3Oauth
         $login = isset($config['login']) ? $config['login'] : '';
         $password = isset($config['passwor']) ? $config['passwor'] : '';
         $privateKey = isset($config['privateKey']) ? $config['privateKey'] : '';
-
         $this->credencials = [
             'login' => $login,
             'passwor' => $password,

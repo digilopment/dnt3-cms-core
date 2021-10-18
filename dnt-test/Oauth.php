@@ -22,7 +22,8 @@ class OauthTest
             'passwor' => 'admin',
             'privateKey' => 'roots'
         ];
-        //$this->setHeader = true;
+        $this->setHeader = true;
+        $this->dnt3Oauth->customDenied = true;
         $this->dnt3Oauth->setCredencials($config);
         print('logged');
     }

@@ -16,13 +16,17 @@ class Curl
         $this->options = $options;
     }
 
-    public function post(array $post, $url = false)
+    public function post(array $post, $url = false, array $options = [])
     {
 
         if ($url) {
             $this->url = $url;
         }
+        if (count($options) > 0) {
+            $this->options = $options;
+        }
         $ch = curl_init($this->url);
+
 
         foreach ($this->options as $key => $val) {
             curl_setopt($ch, $key, $val);
