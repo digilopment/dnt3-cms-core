@@ -8,6 +8,7 @@ RewriteRule  ^([^_][a-zA-Z0-9\ _/:\-%]+)$     index.php?src=$1   [L]
 RewriteCond  $1 ^([^_][a-zA-Z0-9\ _/:\-%]+)
 RewriteRule  ^([^_][a-zA-Z0-9\ _/:\-%]+)$     index.php?src=$1   [L]
 
+#Redirect 302 /exkluzivne/ /sitemap/
 
 
 #Redirect 301 /sitemap /dnt-view/api/xml/sitemap/

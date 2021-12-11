@@ -364,6 +364,10 @@ class MailerController extends AdminController
                     'recipientName' => $recipientEmail,
                     'message' => $content,
                     'subject' => $subject,
+					/*'stringAttachments' => [
+						'Darčekový kupón_registrovaný užívateľ.pdf' => 'https://markiza.digilopment.com/dnt-view/data/_temp/kupon-registrovany.pdf',
+						'Darčekový kupón_užívateľ bez registrácie.pdf' => 'https://markiza.digilopment.com/dnt-view/data/_temp/kupon-bez-registrovany.pdf',
+					],*/
                 ];
 
                 $config = array_merge($configEmail, $configHost);

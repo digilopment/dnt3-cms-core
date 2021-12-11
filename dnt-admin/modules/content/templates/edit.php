@@ -272,21 +272,42 @@ if ($datetime_publish == "0000-00-00 00:00:00") {
                                                 <h3>Content</h3>
                                             </div>
                                             <textarea name="content" class="ckeditor" style="min-height: 495px;"><?php echo $content; ?></textarea>
+											
+											<?php
+											
+											function extract_emails_from($string){
+											  preg_match_all("/[\._a-zA-Z0-9-]+@[\._a-zA-Z0-9-]+/i", $string, $matches);
+											  return $matches[0];
+											}
+											$emails = extract_emails_from($content);
+											if(isset($emails[0]) && filter_var($emails[0], FILTER_VALIDATE_EMAIL)){
+												if(isset(explode('SPRÁVA:', $dnt->not_html($content))[1])){
+													$replyMsg = explode('SPRÁVA:', $dnt->not_html($content))[1];
+												}else{
+													$replyMsg = $content;
+												}
+												$replyMsg = ltrim(str_replace('"', '', $replyMsg));
+												$replyMsg = explode('Kontaktný email odosielateľa:', $replyMsg)[0];
+											?>
+											<br/>
+											
+											<a href="mailto:<?php echo $emails[0]?>?subject=<?php echo $name; ?>&body=<?php echo $replyMsg; ?>">
+												<span class="btn btn-primary bg-green btn-lg btn-block" style="max-width:300px;font-size:14px">Odpovedať na email<br/><b><?php echo $emails[0]; ?></b></span>
+											</a>
+											<?php } ?>
                                         </div>
-                                        <br/>
                                     </div>
                                 </div>
-                                <br/>
                             </div>
 
                             <?php if (MULTY_LANGUAGE != false) contentLanguagesVariations(); /* getTabLanguages(true, true, true, $post['id'], "dnt_posts", $dntDb); */ ?>
                         </div>
                         <!-- end here -->
                         <?php echo $dnt->returnInput(); ?>
-                        <input type="submit" name="sent" class="btn btn-primary btn-lg btn-block" value="Upraviť" />
+                        
 
                     </div>
-
+					<input type="submit" name="sent" class="btn btn-primary btn-lg btn-block" value="Upraviť" />
                 </div>
                 <!-- end prava strana -->
             </div>

@@ -572,7 +572,7 @@ class DB
      * @return int number of records inserted
      *
      */
-    public function insert_multi($table, $columns = array(), $records = array())
+    public function insert_multi($table, $columns = array(), $records = array(), $returnSql = false)
     {
         self::$counter++;
         //Make sure the arrays aren't empty
@@ -608,15 +608,22 @@ class DB
         $values = implode(', ', $values);
 
         $sql .= $fields . ' VALUES ' . $values;
+		
+		if($returnSql){
+			return $sql;
+		}
 
         $query = $this->link->query($sql);
-
+		
+		$this->query("UPDATE `".$table."` SET `id_entity`= `id` WHERE id_entity = 0");
+			
         if ($this->link->error) {
             $this->log_db_errors($this->link->error, $sql);
             return false;
         } else {
             return $added;
         }
+		
     }
 
     /**

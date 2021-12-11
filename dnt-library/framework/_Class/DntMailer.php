@@ -117,7 +117,15 @@ class Mailer
 
         $mail->setFrom($username, $senderName);
         $mail->addAddress($recipientEmail, $recipientName);
-
+		
+		if (isset($config['stringAttachments']) && !empty($config['stringAttachments'])) {
+            $attachements = $config['stringAttachments'];
+            foreach ($attachements as $fileName => $fileUrl) {
+                $fileName = ($fileName) ? $fileName : md5(microtime()) . '_' . basename($fileUrl);
+                $mail->addStringAttachment(file_get_contents($fileUrl), $fileName);
+            }
+        }
+		
         if (isset($config['stringAttachment']) && !empty($config['stringAttachment'])) {
             $stringAttachment = $config['stringAttachment'];
             $mail->addStringAttachment(file_get_contents($stringAttachment), basename($stringAttachment));
@@ -246,25 +254,44 @@ class Mailer
             'send_grid_api_key' => $SEND_GRID_API_KEY,
             'send_grid_api_template_id' => $SEND_GRID_API_TEMPLATE_ID,
         ];
-
+		
+		
         if (isset($config['attachment']) && !empty($config['attachment'])) {
             $attachment = $config['attachment'];
             $data['attachements'] = [
                 basename($attachment) => $attachment,
             ];
         }
+		
+		
+        if (isset($config['stringAttachments']) && is_array($config['stringAttachments']) && count($config['stringAttachments']) > 0) {
+			$files = [];
+            $attachements = $config['stringAttachments'];
+            foreach ($attachements as $fileName => $fileUrl) {
+                $fileName = ($fileName) ? $fileName : md5(microtime()) . '_' . basename($fileUrl);
+                $fileLocation = '../dnt-cache/temp/' . basename($fileName);
+                file_put_contents($fileLocation, file_get_contents($fileUrl));
+                if (file_exists($fileLocation)) {
+                    $files[$fileName] = $fileLocation;
+                }
+            }
+			$data['attachements'] = $files;
+        }
+		
         if (isset($config['stringAttachment']) && !empty($config['stringAttachment'])) {
             file_put_contents('../dnt-cache/temp/' . basename($config['stringAttachment']), file_get_contents($config['stringAttachment']));
             $data['attachements'] = [
                 basename(basename($config['stringAttachment'])) => '../dnt-cache/temp/' . basename($config['stringAttachment']),
             ];
         }
-
+		
         $this->sendGrid->setup($data);
         $this->sendGrid->sent();
+		
         if (isset($config['stringAttachment']) && !empty($config['stringAttachment'])) {
             unlink('../dnt-cache/temp/' . basename($config['stringAttachment']));
         }
+		
         return 1;
         /*
           $senderEmail = $config['senderEmail'];
