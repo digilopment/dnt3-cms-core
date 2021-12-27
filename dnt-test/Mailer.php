@@ -28,8 +28,8 @@ class MailerTest
             //'attachment' => 'data/test.pdf',
             //
             #SENGRID
-            'send_grid_api_key' => '',
-            'send_grid_api_template_id' => '',
+            'send_grid_api_key' => SEND_GRID_API_KEY,
+            'send_grid_api_template_id' => SEND_GRID_API_TEMPLATE_ID,
             
             #SMTP
             'host' => 'smtp.gmail.com',
