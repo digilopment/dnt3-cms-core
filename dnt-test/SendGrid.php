@@ -21,10 +21,10 @@ class SendGridTest
         $data = [
             'to' => 'thomas.doubek@gmail.com',
             'toName' => 'Tomáš Doubek',
-            'from' => 'corona@amplexa.com',
-            'fromName' => 'corona@amplexa.com',
-            'subject' => 'Covid19-test result',
-            'message' => file_get_contents('http://digilopment.com/dnt-test/data/covidEmail.html'),
+            'from' => 'newsletter@mailer.service.com',
+            'fromName' => 'Markiza Mail',
+            'subject' => 'Voyo TEST',
+            'message' => file_get_contents('https://www.newsletter.coloria.sk/voyo/'),
             'attachements' => [
                 '710944582_result.pdf' => 'data/710944582_result.pdf',
             ],
