@@ -657,7 +657,7 @@ INSERT INTO dnt_settings VALUES
 (null,"7159","keys","ga_key","UA-119752505-11","content","Google Analytics key","67","0","1"),
 (null,"7158","","startovaci_modul","homepage","content","Po načítaní webu redirectovať na:","67","50","0"),
 (null,"7156","social_wall","twitter_sw","","text","Twitter Social Wall","67","10","0"),
-(null,"7157","keys","send_grid_api_key","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","text","Api key pre Send grid","67","10","1"),
+(null,"7157","keys","send_grid_api_key","","text","Api key pre Send grid","67","10","1"),
 (null,"7155","social_wall","youtube_sw","","text","Youtube Social Wall","67","10","0"),
 (null,"7154","social_wall","instagram_sw","","text","Instagram Post Social Wall","67","10","0"),
 (null,"7153","social_wall","facebook_post_sw","","text","Facebook Post Social Wall","67","10","0"),

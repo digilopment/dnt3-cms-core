@@ -50,8 +50,8 @@ class SendMailApi
 		$this->pripare();
 		$this->content($confirmUrl);
 		
-        $SEND_GRID_API_TEMPLATE_ID = '';
-        $YOUR_API_KEY = '';
+        $SEND_GRID_API_TEMPLATE_ID = '21118ecf-c7b2-48fc-bc5d-2751472db4a3';
+        $YOUR_API_KEY = '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';
         $params = [
             "from" => [
                 "email" => $this->fromEmail,
