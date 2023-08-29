@@ -19,7 +19,6 @@ use DntLibrary\Base\XMLgenerator;
 
 class DntLog
 {
-
     public $results;
 
     public function __construct()
@@ -31,7 +30,7 @@ class DntLog
     }
 
     /**
-     * 
+     *
      * @return boolean
      */
     public function is_error()
@@ -43,7 +42,7 @@ class DntLog
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function error_to_json()
@@ -57,15 +56,15 @@ class DntLog
     public function getID()
     {
         $this->sessions->init();
-        $this->sessions->set("page_id", $this->dnt->set_rand_string(10));
+        $this->sessions->set('page_id', $this->dnt->set_rand_string(10));
 
-        if ($this->sessions->get("session_id") == false) {
-            $this->sessions->set("session_id", $this->dnt->set_rand_string(10));
+        if ($this->sessions->get('session_id') == false) {
+            $this->sessions->set('session_id', $this->dnt->set_rand_string(10));
         }
     }
 
     /**
-     * 
+     *
      * @param type $arr
      */
     public function get_http_header($arr)
@@ -86,18 +85,18 @@ class DntLog
         }
 
         if ($http_request == $httpCacheStatus) {
-            $headerMsgCache = "content-cache";
+            $headerMsgCache = 'content-cache';
         } else {
-            $headerMsgCache = "no-cache";
+            $headerMsgCache = 'no-cache';
         }
 
         $this->sessions->init();
         if (isset($arr['http_response'])) {
             if ($http_request == $httpCacheStatus) {
                 header('Cache-Control: cache');
-                header("Expires: wait-time " . CACHE_TIME_SEC . "sec");
-                header("Pragma: cache");
-                header('X-Dnt-Cache-Time: ' . CACHE_TIME_SEC . "sec");
+                header('Expires: wait-time ' . CACHE_TIME_SEC . 'sec');
+                header('Pragma: cache');
+                header('X-Dnt-Cache-Time: ' . CACHE_TIME_SEC . 'sec');
             }
             http_response_code($arr['http_response']);
             header('X-Dnt-Request-System: ' . GET_SYSTEM_NAME);
@@ -120,42 +119,40 @@ class DntLog
     {
 
         if (DEBUG_QUERY == 1) {
-
-            $path = "dnt-logs/" . $this->vendor->getId() . "/sql/" . $modul->name . "_query.csv";
+            $path = 'dnt-logs/' . $this->vendor->getId() . '/sql/' . $modul->name . '_query.csv';
             if (!file_exists($path)) {
                 foreach ($_SESSION as $key => $value) {
                     $serverVariables = array(
-                        "HTTP_HOST",
-                        "REQUEST_TIME",
+                        'HTTP_HOST',
+                        'REQUEST_TIME',
                     );
 
-                    if ($this->dnt->in_string("debug_query", $key)) {
+                    if ($this->dnt->in_string('debug_query', $key)) {
                         $serverVariables = array();
-                        $value = str_replace("\n", " ", $value);
-                        $value = str_replace("\t", " ", $value);
-                        $value = str_replace("\r", " ", $value);
+                        $value = str_replace("\n", ' ', $value);
+                        $value = str_replace("\t", ' ', $value);
+                        $value = str_replace("\r", ' ', $value);
                         $value = preg_replace('/\s\s+/', ' ', $value);
                         $value = trim($value);
                         $arrToInsert = array(
-                            "id" => 'null',
-                            "id_entity" => 0,
-                            "vendor_id" => $this->vendor->getId(),
-                            "name" => $modul->name . " Modul Query ",
-                            "name_url" => md5($value),
-                            "query" => $value,
-                            "parent_id" => 0,
+                            'id' => 'null',
+                            'id_entity' => 0,
+                            'vendor_id' => $this->vendor->getId(),
+                            'name' => $modul->name . ' Modul Query ',
+                            'name_url' => md5($value),
+                            'query' => $value,
+                            'parent_id' => 0,
                         );
                         $this->dnt->writeToFile($path, $arrToInsert, $serverVariables);
                     }
                 }
             } else {
-                
             }
         }
     }
 
     /**
-     * 
+     *
      * @param type $arr
      */
     public function add($arr)
@@ -164,7 +161,7 @@ class DntLog
         $this->getID();
 
         if (isset($arr['http_response'])) {
-            $this->get_http_header(array("http_response" => $arr['http_response']));
+            $this->get_http_header(array('http_response' => $arr['http_response']));
         }
 
         $this->sessions->init();
@@ -194,38 +191,38 @@ class DntLog
         }
 
         $serverVariables = array(
-            "HTTP_HOST",
-            "HTTP_CONNECTION",
-            "HTTP_USER_AGENT",
-            "HTTP_ACCEPT",
-            "HTTP_REFERER",
-            "HTTP_ACCEPT_ENCODING",
-            "HTTP_ACCEPT_LANGUAGE",
+            'HTTP_HOST',
+            'HTTP_CONNECTION',
+            'HTTP_USER_AGENT',
+            'HTTP_ACCEPT',
+            'HTTP_REFERER',
+            'HTTP_ACCEPT_ENCODING',
+            'HTTP_ACCEPT_LANGUAGE',
             //"HTTP_ACCEPT_CHARSET",
-            "HTTP_COOKIE",
-            "PATH",
-            "SystemRoot",
-            "COMSPEC",
-            "PATHEXT",
-            "WINDIR",
-            "SERVER_SIGNATURE",
-            "SERVER_SOFTWARE",
-            "SERVER_NAME",
-            "SERVER_ADDR",
-            "SERVER_PORT",
-            "REMOTE_ADDR",
-            "DOCUMENT_ROOT",
-            "SERVER_ADMIN",
-            "SCRIPT_FILENAME",
-            "REMOTE_PORT",
-            "GATEWAY_INTERFACE",
-            "SERVER_PROTOCOL",
-            "REQUEST_METHOD",
-            "QUERY_STRING",
-            "REQUEST_URI",
-            "SCRIPT_NAME",
-            "PHP_SELF",
-            "REQUEST_TIME",
+            'HTTP_COOKIE',
+            'PATH',
+            'SystemRoot',
+            'COMSPEC',
+            'PATHEXT',
+            'WINDIR',
+            'SERVER_SIGNATURE',
+            'SERVER_SOFTWARE',
+            'SERVER_NAME',
+            'SERVER_ADDR',
+            'SERVER_PORT',
+            'REMOTE_ADDR',
+            'DOCUMENT_ROOT',
+            'SERVER_ADMIN',
+            'SCRIPT_FILENAME',
+            'REMOTE_PORT',
+            'GATEWAY_INTERFACE',
+            'SERVER_PROTOCOL',
+            'REQUEST_METHOD',
+            'QUERY_STRING',
+            'REQUEST_URI',
+            'SCRIPT_NAME',
+            'PHP_SELF',
+            'REQUEST_TIME',
         );
 
         foreach ($serverVariables as $item) {
@@ -236,7 +233,7 @@ class DntLog
         $arrToInsert['vendor_id'] = $this->vendor->getId();
         $arrToInsert['http_response'] = $http_response;
         $arrToInsert['system_status'] = $system_status;
-        $arrToInsert['log_id'] = $this->sessions->get("page_id");
+        $arrToInsert['log_id'] = $this->sessions->get('page_id');
         $arrToInsert['msg'] = $msg;
         $arrToInsert['err_msg'] = $this->error_to_json();
         $arrToInsert['THIS_URL'] = WWW_FULL_PATH;
@@ -248,69 +245,66 @@ class DntLog
         }
 
         if ($http_response >= 490) {
-            $mailer = new Mailer;
+            $mailer = new Mailer();
             $mailer->set_recipient(
-                    array(
-                        "thomas.doubek@gmail.com",
+                array(
+                        'thomas.doubek@gmail.com',
                     )
             );
-            $mailer->set_msg("<h2>Designdnt 3 reguest Error, eCatch " . $http_response . "</h2> 
+            $mailer->set_msg('<h2>Designdnt 3 reguest Error, eCatch ' . $http_response . '</h2> 
                 <table>
-                    <tr><td><b>STATUS:</b></td><td> " . $msg . "</td></tr>
-                    <tr><td><b>LOG:</b></td><td> " . $this->sessions->get("page_id") . "</td></tr>
-                    <tr><td><b>VISITED:</b></td><td> " . $arrToInsert['THIS_URL'] . "</td></tr>
-                    <tr><td><b>VENDOR ID:</b></td><td> " . $arrToInsert['vendor_id'] . "</td></tr>
-                    <tr><td><b>VENDOR URL:</b></td><td> " . $dntVendor->getVendorUrl() . "</td></tr>
+                    <tr><td><b>STATUS:</b></td><td> ' . $msg . '</td></tr>
+                    <tr><td><b>LOG:</b></td><td> ' . $this->sessions->get('page_id') . '</td></tr>
+                    <tr><td><b>VISITED:</b></td><td> ' . $arrToInsert['THIS_URL'] . '</td></tr>
+                    <tr><td><b>VENDOR ID:</b></td><td> ' . $arrToInsert['vendor_id'] . '</td></tr>
+                    <tr><td><b>VENDOR URL:</b></td><td> ' . $dntVendor->getVendorUrl() . '</td></tr>
                     <tr><td><br/><b>INFO:</b></td><td><br/> This is service email sent by Designdnt3 CMS. Please do not reply to this email.</td></tr>
-                </table>");
-            $mailer->set_subject("Designdnt3 request " . $http_response . " - " . $dntVendor->getVendorUrl());
-            $mailer->set_sender_name("Designdnt 3");
+                </table>');
+            $mailer->set_subject('Designdnt3 request ' . $http_response . ' - ' . $dntVendor->getVendorUrl());
+            $mailer->set_sender_name('Designdnt 3');
             $mailer->sent_email();
         }
     }
 
     /**
-     * 
+     *
      * @param type $log_id
      */
     public function show($log_id)
     {
         $db = new DB();
-        $columnsData = new XMLgenerator;
-        $columns = "id,http_response,system_status,log_id,timestamp,vendor_id,msg,err_msg,THIS_URL,HTTP_REFERER,HTTP_HOST,HTTP_USER_AGENT,HTTP_ACCEPT,HTTP_ACCEPT_ENCODING,HTTP_ACCEPT_LANGUAGE,HTTP_ACCEPT_CHARSET,HTTP_COOKIE";
+        $columnsData = new XMLgenerator();
+        $columns = 'id,http_response,system_status,log_id,timestamp,vendor_id,msg,err_msg,THIS_URL,HTTP_REFERER,HTTP_HOST,HTTP_USER_AGENT,HTTP_ACCEPT,HTTP_ACCEPT_ENCODING,HTTP_ACCEPT_LANGUAGE,HTTP_ACCEPT_CHARSET,HTTP_COOKIE';
 
-        if ($log_id == "last") {
-            $query = "SELECT * FROM `dnt_logs` WHERE id=(SELECT max(id) FROM dnt_logs)";
+        if ($log_id == 'last') {
+            $query = 'SELECT * FROM `dnt_logs` WHERE id=(SELECT max(id) FROM dnt_logs)';
         } else {
             $query = "SELECT * FROM `dnt_logs` WHERE `log_id` = '" . $log_id . "'";
         }
 
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
-                foreach ($columnsData->getTableColumns("dnt_logs", $columns) as $key => $value) {
-                    print $value . "\t\t\t => <b>" . $row[$value] . "</b><br/>";
+                foreach ($columnsData->getTableColumns('dnt_logs', $columns) as $key => $value) {
+                    print $value . "\t\t\t => <b>" . $row[$value] . '</b><br/>';
                 }
             }
         }
     }
 
-    /**
-     * 
-     */
     public function getAll()
     {
         $db = new DB();
-        $query = "SELECT * FROM `dnt_logs` WHERE vendor_id = " . $this->vendor->getId();
+        $query = 'SELECT * FROM `dnt_logs` WHERE vendor_id = ' . $this->vendor->getId();
         if ($this->db->num_rows($query) > 0) {
             $this->results = $this->db->get_results($query);
         } else {
-            $this->results = "25";
+            $this->results = '25';
         }
         //return false;
     }
 
     /**
-     * 
+     *
      * @param type $andWhere
      * @return type
      */
@@ -318,12 +312,12 @@ class DntLog
     {
 
         $db = new DB();
-        $query = "SELECT id FROM `dnt_logs` WHERE vendor_id = " . $this->vendor->getId() . " $andWhere";
+        $query = 'SELECT id FROM `dnt_logs` WHERE vendor_id = ' . $this->vendor->getId() . " $andWhere";
         return $this->db->num_rows($query);
     }
 
     /**
-     * 
+     *
      * return distinct ip
      * @param type $andWhere
      * @return type
@@ -331,12 +325,12 @@ class DntLog
     public function getUniqueAccess($andWhere)
     {
         $db = new DB();
-        $query = "SELECT DISTINCT `REMOTE_ADDR` FROM `dnt_logs` WHERE vendor_id = " . $this->vendor->getId() . " $andWhere";
+        $query = 'SELECT DISTINCT `REMOTE_ADDR` FROM `dnt_logs` WHERE vendor_id = ' . $this->vendor->getId() . " $andWhere";
         return $this->db->num_rows($query);
     }
 
     /**
-     * 
+     *
      * @param type $andWhere
      * @return type
      */
@@ -344,24 +338,24 @@ class DntLog
     {
 
         $db = new DB();
-        $query = "SELECT `id` FROM `dnt_registred_users` WHERE vendor_id = " . $this->vendor->getId() . " $andWhere";
+        $query = 'SELECT `id` FROM `dnt_registred_users` WHERE vendor_id = ' . $this->vendor->getId() . " $andWhere";
         return $this->db->num_rows($query);
     }
 
     /**
-     * 
+     *
      * @param type $andWhere
      * @return type
      */
     public function getUniqueUsers($andWhere)
     {
         $db = new DB();
-        $query = "SELECT DISTINCT `email` FROM `dnt_registred_users` WHERE vendor_id = " . $this->vendor->getId() . " $andWhere";
+        $query = 'SELECT DISTINCT `email` FROM `dnt_registred_users` WHERE vendor_id = ' . $this->vendor->getId() . " $andWhere";
         return $this->db->num_rows($query);
     }
 
     /**
-     * 
+     *
      * @param type $andWhere
      * @return type
      */
@@ -379,10 +373,9 @@ class DntLog
         $other = 0;
 
         $agent = array();
-        $query = "SELECT * FROM `dnt_logs` WHERE vendor_id = " . $this->vendor->getId() . " $andWhere";
+        $query = 'SELECT * FROM `dnt_logs` WHERE vendor_id = ' . $this->vendor->getId() . " $andWhere";
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
-
                 $agent['os'][] = $this->dnt->getOS($row['HTTP_USER_AGENT']);
                 $agent['browser'][] = $this->dnt->getBrowser($row['HTTP_USER_AGENT']);
             }
@@ -390,5 +383,4 @@ class DntLog
 
         return $agent;
     }
-
 }

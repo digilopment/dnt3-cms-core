@@ -7,8 +7,8 @@ use DntLibrary\Base\Settings;
 
 class SendGrid
 {
-
     protected $attachements = false;
+
     public $response = false;
 
     public function __construct()
@@ -21,22 +21,21 @@ class SendGrid
     {
         $this->senGridService = SEND_GRID_API_REQUEST;
 
-        $SEND_GRID_API_KEY = isset($data['send_grid_api_key']) ? $data['send_grid_api_key'] : $this->settings->get("send_grid_api_key");
-        $SEND_GRID_API_TEMPLATE_ID = isset($data['send_grid_api_template_id']) ? $data['send_grid_api_template_id'] : $this->settings->get("send_grid_api_template_id");
+        $SEND_GRID_API_KEY = isset($data['send_grid_api_key']) ? $data['send_grid_api_key'] : $this->settings->get('send_grid_api_key');
+        $SEND_GRID_API_TEMPLATE_ID = isset($data['send_grid_api_template_id']) ? $data['send_grid_api_template_id'] : $this->settings->get('send_grid_api_template_id');
 
         $this->senGridApiKey = $SEND_GRID_API_KEY;
         $this->senGridTemplateKey = $SEND_GRID_API_TEMPLATE_ID;
-
 
         $data['js'] = array(
             'filters' => array(
                 'templates' => array(
                     'settings' => array(
                         'enable' => 1,
-                        'template_id' => $this->senGridTemplateKey
-                    )
-                )
-            )
+                        'template_id' => $this->senGridTemplateKey,
+                    ),
+                ),
+            ),
         );
 
         $this->to = $data['to'];
@@ -47,7 +46,7 @@ class SendGrid
         $this->text = $this->dnt->not_html($data['message']);
         $this->html = $data['message'];
         $this->xSmtpApi = json_encode($data['js']);
-        
+
         if (isset($data['attachements']) && count($data['attachements']) > 0) {
             $this->attachements = $data['attachements'];
         }
@@ -55,7 +54,6 @@ class SendGrid
 
     public function sent()
     {
-
 
         $files = [];
         if ($this->attachements) {
@@ -76,7 +74,7 @@ class SendGrid
             'html' => $this->html,
             'x-smtpapi' => $this->xSmtpApi,
         ];
-        
+
         $curlHandler = curl_init();
         $this->curlCustomPostfields($curlHandler, $assoc, $files);
         $response = curl_exec($curlHandler);
@@ -123,8 +121,8 @@ class SendGrid
 
         // add final boundary
         $body[] = "--{$boundary}--";
-        $body[] = "";
-        
+        $body[] = '';
+
         // set options
         return curl_setopt_array($ch, array(
             CURLOPT_URL => $this->senGridService,
@@ -136,9 +134,8 @@ class SendGrid
                 'Content-length: ' . strlen(implode("\r\n", $body)),
                 "Content-Type: multipart/form-data; boundary={$boundary}", // change Content-Type
                 'Accept: application/json',
-                'Authorization: Bearer ' . $this->senGridApiKey
+                'Authorization: Bearer ' . $this->senGridApiKey,
             ),
         ));
     }
-
 }

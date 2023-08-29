@@ -1,15 +1,15 @@
 <?php
 
 use DntLibrary\Base\Api;
-use DntLibrary\Base\Vendor;
+
 ?>
 <?php get_top(); ?>
 <?php
 get_top_html();
-$api = new Api;
+$api = new Api();
 $SQL_LOG_FILES = array();
-$folderOfQueries = "../dnt-logs/" . $vendor->getId() . "/sql/";
-$files = glob($folderOfQueries . "*.{csv}", GLOB_BRACE);
+$folderOfQueries = '../dnt-logs/' . $vendor->getId() . '/sql/';
+$files = glob($folderOfQueries . '*.{csv}', GLOB_BRACE);
 foreach ($files as $file) {
     $SQL_LOG_FILES[] = (basename($file));
 }
@@ -35,14 +35,14 @@ foreach ($files as $file) {
                     foreach ($SQL_LOG_FILES as $file) {
                         ?>
                         <li class="<?php
-                    if ($i == 0) {
-                        echo "active";
-                    }
+                        if ($i == 0) {
+                            echo 'active';
+                        }
                         ?>"><a href="#<?php echo md5($file); ?>" data-toggle="tab"><?php echo $file; ?></a></li>
                             <?php
                             $i++;
-                        }
-                        ?>
+                    }
+                    ?>
                 </ul>
                 <div class=" tab-content">
                     <!-- base settings -->
@@ -51,10 +51,10 @@ foreach ($files as $file) {
                     foreach ($SQL_LOG_FILES as $file) {
                         ?>
                         <div class="tab-pane <?php
-                             if ($i == 0) {
-                                 echo "active";
-                             }
-                             ?>" id="<?php echo md5($file); ?>">
+                        if ($i == 0) {
+                            echo 'active';
+                        }
+                        ?>" id="<?php echo md5($file); ?>">
                             <div class="grid-body">
                                 <table class="table table-hover">
                                     <thead>
@@ -70,21 +70,20 @@ foreach ($files as $file) {
                                         <?php
                                         $row = array();
                                         $i = 0;
-                                        if (($handle = fopen($folderOfQueries . $file, "r")) !== FALSE) {
-                                            while (($row = fgetcsv($handle, 10000000, ";")) !== FALSE) {
+                                        if (($handle = fopen($folderOfQueries . $file, 'r')) !== false) {
+                                            while (($row = fgetcsv($handle, 10000000, ';')) !== false) {
                                                 if (isset($row['0']) && $i > 0) {
-
                                                     $name = $row[3];
                                                     $nameUrl = $row[4];
                                                     $getQuery = $row[5];
 
                                                     $base64Query = base64_encode(urldecode($getQuery));
 
-                                                    $jsonURL = WWW_PATH . "dnt-api/json/" . $nameUrl . "/base64/?q=" . $base64Query;
-                                                    $xmlURL = WWW_PATH . "dnt-api/xml/" . $nameUrl . "/base64/?q=" . $base64Query;
+                                                    $jsonURL = WWW_PATH . 'dnt-api/json/' . $nameUrl . '/base64/?q=' . $base64Query;
+                                                    $xmlURL = WWW_PATH . 'dnt-api/xml/' . $nameUrl . '/base64/?q=' . $base64Query;
 
-                                                    $jsonURLShow = WWW_PATH . "dnt-api/json/" . $nameUrl;
-                                                    $xmlURLShow = WWW_PATH . "dnt-api/xml/" . $nameUrl;
+                                                    $jsonURLShow = WWW_PATH . 'dnt-api/json/' . $nameUrl;
+                                                    $xmlURLShow = WWW_PATH . 'dnt-api/xml/' . $nameUrl;
                                                     ?>
                                                     <tr>
                                                         <td style="width: 2%;"><?php echo $i; ?></td>
@@ -123,7 +122,7 @@ foreach ($files as $file) {
             <!-- END PAGINATION -->
         </div>
         <!-- BEGIN PAGINATION -->
-        <!-- END CUSTOM TABLE -->			
+        <!-- END CUSTOM TABLE -->           
     </div>
     <!-- END CUSTOM TABLE -->
 <?php get_bottom_html(); ?>

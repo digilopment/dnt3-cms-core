@@ -31,7 +31,7 @@ class Image
     }
 
     /**
-     * 
+     *
      * @param type $id
      * @param type $table
      * @return boolean
@@ -49,7 +49,7 @@ class Image
     }
 
     /**
-     * 
+     *
      * @param type $input
      * @param type $path = true
      * @return boolean
@@ -67,10 +67,10 @@ class Image
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
                 if ($path == true) {
-                    $imageFileFormat = "dnt-view/data/uploads/formats/" . $format . "/" . $row['name'];
-                    $imageFile = WWW_PATH . "dnt-view/data/uploads/" . $row['name'];
+                    $imageFileFormat = 'dnt-view/data/uploads/formats/' . $format . '/' . $row['name'];
+                    $imageFile = WWW_PATH . 'dnt-view/data/uploads/' . $row['name'];
                     if ($format) {
-                        if (file_exists("../" . $imageFileFormat) || file_exists($imageFileFormat)) {
+                        if (file_exists('../' . $imageFileFormat) || file_exists($imageFileFormat)) {
                             return WWW_PATH . $imageFileFormat;
                         } else {
                             return $imageFile;
@@ -88,14 +88,14 @@ class Image
     }
 
     /**
-     * 
+     *
      * @param type $ids
      * @return boolean
      */
     public function getFileImages($ids, $path = true, $format = false)
     {
         if (!is_array($ids)) {
-            $ids = explode(",", $ids);
+            $ids = explode(',', $ids);
         } else {
             $ids = $ids;
         }
@@ -105,13 +105,13 @@ class Image
                 $query = "SELECT name FROM dnt_uploads WHERE 
 				`id_entity` = '" . $imageId . "' AND 
 				`vendor_id` = '" . $this->vendor->getId() . "' AND 
-				" . $this->dnt->showStatus("show") . "";
+				" . $this->dnt->showStatus('show') . '';
                 if ($this->db->num_rows($query) > 0) {
                     foreach ($this->db->get_results($query) as $row) {
-                        $imageFileFormat = "dnt-view/data/uploads/formats/" . $format . "/" . $row['name'];
-                        $imageFile = WWW_PATH . "dnt-view/data/uploads/" . $row['name'];
+                        $imageFileFormat = 'dnt-view/data/uploads/formats/' . $format . '/' . $row['name'];
+                        $imageFile = WWW_PATH . 'dnt-view/data/uploads/' . $row['name'];
                         if ($format) {
-                            if (file_exists("../" . $imageFileFormat) || file_exists($imageFileFormat)) {
+                            if (file_exists('../' . $imageFileFormat) || file_exists($imageFileFormat)) {
                                 $return[] = WWW_PATH . $imageFileFormat;
                             } else {
                                 $return[] = $imageFile;
@@ -132,7 +132,7 @@ class Image
     }
 
     /**
-     * 
+     *
      * @param type $id
      * @param type $table
      * @return type
@@ -140,7 +140,7 @@ class Image
     public function getPostImage($id, $table = null, $format = false)
     {
         if ($table == true || $table == false || $table === null) {
-            $table = "dnt_posts";
+            $table = 'dnt_posts';
         } else {
             $table = $table;
         }
@@ -159,7 +159,7 @@ class Image
     }
 
     /**
-     * 
+     *
      * @param type $id
      * @param type $table
      * @return type
@@ -177,10 +177,10 @@ class Image
     }
 
     /**
-     * 
+     *
      * @param type $file
-     * 
-     * 
+     *
+     *
      */
     public function hasVendorDipendency($file)
     {
@@ -205,13 +205,13 @@ class Image
     }
 
     /**
-     * 
+     *
      * @param type $file
      * @param type $onDelete - pri mazani z vendora je hodnota nastavena na true, alebo nie je nastaveny param
      * @return string
      * funkcia vrati true, ak je obrazok pouzity v niektorej tablukle (ak nie je dypendencia, moze sa fyzicky vymazat)
      * v opacnom pripade sa vrati false
-     * 
+     *
      */
     public function hasDipendency($file, $onDelete = true)
     {
@@ -234,7 +234,7 @@ class Image
         if ($image_id_entity) {
 
             /**
-             * skontroluje, ci sa nachadza v dnt_uploads prave 0, alebo 1 zaznam. 
+             * skontroluje, ci sa nachadza v dnt_uploads prave 0, alebo 1 zaznam.
              * ak ich je viac, ako 1zaznam, web mohol byt skopirovany a subor caka na pouzitie v druhom webe.
              */
             $onDelete = $onDelete + 1 - 1; //to integer
@@ -243,24 +243,24 @@ class Image
                 if ($this->db->num_rows($query) > $defaultUploadDipendency) {
                     foreach ($this->db->get_results($query) as $row) {
                         $data[] = array(
-                            "image" => $image_id_entity,
-                            "image_url" => $row['name'],
-                            "table" => "dnt_uploads",
-                            "column" => "id_entity",
-                            "vendor_id" => $row['vendor_id'],
+                            'image' => $image_id_entity,
+                            'image_url' => $row['name'],
+                            'table' => 'dnt_uploads',
+                            'column' => 'id_entity',
+                            'vendor_id' => $row['vendor_id'],
                         );
                     }
                 }
             }
 
             $tables = array(
-                "dnt_polls" => "img",
-                "dnt_polls_composer" => "img",
-                "dnt_posts" => "img",
-                "dnt_posts_meta" => "value", //value
-                "dnt_registred_users" => "img",
-                "dnt_settings" => "value", //value
-                "dnt_users" => "img", //value
+                'dnt_polls' => 'img',
+                'dnt_polls_composer' => 'img',
+                'dnt_posts' => 'img',
+                'dnt_posts_meta' => 'value', //value
+                'dnt_registred_users' => 'img',
+                'dnt_settings' => 'value', //value
+                'dnt_users' => 'img', //value
             );
 
             foreach ($tables as $table => $column) {
@@ -268,11 +268,11 @@ class Image
                 if ($this->db->num_rows($query) > 0) {
                     foreach ($this->db->get_results($query) as $row) {
                         $data[] = array(
-                            "image" => $image_id_entity,
-                            "image_url" => $file,
-                            "table" => $table,
-                            "column" => $column,
-                            "vendor_id" => $row['vendor_id'],
+                            'image' => $image_id_entity,
+                            'image_url' => $file,
+                            'table' => $table,
+                            'column' => $column,
+                            'vendor_id' => $row['vendor_id'],
                         );
                     }
                 }
@@ -286,11 +286,11 @@ class Image
      */
     public function cleanIndependentFiles()
     {
-        $path = "../dnt-view/data/uploads/";
-        $files = glob($path . "*");
+        $path = '../dnt-view/data/uploads/';
+        $files = glob($path . '*');
         foreach ($files as $file) {
-            $fileName = str_replace($path, "", $file);
-            if (filetype($file) == "file") {
+            $fileName = str_replace($path, '', $file);
+            if (filetype($file) == 'file') {
                 if (!$this->hasDipendency($fileName, false)) {
                     if (file_exists($path . $fileName)) {
                         unlink($path . $fileName);
@@ -300,5 +300,4 @@ class Image
             }
         }
     }
-
 }

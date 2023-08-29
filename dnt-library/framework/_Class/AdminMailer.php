@@ -17,7 +17,6 @@ use DntLibrary\Base\Vendor;
 
 class AdminMailer
 {
-
     public function __construct()
     {
         $this->adminContent = new AdminContent();
@@ -27,7 +26,7 @@ class AdminMailer
     }
 
     /**
-     * 
+     *
      * @return int
      */
     public function limit()
@@ -36,7 +35,7 @@ class AdminMailer
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function catQuery()
@@ -45,17 +44,17 @@ class AdminMailer
     }
 
     /**
-     * 
+     *
      * @param type $next_id
      * @return type
      */
     public function sent_next_mail($next_id)
     {
-        return WWW_PATH_ADMIN . "?src=mailer&action=sent_mail&post_id=&mail_id=" . $next_id . "";
+        return WWW_PATH_ADMIN . '?src=mailer&action=sent_mail&post_id=&mail_id=' . $next_id . '';
     }
 
     /**
-     * 
+     *
      * @param type $action
      * @param type $cat_id
      * @param type $sub_cat_id
@@ -66,7 +65,7 @@ class AdminMailer
      */
     public function url($action, $cat_id, $sub_cat_id, $type, $post_id, $page)
     {
-        if ($action == "filter") {
+        if ($action == 'filter') {
             return WWW_PATH_ADMIN . "index.php?src=mailer&filter=$cat_id&sub_cat_id=$sub_cat_id&type=$type";
         } else {
             if (isset($_GET['filter'])) {
@@ -78,29 +77,29 @@ class AdminMailer
     }
 
     /**
-     * 
+     *
      * @param type $is_limit
      * @return string
      */
     public function prepare_query($is_limit)
     {
-        if (isset($_GET['filter']) && $_GET['filter'] != "")
+        if (isset($_GET['filter']) && $_GET['filter'] != '') {
             $typ = "AND cat_id = '" . $_GET['filter'] . "'";
-        elseif (isset($_GET['search']) && $_GET['src'] == "mailer")
+        } elseif (isset($_GET['search']) && $_GET['src'] == 'mailer') {
             $typ = "AND `email` LIKE '%" . $this->dnt->name_url($_GET['search']) . "%'";
-        elseif (isset($_GET['search'])) {
+        } elseif (isset($_GET['search'])) {
             $typ = "AND `name_url` LIKE '%" . $this->dnt->name_url($_GET['search']) . "%'";
-        } else
+        } else {
             $typ = false;
+        }
 
         if ($is_limit == false) {
             $limit = false;
-            $query = "SELECT parent_id FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . $this->vendor->getId() . "' " . $typ . " " . $limit . "";
+            $query = "SELECT parent_id FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . $this->vendor->getId() . "' " . $typ . ' ' . $limit . '';
         } else {
             $limit = $is_limit;
-            $query = "SELECT * FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . $this->vendor->getId() . "' " . $typ . " ORDER BY `id` DESC " . $limit . "";
+            $query = "SELECT * FROM `dnt_mailer_mails` WHERE  `vendor_id` = '" . $this->vendor->getId() . "' " . $typ . ' ORDER BY `id` DESC ' . $limit . '';
         }
-
 
         return $query;
     }
@@ -111,13 +110,13 @@ class AdminMailer
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function query()
     {
         if (isset($_GET['page'])) {
-            $returnPage = "&page=" . $_GET['page'];
+            $returnPage = '&page=' . $_GET['page'];
         } else {
             $returnPage = false;
         }
@@ -126,10 +125,11 @@ class AdminMailer
         //$pocet = $this->db->num_rows($query);
         $limit = $this->limit();
 
-        if (isset($_GET['page']))
+        if (isset($_GET['page'])) {
             $strana = $_GET['page'];
-        else
+        } else {
             $strana = 1;
+        }
 
         //$stranok = $pocet / $limit;
         $pociatok = ($strana * $limit) - $limit;
@@ -138,12 +138,12 @@ class AdminMailer
         $next_page = $strana + 1;
         //$stranok_round = ceil($stranok);
 
-        $pager = "LIMIT " . $pociatok . ", " . $limit . "";
+        $pager = 'LIMIT ' . $pociatok . ', ' . $limit . '';
         return $this->prepare_query($pager);
     }
 
     /**
-     * 
+     *
      * @param type $index
      * @return int
      */
@@ -169,69 +169,67 @@ class AdminMailer
 
         $prev_page = $strana - 1;
 
-        if ($index == "next") {
+        if ($index == 'next') {
             $next_page = $strana + 1;
             if ($next_page <= $stranok_round) {
                 return $next_page;
             } else {
                 return $stranok_round;
             }
-        } elseif ($index == "prev") {
+        } elseif ($index == 'prev') {
             if ($prev_page < 1) {
                 return 1;
             } else {
                 return $prev_page;
             }
-        } elseif ($index == "first") {
+        } elseif ($index == 'first') {
             return 1;
-        } elseif ($index == "last") {
+        } elseif ($index == 'last') {
             return $stranok_round;
-        } elseif ($index == "current") {
+        } elseif ($index == 'current') {
             return $strana;
         }
     }
 
     /**
-     * 
+     *
      * @param type $index
      * @return type
      */
     public function paginator($index, $countPages)
     {
-        $adresa = explode("?", WWW_FULL_PATH);
+        $adresa = explode('?', WWW_FULL_PATH);
         if (isset($_GET['page'])) {
             $page = $_GET['page'];
-            $adresa_bez_page = explode("&page=" . $_GET['page'] . "", $adresa[1]); //src=obsah&page=2
+            $adresa_bez_page = explode('&page=' . $_GET['page'] . '', $adresa[1]); //src=obsah&page=2
             $return = $adresa_bez_page[0];
         } else {
             $return = $adresa[1]; //this function return an array
             $page = 1;
         }
-		
-		if($index == 'next'){
-			$pageId = isset($page) ? $page + 1 : 2;
-		}elseif($index == 'first'){
-			$pageId = 1;
-		}elseif($index == 'last'){
-			$pageId = 100;
-		}elseif($index == 'prev'){
-			$pageId = ($page - 1 >= 1)?$page - 1 : 1;
-		}
-		elseif ($index == "current") {
+
+        if ($index == 'next') {
+            $pageId = isset($page) ? $page + 1 : 2;
+        } elseif ($index == 'first') {
+            $pageId = 1;
+        } elseif ($index == 'last') {
+            $pageId = 100;
+        } elseif ($index == 'prev') {
+            $pageId = ($page - 1 >= 1) ? $page - 1 : 1;
+        } elseif ($index == 'current') {
             $pageId = $page;
         }
 
         //return WWW_PATH_ADMIN . "index.php?" . $return . "&page=" . $this->getPage($index, $countPages);
-        return WWW_PATH_ADMIN . "index.php?" . $return . "&page=" . $pageId;
+        return WWW_PATH_ADMIN . 'index.php?' . $return . '&page=' . $pageId;
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function showOrder()
     {
-        return ($this->adminContent->getPage("current") * $this->adminContent->limit()) - $this->adminContent->limit() + 1;
+        return ($this->adminContent->getPage('current') * $this->adminContent->limit()) - $this->adminContent->limit() + 1;
     }
-
 }

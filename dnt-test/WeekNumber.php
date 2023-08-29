@@ -7,7 +7,6 @@ use DntLibrary\Base\Dnt;
 
 class WeekNumberTest
 {
-
     public function __construct()
     {
         $this->dnt = new Dnt();
@@ -16,8 +15,7 @@ class WeekNumberTest
     public function run()
     {
         $date = new DateTime($this->dnt->datetime());
-        $week = $date->format("W");
+        $week = $date->format('W');
         echo "Weeknummer: <b>$week</b>";
     }
-
 }

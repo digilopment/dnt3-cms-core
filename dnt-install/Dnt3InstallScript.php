@@ -1,25 +1,26 @@
 <?php
 
 /**
- * 
- * If you download this script as a singl script file, 
+ *
+ * If you download this script as a singl script file,
  * please add this line of code below, after last bracket
  * *
  * * * => (new Dnt3InstallScript())->run();
  * *
- * 
+ *
  */
 class Dnt3InstallScript
 {
-
     protected static function downloadFile($url, $path)
     {
-        $file = explode("/", $url);
+        $file = explode('/', $url);
         $array = $file;
-        if (!is_array($array))
+        if (!is_array($array)) {
             return $array;
-        if (!count($array))
+        }
+        if (!count($array)) {
             return null;
+        }
         end($array);
         $fotka = $array[key($array)];
 
@@ -63,20 +64,19 @@ class Dnt3InstallScript
 
     public function run()
     {
-        $projectFolder = "dnt3/";
+        $projectFolder = 'dnt3/';
 
-        if (self::downloadFile("https://github.com/designdnt/cms-designdnt3/archive/master.zip", "")) {
-            $zip = new ZipArchive;
+        if (self::downloadFile('https://github.com/designdnt/cms-designdnt3/archive/master.zip', '')) {
+            $zip = new ZipArchive();
             $res = $zip->open('master.zip');
             @file($res);
             $zip->extractTo($projectFolder);
             $zip->close();
-            self::recurse_copy($projectFolder . "cms-designdnt3-master", $projectFolder);
+            self::recurse_copy($projectFolder . 'cms-designdnt3-master', $projectFolder);
             self::rrmdir($projectFolder . 'cms-designdnt3-master');
             unlink('master.zip');
             print ("\nInstalation finished... redirecting\n");
             print ("<script>window.setTimeout(location.href = '/" . $projectFolder . "dnt-install/index.php',5000)</script>");
         }
     }
-
 }

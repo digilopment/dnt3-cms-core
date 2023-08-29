@@ -7,7 +7,6 @@ use DntLibrary\Base\Rest;
 
 class AggrBuilder
 {
-
     public $decode;
 
     public function __construct()
@@ -65,5 +64,4 @@ class AggrBuilder
 
         return $return;
     }
-
 }

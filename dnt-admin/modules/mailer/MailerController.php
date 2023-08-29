@@ -4,6 +4,7 @@ namespace DntAdmin\Moduls;
 
 use App\Subscriber;
 use DntAdmin\App\AdminController;
+use DntLibrary\App\Post;
 use DntLibrary\Base\AdminMailer;
 use DntLibrary\Base\DB;
 use DntLibrary\Base\Dnt;
@@ -12,24 +13,35 @@ use DntLibrary\Base\Rest;
 use DntLibrary\Base\Sessions;
 use DntLibrary\Base\Settings;
 use DntLibrary\Base\Vendor;
-use DntLibrary\App\Post;
 
 class MailerController extends AdminController
 {
-
     protected $loc = __FILE__;
+
     protected $db;
+
     protected $rest;
+
     protected $adminMailer;
+
     protected $dnt;
+
     protected $mailer;
+
     protected $vendor;
+
     protected $session;
+
     protected $categories = [];
+
     protected $countEmails = [];
+
     protected $sentMailPerRequest = 5;
+
     protected $sleep = 1;
+
     protected $subscriber;
+
     protected $settings;
 
     public function __construct()
@@ -130,7 +142,7 @@ class MailerController extends AdminController
                 'vendor_id' => $this->vendor->getId(),
                 'cat_id' => $cat_id,
                 'datetime_creat' => $this->dnt->datetime(),
-                'datetime_update' => $this->dnt->datetime()
+                'datetime_update' => $this->dnt->datetime(),
             );
             $this->db->insert('dnt_mailer_mails', $insertedData);
             $this->dnt->redirect();
@@ -153,8 +165,8 @@ class MailerController extends AdminController
             $return = $this->rest->post('return');
             $table = 'dnt_mailer_mails';
             $this->db->update(
-                    $table,
-                    array(
+                $table,
+                array(
                         'title' => $title,
                         'name' => $name,
                         'surname' => $surname,
@@ -162,9 +174,9 @@ class MailerController extends AdminController
                         'sender_name' => $sender_name,
                         'sender_email' => $sender_email,
                         'cat_id' => $cat_id,
-                        'datetime_update' => $this->dnt->datetime()
+                        'datetime_update' => $this->dnt->datetime(),
                     ),
-                    array(
+                array(
                         'id_entity' => $post_id,
                         '`vendor_id`' => $this->vendor->getId())
             );
@@ -193,11 +205,11 @@ class MailerController extends AdminController
         }
         $table = 'dnt_mailer_mails';
         $this->db->update(
-                $table,
-                array(
+            $table,
+            array(
                     'show' => $set_show,
                 ),
-                array(
+            array(
                     'id_entity' => $post_id,
                     'vendor_id' => $this->vendor->getId(),
                 )
@@ -267,7 +279,7 @@ class MailerController extends AdminController
         $content = str_replace("href='#'", "href=''", $content);
         $hexEmail = $this->dnt->strToHex($recipient['email']);
         $targetUrl = WWW_PATH . 'dnt-api/analytics-newsletters?systemStatus=newsletter_log_click&campainId=' . $campainId . '&email=' . $hexEmail . '&url=';
-        $finalUrl = function($item) use ($hexEmail) {
+        $finalUrl = function ($item) use ($hexEmail) {
             if ($this->session->get('addUrlIdentificator')) {
                 if (parse_url($item, PHP_URL_QUERY)) {
                     return $item . '&dnt3ClickId=' . $hexEmail;
@@ -283,7 +295,7 @@ class MailerController extends AdminController
                 $final[$item] = $targetUrl . urlencode($finalUrl($item));
             }
         }
-        uksort($final, function($a, $b) {
+        uksort($final, function ($a, $b) {
             return strlen($b) <=> strlen($a);
         });
         return str_replace(array_keys($final), array_values($final), $content);
@@ -333,7 +345,7 @@ class MailerController extends AdminController
                 $emails[] = $recipient['email'];
 
                 $recipientEmail = str_replace(' ', '', $recipient['email']);
-                
+
                 //KLIENTI MARKIZA JAR 2019
                 $title = $recipient['title'] . ' ' . $recipient['name'] . ' ' . $recipient['surname'];
                 $title = $this->replaceTitle($title, $content);
@@ -341,7 +353,6 @@ class MailerController extends AdminController
 
                 //content configurator
                 $content = $this->contentConfigurator($content, $recipient);
-
 
                 //set click - replace all href
                 $content = $this->checkClick($content, $recipient, $campain);
@@ -364,10 +375,10 @@ class MailerController extends AdminController
                     'recipientName' => $recipientEmail,
                     'message' => $content,
                     'subject' => $subject,
-					/*'stringAttachments' => [
-						'Darčekový kupón_registrovaný užívateľ.pdf' => 'https://markiza.digilopment.com/dnt-view/data/_temp/kupon-registrovany.pdf',
-						'Darčekový kupón_užívateľ bez registrácie.pdf' => 'https://markiza.digilopment.com/dnt-view/data/_temp/kupon-bez-registrovany.pdf',
-					],*/
+                    /*'stringAttachments' => [
+                        'Darčekový kupón_registrovaný užívateľ.pdf' => 'https://markiza.digilopment.com/dnt-view/data/_temp/kupon-registrovany.pdf',
+                        'Darčekový kupón_užívateľ bez registrácie.pdf' => 'https://markiza.digilopment.com/dnt-view/data/_temp/kupon-bez-registrovany.pdf',
+                    ],*/
                 ];
 
                 $config = array_merge($configEmail, $configHost);
@@ -379,7 +390,6 @@ class MailerController extends AdminController
             $data['countMails'] = $countMails;
             $data['emails'] = join('<br/>', $emails);
             $data['sleep'] = $this->sleep;
-
 
             $this->loadTemplate($this->loc, 'sendingMails', $data);
         } else {
@@ -454,7 +464,7 @@ class MailerController extends AdminController
         if ($this->session->get('count-mails')) {
             $countMails = $this->session->get('count-mails');
         } else {
-            $queryCount = "SELECT COUNT(id_entity) AS `countMails` FROM " . $table . " WHERE cat_id = '" . $cat_id . "' AND vendor_id = '" . $this->vendor->getId() . "'  AND `show` = 1";
+            $queryCount = 'SELECT COUNT(id_entity) AS `countMails` FROM ' . $table . " WHERE cat_id = '" . $cat_id . "' AND vendor_id = '" . $this->vendor->getId() . "'  AND `show` = 1";
             $result = $this->db->get_results($queryCount);
             $countMails = (int) $result[0]['countMails'];
             $this->session->set('count-mails', $countMails);
@@ -462,12 +472,12 @@ class MailerController extends AdminController
 
         if (isset($_GET['mail_id'])) {
             $currentID = $this->rest->get('mail_id');
-            $queryMailId = "SELECT * FROM " . $table . " WHERE cat_id = '" . $cat_id . "' AND vendor_id = '" . $this->vendor->getId() . "'  AND `show` = 1 AND `id_entity` > '" . $currentID . "' ORDER BY `id_entity` asc LIMIT " . $this->sentMailPerRequest . "";
+            $queryMailId = 'SELECT * FROM ' . $table . " WHERE cat_id = '" . $cat_id . "' AND vendor_id = '" . $this->vendor->getId() . "'  AND `show` = 1 AND `id_entity` > '" . $currentID . "' ORDER BY `id_entity` asc LIMIT " . $this->sentMailPerRequest . '';
             $data = $this->db->get_results($queryMailId);
             $requestSended = count($data);
         } else {
             $currentID = $this->dnt->db_current_id($table, "AND cat_id = '" . $cat_id . "'  AND `show` = 1");
-            $query = "SELECT * FROM " . $table . " WHERE cat_id = '" . $cat_id . "' AND vendor_id = '" . $this->vendor->getId() . "'  AND `show` = 1 AND `id_entity` >= '" . $currentID . "' ORDER BY `id_entity` asc LIMIT " . $this->sentMailPerRequest . "";
+            $query = 'SELECT * FROM ' . $table . " WHERE cat_id = '" . $cat_id . "' AND vendor_id = '" . $this->vendor->getId() . "'  AND `show` = 1 AND `id_entity` >= '" . $currentID . "' ORDER BY `id_entity` asc LIMIT " . $this->sentMailPerRequest . '';
             $data = $this->db->get_results($query);
             $requestSended = count($data);
         }
@@ -484,5 +494,4 @@ class MailerController extends AdminController
         $this->session->set('sended-mails', $newSendedMails);
         $this->sentMail($currentID, $lastId, $cat_id, $data, $countMails, $hasData, $newSendedMails);
     }
-
 }

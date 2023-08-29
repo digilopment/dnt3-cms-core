@@ -4,20 +4,21 @@ namespace DntTest;
 
 class ZadanieTest
 {
-
     protected $n = 3 ** 2;
+
     protected $x = 1;
+
     protected $y = 4;
 
     protected function generateTable()
     {
         echo '<table cellpadding="0" cellspacing="0" style="width:500px;height:500px" >';
         for ($row = 1; $row < $this->n; $row++) {
-            echo "<tr>";
+            echo '<tr>';
             for ($col = 1; $col < $this->n; $col++) {
                 echo $this->drawLine($row, $col);
             }
-            echo "</tr>";
+            echo '</tr>';
         }
         echo '</table>';
     }
@@ -49,5 +50,4 @@ class ZadanieTest
     {
         $this->generateTable();
     }
-
 }

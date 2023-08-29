@@ -16,12 +16,16 @@ use DntLibrary\Base\Vendor;
 
 class Post extends Client
 {
-
     public $postsModel = array();
+
     public $postsNavigation = array();
+
     public $postsSubNavigation = array();
+
     protected $rest;
+
     protected $db;
+
     protected $vendor;
 
     public function __construct()
@@ -41,15 +45,15 @@ class Post extends Client
                 }
                 $sortArray[$key][] = $value;
             }
-            if ($column == "datetime_publish") {
+            if ($column == 'datetime_publish') {
                 $sortArray['datetime'][] = strtotime($item[$column]);
-                $orderby = "datetime";
+                $orderby = 'datetime';
             }
         }
 
         $orderby = $column;
 
-        if ($sort == "ASC" || $sort == "asc") {
+        if ($sort == 'ASC' || $sort == 'asc') {
             array_multisort($sortArray[$orderby], SORT_ASC, $data);
         } else {
             array_multisort($sortArray[$orderby], SORT_DESC, $data);
@@ -68,24 +72,24 @@ class Post extends Client
     protected function postsNavigation()
     {
         foreach ($this->postsModel as $model) {
-            if ($model->type == "sitemap" && ($model->show >= 1 && $model->show <= 2) && $model->sub_cat_id == "") {
+            if ($model->type == 'sitemap' && ($model->show >= 1 && $model->show <= 2) && $model->sub_cat_id == '') {
                 $this->postsNavigation[] = $model;
             }
         }
         if ($this->postsNavigation) {
-            $this->postsNavigation = $this->order($this->postsNavigation, "order", "desc");
+            $this->postsNavigation = $this->order($this->postsNavigation, 'order', 'desc');
         }
     }
 
     protected function postsSubNavigation()
     {
         foreach ($this->postsModel as $model) {
-            if ($model->type == "sitemap" && ($model->show >= 1 && $model->show <= 2) && $model->sub_cat_id != "") {
+            if ($model->type == 'sitemap' && ($model->show >= 1 && $model->show <= 2) && $model->sub_cat_id != '') {
                 $this->postsSubNavigation[] = $model;
             }
         }
         if ($this->postsSubNavigation) {
-            $this->postsSubNavigation = $this->order($this->postsSubNavigation, "order", "desc");
+            $this->postsSubNavigation = $this->order($this->postsSubNavigation, 'order', 'desc');
         }
     }
 
@@ -103,7 +107,7 @@ class Post extends Client
         } else {
             $identify = "`name_url` = '$nameUrlOrId'";
         }
-        $query = "SELECT * FROM dnt_posts WHERE " . $identify . " AND vendor_id = '" . $this->vendor->getId() . "' " . $AND_SRV . "";
+        $query = 'SELECT * FROM dnt_posts WHERE ' . $identify . " AND vendor_id = '" . $this->vendor->getId() . "' " . $AND_SRV . '';
         if ($this->db->num_rows($query) > 0) {
             $data = $this->db->get_results($query, true);
             return $data[0];
@@ -139,5 +143,4 @@ class Post extends Client
         $this->postsNavigation();
         $this->postsSubNavigation();
     }
-
 }

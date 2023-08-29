@@ -6,7 +6,6 @@ use DntLibrary\App\SendGrid;
 
 class SendGridTest
 {
-
     protected $dnt;
 
     public function __construct()
@@ -16,7 +15,6 @@ class SendGridTest
 
     public function run()
     {
-
 
         $data = [
             'to' => 'thomas.doubek@gmail.com',
@@ -35,5 +33,4 @@ class SendGridTest
 
         var_dump($this->sendGrid->response);
     }
-
 }

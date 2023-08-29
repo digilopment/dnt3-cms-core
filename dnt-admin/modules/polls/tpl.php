@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 use DntLibrary\Base\Polls;
 
 $polls = new Polls();
@@ -36,12 +37,12 @@ get_top(); ?>
                            </tr>
                         </thead>
                         <tbody>
-						
-						<?php
-						$query = $polls->getPollsAdmin();
-						 if($db->num_rows($query)>0){
-							 foreach($db->get_results($query) as $row){
-						?>
+                        
+                        <?php
+                        $query = $polls->getPollsAdmin();
+                        if ($db->num_rows($query) > 0) {
+                            foreach ($db->get_results($query) as $row) {
+                                ?>
                            <tr>
                               <td><?php echo $row['id_entity']?></td>
                               <td style="max-width: 500px;"><b><a href="index.php?src=polls&action=edit_poll&post_id=<?php echo $row['id_entity']?>"><?php echo $row['name']?></a></b></td>
@@ -50,27 +51,27 @@ get_top(); ?>
                                  <a href="index.php?src=polls&action=edit_poll&post_id=<?php echo $row['id_entity']?>"><i class="fa fa-arrow-right bg-blue action"></i></a>
                               </td>
                                <td style="text-align: center;">
-							  <?php if($row['show'] == 2){ ?>
+                                <?php if ($row['show'] == 2) { ?>
                                  <i class="fa fa-arrow-right bg-red action"></i> &nbsp;&nbsp;&nbsp;NIE
-							  <?php } elseif($row['show'] == 1){ ?>	 
-								 <i class="fa fa-arrow-right bg-green action"></i> &nbsp;ÁNO
-							  <?php } elseif($row['show'] == 0){ ?>	 
-								 <i class="fa fa-arrow-right bg-black action"></i> &nbsp;&nbsp;KOŠ
-							  <?php } ?> 
+                                <?php } elseif ($row['show'] == 1) { ?>  
+                                 <i class="fa fa-arrow-right bg-green action"></i> &nbsp;ÁNO
+                                <?php } elseif ($row['show'] == 0) { ?>  
+                                 <i class="fa fa-arrow-right bg-black action"></i> &nbsp;&nbsp;KOŠ
+                                <?php } ?> 
                               </td>
                                <td style="text-align: center;">
-                                 <a href="<?php echo WWW_PATH."ankety/".$row['id_entity']."/".$row['name_url']."" ?>" target="_blank"><i class="fa fa-arrow-right bg-blue action"></i></a>
+                                 <a href="<?php echo WWW_PATH . 'ankety/' . $row['id_entity'] . '/' . $row['name_url'] . '' ?>" target="_blank"><i class="fa fa-arrow-right bg-blue action"></i></a>
                               </td>
                               <td style="text-align: center;">
-                                  <a href="<?php echo WWW_PATH."ankety/".$row['id_entity']."/".$row['name_url']."" ?>" target="_blank"><i class="fa fa-arrow-right bg-blue action"></i></a>
+                                  <a href="<?php echo WWW_PATH . 'ankety/' . $row['id_entity'] . '/' . $row['name_url'] . '' ?>" target="_blank"><i class="fa fa-arrow-right bg-blue action"></i></a>
                               </td>
                               <td>
                               </td>
                            </tr>
-						  <?php
-								}
-							}
-						  ?>
+                                <?php
+                            }
+                        }
+                        ?>
 
                         </tbody>
                      </table>
@@ -79,7 +80,7 @@ get_top(); ?>
                <!-- END PAGINATION -->
             </div>
             <!-- BEGIN PAGINATION -->
-            <!-- END CUSTOM TABLE -->			
+            <!-- END CUSTOM TABLE -->           
          </div>
       </section>
    </div>

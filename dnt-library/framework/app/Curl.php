@@ -6,8 +6,8 @@ use UI\Exception\RuntimeException;
 
 class Curl
 {
-
     private $url;
+
     private $options;
 
     public function __construct($url = false, array $options = [])
@@ -26,7 +26,6 @@ class Curl
             $this->options = $options;
         }
         $ch = curl_init($this->url);
-
 
         foreach ($this->options as $key => $val) {
             curl_setopt($ch, $key, $val);
@@ -49,5 +48,4 @@ class Curl
 
         return $response;
     }
-
 }

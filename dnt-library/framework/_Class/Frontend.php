@@ -19,7 +19,6 @@ use DntLibrary\Base\Vendor;
 
 class Frontend
 {
-
     public function __construct()
     {
         $this->article = new ArticleView();
@@ -31,7 +30,7 @@ class Frontend
     }
 
     /**
-     * 
+     *
      * @param array $custom_data
      * @return type
      */
@@ -39,7 +38,6 @@ class Frontend
     {
 
         $this->navigation->init();
-
 
         if ($custom_data == false) {
             $custom_data = array(array(false));
@@ -57,14 +55,14 @@ class Frontend
         $translates = $this->multiLanguage->getTranslates();
         $metaSettingsArr = $this->settings->getAllSettings();
 
-        $articleName = $this->article->getPostParam("name", $post_id);
+        $articleName = $this->article->getPostParam('name', $post_id);
         $articleImage = $this->article->getPostImage($post_id);
         $data = array(
-            "media_path" => WWW_PATH . "dnt-view/layouts/" . $this->vendor->getLayout() . "/",
-            "title" => $this->settings->get("title"),
-            "post_id" => $post_id,
-            "webhook" => $this->rest->webhook(),
-            "meta" => array(
+            'media_path' => WWW_PATH . 'dnt-view/layouts/' . $this->vendor->getLayout() . '/',
+            'title' => $this->settings->get('title'),
+            'post_id' => $post_id,
+            'webhook' => $this->rest->webhook(),
+            'meta' => array(
                 '<meta name="keywords" content="' . $metaSettingsArr['keys']['keywords']['value'] . '" />',
                 '<meta name="description" content="' . $metaSettingsArr['keys']['description']['value'] . '" />',
                 '<meta content="' . $articleName . '" property="og:title" />',
@@ -72,25 +70,25 @@ class Frontend
                 '<meta content="article" property="og:type" />',
                 '<meta content="' . $articleImage . '" property="og:image" />',
             ),
-            "article" => array(
-                "name" => $articleName,
-                "name_url" => $this->article->getPostParam("name_url", $post_id),
-                "perex" => $this->article->getPostParam("perex", $post_id),
-                "content" => $this->article->getPostParam("content", $post_id),
-                "embed" => $this->article->getPostParam("embed", $post_id),
-                "datetime_publish" => $this->article->getPostParam("datetime_publish", $post_id),
-                "name" => $articleName,
-                "service" => $this->article->getPostParam("service", $post_id),
-                "service_id" => $this->article->getPostParam("service_id", $post_id),
-                "tags" => $this->article->getPostTags($post_id),
-                "img" => $articleImage,
+            'article' => array(
+                'name' => $articleName,
+                'name_url' => $this->article->getPostParam('name_url', $post_id),
+                'perex' => $this->article->getPostParam('perex', $post_id),
+                'content' => $this->article->getPostParam('content', $post_id),
+                'embed' => $this->article->getPostParam('embed', $post_id),
+                'datetime_publish' => $this->article->getPostParam('datetime_publish', $post_id),
+                'name' => $articleName,
+                'service' => $this->article->getPostParam('service', $post_id),
+                'service_id' => $this->article->getPostParam('service_id', $post_id),
+                'tags' => $this->article->getPostTags($post_id),
+                'img' => $articleImage,
             ),
-            "meta_tree" => $metaArr,
-            "menu_items" => $menuItems,
-            "sitemap_items" => $sitemapItems,
-            "translates" => $translates,
-            "meta_settings" => $metaSettingsArr,
-            "timestamp" => time(),
+            'meta_tree' => $metaArr,
+            'menu_items' => $menuItems,
+            'sitemap_items' => $sitemapItems,
+            'translates' => $translates,
+            'meta_settings' => $metaSettingsArr,
+            'timestamp' => time(),
         );
 
         $finalData = array_merge($data, $custom_data);
@@ -103,7 +101,7 @@ class Frontend
     }
 
     /**
-     * 
+     *
      * @param type $data
      * @param type $key
      * @return boolean
@@ -118,7 +116,7 @@ class Frontend
     }
 
     /**
-     * 
+     *
      * @param type $data
      * @param type $key
      * @return boolean
@@ -133,7 +131,7 @@ class Frontend
     }
 
     /**
-     * 
+     *
      * @param type $data
      * @param type $key
      * @return boolean
@@ -149,11 +147,10 @@ class Frontend
 
     public static function pluginBridgeVar()
     {
-        
     }
 
     /**
-     * 
+     *
      * @param type $data
      * @param type $key
      * @return boolean
@@ -166,5 +163,4 @@ class Frontend
             return false;
         }
     }
-
 }

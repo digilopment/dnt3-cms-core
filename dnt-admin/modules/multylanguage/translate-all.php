@@ -1,28 +1,26 @@
-<?php 
+<?php
 
-use DntLibrary\Base\Dnt;
-use DntLibrary\Base\MultyLanguage;
 use DntLibrary\Base\Rest;
 
 get_top(); ?>
-<?php get_top_html(); 
-   $rest = new Rest;
-   
-   if($rest->get('page')){
-	   $page = $rest->get('page');
-   }else{
-	   $page = 1;
-   }
-   
-	$langs = array();
-	$query = $multiLanguage->getLangs(true);
-	if($db->num_rows($query) > 0){
-		foreach($db->get_results($query) as $row){			
-		 $langs[] = $row['slug'];
-		}
-	}
-						 
-   ?>
+<?php get_top_html();
+   $rest = new Rest();
+
+if ($rest->get('page')) {
+    $page = $rest->get('page');
+} else {
+    $page = 1;
+}
+
+    $langs = array();
+    $query = $multiLanguage->getLangs(true);
+if ($db->num_rows($query) > 0) {
+    foreach ($db->get_results($query) as $row) {
+        $langs[] = $row['slug'];
+    }
+}
+
+?>
 <section class="content">
    <div class="row">
       <section class="content-header">
@@ -34,35 +32,35 @@ get_top(); ?>
             </li>
          </ul>
       </section>
-      <form enctype="multipart/form-data" action="<?php echo WWW_PATH_ADMIN_2."index.php?src=multylanguage&action=update-all";?>" method="POST">
+      <form enctype="multipart/form-data" action="<?php echo WWW_PATH_ADMIN_2 . 'index.php?src=multylanguage&action=update-all';?>" method="POST">
          <!-- prava strana-->
          <div class="col-md-12">
             <div class="col">
                <!-- tabs begin here! -->
                <div class="tab-content" style="border: 0px solid; padding: 0px;">
                   <?php
-				  
-				  foreach($multiLanguage->getTranslates() as $item) {
-				  if(in_array($item['lang_id'], $langs)){
-					  ?>
-					<div class="row" style="border-bottom:1px solid #cccccc;padding-top:15px;">
-					   <div class="form-group">
-						  <label class="col-sm-4 control-label">
-							 <p class="lead dnt_bold">
-								<span class="dnt_lang" style="float: left; font-size:14px"><?php echo $item['translate_id']; ?>:</span>
-								<br/><span class="dnt_lang" style="float: left; font-size:11px"><?php echo $item['translate']; ?></span>
-							 </p>
-						  </label>
-						  <div class="col-sm-8">
-							 <input type="text" value="<?php echo $item['translate']; ?>" name="translate_<?php echo $item['id_entity']; ?>" class="form-control" placeholder="">
-							 <br>
-						  </div>
-					   </div>
-					</div>
-					  <?php
-				  }
-				  }
-				  ?>
+
+                    foreach ($multiLanguage->getTranslates() as $item) {
+                        if (in_array($item['lang_id'], $langs)) {
+                            ?>
+                    <div class="row" style="border-bottom:1px solid #cccccc;padding-top:15px;">
+                       <div class="form-group">
+                          <label class="col-sm-4 control-label">
+                             <p class="lead dnt_bold">
+                                <span class="dnt_lang" style="float: left; font-size:14px"><?php echo $item['translate_id']; ?>:</span>
+                                <br/><span class="dnt_lang" style="float: left; font-size:11px"><?php echo $item['translate']; ?></span>
+                             </p>
+                          </label>
+                          <div class="col-sm-8">
+                             <input type="text" value="<?php echo $item['translate']; ?>" name="translate_<?php echo $item['id_entity']; ?>" class="form-control" placeholder="">
+                             <br>
+                          </div>
+                       </div>
+                    </div>
+                              <?php
+                        }
+                    }
+                    ?>
                </div>
                <!-- end here -->
                <?php echo $dnt->returnInput();?>

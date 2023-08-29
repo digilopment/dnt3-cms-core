@@ -7,7 +7,6 @@ use DntLibrary\Base\Rest;
 
 class MailerServiceApi
 {
-
     public function __construct()
     {
         $this->mailer = new Mailer();
@@ -61,5 +60,4 @@ class MailerServiceApi
         }
         print(json_encode($response));
     }
-
 }

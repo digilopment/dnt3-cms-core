@@ -1,4 +1,4 @@
-<?php include("head.inc"); ?>
+<?php include('head.inc'); ?>
 
 <a name="overview"></a><h2>Overview</h2>
 
@@ -17,4 +17,4 @@ PDFLib improves performance and reduces the memory requirements of dompdf
 somewhat, while the CPDF class, though slightly slower, eliminates any
 dependencies on external PDF libraries.</p>
 
-<?php include("foot.inc"); ?>
+<?php include('foot.inc'); ?>

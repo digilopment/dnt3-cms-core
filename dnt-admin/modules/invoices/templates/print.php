@@ -1,6 +1,5 @@
 <?php
 
-use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Rest;
 
 get_top();
@@ -13,7 +12,7 @@ $psc = !empty($data['order']['company_psc']) ? $data['order']['company_psc'] : $
 $city = !empty($data['order']['company_city']) ? $data['order']['company_city'] : $data['order']['city'];
 $country = !empty($data['order']['company_country']) ? $data['order']['company_country'] : $data['order']['country'];
 $telephone = !empty($data['order']['company_phone_number']) ? $data['order']['company_phone_number'] : $data['order']['phone_number'];
-if ($data['order']['datetime_publish'] == "0000-00-00 00:00:00") {
+if ($data['order']['datetime_publish'] == '0000-00-00 00:00:00') {
     $datetimePublish = $dnt->datetime();
 } else {
     $datetimePublish = $data['order']['datetime_publish'];
@@ -74,7 +73,7 @@ if (isset($data['invoiceHtml'])) {
                                 <?php echo $data['vendor']('vendor_city'); ?><br>
                                 <abbr>Telefón:</abbr> <?php echo $data['vendor']('vendor_tel'); ?><br>
                                 <abbr>IČO:</abbr> <?php echo $data['vendor']('vendor_ico'); ?><br>
-                                <abbr>Bankové spojenie (IBAN):</abbr> <?php echo $data['vendor']('vendor_iban'); ?>										
+                                <abbr>Bankové spojenie (IBAN):</abbr> <?php echo $data['vendor']('vendor_iban'); ?>                                     
                             </address>
                         </div>
                         <div class="col-xs-6 text-right">
@@ -83,7 +82,7 @@ if (isset($data['invoiceHtml'])) {
                                 <?php echo $name; ?><br>
                                 <?php echo $street . ' ' . $gate_number . ', ' . $psc; ?><br>
                                 <?php echo $city . ', ' . $country; ?><br>
-                                <abbr>Telefón:</abbr> <?php echo $telephone; ?><br>										
+                                <abbr>Telefón:</abbr> <?php echo $telephone; ?><br>                                     
                             </address>
                         </div>
                     </div>
@@ -98,7 +97,7 @@ if (isset($data['invoiceHtml'])) {
                         <div class="col-xs-6 text-right">
                             <address>
                                 <strong>Dátum vystavenia:</strong><br>
-                                <?php echo $datePublish->format('d.m.Y'); ?>										
+                                <?php echo $datePublish->format('d.m.Y'); ?>                                        
                             </address>
                         </div>
                     </div>

@@ -1,4 +1,5 @@
 <?php
+
 namespace DntAdmin\Moduls;
 
 use DntLibrary\Base\ArticleList;
@@ -13,12 +14,16 @@ use DntLibrary\Base\Vendor;
 
 class UpdateContent
 {
-
     protected $rest;
+
     protected $cache;
+
     protected $articleView;
+
     protected $db;
+
     protected $multiLanguage;
+
     protected $dntUpload;
 
     public function __construct()
@@ -51,7 +56,7 @@ class UpdateContent
         $sub_cat_id = $rest->post('sub_cat_id');
         $type = $rest->post('type');
         $show = $rest->post('show');
-        $protected = $rest->post('protected');
+        $protected = $rest->post('protected') ? 1 : 0;
         $name = $rest->post('name');
         $name_url = $this->dnt->creat_name_url($rest->post('name'), $rest->post('name_url'));
         $datetime_publish = $this->dnt->timeToDbFormat('.', $rest->post('datetime_publish'));
@@ -80,8 +85,8 @@ class UpdateContent
         $search = str_replace('-', '', $search);
 
         $db->update(
-                $table,
-                array(
+            $table,
+            array(
                     'cat_id' => $cat_id,
                     'sub_cat_id' => $sub_cat_id,
                     'post_category_id' => $post_category_id,
@@ -101,11 +106,10 @@ class UpdateContent
                     'service' => $service,
                     'service_id' => $service_id,
                 ),
-                array(//where
+            array(//where
                     'id_entity' => $post_id,
                     '`vendor_id`' => $this->vendor->getId())
         );
-
 
         $cat_name_url = $this->articleList->getArticleUrl($post_id);
         $cat_name_url = (str_replace(WWW_PATH, '', $cat_name_url));
@@ -122,7 +126,6 @@ class UpdateContent
         //vymaze aktualne preklady
         $where = array('`translate_id`' => $post_id, '`table`' => 'dnt_posts');
         $db->delete('dnt_translates', $where);
-
 
         $query = $multilanguages->getLangs();
         if ($db->num_rows($query) > 0) {
@@ -144,7 +147,7 @@ class UpdateContent
                     '`table`' => 'dnt_posts',
                     '`translate`' => $name,
                     '`show`' => 1,
-                    '`parent_id`' => '0'
+                    '`parent_id`' => '0',
                 );
                 $db->insert('dnt_translates', $insertedData);
 
@@ -159,7 +162,7 @@ class UpdateContent
                     '`table`' => 'dnt_posts',
                     '`translate`' => $name_url,
                     '`show`' => 1,
-                    '`parent_id`' => '0'
+                    '`parent_id`' => '0',
                 );
                 $db->insert('dnt_translates', $insertedData);
 
@@ -174,7 +177,7 @@ class UpdateContent
                     '`table`' => 'dnt_posts',
                     '`translate`' => $perex,
                     '`show`' => 1,
-                    '`parent_id`' => '0'
+                    '`parent_id`' => '0',
                 );
                 $db->insert('dnt_translates', $insertedData);
 
@@ -189,7 +192,7 @@ class UpdateContent
                     '`table`' => 'dnt_posts',
                     '`translate`' => $content,
                     '`show`' => 1,
-                    '`parent_id`' => '0'
+                    '`parent_id`' => '0',
                 );
                 $db->insert('dnt_translates', $insertedData);
 
@@ -204,12 +207,11 @@ class UpdateContent
                     '`table`' => 'dnt_posts',
                     '`translate`' => $tags,
                     '`show`' => 1,
-                    '`parent_id`' => '0'
+                    '`parent_id`' => '0',
                 );
                 $db->insert('dnt_translates', $insertedData);
             }
         }
-
 
         if ($rest->post('gallery_key_' . $post_id)) {
             if ($rest->post('gallery_key_' . $post_id) == 'del') {
@@ -218,27 +220,26 @@ class UpdateContent
                 $galleryData = $rest->post('gallery_key_' . $post_id);
             }
             $db->update(
-                    $table,
-                    array(
+                $table,
+                array(
                         'img' => $galleryData,
                     ),
-                    array(
+                array(
                         'id_entity' => $post_id,
                         '`vendor_id`' => $this->vendor->getId())
             );
         } else {
             $dntUpload->addDefaultImage(
-                    'userfile',
-                    'dnt_posts',
-                    'img',
-                    '`id_entity`',
-                    $post_id,
-                    '../dnt-view/data/uploads'
+                'userfile',
+                'dnt_posts',
+                'img',
+                '`id_entity`',
+                $post_id,
+                '../dnt-view/data/uploads'
             );
         }
 
         $response = ['url' => $return];
         return $response;
     }
-
 }

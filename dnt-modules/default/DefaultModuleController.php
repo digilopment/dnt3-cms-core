@@ -6,7 +6,6 @@ use DntLibrary\App\Modul;
 
 class DefaultModuleController extends Modul
 {
-
     protected $loc = __FILE__;
 
     public function run()
@@ -15,5 +14,4 @@ class DefaultModuleController extends Modul
             die('no module, no acction');
         }
     }
-
 }

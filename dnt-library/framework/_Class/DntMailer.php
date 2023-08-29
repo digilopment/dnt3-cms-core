@@ -17,17 +17,22 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 class Mailer
 {
-
     public $recipient; //array
+
     public $sender_email; //string
+
     public $sender_name; //string
+
     public $title; //string
+
     public $msg; //string
+
     public $subject; //string
+
     public $response;
 
     /**
-     * 
+     *
      * @return boolean
      */
     public function __construct()
@@ -37,7 +42,7 @@ class Mailer
     }
 
     /**
-     * 
+     *
      * @param type $arr
      */
     public function set_recipient($arr)
@@ -46,7 +51,7 @@ class Mailer
     }
 
     /**
-     * 
+     *
      * @param type $str
      */
     public function set_sender_email($str)
@@ -55,7 +60,7 @@ class Mailer
     }
 
     /**
-     * 
+     *
      * @param type $str
      */
     public function set_sender_name($str)
@@ -64,7 +69,7 @@ class Mailer
     }
 
     /**
-     * 
+     *
      * @param type $str
      */
     public function set_title($str)
@@ -73,7 +78,7 @@ class Mailer
     }
 
     /**
-     * 
+     *
      * @param type $str
      */
     public function set_msg($str)
@@ -82,7 +87,7 @@ class Mailer
     }
 
     /**
-     * 
+     *
      * @param type $str
      */
     public function set_subject($str)
@@ -117,15 +122,15 @@ class Mailer
 
         $mail->setFrom($username, $senderName);
         $mail->addAddress($recipientEmail, $recipientName);
-		
-		if (isset($config['stringAttachments']) && !empty($config['stringAttachments'])) {
+
+        if (isset($config['stringAttachments']) && !empty($config['stringAttachments'])) {
             $attachements = $config['stringAttachments'];
             foreach ($attachements as $fileName => $fileUrl) {
                 $fileName = ($fileName) ? $fileName : md5(microtime()) . '_' . basename($fileUrl);
                 $mail->addStringAttachment(file_get_contents($fileUrl), $fileName);
             }
         }
-		
+
         if (isset($config['stringAttachment']) && !empty($config['stringAttachment'])) {
             $stringAttachment = $config['stringAttachment'];
             $mail->addStringAttachment(file_get_contents($stringAttachment), basename($stringAttachment));
@@ -151,8 +156,8 @@ class Mailer
         $recipientEmail = $config['recipientEmail'];
         $msg = $config['message'];
         $sbj = $config['subject'];
-        $SEND_GRID_API_KEY = isset($config['send_grid_api_key']) ? $config['send_grid_api_key'] : $this->settings->get("send_grid_api_key");
-        $SEND_GRID_API_TEMPLATE_ID = isset($config['send_grid_api_template_id']) ? $config['send_grid_api_template_id'] : $this->settings->get("send_grid_api_template_id");
+        $SEND_GRID_API_KEY = isset($config['send_grid_api_key']) ? $config['send_grid_api_key'] : $this->settings->get('send_grid_api_key');
+        $SEND_GRID_API_TEMPLATE_ID = isset($config['send_grid_api_template_id']) ? $config['send_grid_api_template_id'] : $this->settings->get('send_grid_api_template_id');
 
         if (is_array($recipientEmail) && is_array($msg)) {
             $emailTo = [];
@@ -160,56 +165,55 @@ class Mailer
             foreach ($recipientEmail as $singl) {
                 $emailTo[] = ['email' => $singl];
                 $messageTo[] = [
-                    'type' => "text/html",
+                    'type' => 'text/html',
                     'value' => $msg,
                 ];
             }
         } else {
             $emailTo = [
-                "email" => $recipientEmail,
-                "name" => $recipientEmail,
+                'email' => $recipientEmail,
+                'name' => $recipientEmail,
             ];
             $messageTo = [
-                'type' => "text/html",
+                'type' => 'text/html',
                 'value' => $msg,
             ];
         }
         $params = [
-            "from" => [
-                "email" => $senderEmail,
-                "name" => $senderName,
+            'from' => [
+                'email' => $senderEmail,
+                'name' => $senderName,
             ],
-            "subject" => $sbj,
-            "template_id" => $SEND_GRID_API_TEMPLATE_ID,
-            "content" => [
+            'subject' => $sbj,
+            'template_id' => $SEND_GRID_API_TEMPLATE_ID,
+            'content' => [
                 [
-                    "type" => "text/html",
-                    "value" => $msg,
-                ]
+                    'type' => 'text/html',
+                    'value' => $msg,
+                ],
             ],
-            "personalizations" => [
+            'personalizations' => [
                 [
-                    "to" => [
+                    'to' => [
                         [
-                            "email" => $recipientEmail,
-                            "name" => $recipientEmail,
-                        ]
+                            'email' => $recipientEmail,
+                            'name' => $recipientEmail,
+                        ],
                     ],
-                    "send_at" => time()
-                ]
+                    'send_at' => time(),
+                ],
             ],
-            "tracking_settings" => [
+            'tracking_settings' => [
                 'click_tracking' => [
-                    "enable" => false,
-                    "enable_text" => false,
+                    'enable' => false,
+                    'enable_text' => false,
                 ],
                 'click_tracking' => [
-                    "enable" => false,
-                    "enable_text" => false,
-                ]
-            ]
+                    'enable' => false,
+                    'enable_text' => false,
+                ],
+            ],
         ];
-
 
         $data = json_encode($params);
 
@@ -240,8 +244,8 @@ class Mailer
         $recipientEmail = $config['recipientEmail'];
         $msg = $config['message'];
         $sbj = $config['subject'];
-        $SEND_GRID_API_KEY = isset($config['send_grid_api_key']) ? $config['send_grid_api_key'] : $this->settings->get("send_grid_api_key");
-        $SEND_GRID_API_TEMPLATE_ID = isset($config['send_grid_api_template_id']) ? $config['send_grid_api_template_id'] : $this->settings->get("send_grid_api_template_id");
+        $SEND_GRID_API_KEY = isset($config['send_grid_api_key']) ? $config['send_grid_api_key'] : $this->settings->get('send_grid_api_key');
+        $SEND_GRID_API_TEMPLATE_ID = isset($config['send_grid_api_template_id']) ? $config['send_grid_api_template_id'] : $this->settings->get('send_grid_api_template_id');
 
         $this->sendGrid = new SendGrid();
         $data = [
@@ -254,18 +258,16 @@ class Mailer
             'send_grid_api_key' => $SEND_GRID_API_KEY,
             'send_grid_api_template_id' => $SEND_GRID_API_TEMPLATE_ID,
         ];
-		
-		
+
         if (isset($config['attachment']) && !empty($config['attachment'])) {
             $attachment = $config['attachment'];
             $data['attachements'] = [
                 basename($attachment) => $attachment,
             ];
         }
-		
-		
+
         if (isset($config['stringAttachments']) && is_array($config['stringAttachments']) && count($config['stringAttachments']) > 0) {
-			$files = [];
+            $files = [];
             $attachements = $config['stringAttachments'];
             foreach ($attachements as $fileName => $fileUrl) {
                 $fileName = ($fileName) ? $fileName : md5(microtime()) . '_' . basename($fileUrl);
@@ -275,23 +277,23 @@ class Mailer
                     $files[$fileName] = $fileLocation;
                 }
             }
-			$data['attachements'] = $files;
+            $data['attachements'] = $files;
         }
-		
+
         if (isset($config['stringAttachment']) && !empty($config['stringAttachment'])) {
             file_put_contents('../dnt-cache/temp/' . basename($config['stringAttachment']), file_get_contents($config['stringAttachment']));
             $data['attachements'] = [
                 basename(basename($config['stringAttachment'])) => '../dnt-cache/temp/' . basename($config['stringAttachment']),
             ];
         }
-		
+
         $this->sendGrid->setup($data);
         $this->sendGrid->sent();
-		
+
         if (isset($config['stringAttachment']) && !empty($config['stringAttachment'])) {
             unlink('../dnt-cache/temp/' . basename($config['stringAttachment']));
         }
-		
+
         return 1;
         /*
           $senderEmail = $config['senderEmail'];
@@ -385,8 +387,8 @@ class Mailer
         $headers .= 'From: ' . $senderName . ' <' . $senderEmail . '>' . $eol;
         $headers .= 'To: <' . $recipientEmail . '>' . $eol;
         $headers .= 'Return-Path: ' . $senderName . ' <' . $senderEmail . '>' . $eol;
-        $headers .= "Message-ID:<TheSystem@" . $_SERVER['SERVER_NAME'] . ">" . $eol;
-        $headers .= "X-Mailer: PHP v" . phpversion() . $eol;
+        $headers .= 'Message-ID:<TheSystem@' . $_SERVER['SERVER_NAME'] . '>' . $eol;
+        $headers .= 'X-Mailer: PHP v' . phpversion() . $eol;
         $headers .= 'MIME-Version: 1.0' . $eol;
         $headers .= 'X-MS-Exchange-Organization-AuthSource: VE1PR05MB7229.eurprd05.prod.outlook.com' . $eol;
         $headers .= 'Content-type: text/html; charset=windows-1250' . "\r\n";
@@ -422,7 +424,7 @@ class Mailer
     }
 
     /**
-     * 
+     *
      * @param type $to
      */
     public function prepare_mail($to)
@@ -430,29 +432,29 @@ class Mailer
 
         //SENDER
         if ($this->sender_email == false) {
-            $od_email = $this->settings->get("vendor_email");
+            $od_email = $this->settings->get('vendor_email');
         } else {
             $od_email = $this->sender_email;
         }
 
         //PREDMET
         if ($this->subject == false) {
-            $predmet = "(no subject)";
+            $predmet = '(no subject)';
         } else {
-            if (SEND_EMAIL_VIA == "internal") {
+            if (SEND_EMAIL_VIA == 'internal') {
                 $predmet = $this->dnt->odstran_diakritiku($this->subject);
-            } elseif (SEND_EMAIL_VIA == "send_grid") {
+            } elseif (SEND_EMAIL_VIA == 'send_grid') {
                 $predmet = $this->subject;
             }
         }
 
         //OD MENO
         if ($this->sender_name == false) {
-            $od_meno = $this->settings->get("vendor_company");
+            $od_meno = $this->settings->get('vendor_company');
         } else {
-            if (SEND_EMAIL_VIA == "internal") {
+            if (SEND_EMAIL_VIA == 'internal') {
                 $od_meno = $this->dnt->odstran_diakritiku($this->sender_name);
-            } elseif (SEND_EMAIL_VIA == "send_grid") {
+            } elseif (SEND_EMAIL_VIA == 'send_grid') {
                 $od_meno = $this->sender_name;
             }
         }
@@ -464,7 +466,6 @@ class Mailer
             $email_sprava = $this->msg;
         }
 
-
         //SPOJ DOKPOPY
         $subject = iconv('UTF-8', 'windows-1250', $predmet);
         $title = 'Html Email';
@@ -474,24 +475,24 @@ class Mailer
         $headers .= 'To:  <' . $to . '>' . "\r\n"; // dalsi mail sa oddeluje ciarkou
         $headers .= 'From: ' . $od_meno . ' <' . $od_email . '>' . "\r\n";
 
-        if ($this->settings->show("send_grid_api_key") == true && $this->settings->show("send_grid_api_template_id") == true) {
-            $SEND_GRID_API_KEY = $this->settings->get("send_grid_api_key");
-            $SEND_GRID_API_TEMPLATE_ID = $this->settings->get("send_grid_api_template_id");
+        if ($this->settings->show('send_grid_api_key') == true && $this->settings->show('send_grid_api_template_id') == true) {
+            $SEND_GRID_API_KEY = $this->settings->get('send_grid_api_key');
+            $SEND_GRID_API_TEMPLATE_ID = $this->settings->get('send_grid_api_template_id');
         } else {
             $SEND_GRID_API_KEY = SEND_GRID_API_KEY;
             $SEND_GRID_API_TEMPLATE_ID = SEND_GRID_API_TEMPLATE_ID;
         }
 
-        if (SEND_EMAIL_VIA == "internal") {
-            $to = str_replace(" ", "", $to);
+        if (SEND_EMAIL_VIA == 'internal') {
+            $to = str_replace(' ', '', $to);
             @mail($to, $subject, $message, $headers);
-        } elseif (SEND_EMAIL_VIA == "send_grid") {
+        } elseif (SEND_EMAIL_VIA == 'send_grid') {
             $js = array(
                 'sub' => array(':name' => array('Elmer')),
-                'filters' => array('templates' => array('settings' => array('enable' => 1, 'template_id' => $SEND_GRID_API_TEMPLATE_ID)))
+                'filters' => array('templates' => array('settings' => array('enable' => 1, 'template_id' => $SEND_GRID_API_TEMPLATE_ID))),
             );
-            $to = str_replace(" ", "", $to);
-            $od_email = str_replace(" ", "", $od_email);
+            $to = str_replace(' ', '', $to);
+            $od_email = str_replace(' ', '', $od_email);
             $params = array(
                 'to' => $to,
                 'toname' => $to,
@@ -522,9 +523,8 @@ class Mailer
             $this->response = $response;
             //var_dump($response, curl_error($session));
             curl_close($session);
-            //SEND GRID END 
-        } elseif (SEND_EMAIL_VIA == "smtp") {
-            
+            //SEND GRID END
+        } elseif (SEND_EMAIL_VIA == 'smtp') {
         }
     }
 
@@ -533,29 +533,29 @@ class Mailer
 
         //SENDER
         if ($this->sender_email == false) {
-            $od_email = $this->settings->get("vendor_email");
+            $od_email = $this->settings->get('vendor_email');
         } else {
             $od_email = $this->sender_email;
         }
 
         //PREDMET
         if ($this->subject == false) {
-            $predmet = "(no subject)";
+            $predmet = '(no subject)';
         } else {
-            if (SEND_EMAIL_VIA == "internal") {
+            if (SEND_EMAIL_VIA == 'internal') {
                 $predmet = $this->dnt->odstran_diakritiku($this->subject);
-            } elseif (SEND_EMAIL_VIA == "send_grid") {
+            } elseif (SEND_EMAIL_VIA == 'send_grid') {
                 $predmet = $this->subject;
             }
         }
 
         //OD MENO
         if ($this->sender_name == false) {
-            $od_meno = $this->settings->get("vendor_company");
+            $od_meno = $this->settings->get('vendor_company');
         } else {
-            if (SEND_EMAIL_VIA == "internal") {
+            if (SEND_EMAIL_VIA == 'internal') {
                 $od_meno = $this->dnt->odstran_diakritiku($this->sender_name);
-            } elseif (SEND_EMAIL_VIA == "send_grid") {
+            } elseif (SEND_EMAIL_VIA == 'send_grid') {
                 $od_meno = $this->sender_name;
             }
         }
@@ -567,9 +567,9 @@ class Mailer
             $email_sprava = $this->msg;
         }
 
-        if ($this->settings->show("send_grid_api_key") == true && $this->settings->show("send_grid_api_template_id") == true) {
-            $SEND_GRID_API_KEY = $this->settings->get("send_grid_api_key");
-            $SEND_GRID_API_TEMPLATE_ID = $this->settings->get("send_grid_api_template_id");
+        if ($this->settings->show('send_grid_api_key') == true && $this->settings->show('send_grid_api_template_id') == true) {
+            $SEND_GRID_API_KEY = $this->settings->get('send_grid_api_key');
+            $SEND_GRID_API_TEMPLATE_ID = $this->settings->get('send_grid_api_template_id');
         } else {
             $SEND_GRID_API_KEY = SEND_GRID_API_KEY;
             $SEND_GRID_API_TEMPLATE_ID = SEND_GRID_API_TEMPLATE_ID;
@@ -581,56 +581,55 @@ class Mailer
             foreach ($to as $singl) {
                 $emailTo[] = ['email' => $singl];
                 $messageTo[] = [
-                    'type' => "text/html",
+                    'type' => 'text/html',
                     'value' => $email_sprava,
                 ];
             }
         } else {
             $emailTo = [
-                "email" => $to,
-                "name" => $to,
+                'email' => $to,
+                'name' => $to,
             ];
             $messageTo = [
-                'type' => "text/html",
+                'type' => 'text/html',
                 'value' => $email_sprava,
             ];
         }
         $params = [
-            "from" => [
-                "email" => $od_email,
-                "name" => $od_meno,
+            'from' => [
+                'email' => $od_email,
+                'name' => $od_meno,
             ],
-            "subject" => $predmet,
-            "template_id" => $SEND_GRID_API_TEMPLATE_ID,
-            "content" => [
+            'subject' => $predmet,
+            'template_id' => $SEND_GRID_API_TEMPLATE_ID,
+            'content' => [
                 [
-                    "type" => "text/html",
-                    "value" => $email_sprava,
-                ]
+                    'type' => 'text/html',
+                    'value' => $email_sprava,
+                ],
             ],
-            "personalizations" => [
+            'personalizations' => [
                 [
-                    "to" => [
+                    'to' => [
                         [
-                            "email" => $to,
-                            "name" => $to,
-                        ]
+                            'email' => $to,
+                            'name' => $to,
+                        ],
                     ],
-                    "send_at" => time()
-                ]
+                    'send_at' => time(),
+                ],
             ],
-            "tracking_settings" => [
+            'tracking_settings' => [
                 'click_tracking' => [
-                    "enable" => false,
-                    "enable_text" => false,
+                    'enable' => false,
+                    'enable_text' => false,
                 ],
                 'click_tracking' => [
-                    "enable" => false,
-                    "enable_text" => false,
-                ]
-            ]
+                    'enable' => false,
+                    'enable_text' => false,
+                ],
+            ],
         ];
-
 
         $data = json_encode($params);
 
@@ -661,5 +660,4 @@ class Mailer
             $this->prepare_mail($to);
         }
     }
-
 }

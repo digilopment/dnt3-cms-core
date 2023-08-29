@@ -17,7 +17,6 @@ use DntLibrary\Base\Vendor;
 
 class Polls
 {
-
     public function __construct()
     {
         $this->db = new DB();
@@ -27,33 +26,34 @@ class Polls
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function getTypes()
     {
         return array(
-            "1" => "Kvíz s percentuálnou úspešnosťou (Vedomostný kvíz)",
-            "2" => "Kvíz s predpokladaným výsledkom kategorizácie (Priraďovací kvíz)",
+            '1' => 'Kvíz s percentuálnou úspešnosťou (Vedomostný kvíz)',
+            '2' => 'Kvíz s predpokladaným výsledkom kategorizácie (Priraďovací kvíz)',
         );
     }
 
     /**
-     * 
+     *
      * @param type $type
      */
     public function currentType($type)
     {
         foreach ($this->getTypes() as $key => $value) {
-            if ($type == $key)
-                echo "<option value='" . $key . "' selected>" . $value . "</option>";
-            else
-                echo "<option value='" . $key . "'>" . $value . "</option>";
+            if ($type == $key) {
+                echo "<option value='" . $key . "' selected>" . $value . '</option>';
+            } else {
+                echo "<option value='" . $key . "'>" . $value . '</option>';
+            }
         }
     }
 
     /**
-     * 
+     *
      * @param type $type
      * @return type
      */
@@ -64,16 +64,15 @@ class Polls
     }
 
     /**
-     * 
+     *
      * @param type $poll_id
      */
     public function is_correct($poll_id)
     {
-        
     }
 
     /**
-     * 
+     *
      * @return string
      */
     public function getPolls()
@@ -82,7 +81,7 @@ class Polls
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function getPollsAdmin()
@@ -91,9 +90,9 @@ class Polls
     }
 
     /**
-     * 
+     *
      * @return type
-     * returns @integer - last id 
+     * returns @integer - last id
      * add insert query *add insert query
      * this function generate wrapper of current poll
      */
@@ -101,14 +100,14 @@ class Polls
     {
         $insertedData = array(
             'vendor_id' => $this->vendor->getId(),
-            'name' => $this->rest->post("name"),
-            'name_url' => $this->dnt->name_url($this->rest->post("name")),
-            'type' => $this->rest->post("poll_type"),
+            'name' => $this->rest->post('name'),
+            'name_url' => $this->dnt->name_url($this->rest->post('name')),
+            'type' => $this->rest->post('poll_type'),
             'datetime_creat' => $this->dnt->datetime(),
             'datetime_update' => $this->dnt->datetime(),
             'datetime_publish' => $this->dnt->datetime(),
             '`show`' => '0',
-            'count_questions' => $this->rest->post("count_questions")
+            'count_questions' => $this->rest->post('count_questions'),
         );
 
         $this->db->insert('dnt_polls', $insertedData);
@@ -117,7 +116,7 @@ class Polls
     }
 
     /**
-     * 
+     *
      * @param type $column
      * @param type $poll_id
      * @return boolean
@@ -126,8 +125,8 @@ class Polls
     public function getParam($column, $poll_id)
     {
         $query = "SELECT `$column` FROM dnt_polls WHERE
-		vendor_id 	= " . $this->vendor->getId() . " AND
-		id_entity 	= " . $poll_id . "";
+		vendor_id 	= " . $this->vendor->getId() . ' AND
+		id_entity 	= ' . $poll_id . '';
 
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
@@ -139,7 +138,7 @@ class Polls
     }
 
     /**
-     * 
+     *
      * @param type $poll_id
      * @return type
      * return $integer
@@ -147,17 +146,17 @@ class Polls
      */
     public function getNumberOfQuestions($poll_id)
     {
-        $query = "SELECT * FROM dnt_polls_composer WHERE
-		vendor_id 	= " . $this->vendor->getId() . " AND
-		poll_id 	= " . $poll_id . " AND
+        $query = 'SELECT * FROM dnt_polls_composer WHERE
+		vendor_id 	= ' . $this->vendor->getId() . ' AND
+		poll_id 	= ' . $poll_id . " AND
 		`key`       = 'question'";
         return $this->db->num_rows($query);
     }
 
     /**
-     * 
+     *
      * @param type $poll_id
-     * no return 
+     * no return
      * add insert query
      * this function generate polls meta.
      */
@@ -168,7 +167,7 @@ class Polls
         $questions = 5;
         $order = $questions;
         $winning_combination = 3;
-        $count_questions = $this->getParam("count_questions", $poll_id);
+        $count_questions = $this->getParam('count_questions', $poll_id);
 
         //generovanie inputov pre vyherne kombinacie..
         for ($i = 1; $i <= $winning_combination; $i++) {
@@ -176,11 +175,11 @@ class Polls
             $insertedData = array(
                 '`vendor_id`' => $this->vendor->getId(),
                 '`poll_id`' => $poll_id,
-                '`question_id`' => "0", // winning_combination ma vzdy index 0
-                '`key`' => "winning_combination",
+                '`question_id`' => '0', // winning_combination ma vzdy index 0
+                '`key`' => 'winning_combination',
                 '`value`' => "Výherná kombinácia č. $i",
                 '`description`' => "Výherná kombinácia č. $i",
-                '`show`' => "1",
+                '`show`' => '1',
                 '`points`' => $points,
                 '`order`' => "$order",
             );
@@ -188,20 +187,18 @@ class Polls
         }
 
         for ($j = 1; $j <= $questions; $j++) {
-
             //generovanie inputov pre otazky..
             $insertedData = array(
                 '`vendor_id`' => $this->vendor->getId(),
                 '`poll_id`' => $poll_id,
                 '`question_id`' => $question_id,
-                '`key`' => "question",
-                '`value`' => "Otázka",
-                '`description`' => "Tu zadajte Vašu otázku",
-                '`show`' => "1",
+                '`key`' => 'question',
+                '`value`' => 'Otázka',
+                '`description`' => 'Tu zadajte Vašu otázku',
+                '`show`' => '1',
                 '`order`' => "$order",
             );
             $this->db->insert('dnt_polls_composer', $insertedData);
-
 
             //generovanie inputov pre typy odpovedí A,B,C,D...
             for ($i = 1; $i <= $count_questions; $i++) {
@@ -209,11 +206,11 @@ class Polls
                     '`vendor_id`' => $this->vendor->getId(),
                     '`poll_id`' => $poll_id,
                     '`question_id`' => $question_id,
-                    '`key`' => "ans",
-                    '`value`' => "Odpoveď pre otázku",
-                    '`description`' => "Tu zadajte jednu z Vaších odpovedi pre otázku",
+                    '`key`' => 'ans',
+                    '`value`' => 'Odpoveď pre otázku',
+                    '`description`' => 'Tu zadajte jednu z Vaších odpovedi pre otázku',
                     '`points`' => "$i",
-                    '`show`' => "1",
+                    '`show`' => '1',
                 );
                 $this->db->insert('dnt_polls_composer', $insertedData);
             }
@@ -223,13 +220,13 @@ class Polls
     }
 
     /**
-     * 
+     *
      * @param type $poll_id
      * @param type $question_id
      */
     public function addQuestion($poll_id, $question_id)
     {
-        $count_questions = $this->getParam("count_questions", $poll_id);
+        $count_questions = $this->getParam('count_questions', $poll_id);
         $question_id = $question_id + 1;
         $order = false;
 
@@ -237,10 +234,10 @@ class Polls
             '`vendor_id`' => $this->vendor->getId(),
             '`poll_id`' => $poll_id,
             '`question_id`' => $question_id,
-            '`key`' => "question",
-            '`value`' => "Otázka",
-            '`description`' => "Tu zadajte Vašu otázku",
-            '`show`' => "1",
+            '`key`' => 'question',
+            '`value`' => 'Otázka',
+            '`description`' => 'Tu zadajte Vašu otázku',
+            '`show`' => '1',
             '`order`' => "$order",
         );
         $this->db->insert('dnt_polls_composer', $insertedData);
@@ -252,18 +249,18 @@ class Polls
                 '`vendor_id`' => $this->vendor->getId(),
                 '`poll_id`' => $poll_id,
                 '`question_id`' => $question_id,
-                '`key`' => "ans",
-                '`value`' => "Odpoveď pre otázku",
-                '`description`' => "Tu zadajte jednu z Vaších odpovedi pre otázku",
-                '`points`' => "",
-                '`show`' => "1",
+                '`key`' => 'ans',
+                '`value`' => 'Odpoveď pre otázku',
+                '`description`' => 'Tu zadajte jednu z Vaších odpovedi pre otázku',
+                '`points`' => '',
+                '`show`' => '1',
             );
             $this->db->insert('dnt_polls_composer', $insertedData);
         }
     }
 
     /**
-     * 
+     *
      * @param type $poll_id
      * @param type $question_id
      */
@@ -274,17 +271,17 @@ class Polls
             '`vendor_id`' => $this->vendor->getId(),
             '`poll_id`' => $poll_id,
             '`question_id`' => $question_id,
-            '`key`' => "winning_combination",
-            '`value`' => "Výherná kombinácia",
-            '`description`' => "Výherná kombinácia",
-            '`show`' => "1",
+            '`key`' => 'winning_combination',
+            '`value`' => 'Výherná kombinácia',
+            '`description`' => 'Výherná kombinácia',
+            '`show`' => '1',
             '`order`' => "$order",
         );
         $this->db->insert('dnt_polls_composer', $insertedData);
     }
 
     /**
-     * 
+     *
      * @param type $poll_id
      * @param type $question_id
      */
@@ -295,7 +292,7 @@ class Polls
     }
 
     /**
-     * 
+     *
      * @param type $id
      */
     public function delComposerInput($id)
@@ -305,18 +302,18 @@ class Polls
     }
 
     /**
-     * 
+     *
      * @param type $poll_id
      * @param type $copy_poll_id
-     * no return 
+     * no return
      * this function generate polls meta via copy.
      */
     public function copyComposer($poll_id, $copy_poll_id)
     {
         //get instances
-        $query = "SELECT * FROM dnt_polls_composer WHERE
-		vendor_id 	= " . $this->vendor->getId() . " AND
-		poll_id 	= " . $copy_poll_id . "";
+        $query = 'SELECT * FROM dnt_polls_composer WHERE
+		vendor_id 	= ' . $this->vendor->getId() . ' AND
+		poll_id 	= ' . $copy_poll_id . '';
 
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
@@ -338,23 +335,23 @@ class Polls
             }
         }
 
-        $query = "SELECT * FROM dnt_polls WHERE
-		vendor_id 	= " . $this->vendor->getId() . " AND
-		id_entity 	= " . $copy_poll_id . "";
+        $query = 'SELECT * FROM dnt_polls WHERE
+		vendor_id 	= ' . $this->vendor->getId() . ' AND
+		id_entity 	= ' . $copy_poll_id . '';
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
-
-                $table = "dnt_polls";
+                $table = 'dnt_polls';
                 $this->db->update(
-                        $table, //table
-                        array(//set
+                    $table, //table
+                    array(//set
                             'name' => $row['name'],
                             'name_url' => $row['name_url'],
                             'type' => $row['type'],
                             'img' => $row['img'],
                             'content' => $row['content'],
                             'count_questions' => $row['count_questions'],
-                        ), array(//where
+                        ),
+                    array(//where
                     'id_entity' => $poll_id,
                     '`vendor_id`' => $this->vendor->getId())
                 );
@@ -363,7 +360,7 @@ class Polls
     }
 
     /**
-     * 
+     *
      * @param type $poll_id
      * @param type $question_id
      * @return type
@@ -372,26 +369,26 @@ class Polls
      */
     public function getCurrentAnsewerData($poll_id, $question_id)
     {
-        return "SELECT * FROM dnt_polls_composer WHERE
-		vendor_id 	= " . $this->vendor->getId() . " AND
-		poll_id 	= " . $poll_id . " AND
+        return 'SELECT * FROM dnt_polls_composer WHERE
+		vendor_id 	= ' . $this->vendor->getId() . ' AND
+		poll_id 	= ' . $poll_id . " AND
 		`key` <> 'winning_combination' AND
-		question_id = " . $question_id . "";
+		question_id = " . $question_id . '';
     }
 
     /**
-     * 
+     *
      * @param type $poll_id
      * @param type $question_id
      * @return type
      */
     public function getQuestions($poll_id, $question_id)
     {
-        return "SELECT * FROM dnt_polls_composer WHERE
-		vendor_id 	= " . $this->vendor->getId() . " AND
-		poll_id 	= " . $poll_id . " AND
+        return 'SELECT * FROM dnt_polls_composer WHERE
+		vendor_id 	= ' . $this->vendor->getId() . ' AND
+		poll_id 	= ' . $poll_id . " AND
 		`key` LIKE '%ans%' AND
-		question_id = " . $question_id . "";
+		question_id = " . $question_id . '';
     }
 
     /*
@@ -403,26 +400,26 @@ class Polls
 
     public function getWinningCombinationData($poll_id)
     {
-        return "SELECT * FROM dnt_polls_composer WHERE
-		vendor_id 	= " . $this->vendor->getId() . " AND
-		poll_id 	= " . $poll_id . " AND
+        return 'SELECT * FROM dnt_polls_composer WHERE
+		vendor_id 	= ' . $this->vendor->getId() . ' AND
+		poll_id 	= ' . $poll_id . " AND
 		`key` = 'winning_combination'";
     }
 
     /**
-     * 
+     *
      * @param type $poll_id
      * @return type
      */
     public function getPollData($poll_id)
     {
-        return "SELECT * FROM dnt_polls_composer WHERE
-		vendor_id 	= " . $this->vendor->getId() . " AND
-		poll_id 	= " . $poll_id . "";
+        return 'SELECT * FROM dnt_polls_composer WHERE
+		vendor_id 	= ' . $this->vendor->getId() . ' AND
+		poll_id 	= ' . $poll_id . '';
     }
 
     /**
-     * 
+     *
      * @param type $prefix
      * @param type $id
      * @param type $column
@@ -432,11 +429,11 @@ class Polls
      */
     public function inputName($prefix, $id, $column)
     {
-        return $id . "_" . $prefix . "_" . $column;
+        return $id . '_' . $prefix . '_' . $column;
     }
 
     /**
-     * 
+     *
      * @param type $poll_id
      * @param type $question_id
      * @return type
@@ -457,8 +454,8 @@ class Polls
     public function getPollsIds($poll_id)
     {
         $arr = array();
-        $query = "SELECT `question_id` FROM dnt_polls_composer WHERE
-		vendor_id 	= " . $this->vendor->getId() . " AND
+        $query = 'SELECT `question_id` FROM dnt_polls_composer WHERE
+		vendor_id 	= ' . $this->vendor->getId() . " AND
 		`key`       = 'question' AND
 		poll_id 	= '" . $poll_id . "'";
         if ($this->db->num_rows($query) > 0) {
@@ -472,7 +469,7 @@ class Polls
     }
 
     /**
-     * 
+     *
      * @param type $poll_id
      * @return type
      * return @string
@@ -481,10 +478,10 @@ class Polls
     public function getMaxPoint($poll_id)
     {
 
-        $query = "SELECT * FROM dnt_polls_composer WHERE
-		vendor_id 	= " . $this->vendor->getId() . " AND
+        $query = 'SELECT * FROM dnt_polls_composer WHERE
+		vendor_id 	= ' . $this->vendor->getId() . " AND
 		`key` 	LIKE '%ans%' AND
-		poll_id 	= " . $poll_id . "";
+		poll_id 	= " . $poll_id . '';
 
         $points = 0;
         foreach ($this->getPollsIds($poll_id) as $question_id) {
@@ -493,5 +490,4 @@ class Polls
 
         return $points;
     }
-
 }

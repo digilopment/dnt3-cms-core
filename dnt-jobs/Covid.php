@@ -14,10 +14,15 @@ class CovidJob
     const STATIC_FILE = 'data/covid.json';
 
     protected $dnt;
+
     protected $dom;
+
     protected $json;
+
     protected $firstCovidCase = 0;
+
     protected $localContent = null;
+
     protected $hasLocalData = null;
 
     public function __construct()
@@ -78,47 +83,47 @@ class CovidJob
             'latest' => $this->getValue('covid-test-today'),
             'new' => $this->getValue('covid-test-new'),
         ];
-		 $final['testedAG'] = [
+         $final['testedAG'] = [
             'updatedFormated' => $updated,
             'latest' => $this->getValue('covid-testAG-today'),
             'new' => $this->getValue('covid-testAG-new'),
-        ];
-        $final['infected'] = [
+         ];
+         $final['infected'] = [
             'updatedFormated' => $updated,
             'latest' => $this->getValue('covid-infected-today'),
             'new' => $this->getValue('covid-infected-new'),
-        ];
-		$final['inficatedAG'] = [
+         ];
+         $final['inficatedAG'] = [
             'updatedFormated' => $updated,
             'latest' => $this->getValue('covid-inficatedAG-today'),
             'new' => $this->getValue('covid-inficatedAG-new'),
-        ];
-        $final['died'] = [
+         ];
+         $final['died'] = [
             'updatedFormated' => $updated,
             'latest' => $this->getValue('covid-died-today'),
             'new' => $this->getValue('covid-died-new'),
-        ];
-		 $final['hospital'] = [
+         ];
+         $final['hospital'] = [
             'updatedFormated' => $updated,
             'latest' => $this->getValue('covid-hospital-today', false),
             'new' => $this->getValue('covid-hospital-new', false),
-        ];
-		$final['injected'] = [
+         ];
+         $final['injected'] = [
             'updatedFormated' => $updated,
             'latest' => $this->getValue('covid-injected-today'),
             'new' => $this->getValue('covid-injected-new'),
-        ];
-		$final['injectedFirst'] = [
+         ];
+         $final['injectedFirst'] = [
             'updatedFormated' => $updated,
             'latest' => $this->getValue('covid-injectedFirst-today'),
             'new' => $this->getValue('covid-injectedFirst-new'),
-        ];
-		$final['injectedSecond'] = [
+         ];
+         $final['injectedSecond'] = [
             'updatedFormated' => $updated,
             'latest' => $this->getValue('covid-injectedSecond-today'),
             'new' => $this->getValue('covid-injectedSecond-new'),
-        ];
-        return $final;
+         ];
+         return $final;
     }
 
     protected function getActualData()
@@ -136,5 +141,4 @@ class CovidJob
         $this->init();
         print $this->getActualData();
     }
-
 }

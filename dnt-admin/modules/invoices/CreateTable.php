@@ -6,7 +6,6 @@ use DntLibrary\Base\DB;
 
 class CreateTable
 {
-
     protected $db;
 
     public function __construct()
@@ -24,5 +23,4 @@ class CreateTable
             $this->db->query("ALTER TABLE `$tableName` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT");
         }
     }
-
 }

@@ -10,13 +10,12 @@
 
 namespace DntLibrary\Base;
 
-use mysqli;
 use DntLibrary\Base\DB;
 use DntLibrary\Base\Dnt;
+use mysqli;
 
 class Install
 {
-
     public function __construct()
     {
         $this->dbMysqli = new mysqli(DB_HOST, DB_USER, DB_PASS);
@@ -25,13 +24,13 @@ class Install
     }
 
     /**
-     * 
+     *
      * @return boolean
      */
     public function db_exists()
     {
         $database = DB_NAME;
-        $query = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME=?";
+        $query = 'SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME=?';
         $stmt = $this->dbMysqli->prepare($query);
         $stmt->bind_param('s', $database);
         $stmt->execute();
@@ -45,7 +44,7 @@ class Install
     }
 
     /**
-     * 
+     *
      * @param type $query
      * @return boolean
      */
@@ -57,7 +56,7 @@ class Install
             foreach ($this->db->get_results($query) as $childArr) {
                 if ($i == 1) {
                     foreach ($childArr as $key => $value) {
-                        if ($key != "id" && $key != "vendor_id") {
+                        if ($key != 'id' && $key != 'vendor_id') {
                             $arr[] = $key;
                         }
                     }
@@ -71,7 +70,7 @@ class Install
     }
 
     /**
-     * 
+     *
      * @param array $tables
      * @param type $VENDOR_NAME
      * @param type $COPY_FROM
@@ -89,7 +88,6 @@ class Install
             $vendor_layout = $this->dnt->name_url($VENDOR_NAME);
         }
 
-
         $insertedData = array(
             'name' => $vendor_name,
             'name_url' => $vendor_name_url,
@@ -106,8 +104,8 @@ class Install
                 $data = array();
                 foreach ($this->db->get_results($query) as $row) {
                     foreach (self::getColumns($query) as $column) {
-                        $data["`" . $column . "`"] = $row[$column];
-                        $data["vendor_id"] = $NEW_VENDOR_ID;
+                        $data['`' . $column . '`'] = $row[$column];
+                        $data['vendor_id'] = $NEW_VENDOR_ID;
                     }
                     $this->db->insert($table, $data, false);
                 }
@@ -116,14 +114,12 @@ class Install
     }
 
     /**
-     * 
+     *
      * @param type $id
      * @param type $tables
      */
     public function delVendor($id, $tables)
     {
-
-
 
         foreach ($tables as $table) {
             $where = array('vendor_id' => $id);
@@ -134,7 +130,7 @@ class Install
     }
 
     /**
-     * 
+     *
      * @param type $id
      * @param type $move_to
      * @param type $tables
@@ -142,16 +138,15 @@ class Install
     public function moveVendor($id, $move_to, $tables)
     {
 
-
-
         foreach ($tables as $table) {
             $where = array('vendor_id' => $id);
 
             $this->db->update(
-                    $table, //table
-                    array(//set
+                $table, //table
+                array(//set
                         'vendor_id' => $move_to,
-                    ), array(//where
+                    ),
+                array(//where
                 'vendor_id' => $id)
             );
         }
@@ -160,7 +155,7 @@ class Install
         $this->db->query($query);
         $query = "UPDATE `dnt_vendors` SET `id_entity` = '" . $move_to . "' WHERE `dnt_vendors`.`id_entity` = $id";
         $this->db->query($query);
-        return "Updated";
+        return 'Updated';
     }
 
     public function updateIdEntity($tables)
@@ -171,12 +166,12 @@ class Install
             if ($this->db->num_rows($query) > 0) {
                 $data = array();
                 foreach ($this->db->get_results($query) as $row) {
-
                     $this->db->update(
-                            $table, //table
-                            array(//set
+                        $table, //table
+                        array(//set
                                 'id_entity' => $row['id'],
-                            ), array(//where
+                            ),
+                        array(//where
                         'id_entity' => 0,
                         'id' => $row['id'],
                             )
@@ -199,19 +194,16 @@ class Install
         //$conn = new mysqli(DB_HOST, DB_USER, DB_PASS);
         // Check connection
         if ($this->dbMysqli->connect_error) {
-            die("Connection failed: " . $this->dbMysqli->connect_error);
+            die('Connection failed: ' . $this->dbMysqli->connect_error);
         }
         // Create database
-        $sql = "CREATE DATABASE " . DB_NAME . "";
-        if ($this->dbMysqli->query($sql) === TRUE) {
-            echo "Database created successfully";
+        $sql = 'CREATE DATABASE ' . DB_NAME . '';
+        if ($this->dbMysqli->query($sql) === true) {
+            echo 'Database created successfully';
         } else {
-            echo "Error creating database: " . $this->dbMysqli->error;
+            echo 'Error creating database: ' . $this->dbMysqli->error;
         }
         $this->dbMysqli->close();
-
-
-
 
         //INSERT DATA
         $filename = 'install.sql';
@@ -222,8 +214,9 @@ class Install
         // Loop through each line
         foreach ($lines as $line) {
             // Skip it if it's a comment
-            if (substr($line, 0, 2) == '--' || $line == '')
+            if (substr($line, 0, 2) == '--' || $line == '') {
                 continue;
+            }
 
             // Add this line to the current segment
             $templine .= $line;
@@ -238,19 +231,15 @@ class Install
 		(1, 'Skeleton', 'skeleton', 'skeleton', 1);";
         $this->db->query($addVendor);
 
-        echo "Data imported, vendor created";
+        echo 'Data imported, vendor created';
     }
 
     /**
-     * 
+     *
      * @param type $sqlFile
      */
     public function addInstallation($sqlFile)
     {
-
-
-
-
 
         //INSERT DATA
         $filename = $sqlFile;
@@ -261,8 +250,9 @@ class Install
         // Loop through each line
         foreach ($lines as $line) {
             // Skip it if it's a comment
-            if (substr($line, 0, 2) == '--' || $line == '')
+            if (substr($line, 0, 2) == '--' || $line == '') {
                 continue;
+            }
 
             // Add this line to the current segment
             $templine .= $line;
@@ -275,7 +265,7 @@ class Install
     }
 
     /**
-     * 
+     *
      * @param type $host
      * @param type $user
      * @param type $pass
@@ -329,18 +319,18 @@ class Install
                             $contentVendor .= ',';
                         }
                     }
-                    $contentVendor .= ")";
+                    $contentVendor .= ')';
                     if ((($st_counter + 1) % 100 == 0 && $st_counter != 0) || $st_counter + 1 == $rows_num) {
-                        $contentVendor .= ";";
+                        $contentVendor .= ';';
                     } else {
-                        $contentVendor .= ",";
+                        $contentVendor .= ',';
                     }
                     $st_counter = $st_counter + 1;
                 }
             }
         }
         foreach ($target_tables as $table) {
-            $result = $mysqli->query("SELECT * FROM " . $table . " $vendor_where");
+            $result = $mysqli->query('SELECT * FROM ' . $table . " $vendor_where");
             $fields_amount = @$result->field_count;
             $rows_num = $mysqli->affected_rows;
             $res = $mysqli->query('SHOW CREATE TABLE ' . $table);
@@ -350,7 +340,7 @@ class Install
             for ($i = 0, $st_counter = 0; $i < $fields_amount; $i++, $st_counter = 0) {
                 while ($row = $result->fetch_row()) { //when started (and every after 100 command cycle):
                     if ($st_counter % 100 == 0 || $st_counter == 0) {
-                        $content .= "\nINSERT INTO " . $table . " VALUES";
+                        $content .= "\nINSERT INTO " . $table . ' VALUES';
                     }
                     $content .= "\n(";
                     for ($j = 0; $j < $fields_amount; $j++) {
@@ -368,22 +358,22 @@ class Install
                             $content .= ',';
                         }
                     }
-                    $content .= ")";
+                    $content .= ')';
                     //every after 100 command cycle [or at last line] ....p.s. but should be inserted 1 cycle eariler
                     if ((($st_counter + 1) % 100 == 0 && $st_counter != 0) || $st_counter + 1 == $rows_num) {
-                        $content .= ";";
+                        $content .= ';';
                     } else {
-                        $content .= ",";
+                        $content .= ',';
                     }
                     $st_counter = $st_counter + 1;
                 }
             } $content .= "\n\n\n";
         }
 
-        $content = str_replace("CREATE TABLE", "CREATE TABLE IF NOT EXISTS", $content);
+        $content = str_replace('CREATE TABLE', 'CREATE TABLE IF NOT EXISTS', $content);
         //$backup_name = $backup_name ? $backup_name : $name."___(".date('H-i-s')."_".date('d-m-Y').")__rand".rand(1,11111111).".sql";
-        $backup_name = $backup_name ? $backup_name : $name . ".sql";
-        /* header('Content-Type: application/octet-stream');   
+        $backup_name = $backup_name ? $backup_name : $name . '.sql';
+        /* header('Content-Type: application/octet-stream');
           header("Content-Transfer-Encoding: Binary");
           header("Content-disposition: attachment; filename=\"".$backup_name."\"");
          */
@@ -402,8 +392,9 @@ class Install
         // Loop through each line
         foreach ($lines as $line) {
             // Skip it if it's a comment
-            if (substr($line, 0, 2) == '--' || $line == '')
+            if (substr($line, 0, 2) == '--' || $line == '') {
                 continue;
+            }
 
             // Add this line to the current segment
             $templine .= $line;
@@ -414,5 +405,4 @@ class Install
             }
         }
     }
-
 }

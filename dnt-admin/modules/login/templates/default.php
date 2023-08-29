@@ -12,7 +12,7 @@
                             <img class="profile-img" src="<?php echo WWW_PATH_ADMIN_2; ?>img/designdnt_singl_dark.png" alt="">
                             <!-- END PROFILE IMAGE -->
                             <!-- BEGIN LOGIN FORM -->
-                            <form name="login" action="<?php echo WWW_PATH_ADMIN_2 . "index.php?src=login&action=login"; ?>" method="POST" class="form-login">
+                            <form name="login" action="<?php echo WWW_PATH_ADMIN_2 . 'index.php?src=login&action=login'; ?>" method="POST" class="form-login">
                                 <input type="text" name="email" class="form-control" placeholder="Email, alebo login" autofocus>
 
                                 <input type="password" name="pass" class="form-control" placeholder="Heslo">
@@ -26,7 +26,7 @@
                             </form>
                             <!-- END LOGIN FORM -->
                         </div>
-                        <a href="<?php echo WWW_PATH_ADMIN_2 . "index.php?src=forgotten-password"; ?>" class="text-center new-account">Zabudol som heslo</a>
+                        <a href="<?php echo WWW_PATH_ADMIN_2 . 'index.php?src=forgotten-password'; ?>" class="text-center new-account">Zabudol som heslo</a>
                     </div>
                     <!-- END LOGIN BOX -->
                 </div>

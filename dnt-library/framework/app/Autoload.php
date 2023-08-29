@@ -12,7 +12,6 @@ namespace DntLibrary\App;
 
 class Autoloader
 {
-
     protected function fileLoader($file)
     {
         if (file_exists($file)) {
@@ -97,5 +96,4 @@ class Autoloader
         $this->fileLoader($path . 'dnt-library/framework/app/Curl.php');
         $this->fileLoader($path . 'dnt-library/framework/app/Dnt3Oauth.php');
     }
-
 }

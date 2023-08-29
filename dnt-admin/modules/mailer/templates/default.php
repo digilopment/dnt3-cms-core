@@ -1,6 +1,5 @@
 <?php
 
-use DntLibrary\Base\Settings;
 
 get_top();
 get_top_html();
@@ -40,7 +39,7 @@ $countPages = $data['countPages'];
         foreach ($data['categories'] as $cat) {
             ?>
             <li class="post_type">
-                <a href="<?php echo $adminMailer->url("filter", $cat['id_entity'], false, false, false, 1) ?>">
+                <a href="<?php echo $adminMailer->url('filter', $cat['id_entity'], false, false, false, 1) ?>">
                     <span class="label label-primary bg-blue" style="padding: 5px;"><big><?php echo $cat['name']; ?></big></span>
                 </a>
             </li>
@@ -53,7 +52,7 @@ $countPages = $data['countPages'];
 <div class="modal fade" id="modalPrimary2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel8" aria-hidden="true">
     <div class="modal-wrapper">
         <div class="modal-dialog">
-            <form action="<?php echo $adminMailer->url("add_mail", false, false, false, false, false) ?>" method="POST">
+            <form action="<?php echo $adminMailer->url('add_mail', false, false, false, false, false) ?>" method="POST">
                 <div class="modal-content">
                     <div class="modal-header bg-blue">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -70,7 +69,7 @@ $countPages = $data['countPages'];
                             <option value="NULL">(kategória emailu)</option>
                             <?php
                             foreach ($data['categories'] as $cat) {
-                                echo"<option value='" . $cat['id_entity'] . "'>" . $cat['name'] . "</option>";
+                                echo"<option value='" . $cat['id_entity'] . "'>" . $cat['name'] . '</option>';
                             }
                             ?>
                         </select>
@@ -91,7 +90,7 @@ $countPages = $data['countPages'];
 <div class="modal fade" id="pridat_kat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel8" aria-hidden="true">
     <div class="modal-wrapper">
         <div class="modal-dialog">
-            <form action="<?php echo $adminMailer->url("add_cat", false, false, false, false, false) ?>" method="POST">
+            <form action="<?php echo $adminMailer->url('add_cat', false, false, false, false, false) ?>" method="POST">
                 <div class="modal-content">
                     <div class="modal-header bg-blue">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -117,7 +116,7 @@ $countPages = $data['countPages'];
 <div class="modal fade" id="modalPrimary3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel8" aria-hidden="true">
     <div class="modal-wrapper">
         <div class="modal-dialog">
-            <form action="<?php echo $adminMailer->url("sent_mail", false, false, false, false, false) ?>" method="POST">
+            <form action="<?php echo $adminMailer->url('sent_mail', false, false, false, false, false) ?>" method="POST">
                 <div class="modal-content">
                     <div class="modal-header bg-blue">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -127,9 +126,9 @@ $countPages = $data['countPages'];
                         <h4><strong>Nastavenia odosielateľa</strong></h4>
                         <input type="text" name="subject" class="form-control" placeholder="Predmet:"/>
                         <br/>
-                        <input type="text" name="senderName" class="form-control" placeholder="Odosielateľ (<?php echo $settings->get("vendor_company"); ?>)"/>
+                        <input type="text" name="senderName" class="form-control" placeholder="Odosielateľ (<?php echo $settings->get('vendor_company'); ?>)"/>
                         <br/>
-                        <input type="text" name="senderEmail" class="form-control" value="" placeholder="Email odosielateľa (<?php echo $settings->get("vendor_email"); ?>)"/>
+                        <input type="text" name="senderEmail" class="form-control" value="" placeholder="Email odosielateľa (<?php echo $settings->get('vendor_email'); ?>)"/>
                         <br/>
                         <input type="checkbox" name="useSenderFromEmail" checked=""/> Ak je pri emaile v zozname emailov vyplnený <b>odosielateľ</b> a <b>email odosielateľa</b>, použiť tento email a meno (email odosielateľa a meno odosielateľa) na doručenie konkrétnej emailovej adresy pod týmito doručovacími údajmi.
                         <br/>
@@ -150,7 +149,7 @@ $countPages = $data['countPages'];
                             $query = "SELECT * FROM dnt_posts WHERE cat_id = '293' AND vendor_id = '" . $vendor->getId() . " AND `show` = 1'";
                             if ($db->num_rows($query) > 0) {
                                 foreach ($db->get_results($query) as $row) {
-                                    echo"<option value='" . $row['id_entity'] . "'>" . $row['name'] . "</option>";
+                                    echo"<option value='" . $row['id_entity'] . "'>" . $row['name'] . '</option>';
                                 }
                             }
                             ?>
@@ -164,7 +163,7 @@ $countPages = $data['countPages'];
                             <option value="NULL">(vyberte kategóriu prijmateľov)</option>
                             <?php
                             foreach ($data['categories'] as $cat) {
-                                echo"<option value='" . $cat['id_entity'] . "'>" . $cat['name'] . "</option>";
+                                echo"<option value='" . $cat['id_entity'] . "'>" . $cat['name'] . '</option>';
                             }
                             ?>
                         </select>
@@ -220,17 +219,17 @@ $countPages = $data['countPages'];
                     </thead>
                     <tbody>
                         <?php
-                        $query = $adminMailer->query();			
+                        $query = $adminMailer->query();
                         //$i = $adminMailer->showOrder();
                         $page = 1; //$adminMailer->getPage("current");
-						$i = $data['page'] * $data['pageLimit'] - $data['pageLimit'] + 1;
+                        $i = $data['page'] * $data['pageLimit'] - $data['pageLimit'] + 1;
                         if ($db->num_rows($query) > 0) {
                             foreach ($db->get_results($query) as $row) {
                                 $cat_id = $row['cat_id'];
                                 $post_id = $row['id_entity'];
                                 $cat_id = $row['cat_id'];
                                 ?>
-                            <form method="POST" action="<?php echo $adminMailer->url("edit_mail", $cat_id, false, false, $post_id, $page) ?>" >
+                            <form method="POST" action="<?php echo $adminMailer->url('edit_mail', $cat_id, false, false, $post_id, $page) ?>" >
                                 <tr>
                                     <td><?php echo $i++; ?> (<?php echo $row['id_entity']; ?>)</td>
                                     <td><b><input style="width: 80%;" type="text" name="title" value="<?php echo $row['title']; ?>" /></b></td>
@@ -242,12 +241,13 @@ $countPages = $data['countPages'];
                                     <td>
                                         <select name="cat_id" id="cname" class="form-control" minlength="2" required >
                                             <?php
-											echo '<option value="" >(bez kategórie)</option>';
+                                            echo '<option value="" >(bez kategórie)</option>';
                                             foreach ($data['categories'] as $cat) {
-                                                if ($cat['id_entity'] == $row['cat_id'])
-                                                    echo"<option value='" . $cat['id_entity'] . "' selected>" . $cat['name'] . "</option>";
-                                                else
-                                                    echo"<option value='" . $cat['id_entity'] . "'>" . $cat['name'] . "</option>";
+                                                if ($cat['id_entity'] == $row['cat_id']) {
+                                                    echo"<option value='" . $cat['id_entity'] . "' selected>" . $cat['name'] . '</option>';
+                                                } else {
+                                                    echo"<option value='" . $cat['id_entity'] . "'>" . $cat['name'] . '</option>';
+                                                }
                                             }
                                             ?>
                                         </select>
@@ -257,45 +257,44 @@ $countPages = $data['countPages'];
                                         <input type="submit" name="sent" value="Upraviť" class="label-primary bg-green" />
                                     </td>
                                     <td>
-                                        <a href="<?php echo $adminMailer->url("show_hide", $cat_id, false, false, $post_id, $page) ?>">
+                                        <a href="<?php echo $adminMailer->url('show_hide', $cat_id, false, false, $post_id, $page) ?>">
                                             <i class="<?php echo admin_zobrazenie_stav($row['show']); ?>"></i>
                                         </a>
                                     </td>
                                     <td>
-                                        <a <?php echo $dnt->confirmMsg("Naozaj chcete zmazať tento email?"); ?> href="<?php echo $adminMailer->url("del_mail", $cat_id, false, false, $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
+                                        <a <?php echo $dnt->confirmMsg('Naozaj chcete zmazať tento email?'); ?> href="<?php echo $adminMailer->url('del_mail', $cat_id, false, false, $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
                                     </td>
                                 </tr>
                             </form>
-                            <?php
+                                <?php
+                            }
+                        } else {
+                            no_results();
                         }
-									
-                    } else {
-                        no_results();
-                    }
-                    ?>									
+                        ?>                                  
                     </tbody>
                 </table>
             </div>
-	
-			<ul class="pagination">
+    
+            <ul class="pagination">
                 <li class="">
-                    <a href="<?php echo $adminMailer->paginator("prev", $countPages); ?>">
+                    <a href="<?php echo $adminMailer->paginator('prev', $countPages); ?>">
                         &laquo;
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo $adminMailer->paginator("current", $countPages); ?>">
+                    <a href="<?php echo $adminMailer->paginator('current', $countPages); ?>">
                         <?php echo isset($_GET['page']) ? $_GET['page'] : 1 ?>
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo $adminMailer->paginator("next", $countPages); ?>">
+                    <a href="<?php echo $adminMailer->paginator('next', $countPages); ?>">
                         &raquo;
                     </a>
                 </li>
             </ul>
-			
-			<?php /*
+            
+            <?php /*
             <ul class="pagination">
                 <li class="">
                     <a href="<?php echo $adminMailer->paginator("prev", $countPages); ?>">
@@ -318,7 +317,7 @@ $countPages = $data['countPages'];
                     </a>
                 </li>
             </ul>
-			*/?>
+            */?>
             <!-- END PAGINATION -->
         </div>
         <div class="tab-pane " id="kat">
@@ -359,16 +358,16 @@ $countPages = $data['countPages'];
                                         <input type="submit" name="odoslat" value="Upraviť" class="label-primary bg-green" />
                                     </td>
                                     <td>
-                                        <a href="<?php echo $adminMailer->url("del_cat", $cat_id, false, false, $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
+                                        <a href="<?php echo $adminMailer->url('del_cat', $cat_id, false, false, $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
                                     </td>
                                 </tr>
                             </form>
-                            <?php
+                                <?php
+                            }
+                        } else {
+                            no_results();
                         }
-                    } else {
-                        no_results();
-                    }
-                    ?>									
+                        ?>                                  
                     </tbody>
                 </table>
             </div>

@@ -6,7 +6,6 @@ use DntLibrary\Base\Dnt;
 
 class LogSeenFakerTest
 {
-
     protected $dnt;
 
     public function __construct()
@@ -47,5 +46,4 @@ class LogSeenFakerTest
             //file_get_contents($url);
         }
     }
-
 }

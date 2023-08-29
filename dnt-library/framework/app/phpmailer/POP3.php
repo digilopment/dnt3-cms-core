@@ -63,6 +63,33 @@ class POP3
     const DEFAULT_TIMEOUT = 30;
 
     /**
+     * Line break constant.
+     */
+    const LE = "\r\n";
+
+    /**
+     * Debug level for no output.
+     *
+     * @var int
+     */
+    const DEBUG_OFF = 0;
+
+    /**
+     * Debug level to show server -> client messages
+     * also shows clients connection errors or errors from server
+     *
+     * @var int
+     */
+    const DEBUG_SERVER = 1;
+
+    /**
+     * Debug level to show client -> server and server -> client messages.
+     *
+     * @var int
+     */
+    const DEBUG_CLIENT = 2;
+
+    /**
      * POP3 class debug output mode.
      * Debug output level.
      * Options:
@@ -129,33 +156,6 @@ class POP3
      * @var array
      */
     protected $errors = [];
-
-    /**
-     * Line break constant.
-     */
-    const LE = "\r\n";
-
-    /**
-     * Debug level for no output.
-     *
-     * @var int
-     */
-    const DEBUG_OFF = 0;
-
-    /**
-     * Debug level to show server -> client messages
-     * also shows clients connection errors or errors from server
-     *
-     * @var int
-     */
-    const DEBUG_SERVER = 1;
-
-    /**
-     * Debug level to show client -> server and server -> client messages.
-     *
-     * @var int
-     */
-    const DEBUG_CLIENT = 2;
 
     /**
      * Simple static wrapper for all-in-one POP before SMTP.

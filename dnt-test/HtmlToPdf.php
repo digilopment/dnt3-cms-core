@@ -8,10 +8,12 @@ use DntLibrary\Base\Rest;
 
 class HtmlToPdfTest
 {
-
     protected $pdf;
+
     protected $dnt;
+
     protected $rest;
+
     protected $url = 'http://example.com/';
 
     public function __construct()
@@ -54,5 +56,4 @@ class HtmlToPdfTest
         print $this->htmlTemplate();
         print ('<a href="' . WWW_PATH . $path . $pdfName . '" target="_blank">Open</a>');
     }
-
 }

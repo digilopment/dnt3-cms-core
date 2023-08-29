@@ -16,11 +16,13 @@ class HTML5_Parser
      * @param $builder Custom builder implementation
      * @return Parsed HTML as DOMDocument
      */
-    static public function parse($text, $builder = null) {
+    public static function parse($text, $builder = null)
+    {
         $tokenizer = new HTML5_Tokenizer($text, $builder);
         $tokenizer->parse();
         return $tokenizer->save();
     }
+
     /**
      * Parses an HTML fragment.
      * @param $text HTML text to parse
@@ -28,7 +30,8 @@ class HTML5_Parser
      * @param $builder Custom builder implementation
      * @return Parsed HTML as DOMDocument
      */
-    static public function parseFragment($text, $context = null, $builder = null) {
+    public static function parseFragment($text, $context = null, $builder = null)
+    {
         $tokenizer = new HTML5_Tokenizer($text, $builder);
         $tokenizer->parseFragment($context);
         return $tokenizer->save();

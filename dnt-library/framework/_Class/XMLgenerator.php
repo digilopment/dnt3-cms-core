@@ -15,7 +15,6 @@ use DntLibrary\Base\Dnt;
 
 class XMLgenerator
 {
-
     public function __construct()
     {
         $this->db = new DB();
@@ -23,7 +22,7 @@ class XMLgenerator
     }
 
     /**
-     * 
+     *
      * @param type $array
      * @return type
      */
@@ -33,7 +32,7 @@ class XMLgenerator
     }
 
     /**
-     * 
+     *
      * @param type $table
      * @param type $columns
      * @return boolean
@@ -42,8 +41,8 @@ class XMLgenerator
     {
         $query = ("SELECT $columns FROM $table");
         if ($this->db->num_rows($query) > 0) {
-            $columns = str_replace(" ", "", $columns);
-            $array = explode(",", $columns);
+            $columns = str_replace(' ', '', $columns);
+            $array = explode(',', $columns);
             return $array;
         } else {
             return false;
@@ -51,7 +50,7 @@ class XMLgenerator
     }
 
     /**
-     * 
+     *
      * @param type $table
      * @param boolean $andWhere
      * @return boolean
@@ -76,7 +75,7 @@ class XMLgenerator
     }
 
     /**
-     * 
+     *
      * @param type $table
      * @param type $columns
      * @param type $id
@@ -97,7 +96,7 @@ class XMLgenerator
     }
 
     /**
-     * 
+     *
      * @param type $input
      * @return type
      */
@@ -126,7 +125,7 @@ class XMLgenerator
     }
 
     /**
-     * 
+     *
      * @param type $table
      * @param type $columns
      * @param type $where
@@ -143,7 +142,7 @@ class XMLgenerator
     }
 
     /**
-     * 
+     *
      * @param type $table
      * @param type $columns
      * @param type $where
@@ -156,7 +155,7 @@ class XMLgenerator
     }
 
     /**
-     * 
+     *
      * @param type $table
      * @param type $columns
      * @param type $where
@@ -168,13 +167,12 @@ class XMLgenerator
         $data = chr(0xEF) . chr(0xBB) . chr(0xBF); //diakritika pod UTF 8
         $query = "SELECT $columns FROM $table WHERE parent_id = 0 $where";
         if ($this->db->num_rows($query) > 0) {
-
             $pocetStlpcov = count($this->getTableColumns($table, $columns));
 
             if ($columnsName) {
-                $data .= str_replace(",", ";", $columnsName) . "\n";
+                $data .= str_replace(',', ';', $columnsName) . "\n";
             } else {
-                $data .= implode(";", $this->getTableColumns($table, $columns)) . "\n";
+                $data .= implode(';', $this->getTableColumns($table, $columns)) . "\n";
             }
 
             foreach ($this->db->get_results($query) as $row) {
@@ -185,7 +183,7 @@ class XMLgenerator
                     if ($i == $pocetStlpcov) {
                         $data .= "\n";
                     } else {
-                        $data .= ";";
+                        $data .= ';';
                     }
                     $i++;
                 }
@@ -199,7 +197,7 @@ class XMLgenerator
     }
 
     /**
-     * 
+     *
      * @param type $table
      * @param type $columns
      * @param type $where
@@ -211,17 +209,17 @@ class XMLgenerator
         $data = chr(0xEF) . chr(0xBB) . chr(0xBF); //diakritika pod UTF 8
         $query = "SELECT $columns FROM $table WHERE parent_id = 0 $where";
         if ($this->db->num_rows($query) > 0) {
-            $data .= str_replace(" ", ";", $columns);
+            $data .= str_replace(' ', ';', $columns);
 
             if ($columnsName) {
-                $data .= str_replace(",", ";", $columnsName) . "\n";
+                $data .= str_replace(',', ';', $columnsName) . "\n";
             } else {
-                $data .= str_replace(" ", ";", $columns);
+                $data .= str_replace(' ', ';', $columns);
             }
 
             $data .= "\n";
             foreach ($this->db->get_results($query) as $row) {
-                $data .= $row['id_entity'] . ";" . $row['vendor_id'] . ";" . $row['name'] . ";" . $row['surname'] . ";" . $row['session_id'] . ";" . $row['mesto'] . ";" . $row['psc'] . ";" . $row['email'] . ";" . $row['content'] . ";" . $row['news'] . ";" . $row['news_2'] . ";" . $row['perex'] . ";" . $row['podmienky'] . "\n";
+                $data .= $row['id_entity'] . ';' . $row['vendor_id'] . ';' . $row['name'] . ';' . $row['surname'] . ';' . $row['session_id'] . ';' . $row['mesto'] . ';' . $row['psc'] . ';' . $row['email'] . ';' . $row['content'] . ';' . $row['news'] . ';' . $row['news_2'] . ';' . $row['perex'] . ';' . $row['podmienky'] . "\n";
             }
         }
         if (!is_readable(dirname($fileName))) {
@@ -231,7 +229,7 @@ class XMLgenerator
     }
 
     /**
-     * 
+     *
      * @param type $input
      * @param type $fileName
      */
@@ -239,5 +237,4 @@ class XMLgenerator
     {
         file_put_contents($fileName, $this->arrayToXls($input));
     }
-
 }

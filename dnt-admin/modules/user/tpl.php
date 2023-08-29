@@ -1,19 +1,16 @@
 <?php
 
-use DntLibrary\Base\Dnt;
-use DntLibrary\Base\FileAdmin;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\User;
-use DntLibrary\Base\Vendor;
 
 get_top();
 ?>
 <?php
 get_top_html();
-$user = new User;
-$rest = new Rest;
-$type = $rest->get("type");
-$date_time_format = date("d") . "-" . date("m") . "-" . date("Y");
+$user = new User();
+$rest = new Rest();
+$type = $rest->get('type');
+$date_time_format = date('d') . '-' . date('m') . '-' . date('Y');
 ?>
 <div class="row">
     <!-- BEGIN CUSTOM TABLE -->
@@ -69,15 +66,15 @@ $date_time_format = date("d") . "-" . date("m") . "-" . date("Y");
                         <?php
                         //$i = 1;
                         $i = $fileAdmin->showOrder();
-                        foreach ($user->getUserByType($rest->get("type")) as $row) {
+                        foreach ($user->getUserByType($rest->get('type')) as $row) {
                             $image = $user->getImage($row['img']);
                             $voucherId = $row['voucher'];
                             $postId = $row['id_entity'];
-                            $voucherAssigneUrl = "index.php?src=user&type=" . $rest->get("type") . "&action=assign-voucher&post_id=$postId";
+                            $voucherAssigneUrl = 'index.php?src=user&type=' . $rest->get('type') . "&action=assign-voucher&post_id=$postId";
                             ?>
                             <tr>
                                 <td><b><?php echo $i ?> <span style="font-size:7px">(<?php echo $postId ?>)</span></b></td>
-                                <td><b><?php echo $row['name'] . " " . $row['surname']; ?></b></td>
+                                <td><b><?php echo $row['name'] . ' ' . $row['surname']; ?></b></td>
                                 <td><?php echo $row['email']; ?></td>
                                 <td><?php echo $row['podmienky']; ?></td>
                                 <td><?php echo $row['news']; ?></td>
@@ -86,23 +83,23 @@ $date_time_format = date("d") . "-" . date("m") . "-" . date("Y");
 
                                 <td><b><?php if ($image) {
                                     echo '<a href="' . $image . '" target="_blank"><i class="fa fa-picture-o bg-green action"></i>';
-                                } ?></td>
+                                       } ?></td>
                                 <td>
                                     <?php if ($voucherId) { ?>
                                         <i title="Voucher je priradený" class="fa fa-check bg-green action"></i></td>
                                     <?php } else { ?>
                             <a href="<?php echo $voucherAssigneUrl; ?>"><i title="Voucher čaká na priradenie, kliknutím priradíte." class="fa fa-times bg-blue action"></i></a>
-                        <?php } ?>
+                                    <?php } ?>
                         </td>
                         <td>
                             <a title="Editovať používateľa" href="index.php?src=user&action=edit&post_id=<?php echo $row['id_entity'] ?>"><i class="fa fa-pencil bg-blue action"></i></a>
-                            <a <?php echo $dnt->confirmMsg("Naozaj chcete vymazať tohoto používateľa?"); ?> title="Zmazať používateľa" href="index.php?src=user&action=del&post_id=<?php echo $row['id_entity'] ?>"><i class="fa fa-times bg-red action"></i></a>
+                            <a <?php echo $dnt->confirmMsg('Naozaj chcete vymazať tohoto používateľa?'); ?> title="Zmazať používateľa" href="index.php?src=user&action=del&post_id=<?php echo $row['id_entity'] ?>"><i class="fa fa-times bg-red action"></i></a>
                         </td>
                         </tr>
                             <?php
                             $i++;
                         }
-                        ?>									
+                        ?>                                  
                     </tbody>
                 </table>
             </div>
@@ -110,22 +107,22 @@ $date_time_format = date("d") . "-" . date("m") . "-" . date("Y");
 
         <ul class="pagination">
             <li class="">
-                <a href="<?php echo $user->paginator($type, "prev"); ?>">
+                <a href="<?php echo $user->paginator($type, 'prev'); ?>">
                     &laquo;
                 </a>
             </li>
             <li>
-                <a href="<?php echo $user->paginator($type, "first"); ?>">
-                    <?php echo $user->getPage($type, "first"); ?>
+                <a href="<?php echo $user->paginator($type, 'first'); ?>">
+                    <?php echo $user->getPage($type, 'first'); ?>
                 </a>
             </li>
             <li>
-                <a href="<?php echo $user->paginator($type, "last"); ?>">
-                    <?php echo $user->getPage($type, "last"); ?>
+                <a href="<?php echo $user->paginator($type, 'last'); ?>">
+                    <?php echo $user->getPage($type, 'last'); ?>
                 </a>
             </li>
             <li>
-                <a href="<?php echo $user->paginator($type, "next"); ?>">
+                <a href="<?php echo $user->paginator($type, 'next'); ?>">
                     &raquo;
                 </a>
             </li>

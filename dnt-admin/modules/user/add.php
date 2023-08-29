@@ -2,7 +2,6 @@
 
 use DntLibrary\Base\AdminUser;
 use DntLibrary\Base\Api;
-use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\User;
 
@@ -10,11 +9,11 @@ get_top();
 ?>
 <?php get_top_html(); ?>
 <?php
-$rest = new Rest;
-$api = new Api;
-$admin = new AdminUser;
-$user = new User;
-$post_id = $rest->get("post_id");
+$rest = new Rest();
+$api = new Api();
+$admin = new AdminUser();
+$user = new User();
+$post_id = $rest->get('post_id');
 //var_dump($user->getColumns($query));
 ?>
 <section class="content">
@@ -45,27 +44,26 @@ $post_id = $rest->get("post_id");
                                 <span style="font-weight: bold;">
                                     <?php
                                     foreach ($api->getColumns($query) as $key => $value) {
-                                        if (
-                                                $value != "id" &&
-                                                $value != "id_entity" &&
-                                                $value != "type" &&
-                                                $value != "session_id" &&
-                                                $value != "news" &&
-                                                $value != "news_2" &&
-                                                $value != "kliknute" &&
-                                                $value != "vendor_id" &&
-                                                $value != "datetime_creat" &&
-                                                $value != "datetime_update" &&
-                                                $value != "datetime_publish" &&
-                                                $value != "podmienky" &&
-                                                $value != "img" &&
-                                                $value != "ip_adresa" &&
-                                                $value != "parent_id" &&
-                                                $value != "hladam" &&
-                                                $value != "custom_1" &&
-                                                $value != "status" &&
-                                                $value != "sex" &&
-                                                $value != "pass"
+                                        if ($value != 'id' &&
+                                                $value != 'id_entity' &&
+                                                $value != 'type' &&
+                                                $value != 'session_id' &&
+                                                $value != 'news' &&
+                                                $value != 'news_2' &&
+                                                $value != 'kliknute' &&
+                                                $value != 'vendor_id' &&
+                                                $value != 'datetime_creat' &&
+                                                $value != 'datetime_update' &&
+                                                $value != 'datetime_publish' &&
+                                                $value != 'podmienky' &&
+                                                $value != 'img' &&
+                                                $value != 'ip_adresa' &&
+                                                $value != 'parent_id' &&
+                                                $value != 'hladam' &&
+                                                $value != 'custom_1' &&
+                                                $value != 'status' &&
+                                                $value != 'sex' &&
+                                                $value != 'pass'
                                         ) {
                                             ?>
                                             <h5><?php echo $value; ?>:</h5>
@@ -73,8 +71,8 @@ $post_id = $rest->get("post_id");
                                                 <input type="text" name="<?php echo $value; ?>" value="" class="form-control">
                                             </div>
                                         <?php } ?>  
-									<?php } ?>
-                                    <br/>						
+                                    <?php } ?>
+                                    <br/>                       
 
                                 </span>
                             </div>

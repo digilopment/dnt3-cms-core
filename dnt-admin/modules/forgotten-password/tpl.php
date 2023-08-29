@@ -12,7 +12,7 @@
                             <img class="profile-img" src="<?php echo WWW_PATH_ADMIN_2; ?>img/designdnt_singl_dark.png" alt="">
                             <!-- END PROFILE IMAGE -->
                             <!-- BEGIN LOGIN FORM -->
-                            <form name="login" action="<?php echo WWW_PATH_ADMIN_2 . "index.php?src=forgotten-password&action=request"; ?>" method="POST" class="form-login">
+                            <form name="login" action="<?php echo WWW_PATH_ADMIN_2 . 'index.php?src=forgotten-password&action=request'; ?>" method="POST" class="form-login">
                                 <input type="text" name="email" class="form-control" placeholder="Váš email" autofocus>
                                 <button class="btn btn-lg btn-primary btn-block" name="sent" type="submit">Odoslať žiadosť o nové heslo</button>
                                 <label class="checkbox pull-left">
@@ -22,7 +22,7 @@
                             </form>
                             <!-- END LOGIN FORM -->
                         </div>
-                        <a href="<?php echo WWW_PATH_ADMIN_2 . "index.php?src=login"; ?>" class="text-center new-account">Prihlásiť sa</a>
+                        <a href="<?php echo WWW_PATH_ADMIN_2 . 'index.php?src=login'; ?>" class="text-center new-account">Prihlásiť sa</a>
                     </div>
                     <!-- END LOGIN BOX -->
                 </div>

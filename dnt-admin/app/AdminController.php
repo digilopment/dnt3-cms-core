@@ -4,18 +4,16 @@ namespace DntAdmin\App;
 
 class AdminController
 {
+    public function __construct()
+    {
+    }
 
-	public function __construct(){
-		
-	}
-	
     public function loadTemplate($path, $tpl, $data = false)
     {
         if (!function_exists('adminFunctionsExists')) {
             include '../' . ADMIN_URL_2 . '/plugins/tpl_functions.php';
         }
         if (!function_exists('tplData')) {
-
             /*function tplData($data, $object)
             {
                 if (isset($data[$object])) {
@@ -24,7 +22,6 @@ class AdminController
                     return false;
                 }
             }*/
-
         }
 
         include dirname($path) . '/templates/' . $tpl . '.php';
@@ -34,5 +31,4 @@ class AdminController
     {
         return isset($_POST[$postKey]) ? true : false;
     }
-
 }

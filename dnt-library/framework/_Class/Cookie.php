@@ -67,23 +67,26 @@ class Cookie
      * @param string $domain
      * @return bool
      */
-    static public function Set($name, $value, $expiry = self::OneYear, $path = '/', $domain = false)
+    public static function Set($name, $value, $expiry = self::OneYear, $path = '/', $domain = false)
     {
         $retval = false;
         if (!headers_sent()) {
-            if ($domain === false)
+            if ($domain === false) {
                 $domain = $_SERVER['HTTP_HOST'];
+            }
 
-            if ($expiry === -1)
+            if ($expiry === -1) {
                 $expiry = 1893456000; // Lifetime = 2030-01-01 00:00:00
-            elseif (is_numeric($expiry))
+            } elseif (is_numeric($expiry)) {
                 $expiry += time();
-            else
+            } else {
                 $expiry = strtotime($expiry);
+            }
 
             $retval = @setcookie($name, $value, $expiry, $path, $domain);
-            if ($retval)
+            if ($retval) {
                 $_COOKIE[$name] = $value;
+            }
         }
         return $retval;
     }
@@ -101,14 +104,15 @@ class Cookie
     {
         $retval = false;
         if (!headers_sent()) {
-            if ($domain === false)
+            if ($domain === false) {
                 $domain = $_SERVER['HTTP_HOST'];
+            }
             $retval = setcookie($name, '', time() - 3600, $path, $domain);
 
-            if ($remove_from_global)
+            if ($remove_from_global) {
                 unset($_COOKIE[$name]);
+            }
         }
         return $retval;
     }
-
 }

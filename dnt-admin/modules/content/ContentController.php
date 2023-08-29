@@ -18,18 +18,28 @@ use DntLibrary\Base\Webhook;
 
 class ContentController extends AdminController
 {
-
     protected $loc = __FILE__;
+
     protected $namespace = __NAMESPACE__ . '';
+
     protected $db;
+
     protected $rest;
+
     protected $webhook;
+
     protected $image;
+
     protected $adminContent;
+
     protected $dnt;
+
     protected $vendor;
+
     protected $updateContent;
+
     protected $importContent;
+
     protected $finalItems;
 
     public function __construct()
@@ -74,7 +84,7 @@ class ContentController extends AdminController
             'datetime_creat' => $this->dnt->datetime(),
             'datetime_update' => $this->dnt->datetime(),
             'datetime_publish' => $this->dnt->datetime(),
-            '`show`' => '0'
+            '`show`' => '0',
         );
 
         $this->db->dbTransaction();
@@ -87,16 +97,15 @@ class ContentController extends AdminController
             $groupId = $lastId;
         }
         $this->db->update(
-                'dnt_posts',
-                array(
+            'dnt_posts',
+            array(
                     'group_id' => $groupId,
                 ),
-                array(
+            array(
                     'id_entity' => $lastId,
                     'vendor_id' => $this->vendor->getId(),
                 )
         );
-
 
         $redirect = WWW_PATH_ADMIN_2 . 'index.php?src=content&filter=' . $this->rest->get('filter') . '&sub_cat_id=' . $this->rest->get('sub_cat_id') . '&post_id=' . $lastId . '&page=1&action=edit&included=' . $this->rest->get('included') . '';
         $this->dnt->redirect($redirect);
@@ -118,7 +127,7 @@ class ContentController extends AdminController
             'perex' => 'Toto je perex',
             'service' => 'product_detail',
             'type' => 'product',
-            'image' => 'https://cyan.com/wp-content/uploads/2019/08/test-image.jpg'
+            'image' => 'https://cyan.com/wp-content/uploads/2019/08/test-image.jpg',
         ];
         $this->importContent->createPost($postData, []);
     }
@@ -140,11 +149,11 @@ class ContentController extends AdminController
         $post_id = $this->rest->get('post_id');
         $table = 'dnt_posts';
         $this->db->update(
-                $table, //table
-                array(//set
+            $table, //table
+            array(//set
                     'show' => 0,
                 ),
-                array(//where
+            array(//where
                     'id_entity' => $post_id,
                     'vendor_id' => $this->vendor->getId(),
                 )
@@ -167,11 +176,11 @@ class ContentController extends AdminController
 
         $table = 'dnt_posts';
         $this->db->update(
-                $table, //table
-                array(//set
+            $table, //table
+            array(//set
                     'order' => $order,
                 ),
-                array(//where
+            array(//where
                     'id_entity' => $post_id,
                     'vendor_id' => $this->vendor->getId(),
                 )
@@ -193,11 +202,11 @@ class ContentController extends AdminController
 
         $table = 'dnt_posts';
         $this->db->update(
-                $table,
-                array(
+            $table,
+            array(
                     'order' => $order,
                 ),
-                array(
+            array(
                     'id_entity' => $post_id,
                     'vendor_id' => $this->vendor->getId(),
                 )
@@ -224,11 +233,11 @@ class ContentController extends AdminController
         }
         $table = 'dnt_posts';
         $this->db->update(
-                $table,
-                array(
+            $table,
+            array(
                     'show' => $set_show,
                 ),
-                array(
+            array(
                     'id_entity' => $post_id,
                     'vendor_id' => $this->vendor->getId(),
                 )
@@ -245,12 +254,12 @@ class ContentController extends AdminController
         $id_entity = $this->rest->post('id_entity');
 
         $this->db->update(
-                'dnt_post_type',
-                array(
+            'dnt_post_type',
+            array(
                     'name' => $name,
                     'name_url' => $name_url,
                 ),
-                array(
+            array(
                     'id_entity' => $id_entity,
                     '`vendor_id`' => $this->vendor->getId())
         );
@@ -315,15 +324,15 @@ class ContentController extends AdminController
 
     public function editAction()
     {
-        $post_id = $this->rest->get("post_id");
-        $group_id = $this->adminContent->getPostParam("group_id", $post_id);
+        $post_id = $this->rest->get('post_id');
+        $group_id = $this->adminContent->getPostParam('group_id', $post_id);
         if ($group_id == 0) {
             $this->db->update(
-                    'dnt_posts',
-                    array(
+                'dnt_posts',
+                array(
                         'group_id' => $post_id,
                     ),
-                    array(
+                array(
                         'id_entity' => $post_id,
                         'vendor_id' => $this->vendor->getId(),
                     )
@@ -358,5 +367,4 @@ class ContentController extends AdminController
             $this->loadTemplate($this->loc, 'success', $data);
         }
     }
-
 }

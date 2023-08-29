@@ -26,10 +26,12 @@ use DntLibrary\Base\FaceDetector;
 
 class FaceDetector
 {
-
     protected $detection_data;
+
     protected $canvas;
+
     protected $face;
+
     private $reduced_canvas;
 
     /**
@@ -64,16 +66,12 @@ class FaceDetector
     public function faceDetect($file)
     {
         if (is_resource($file)) {
-
             $this->canvas = $file;
         } elseif (is_file($file)) {
-
             $this->canvas = imagecreatefromjpeg($file);
         } elseif (is_string($file)) {
-
             $this->canvas = imagecreatefromstring($file);
         } else {
-
             throw new Exception("Can not load $file");
         }
 
@@ -93,13 +91,25 @@ class FaceDetector
             $this->reduced_canvas = imagecreatetruecolor($im_width / $ratio, $im_height / $ratio);
 
             imagecopyresampled(
-                    $this->reduced_canvas, $this->canvas, 0, 0, 0, 0, $im_width / $ratio, $im_height / $ratio, $im_width, $im_height
+                $this->reduced_canvas,
+                $this->canvas,
+                0,
+                0,
+                0,
+                0,
+                $im_width / $ratio,
+                $im_height / $ratio,
+                $im_width,
+                $im_height
             );
 
             $stats = $this->getImgStats($this->reduced_canvas);
 
             $this->face = $this->doDetectGreedyBigToSmall(
-                    $stats['ii'], $stats['ii2'], $stats['width'], $stats['height']
+                $stats['ii'],
+                $stats['ii2'],
+                $stats['width'],
+                $stats['height']
             );
 
             if ($this->face['w'] > 0) {
@@ -111,7 +121,10 @@ class FaceDetector
             $stats = $this->getImgStats($this->canvas);
 
             $this->face = $this->doDetectGreedyBigToSmall(
-                    $stats['ii'], $stats['ii2'], $stats['width'], $stats['height']
+                $stats['ii'],
+                $stats['ii2'],
+                $stats['width'],
+                $stats['height']
             );
         }
         return ($this->face['w'] > 0);
@@ -122,7 +135,12 @@ class FaceDetector
         $color = imagecolorallocate($this->canvas, 255, 0, 0); //red
 
         imagerectangle(
-                $this->canvas, $this->face['x'], $this->face['y'], $this->face['x'] + $this->face['w'], $this->face['y'] + $this->face['w'], $color
+            $this->canvas,
+            $this->face['x'],
+            $this->face['y'],
+            $this->face['x'] + $this->face['w'],
+            $this->face['y'] + $this->face['w'],
+            $color
         );
 
         header('Content-type: image/jpeg');
@@ -173,7 +191,7 @@ class FaceDetector
             'width' => $image_width,
             'height' => $image_height,
             'ii' => $iis['ii'],
-            'ii2' => $iis['ii2']
+            'ii2' => $iis['ii2'],
         );
     }
 
@@ -199,7 +217,7 @@ class FaceDetector
                 $red = ($rgb >> 16) & 0xFF;
                 $green = ($rgb >> 8) & 0xFF;
                 $blue = $rgb & 0xFF;
-                $grey = (0.2989 * $red + 0.587 * $green + 0.114 * $blue) >> 0;  // this is what matlab uses
+                $grey = (0.2989 * $red + 0.587 * $green + 0.114 * $blue) >> 0; // this is what matlab uses
                 $rowsum += $grey;
                 $rowsum2 += $grey * $grey;
 
@@ -233,7 +251,7 @@ class FaceDetector
                     }
                 } // end x
             } // end y
-        }  // end scale
+        } // end scale
         return null;
     }
 
@@ -291,21 +309,15 @@ class FaceDetector
                     $current_node = null;
 
                     if ($rect_sum >= $node_thresh * $vnorm) {
-
                         if ($rightidx == -1) {
-
                             $tree_sum = $rightval;
                         } else {
-
                             $current_node = $tree[$rightidx];
                         }
                     } else {
-
                         if ($leftidx == -1) {
-
                             $tree_sum = $leftval;
                         } else {
-
                             $current_node = $tree[$leftidx];
                         }
                     }
@@ -319,12 +331,10 @@ class FaceDetector
         }
         return true;
     }
-
 }
 
 class FaceModify extends FaceDetector
 {
-
     public function Rotate()
     {
         $canvas = imagecreatetruecolor($this->face['w'], $this->face['w']);
@@ -360,5 +370,4 @@ class FaceModify extends FaceDetector
         header('Content-type: image/jpeg');
         imagejpeg($canvas);
     }
-
 }

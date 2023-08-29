@@ -6,7 +6,7 @@
  *  Dnt3 MultiDomain Platform
  *  CMS Designdnt3
  *  author: Digilopment
- * 
+ *
  */
 
 namespace Index;
@@ -16,7 +16,6 @@ use DntLibrary\App\Bootstrap;
 
 (new class
 {
-
     public function __construct()
     {
         require '../dnt-library/framework/app/Bootstrap.php';

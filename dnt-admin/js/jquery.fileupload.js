@@ -52,7 +52,8 @@
         Blob.prototype.webkitSlice || Blob.prototype.mozSlice);
 
     // Helper function to create drag handlers for dragover/dragenter/dragleave:
-    function getDragHandler(type) {
+    function getDragHandler(type)
+    {
         var isDragOver = type === 'dragover';
         return function (e) {
             e.dataTransfer = e.originalEvent && e.originalEvent.dataTransfer;
@@ -468,7 +469,7 @@
                             formData.push({
                                 name: ($.type(options.paramName) === 'array' &&
                                     options.paramName[index]) || paramName,
-                                value: file
+                            value: file
                             });
                         });
                     }
@@ -1205,17 +1206,17 @@
                 data = {
                     fileInput: $(e.target),
                     form: $(e.target.form)
-                };
+            };
             this._getFileInputFiles(data.fileInput).always(function (files) {
                 data.files = files;
                 if (that.options.replaceFileInput) {
                     that._replaceFileInput(data);
                 }
                 if (that._trigger(
-                        'change',
-                        $.Event('change', {delegatedEvent: e}),
-                        data
-                    ) !== false) {
+                    'change',
+                    $.Event('change', {delegatedEvent: e}),
+                    data
+                ) !== false) {
                     that._onAdd(e, data);
                 }
             });
@@ -1233,10 +1234,10 @@
                     }
                 });
                 if (this._trigger(
-                        'paste',
-                        $.Event('paste', {delegatedEvent: e}),
-                        data
-                    ) !== false) {
+                    'paste',
+                    $.Event('paste', {delegatedEvent: e}),
+                    data
+                ) !== false) {
                     this._onAdd(e, data);
                 }
             }
@@ -1252,10 +1253,10 @@
                 this._getDroppedFiles(dataTransfer).always(function (files) {
                     data.files = files;
                     if (that._trigger(
-                            'drop',
-                            $.Event('drop', {delegatedEvent: e}),
-                            data
-                        ) !== false) {
+                        'drop',
+                        $.Event('drop', {delegatedEvent: e}),
+                        data
+                    ) !== false) {
                         that._onAdd(e, data);
                     }
                 });

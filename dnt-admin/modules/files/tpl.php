@@ -1,12 +1,8 @@
 <?php
 
 use DntLibrary\Base\DB;
-use DntLibrary\Base\Dnt;
-use DntLibrary\Base\DntUpload;
-use DntLibrary\Base\FileAdmin;
 use DntLibrary\Base\Image;
 use DntLibrary\Base\Rest;
-use DntLibrary\Base\Vendor;
 
 get_top();
 ?>
@@ -14,7 +10,7 @@ get_top();
 <?php
 $db = new DB();
 $rest = new Rest();
-$image = new Image;
+$image = new Image();
 ?>
 <!-- BEGIN CUSTOM TABLE -->
 <section class="row content-header">
@@ -50,7 +46,7 @@ $image = new Image;
         </a>
         <?php
     }
-    ?>	
+    ?>  
 </section>
 <div style="clear: both;"></div>
 <div class="col-md-12">
@@ -89,7 +85,7 @@ $image = new Image;
                                 $post_id = $row['id_entity'];
                                 $sub_cat_id = false;
                                 $type = $row['type'];
-                                $page = $fileAdmin->getPage("current");
+                                $page = $fileAdmin->getPage('current');
 
                                 $imageName = $image->getFileImage($post_id, false, false);
                                 ?>
@@ -105,16 +101,16 @@ $image = new Image;
                                         <br>
                                         <?php
                                         foreach ($dntUpload->imageFormats() as $format) {
-                                            if ($dnt->in_string("image", $type)) {
+                                            if ($dnt->in_string('image', $type)) {
                                                 ?>
-                                                <span style="font-weight:bold;"><a href="<?php echo "../dnt-view/data/uploads/formats/" . $format . "/" . $imageName ?>" target="_blank">width-<?php echo $format; ?></a> | </span>
+                                                <span style="font-weight:bold;"><a href="<?php echo '../dnt-view/data/uploads/formats/' . $format . '/' . $imageName ?>" target="_blank">width-<?php echo $format; ?></a> | </span>
                                             <?php } ?>
                                         <?php } ?>
                                         <br><br>
                                         <input style="width: 250px" type="text" value="<?php echo $image->getFileImage($post_id); ?>">
                                     </td>
                                     <td>
-                                        <?php echo $fileAdmin->getPostParam("type", $row['id_entity']); ?>
+                                        <?php echo $fileAdmin->getPostParam('type', $row['id_entity']); ?>
                                     </td>
                                     <td>
                                         <b><?php echo $row['datetime']; ?></b>
@@ -122,34 +118,34 @@ $image = new Image;
                                     <td><b>
                                             <?php
                                             echo '<a target="_blank" href="' . $image->getFileImage($post_id) . '">';
-                                            if ($dnt->in_string("image", $row['type'])) {
+                                            if ($dnt->in_string('image', $row['type'])) {
                                                 echo '<img style="width: 100px;" src="' . $image->getFileImage($post_id, true, Image::SMALL) . '"/>';
                                             } else {
-                                                echo "Súbor";
+                                                echo 'Súbor';
                                             }
                                             echo '</a>';
                                             ?>
                                         </b>
                                     </td>
                                     <td>
-                                        <a href="<?php echo $fileAdmin->url("show_hide", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>">
+                                        <a href="<?php echo $fileAdmin->url('show_hide', $cat_id, $sub_cat_id, $type, $post_id, $page) ?>">
                                             <i class="<?php echo admin_zobrazenie_stav($row['show']); ?>"></i>
                                         </a>
                                     </td>
                                     <td>
-                                        <a <?php echo $dnt->confirmMsg("Naozaj chcete vymazať tento post?"); ?> href="<?php echo $fileAdmin->url("del", $cat_id, $sub_cat_id, "image", $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
+                                        <a <?php echo $dnt->confirmMsg('Naozaj chcete vymazať tento post?'); ?> href="<?php echo $fileAdmin->url('del', $cat_id, $sub_cat_id, 'image', $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
                                         <input type="checkbox" name="del_<?php echo $post_id; ?>">
                                     </td>
                                 </tr>
                             <thead>
 
                             </thead>
-                            <?php
+                                <?php
+                            }
+                        } else {
+                            no_results();
                         }
-                    } else {
-                        no_results();
-                    }
-                    ?>	
+                        ?>  
                     <tr>
                         <th></th>
                         <th></th>
@@ -159,7 +155,7 @@ $image = new Image;
                         <th></th>
                         <th></th>
                         <th><input type="submit" value="Vymazať vybrané" name="sent"></th>
-                    </tr>			  
+                    </tr>             
                     </tbody>
                 </table>
             </div>
@@ -167,22 +163,22 @@ $image = new Image;
     </div>
     <ul class="pagination">
         <li class="">
-            <a href="<?php echo $fileAdmin->paginator("prev"); ?>">
+            <a href="<?php echo $fileAdmin->paginator('prev'); ?>">
                 &laquo;
             </a>
         </li>
         <li>
-            <a href="<?php echo $fileAdmin->paginator("first"); ?>">
-                <?php echo $fileAdmin->getPage("first"); ?>
+            <a href="<?php echo $fileAdmin->paginator('first'); ?>">
+                <?php echo $fileAdmin->getPage('first'); ?>
             </a>
         </li>
         <li>
-            <a href="<?php echo $fileAdmin->paginator("last"); ?>">
-                <?php echo $fileAdmin->getPage("last"); ?>
+            <a href="<?php echo $fileAdmin->paginator('last'); ?>">
+                <?php echo $fileAdmin->getPage('last'); ?>
             </a>
         </li>
         <li>
-            <a href="<?php echo $fileAdmin->paginator("next"); ?>">
+            <a href="<?php echo $fileAdmin->paginator('next'); ?>">
                 &raquo;
             </a>
         </li>

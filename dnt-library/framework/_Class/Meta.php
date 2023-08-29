@@ -17,7 +17,6 @@ use DntLibrary\Base\Vendor;
 
 class Meta
 {
-
     public function __construct()
     {
         $this->db = new DB();
@@ -27,22 +26,22 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function getMapLocation()
     {
         $string = $this->getCompetitionMeta('map_location');
-        $string = explode("@", $string);
+        $string = explode('@', $string);
         $position = $string[1];
-        $position = explode("z/data", $position);
+        $position = explode('z/data', $position);
         $position = $position[0];
-        $position = explode(",", $position);
+        $position = explode(',', $position);
         return $position;
     }
 
     /**
-     * 
+     *
      * @return boolean
      */
     public function getRealDomain()
@@ -61,14 +60,14 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @param type $column
      * @param type $domain
      * @return boolean
      */
     public function getColumnByDomain($column, $domain)
     {
-        $query = "SELECT `" . $column . "` FROM dnt_microsites WHERE `real_url` = '" . $domain . "' AND `vendor_id` = '" . $this->vendor->getId() . "' LIMIT 1";
+        $query = 'SELECT `' . $column . "` FROM dnt_microsites WHERE `real_url` = '" . $domain . "' AND `vendor_id` = '" . $this->vendor->getId() . "' LIMIT 1";
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
                 $return = $row[$column];
@@ -80,21 +79,21 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @return boolean
      */
     function competitionId()
     {
         //ADMIN
         if ($this->rest->isAdmin()) {
-            return $this->rest->get("id");
+            return $this->rest->get('id');
         } else {
             //EXTERNALL URL
-            if (in_array(str_replace("www.", "", WWW_PATH), $this->getRealDomain())) {
-                $get = $this->getColumnByDomain("url", WWW_PATH);
+            if (in_array(str_replace('www.', '', WWW_PATH), $this->getRealDomain())) {
+                $get = $this->getColumnByDomain('url', WWW_PATH);
             }
             //INTERNAL URL
-            elseif ($this->rest->getModul() == "microsites" && $this->rest->webhook(2)) {
+            elseif ($this->rest->getModul() == 'microsites' && $this->rest->webhook(2)) {
                 $get = $this->rest->webhook(2);
             }
 
@@ -113,13 +112,13 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @param type $column
      * @return boolean
      */
     public function getCompetitionColumn($column)
     {
-        $query = "SELECT `" . $column . "` FROM dnt_microsites WHERE 
+        $query = 'SELECT `' . $column . "` FROM dnt_microsites WHERE 
 			`vendor_id` = '" . $this->vendor->getId() . "' AND 
 			`id_entity` = '" . $this->competitionId() . "'
 			";
@@ -135,14 +134,14 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @param type $column
      * @param type $competition_id
      * @return boolean
      */
     public function getCompetitionColumnByInput($column, $competition_id)
     {
-        $query = "SELECT `" . $column . "` FROM dnt_microsites WHERE 
+        $query = 'SELECT `' . $column . "` FROM dnt_microsites WHERE 
 			`vendor_id` = '" . $this->vendor->getId() . "' AND 
 			`id_entity` = '" . $competition_id . "'
 			";
@@ -158,14 +157,14 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @param type $column
      * @param type $id
      * @return boolean
      */
     public function getCompetitionColumnId($column, $id_entity)
     {
-        $query = "SELECT `" . $column . "` FROM dnt_microsites WHERE 
+        $query = 'SELECT `' . $column . "` FROM dnt_microsites WHERE 
 			`vendor_id` = '" . $this->vendor->getId() . "' AND 
 			`id_entity` = '" . $id_entity . "'
 			";
@@ -181,7 +180,7 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @param type $key
      * @return boolean
      */
@@ -202,7 +201,7 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @param type $key
      * @return boolean
      */
@@ -228,7 +227,7 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @param type $key
      * @return boolean
      */
@@ -250,7 +249,7 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @param type $key
      * @param type $id
      * @return boolean
@@ -274,7 +273,7 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @param type $key
      * @param type $competition_id
      * @return boolean
@@ -298,7 +297,7 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @param type $key
      * @param type $competition_id
      * @return boolean
@@ -322,7 +321,7 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @return boolean
      */
     public function getMenuItems()
@@ -344,7 +343,7 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @return boolean
      */
     public function getModulItems()
@@ -368,7 +367,7 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @param type $number
      * @return boolean
      */
@@ -391,7 +390,7 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @return boolean
      */
     public function getFormBaseFields()
@@ -418,7 +417,7 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @param type $data
      * @return type
      */
@@ -428,7 +427,7 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @param type $data
      * @return type
      */
@@ -439,7 +438,7 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @param type $hash
      * @param type $key
      * @return boolean
@@ -467,7 +466,7 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @param type $hash
      * @return boolean
      */
@@ -488,7 +487,7 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @param type $catId
      * @return string
      */
@@ -499,7 +498,7 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function all_meta_competition()
@@ -509,7 +508,7 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @param type $value
      * @param type $meta
      */
@@ -517,11 +516,11 @@ class Meta
     {
         if ($value == 1) {
             $ano = 'selected';
-            $color = "3C763D";
+            $color = '3C763D';
             $nie = false;
         } else {
             $nie = 'selected';
-            $color = "ff0000";
+            $color = 'ff0000';
             $ano = false;
         }
         echo '<select class="form-control" name="zobrazit_' . $meta . '" style="border: 2px #' . $color . ' solid;">
@@ -531,48 +530,48 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @param type $input
      * @return type
      */
     public function link_format($input)
     {
-        $input = str_replace("http://", "", $input);
-        $input = str_replace("https://", "", $input);
-        $input = str_replace("", "", $input);
+        $input = str_replace('http://', '', $input);
+        $input = str_replace('https://', '', $input);
+        $input = str_replace('', '', $input);
         return $input;
     }
 
     /**
-     * 
+     *
      * @return type
      * LANGUAGES
      */
     public function competition_languages()
     {
         return array(
-            "sk_SK" => "Slovenský",
-            "cs_CZ" => "Česky",
-            "en_EN" => "Anglický",
-            "de_DE" => "Nemecký",
+            'sk_SK' => 'Slovenský',
+            'cs_CZ' => 'Česky',
+            'en_EN' => 'Anglický',
+            'de_DE' => 'Nemecký',
         );
     }
 
     /**
-     * 
+     *
      * @param type $layout
      */
     public function getCompetitionLanguage($layout)
     {
         $layouts = $this->competition_languages();
-        $selected = "";
+        $selected = '';
         echo '<select name="_language" style="padding: 5px;">';
 
         foreach ($layouts as $layoutIndex => $layoutName) {
             if ($layout == $layoutIndex) {
-                $selected = "selected";
+                $selected = 'selected';
             } else {
-                $selected = "";
+                $selected = '';
             }
             echo '<option value="' . $layoutIndex . '" ' . $selected . ' >' . $layoutName . '</option>';
         }
@@ -582,7 +581,7 @@ class Meta
     //LAYOUTS
 
     /**
-     * 
+     *
      * @return type
      * LAYOUTS
      * en_EN
@@ -590,26 +589,26 @@ class Meta
     public function competition_layout()
     {
         return array(
-            "dnt_first" => "1.st theme",
-            "dnt_second" => "2.nd theme",
+            'dnt_first' => '1.st theme',
+            'dnt_second' => '2.nd theme',
         );
     }
 
     /**
-     * 
+     *
      * @param type $layout
      */
     public function getCompetitionLayout($layout)
     {
         $layouts = $this->competition_layout();
-        $selected = "";
+        $selected = '';
         echo '<select name="layout" style="padding: 5px;">';
 
         foreach ($layouts as $layoutIndex => $layoutName) {
             if ($layout == $layoutIndex) {
-                $selected = "selected";
+                $selected = 'selected';
             } else {
-                $selected = "";
+                $selected = '';
             }
             echo '<option value="' . $layoutIndex . '" ' . $selected . ' >' . $layoutName . '</option>';
         }
@@ -617,43 +616,43 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @return type
      * FONTS
      */
     public function competition_fonts()
     {
         return array(
-            "roboto" => "Roboto",
-            "Arial" => "Arial",
-            "Georgia" => "Georgia",
-            "Calibri" => "Calibri",
-            "Cambria" => "Cambria",
-            "Lucida Sans Unicode" => "Lucida Sans Unicode",
-            "Myriad Pro Regular " => "Myriad Pro Regular",
-            "Tahoma" => "Tahoma",
-            "Verdana" => "Verdana",
-                //"Times New Roman" 	=> "Times New Roman",
-                //"bebas_neueregular" 	=> "Bebas",
-                //"impact" 	=> "Impact",
+            'roboto' => 'Roboto',
+            'Arial' => 'Arial',
+            'Georgia' => 'Georgia',
+            'Calibri' => 'Calibri',
+            'Cambria' => 'Cambria',
+            'Lucida Sans Unicode' => 'Lucida Sans Unicode',
+            'Myriad Pro Regular ' => 'Myriad Pro Regular',
+            'Tahoma' => 'Tahoma',
+            'Verdana' => 'Verdana',
+                //"Times New Roman"     => "Times New Roman",
+                //"bebas_neueregular"   => "Bebas",
+                //"impact"  => "Impact",
         );
     }
 
     /**
-     * 
+     *
      * @param type $font
      */
     public function getCompetitionFont($font)
     {
         $fonts = $this->competition_fonts();
-        $selected = "";
+        $selected = '';
         echo '<select name="_font" style="padding: 5px;">';
 
         foreach ($fonts as $fontIndex => $fontName) {
             if ($font == $fontIndex) {
-                $selected = "selected";
+                $selected = 'selected';
             } else {
-                $selected = "";
+                $selected = '';
             }
             echo '<option value="' . $fontIndex . '" ' . $selected . ' >' . $fontName . '</option>';
         }
@@ -661,14 +660,14 @@ class Meta
     }
 
     /**
-     * 
+     *
      * @param type $data
      * @return type
      */
     public function hyperlinkParser($data)
     {
-        if ($this->dnt->in_string("|", $data)) {
-            $dataArr = explode("|", $data);
+        if ($this->dnt->in_string('|', $data)) {
+            $dataArr = explode('|', $data);
             if (count($dataArr) == 2) {
                 return $dataArr;
             } else {
@@ -678,5 +677,4 @@ class Meta
             return array($data, $data);
         }
     }
-
 }

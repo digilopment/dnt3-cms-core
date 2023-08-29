@@ -17,15 +17,18 @@ use DntLibrary\Base\Vendor;
 
 class BaseController
 {
-
     protected $suffix = 'generated';
+
     protected $confFile = 'Plugins.shell';
+
     protected $settinhs;
 
-	public function __construct(){
-		$this->dnt = new Dnt();
-		$this->vendor = new Vendor();
-	}
+    public function __construct()
+    {
+        $this->dnt = new Dnt();
+        $this->vendor = new Vendor();
+    }
+
     protected function modul()
     {
         $settings = new Settings();
@@ -34,12 +37,12 @@ class BaseController
 
     protected function path()
     {
-        return "dnt-view/layouts/" . $this->vendor->getLayout() . "/plugins/";
+        return 'dnt-view/layouts/' . $this->vendor->getLayout() . '/plugins/';
     }
 
     protected function cachedFile($plugin)
     {
-        return "dnt-cache/plugins/" . $this->pluginCacheName($plugin);
+        return 'dnt-cache/plugins/' . $this->pluginCacheName($plugin);
     }
 
     protected function pluginKey($plugin, $key)
@@ -66,7 +69,7 @@ class BaseController
         }
 
         if (isset($plugin['type']) && $plugin['type'] == 'mdl') {
-            $clsName = (new Autoloader())->className($plugin['tpl']) . "PluginControll";
+            $clsName = (new Autoloader())->className($plugin['tpl']) . 'PluginControll';
             if (!class_exists('\DntView\Layout\Modul\Plugin\\' . $clsName)) {
                 include $this->path() . $pathCompose . $controller;
                 $clsName = '\DntView\Layout\Modul\Plugin\\' . $clsName;
@@ -101,8 +104,8 @@ class BaseController
 
     protected function createCacheFile($plugin, $html)
     {
-        if (!is_dir("dnt-cache/plugins")) {
-            mkdir("dnt-cache/plugins");
+        if (!is_dir('dnt-cache/plugins')) {
+            mkdir('dnt-cache/plugins');
         }
 
         if ($this->pluginKey($plugin, 'compress') == 1) {
@@ -122,12 +125,12 @@ class BaseController
             } elseif ($this->dnt->in_string('WEBHOOK', $pluginCacheId)) {
                 $val = str_replace('WEBHOOK{', '', $pluginCacheId);
                 $val = str_replace('}', '', $val);
-                $cacheId = (!empty((new Rest())->webhook($val)) && $pluginCacheId == 'WEBHOOK{' . $val . '}') ? str_replace("/", "-", (new Rest())->webhook($val)) : false;
+                $cacheId = (!empty((new Rest())->webhook($val)) && $pluginCacheId == 'WEBHOOK{' . $val . '}') ? str_replace('/', '-', (new Rest())->webhook($val)) : false;
                 $cahedParams[] = $cacheId;
             } elseif ($this->dnt->in_string('GET{', $pluginCacheId)) {
                 $val = str_replace('GET{', '', $pluginCacheId);
                 $val = str_replace('}', '', $val);
-                $cacheId = (!empty((new Rest())->get($val)) && $pluginCacheId == 'GET{' . $val . '}') ? str_replace("/", "-", (new Rest())->get($val)) : false;
+                $cacheId = (!empty((new Rest())->get($val)) && $pluginCacheId == 'GET{' . $val . '}') ? str_replace('/', '-', (new Rest())->get($val)) : false;
                 $cahedParams[] = $cacheId;
             }
         }
@@ -162,29 +165,29 @@ class BaseController
     {
         $index = strtoupper(substr($plugin['cache'], -1));
         switch ($index) {
-            case "S":
+            case 'S':
                 $multiplier = 1;
                 break;
-            case "M":
+            case 'M':
                 $multiplier = 60;
                 break;
-            case "H":
+            case 'H':
                 $multiplier = 3600;
                 break;
-            case "D":
+            case 'D':
                 $multiplier = 86400;
                 break;
-            case "W":
+            case 'W':
                 $multiplier = 86400 * 7;
                 break;
-            case "N":
+            case 'N':
                 $multiplier = 86400 * 30;
                 break;
-            case "Y":
+            case 'Y':
                 $multiplier = 86400 * 365;
                 break;
         }
-        $value = preg_replace("/[^0-9]/", "", $plugin['cache']);
+        $value = preg_replace('/[^0-9]/', '', $plugin['cache']);
         return $value * $multiplier;
     }
 
@@ -208,15 +211,14 @@ class BaseController
     public function bodyParser($conf, $pluginKeys, $allowCache, $data)
     {
 
-        $tplFunctions = "dnt-view/layouts/" . $this->vendor->getLayout() . "/tpl_functions.php";
+        $tplFunctions = 'dnt-view/layouts/' . $this->vendor->getLayout() . '/tpl_functions.php';
         if (file_exists($tplFunctions)) {
             include $tplFunctions;
         }
 
         $output = [];
         foreach ($conf as $plugin) {
-
-            $plugin["data"] = $data;
+            $plugin['data'] = $data;
 
             if ($this->isCachedFile($plugin, $allowCache)) {
                 $output[$plugin['layout']][] = $this->getCachedFileToString($plugin, $data);
@@ -245,7 +247,7 @@ class BaseController
                 $layout = $this->getTemplateToString($plugin, $data);
             } else {
                 $layouts[] = '<<!' . $layoutKey . '!>>';
-                $templates[] = join("", $output[$layoutKey]);
+                $templates[] = join('', $output[$layoutKey]);
             }
         }
 
@@ -260,25 +262,25 @@ class BaseController
             '/\>[^\S ]+/s', // strip whitespaces after tags, except space
             '/[^\S ]+\</s', // strip whitespaces before tags, except space
             '/(\s)+/s', // shorten multiple whitespace sequences
-            '/<!--(.|\s)*?-->/' // Remove HTML comments
+            '/<!--(.|\s)*?-->/', // Remove HTML comments
         );
         $replace = array(
             '>',
             '<',
             '\\1',
-            ''
+            '',
         );
         return preg_replace($search, $replace, $html);
     }
 
     protected function modulConfigurator($data, $modul = false)
     {
-		//var_dump('sss');exit;
+        //var_dump('sss');exit;
         if ($modul) {
             $data['article']['service'] = $modul;
-            $confFile = "dnt-view/layouts/" . $this->vendor->getLayout() . "/modules/" . $modul . "/" . $this->confFile;
+            $confFile = 'dnt-view/layouts/' . $this->vendor->getLayout() . '/modules/' . $modul . '/' . $this->confFile;
         } elseif (isset($data['article']['service']) && !empty($data['article']['service'])) {
-            $confFile = "dnt-view/layouts/" . $this->vendor->getLayout() . "/modules/" . $data['article']['service'] . "/" . $this->confFile;
+            $confFile = 'dnt-view/layouts/' . $this->vendor->getLayout() . '/modules/' . $data['article']['service'] . '/' . $this->confFile;
         } else {
             $confFile = false;
         }
@@ -305,7 +307,7 @@ class BaseController
                 }
                 $data['PLUGINS'] = $conf;
             } else {
-                die("No config file found <b>" . $confFile . "</b>");
+                die('No config file found <b>' . $confFile . '</b>');
             }
 
             foreach ($xml as $plugin) {
@@ -323,7 +325,6 @@ class BaseController
 
     protected function modulLoader($data, $file)
     {
-        include "dnt-view/layouts/" . $this->vendor->getLayout() . "/modules/" . $data['article']['service'] . "/" . $file;
+        include 'dnt-view/layouts/' . $this->vendor->getLayout() . '/modules/' . $data['article']['service'] . '/' . $file;
     }
-
 }

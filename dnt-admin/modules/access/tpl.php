@@ -1,7 +1,6 @@
-<?php 
-use DntLibrary\Base\AdminUser;
-use DntLibrary\Base\Dnt;
-use DntLibrary\Base\Vendor;
+<?php
+
+
 get_top(); ?>
 <?php get_top_html(); ?>
 <div class="row">
@@ -42,7 +41,7 @@ get_top(); ?>
                                 <tr>
                                     <td><?php echo $row['id_entity']; ?></td>
                                     <td><?php echo $row['login']; ?></td>
-                                    <td><b><?php echo $row['name'] . " " . $row['surname']; ?></b></td>
+                                    <td><b><?php echo $row['name'] . ' ' . $row['surname']; ?></b></td>
                                     <td>
                                         <span class="">
                                             <?php echo $row['email']; ?>
@@ -52,7 +51,7 @@ get_top(); ?>
                                         <?php
                                         if (($pocet_aktivne > 1) || ($row['status'] == 0)) {
                                             ?>
-                                            <a href="<?php echo WWW_PATH_ADMIN_2 . "index.php?src=" . $rest->get('src') . "&nastav_zobrazenie=" . $row['status'] . "&id=" . $row['id_entity']; ?>">
+                                            <a href="<?php echo WWW_PATH_ADMIN_2 . 'index.php?src=' . $rest->get('src') . '&nastav_zobrazenie=' . $row['status'] . '&id=' . $row['id_entity']; ?>">
                                                 <i class="<?php echo admin_zobrazenie_stav($row['status']); ?>"></i>
                                             </a>
                                             <?php
@@ -62,25 +61,25 @@ get_top(); ?>
                                         ?>
                                     </td>
                                     <td>
-                                        <a href="<?php echo WWW_PATH_ADMIN_2 . "index.php?src=" . $rest->get('src') . "&action=edit&post_id=" . $row['id_entity']; ?>"><i class="fa fa-pencil bg-blue action"></i></a>
+                                        <a href="<?php echo WWW_PATH_ADMIN_2 . 'index.php?src=' . $rest->get('src') . '&action=edit&post_id=' . $row['id_entity']; ?>"><i class="fa fa-pencil bg-blue action"></i></a>
                                         <?php
                                         //var_dump($row['id_entity'], $adminUser->data("admin", "id_entity"));
-                                        if ($adminUser->data("admin", "id_entity") != $row['id_entity']) {
+                                        if ($adminUser->data('admin', 'id_entity') != $row['id_entity']) {
                                             ?>
-                                            <a <?php echo $dnt->confirmMsg("Naozaj chcete zmazať tohoto používateľa?"); ?> href="<?php echo WWW_PATH_ADMIN_2 . "index.php?src=" . $rest->get('src') . "&action=del&post_id=" . $row['id_entity']; ?>"><i class="fa fa-times bg-red action"></i></a>
+                                            <a <?php echo $dnt->confirmMsg('Naozaj chcete zmazať tohoto používateľa?'); ?> href="<?php echo WWW_PATH_ADMIN_2 . 'index.php?src=' . $rest->get('src') . '&action=del&post_id=' . $row['id_entity']; ?>"><i class="fa fa-times bg-red action"></i></a>
                                                 <?php
-                                            } else {
-                                                echo '<a href="#" title="Nie je možné vymazať aktívny účet, pod ktorým ste prihlásený"><i class="fa fa-minus-square bg-red action"></i></a>';
-                                            }
-                                            ?>
+                                        } else {
+                                            echo '<a href="#" title="Nie je možné vymazať aktívny účet, pod ktorým ste prihlásený"><i class="fa fa-minus-square bg-red action"></i></a>';
+                                        }
+                                        ?>
                                     </td>
                                 </tr>
-        <?php
-    }
-} else {
-    no_results();
-}
-?>									
+                                <?php
+                            }
+                        } else {
+                            no_results();
+                        }
+                        ?>                                  
                     </tbody>
                 </table>
             </div>

@@ -131,28 +131,28 @@
                                         <td> <?php echo isset($data['setLogData'][$item->email]) ? '<b>' . $data['setLogData'][$item->email]['clicked']() . '</b>' : 'NIE'; ?></td>
                                         <td> <?php echo isset($data['setLogData'][$item->email]) ? '<b>' . $data['setLogData'][$item->email]['countClick']() . '</b>' : '0'; ?></td>
                                         <td> <?php
-                                            if (isset($data['setLogSeenData'][$item->email])) {
-                                                foreach ($data['setLogSeenData'][$item->email]['logs'] as $log) {
-                                                    echo isset(json_decode($log->msg)->redirectTo) ? "Videl o: <b>" . $log->timestamp . "</b><br/>" : false . "<br/>";
-                                                }
+                                        if (isset($data['setLogSeenData'][$item->email])) {
+                                            foreach ($data['setLogSeenData'][$item->email]['logs'] as $log) {
+                                                echo isset(json_decode($log->msg)->redirectTo) ? 'Videl o: <b>' . $log->timestamp . '</b><br/>' : false . '<br/>';
                                             }
-                                            if (isset($data['setLogData'][$item->email])) {
-                                                foreach ($data['setLogData'][$item->email]['logs'] as $log) {
-                                                    echo isset(json_decode($log->msg)->redirectTo) ? "<b>" . $log->timestamp . "</b><br/>" . json_decode($log->msg)->redirectTo . "<br/>" : false . "<br/>";
-                                                }
+                                        }
+                                        if (isset($data['setLogData'][$item->email])) {
+                                            foreach ($data['setLogData'][$item->email]['logs'] as $log) {
+                                                echo isset(json_decode($log->msg)->redirectTo) ? '<b>' . $log->timestamp . '</b><br/>' . json_decode($log->msg)->redirectTo . '<br/>' : false . '<br/>';
                                             }
-                                            ?></td>
+                                        }
+                                        ?></td>
                                         <td> <?php
-                                            if (isset($data['setLogData'][$item->email])) {
-                                                foreach ($data['setLogData'][$item->email]['logs'] as $log) {
-                                                    if ($log->system_status == 'newsletter_log_click') {
-                                                        echo $data['dnt']->getOs($log->HTTP_USER_AGENT) . "<br/><br/>";
-                                                    } else {
-                                                        echo $data['dnt']->getOs($log->HTTP_USER_AGENT) . "<br/>";
-                                                    }
+                                        if (isset($data['setLogData'][$item->email])) {
+                                            foreach ($data['setLogData'][$item->email]['logs'] as $log) {
+                                                if ($log->system_status == 'newsletter_log_click') {
+                                                    echo $data['dnt']->getOs($log->HTTP_USER_AGENT) . '<br/><br/>';
+                                                } else {
+                                                    echo $data['dnt']->getOs($log->HTTP_USER_AGENT) . '<br/>';
                                                 }
                                             }
-                                            ?></td>
+                                        }
+                                        ?></td>
                                     </tr>
                                 <?php } ?>
                             </tbody>

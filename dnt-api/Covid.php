@@ -6,8 +6,8 @@ use DntLibrary\App\Render;
 
 class CovidApi
 {
-
     protected $serviceUrl = '../dnt-jobs/data/covid.json';
+
     protected $content;
 
     public function __construct()
@@ -28,5 +28,4 @@ class CovidApi
     {
         (new Render($this->content))->render();
     }
-
 }

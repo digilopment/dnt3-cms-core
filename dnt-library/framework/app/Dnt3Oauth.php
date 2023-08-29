@@ -7,9 +7,10 @@ use DntLibrary\Base\Dnt;
 
 class Dnt3Oauth
 {
-
     public $setHeader = false;
+
     public $isLogged = false;
+
     public $customDenied = false;
 
     public function __construct()
@@ -26,7 +27,7 @@ class Dnt3Oauth
         $this->credencials = [
             'login' => $login,
             'passwor' => $password,
-            'privateKey' => $privateKey
+            'privateKey' => $privateKey,
         ];
         $this->createToken();
         $this->setAuth();
@@ -84,5 +85,4 @@ class Dnt3Oauth
         $this->sslCrypt = new OpenSslCrypt($this->config['privateKey']);
         $this->token = $this->sslCrypt->encrypt($tokenator);
     }
-
 }

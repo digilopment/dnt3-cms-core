@@ -1,12 +1,12 @@
 
-<?php 
-use DntLibrary\Base\AdminUser;
-use DntLibrary\Base\Dnt;
+<?php
+
 use DntLibrary\Base\Vendor;
+
 get_top(); ?>
-<?php get_top_html(); 
-   $vendor = new Vendor;
-   ?>
+<?php get_top_html();
+   $vendor = new Vendor();
+?>
 <section class="content">
 <div class="row">
    <div style="clear: both;"></div>
@@ -37,16 +37,16 @@ get_top(); ?>
                   </tr>
                </thead>
                <tbody>
-                  <?php 
+                  <?php
                      $i = 1;
-                     foreach($vendor->getAll() as $row){
-                     $webUrl 	= HTTP_PROTOCOL.$row['name_url'].".".DOMAIN.WWW_FOLDERS;
-                     $develUrl 	= HTTP_PROTOCOL."devel.".$row['name_url'].".".DOMAIN.WWW_FOLDERS;
-                     $realUrl 	= $row['real_url'];
-					 $email     = $adminUser->data("admin", "email");
-					 $vendorId  = $row['id_entity'];
-                     $adminUrl 	= $webUrl."/".ADMIN_URL_2."/index.php?src=login&action=auto-login&domain_change=1&admin_id=".$email."&id_entity=".$vendorId;
-                     ?>
+                    foreach ($vendor->getAll() as $row) {
+                        $webUrl = HTTP_PROTOCOL . $row['name_url'] . '.' . DOMAIN . WWW_FOLDERS;
+                        $develUrl = HTTP_PROTOCOL . 'devel.' . $row['name_url'] . '.' . DOMAIN . WWW_FOLDERS;
+                        $realUrl = $row['real_url'];
+                        $email = $adminUser->data('admin', 'email');
+                        $vendorId = $row['id_entity'];
+                        $adminUrl = $webUrl . '/' . ADMIN_URL_2 . '/index.php?src=login&action=auto-login&domain_change=1&admin_id=' . $email . '&id_entity=' . $vendorId;
+                        ?>
                   <tr>
                      <td><?php echo $i; ?></td>
                      <td><?php echo $row['id_entity']; ?></td>
@@ -56,7 +56,7 @@ get_top(); ?>
                         <i class="fa fa-arrow-right bg-green action"></i> <a href="<?php echo $webUrl; ?>" target="_blank"><?php echo $webUrl; ?></a>
                      </td>
                      <td>
-                        <?php if($row['show_real_url'] == 1){?>
+                        <?php if ($row['show_real_url'] == 1) {?>
                         <i class="fa fa-arrow-right bg-green action"></i> <a href="<?php echo $realUrl; ?>" target="_blank"><?php echo $realUrl; ?></a>
                         <?php } else {?>
                         <i class="fa fa-times bg-red action"></i> - K tomuto webu nie je priradená žiadna doména
@@ -70,7 +70,7 @@ get_top(); ?>
                      </td>
                      <td>
                         <button data-toggle="modal" data-target="#modalPrimary<?php echo $row['id_entity']; ?>"><i class="fa fa-pencil bg-blue action"></i></button>
-                        <!-- START MODAL -->								
+                        <!-- START MODAL -->                                
                         <div class="modal fade" id="modalPrimary<?php echo $row['id_entity']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel8" aria-hidden="true">
                            <div class="modal-wrapper">
                               <div class="modal-dialog">
@@ -104,30 +104,29 @@ get_top(); ?>
                                                                <br/>
                                                             </div>
                                                          </div>
-														 
-														 <div class="form-group">
+                                                         
+                                                         <div class="form-group">
                                                             <label class="col-sm-3 control-label"><b>Vendor ID:</b></label>
                                                             <div class="col-sm-9">
                                                                <input type="number"  value="<?php echo $row['id']; ?>" name="vendor_id_move" class="form-control" placeholder="Názov:">
                                                                <br/>
                                                             </div>
                                                          </div>
-														 
+                                                         
                                                          <!-- layout -->
                                                          <div class="form-group">
                                                             <label class="col-sm-3 control-label"><b>Layout</b></label>
                                                             <div class="col-sm-9 ">
                                                                <select class="form-control" name="layout" style="">
-                                                               <?php 
-                                                                  foreach($vendor->getlayouts() as $layout){
-                                                                   if($row['layout'] == $layout){
-                                                                    echo '<option selected value="'.$layout.'">'.$layout.'</option>';
-                                                                   }else{
-                                                                    echo '<option value="'.$layout.'">'.$layout.'</option>';
-                                                                   }
-                                                                   
-                                                                  }
-                                                                  ?>
+                                                              <?php
+                                                                foreach ($vendor->getlayouts() as $layout) {
+                                                                    if ($row['layout'] == $layout) {
+                                                                        echo '<option selected value="' . $layout . '">' . $layout . '</option>';
+                                                                    } else {
+                                                                        echo '<option value="' . $layout . '">' . $layout . '</option>';
+                                                                    }
+                                                                }
+                                                                ?>
                                                                </select>
                                                                <br/>
                                                             </div>
@@ -135,14 +134,14 @@ get_top(); ?>
                                                          <div class="form-group">
                                                             <label class="col-sm-3 control-label"><b>Zobraziť na vlastnej adrese:</b></label>
                                                             <div class="col-sm-9 ">
-                                                               <?php $dnt->setMetaStatus($row['show_real_url'], "show_real_url");?>
+                                                               <?php $dnt->setMetaStatus($row['show_real_url'], 'show_real_url');?>
                                                                <br/>
                                                             </div>
                                                          </div>
                                                          <div class="form-group">
                                                             <label class="col-sm-3 control-label"><b>Povoliť registráciu:</b></label>
                                                             <div class="col-sm-9 ">
-                                                               <?php $dnt->setMetaStatus($row['in_progress'], "in_progress");?>
+                                                               <?php $dnt->setMetaStatus($row['in_progress'], 'in_progress');?>
                                                                <br/>
                                                             </div>
                                                          </div>
@@ -172,17 +171,17 @@ get_top(); ?>
                         <!-- END MODAL -->
                      </td>
                      <td>
-						<?php if($vendor->getId() == $row['id_entity'] || DELETING_VENDORS == false){
-							echo '<i title="Nemôžete vymazať web, v ktorom ste prihlásený." class="fa fa-times bg-red action" style="opacity:0.3;border:2px solid red "></i>';
-						}else{?>
-                         <a <?php echo $dnt->confirmMsg("Naozaj chcete vymazať tento web?"); ?> href="index.php?src=vendor&action=del&vendor_id=<?php echo $row['id_entity']; ?>"><i class="fa fa-times bg-red action"></i></a>
-						<?php } ?>
+                        <?php if ($vendor->getId() == $row['id_entity'] || DELETING_VENDORS == false) {
+                            echo '<i title="Nemôžete vymazať web, v ktorom ste prihlásený." class="fa fa-times bg-red action" style="opacity:0.3;border:2px solid red "></i>';
+                        } else {?>
+                         <a <?php echo $dnt->confirmMsg('Naozaj chcete vymazať tento web?'); ?> href="index.php?src=vendor&action=del&vendor_id=<?php echo $row['id_entity']; ?>"><i class="fa fa-times bg-red action"></i></a>
+                        <?php } ?>
                      </td>
                   </tr>
-                  <?php 
-                     $i++;
-                     }
-                     ?>
+                        <?php
+                        $i++;
+                    }
+                    ?>
                </tbody>
             </table>
          </div>
@@ -190,7 +189,7 @@ get_top(); ?>
       <!-- END PAGINATION -->
    </div>
    <!-- BEGIN PAGINATION -->
-   <!-- END CUSTOM TABLE -->			
+   <!-- END CUSTOM TABLE -->            
 </div>
 <!-- END CUSTOM TABLE -->
 <?php get_bottom_html(); ?>

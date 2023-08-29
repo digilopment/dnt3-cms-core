@@ -8,8 +8,8 @@ use DntLibrary\Base\Sessions;
 
 class LogoutController extends AdminController
 {
-
     protected $session;
+
     protected $dnt;
 
     public function __construct()
@@ -24,5 +24,4 @@ class LogoutController extends AdminController
         $this->session->remove('admin_id');
         $this->dnt->redirect(WWW_PATH_ADMIN_2);
     }
-
 }

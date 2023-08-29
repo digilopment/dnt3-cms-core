@@ -16,6 +16,7 @@ class ArrayDiffCsvJob
     const REMOTE_SERVICE_HOST = 'http://tdoubek.beta.markiza.sk/';
 
     protected $db;
+
     protected $dnt;
 
     public function __construct()
@@ -39,15 +40,13 @@ class ArrayDiffCsvJob
             $imported[] = $val[0];
         }
 
-
         $diff = array_diff($all, $imported);
         $createIn = join(', ', $diff);
 
         $query = "SELECT * FROM addons.obchod_zakaznici WHERE id IN ( $createIn )";
         $rows = $this->db->get_results($query);
         foreach ($rows as $row) {
-            echo $row['meno'] . "<br/>";
+            echo $row['meno'] . '<br/>';
         }
     }
-
 }

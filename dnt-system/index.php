@@ -7,7 +7,6 @@ use DntLibrary\App\Bootstrap;
 
 (new class
 {
-
     public function __construct()
     {
         require '../dnt-library/framework/app/Bootstrap.php';

@@ -6,7 +6,6 @@ use DntLibrary\Base\Pdf;
 
 class PdfTest
 {
-
     public function run()
     {
         $path = '../';
@@ -25,7 +24,6 @@ class PdfTest
         $pdf = new Pdf();
         $pdf->downloadPdf($path, $fileName, $pdfName, $html);
 
-        echo "<b>saved to:</b> data/uploads/" . $fileName . '.pdf';
+        echo '<b>saved to:</b> data/uploads/' . $fileName . '.pdf';
     }
-
 }

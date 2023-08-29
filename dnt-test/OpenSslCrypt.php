@@ -6,7 +6,6 @@ use DntLibrary\App\OpenSslCrypt;
 
 class OpenSslCryptTest
 {
-
     private $privateKey = 'customKeySetHere';
 
     public function __construct()
@@ -24,5 +23,4 @@ class OpenSslCryptTest
         echo '<br/>';
         echo $decrypt;
     }
-
 }

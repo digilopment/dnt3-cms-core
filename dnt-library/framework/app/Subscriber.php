@@ -10,11 +10,14 @@ use DntLibrary\Base\Vendor;
 
 class Subscriber
 {
-
     protected $db;
+
     protected $rest;
+
     public $isSubsscriber;
+
     protected $dnt;
+
     protected $settings;
 
     public function __construct()
@@ -95,11 +98,11 @@ class Subscriber
     {
         if (($this->status == 1 || $this->status == 0) && $this->valid) {
             $this->db->update(
-                    'dnt_mailer_mails',
-                    array(
-                        'show' => $this->status
+                'dnt_mailer_mails',
+                array(
+                        'show' => $this->status,
                     ),
-                    array(
+                array(
                         'vendor_id' => $this->vendor_id,
                         'email' => $this->email,
                         'id_entity' => $this->id_entity,
@@ -122,5 +125,4 @@ class Subscriber
         ]);
         print $json;
     }
-
 }

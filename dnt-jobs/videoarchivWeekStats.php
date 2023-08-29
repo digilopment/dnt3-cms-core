@@ -4,7 +4,6 @@ namespace DntJobs;
 
 class VideoarchivWeekStatsJob
 {
-
     protected function parseData()
     {
         $i = 1;
@@ -43,5 +42,4 @@ class VideoarchivWeekStatsJob
             echo $week . ',' . $value . '<br/>';
         }
     }
-
 }

@@ -4,7 +4,6 @@ namespace DntTest;
 
 class CallTest
 {
-
     public function __call($methodName, $arguments)
     {
         if ($methodName == 'myarea') {
@@ -21,5 +20,4 @@ class CallTest
     {
         print $this->myarea(4, 2, 4);
     }
-
 }

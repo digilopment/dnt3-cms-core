@@ -14,9 +14,8 @@ use DntLibrary\Base\DB;
 
 class Config
 {
-
     /**
-     * 
+     *
      * @param type $key
      * @return type
      */
@@ -39,5 +38,4 @@ class Config
 
         return $this->value;
     }
-
 }

@@ -6,7 +6,6 @@ use DntLibrary\App\Client;
 
 class ClienterTest
 {
-
     protected $client;
 
     public function __construct()
@@ -19,5 +18,4 @@ class ClienterTest
         $this->client->init();
         var_dump($this->client);
     }
-
 }

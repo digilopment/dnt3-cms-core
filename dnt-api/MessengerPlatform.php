@@ -1,7 +1,7 @@
 <?php
 
 /**
- * DntBot is application for Facebook Messenegr 
+ * DntBot is application for Facebook Messenegr
  * This application is developed by Tomas Doubek
  *
  * The area of the page that contains comments and the comment form.
@@ -17,12 +17,10 @@ use DntLibrary\Base\MessengerBot;
 
 class MessengerPlatformApi
 {
-
     public function run()
     {
 
         if (isset($_GET['trigger'])) {
-
             $trigger = $_GET['trigger'];
             $msg = $_GET['msg'];
             $sender_id = $_GET['sender_id'];
@@ -33,5 +31,4 @@ class MessengerPlatformApi
             $dntBot->run();
         }
     }
-
 }

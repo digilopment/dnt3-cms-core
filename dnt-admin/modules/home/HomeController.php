@@ -7,7 +7,6 @@ use DntLibrary\Base\Dnt;
 
 class HomeController extends AdminController
 {
-
     protected $dnt;
 
     public function __construct()
@@ -20,5 +19,4 @@ class HomeController extends AdminController
 
         $this->dnt->redirect(WWW_PATH_ADMIN_2 . '?src=' . DEFAULT_MODUL_ADMIN);
     }
-
 }

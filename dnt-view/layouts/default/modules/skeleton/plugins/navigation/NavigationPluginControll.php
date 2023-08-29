@@ -7,8 +7,8 @@ use DntLibrary\Base\Navigation;
 
 class NavigationPluginControll extends Plugin
 {
-
     protected $loc = __FILE__;
+
     protected $menu;
 
     /**
@@ -38,5 +38,4 @@ class NavigationPluginControll extends Plugin
         $pluginData = ['nav' => $this->menu];
         $this->layout($this->loc, 'tpl', $pluginData);
     }
-
 }

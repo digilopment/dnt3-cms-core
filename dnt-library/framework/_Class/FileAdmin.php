@@ -11,13 +11,12 @@
 namespace DntLibrary\Base;
 
 use DntLibrary\Base\AdminContent;
+use DntLibrary\Base\DB;
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Vendor;
-use DntLibrary\Base\DB;
 
 class FileAdmin
 {
-
     public function __construct()
     {
         $this->db = new DB();
@@ -27,7 +26,7 @@ class FileAdmin
     }
 
     /**
-     * 
+     *
      * @return int
      */
     public function limit()
@@ -36,7 +35,7 @@ class FileAdmin
     }
 
     /**
-     * 
+     *
      * @param type $is_limit
      * @return string
      */
@@ -49,24 +48,25 @@ class FileAdmin
             $typ = false;
         }
 
-        if ($is_limit == false)
+        if ($is_limit == false) {
             $limit = false;
-        else
+        } else {
             $limit = $is_limit;
+        }
 
-        $query = "SELECT * FROM `dnt_uploads` WHERE  `vendor_id` = '" . $this->vendor->getId() . "' " . $typ . " ORDER BY `id` DESC " . $limit . "";
+        $query = "SELECT * FROM `dnt_uploads` WHERE  `vendor_id` = '" . $this->vendor->getId() . "' " . $typ . ' ORDER BY `id` DESC ' . $limit . '';
         return $query;
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function query($noLimit = false)
     {
 
         if (isset($_GET['page'])) {
-            $returnPage = "&page=" . $_GET['page'];
+            $returnPage = '&page=' . $_GET['page'];
         } else {
             $returnPage = false;
         }
@@ -75,10 +75,11 @@ class FileAdmin
         $pocet = $this->db->num_rows($query);
         $limit = $this->limit();
 
-        if (isset($_GET['page']))
+        if (isset($_GET['page'])) {
             $strana = $_GET['page'];
-        else
+        } else {
             $strana = 1;
+        }
 
         $stranok = $pocet / $limit;
         $pociatok = ($strana * $limit) - $limit;
@@ -90,13 +91,13 @@ class FileAdmin
         if ($noLimit) {
             $pager = false;
         } else {
-            $pager = "LIMIT " . $pociatok . ", " . $limit . "";
+            $pager = 'LIMIT ' . $pociatok . ', ' . $limit . '';
         }
         return $this->prepare_query($pager);
     }
 
     /**
-     * 
+     *
      * @param type $index
      * @return int
      */
@@ -118,49 +119,48 @@ class FileAdmin
         $stranok_round = ceil($stranok);
         $prev_page = $strana - 1;
 
-        if ($index == "next") {
+        if ($index == 'next') {
             $next_page = $strana + 1;
             if ($next_page <= $stranok_round) {
                 return $next_page;
             } else {
                 return $stranok_round;
             }
-        } elseif ($index == "prev") {
+        } elseif ($index == 'prev') {
             if ($prev_page < 1) {
                 return 1;
             } else {
                 return $prev_page;
             }
-        } elseif ($index == "first") {
+        } elseif ($index == 'first') {
             return 1;
-        } elseif ($index == "last") {
-
+        } elseif ($index == 'last') {
             return $stranok_round;
-        } elseif ($index == "current") {
+        } elseif ($index == 'current') {
             return $strana;
         }
     }
 
     /**
-     * 
+     *
      * @param type $index
      * @return type
      */
     public function paginator($index)
     {
-        $adresa = explode("?", WWW_FULL_PATH);
+        $adresa = explode('?', WWW_FULL_PATH);
         if (isset($_GET['page'])) {
-            $adresa_bez_page = explode("&page=" . $_GET['page'] . "", $adresa[1]);
+            $adresa_bez_page = explode('&page=' . $_GET['page'] . '', $adresa[1]);
             $return = $adresa_bez_page[0];
         } else {
             $return = $adresa[1];
         }
 
-        return WWW_PATH_ADMIN . "index.php?" . $return . "&page=" . $this->getPage($index);
+        return WWW_PATH_ADMIN . 'index.php?' . $return . '&page=' . $this->getPage($index);
     }
 
     /**
-     * 
+     *
      * @param type $action
      * @param type $cat_id
      * @param type $sub_cat_id
@@ -171,7 +171,7 @@ class FileAdmin
      */
     public function url($action, $cat_id, $sub_cat_id, $type, $post_id, $page)
     {
-        if ($action == "filter") {
+        if ($action == 'filter') {
             return WWW_PATH_ADMIN . "index.php?src=files&filter=$cat_id&sub_cat_id=$sub_cat_id&type=$type";
         } else {
             if (isset($_GET['filter'])) {
@@ -183,7 +183,7 @@ class FileAdmin
     }
 
     /**
-     * 
+     *
      * @param type $column
      * @param type $post_id
      * @return boolean
@@ -202,12 +202,11 @@ class FileAdmin
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function showOrder()
     {
-        return ($this->adminContent->getPage("current") * $this->adminContent->limit()) - $this->adminContent->limit() + 1;
+        return ($this->adminContent->getPage('current') * $this->adminContent->limit()) - $this->adminContent->limit() + 1;
     }
-
 }

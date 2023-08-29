@@ -15,20 +15,24 @@ use Exception;
 class GoogleCaptcha
 {
 
-    const SERVICE_URL = "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s";
+    const SERVICE_URL = 'https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s';
 
     public $privateToken;
+
     public $publicToken;
+
     public $postName;
+
     public $checkedOptions = null;
+
     protected $config = array(
         'google-recaptcha' => array(
-            'postName' => 'g-recaptcha-response'
+            'postName' => 'g-recaptcha-response',
         ),
     );
 
     /**
-     * 
+     *
      * @param type $config
      * @return \Application\Service\GoogleCaptcha
      * @throws Exception
@@ -36,7 +40,7 @@ class GoogleCaptcha
     public function __construct($siteKey, $secretKey)
     {
         if (!isset($this->config['google-recaptcha'])) {
-            throw new Exception("No google captcha set-up");
+            throw new Exception('No google captcha set-up');
         }
 
         $this->publicToken = $siteKey;
@@ -46,7 +50,7 @@ class GoogleCaptcha
     }
 
     /**
-     * 
+     *
      * @param type $checkedOptions
      * @return \Application\Service\GoogleCaptcha
      */
@@ -57,7 +61,7 @@ class GoogleCaptcha
     }
 
     /**
-     * 
+     *
      * @return boolean
      */
     public function getResponse()
@@ -91,5 +95,4 @@ class GoogleCaptcha
     {
         return $this->postName;
     }
-
 }

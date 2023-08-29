@@ -7,12 +7,11 @@ use DntLibrary\Base\Vendor;
 
 class Navigation
 {
-
     protected $posts = [];
 
     public function __construct()
     {
-        $this->db = new DB;
+        $this->db = new DB();
         $this->vendor = new Vendor();
     }
 
@@ -50,5 +49,4 @@ class Navigation
     {
         $this->model();
     }
-
 }

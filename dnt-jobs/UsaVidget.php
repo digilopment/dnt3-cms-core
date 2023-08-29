@@ -13,10 +13,15 @@ class UsaVidgetJob
     const STATIC_FILE = 'data/usa-vidget.json';
 
     protected $dnt;
+
     protected $dom;
+
     protected $json;
+
     protected $firstCovidCase = 0;
+
     protected $localContent = null;
+
     protected $hasLocalData = null;
 
     public function __construct()
@@ -100,5 +105,4 @@ class UsaVidgetJob
         header('Content-Type: application/json');
         print $this->getActualData();
     }
-
 }

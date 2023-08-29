@@ -62,10 +62,10 @@
             // The expected data type of the upload response, sets the dataType
             // option of the $.ajax upload requests:
             dataType: 'json',
-            
+
             // Error and info messages:
             messages: {
-                unknownError: 'Upload sa nepodaril'  
+                unknownError: 'Upload sa nepodaril'
             },
 
             // Function returning the current number of files,
@@ -412,7 +412,8 @@
                         'DownloadURL',
                         [type, name, url].join(':')
                     );
-                } catch (ignore) {}
+                } catch (ignore) {
+                }
             });
         },
 

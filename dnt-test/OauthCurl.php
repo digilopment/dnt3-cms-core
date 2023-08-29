@@ -7,7 +7,6 @@ use DntLibrary\App\Dnt3Oauth;
 
 class OauthCurlTest
 {
-
     public $setHeader = false;
 
     public function __construct()
@@ -21,7 +20,7 @@ class OauthCurlTest
         $config = [
             'login' => 'tomas',
             'passwor' => 'admin',
-            'privateKey' => 'roots'
+            'privateKey' => 'roots',
         ];
         $this->dnt3Oauth->setCredencials($config);
         $options = [CURLOPT_HTTPHEADER => ['X-Dnt3-Auth:' . $this->dnt3Oauth->token]];
@@ -31,5 +30,4 @@ class OauthCurlTest
 
         print('logged');
     }
-
 }

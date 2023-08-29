@@ -1,6 +1,5 @@
 <?php
 
-use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\User;
 
@@ -11,16 +10,15 @@ get_top();
 $rest = new Rest();
 $user = new User();
 
-$id_entity = $rest->get("post_id");
+$id_entity = $rest->get('post_id');
 foreach ($user->getUser($id_entity) as $row) {
-
     $img = $user->getImage($row['img']);
     ?>
     <div class="col-md-12">
         <div class="grid search">
             <div class="grid-body">
                 <div class="row">
-                    <form enctype='multipart/form-data' action="<?php echo "index.php?src=user&action=update&post_id=" . $id_entity . ""; ?>" method="POST">
+                    <form enctype='multipart/form-data' action="<?php echo 'index.php?src=user&action=update&post_id=' . $id_entity . ''; ?>" method="POST">
                         <!-- BEGIN FILTERS -->
                         <div class="row">
 
@@ -99,7 +97,7 @@ foreach ($user->getUser($id_entity) as $row) {
                                 </div>
                                 <?php
                                 $datetime_publish = $row['datetime_publish'];
-                                if ($datetime_publish == "0000-00-00 00:00:00") {
+                                if ($datetime_publish == '0000-00-00 00:00:00') {
                                     $datetime_publish = $this->dnt->datetime();
                                 }
                                 ?>
@@ -152,7 +150,7 @@ foreach ($user->getUser($id_entity) as $row) {
                                 <img class="img-responsive" src="<?php echo $img; ?>" alt="" />
                                 <input name="userfile" type="file" class="form-control">
                                 <br/>
-    <?php galleryChooser("user_avatar_" . $id_entity); ?>
+    <?php galleryChooser('user_avatar_' . $id_entity); ?>
     <?php echo $this->dnt->returnInput(); ?>
                                 <br/><br/>
 

@@ -6,7 +6,6 @@ use DntLibrary\App\Plugin;
 
 class ContentPluginControll extends Plugin
 {
-
     protected $loc = __FILE__;
 
     public function run()
@@ -14,5 +13,4 @@ class ContentPluginControll extends Plugin
         $pluginData = ['array' => 'pluginData'];
         $this->layout($this->loc, 'tpl', $pluginData);
     }
-
 }

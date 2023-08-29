@@ -14,9 +14,8 @@ use DntLibrary\Base\Vendor;
 
 class Xlsx
 {
-
     /**
-     * 
+     *
      * @param type $path
      * @param type $fileName
      * @param type $pdfName
@@ -24,38 +23,38 @@ class Xlsx
      */
     public function read($path, $fileName)
     {
-        $filePath = $path . "dnt-view/data/uploads/" . $fileName;
+        $filePath = $path . 'dnt-view/data/uploads/' . $fileName;
         $excel_data = false;
         date_default_timezone_set('Europe/Paris');
         $Spreadsheet = new SpreadsheetReader($filePath);
         $Sheets = $Spreadsheet->Sheets();
         foreach ($Sheets as $Index => $Name) {
-            $excel_data .= "<h3>" . $Name . "</h3>";
-            $excel_data .= "<table>";
+            $excel_data .= '<h3>' . $Name . '</h3>';
+            $excel_data .= '<table>';
             foreach ($Spreadsheet as $Key => $Row) {
                 foreach ($Row as $value) {
-                    $excel_data .= "<td>" . $value . "</td>";
+                    $excel_data .= '<td>' . $value . '</td>';
                 }
-                $excel_data .= "</tr><tr>";
+                $excel_data .= '</tr><tr>';
             }
-            $excel_data .= "</table>";
+            $excel_data .= '</table>';
         }
         return $excel_data;
     }
 
     /**
-     * 
+     *
      * @param type $path
      * @param type $fileName
      * @param type $fullPath
      */
     public function toArray($path, $fileName, $fullPath = false)
     {
-        $vendor = new Vendor;
+        $vendor = new Vendor();
         if ($fullPath != false) {
             $filePath = $fullPath;
         } else {
-            $filePath = $path . "dnt-view/data/uploads/" . $fileName;
+            $filePath = $path . 'dnt-view/data/uploads/' . $fileName;
         }
         $excel_data = false;
         date_default_timezone_set('Europe/Paris');
@@ -70,5 +69,4 @@ class Xlsx
         }
         return $excel_data;
     }
-
 }

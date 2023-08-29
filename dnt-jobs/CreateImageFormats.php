@@ -4,8 +4,8 @@ namespace DntJobs;
 
 use DntLibrary\Base\DB;
 use DntLibrary\Base\DntUpload;
-use DntLibrary\Base\Vendor;
 use DntLibrary\Base\Upload;
+use DntLibrary\Base\Vendor;
 
 class CreateImageFormatsJob
 {
@@ -51,7 +51,6 @@ class CreateImageFormatsJob
         }
 
         foreach ($images as $image) {
-
             if (!file_exists(self::UPLOAD_PATH . 'formats/' . $this->dntUpload->imageFormats()[0] . '/' . $image['imageName'])) {
                 $upload = new Upload($image['pathImage']);
                 if ($upload->uploaded) {
@@ -69,5 +68,4 @@ class CreateImageFormatsJob
             }
         }
     }
-
 }

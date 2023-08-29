@@ -17,7 +17,6 @@ use DntLibrary\Base\Vendor;
 
 class Dnt
 {
-
     public function __construct()
     {
         $this->db = new DB();
@@ -25,7 +24,7 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @param type $table
      * @return boolean
      */
@@ -33,9 +32,9 @@ class Dnt
     {
 
         if ($vendor_id) {
-            $query = "SELECT MAX(id) FROM " . $table . " WHERE vendor_id = " . $vendor_id . "";
+            $query = 'SELECT MAX(id) FROM ' . $table . ' WHERE vendor_id = ' . $vendor_id . '';
         } else {
-            $query = "SELECT MAX(id) FROM " . $table . " WHERE vendor_id = " . $this->vendor->getId() . "";
+            $query = 'SELECT MAX(id) FROM ' . $table . ' WHERE vendor_id = ' . $this->vendor->getId() . '';
         }
 
         if ($this->db->num_rows($query) > 0) {
@@ -49,7 +48,7 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @param type $table
      * @param type $column
      * @param type $vendor_id
@@ -58,13 +57,11 @@ class Dnt
     public function getMaxValueFromColumn($table, $column, $vendor_id = true)
     {
 
-
         if ($vendor_id) {
             $query = "SELECT MAX($column) FROM " . $table . " WHERE vendor_id = '" . $this->vendor->getId() . "'";
         } else {
             $query = "SELECT MAX($column) FROM " . $table;
         }
-
 
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
@@ -77,13 +74,13 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @return boolean
      */
     public function getLastIdVendor()
     {
 
-        $query = "SELECT MAX(id) FROM dnt_vendors ";
+        $query = 'SELECT MAX(id) FROM dnt_vendors ';
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
                 $return = $row['MAX(id)'];
@@ -95,63 +92,64 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @param type $googleMapsUrl
      * @return type
      */
     function getMapLocation($googleMapsUrl)
     {
         $string = $googleMapsUrl;
-        $string = explode("@", $string);
+        $string = explode('@', $string);
         $position = $string[1];
-        $position = explode("z/data", $position);
+        $position = explode('z/data', $position);
         $position = $position[0];
-        $position = explode(",", $position);
+        $position = explode(',', $position);
         return $position;
     }
 
     /**
-     * 
+     *
      * @param type $lastId
      */
     public function getIdEntity($lastId)
     {
 
         $this->db->update(
-                'dnt_posts', //table
-                array(//set
-                    'id_entity' => $lastId
-                ), array(//where
-            'id' => $lastId
+            'dnt_posts', //table
+            array(//set
+                    'id_entity' => $lastId,
+                ),
+            array(//where
+            'id' => $lastId,
                 )
         );
     }
 
     /**
-     * 
+     *
      * @param type $link
      * @return type
      */
     public function cislo($link)
     {
-        return preg_replace("/[^0-9]/", "", $link);
+        return preg_replace('/[^0-9]/', '', $link);
     }
 
     /**
-     * 
+     *
      * @param type $input
      * @return type
      */
     function linkFormat($input)
     {
-        $input = str_replace("http://", "", $input);
-        $input = str_replace("https://", "", $input);
-        $input = str_replace("", "", $input);
+        $input = str_replace('http://', '', $input);
+        $input = str_replace('https://', '', $input);
+        $input = str_replace('', '', $input);
         return $input;
     }
 
     /**
-     * 
+     *
      * @param type $column
      * @return type
      */
@@ -167,16 +165,16 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function datetime()
     {
-        return date("Y-m-d H:i:s");
+        return date('Y-m-d H:i:s');
     }
 
     /**
-     * 
+     *
      * @param type $file
      */
     public function deleteFile($file)
@@ -187,14 +185,14 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @param type $src
      */
     function rrmdir($dirPath)
     {
         $files = new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator($dirPath, RecursiveDirectoryIterator::SKIP_DOTS),
-                RecursiveIteratorIterator::CHILD_FIRST
+            new RecursiveDirectoryIterator($dirPath, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::CHILD_FIRST
         );
 
         foreach ($files as $fileinfo) {
@@ -204,7 +202,7 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function timestamp()
@@ -213,20 +211,20 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @param type $separator
      * @param type $time
      * @return type
      */
     public function timeToDbFormat($separator, $time)
     {
-        $dateAndTime = explode(" ", $time);
+        $dateAndTime = explode(' ', $time);
         $data = explode($separator, $dateAndTime[0]);
-        return $data[2] . "-" . $data[1] . "-" . $data[0] . " " . $dateAndTime[1] . ":00";
+        return $data[2] . '-' . $data[1] . '-' . $data[0] . ' ' . $dateAndTime[1] . ':00';
     }
 
     /**
-     * 
+     *
      * @param type $time
      * @param type $format
      * @return type
@@ -238,7 +236,7 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @param type $cislo
      * @return type
      */
@@ -248,7 +246,7 @@ class Dnt
             $return = $cislo;
         } else {
             if (strlen($cislo) == 1) {
-                $return = "0" . $cislo;
+                $return = '0' . $cislo;
             } else {
                 $return = $cislo;
             }
@@ -257,7 +255,7 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @param type $pharse
      * @param type $str
      * @return type
@@ -269,51 +267,51 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @param type $link
      * @return type
      */
     public function desatinne_cislo($link)
     {
-        $link = str_replace(",", ".", $link);
-        return preg_replace("/[^0-9\.]/", "", $link);
+        $link = str_replace(',', '.', $link);
+        return preg_replace('/[^0-9\.]/', '', $link);
     }
 
     /**
-     * 
+     *
      * @param type $pocetZnakov
      * @return type
      */
     public function generujHeslo($pocetZnakov)
     {
-        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         return substr(str_shuffle($chars), 0, $pocetZnakov);
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function microtimeSec()
     {
-        list($usec, $sec) = explode(" ", microtime());
+        list($usec, $sec) = explode(' ', microtime());
         $tmp = ((float) $usec + (float) $sec);
-        $tmp1 = explode(".", $tmp);
+        $tmp1 = explode('.', $tmp);
         $tmp0 = $tmp1[0];
         return $tmp0;
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function is_mobile()
     {
-        return preg_match("/(android|iPhone|iPod|iPad|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
+        return preg_match('/(android|iPhone|iPod|iPad|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i', $_SERVER['HTTP_USER_AGENT']);
     }
 
     /**
-     * 
+     *
      * @param type $file
      * @return type
      */
@@ -328,7 +326,7 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @param type $src
      * @param type $dst
      */
@@ -349,34 +347,34 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function get_datum()
     {
-        return $get_datum = "" . date("d") . "." . date("m") . "." . date("Y") . "";
+        return $get_datum = '' . date('d') . '.' . date('m') . '.' . date('Y') . '';
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function get_rok()
     {
-        return $get_rok = date("Y");
+        return $get_rok = date('Y');
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function get_mesiac()
     {
-        return $get_mesiac = date("m");
+        return $get_mesiac = date('m');
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function get_ip()
@@ -385,16 +383,16 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function get_den()
     {
-        return $get_den = date("d");
+        return $get_den = date('d');
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function get_cas()
@@ -403,7 +401,7 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @return string
      */
     public function get_os($external = false)
@@ -413,27 +411,28 @@ class Dnt
         } else {
             $agent = $_SERVER['HTTP_USER_AGENT'];
         }
-        if (preg_match('/Android/', $agent))
+        if (preg_match('/Android/', $agent)) {
             $os = 'Android';
-        elseif (preg_match('/Win/', $agent))
+        } elseif (preg_match('/Win/', $agent)) {
             $os = 'Windows';
-        elseif (preg_match('/Mac/', $agent))
+        } elseif (preg_match('/Mac/', $agent)) {
             $os = 'Mac';
-        elseif (preg_match('/BlackBerry/', $agent))
+        } elseif (preg_match('/BlackBerry/', $agent)) {
             $os = 'BlackBerry';
-        elseif (preg_match('/Linux/', $agent))
+        } elseif (preg_match('/Linux/', $agent)) {
             $os = 'Linux';
-        elseif (preg_match('/iPhone|iPod|iPad/', $agent))
+        } elseif (preg_match('/iPhone|iPod|iPad/', $agent)) {
             $os = 'iPhone|iPod|iPad';
-        else
+        } else {
             $os = 'Nerozpoznaný OS';
+        }
         return $os;
     }
 
     function getOS($user_agent)
     {
 
-        $os_platform = "Unknown OS Platform";
+        $os_platform = 'Unknown OS Platform';
 
         $os_array = array(
             '/windows nt 10/i' => 'Windows 10',
@@ -458,24 +457,28 @@ class Dnt
             '/ipad/i' => 'iPad',
             '/android/i' => 'Android',
             '/blackberry/i' => 'BlackBerry',
-            '/webos/i' => 'Mobile'
+            '/webos/i' => 'Mobile',
         );
 
-        foreach ($os_array as $regex => $value)
-            if (preg_match($regex, $user_agent))
+        foreach ($os_array as $regex => $value) {
+            if (preg_match($regex, $user_agent)) {
                 $os_platform = $value;
+            }
+        }
 
         return $os_platform;
     }
 
     public function downloadFile($url, $cesta)
     {
-        $img = explode("/", $url);
+        $img = explode('/', $url);
         $array = $img;
-        if (!is_array($array))
+        if (!is_array($array)) {
             return $array;
-        if (!count($array))
+        }
+        if (!count($array)) {
             return null;
+        }
         end($array);
         $fotka = $array[key($array)];
 
@@ -488,7 +491,7 @@ class Dnt
         }
         if (file_get_contents($url)) {
             file_put_contents($img, file_get_contents($url));
-            return array("file" => $fotka, "path" => $cesta);
+            return array('file' => $fotka, 'path' => $cesta);
         }
         return false;
     }
@@ -496,7 +499,7 @@ class Dnt
     function getBrowser($user_agent)
     {
 
-        $browser = "Unknown Browser";
+        $browser = 'Unknown Browser';
 
         $browser_array = array(
             '/msie/i' => 'Internet Explorer',
@@ -508,25 +511,27 @@ class Dnt
             '/netscape/i' => 'Netscape',
             '/maxthon/i' => 'Maxthon',
             '/konqueror/i' => 'Konqueror',
-            '/mobile/i' => 'Mobile Browser'
+            '/mobile/i' => 'Mobile Browser',
         );
 
-        foreach ($browser_array as $regex => $value)
-            if (preg_match($regex, $user_agent))
+        foreach ($browser_array as $regex => $value) {
+            if (preg_match($regex, $user_agent)) {
                 $browser = $value;
+            }
+        }
 
         return $browser;
     }
 
     /**
-     * 
+     *
      * @param type $dlzka
      * @return type
      */
     public function set_rand_string($dlzka = 10)
     {
-        $retazec = "";
-        $nahodne = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
+        $retazec = '';
+        $nahodne = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789';
         for ($i = 0; $i < $dlzka; $i++) {
             $retazec .= substr($nahodne, rand(0, strlen($nahodne) - 1), 1);
             // vrati true/false
@@ -536,16 +541,16 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function set_four_one()
     {
-        return "" . rand(1, 9) . "" . rand(1, 9) . "" . rand(1, 9) . "" . rand(1, 9) . "";
+        return '' . rand(1, 9) . '' . rand(1, 9) . '' . rand(1, 9) . '' . rand(1, 9) . '';
     }
 
     /**
-     * 
+     *
      * @param type $url_adresa
      * @return type
      */
@@ -566,22 +571,22 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @param type $name_url
      * @return boolean
      */
     public function is_external_url($name_url)
     {
         //$name_url = str_replace("/", "\/", $name_url);
-        if ($this->in_string("http:\/\/", $name_url)) {
+        if ($this->in_string('http:\/\/', $name_url)) {
             $return = true;
         }
         //https protocol
-        elseif ($this->in_string("https:\/\/", $name_url)) {
+        elseif ($this->in_string('https:\/\/', $name_url)) {
             $return = true;
         }
         //protocol relative
-        elseif ($this->in_string("\/\/", $name_url)) {
+        elseif ($this->in_string('\/\/', $name_url)) {
             $return = true;
         } else {
             $return = false;
@@ -590,7 +595,7 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @param type $name
      * @param type $name_url
      * @return type
@@ -598,15 +603,15 @@ class Dnt
     public function creat_name_url($name, $name_url)
     {
 
-        if ($this->in_string("<WWW_PATH>", $name_url)) {
-            $name_url = explode("WWW_PATH", $name_url);
-            $name_url = "<WWW_PATH>" . $this->name_url($name_url[1]);
+        if ($this->in_string('<WWW_PATH>', $name_url)) {
+            $name_url = explode('WWW_PATH', $name_url);
+            $name_url = '<WWW_PATH>' . $this->name_url($name_url[1]);
             return $name_url;
         }
 
         if (empty($name_url)) {
             return $this->name_url($name);
-        } elseif ($this->in_string("#", $name_url)) {
+        } elseif ($this->in_string('#', $name_url)) {
             return $name_url;
         }
         //http is_external_url
@@ -618,7 +623,7 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @param type $presmeruj_url
      */
     public function redirect($presmeruj_url = false)
@@ -628,7 +633,6 @@ class Dnt
         } else {
             $redirect = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '/';
         }
-
 
         if (!headers_sent()) {
             header('Location: ' . $redirect);
@@ -642,7 +646,7 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @param type $presmeruj_url
      */
     public function presmeruj_url_by_js($presmeruj_url)
@@ -654,14 +658,15 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @param type $str
      * @return type
      */
     public function safe($str)
     {
-        if (is_array($str))
+        if (is_array($str)) {
             return array_map(__METHOD__, $str);
+        }
 
         if (!empty($str) && is_string($str)) {
             return str_replace(array('\\', "\0", "\n", "\r", "'", '"', "\x1a"), array('\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'), $str);
@@ -671,24 +676,25 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @param string $str
      * @param type $zobraz_znakov
      * @return string
      */
     public function obsah_uvod($str, $zobraz_znakov)
     {
-        //return htmlspecialchars($str); 
-        if (strlen($str) > $zobraz_znakov)
-            return "" . $str = substr($str, 0, $zobraz_znakov) . "...";
-        elseif (strlen($str) > 5)
+        //return htmlspecialchars($str);
+        if (strlen($str) > $zobraz_znakov) {
+            return '' . $str = substr($str, 0, $zobraz_znakov) . '...';
+        } elseif (strlen($str) > 5) {
             return $str;
-        else
-            return "Tento príspevok nemá žiaden náhľad článku, pretože sa jeho obsah pravdepodobne skladá z multymediálneho obsahu. Prosím kliknite na <b>čítať viac</b> a môžete prezerať vami vybraný obsah.";
+        } else {
+            return 'Tento príspevok nemá žiaden náhľad článku, pretože sa jeho obsah pravdepodobne skladá z multymediálneho obsahu. Prosím kliknite na <b>čítať viac</b> a môžete prezerať vami vybraný obsah.';
+        }
     }
 
     /**
-     * 
+     *
      * @param type $input
      * @param type $maxWords
      * @param type $maxChars
@@ -707,8 +713,9 @@ class Dnt
             $fragment = trim(array_pop($words));
             $chars += strlen($fragment);
 
-            if ($chars > $maxChars)
+            if ($chars > $maxChars) {
                 break;
+            }
 
             $truncated[] = $fragment;
         }
@@ -723,7 +730,7 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @param type $str
      * @param type $maxPocetSlov
      * @return type
@@ -731,46 +738,47 @@ class Dnt
     public function perex($str, $maxPocetSlov)
     {
         $str = not_html($str);
-        $slova = explode(" ", $str);
+        $slova = explode(' ', $str);
         $pocetSlov = count($slova);
 
         for ($i = 0; $i < $maxPocetSlov; $i++) {
-            $return .= " " . $slova[$i];
+            $return .= ' ' . $slova[$i];
         }
 
-        return $return . "...";
+        return $return . '...';
     }
 
     /**
-     * 
+     *
      * @param type $str
      * @return type
      */
     public function not_html($str)
     {
-        //return htmlspecialchars($str); 
+        //return htmlspecialchars($str);
         $str = strip_tags($str);
         $str = trim($str);
         return $str;
     }
 
     /**
-     * 
+     *
      * @param type $email
      * @return boolean
      */
     public function is_email($email)
     {
-        if ($email == "")
+        if ($email == '') {
             return true;
-        elseif (preg_match("/^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/", $email))
+        } elseif (preg_match('/^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$/', $email)) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
 
     /**
-     * 
+     *
      * @param type $iban
      * @return boolean
      */
@@ -781,12 +789,11 @@ class Dnt
         $Chars = array('a' => 10, 'b' => 11, 'c' => 12, 'd' => 13, 'e' => 14, 'f' => 15, 'g' => 16, 'h' => 17, 'i' => 18, 'j' => 19, 'k' => 20, 'l' => 21, 'm' => 22, 'n' => 23, 'o' => 24, 'p' => 25, 'q' => 26, 'r' => 27, 's' => 28, 't' => 29, 'u' => 30, 'v' => 31, 'w' => 32, 'x' => 33, 'y' => 34, 'z' => 35);
 
         if (strlen($iban) == $Countries[substr($iban, 0, 2)]) {
-
             $MovedChar = substr($iban, 4) . substr($iban, 0, 4);
             $MovedCharArray = str_split($MovedChar);
-            $NewString = "";
+            $NewString = '';
 
-            foreach ($MovedCharArray AS $key => $value) {
+            foreach ($MovedCharArray as $key => $value) {
                 if (!is_numeric($MovedCharArray[$key])) {
                     $MovedCharArray[$key] = $Chars[$MovedCharArray[$key]];
                 }
@@ -810,30 +817,30 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @param type $facebook_profil
      * @return boolean
      */
     public function is_facebook_profil($facebook_profil)
     {
-        list($facebook_url, $facebook_user) = explode(".com/", $facebook_profil);
-        if ($facebook_profil == "") {
+        list($facebook_url, $facebook_user) = explode('.com/', $facebook_profil);
+        if ($facebook_profil == '') {
             return false; //empty filed
-        } elseif ($facebook_url != "https://www.facebook") {
+        } elseif ($facebook_url != 'https://www.facebook') {
             return false; //first part is not facebook
         } else {
-            return true; //OK 
+            return true; //OK
         }
     }
 
     /**
-     * 
+     *
      * @param type $text
      * @return type
      */
     public function odstran_diakritiku($text)
     {
-        $prevodni_tabulka = Array(
+        $prevodni_tabulka = array(
             'ä' => 'a',
             'Ä' => 'A',
             'á' => 'a',
@@ -917,7 +924,7 @@ class Dnt
             'ž' => 'z',
             'Ž' => 'Z',
             'ź' => 'z',
-            'Ź' => 'Z'
+            'Ź' => 'Z',
         );
 
         $text = strtr($text, $prevodni_tabulka);
@@ -925,7 +932,7 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @param type $predmet
      * @param type $komu
      * @param type $od_meno
@@ -935,7 +942,7 @@ class Dnt
     public function my_email($predmet, $komu, $od_meno, $od_email, $email_sprava)
     {
 
-        $od_email = "info@query.sk";
+        $od_email = 'info@query.sk';
         // carriage return type (we use a PHP end of line constant)
         $predmet = $this->odstran_diakritiku($predmet);
         $od_meno = $this->odstran_diakritiku($od_meno);
@@ -949,8 +956,6 @@ class Dnt
         $headers .= 'To:  <' . $komu . '>' . "\r\n"; // dalsi mail sa oddeluje ciarkou
         $headers .= 'From: ' . $od_meno . ' <' . $od_email . '>' . "\r\n";
 
-
-
         mail($to, $subject, $message, $headers);
     }
 
@@ -960,7 +965,7 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @param type $msg
      * @return type
      */
@@ -970,7 +975,7 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @param type $table
      * @param type $column
      * @param type $post_id
@@ -989,7 +994,7 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @param type $table
      * @param type $and_where
      * @return boolean
@@ -1007,7 +1012,7 @@ class Dnt
     }
 
     /**
-     * 
+     *
      * @param type $table
      * @param type $and_where
      * @param type $currentId
@@ -1029,11 +1034,11 @@ class Dnt
     {
         if ($value == 1) {
             $ano = 'selected';
-            $color = "3C763D";
+            $color = '3C763D';
             $nie = false;
         } else {
             $nie = 'selected';
-            $color = "ff0000";
+            $color = 'ff0000';
             $ano = false;
         }
         echo '<select class="form-control" name="zobrazit_' . $meta . '" style="border: 2px #' . $color . ' solid;">
@@ -1049,10 +1054,11 @@ class Dnt
         $default = 'rgb(0,0,0)';
 
         //Return default if no color provided
-        if (empty($color))
+        if (empty($color)) {
             return $default;
+        }
 
-        //Sanitize $color if "#" is provided 
+        //Sanitize $color if "#" is provided
         if ($color[0] == '#') {
             $color = substr($color, 1);
         }
@@ -1071,11 +1077,12 @@ class Dnt
 
         //Check if opacity is set(rgba or rgb)
         if ($opacity) {
-            if (abs($opacity) == 1)
+            if (abs($opacity) == 1) {
                 $opacity = 1.0;
-            $output = 'rgba(' . implode(",", $rgb) . ',' . $opacity . ')';
+            }
+            $output = 'rgba(' . implode(',', $rgb) . ',' . $opacity . ')';
         } else {
-            $output = 'rgb(' . implode(",", $rgb) . ')';
+            $output = 'rgb(' . implode(',', $rgb) . ')';
         }
 
         //Return rgb(a) color string
@@ -1102,27 +1109,29 @@ class Dnt
 
         $hash = (strpos($rgb, '#') !== false) ? '#' : '';
         $rgb = (strlen($rgb) == 7) ? str_replace('#', '', $rgb) : ((strlen($rgb) == 6) ? $rgb : false);
-        if (strlen($rgb) != 6)
+        if (strlen($rgb) != 6) {
             return $hash . '000000';
+        }
         $darker = ($darker > 1) ? $darker : 1;
 
         list($R16, $G16, $B16) = str_split($rgb, 2);
 
-        $R = sprintf("%02X", floor(hexdec($R16) / $darker));
-        $G = sprintf("%02X", floor(hexdec($G16) / $darker));
-        $B = sprintf("%02X", floor(hexdec($B16) / $darker));
+        $R = sprintf('%02X', floor(hexdec($R16) / $darker));
+        $G = sprintf('%02X', floor(hexdec($G16) / $darker));
+        $B = sprintf('%02X', floor(hexdec($B16) / $darker));
 
         return $hash . $R . $G . $B;
     }
 
     public function rmkdir($path)
     {
-        if (@mkdir($path) or file_exists($path))
+        if (@mkdir($path) or file_exists($path)) {
             return true;
+        }
         return ($this->rmkdir(dirname($path)) and mkdir($path));
     }
 
-    public function orderby($data, $column = "id", $sort = "ASC")
+    public function orderby($data, $column = 'id', $sort = 'ASC')
     {
         if (count($data) > 0) {
             $sortArray = array();
@@ -1133,15 +1142,15 @@ class Dnt
                     }
                     $sortArray[$key][] = $value;
                 }
-                if ($column == "datetime_publish") {
+                if ($column == 'datetime_publish') {
                     $sortArray['datetime'][] = strtotime($item[$column]);
-                    $orderby = "datetime";
+                    $orderby = 'datetime';
                 }
             }
 
             $orderby = $column;
 
-            if ($sort == "ASC" || $sort == "asc") {
+            if ($sort == 'ASC' || $sort == 'asc') {
                 array_multisort($sortArray[$orderby], SORT_ASC, $data);
             } else {
                 array_multisort($sortArray[$orderby], SORT_DESC, $data);
@@ -1151,14 +1160,14 @@ class Dnt
         return $data;
     }
 
-    /* 	
+    /*
      *
      * writeLog()
      * metoda zapisuje logy do suboru csv
      * kazdy novy zaznam sa zapisuje do noveho riadku
      * kazdy den sa vytvori novy subor s prefixxom Y_m_d
      * logy je mozne ukladat do vlastného súboru (suborov)
-     *  
+     *
      *
      * */
 
@@ -1172,8 +1181,9 @@ class Dnt
         $data = @file_get_contents($fileName);
 
         //AK SU SERVER VARIABLES
-        if (!is_array($serverVariables))
+        if (!is_array($serverVariables)) {
             $serverVariables = array();
+        }
 
         //PRIRADENIE ZOZNAM SERVEROVYCH METOD DO SUPERGLOBALNEJ PREMENNEJ SERVER  A ZISKANIE JEJ HODNOTY
         foreach ($serverVariables as $item) {
@@ -1186,13 +1196,13 @@ class Dnt
         }
 
         //ZAPIS NAZVY STLPCOV, LEN AK SA JEDNA O NOVOVYTVORENZ SUBOR
-        $columnsName = empty($data) ? implode(";", $columnName) . "\n" : "";
+        $columnsName = empty($data) ? implode(';', $columnName) . "\n" : '';
 
         //IMPLODE DO RETAZCA
-        $newData = implode(";", $arrToInsert);
+        $newData = implode(';', $arrToInsert);
 
         //OSETRENIE (PRIODANIE) NOVEHO RIADKU, LEN V PRIPADE AK SU V SUBORE DATA
-        $newLine = !empty($data) ? "\n" : "";
+        $newLine = !empty($data) ? "\n" : '';
 
         //SPOJENIE STARYCH DAT, RIADKU A NOVYCH DAT DO PREMENY putData
         $putData = $columnsName . $data . $newLine . $newData;
@@ -1214,8 +1224,8 @@ class Dnt
     public function youtubeVideoToEmbed($video)
     {
         if (count(explode('?v=', $video)) > 1) {
-            $video = explode("?v=", $video);
-            $youtube_hash = "https://www.youtube.com/embed/" . $video[1];
+            $video = explode('?v=', $video);
+            $youtube_hash = 'https://www.youtube.com/embed/' . $video[1];
         } else {
             $youtube_hash = $video;
         }
@@ -1229,13 +1239,13 @@ class Dnt
             '/\>[^\S ]+/s', // strip whitespaces after tags, except space
             '/[^\S ]+\</s', // strip whitespaces before tags, except space
             '/(\s)+/s', // shorten multiple whitespace sequences
-            '/<!--(.|\s)*?-->/' // Remove HTML comments
+            '/<!--(.|\s)*?-->/', // Remove HTML comments
         );
         $replace = array(
             '>',
             '<',
             '\\1',
-            ''
+            '',
         );
         return preg_replace($search, $replace, $html);
     }
@@ -1251,8 +1261,9 @@ class Dnt
 
     public function uuid()
     {
-        if (function_exists('com_create_guid') === true)
+        if (function_exists('com_create_guid') === true) {
             return trim(com_create_guid(), '{}');
+        }
 
         $data = openssl_random_pseudo_bytes(16);
         $data[6] = chr(ord($data[6]) & 0x0f | 0x40); // set version to 0100
@@ -1268,5 +1279,4 @@ class Dnt
         }
         return $string;
     }
-
 }

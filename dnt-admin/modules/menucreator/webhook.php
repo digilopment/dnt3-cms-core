@@ -10,11 +10,11 @@ function configMenuItems()
     $vendor = new Vendor();
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "menu",
-        '`included`' => "",
-        '`ico`' => "fa-gears",
-        '`order`' => "20",
-        '`name`' => "Nastavenia",
+        '`type`' => 'menu',
+        '`included`' => '',
+        '`ico`' => 'fa-gears',
+        '`order`' => '20',
+        '`name`' => 'Nastavenia',
         '`name_url`' => 'settings',
         '`name_url_sub`' => 'settings',
         '`show`' => '1',
@@ -22,11 +22,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "menu",
-        '`included`' => "post",
-        '`ico`' => "fa-laptop",
-        '`order`' => "30",
-        '`name`' => "Obsah",
+        '`type`' => 'menu',
+        '`included`' => 'post',
+        '`ico`' => 'fa-laptop',
+        '`order`' => '30',
+        '`name`' => 'Obsah',
         '`name_url`' => 'content',
         '`name_url_sub`' => 'content&incuded=post',
         '`show`' => '1',
@@ -34,11 +34,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "fa-plus",
-        '`order`' => "1",
-        '`name`' => "Pridať post",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => 'fa-plus',
+        '`order`' => '1',
+        '`name`' => 'Pridať post',
         '`name_url`' => 'content',
         '`name_url_sub`' => 'content&add',
         '`show`' => '1',
@@ -46,11 +46,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "",
-        '`order`' => "6",
-        '`name`' => "Bleskovky",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => '',
+        '`order`' => '6',
+        '`name`' => 'Bleskovky',
         '`name_url`' => 'content&filter=bleskovky',
         '`name_url_sub`' => 'content',
         '`show`' => '1',
@@ -58,11 +58,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "menu",
-        '`included`' => "",
-        '`ico`' => "fa-user",
-        '`order`' => "80",
-        '`name`' => "Prístupy",
+        '`type`' => 'menu',
+        '`included`' => '',
+        '`ico`' => 'fa-user',
+        '`order`' => '80',
+        '`name`' => 'Prístupy',
         '`name_url`' => 'access',
         '`name_url_sub`' => 'access',
         '`show`' => '1',
@@ -70,11 +70,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "",
-        '`order`' => "3",
-        '`name`' => "Stránky",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => '',
+        '`order`' => '3',
+        '`name`' => 'Stránky',
         '`name_url`' => 'content',
         '`name_url_sub`' => 'content&filter=pages',
         '`show`' => '1',
@@ -82,11 +82,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "menu",
-        '`included`' => "",
-        '`ico`' => "fa fa-home",
-        '`order`' => "10",
-        '`name`' => "Domov",
+        '`type`' => 'menu',
+        '`included`' => '',
+        '`ico`' => 'fa fa-home',
+        '`order`' => '10',
+        '`name`' => 'Domov',
         '`name_url`' => 'home',
         '`name_url_sub`' => '',
         '`show`' => '1',
@@ -94,11 +94,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "menu",
-        '`included`' => "",
-        '`ico`' => "fa fa-shopping-cart",
-        '`order`' => "70",
-        '`name`' => "Eshop",
+        '`type`' => 'menu',
+        '`included`' => '',
+        '`ico`' => 'fa fa-shopping-cart',
+        '`order`' => '70',
+        '`name`' => 'Eshop',
         '`name_url`' => 'invoices',
         '`name_url_sub`' => 'invoices',
         '`show`' => '0',
@@ -106,11 +106,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "fa fa-shopping-cart",
-        '`order`' => "70",
-        '`name`' => "Zoznam objednávok",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => 'fa fa-shopping-cart',
+        '`order`' => '70',
+        '`name`' => 'Zoznam objednávok',
         '`name_url`' => 'invoices',
         '`name_url_sub`' => 'invoices',
         '`show`' => '0',
@@ -118,11 +118,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "fa fa-product-hunt",
-        '`order`' => "70",
-        '`name`' => "Zoznam produktov",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => 'fa fa-product-hunt',
+        '`order`' => '70',
+        '`name`' => 'Zoznam produktov',
         '`name_url`' => 'invoices',
         '`name_url_sub`' => 'content&included=product',
         '`show`' => '0',
@@ -131,11 +131,11 @@ function configMenuItems()
 
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "fa fa-product-hunt",
-        '`order`' => "70",
-        '`name`' => "Kategórie produktov",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => 'fa fa-product-hunt',
+        '`order`' => '70',
+        '`name`' => 'Kategórie produktov',
         '`name_url`' => 'invoices',
         '`name_url_sub`' => 'categories&type=product',
         '`show`' => '0',
@@ -144,11 +144,11 @@ function configMenuItems()
 
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "fa fa-product-hunt",
-        '`order`' => "70",
-        '`name`' => "Kategórie variantov produktu",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => 'fa fa-product-hunt',
+        '`order`' => '70',
+        '`name`' => 'Kategórie variantov produktu',
         '`name_url`' => 'invoices',
         '`name_url_sub`' => 'categories&type=variant',
         '`show`' => '0',
@@ -157,11 +157,11 @@ function configMenuItems()
 
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "fa fa-file-text-o",
-        '`order`' => "70",
-        '`name`' => "Nová objednávka",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => 'fa fa-file-text-o',
+        '`order`' => '70',
+        '`name`' => 'Nová objednávka',
         '`name_url`' => 'invoices',
         '`name_url_sub`' => 'invoices&action=add',
         '`show`' => '0',
@@ -170,11 +170,11 @@ function configMenuItems()
 
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "menu",
-        '`included`' => "",
-        '`ico`' => "fa fa-list-alt",
-        '`order`' => "70",
-        '`name`' => "Kategórie",
+        '`type`' => 'menu',
+        '`included`' => '',
+        '`ico`' => 'fa fa-list-alt',
+        '`order`' => '70',
+        '`name`' => 'Kategórie',
         '`name_url`' => 'categories',
         '`name_url_sub`' => 'categories',
         '`show`' => '0',
@@ -183,11 +183,11 @@ function configMenuItems()
 
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "menu",
-        '`included`' => "",
-        '`ico`' => "fa-envelope",
-        '`order`' => "90",
-        '`name`' => "Mailer",
+        '`type`' => 'menu',
+        '`included`' => '',
+        '`ico`' => 'fa-envelope',
+        '`order`' => '90',
+        '`name`' => 'Mailer',
         '`name_url`' => 'mailer',
         '`name_url_sub`' => 'mailer',
         '`show`' => '1',
@@ -195,11 +195,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "",
-        '`order`' => "5",
-        '`name`' => "Všetky prístupy",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => '',
+        '`order`' => '5',
+        '`name`' => 'Všetky prístupy',
         '`name_url`' => 'pristupy',
         '`name_url_sub`' => 'pristupy',
         '`show`' => '1',
@@ -207,11 +207,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "fa-plus",
-        '`order`' => "0",
-        '`name`' => "Pridať prístup",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => 'fa-plus',
+        '`order`' => '0',
+        '`name`' => 'Pridať prístup',
         '`name_url`' => 'pristupy',
         '`name_url_sub`' => 'pristupy&pridat',
         '`show`' => '1',
@@ -219,11 +219,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "",
-        '`order`' => "4",
-        '`name`' => "Podstránky",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => '',
+        '`order`' => '4',
+        '`name`' => 'Podstránky',
         '`name_url`' => 'content',
         '`name_url_sub`' => 'content&filter=pages-sub',
         '`show`' => '1',
@@ -231,11 +231,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "fa-plus",
-        '`order`' => "2",
-        '`name`' => "Pridať podstránku",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => 'fa-plus',
+        '`order`' => '2',
+        '`name`' => 'Pridať podstránku',
         '`name_url`' => 'content',
         '`name_url_sub`' => 'content&add=pages-sub',
         '`show`' => '1',
@@ -243,11 +243,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "",
-        '`order`' => "7",
-        '`name`' => "Statický obsah",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => '',
+        '`order`' => '7',
+        '`name`' => 'Statický obsah',
         '`name_url`' => 'content',
         '`name_url_sub`' => 'content&filter=static',
         '`show`' => '1',
@@ -255,11 +255,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "",
-        '`order`' => "7",
-        '`name`' => "Sponzori",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => '',
+        '`order`' => '7',
+        '`name`' => 'Sponzori',
         '`name_url`' => 'content',
         '`name_url_sub`' => 'content&filter=sponzori',
         '`show`' => '1',
@@ -267,11 +267,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "",
-        '`order`' => "8",
-        '`name`' => "Partneri",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => '',
+        '`order`' => '8',
+        '`name`' => 'Partneri',
         '`name_url`' => 'content',
         '`name_url_sub`' => 'content&filter=partneri',
         '`show`' => '1',
@@ -279,11 +279,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "menu",
-        '`included`' => "",
-        '`ico`' => "fa-language",
-        '`order`' => "60",
-        '`name`' => "Multylanguage",
+        '`type`' => 'menu',
+        '`included`' => '',
+        '`ico`' => 'fa-language',
+        '`order`' => '60',
+        '`name`' => 'Multylanguage',
         '`name_url`' => 'multylanguage',
         '`name_url_sub`' => '',
         '`show`' => '1',
@@ -291,11 +291,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "",
-        '`order`' => "23",
-        '`name`' => "Aktívne jazyky",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => '',
+        '`order`' => '23',
+        '`name`' => 'Aktívne jazyky',
         '`name_url`' => 'multylanguage',
         '`name_url_sub`' => 'multylanguage&add',
         '`show`' => '1',
@@ -303,11 +303,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "",
-        '`order`' => "22",
-        '`name`' => "Zoznamp rekladov",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => '',
+        '`order`' => '22',
+        '`name`' => 'Zoznamp rekladov',
         '`name_url`' => 'multylanguage',
         '`name_url_sub`' => 'multylanguage&action=translates',
         '`show`' => '1',
@@ -315,11 +315,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "menu",
-        '`included`' => "sitemap",
-        '`ico`' => "fa fa-list",
-        '`order`' => "40",
-        '`name`' => "Sitemap",
+        '`type`' => 'menu',
+        '`included`' => 'sitemap',
+        '`ico`' => 'fa fa-list',
+        '`order`' => '40',
+        '`name`' => 'Sitemap',
         '`name_url`' => 'content',
         '`name_url_sub`' => 'content&incuded=sitemap',
         '`show`' => '1',
@@ -327,11 +327,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "menu",
-        '`included`' => "",
-        '`ico`' => "fa-pie-chart",
-        '`order`' => "70",
-        '`name`' => "Kvízy",
+        '`type`' => 'menu',
+        '`included`' => '',
+        '`ico`' => 'fa-pie-chart',
+        '`order`' => '70',
+        '`name`' => 'Kvízy',
         '`name_url`' => 'polls',
         '`name_url_sub`' => 'polls',
         '`show`' => '1',
@@ -339,11 +339,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "",
-        '`order`' => "23",
-        '`name`' => "Pridať kvíz",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => '',
+        '`order`' => '23',
+        '`name`' => 'Pridať kvíz',
         '`name_url`' => 'polls',
         '`name_url_sub`' => 'polls&action=add_poll',
         '`show`' => '1',
@@ -351,11 +351,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "",
-        '`order`' => "23",
-        '`name`' => "Zoznam kvízov",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => '',
+        '`order`' => '23',
+        '`name`' => 'Zoznam kvízov',
         '`name_url`' => 'polls',
         '`name_url_sub`' => 'polls',
         '`show`' => '1',
@@ -363,11 +363,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "menu",
-        '`included`' => "",
-        '`ico`' => "fa-file",
-        '`order`' => "50",
-        '`name`' => "Súbory",
+        '`type`' => 'menu',
+        '`included`' => '',
+        '`ico`' => 'fa-file',
+        '`order`' => '50',
+        '`name`' => 'Súbory',
         '`name_url`' => 'files',
         '`name_url_sub`' => 'files',
         '`show`' => '1',
@@ -375,11 +375,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "menu",
-        '`included`' => "",
-        '`ico`' => "fa-gears",
-        '`order`' => "100",
-        '`name`' => "Microweb",
+        '`type`' => 'menu',
+        '`included`' => '',
+        '`ico`' => 'fa-gears',
+        '`order`' => '100',
+        '`name`' => 'Microweb',
         '`name_url`' => 'microweb',
         '`name_url_sub`' => 'microweb',
         '`show`' => '1',
@@ -387,11 +387,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "fa-gears",
-        '`order`' => "20",
-        '`name`' => "Zoznam",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => 'fa-gears',
+        '`order`' => '20',
+        '`name`' => 'Zoznam',
         '`name_url`' => 'microweb',
         '`name_url_sub`' => 'microweb',
         '`show`' => '1',
@@ -399,11 +399,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "fa-gears",
-        '`order`' => "20",
-        '`name`' => "Pridať",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => 'fa-gears',
+        '`order`' => '20',
+        '`name`' => 'Pridať',
         '`name_url`' => 'microweb',
         '`name_url_sub`' => 'microweb&action=add',
         '`show`' => '1',
@@ -411,11 +411,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "menu",
-        '`included`' => "",
-        '`ico`' => "fa-globe",
-        '`order`' => "110",
-        '`name`' => "Zoznamwebov",
+        '`type`' => 'menu',
+        '`included`' => '',
+        '`ico`' => 'fa-globe',
+        '`order`' => '110',
+        '`name`' => 'Zoznamwebov',
         '`name_url`' => 'vendor',
         '`name_url_sub`' => '',
         '`show`' => '1',
@@ -423,11 +423,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "",
-        '`order`' => "22",
-        '`name`' => "Zoznam",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => '',
+        '`order`' => '22',
+        '`name`' => 'Zoznam',
         '`name_url`' => 'vendor',
         '`name_url_sub`' => 'vendor',
         '`show`' => '1',
@@ -435,11 +435,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "",
-        '`order`' => "22",
-        '`name`' => "Pridať web",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => '',
+        '`order`' => '22',
+        '`name`' => 'Pridať web',
         '`name_url`' => 'vendor',
         '`name_url_sub`' => 'vendor&action=add',
         '`show`' => '1',
@@ -447,11 +447,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "fa-user",
-        '`order`' => "100",
-        '`name`' => "Zoznam",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => 'fa-user',
+        '`order`' => '100',
+        '`name`' => 'Zoznam',
         '`name_url`' => 'user',
         '`name_url_sub`' => 'user',
         '`show`' => '1',
@@ -459,11 +459,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "fa-user",
-        '`order`' => "100",
-        '`name`' => "Pridať používateľa",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => 'fa-user',
+        '`order`' => '100',
+        '`name`' => 'Pridať používateľa',
         '`name_url`' => 'user',
         '`name_url_sub`' => 'user&action=add',
         '`show`' => '1',
@@ -471,11 +471,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "menu",
-        '`included`' => "",
-        '`ico`' => "fa-user",
-        '`order`' => "100",
-        '`name`' => "Používatelia",
+        '`type`' => 'menu',
+        '`included`' => '',
+        '`ico`' => 'fa-user',
+        '`order`' => '100',
+        '`name`' => 'Používatelia',
         '`name_url`' => 'user',
         '`name_url_sub`' => 'user',
         '`show`' => '1',
@@ -483,11 +483,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "menu",
-        '`included`' => "",
-        '`ico`' => "fa fa-line-chart",
-        '`order`' => "15",
-        '`name`' => "Štatistika",
+        '`type`' => 'menu',
+        '`included`' => '',
+        '`ico`' => 'fa fa-line-chart',
+        '`order`' => '15',
+        '`name`' => 'Štatistika',
         '`name_url`' => 'statistics',
         '`name_url_sub`' => '',
         '`show`' => '1',
@@ -495,11 +495,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "menu",
-        '`included`' => "",
-        '`ico`' => "fa fa-image",
-        '`order`' => "15",
-        '`name`' => "Galérie",
+        '`type`' => 'menu',
+        '`included`' => '',
+        '`ico`' => 'fa fa-image',
+        '`order`' => '15',
+        '`name`' => 'Galérie',
         '`name_url`' => 'gallery',
         '`name_url_sub`' => '',
         '`show`' => '1',
@@ -507,11 +507,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "menu",
-        '`included`' => "",
-        '`ico`' => "fa-file-excel-o",
-        '`order`' => "90",
-        '`name`' => "Voučre",
+        '`type`' => 'menu',
+        '`included`' => '',
+        '`ico`' => 'fa-file-excel-o',
+        '`order`' => '90',
+        '`name`' => 'Voučre',
         '`name_url`' => 'vouchers',
         '`name_url_sub`' => 'vouchers',
         '`show`' => '1',
@@ -519,11 +519,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "submenu",
-        '`included`' => "",
-        '`ico`' => "",
-        '`order`' => "22",
-        '`name`' => "Importovať web",
+        '`type`' => 'submenu',
+        '`included`' => '',
+        '`ico`' => '',
+        '`order`' => '22',
+        '`name`' => 'Importovať web',
         '`name_url`' => 'vendor',
         '`name_url_sub`' => 'vendor&action=import',
         '`show`' => '1',
@@ -531,39 +531,37 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "menu",
-        '`included`' => "video",
-        '`ico`' => "fa fa-video-camera",
-        '`order`' => "40",
-        '`name`' => "Video",
+        '`type`' => 'menu',
+        '`included`' => 'video',
+        '`ico`' => 'fa fa-video-camera',
+        '`order`' => '40',
+        '`name`' => 'Video',
         '`name_url`' => 'content',
         '`name_url_sub`' => 'content&incuded=video',
         '`show`' => '1',
         '`parent_id`' => '0',
     );
 
-
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "menu",
-        '`included`' => "",
-        '`ico`' => "fa fa-trash",
-        '`order`' => "50",
-        '`name`' => "Odstránené príspevky",
+        '`type`' => 'menu',
+        '`included`' => '',
+        '`ico`' => 'fa fa-trash',
+        '`order`' => '50',
+        '`name`' => 'Odstránené príspevky',
         '`name_url`' => 'content&postParam=show-0',
         '`name_url_sub`' => '',
         '`show`' => '1',
         '`parent_id`' => '0',
     );
 
-
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "menu",
-        '`included`' => "product",
-        '`ico`' => "fa fa-product-hunt",
-        '`order`' => "40",
-        '`name`' => "Produkty",
+        '`type`' => 'menu',
+        '`included`' => 'product',
+        '`ico`' => 'fa fa-product-hunt',
+        '`order`' => '40',
+        '`name`' => 'Produkty',
         '`name_url`' => 'content',
         '`name_url_sub`' => 'content&incuded=product',
         '`show`' => '0',
@@ -571,11 +569,11 @@ function configMenuItems()
     );
     $insertedData[] = array(
         '`vendor_id`' => $vendor->getId(),
-        '`type`' => "menu",
-        '`included`' => "gallery",
-        '`ico`' => "fa fa-list",
-        '`order`' => "40",
-        '`name`' => "Galérie",
+        '`type`' => 'menu',
+        '`included`' => 'gallery',
+        '`ico`' => 'fa fa-list',
+        '`order`' => '40',
+        '`name`' => 'Galérie',
         '`name_url`' => 'content',
         '`name_url_sub`' => 'content&incuded=gallery',
         '`show`' => '1',
@@ -588,7 +586,7 @@ function configMenuItems()
 function menuQuery()
 {
     $vendor = new Vendor();
-    $query = "SELECT * FROM `dnt_admin_menu` WHERE `vendor_id` = " . $vendor->getId() . " ORDER BY `type`, `order`";
+    $query = 'SELECT * FROM `dnt_admin_menu` WHERE `vendor_id` = ' . $vendor->getId() . ' ORDER BY `type`, `order`';
     return $query;
 }
 
@@ -684,8 +682,8 @@ function sql2Arr()
 	(null,"3032","57","menu","gallery","fa fa-list","40","Galérie","content","content&incuded=gallery","1","0");
 	';
 
-    $data = str_replace(");", "),", $data);
-    $data = explode("),", $data);
+    $data = str_replace(');', '),', $data);
+    $data = explode('),', $data);
     $i = 0;
     foreach ($data as $value) {
         $items[] = $value;
@@ -694,8 +692,8 @@ function sql2Arr()
 
     $x = 0;
     foreach ($items as $row) {
-        $tmp = str_replace("(", "", $row);
-        $tmp = str_replace("'", "", $tmp);
+        $tmp = str_replace('(', '', $row);
+        $tmp = str_replace("'", '', $tmp);
         $tmp = str_replace('"', '', $tmp);
         $tmp = preg_replace('/\s+/', '', $tmp);
         $tmp = str_replace('fafa', 'fa fa', $tmp);
@@ -707,7 +705,7 @@ function sql2Arr()
         $tmp = str_replace('Všetky', 'Všetky ', $tmp);
         $cleanRow = $tmp;
 
-        foreach (explode(",", $cleanRow) as $item) {
+        foreach (explode(',', $cleanRow) as $item) {
             $fill[] = $item;
         }
         //@var_dump($fill[9+$x]);
@@ -732,17 +730,17 @@ $rest = new Rest();
 $db = new DB();
 $dnt = new Dnt();
 $vendor = new Vendor();
-if ($rest->get("action") == "sql2Arr") {
+if ($rest->get('action') == 'sql2Arr') {
     sql2Arr();
-} elseif ($rest->get("action") == "addToMenu") {
+} elseif ($rest->get('action') == 'addToMenu') {
     addToMenu();
-    Dnt::redirect(WWW_PATH_ADMIN_2 . "index.php?src=" . $rest->get("src") . "");
-} elseif ($rest->get("action") == "show_hide") {
-    include "show_hide.php";
-} elseif ($rest->get("action") == "del") {
-    include "del.php";
-} elseif ($rest->get("action") == "update") {
-    include "update.php";
+    Dnt::redirect(WWW_PATH_ADMIN_2 . 'index.php?src=' . $rest->get('src') . '');
+} elseif ($rest->get('action') == 'show_hide') {
+    include 'show_hide.php';
+} elseif ($rest->get('action') == 'del') {
+    include 'del.php';
+} elseif ($rest->get('action') == 'update') {
+    include 'update.php';
 } else {
-    include "tpl.php";
+    include 'tpl.php';
 }

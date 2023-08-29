@@ -22,7 +22,6 @@ use DntLibrary\Base\Webhook;
 
 class ArticleView extends AdminContent
 {
-
     public function __construct()
     {
         $this->db = new DB();
@@ -37,7 +36,7 @@ class ArticleView extends AdminContent
     }
 
     /**
-     * 
+     *
      * @param type $post_type
      * @return type
      */
@@ -56,8 +55,8 @@ class ArticleView extends AdminContent
 
         if (is_numeric($post_type)) {
             $andPost = "`cat_id` = '" . $post_type . "' AND ";
-        } elseif ($this->dnt->in_string(",", $post_type)) {
-            $andPost = "`cat_id` IN(" . $post_type . ") AND";
+        } elseif ($this->dnt->in_string(',', $post_type)) {
+            $andPost = '`cat_id` IN(' . $post_type . ') AND';
         } else {
             $andPost = "`cat_id` = '" . $this->getCatId($post_type) . "' AND ";
         }
@@ -74,7 +73,7 @@ class ArticleView extends AdminContent
     }
 
     /**
-     * 
+     *
      * @param type $post_type
      * @return type
      */
@@ -113,36 +112,36 @@ class ArticleView extends AdminContent
         $data = preg_replace('/\s{3,}/', ' ', $data);
         $data = preg_replace($pattern, $replace, $data);
 
-        $data = str_replace(");", ")", $data['sql']);
-        $data = str_replace("(", "", $data);
-        $data = str_replace("'", "", $data);
-        $data = explode("),", $data);
+        $data = str_replace(');', ')', $data['sql']);
+        $data = str_replace('(', '', $data);
+        $data = str_replace("'", '', $data);
+        $data = explode('),', $data);
 
         foreach ($data as $id => $item) {
-            foreach (explode(",", $item) as $id2 => $key) {
-
-                if ($id2 == 0)
-                    $myKey = "id";
-                elseif ($id2 == 1)
-                    $myKey = "id_entity";
-                elseif ($id2 == 2)
-                    $myKey = "post_id";
-                elseif ($id2 == 3)
-                    $myKey = "service";
-                elseif ($id2 == 4)
-                    $myKey = "vendor_id";
-                elseif ($id2 == 5)
-                    $myKey = "key";
-                elseif ($id2 == 6)
-                    $myKey = "value";
-                elseif ($id2 == 7)
-                    $myKey = "content_type";
-                elseif ($id2 == 8)
-                    $myKey = "cat_id";
-                elseif ($id2 == 9)
-                    $myKey = "description";
-                elseif ($id2 == 10)
-                    $myKey = "show";
+            foreach (explode(',', $item) as $id2 => $key) {
+                if ($id2 == 0) {
+                    $myKey = 'id';
+                } elseif ($id2 == 1) {
+                    $myKey = 'id_entity';
+                } elseif ($id2 == 2) {
+                    $myKey = 'post_id';
+                } elseif ($id2 == 3) {
+                    $myKey = 'service';
+                } elseif ($id2 == 4) {
+                    $myKey = 'vendor_id';
+                } elseif ($id2 == 5) {
+                    $myKey = 'key';
+                } elseif ($id2 == 6) {
+                    $myKey = 'value';
+                } elseif ($id2 == 7) {
+                    $myKey = 'content_type';
+                } elseif ($id2 == 8) {
+                    $myKey = 'cat_id';
+                } elseif ($id2 == 9) {
+                    $myKey = 'description';
+                } elseif ($id2 == 10) {
+                    $myKey = 'show';
+                }
 
                 /** IF SINGL LINE * */
                 if ($dbKey && $dbKey == $key) {
@@ -153,7 +152,7 @@ class ArticleView extends AdminContent
                 if ($id2 == 6 or $id2 == 9) {
                     $array[$id][$myKey] = $key;
                 } else {
-                    $array[$id][$myKey] = preg_replace($pattern, $replace, str_replace(")", "", $key));
+                    $array[$id][$myKey] = preg_replace($pattern, $replace, str_replace(')', '', $key));
                 }
             }
         }
@@ -161,16 +160,16 @@ class ArticleView extends AdminContent
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function getSitemap()
     {
         //$post_type = "personal";
-        $db = new DB;
+        $db = new DB();
         $query = "SELECT * FROM dnt_posts WHERE 
             `type`      = 'sitemap' AND 
-            `cat_id`    = '" . $this->getCatId("sitemap") . "' AND 
+            `cat_id`    = '" . $this->getCatId('sitemap') . "' AND 
             `show`      = '1'";
 
         if ($db->num_rows($query) > 0) {
@@ -181,7 +180,7 @@ class ArticleView extends AdminContent
     }
 
     /**
-     * 
+     *
      * @param type $column
      * @param type $name_url
      * @return boolean
@@ -195,7 +194,7 @@ class ArticleView extends AdminContent
             $AND_SRV = false;
         }
 
-        $query = "SELECT `$column` FROM dnt_posts WHERE `name_url` = '$name_url' AND vendor_id = '" . $this->vendor->getId() . "' " . $AND_SRV . "";
+        $query = "SELECT `$column` FROM dnt_posts WHERE `name_url` = '$name_url' AND vendor_id = '" . $this->vendor->getId() . "' " . $AND_SRV . '';
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
                 return $row[$column];
@@ -213,21 +212,21 @@ class ArticleView extends AdminContent
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function getStaticId()
     {
         if ($this->rest->webhook(1)) {
             $service = false;
-            return $this->StaticViewParam("id_entity", $this->rest->webhook(1), $service);
+            return $this->StaticViewParam('id_entity', $this->rest->webhook(1), $service);
         } else {
-            return $this->StaticViewParam("id_entity", $this->rest->webhook(1));
+            return $this->StaticViewParam('id_entity', $this->rest->webhook(1));
         }
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function getArticleId()
@@ -236,7 +235,7 @@ class ArticleView extends AdminContent
     }
 
     /**
-     * 
+     *
      * @param type $post_id
      * @return type
      * returns array of tags
@@ -244,8 +243,8 @@ class ArticleView extends AdminContent
     public function getPostTags($post_id)
     {
         $arr = array();
-        if (count($this->showTags($this->getPostParam("tags", $post_id))) > 0) {
-            foreach ($this->showTags($this->getPostParam("tags", $post_id)) as $tag) {
+        if (count($this->showTags($this->getPostParam('tags', $post_id))) > 0) {
+            foreach ($this->showTags($this->getPostParam('tags', $post_id)) as $tag) {
                 $arr[] = $tag;
             }
             return $arr;
@@ -255,7 +254,7 @@ class ArticleView extends AdminContent
     }
 
     /**
-     * 
+     *
      * @param type $column
      * @param type $post_id
      * @param type $full_url
@@ -264,8 +263,6 @@ class ArticleView extends AdminContent
      */
     public function getPostParam($column, $post_id, $full_url = false, $default = false)
     {
-
-
 
         if (DEAFULT_LANG == $this->multiLanguage->getLang() || MULTY_LANGUAGE == false) {
             $Q_column = $column;
@@ -277,13 +274,12 @@ class ArticleView extends AdminContent
                 AND `dnt_posts`.vendor_id 	= '" . $this->vendor->getId() . "'
                 ";
         } else {
-            if (
-                    $column == "name" ||
-                    $column == "name_url" ||
-                    $column == "content" ||
-                    $column == "perex"
+            if ($column == 'name' ||
+                    $column == 'name_url' ||
+                    $column == 'content' ||
+                    $column == 'perex'
             ) {
-                $Q_column = "l_translate";
+                $Q_column = 'l_translate';
                 $query = "
                 SELECT 
                     `dnt_posts`.`id` AS c_id, 
@@ -325,13 +321,13 @@ class ArticleView extends AdminContent
 
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
-                if ($column == "name_url") {
+                if ($column == 'name_url') {
                     if ($this->dnt->is_external_url($row[$Q_column])) {
                         return $row[$Q_column];
-                    } elseif ($full_url == false && $column == "name_url") {
-                        return $this->url->get("WWW_PATH") . $row[$Q_column];
+                    } elseif ($full_url == false && $column == 'name_url') {
+                        return $this->url->get('WWW_PATH') . $row[$Q_column];
                     } else {
-                        return $this->url->get("WWW_PATH") . $row[$Q_column];
+                        return $this->url->get('WWW_PATH') . $row[$Q_column];
                     }
                 } else {
                     return $row[$Q_column];
@@ -343,7 +339,7 @@ class ArticleView extends AdminContent
     }
 
     /**
-     * 
+     *
      * @param type $id
      * @return type
      */
@@ -353,7 +349,7 @@ class ArticleView extends AdminContent
     }
 
     /**
-     * 
+     *
      * @param type $id_entity
      * @return type
      */
@@ -404,8 +400,6 @@ class ArticleView extends AdminContent
 		ORDER BY 
 			`dnt_posts_meta`.`id_entity` ASC";
 
-
-
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
                 $arr['dnt_posts_id'] = $row['dnt_posts_id'];
@@ -427,7 +421,7 @@ class ArticleView extends AdminContent
     }
 
     /**
-     * 
+     *
      * @param type $cat_name_url
      * @param type $id_entity
      * @param type $name_url
@@ -437,18 +431,17 @@ class ArticleView extends AdminContent
     {
         if ($this->dnt->is_external_url($name_url)) {
             $url = $name_url;
-        } elseif ($this->dnt->in_string("<WWW_PATH>", $name_url)) {
-            $url = str_replace("<WWW_PATH>", WWW_PATH, $name_url);
+        } elseif ($this->dnt->in_string('<WWW_PATH>', $name_url)) {
+            $url = str_replace('<WWW_PATH>', WWW_PATH, $name_url);
         } elseif (in_array($name_url, $this->webhook->getSitemapModules())) {
-            $url = $this->url->get("WWW_PATH") . "" . $name_url . "";
+            $url = $this->url->get('WWW_PATH') . '' . $name_url . '';
         } else {
             if ($type) {
-                $url = $this->url->get("WWW_PATH") . $cat_name_url . "/" . $type . "/" . $id_entity . "/" . $name_url . "";
+                $url = $this->url->get('WWW_PATH') . $cat_name_url . '/' . $type . '/' . $id_entity . '/' . $name_url . '';
             } else {
-                $url = $this->url->get("WWW_PATH") . $cat_name_url . "/detail/" . $id_entity . "/" . $name_url . "";
+                $url = $this->url->get('WWW_PATH') . $cat_name_url . '/detail/' . $id_entity . '/' . $name_url . '';
             }
         }
         return $url;
     }
-
 }

@@ -10,7 +10,6 @@ use DntLibrary\Base\Vendor;
 
 class JsonVariantsToPostVariantsJob
 {
-
     public function __construct()
     {
         $this->db = new DB();
@@ -22,11 +21,11 @@ class JsonVariantsToPostVariantsJob
 
     protected function getProducts()
     {
-        $query = "SELECT * FROM dnt_posts WHERE "
+        $query = 'SELECT * FROM dnt_posts WHERE '
                 . "type = 'product' AND "
                 . "`show` = '1' AND "
                 . "vendor_id = '" . $this->vendor->getId() . "'"
-                . "ORDER BY id ASC ";
+                . 'ORDER BY id ASC ';
         $this->finalItems = $this->db->get_results($query);
     }
 
@@ -74,12 +73,12 @@ class JsonVariantsToPostVariantsJob
 
         foreach ($meta as $key => $val) {
             $this->db->update(
-                    'dnt_posts_meta',
-                    array(
+                'dnt_posts_meta',
+                array(
                         'show' => 1,
                         'value' => $val,
                     ),
-                    array(
+                array(
                         '`key`' => $key,
                         '`post_id`' => $lastId,
                         '`vendor_id`' => $post['vendor_id'])
@@ -105,7 +104,7 @@ class JsonVariantsToPostVariantsJob
                 '`content_type`' => 'text',
                 '`cat_id`' => '2',
                 '`description`' => 'Meta ' . ucfirst($key),
-                '`show`' => '1'
+                '`show`' => '1',
             );
             $this->db->insert('dnt_posts_meta', $insertedData);
         }
@@ -123,9 +122,9 @@ class JsonVariantsToPostVariantsJob
 
     protected function removeUnusedMeta()
     {
-        $query = "DELETE FROM `dnt_posts_meta` WHERE "
-                . "post_id IN("
-                . "SELECT id_entity FROM `dnt_posts` WHERE "
+        $query = 'DELETE FROM `dnt_posts_meta` WHERE '
+                . 'post_id IN('
+                . 'SELECT id_entity FROM `dnt_posts` WHERE '
                 . "vendor_id = '" . $this->vendor->getId() . "' AND "
                 . "type = 'variant') AND "
                 . "vendor_id = '" . $this->vendor->getId() . "' AND "
@@ -136,9 +135,9 @@ class JsonVariantsToPostVariantsJob
 
     protected function removeAllPostsVariants()
     {
-        $query = "DELETE FROM `dnt_posts_meta` WHERE "
-                . "post_id IN("
-                . "SELECT id_entity FROM `dnt_posts` WHERE "
+        $query = 'DELETE FROM `dnt_posts_meta` WHERE '
+                . 'post_id IN('
+                . 'SELECT id_entity FROM `dnt_posts` WHERE '
                 . "vendor_id = '" . $this->vendor->getId() . "' AND "
                 . "type = 'variant') AND "
                 . "vendor_id = '" . $this->vendor->getId() . "' AND "
@@ -190,5 +189,4 @@ class JsonVariantsToPostVariantsJob
         //$this->removeUnusedMeta();
         //var_dump($this->finalItems);
     }
-
 }

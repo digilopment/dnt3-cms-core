@@ -4,7 +4,6 @@ namespace DntTest;
 
 class PerformanceTest
 {
-
     public function run()
     {
 
@@ -21,10 +20,8 @@ class PerformanceTest
             !isset($string[$maxChars]);
         }
         $end = microtime(true);
-        echo ($end - $start) . " s";
-
+        echo ($end - $start) . ' s';
 
         phpinfo();
     }
-
 }

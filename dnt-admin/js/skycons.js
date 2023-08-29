@@ -1,12 +1,12 @@
-﻿(function(global) {
-  "use strict";
+﻿(function (global) {
+    "use strict";
 
   /* Set up a RequestAnimationFrame shim so we can animate efficiently FOR
    * GREAT JUSTICE. */
-  var requestInterval, cancelInterval;
+    var requestInterval, cancelInterval;
 
-  (function() {
-    var raf = global.requestAnimationFrame       ||
+    (function () {
+        var raf = global.requestAnimationFrame       ||
               global.webkitRequestAnimationFrame ||
               global.mozRequestAnimationFrame    ||
               global.oRequestAnimationFrame      ||
@@ -17,29 +17,28 @@
               global.oCancelAnimationFrame       ||
               global.msCancelAnimationFrame      ;
 
-    if(raf && caf) {
-      requestInterval = function(fn, delay) {
-        var handle = {value: null};
+        if (raf && caf) {
+            requestInterval = function (fn, delay) {
+                var handle = {value: null};
 
-        function loop() {
-          handle.value = raf(loop);
-          fn();
+                function loop()
+                {
+                    handle.value = raf(loop);
+                    fn();
+                }
+
+                loop();
+                return handle;
+            };
+
+            cancelInterval = function (handle) {
+                caf(handle.value);
+            };
+        } else {
+            requestInterval = setInterval;
+            cancelInterval = clearInterval;
         }
-
-        loop();
-        return handle;
-      };
-
-      cancelInterval = function(handle) {
-        caf(handle.value);
-      };
-    }
-
-    else {
-      requestInterval = setInterval;
-      cancelInterval = clearInterval;
-    }
-  }());
+    }());
 
   /* Catmull-rom spline stuffs. */
   /*
@@ -138,197 +137,209 @@
   /* Define skycon things. */
   /* FIXME: I'm *really really* sorry that this code is so gross. Really, I am.
    * I'll try to clean it up eventually! Promise! */
-  var KEYFRAME = 500,
+    var KEYFRAME = 500,
       STROKE = 0.08,
       TAU = 2.0 * Math.PI,
       TWO_OVER_SQRT_2 = 2.0 / Math.sqrt(2);
 
-  function circle(ctx, x, y, r) {
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, TAU, false);
-    ctx.fill();
-  }
+    function circle(ctx, x, y, r)
+    {
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, TAU, false);
+        ctx.fill();
+    }
 
-  function line(ctx, ax, ay, bx, by) {
-    ctx.beginPath();
-    ctx.moveTo(ax, ay);
-    ctx.lineTo(bx, by);
-    ctx.stroke();
-  }
+    function line(ctx, ax, ay, bx, by)
+    {
+        ctx.beginPath();
+        ctx.moveTo(ax, ay);
+        ctx.lineTo(bx, by);
+        ctx.stroke();
+    }
 
-  function puff(ctx, t, cx, cy, rx, ry, rmin, rmax) {
-    var c = Math.cos(t * TAU),
+    function puff(ctx, t, cx, cy, rx, ry, rmin, rmax)
+    {
+        var c = Math.cos(t * TAU),
         s = Math.sin(t * TAU);
 
-    rmax -= rmin;
+        rmax -= rmin;
 
-    circle(
-      ctx,
-      cx - s * rx,
-      cy + c * ry + rmax * 0.5,
-      rmin + (1 - c * 0.5) * rmax
-    );
-  }
+        circle(
+            ctx,
+            cx - s * rx,
+            cy + c * ry + rmax * 0.5,
+            rmin + (1 - c * 0.5) * rmax
+        );
+    }
 
-  function puffs(ctx, t, cx, cy, rx, ry, rmin, rmax) {
-    var i;
+    function puffs(ctx, t, cx, cy, rx, ry, rmin, rmax)
+    {
+        var i;
 
-    for(i = 5; i--; )
-      puff(ctx, t + i / 5, cx, cy, rx, ry, rmin, rmax);
-  }
+        for (i = 5; i--; ) {
+            puff(ctx, t + i / 5, cx, cy, rx, ry, rmin, rmax);
+        }
+    }
 
-  function cloud(ctx, t, cx, cy, cw, s, color) {
-    t /= 30000;
+    function cloud(ctx, t, cx, cy, cw, s, color)
+    {
+        t /= 30000;
 
-    var a = cw * 0.21,
+        var a = cw * 0.21,
         b = cw * 0.12,
         c = cw * 0.24,
         d = cw * 0.28;
 
-    ctx.fillStyle = color;
-    puffs(ctx, t, cx, cy, a, b, c, d);
+        ctx.fillStyle = color;
+        puffs(ctx, t, cx, cy, a, b, c, d);
 
-    ctx.globalCompositeOperation = 'destination-out';
-    puffs(ctx, t, cx, cy, a, b, c - s, d - s);
-    ctx.globalCompositeOperation = 'source-over';
-  }
+        ctx.globalCompositeOperation = 'destination-out';
+        puffs(ctx, t, cx, cy, a, b, c - s, d - s);
+        ctx.globalCompositeOperation = 'source-over';
+    }
 
-  function sun(ctx, t, cx, cy, cw, s, color) {
-    t /= 120000;
+    function sun(ctx, t, cx, cy, cw, s, color)
+    {
+        t /= 120000;
 
-    var a = cw * 0.25 - s * 0.5,
+        var a = cw * 0.25 - s * 0.5,
         b = cw * 0.32 + s * 0.5,
         c = cw * 0.50 - s * 0.5,
         i, p, cos, sin;
 
-    ctx.strokeStyle = color;
-    ctx.lineWidth = s;
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
+        ctx.strokeStyle = color;
+        ctx.lineWidth = s;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
 
-    ctx.beginPath();
-    ctx.arc(cx, cy, a, 0, TAU, false);
-    ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(cx, cy, a, 0, TAU, false);
+        ctx.stroke();
 
-    for(i = 8; i--; ) {
-      p = (t + i / 8) * TAU;
-      cos = Math.cos(p);
-      sin = Math.sin(p);
-      line(ctx, cx + cos * b, cy + sin * b, cx + cos * c, cy + sin * c);
+        for (i = 8; i--; ) {
+            p = (t + i / 8) * TAU;
+            cos = Math.cos(p);
+            sin = Math.sin(p);
+            line(ctx, cx + cos * b, cy + sin * b, cx + cos * c, cy + sin * c);
+        }
     }
-  }
 
-  function moon(ctx, t, cx, cy, cw, s, color) {
-    t /= 15000;
+    function moon(ctx, t, cx, cy, cw, s, color)
+    {
+        t /= 15000;
 
-    var a = cw * 0.29 - s * 0.5,
+        var a = cw * 0.29 - s * 0.5,
         b = cw * 0.05,
         c = Math.cos(t * TAU),
         p = c * TAU / -16;
 
-    ctx.strokeStyle = color;
-    ctx.lineWidth = s;
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
+        ctx.strokeStyle = color;
+        ctx.lineWidth = s;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
 
-    cx += c * b;
+        cx += c * b;
 
-    ctx.beginPath();
-    ctx.arc(cx, cy, a, p + TAU / 8, p + TAU * 7 / 8, false);
-    ctx.arc(cx + Math.cos(p) * a * TWO_OVER_SQRT_2, cy + Math.sin(p) * a * TWO_OVER_SQRT_2, a, p + TAU * 5 / 8, p + TAU * 3 / 8, true);
-    ctx.closePath();
-    ctx.stroke();
-  }
+        ctx.beginPath();
+        ctx.arc(cx, cy, a, p + TAU / 8, p + TAU * 7 / 8, false);
+        ctx.arc(cx + Math.cos(p) * a * TWO_OVER_SQRT_2, cy + Math.sin(p) * a * TWO_OVER_SQRT_2, a, p + TAU * 5 / 8, p + TAU * 3 / 8, true);
+        ctx.closePath();
+        ctx.stroke();
+    }
 
-  function rain(ctx, t, cx, cy, cw, s, color) {
-    t /= 1350;
+    function rain(ctx, t, cx, cy, cw, s, color)
+    {
+        t /= 1350;
 
-    var a = cw * 0.16,
+        var a = cw * 0.16,
         b = TAU * 11 / 12,
-        c = TAU *  7 / 12,
+        c = TAU * 7 / 12,
         i, p, x, y;
 
-    ctx.fillStyle = color;
+        ctx.fillStyle = color;
 
-    for(i = 4; i--; ) {
-      p = (t + i / 4) % 1;
-      x = cx + ((i - 1.5) / 1.5) * (i === 1 || i === 2 ? -1 : 1) * a;
-      y = cy + p * p * cw;
-      ctx.beginPath();
-      ctx.moveTo(x, y - s * 1.5);
-      ctx.arc(x, y, s * 0.75, b, c, false);
-      ctx.fill();
+        for (i = 4; i--; ) {
+            p = (t + i / 4) % 1;
+            x = cx + ((i - 1.5) / 1.5) * (i === 1 || i === 2 ? -1 : 1) * a;
+            y = cy + p * p * cw;
+            ctx.beginPath();
+            ctx.moveTo(x, y - s * 1.5);
+            ctx.arc(x, y, s * 0.75, b, c, false);
+            ctx.fill();
+        }
     }
-  }
 
-  function sleet(ctx, t, cx, cy, cw, s, color) {
-    t /= 750;
+    function sleet(ctx, t, cx, cy, cw, s, color)
+    {
+        t /= 750;
 
-    var a = cw * 0.1875,
+        var a = cw * 0.1875,
         b = TAU * 11 / 12,
-        c = TAU *  7 / 12,
+        c = TAU * 7 / 12,
         i, p, x, y;
 
-    ctx.strokeStyle = color;
-    ctx.lineWidth = s * 0.5;
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
+        ctx.strokeStyle = color;
+        ctx.lineWidth = s * 0.5;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
 
-    for(i = 4; i--; ) {
-      p = (t + i / 4) % 1;
-      x = Math.floor(cx + ((i - 1.5) / 1.5) * (i === 1 || i === 2 ? -1 : 1) * a) + 0.5;
-      y = cy + p * cw;
-      line(ctx, x, y - s * 1.5, x, y + s * 1.5);
+        for (i = 4; i--; ) {
+            p = (t + i / 4) % 1;
+            x = Math.floor(cx + ((i - 1.5) / 1.5) * (i === 1 || i === 2 ? -1 : 1) * a) + 0.5;
+            y = cy + p * cw;
+            line(ctx, x, y - s * 1.5, x, y + s * 1.5);
+        }
     }
-  }
 
-  function snow(ctx, t, cx, cy, cw, s, color) {
-    t /= 3000;
+    function snow(ctx, t, cx, cy, cw, s, color)
+    {
+        t /= 3000;
 
-    var a  = cw * 0.16,
-        b  = s * 0.75,
-        u  = t * TAU * 0.7,
+        var a = cw * 0.16,
+        b = s * 0.75,
+        u = t * TAU * 0.7,
         ux = Math.cos(u) * b,
         uy = Math.sin(u) * b,
-        v  = u + TAU / 3,
+        v = u + TAU / 3,
         vx = Math.cos(v) * b,
         vy = Math.sin(v) * b,
-        w  = u + TAU * 2 / 3,
+        w = u + TAU * 2 / 3,
         wx = Math.cos(w) * b,
         wy = Math.sin(w) * b,
         i, p, x, y;
 
-    ctx.strokeStyle = color;
-    ctx.lineWidth = s * 0.5;
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
+        ctx.strokeStyle = color;
+        ctx.lineWidth = s * 0.5;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
 
-    for(i = 4; i--; ) {
-      p = (t + i / 4) % 1;
-      x = cx + Math.sin((p + i / 4) * TAU) * a;
-      y = cy + p * cw;
+        for (i = 4; i--; ) {
+            p = (t + i / 4) % 1;
+            x = cx + Math.sin((p + i / 4) * TAU) * a;
+            y = cy + p * cw;
 
-      line(ctx, x - ux, y - uy, x + ux, y + uy);
-      line(ctx, x - vx, y - vy, x + vx, y + vy);
-      line(ctx, x - wx, y - wy, x + wx, y + wy);
+            line(ctx, x - ux, y - uy, x + ux, y + uy);
+            line(ctx, x - vx, y - vy, x + vx, y + vy);
+            line(ctx, x - wx, y - wy, x + wx, y + wy);
+        }
     }
-  }
 
-  function fogbank(ctx, t, cx, cy, cw, s, color) {
-    t /= 30000;
+    function fogbank(ctx, t, cx, cy, cw, s, color)
+    {
+        t /= 30000;
 
-    var a = cw * 0.21,
+        var a = cw * 0.21,
         b = cw * 0.06,
         c = cw * 0.21,
         d = cw * 0.28;
 
-    ctx.fillStyle = color;
-    puffs(ctx, t, cx, cy, a, b, c, d);
+        ctx.fillStyle = color;
+        puffs(ctx, t, cx, cy, a, b, c, d);
 
-    ctx.globalCompositeOperation = 'destination-out';
-    puffs(ctx, t, cx, cy, a, b, c - s, d - s);
-    ctx.globalCompositeOperation = 'source-over';
-  }
+        ctx.globalCompositeOperation = 'destination-out';
+        puffs(ctx, t, cx, cy, a, b, c - s, d - s);
+        ctx.globalCompositeOperation = 'source-over';
+    }
 
   /*
   var WIND_PATHS = [
@@ -362,7 +373,7 @@
       ];
   */
 
-  var WIND_PATHS = [
+    var WIND_PATHS = [
         [
           -0.7500, -0.1800, -0.7219, -0.1527, -0.6971, -0.1225,
           -0.6739, -0.0910, -0.6516, -0.0588, -0.6298, -0.0262,
@@ -406,218 +417,220 @@
         {start: 0.56, end: 0.16}
       ];
 
-  function leaf(ctx, t, x, y, cw, s, color) {
-    var a = cw / 8,
+    function leaf(ctx, t, x, y, cw, s, color)
+    {
+        var a = cw / 8,
         b = a / 3,
         c = 2 * b,
         d = (t % 1) * TAU,
         e = Math.cos(d),
         f = Math.sin(d);
 
-    ctx.fillStyle = color;
-    ctx.strokeStyle = color;
-    ctx.lineWidth = s;
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
+        ctx.fillStyle = color;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = s;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
 
-    ctx.beginPath();
-    ctx.arc(x        , y        , a, d          , d + Math.PI, false);
-    ctx.arc(x - b * e, y - b * f, c, d + Math.PI, d          , false);
-    ctx.arc(x + c * e, y + c * f, b, d + Math.PI, d          , true );
-    ctx.globalCompositeOperation = 'destination-out';
-    ctx.fill();
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.stroke();
-  }
+        ctx.beginPath();
+        ctx.arc(x        , y        , a, d          , d + Math.PI, false);
+        ctx.arc(x - b * e, y - b * f, c, d + Math.PI, d          , false);
+        ctx.arc(x + c * e, y + c * f, b, d + Math.PI, d          , true);
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.fill();
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.stroke();
+    }
 
-  function swoosh(ctx, t, cx, cy, cw, s, index, total, color) {
-    t /= 2500;
+    function swoosh(ctx, t, cx, cy, cw, s, index, total, color)
+    {
+        t /= 2500;
 
-    var path = WIND_PATHS[index],
+        var path = WIND_PATHS[index],
         a = (t + index - WIND_OFFSETS[index].start) % total,
         c = (t + index - WIND_OFFSETS[index].end  ) % total,
         e = (t + index                            ) % total,
         b, d, f, i;
 
-    ctx.strokeStyle = color;
-    ctx.lineWidth = s;
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
+        ctx.strokeStyle = color;
+        ctx.lineWidth = s;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
 
-    if(a < 1) {
-      ctx.beginPath();
+        if (a < 1) {
+            ctx.beginPath();
 
-      a *= path.length / 2 - 1;
-      b  = Math.floor(a);
-      a -= b;
-      b *= 2;
-      b += 2;
+            a *= path.length / 2 - 1;
+            b = Math.floor(a);
+            a -= b;
+            b *= 2;
+            b += 2;
 
-      ctx.moveTo(
-        cx + (path[b - 2] * (1 - a) + path[b    ] * a) * cw,
-        cy + (path[b - 1] * (1 - a) + path[b + 1] * a) * cw
-      );
+            ctx.moveTo(
+                cx + (path[b - 2] * (1 - a) + path[b    ] * a) * cw,
+                cy + (path[b - 1] * (1 - a) + path[b + 1] * a) * cw
+            );
 
-      if(c < 1) {
-        c *= path.length / 2 - 1;
-        d  = Math.floor(c);
-        c -= d;
-        d *= 2;
-        d += 2;
+            if (c < 1) {
+                  c *= path.length / 2 - 1;
+                  d = Math.floor(c);
+                  c -= d;
+                  d *= 2;
+                  d += 2;
 
-        for(i = b; i !== d; i += 2)
-          ctx.lineTo(cx + path[i] * cw, cy + path[i + 1] * cw);
+                for (i = b; i !== d; i += 2) {
+                    ctx.lineTo(cx + path[i] * cw, cy + path[i + 1] * cw);
+                }
 
-        ctx.lineTo(
-          cx + (path[d - 2] * (1 - c) + path[d    ] * c) * cw,
-          cy + (path[d - 1] * (1 - c) + path[d + 1] * c) * cw
-        );
-      }
+                  ctx.lineTo(
+                      cx + (path[d - 2] * (1 - c) + path[d    ] * c) * cw,
+                      cy + (path[d - 1] * (1 - c) + path[d + 1] * c) * cw
+                  );
+            } else {
+                for (i = b; i !== path.length; i += 2) {
+                    ctx.lineTo(cx + path[i] * cw, cy + path[i + 1] * cw);
+                }
+            }
 
-      else
-        for(i = b; i !== path.length; i += 2)
-          ctx.lineTo(cx + path[i] * cw, cy + path[i + 1] * cw);
+            ctx.stroke();
+        } else if (c < 1) {
+            ctx.beginPath();
 
-      ctx.stroke();
+            c *= path.length / 2 - 1;
+            d = Math.floor(c);
+            c -= d;
+            d *= 2;
+            d += 2;
+
+            ctx.moveTo(cx + path[0] * cw, cy + path[1] * cw);
+
+            for (i = 2; i !== d; i += 2) {
+                ctx.lineTo(cx + path[i] * cw, cy + path[i + 1] * cw);
+            }
+
+            ctx.lineTo(
+                cx + (path[d - 2] * (1 - c) + path[d    ] * c) * cw,
+                cy + (path[d - 1] * (1 - c) + path[d + 1] * c) * cw
+            );
+
+            ctx.stroke();
+        }
+
+        if (e < 1) {
+            e *= path.length / 2 - 1;
+            f = Math.floor(e);
+            e -= f;
+            f *= 2;
+            f += 2;
+
+            leaf(
+                ctx,
+                t,
+                cx + (path[f - 2] * (1 - e) + path[f    ] * e) * cw,
+                cy + (path[f - 1] * (1 - e) + path[f + 1] * e) * cw,
+                cw,
+                s,
+                color
+            );
+        }
     }
 
-    else if(c < 1) {
-      ctx.beginPath();
-
-      c *= path.length / 2 - 1;
-      d  = Math.floor(c);
-      c -= d;
-      d *= 2;
-      d += 2;
-
-      ctx.moveTo(cx + path[0] * cw, cy + path[1] * cw);
-
-      for(i = 2; i !== d; i += 2)
-        ctx.lineTo(cx + path[i] * cw, cy + path[i + 1] * cw);
-
-      ctx.lineTo(
-        cx + (path[d - 2] * (1 - c) + path[d    ] * c) * cw,
-        cy + (path[d - 1] * (1 - c) + path[d + 1] * c) * cw
-      );
-
-      ctx.stroke();
-    }
-
-    if(e < 1) {
-      e *= path.length / 2 - 1;
-      f  = Math.floor(e);
-      e -= f;
-      f *= 2;
-      f += 2;
-
-      leaf(
-        ctx,
-        t,
-        cx + (path[f - 2] * (1 - e) + path[f    ] * e) * cw,
-        cy + (path[f - 1] * (1 - e) + path[f + 1] * e) * cw,
-        cw,
-        s,
-        color
-      );
-    }
-  }
-
-  var Skycons = function(opts) {
-        this.list        = [];
-        this.interval    = null;
-        this.color       = opts && opts.color ? opts.color : "black";
+    var Skycons = function (opts) {
+        this.list = [];
+        this.interval = null;
+        this.color = opts && opts.color ? opts.color : "black";
         this.resizeClear = !!(opts && opts.resizeClear);
-      };
+    };
 
-  Skycons.CLEAR_DAY = function(ctx, t, color) {
-    var w = ctx.canvas.width,
+    Skycons.CLEAR_DAY = function (ctx, t, color) {
+        var w = ctx.canvas.width,
         h = ctx.canvas.height,
         s = Math.min(w, h);
 
-    sun(ctx, t, w * 0.5, h * 0.5, s, s * STROKE, color);
-  };
+        sun(ctx, t, w * 0.5, h * 0.5, s, s * STROKE, color);
+    };
 
-  Skycons.CLEAR_NIGHT = function(ctx, t, color) {
-    var w = ctx.canvas.width,
+    Skycons.CLEAR_NIGHT = function (ctx, t, color) {
+        var w = ctx.canvas.width,
         h = ctx.canvas.height,
         s = Math.min(w, h);
 
-    moon(ctx, t, w * 0.5, h * 0.5, s, s * STROKE, color);
-  };
+        moon(ctx, t, w * 0.5, h * 0.5, s, s * STROKE, color);
+    };
 
-  Skycons.PARTLY_CLOUDY_DAY = function(ctx, t, color) {
-    var w = ctx.canvas.width,
+    Skycons.PARTLY_CLOUDY_DAY = function (ctx, t, color) {
+        var w = ctx.canvas.width,
         h = ctx.canvas.height,
         s = Math.min(w, h);
 
-    sun(ctx, t, w * 0.625, h * 0.375, s * 0.75, s * STROKE, color);
-    cloud(ctx, t, w * 0.375, h * 0.625, s * 0.75, s * STROKE, color);
-  };
+        sun(ctx, t, w * 0.625, h * 0.375, s * 0.75, s * STROKE, color);
+        cloud(ctx, t, w * 0.375, h * 0.625, s * 0.75, s * STROKE, color);
+    };
 
-  Skycons.PARTLY_CLOUDY_NIGHT = function(ctx, t, color) {
-    var w = ctx.canvas.width,
+    Skycons.PARTLY_CLOUDY_NIGHT = function (ctx, t, color) {
+        var w = ctx.canvas.width,
         h = ctx.canvas.height,
         s = Math.min(w, h);
 
-    moon(ctx, t, w * 0.667, h * 0.375, s * 0.75, s * STROKE, color);
-    cloud(ctx, t, w * 0.375, h * 0.625, s * 0.75, s * STROKE, color);
-  };
+        moon(ctx, t, w * 0.667, h * 0.375, s * 0.75, s * STROKE, color);
+        cloud(ctx, t, w * 0.375, h * 0.625, s * 0.75, s * STROKE, color);
+    };
 
-  Skycons.CLOUDY = function(ctx, t, color) {
-    var w = ctx.canvas.width,
+    Skycons.CLOUDY = function (ctx, t, color) {
+        var w = ctx.canvas.width,
         h = ctx.canvas.height,
         s = Math.min(w, h);
 
-    cloud(ctx, t, w * 0.5, h * 0.5, s, s * STROKE, color);
-  };
+        cloud(ctx, t, w * 0.5, h * 0.5, s, s * STROKE, color);
+    };
 
-  Skycons.RAIN = function(ctx, t, color) {
-    var w = ctx.canvas.width,
+    Skycons.RAIN = function (ctx, t, color) {
+        var w = ctx.canvas.width,
         h = ctx.canvas.height,
         s = Math.min(w, h);
 
-    rain(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
-    cloud(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
-  };
+        rain(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
+        cloud(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
+    };
 
-  Skycons.SLEET = function(ctx, t, color) {
-    var w = ctx.canvas.width,
+    Skycons.SLEET = function (ctx, t, color) {
+        var w = ctx.canvas.width,
         h = ctx.canvas.height,
         s = Math.min(w, h);
 
-    sleet(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
-    cloud(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
-  };
+        sleet(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
+        cloud(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
+    };
 
-  Skycons.SNOW = function(ctx, t, color) {
-    var w = ctx.canvas.width,
+    Skycons.SNOW = function (ctx, t, color) {
+        var w = ctx.canvas.width,
         h = ctx.canvas.height,
         s = Math.min(w, h);
 
-    snow(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
-    cloud(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
-  };
+        snow(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
+        cloud(ctx, t, w * 0.5, h * 0.37, s * 0.9, s * STROKE, color);
+    };
 
-  Skycons.WIND = function(ctx, t, color) {
-    var w = ctx.canvas.width,
+    Skycons.WIND = function (ctx, t, color) {
+        var w = ctx.canvas.width,
         h = ctx.canvas.height,
         s = Math.min(w, h);
 
-    swoosh(ctx, t, w * 0.5, h * 0.5, s, s * STROKE, 0, 2, color);
-    swoosh(ctx, t, w * 0.5, h * 0.5, s, s * STROKE, 1, 2, color);
-  };
+        swoosh(ctx, t, w * 0.5, h * 0.5, s, s * STROKE, 0, 2, color);
+        swoosh(ctx, t, w * 0.5, h * 0.5, s, s * STROKE, 1, 2, color);
+    };
 
-  Skycons.FOG = function(ctx, t, color) {
-    var w = ctx.canvas.width,
+    Skycons.FOG = function (ctx, t, color) {
+        var w = ctx.canvas.width,
         h = ctx.canvas.height,
         s = Math.min(w, h),
         k = s * STROKE;
 
-    fogbank(ctx, t, w * 0.5, h * 0.32, s * 0.75, k, color);
+        fogbank(ctx, t, w * 0.5, h * 0.32, s * 0.75, k, color);
 
-    t /= 5000;
+        t /= 5000;
 
-    var a = Math.cos((t       ) * TAU) * s * 0.02,
+        var a = Math.cos((t       ) * TAU) * s * 0.02,
         b = Math.cos((t + 0.25) * TAU) * s * 0.02,
         c = Math.cos((t + 0.50) * TAU) * s * 0.02,
         d = Math.cos((t + 0.75) * TAU) * s * 0.02,
@@ -625,106 +638,114 @@
         e = Math.floor(n - k * 0.5) + 0.5,
         f = Math.floor(n - k * 2.5) + 0.5;
 
-    ctx.strokeStyle = color;
-    ctx.lineWidth = k;
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
+        ctx.strokeStyle = color;
+        ctx.lineWidth = k;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
 
-    line(ctx, a + w * 0.2 + k * 0.5, e, b + w * 0.8 - k * 0.5, e);
-    line(ctx, c + w * 0.2 + k * 0.5, f, d + w * 0.8 - k * 0.5, f);
-  };
+        line(ctx, a + w * 0.2 + k * 0.5, e, b + w * 0.8 - k * 0.5, e);
+        line(ctx, c + w * 0.2 + k * 0.5, f, d + w * 0.8 - k * 0.5, f);
+    };
 
-  Skycons.prototype = {
-    _determineDrawingFunction: function(draw) {
-      if(typeof draw === "string") {
-        draw = draw.toUpperCase().replace(/-/g, "_");
-        return Skycons.hasOwnProperty(draw) ? Skycons[draw] : null;
-      }
-    },
-    add: function(el, draw) {
-      var obj;
+    Skycons.prototype = {
+        _determineDrawingFunction: function (draw) {
+            if (typeof draw === "string") {
+                draw = draw.toUpperCase().replace(/-/g, "_");
+                return Skycons.hasOwnProperty(draw) ? Skycons[draw] : null;
+            }
+        },
+        add: function (el, draw) {
+            var obj;
 
-      if(typeof el === "string")
-        el = document.getElementById(el);
+            if (typeof el === "string") {
+                el = document.getElementById(el);
+            }
 
-      // Does nothing if canvas name doesn't exists
-      if(el === null)
-        return;
+          // Does nothing if canvas name doesn't exists
+            if (el === null) {
+                return;
+            }
 
-      draw = this._determineDrawingFunction(draw);
+            draw = this._determineDrawingFunction(draw);
 
-      // Does nothing if the draw function isn't actually a function
-      if(typeof draw !== "function")
-        return;
+          // Does nothing if the draw function isn't actually a function
+            if (typeof draw !== "function") {
+                return;
+            }
 
-      obj = {
-        element: el,
-        context: el.getContext("2d"),
-        drawing: draw
-      };
+            obj = {
+                element: el,
+                context: el.getContext("2d"),
+                drawing: draw
+            };
 
-      this.list.push(obj);
-      this.draw(obj, KEYFRAME);
-    },
-    set: function(el, draw) {
-      var i;
+            this.list.push(obj);
+            this.draw(obj, KEYFRAME);
+        },
+        set: function (el, draw) {
+            var i;
 
-      if(typeof el === "string")
-        el = document.getElementById(el);
+            if (typeof el === "string") {
+                el = document.getElementById(el);
+            }
 
-      for(i = this.list.length; i--; )
-        if(this.list[i].element === el) {
-          this.list[i].drawing = this._determineDrawingFunction(draw);
-          this.draw(this.list[i], KEYFRAME);
-          return;
+            for (i = this.list.length; i--; ) {
+                if (this.list[i].element === el) {
+                    this.list[i].drawing = this._determineDrawingFunction(draw);
+                    this.draw(this.list[i], KEYFRAME);
+                    return;
+                }
+            }
+
+            this.add(el, draw);
+        },
+        remove: function (el) {
+            var i;
+
+            if (typeof el === "string") {
+                el = document.getElementById(el);
+            }
+
+            for (i = this.list.length; i--; ) {
+                if (this.list[i].element === el) {
+                    this.list.splice(i, 1);
+                    return;
+                }
+            }
+        },
+        draw: function (obj, time) {
+            var canvas = obj.context.canvas;
+
+            if (this.resizeClear) {
+                canvas.width = canvas.width;
+            } else {
+                obj.context.clearRect(0, 0, canvas.width, canvas.height);
+            }
+
+            obj.drawing(obj.context, time, this.color);
+        },
+        play: function () {
+            var self = this;
+
+            this.pause();
+            this.interval = requestInterval(function () {
+                var now = Date.now(),
+                i;
+
+                for (i = self.list.length; i--; ) {
+                    self.draw(self.list[i], now);
+                }
+            }, 1000 / 60);
+        },
+        pause: function () {
+            var i;
+
+            if (this.interval) {
+                cancelInterval(this.interval);
+                this.interval = null;
+            }
         }
+    };
 
-      this.add(el, draw);
-    },
-    remove: function(el) {
-      var i;
-
-      if(typeof el === "string")
-        el = document.getElementById(el);
-
-      for(i = this.list.length; i--; )
-        if(this.list[i].element === el) {
-          this.list.splice(i, 1);
-          return;
-        }
-    },
-    draw: function(obj, time) {
-      var canvas = obj.context.canvas;
-
-      if(this.resizeClear)
-        canvas.width = canvas.width;
-
-      else
-        obj.context.clearRect(0, 0, canvas.width, canvas.height);
-
-      obj.drawing(obj.context, time, this.color);
-    },
-    play: function() {
-      var self = this;
-
-      this.pause();
-      this.interval = requestInterval(function() {
-        var now = Date.now(),
-            i;
-
-        for(i = self.list.length; i--; )
-          self.draw(self.list[i], now);
-      }, 1000 / 60);
-    },
-    pause: function() {
-      var i;
-
-      if(this.interval) {
-        cancelInterval(this.interval);
-        this.interval = null;
-      }
-    }
-  };
-
-  global.Skycons = Skycons;
+    global.Skycons = Skycons;
 }(this));

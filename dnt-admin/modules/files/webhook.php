@@ -3,31 +3,29 @@
 use DntLibrary\Base\AdminUser;
 use DntLibrary\Base\DB;
 use DntLibrary\Base\Dnt;
+use DntLibrary\Base\DntUpload;
+use DntLibrary\Base\FileAdmin;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Sessions;
 use DntLibrary\Base\Vendor;
-use DntLibrary\Base\FileAdmin;
-use DntLibrary\Base\DntUpload;
 
 $rest = new Rest();
 $session = new Sessions();
-$dnt = new Dnt;
+$dnt = new Dnt();
 $adminUser = new AdminUser();
-$db = new DB;
-$vendor = new Vendor;
-$fileAdmin = new FileAdmin;
-$dntUpload = new DntUpload;
+$db = new DB();
+$vendor = new Vendor();
+$fileAdmin = new FileAdmin();
+$dntUpload = new DntUpload();
 
-if ($rest->get("action") == "show_hide") {
+if ($rest->get('action') == 'show_hide') {
     //default article view action add
-    include "show_hide.php";
-} elseif ($rest->get("action") == "add") {
+    include 'show_hide.php';
+} elseif ($rest->get('action') == 'add') {
     //default article view action add
-    include "upload.php";
-} elseif ($rest->get("action") == "del") {
-    include "del.php";
+    include 'upload.php';
+} elseif ($rest->get('action') == 'del') {
+    include 'del.php';
 } else {
-    include "tpl.php";
+    include 'tpl.php';
 }
-
-

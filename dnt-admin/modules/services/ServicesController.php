@@ -17,14 +17,20 @@ use DntLibrary\Base\Vendor;
 
 class ServicesController extends AdminController
 {
-
     protected $loc = __FILE__;
+
     protected $rest;
+
     protected $image;
+
     protected $adminContent;
+
     protected $dnt;
+
     protected $articleView;
+
     protected $db;
+
     protected $dntUpload;
 
     public function __construct()
@@ -44,8 +50,8 @@ class ServicesController extends AdminController
 
     protected function checkMetaServicesConfigurator()
     {
-        $file = '../dnt-view/layouts/' . $this->vendor->getLayout() . "/modules/" . $this->rest->get('service') . "/install/install.php";
-        $class = '../dnt-view/layouts/' . $this->vendor->getLayout() . "/modules/" . $this->rest->get('service') . "/install/MetaServices.php";
+        $file = '../dnt-view/layouts/' . $this->vendor->getLayout() . '/modules/' . $this->rest->get('service') . '/install/install.php';
+        $class = '../dnt-view/layouts/' . $this->vendor->getLayout() . '/modules/' . $this->rest->get('service') . '/install/MetaServices.php';
         if (file_exists($class) || file_exists($file)) {
             return true;
         } else {
@@ -91,7 +97,7 @@ class ServicesController extends AdminController
 
         $post_id = $this->rest->get('post_id');
 
-        $group_id = $this->adminContent->getPostParam("group_id", $post_id);
+        $group_id = $this->adminContent->getPostParam('group_id', $post_id);
         $variantsItems = $this->postVariants->getVariants($group_id, false);
         $data['variants'] = $this->postsWithMetaData($variantsItems);
         $postItem[] = (array) $this->post->getPost($group_id, false);
@@ -112,9 +118,7 @@ class ServicesController extends AdminController
         if ($this->hasPost('sent')) {
             $return = $this->rest->post('return');
             foreach ($this->articleView->getPostsMeta($postId, $this->rest->get('service')) as $row) {
-
                 if ($row['content_type'] == 'image' || $row['content_type'] == 'file') {
-
                     if ($this->rest->post('gallery_key_' . $row['id_entity'])) {
                         if ($this->rest->post('gallery_key_' . $row['id_entity']) == 'del') {
                             $galleryData = '';
@@ -122,44 +126,44 @@ class ServicesController extends AdminController
                             $galleryData = $this->rest->post('gallery_key_' . $row['id_entity']);
                         }
                         $this->db->update(
-                                'dnt_posts_meta',
-                                array(
+                            'dnt_posts_meta',
+                            array(
                                     'value' => $galleryData,
                                 ),
-                                array(
+                            array(
                                     'id_entity' => $row['id_entity'],
                                     'service' => $this->rest->get('service'),
-                                    '`vendor_id`' => $this->vendor->getId()
+                                    '`vendor_id`' => $this->vendor->getId(),
                                 )
                         );
                     } else {
                         $this->dntUpload->multypleUploadFiles(
-                                $_FILES['userfile_' . $row['id_entity']],
-                                'dnt_posts_meta',
-                                'value',
-                                '`id_entity`',
-                                $row['id_entity'],
-                                $path
+                            $_FILES['userfile_' . $row['id_entity']],
+                            'dnt_posts_meta',
+                            'value',
+                            '`id_entity`',
+                            $row['id_entity'],
+                            $path
                         );
                     }
                 } elseif ($row['content_type'] == 'youtube_embed') {
                     $this->db->update(
-                            'dnt_posts_meta',
-                            array(
+                        'dnt_posts_meta',
+                        array(
                                 'value' => $this->dnt->youtubeVideoToEmbed($this->rest->post('key_' . $row['id_entity'])),
                             ),
-                            array(
+                        array(
                                 'id_entity' => $row['id_entity'],
                                 'service' => $this->rest->get('service'),
                                 '`vendor_id`' => $this->vendor->getId())
                     );
                 } else {
                     $this->db->update(
-                            'dnt_posts_meta',
-                            array(
-                                'value' => $this->rest->post('key_' . $row['id_entity'])
+                        'dnt_posts_meta',
+                        array(
+                                'value' => $this->rest->post('key_' . $row['id_entity']),
                             ),
-                            array(
+                        array(
                                 'id_entity' => $row['id_entity'],
                                 'service' => $this->rest->get('service'),
                                 '`vendor_id`' => $this->vendor->getId())
@@ -167,16 +171,15 @@ class ServicesController extends AdminController
                 }
 
                 $this->db->update(
-                        'dnt_posts_meta',
-                        array(
-                            'show' => $this->rest->post('zobrazit_' . $row['id_entity'])
+                    'dnt_posts_meta',
+                    array(
+                            'show' => $this->rest->post('zobrazit_' . $row['id_entity']),
                         ),
-                        array(
+                    array(
                             'id_entity' => $row['id_entity'],
                             'service' => $this->rest->get('service'),
                             '`vendor_id`' => $this->vendor->getId())
                 );
-
 
                 $searchMeta = [];
                 if ($row['content_type'] == 'text' || $row['content_type'] == 'content') {
@@ -195,13 +198,12 @@ class ServicesController extends AdminController
             $search = $this->dnt->name_url($search);
             $search = str_replace('-', '', $search);
 
-
             $this->db->update(
-                    'dnt_posts',
-                    array(
+                'dnt_posts',
+                array(
                         'search' => $search,
                     ),
-                    array(
+                array(
                         'id_entity' => $postId,
                         '`vendor_id`' => $this->vendor->getId())
             );
@@ -211,5 +213,4 @@ class ServicesController extends AdminController
             $this->loadTemplate($this->loc, 'success', $data);
         }
     }
-
 }

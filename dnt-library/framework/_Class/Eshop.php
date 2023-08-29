@@ -12,14 +12,11 @@ namespace DntLibrary\Base;
 
 class Eshop
 {
-
     /**
-     * 
+     *
      * @param type $postId
      */
     public function addToCart($postId)
     {
-        
     }
-
 }

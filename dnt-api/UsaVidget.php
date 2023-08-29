@@ -6,8 +6,8 @@ use DntLibrary\App\Render;
 
 class UsaVidgetApi
 {
-
     protected $serviceUrl = '../dnt-jobs/data/usa-vidget.json';
+
     protected $content;
 
     public function __construct()
@@ -28,5 +28,4 @@ class UsaVidgetApi
     {
         (new Render($this->content))->render();
     }
-
 }

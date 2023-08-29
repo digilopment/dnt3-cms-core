@@ -12,8 +12,8 @@ use function str_split;
 
 class Invoices
 {
-
     protected $db;
+
     protected $rest;
 
     public function __construct()
@@ -26,8 +26,8 @@ class Invoices
 
     public function numToText($cislo)
     {
-        $cislo = strtr($cislo, ",", ".");
-        if ($cislo == "00") {
+        $cislo = strtr($cislo, ',', '.');
+        if ($cislo == '00') {
             $cislo = 0;
         }
         $spojka = '';
@@ -70,7 +70,7 @@ class Invoices
             1000000000 => 'miliarda',
             1000000000000 => 'trilión',
             1000000000000000 => 'quadrilión',
-            1000000000000000000 => 'quintilión'
+            1000000000000000000 => 'quintilión',
         );
 
         if (!is_numeric($cislo)) {
@@ -80,7 +80,8 @@ class Invoices
         if (($cislo >= 0 && (int) $cislo < 0) || (int) $cislo < 0 - PHP_INT_MAX) {
             // overflow
             trigger_error(
-                    '$this->numToText akceptuje iba čísla medzi -' . PHP_INT_MAX . ' a ' . PHP_INT_MAX, E_USER_WARNING
+                '$this->numToText akceptuje iba čísla medzi -' . PHP_INT_MAX . ' a ' . PHP_INT_MAX,
+                E_USER_WARNING
             );
             return false;
         }
@@ -123,7 +124,7 @@ class Invoices
                 }
                 break;
             case $cislo == 2000:
-                $retazec .= "dvetisíc";
+                $retazec .= 'dvetisíc';
                 break;
             default:
                 $zakladna_jednotka = pow(1000, floor(log($cislo, 1000)));
@@ -172,7 +173,7 @@ class Invoices
     public function updateCountInCart($produktId, $count, $orderId)
     {
         $current = 0;
-        $query = "SELECT product_id, count FROM dnt_basket WHERE "
+        $query = 'SELECT product_id, count FROM dnt_basket WHERE '
                 . "vendor_id = '" . $this->vendor->getId() . "' AND "
                 . "order_id_entity = '" . $orderId . "' AND "
                 . "product_id = '" . $produktId . "'";
@@ -185,13 +186,13 @@ class Invoices
         }
         $newCount = $current + $count;
         $this->db->update(
-                'dnt_basket',
-                [
+            'dnt_basket',
+            [
                     'count' => $newCount,
                 ],
-                [
+            [
                     'product_id' => $produktId,
-                    '`vendor_id`' => $this->vendor->getId()
+                    '`vendor_id`' => $this->vendor->getId(),
                 ]
         );
     }
@@ -205,7 +206,7 @@ class Invoices
             'order_id_entity' => $orderId,
             'count' => $count,
             'datetime_creat' => $this->dnt->datetime(),
-            'parent_id' => 0
+            'parent_id' => 0,
         ];
         $this->db->insert('dnt_basket', $insert);
     }
@@ -268,7 +269,7 @@ class Invoices
     }
 
     /**
-     * 
+     *
      * get all products with post_meta_data
      */
     public function getProducts()
@@ -287,7 +288,7 @@ class Invoices
             }
             $ids = join(',', $idsArr);
 
-            $query2 = "SELECT * FROM dnt_posts_meta WHERE `vendor_id` = '" . $this->vendor->getId() . "' AND post_id IN (" . $ids . ")";
+            $query2 = "SELECT * FROM dnt_posts_meta WHERE `vendor_id` = '" . $this->vendor->getId() . "' AND post_id IN (" . $ids . ')';
 
             if ($this->db->num_rows($query2) > 0) {
                 $rawMeta = $this->db->get_results($query2);
@@ -339,8 +340,8 @@ class Invoices
     {
         $datetimePublish = $this->dnt->timeToDbFormat('.', $this->rest->post('datetime_publish'));
         $this->db->update(
-                'dnt_orders',
-                [
+            'dnt_orders',
+            [
                     'order_id' => $this->rest->post('order_id'),
                     'name' => $this->rest->post('name'),
                     'surname' => $this->rest->post('surname'),
@@ -376,9 +377,9 @@ class Invoices
                     'datetime_update' => $this->dnt->datetime(),
                     'datetime_publish' => $datetimePublish,
                 ],
-                [
+            [
                     'id_entity' => $id,
-                    '`vendor_id`' => $this->vendor->getId()
+                    '`vendor_id`' => $this->vendor->getId(),
                 ]
         );
     }
@@ -403,5 +404,4 @@ class Invoices
         $response = str_replace(WWW_PATH, 'https://query.sk/', $response);
         return $response;
     }
-
 }

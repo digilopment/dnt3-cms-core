@@ -14,18 +14,17 @@ use DntLibrary\Base\DB;
 
 class Vendor
 {
-
     /**
-     * 
+     *
      * @return type
      */
     public static function getVendorUrl()
     {
 
-        $hosts = explode(".", @$_SERVER['HTTP_HOST']);
+        $hosts = explode('.', @$_SERVER['HTTP_HOST']);
         $host = $hosts[0];
 
-        if ($host == "www") {
+        if ($host == 'www') {
             $vendorUrl = $hosts[1];
         } elseif ($host == @$_SERVER['HTTP_HOST']) { //ak nie je subdomena, tak vrati false
             $vendorUrl = false;
@@ -42,23 +41,23 @@ class Vendor
      */
     public function getProtocolFromUrl($url)
     {
-        $tmp = explode("//", $url);
+        $tmp = explode('//', $url);
         $tmp = $tmp[0];
-        if ($tmp == "http:" || "https:") {
-            return $tmp . "//";
+        if ($tmp == 'http:' || 'https:') {
+            return $tmp . '//';
         } else {
             return false;
         }
     }
 
     /**
-     * 
+     *
      * @param type $url
      * @return boolean
      */
     public function getDomainFromUrl($url)
     {
-        $tmp = explode("://", $url);
+        $tmp = explode('://', $url);
         if (isset($tmp[1])) {
             return $tmp[1];
         } else {
@@ -67,7 +66,7 @@ class Vendor
     }
 
     /**
-     * 
+     *
      * @return boolean
      */
     public static function getId()
@@ -81,7 +80,7 @@ class Vendor
     }
 
     /**
-     * 
+     *
      * @return boolean
      */
     public static function getLayout()
@@ -92,7 +91,7 @@ class Vendor
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function getLayouts()
@@ -100,7 +99,7 @@ class Vendor
         $layouts = array();
         $files = scandir('../dnt-view/layouts/');
         foreach ($files as $file) {
-            if ($file == "." || $file == "..") {
+            if ($file == '.' || $file == '..') {
                 continue;
             } else {
                 $layouts[] = $file;
@@ -111,14 +110,14 @@ class Vendor
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function getAll()
     {
         $db = new DB();
 
-        $query = "SELECT * FROM `dnt_vendors` order by id_entity asc";
+        $query = 'SELECT * FROM `dnt_vendors` order by id_entity asc';
 
         if ($db->num_rows($query) > 0) {
             return $db->get_results($query);
@@ -128,14 +127,14 @@ class Vendor
     }
 
     /**
-     * 
+     *
      * @param type $column
      * @return boolean
      */
     public function getColumn($column)
     {
-        $db = new DB;
-        $query = "SELECT `" . $column . "` FROM `dnt_vendors` WHERE 
+        $db = new DB();
+        $query = 'SELECT `' . $column . "` FROM `dnt_vendors` WHERE 
 			`id_entity` = '" . $this->getId() . "'
 			";
         if ($db->num_rows($query) > 0) {
@@ -148,5 +147,4 @@ class Vendor
 
         return $return;
     }
-
 }

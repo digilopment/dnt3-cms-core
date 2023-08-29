@@ -11,7 +11,6 @@ use DntLibrary\Base\Vendor;
 
 class PrepareCacheByUrlJob
 {
-
     public function __construct()
     {
         $this->vendor = new Vendor();
@@ -30,8 +29,8 @@ class PrepareCacheByUrlJob
             'http' => array(
                 'method' => 'GET',
                 'header' => 'Accept-language: en\r\n' .
-                'Cookie: IS_JOB=1\r\n'
-            )
+                'Cookie: IS_JOB=1\r\n',
+            ),
         );
         $this->context = stream_context_create($opts);
     }
@@ -136,10 +135,9 @@ class PrepareCacheByUrlJob
             header('Content-Type: application/json');
             header('Access-Control-Allow-Origin: *');
             $data = [
-                'urls' => $this->finaUrls
+                'urls' => $this->finaUrls,
             ];
             echo json_encode($data);
         }
     }
-
 }

@@ -3,11 +3,11 @@
 /* ------------------------------------------------------------------------------
  * * File:        class.db.php
  * * Class:       Simply MySQLi
- * * Description: PHP MySQLi wrapper class to handle common database queries and operations 
+ * * Description: PHP MySQLi wrapper class to handle common database queries and operations
  * * Version:     2.1.4
  * * Updated:     11-Sep-2014
  * * Author:      Bennett Stone
- * * Homepage:    www.phpdevtips.com 
+ * * Homepage:    www.phpdevtips.com
  * *------------------------------------------------------------------------------
  * * COPYRIGHT (c) 2012 - 2014 BENNETT STONE
  * *
@@ -18,9 +18,9 @@
  * *
  * * http://www.opensource.org/licenses/gpl-license.php
  * *
- * * This program is distributed in the hope that it will be useful, but WITHOUT 
- * * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
- * * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. 
+ * * This program is distributed in the hope that it will be useful, but WITHOUT
+ * * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * *------------------------------------------------------------------------------ */
 /* * *****************************
   Example initialization:
@@ -52,11 +52,40 @@ use function mb_internal_encoding;
 
 class DB
 {
-
     public $link = null;
+
     public $filter;
+
     static $inst = null;
+
     public static $counter = 0;
+
+    public function __construct($config = false)
+    {
+        if ($GLOBALS['DATABASE'] == false) {
+            mb_internal_encoding('UTF-8');
+            mb_regex_encoding('UTF-8');
+            mysqli_report(MYSQLI_REPORT_STRICT);
+            try {
+                if (is_array($config)) {
+                    $dbHost = isset($config['db_host']) ? $config['db_host'] : DB_HOST;
+                    $dbUser = isset($config['db_user']) ? $config['db_user'] : DB_USER;
+                    $dbPass = isset($config['db_pass']) ? $config['db_pass'] : DB_PASS;
+                    $dbName = isset($config['db_name']) ? $config['db_name'] : DB_NAME;
+                    $this->link = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
+                } else {
+                    $this->link = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+                }
+                $this->link->set_charset('utf8');
+                $GLOBALS['DATABASE'] = $this->link;
+            } catch (Exception $e) {
+                die('Unable to connect to database');
+            }
+        } else {
+            $this->link = $GLOBALS['DATABASE'];
+            //var_dump('running', $this->link);
+        }
+    }
 
     /**
      * Allow the class to send admins a message alerting them to errors
@@ -90,37 +119,9 @@ class DB
         }
     }
 
-    public function __construct($config = false)
-    {
-		if ($GLOBALS['DATABASE'] == false) {
-			mb_internal_encoding('UTF-8');
-			mb_regex_encoding('UTF-8');
-			mysqli_report(MYSQLI_REPORT_STRICT);
-			try {
-				if (is_array($config)) {
-					$dbHost = isset($config['db_host']) ? $config['db_host'] : DB_HOST;
-					$dbUser = isset($config['db_user']) ? $config['db_user'] : DB_USER;
-					$dbPass = isset($config['db_pass']) ? $config['db_pass'] : DB_PASS;
-					$dbName = isset($config['db_name']) ? $config['db_name'] : DB_NAME;
-					$this->link = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
-				} else {
-					$this->link = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-				}
-				$this->link->set_charset("utf8");
-				$GLOBALS['DATABASE'] = $this->link;
-			} catch (Exception $e) {
-				die('Unable to connect to database');
-			}
-			
-		}else{
-			$this->link = $GLOBALS['DATABASE'];
-			//var_dump('running', $this->link);
-		}
-    }
-
     public function __destruct()
     {
-		/*var_dump('sss');
+        /*var_dump('sss');
         if ($this->link) {
             $this->disconnect();
         }*/
@@ -131,7 +132,7 @@ class DB
      *
      * Example usage:
      * $user_name = $database->filter( $_POST['user_name'] );
-     * 
+     *
      * Or to filter an entire array:
      * $data = array( 'name' => $_POST['name'], 'email' => 'email@address.com' );
      * $data = $database->filter( $data );
@@ -248,7 +249,7 @@ class DB
      */
     public function dbTransaction()
     {
-        $query = "START TRANSACTION";
+        $query = 'START TRANSACTION';
         $this->query($query);
     }
 
@@ -257,7 +258,7 @@ class DB
      */
     public function dbCommit()
     {
-        $query = "COMMIT";
+        $query = 'COMMIT';
         $this->query($query);
     }
 
@@ -271,7 +272,7 @@ class DB
      */
     public function dbRollback()
     {
-        $query = "ROLLBACK";
+        $query = 'ROLLBACK';
         $this->query($query);
     }
 
@@ -331,7 +332,7 @@ class DB
      *
      * Example Usage:
      * $check_user = array(
-     *    'user_email' => 'someuser@gmail.com', 
+     *    'user_email' => 'someuser@gmail.com',
      *    'user_id' => 48
      * );
      * $exists = $database->exists( 'your_table', 'user_id', $check_user );
@@ -416,7 +417,7 @@ class DB
     {
         self::$counter++;
         if (DEBUG_QUERY == 1) {
-            $_SESSION["x_debug_query_" . rand(0, 9999) . "_" . md5($query)] = $query;
+            $_SESSION['x_debug_query_' . rand(0, 9999) . '_' . md5($query)] = $query;
         }
 
         //Overwrite the $row var to null
@@ -440,8 +441,8 @@ class DB
      *
      * Example usage:
      * $user_data = array(
-     *      'name' => 'Bennett', 
-     *      'email' => 'email@address.com', 
+     *      'name' => 'Bennett',
+     *      'email' => 'email@address.com',
      *      'active' => 1
      * );
      * $database->insert( 'users_table', $user_data );
@@ -460,7 +461,7 @@ class DB
             return false;
         }
 
-        $sql = "INSERT INTO " . $table;
+        $sql = 'INSERT INTO ' . $table;
         $fields = array();
         $values = array();
         foreach ($variables as $field => $value) {
@@ -478,18 +479,18 @@ class DB
 
         if ($update == true) {
             $this->update(
-                    $table, //table
-                    array(//set
-                        'id_entity' => $lastId
+                $table, //table
+                array(//set
+                        'id_entity' => $lastId,
                     ),
-                    array(//where
-                        'id' => $lastId
+                array(//where
+                        'id' => $lastId,
                     )
             );
         }
 
         if ($this->link->error) {
-            //return false; 
+            //return false;
             $this->log_db_errors($this->link->error, $sql);
             return false;
         } else {
@@ -517,7 +518,7 @@ class DB
             return false;
         }
 
-        $sql = "INSERT INTO " . $table;
+        $sql = 'INSERT INTO ' . $table;
         $fields = array();
         $values = array();
         foreach ($variables as $field => $value) {
@@ -544,20 +545,20 @@ class DB
      *
      * Example usage:
      * $fields = array(
-     *      'name', 
-     *      'email', 
+     *      'name',
+     *      'email',
      *      'active'
      *  );
      *  $records = array(
      *     array(
      *          'Bennett', 'bennett@email.com', 1
-     *      ), 
+     *      ),
      *      array(
      *          'Lori', 'lori@email.com', 0
-     *      ), 
+     *      ),
      *      array(
      *          'Nick', 'nick@nick.com', 1, 'This will not be added'
-     *      ), 
+     *      ),
      *      array(
      *          'Meghan', 'meghan@email.com', 1
      *      )
@@ -587,7 +588,7 @@ class DB
         $added = 0;
 
         //Start the query
-        $sql = "INSERT INTO " . $table;
+        $sql = 'INSERT INTO ' . $table;
 
         $fields = array();
         //Loop through the columns for insertion preparation
@@ -608,22 +609,21 @@ class DB
         $values = implode(', ', $values);
 
         $sql .= $fields . ' VALUES ' . $values;
-		
-		if($returnSql){
-			return $sql;
-		}
+
+        if ($returnSql) {
+            return $sql;
+        }
 
         $query = $this->link->query($sql);
-		
-		$this->query("UPDATE `".$table."` SET `id_entity`= `id` WHERE id_entity = 0");
-			
+
+        $this->query('UPDATE `' . $table . '` SET `id_entity`= `id` WHERE id_entity = 0');
+
         if ($this->link->error) {
             $this->log_db_errors($this->link->error, $sql);
             return false;
         } else {
             return $added;
         }
-		
     }
 
     /**
@@ -651,9 +651,8 @@ class DB
         if (empty($variables)) {
             return false;
         }
-        $sql = "UPDATE " . $table . " SET ";
+        $sql = 'UPDATE ' . $table . ' SET ';
         foreach ($variables as $field => $value) {
-
             $updates[] = "`$field` = '$value'";
         }
         $sql .= implode(', ', $updates);
@@ -704,15 +703,15 @@ class DB
             return false;
         }
 
-        $sql = "DELETE FROM " . $table;
+        $sql = 'DELETE FROM ' . $table;
         foreach ($where as $field => $value) {
             $value = $value;
             $clause[] = "$field = '$value'";
         }
-        $sql .= " WHERE " . implode(' AND ', $clause);
+        $sql .= ' WHERE ' . implode(' AND ', $clause);
 
         if (!empty($limit)) {
-            $sql .= " LIMIT " . $limit;
+            $sql .= ' LIMIT ' . $limit;
         }
 
         $query = $this->link->query($sql);
@@ -746,7 +745,7 @@ class DB
 
     /**
      * Return the number of rows affected by a given query
-     * 
+     *
      * Example usage:
      * $database->insert( 'users_table', $user );
      * $database->affected();
@@ -816,7 +815,7 @@ class DB
         if (!empty($tables)) {
             $truncated = 0;
             foreach ($tables as $table) {
-                $truncate = "TRUNCATE TABLE `" . trim($table) . "`";
+                $truncate = 'TRUNCATE TABLE `' . trim($table) . '`';
                 $this->link->query($truncate);
                 if (!$this->link->error) {
                     $truncated++;
@@ -843,7 +842,7 @@ class DB
             $out .= $variable;
         } else {
             $out .= '<pre>';
-            $out .= print_r($variable, TRUE);
+            $out .= print_r($variable, true);
             $out .= '</pre>';
         }
         if ($echo === true) {
@@ -895,7 +894,6 @@ class DB
     {
         $this->link->close();
     }
-
 }
 
 //end class DB

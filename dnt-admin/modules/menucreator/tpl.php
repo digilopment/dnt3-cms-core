@@ -8,7 +8,7 @@ get_top();
 <?php get_top_html(); ?>
 <?php
 $db = new DB();
-$rest = new Rest;
+$rest = new Rest();
 ?>
 
 <!-- BEGIN CUSTOM TABLE -->
@@ -17,7 +17,7 @@ $rest = new Rest;
         <span class="label label-primary bg-green" style="padding:5px;"><big>Pridať všetky menu položky</big></span>
     </a>
 
-</section>	
+</section>  
 
 <div style="clear: both;"></div>
 <div class="col-md-12">
@@ -83,7 +83,7 @@ $rest = new Rest;
                         } else {
                             no_results();
                         }
-                        ?>									
+                        ?>                                  
                     </tbody>
                     <input type="submit" name="sent" class="btn btn-primary" value="Uložiť" >
                 </form>

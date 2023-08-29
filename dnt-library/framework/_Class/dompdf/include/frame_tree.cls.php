@@ -17,78 +17,82 @@
  * @package dompdf
  * @access protected
  */
-class Frame_Tree {
-    
+class Frame_Tree
+{
   /**
    * Tags to ignore while parsing the tree
    *
    * @var array
    */
-  static protected $_HIDDEN_TAGS = array("area", "base", "basefont", "head", "style",
-                                         "meta", "title", "colgroup",
-                                         "noembed", "noscript", "param", "#comment");  
+    protected static $_HIDDEN_TAGS = array('area', 'base', 'basefont', 'head', 'style',
+                                         'meta', 'title', 'colgroup',
+                                         'noembed', 'noscript', 'param', '#comment');
+
   /**
    * The main DomDocument
    *
    * @see http://ca2.php.net/manual/en/ref.dom.php
    * @var DomDocument
    */
-  protected $_dom;
+    protected $_dom;
 
   /**
    * The root node of the FrameTree.
    *
    * @var Frame
    */
-  protected $_root;
+    protected $_root;
 
   /**
    * Subtrees of absolutely positioned elements
    *
    * @var array of Frames
    */
-  protected $_absolute_frames;
+    protected $_absolute_frames;
 
   /**
    * A mapping of {@link Frame} objects to DOMNode objects
    *
    * @var array
    */
-  protected $_registry;
-  
+    protected $_registry;
 
   /**
    * Class constructor
    *
    * @param DomDocument $dom the main DomDocument object representing the current html document
    */
-  function __construct(DomDocument $dom) {
-    $this->_dom = $dom;
-    $this->_root = null;
-    $this->_registry = array();
-  }
-  
-  function __destruct() {
-    clear_object($this);
-  }
+    function __construct(DomDocument $dom)
+    {
+        $this->_dom = $dom;
+        $this->_root = null;
+        $this->_registry = array();
+    }
+
+    function __destruct()
+    {
+        clear_object($this);
+    }
 
   /**
    * Returns the DomDocument object representing the curent html document
    *
    * @return DOMDocument
    */
-  function get_dom() {
-    return $this->_dom;
-  }
+    function get_dom()
+    {
+        return $this->_dom;
+    }
 
   /**
    * Returns the root frame of the tree
-   * 
+   *
    * @return Page_Frame_Decorator
    */
-  function get_root() {
-    return $this->_root;
-  }
+    function get_root()
+    {
+        return $this->_root;
+    }
 
   /**
    * Returns a specific frame given its id
@@ -96,58 +100,62 @@ class Frame_Tree {
    * @param string $id
    * @return Frame
    */
-  function get_frame($id) {
-    return isset($this->_registry[$id]) ? $this->_registry[$id] : null;
-  }
+    function get_frame($id)
+    {
+        return isset($this->_registry[$id]) ? $this->_registry[$id] : null;
+    }
 
   /**
    * Returns a post-order iterator for all frames in the tree
    *
    * @return FrameTreeList|Frame[]
    */
-  function get_frames() {
-    return new FrameTreeList($this->_root);
-  }
-      
+    function get_frames()
+    {
+        return new FrameTreeList($this->_root);
+    }
+
   /**
    * Builds the tree
    */
-  function build_tree() {
-    $html = $this->_dom->getElementsByTagName("html")->item(0);
-    if ( is_null($html) ) {
-      $html = $this->_dom->firstChild;
+    function build_tree()
+    {
+        $html = $this->_dom->getElementsByTagName('html')->item(0);
+        if (is_null($html)) {
+            $html = $this->_dom->firstChild;
+        }
+
+        if (is_null($html)) {
+            throw new DOMPDF_Exception('Requested HTML document contains no data.');
+        }
+
+        $this->fix_tables();
+
+        $this->_root = $this->_build_tree_r($html);
     }
 
-    if ( is_null($html) ) {
-      throw new DOMPDF_Exception("Requested HTML document contains no data.");
-    }
-
-    $this->fix_tables();
-    
-    $this->_root = $this->_build_tree_r($html);
-  }
-  
   /**
    * Adds missing TBODYs around TR
    */
-  protected function fix_tables(){
-    $xp = new DOMXPath($this->_dom);
-    
-    // Move table caption before the table
-    // FIXME find a better way to deal with it...
-    $captions = $xp->query("//table/caption");
-    foreach($captions as $caption) {
-      $table = $caption->parentNode;
-      $table->parentNode->insertBefore($caption, $table);
+    protected function fix_tables()
+    {
+        $xp = new DOMXPath($this->_dom);
+
+      // Move table caption before the table
+      // FIXME find a better way to deal with it...
+        $captions = $xp->query('//table/caption');
+        foreach ($captions as $caption) {
+            $table = $caption->parentNode;
+            $table->parentNode->insertBefore($caption, $table);
+        }
+
+        $rows = $xp->query('//table/tr');
+        foreach ($rows as $row) {
+            $tbody = $this->_dom->createElement('tbody');
+            $tbody = $row->parentNode->insertBefore($tbody, $row);
+            $tbody->appendChild($row);
+        }
     }
-    
-    $rows = $xp->query("//table/tr");
-    foreach($rows as $row) {
-      $tbody = $this->_dom->createElement("tbody");
-      $tbody = $row->parentNode->insertBefore($tbody, $row);
-      $tbody->appendChild($row);
-    }
-  }
 
   /**
    * Recursively adds {@link Frame} objects to the tree
@@ -160,82 +168,82 @@ class Frame_Tree {
    * @param DOMNode $node the current DOMNode being considered
    * @return Frame
    */
-  protected function _build_tree_r(DOMNode $node) {
-    
-    $frame = new Frame($node);
-    $id = $frame->get_id();
-    $this->_registry[ $id ] = $frame;
-    
-    if ( !$node->hasChildNodes() ) {
-      return $frame;
-    }
+    protected function _build_tree_r(DOMNode $node)
+    {
 
-    // Fixes 'cannot access undefined property for object with
-    // overloaded access', fix by Stefan radulian
-    // <stefan.radulian@symbion.at>    
-    //foreach ($node->childNodes as $child) {
+        $frame = new Frame($node);
+        $id = $frame->get_id();
+        $this->_registry[ $id ] = $frame;
 
-    // Store the children in an array so that the tree can be modified
-    $children = array();
-    for ($i = 0; $i < $node->childNodes->length; $i++) {
-      $children[] = $node->childNodes->item($i);
-    }
-
-    foreach ($children as $child) {
-      $node_name = mb_strtolower($child->nodeName);
-      
-      // Skip non-displaying nodes
-      if ( in_array($node_name, self::$_HIDDEN_TAGS) )  {
-        if ( $node_name !== "head" && $node_name !== "style" ) {
-          $child->parentNode->removeChild($child);
+        if (!$node->hasChildNodes()) {
+            return $frame;
         }
-        
-        continue;
-      }
 
-      // Skip empty text nodes
-      if ( $node_name === "#text" && $child->nodeValue == "" ) {
-        $child->parentNode->removeChild($child);
-        continue;
-      }
+      // Fixes 'cannot access undefined property for object with
+      // overloaded access', fix by Stefan radulian
+      // <stefan.radulian@symbion.at>
+      //foreach ($node->childNodes as $child) {
 
-      // Skip empty image nodes
-      if ( $node_name === "img" && $child->getAttribute("src") == "" ) {
-        $child->parentNode->removeChild($child);
-        continue;
-      }
-      
-      $frame->append_child($this->_build_tree_r($child), false);
+      // Store the children in an array so that the tree can be modified
+        $children = array();
+        for ($i = 0; $i < $node->childNodes->length; $i++) {
+            $children[] = $node->childNodes->item($i);
+        }
+
+        foreach ($children as $child) {
+            $node_name = mb_strtolower($child->nodeName);
+
+          // Skip non-displaying nodes
+            if (in_array($node_name, self::$_HIDDEN_TAGS)) {
+                if ($node_name !== 'head' && $node_name !== 'style') {
+                    $child->parentNode->removeChild($child);
+                }
+
+                continue;
+            }
+
+          // Skip empty text nodes
+            if ($node_name === '#text' && $child->nodeValue == '') {
+                $child->parentNode->removeChild($child);
+                continue;
+            }
+
+          // Skip empty image nodes
+            if ($node_name === 'img' && $child->getAttribute('src') == '') {
+                $child->parentNode->removeChild($child);
+                continue;
+            }
+
+            $frame->append_child($this->_build_tree_r($child), false);
+        }
+
+        return $frame;
     }
-    
-    return $frame;
-  }
-  
-  public function insert_node(DOMNode $node, DOMNode $new_node, $pos) {
-    if ( $pos === "after" || !$node->firstChild ) {
-      $node->appendChild($new_node);
+
+    public function insert_node(DOMNode $node, DOMNode $new_node, $pos)
+    {
+        if ($pos === 'after' || !$node->firstChild) {
+            $node->appendChild($new_node);
+        } else {
+            $node->insertBefore($new_node, $node->firstChild);
+        }
+
+        $this->_build_tree_r($new_node);
+
+        $frame_id = $new_node->getAttribute('frame_id');
+        $frame = $this->get_frame($frame_id);
+
+        $parent_id = $node->getAttribute('frame_id');
+        $parent = $this->get_frame($parent_id);
+
+        if ($parent) {
+            if ($pos === 'before') {
+                $parent->prepend_child($frame, false);
+            } else {
+                $parent->append_child($frame, false);
+            }
+        }
+
+        return $frame_id;
     }
-    else {
-      $node->insertBefore($new_node, $node->firstChild);
-    }
-    
-    $this->_build_tree_r($new_node);
-    
-    $frame_id = $new_node->getAttribute("frame_id");
-    $frame = $this->get_frame($frame_id);
-    
-    $parent_id = $node->getAttribute("frame_id");
-    $parent = $this->get_frame($parent_id);
-    
-    if ( $parent ) {
-      if ( $pos === "before" ) {
-        $parent->prepend_child($frame, false);
-      }
-      else {
-        $parent->append_child($frame, false);
-      }
-    }
-    
-    return $frame_id;
-  }
 }

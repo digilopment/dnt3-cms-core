@@ -17,6 +17,7 @@ class ObchodZakazniciExportJob
     const REMOTE_SERVICE_HOST = 'http://tdoubek.beta.markiza.sk/';
 
     protected $db;
+
     protected $dnt;
 
     public function __construct()
@@ -33,28 +34,28 @@ class ObchodZakazniciExportJob
         $str = str_replace(array('\r\n', '\r', '\n', '\t'), '', $str);
         $str = trim($str);
         $str = preg_replace(
-                array(
+            array(
                     '/ {2,}/',
-                    '/<!--.*?-->|\t|(?:\r?\n[ \t]*)+/s'
+                    '/<!--.*?-->|\t|(?:\r?\n[ \t]*)+/s',
                 ),
-                array(
+            array(
                     ' ',
-                    ''
+                    '',
                 ),
-                $str
+            $str
         );
 
         $search = array(
             '/\>[^\S ]+/s', // strip whitespaces after tags, except space
             '/[^\S ]+\</s', // strip whitespaces before tags, except space
             '/(\s)+/s', // shorten multiple whitespace sequences
-            '/<!--(.|\s)*?-->/' // Remove HTML comments
+            '/<!--(.|\s)*?-->/', // Remove HTML comments
         );
         $replace = array(
             '>',
             '<',
             '\\1',
-            ''
+            '',
         );
         $str = preg_replace($search, $replace, $str);
         $str = str_replace("'", '', $str);
@@ -80,7 +81,7 @@ class ObchodZakazniciExportJob
         return true;
     }
 
-    function createFormsCsv($data, $delimiter = ',', $enclosure = '"', $escape_char = "\\")
+    function createFormsCsv($data, $delimiter = ',', $enclosure = '"', $escape_char = '\\')
     {
 
         $f = fopen(self::STATIC_PATH . self::DB_TABLE_TO . '.csv', 'w+');
@@ -113,7 +114,7 @@ class ObchodZakazniciExportJob
          * */
 
         $db = new mysqli(DB_HOST, DB_USER, DB_PASS, self::DB_NAME);
-        $query = "SELECT * FROM " . self::DB_TABLE_TO . " WHERE 1";
+        $query = 'SELECT * FROM ' . self::DB_TABLE_TO . ' WHERE 1';
         $result = $db->query($query);
         var_dump($result);
         while ($row = $result->fetch_assoc()) {
@@ -125,8 +126,6 @@ class ObchodZakazniciExportJob
         //$rows = $this->db->get_results($query);
         $list = [];
         foreach ($rows as $row) {
-
-
             //$data['datetime_created'] = $row['datum_rok'] . '-' . $this->dnt->dvojcifernyDatum($row['datum_mesiac']) . '-' . $this->dnt->dvojcifernyDatum($row['datum_den']) . ' ' . $row['cas'];
 
             $form_id = 10;
@@ -195,5 +194,4 @@ class ObchodZakazniciExportJob
         //var_dump($list);
         $this->createFormsCsv($list);
     }
-
 }

@@ -17,7 +17,6 @@ use DntLibrary\Base\Vendor;
 
 class MultyLanguage
 {
-
     public $countActiveLangs = false;
 
     public function __construct()
@@ -29,7 +28,7 @@ class MultyLanguage
     }
 
     /**
-     * 
+     *
      * @return array
      */
     public function activeVendorLangsQuery()
@@ -37,7 +36,6 @@ class MultyLanguage
         if (count($GLOBALS['ACTIVE_LANGS_ARR']) > 0) {
             return $GLOBALS['ACTIVE_LANGS_ARR'];
         } else {
-
             //$q = "SELECTs * FROMs dnt_languages WHEREs `show` = '1' AND vendor_id = '" . $this->vendor->getId() . "'";
             $q = "SELECT * FROM dnt_languages WHERE `show` = '1' AND vendor_id = '" . $this->vendor->getId() . "' ORDER BY slug asc";
             if ($this->db->num_rows($q) > 0) {
@@ -54,7 +52,7 @@ class MultyLanguage
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function activeVendorLangs()
@@ -63,38 +61,40 @@ class MultyLanguage
     }
 
     /**
-     * 
+     *
      * @param type $is_limit
      * @return string
      */
     protected function prepare_query($is_limit)
     {
         if (isset($_GET['search'])) {
-            $typ = "AND (`translate_id` LIKE '%" . str_replace("-", "_", $this->dnt->name_url($_GET['search'])) . "%' OR `translate` LIKE '%" . str_replace("-", "_", urldecode($_GET['search'])) . "%') ";
-        } else
+            $typ = "AND (`translate_id` LIKE '%" . str_replace('-', '_', $this->dnt->name_url($_GET['search'])) . "%' OR `translate` LIKE '%" . str_replace('-', '_', urldecode($_GET['search'])) . "%') ";
+        } else {
             $typ = "AND type = 'static'";
+        }
 
-        if ($is_limit == false)
+        if ($is_limit == false) {
             $limit = false;
-        else
+        } else {
             $limit = $is_limit;
-		//DEAFULT_LANG
+        }
+        //DEAFULT_LANG
         $query = "SELECT * FROM dnt_translates WHERE 
 			 lang_id = '" . $GLOBALS['ORIGIN_DOMAIN_LNG'] . "' AND
 			 vendor_id = '" . $this->vendor->getId() . "'
-			 " . $typ . " ORDER BY `id` DESC " . $limit . "";
+			 " . $typ . ' ORDER BY `id` DESC ' . $limit . '';
 
         return $query;
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function query()
     {
         if (isset($_GET['page'])) {
-            $returnPage = "&page=" . $_GET['page'];
+            $returnPage = '&page=' . $_GET['page'];
         } else {
             $returnPage = false;
         }
@@ -103,10 +103,11 @@ class MultyLanguage
         $pocet = $this->db->num_rows($query);
         $limit = 20;
 
-        if (isset($_GET['page']))
+        if (isset($_GET['page'])) {
             $strana = $_GET['page'];
-        else
+        } else {
             $strana = 1;
+        }
 
         $stranok = $pocet / $limit;
         $pociatok = ($strana * $limit) - $limit;
@@ -115,12 +116,12 @@ class MultyLanguage
         $next_page = $strana + 1;
         $stranok_round = ceil($stranok);
 
-        $pager = "LIMIT " . $pociatok . ", " . $limit . "";
-        return array("query" => $this->prepare_query($pager), "pages" => $stranok_round);
+        $pager = 'LIMIT ' . $pociatok . ', ' . $limit . '';
+        return array('query' => $this->prepare_query($pager), 'pages' => $stranok_round);
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function getLang()
@@ -129,7 +130,7 @@ class MultyLanguage
     }
 
     /**
-     * 
+     *
      * @return boolean
      */
     public function getTranslates()
@@ -143,7 +144,7 @@ class MultyLanguage
     }
 
     /**
-     * 
+     *
      * @param type $data
      * @param type $key
      * @param type $value
@@ -168,7 +169,7 @@ class MultyLanguage
     }
 
     /**
-     * 
+     *
      * @param type $frontend
      * @return type
      */
@@ -186,7 +187,7 @@ class MultyLanguage
     }
 
     /**
-     * 
+     *
      * @param type $frontend
      * @return type
      */
@@ -204,9 +205,6 @@ class MultyLanguage
         }
     }
 
-    /**
-     * 
-     */
     public function countActiveLangs()
     {
         $query = $this->getLangs($frontend);
@@ -214,7 +212,7 @@ class MultyLanguage
     }
 
     /**
-     * 
+     *
      * @param type $id
      * @param type $table
      * @param type $column
@@ -233,13 +231,13 @@ class MultyLanguage
     }
 
     /**
-     * 
+     *
      * @param type $lang
      * @return type
      */
     public function changeLanguage($lang)
     {
-        $scale = explode("/" . $this->getLang(), WWW_WEBHOOKS);
+        $scale = explode('/' . $this->getLang(), WWW_WEBHOOKS);
         if (isset($scale[1])) {
             $after_lang = $scale[1];
         } else {
@@ -247,15 +245,15 @@ class MultyLanguage
             $after_lang = $scale[1];
         }
 
-        $return_url = WWW_PATH . "" . $lang . "/" . $after_lang;
-        $return_url = str_replace("///", "/", $return_url);
-        $return_url = str_replace("//", "/", $return_url);
-        $return_url = str_replace(":/", "://", $return_url);
+        $return_url = WWW_PATH . '' . $lang . '/' . $after_lang;
+        $return_url = str_replace('///', '/', $return_url);
+        $return_url = str_replace('//', '/', $return_url);
+        $return_url = str_replace(':/', '://', $return_url);
         return $return_url;
     }
 
     /**
-     * 
+     *
      * @param type $data
      * @return boolean
      */
@@ -264,7 +262,7 @@ class MultyLanguage
         $translate_id = isset($data['translate_id']) ? $data['translate_id'] : false;
         $type = isset($data['type']) ? $data['type'] : false;
         $table = isset($data['table']) ? $data['table'] : false;
-        //$default 		= isset($data['default']) ? $data['default'] : false;
+        //$default      = isset($data['default']) ? $data['default'] : false;
         $lang_id = isset($data['lang_id']) ? $data['lang_id'] : false;
 
         if ($column) {
@@ -291,7 +289,7 @@ class MultyLanguage
     }
 
     /**
-     * 
+     *
      * @param type $data
      * @return type
      */
@@ -302,10 +300,10 @@ class MultyLanguage
         $table = isset($data['table']) ? $data['table'] : false;
         $default = isset($data['default']) ? $data['default'] : false;
 
-        $db = new DB;
+        $db = new DB();
         $return = false;
 
-        if ($type == "static") {
+        if ($type == 'static') {
             $query = "SELECT `translate` FROM `dnt_translates` WHERE
 			`parent_id` = '0' AND
 			`vendor_id` = '" . $this->vendor->getId() . "' AND
@@ -336,7 +334,7 @@ class MultyLanguage
         } else {
             if ($this->db->num_rows($query) > 0) {
                 foreach ($this->db->get_results($query) as $row) {
-                    if ($row['translate'] == "") {
+                    if ($row['translate'] == '') {
                         $return = $default;
                     } else {
                         $return = $row['translate'];
@@ -348,5 +346,4 @@ class MultyLanguage
         }
         return $return;
     }
-
 }

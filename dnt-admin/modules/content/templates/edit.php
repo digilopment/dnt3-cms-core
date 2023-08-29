@@ -1,6 +1,5 @@
 <?php
 
-use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Image;
 
 get_top();
@@ -13,8 +12,8 @@ $adminContent = $data['adminContent'];
 $image = $data['image'];
 
 
-$post_id = $rest->get("post_id");
-$page = $rest->get("page");
+$post_id = $rest->get('post_id');
+$page = $rest->get('page');
 $group_id = $data['item'][0]['group_id'];
 $cat_id = $data['item'][0]['cat_id'];
 $sub_cat_id = $data['item'][0]['sub_cat_id'];
@@ -35,7 +34,7 @@ $service_id = $data['item'][0]['service_id'];
 $imageID = $data['item'][0]['img'];
 $post_category_id = $data['item'][0]['post_category_id'];
 $variant = $data['item'][0]['variant'];
-if ($datetime_publish == "0000-00-00 00:00:00") {
+if ($datetime_publish == '0000-00-00 00:00:00') {
     $datetime_publish = $dnt->datetime();
 }
 ?>
@@ -54,33 +53,33 @@ if ($datetime_publish == "0000-00-00 00:00:00") {
     }
 </style>
 <section class="col-xs-12" style="margin-bottom:15px">
-    <a href="index.php?src=content&included=<?php echo $rest->get("included"); ?>&filter=<?php echo $rest->get("filter"); ?>">
+    <a href="index.php?src=content&included=<?php echo $rest->get('included'); ?>&filter=<?php echo $rest->get('filter'); ?>">
         <span class="label label-primary bg-blue" style="padding:5px;" ><big>PREJSŤ NA ZOZNAM</big></span>
     </a>
-    <a href="index.php?src=content&included=<?php echo $rest->get("included"); ?>&filter=<?php echo $rest->get("filter"); ?>&action=add">
+    <a href="index.php?src=content&included=<?php echo $rest->get('included'); ?>&filter=<?php echo $rest->get('filter'); ?>&action=add">
         <span class="label label-primary bg-green" style="padding:5px;"><big>PRIDAŤ NOVÝ POST V TEJTO KATEGÓRII</big></span>
     </a>
-    <a href="index.php?src=content&included=variant&filter=<?php echo $rest->get("filter"); ?>&action=addVariant&post_id=<?php echo $rest->get("post_id"); ?>">
+    <a href="index.php?src=content&included=variant&filter=<?php echo $rest->get('filter'); ?>&action=addVariant&post_id=<?php echo $rest->get('post_id'); ?>">
         <span class="label label-primary bg-orange" style="padding:5px;"><big>PRIDAŤ VARIANT</big></span>
     </a>
-    <?php if ($rest->get("included") == "sitemap" && $service) { ?>
-        <a <?php echo $dnt->confirmMsg("Pred prejdením na službu sa prosím uistite, či máte uložte všetky zmeny."); ?> 
-            href="index.php?src=services&included=<?php echo $rest->get("included"); ?>&filter=<?php echo $rest->get("filter"); ?>&post_id=<?php echo $rest->get("post_id"); ?>&service=<?php echo $service; ?>">
+    <?php if ($rest->get('included') == 'sitemap' && $service) { ?>
+        <a <?php echo $dnt->confirmMsg('Pred prejdením na službu sa prosím uistite, či máte uložte všetky zmeny.'); ?> 
+            href="index.php?src=services&included=<?php echo $rest->get('included'); ?>&filter=<?php echo $rest->get('filter'); ?>&post_id=<?php echo $rest->get('post_id'); ?>&service=<?php echo $service; ?>">
             <span class="label label-primary bg-orange" style="padding:5px;"><big>PREJSŤ NA SLUŽBU</big></span>
         </a>
     <?php } ?>
 
     <?php if ($show > 0) { ?>
-        <a  href="<?php echo WWW_PATH . "a/" . $rest->get("post_id"); ?>" target="_blank" style="float:right">
+        <a  href="<?php echo WWW_PATH . 'a/' . $rest->get('post_id'); ?>" target="_blank" style="float:right">
             <span class="label label-primary bg-blue" style="padding:5px;"><big><i class="fa fa-external-link-square"></i> OTVORIŤ POST NA WEBE</big></span>
         </a>
     <?php } ?>
-</section>	
+</section>  
 <section class="content">
     <div class="row">
         <!-- BEGIN LEFT TABS -->
         <div style="clear: both;"></div>
-        <form enctype='multipart/form-data' action="<?php echo $adminContent->url("update", $cat_id, $sub_cat_id, $type, $post_id, $page) ?>" method="POST">
+        <form enctype='multipart/form-data' action="<?php echo $adminContent->url('update', $cat_id, $sub_cat_id, $type, $post_id, $page) ?>" method="POST">
             <div class="row">
                 <!-- lava strana-->
                 <div class="col-md-4">
@@ -101,7 +100,7 @@ if ($datetime_publish == "0000-00-00 00:00:00") {
                                     <a href="<?php echo $editUrl; ?>">
                                         <i class="fa fa-pencil bg-blue action"></i>
                                     </a>
-                                    <a href="index.php?src=services&included=<?php echo $rest->get("included"); ?>&filter=<?php echo $rest->get("filter"); ?>&post_id=<?php echo $rest->get("post_id"); ?>&service=<?php echo $service; ?>">
+                                    <a href="index.php?src=services&included=<?php echo $rest->get('included'); ?>&filter=<?php echo $rest->get('filter'); ?>&post_id=<?php echo $rest->get('post_id'); ?>&service=<?php echo $service; ?>">
                                         <i class="fa fa-pencil bg-orange action"></i>
                                     </a>
                                     <a href="<?php echo $adminContent->url('show_hide', $data['parentItem'][0]['cat_id'], $data['parentItem'][0]['sub_cat_id'], $data['parentItem'][0]['type'], $data['parentItem'][0]['id_entity'], $page) ?>">
@@ -228,7 +227,9 @@ if ($datetime_publish == "0000-00-00 00:00:00") {
                     <div class="col">
 
 
-                        <?php if (MULTY_LANGUAGE != false) getLangNavigation(); ?>
+                        <?php if (MULTY_LANGUAGE != false) {
+                            getLangNavigation();
+                        } ?>
 
                         <!-- tabs begin here! -->
                         <div class="tab-content" style="border: 0px solid; padding: 0px;">
@@ -249,7 +250,9 @@ if ($datetime_publish == "0000-00-00 00:00:00") {
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label text-left"><b>URL Address:</b></label>
                                             <div class="col-sm-10">
-                                                <input type="text"  value="<?php echo $name_url; ?>" name="name_url" class="form-control" placeholder="Url:" <?php if ($protected == 1) echo 'disabled'; ?>>
+                                                <input type="text"  value="<?php echo $name_url; ?>" name="name_url" class="form-control" placeholder="Url:" <?php if ($protected == 1) {
+                                                    echo 'disabled';
+                                                                           } ?>>
                                                 <br/>
                                             </div>
                                         </div>
@@ -272,42 +275,45 @@ if ($datetime_publish == "0000-00-00 00:00:00") {
                                                 <h3>Content</h3>
                                             </div>
                                             <textarea name="content" class="ckeditor" style="min-height: 495px;"><?php echo $content; ?></textarea>
-											
-											<?php
-											
-											function extract_emails_from($string){
-											  preg_match_all("/[\._a-zA-Z0-9-]+@[\._a-zA-Z0-9-]+/i", $string, $matches);
-											  return $matches[0];
-											}
-											$emails = extract_emails_from($content);
-											if(isset($emails[0]) && filter_var($emails[0], FILTER_VALIDATE_EMAIL)){
-												if(isset(explode('SPRÁVA:', $dnt->not_html($content))[1])){
-													$replyMsg = explode('SPRÁVA:', $dnt->not_html($content))[1];
-												}else{
-													$replyMsg = $content;
-												}
-												$replyMsg = ltrim(str_replace('"', '', $replyMsg));
-												$replyMsg = explode('Kontaktný email odosielateľa:', $replyMsg)[0];
-											?>
-											<br/>
-											
-											<a href="mailto:<?php echo $emails[0]?>?subject=<?php echo $name; ?>&body=<?php echo $replyMsg; ?>">
-												<span class="btn btn-primary bg-green btn-lg btn-block" style="max-width:300px;font-size:14px">Odpovedať na email<br/><b><?php echo $emails[0]; ?></b></span>
-											</a>
-											<?php } ?>
+                                            
+                                            <?php
+
+                                            function extract_emails_from($string)
+                                            {
+                                                preg_match_all('/[\._a-zA-Z0-9-]+@[\._a-zA-Z0-9-]+/i', $string, $matches);
+                                                return $matches[0];
+                                            }
+                                            $emails = extract_emails_from($content);
+                                            if (isset($emails[0]) && filter_var($emails[0], FILTER_VALIDATE_EMAIL)) {
+                                                if (isset(explode('SPRÁVA:', $dnt->not_html($content))[1])) {
+                                                    $replyMsg = explode('SPRÁVA:', $dnt->not_html($content))[1];
+                                                } else {
+                                                    $replyMsg = $content;
+                                                }
+                                                $replyMsg = ltrim(str_replace('"', '', $replyMsg));
+                                                $replyMsg = explode('Kontaktný email odosielateľa:', $replyMsg)[0];
+                                                ?>
+                                            <br/>
+                                            
+                                            <a href="mailto:<?php echo $emails[0]?>?subject=<?php echo $name; ?>&body=<?php echo $replyMsg; ?>">
+                                                <span class="btn btn-primary bg-green btn-lg btn-block" style="max-width:300px;font-size:14px">Odpovedať na email<br/><b><?php echo $emails[0]; ?></b></span>
+                                            </a>
+                                            <?php } ?>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <?php if (MULTY_LANGUAGE != false) contentLanguagesVariations(); /* getTabLanguages(true, true, true, $post['id'], "dnt_posts", $dntDb); */ ?>
+                            <?php if (MULTY_LANGUAGE != false) {
+                                contentLanguagesVariations();
+                            } /* getTabLanguages(true, true, true, $post['id'], "dnt_posts", $dntDb); */ ?>
                         </div>
                         <!-- end here -->
                         <?php echo $dnt->returnInput(); ?>
                         
 
                     </div>
-					<input type="submit" name="sent" class="btn btn-primary btn-lg btn-block" value="Upraviť" />
+                    <input type="submit" name="sent" class="btn btn-primary btn-lg btn-block" value="Upraviť" />
                 </div>
                 <!-- end prava strana -->
             </div>

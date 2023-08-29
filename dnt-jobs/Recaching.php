@@ -8,7 +8,6 @@ use DntLibrary\Base\Vendor;
 
 class RecachingJob
 {
-
     public function __construct()
     {
         $this->vendor = new Vendor();
@@ -88,5 +87,4 @@ class RecachingJob
             }
         }
     }
-
 }

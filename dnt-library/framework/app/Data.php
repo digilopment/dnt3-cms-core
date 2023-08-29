@@ -20,7 +20,6 @@ use DntLibrary\Base\Vendor;
 
 class Data
 {
-
     public function __construct()
     {
         $this->vendor = new Vendor();
@@ -54,7 +53,6 @@ class Data
     public function get()
     {
         $this->init();
-
 
         $customData = $this->customData;
 
@@ -96,7 +94,6 @@ class Data
         $sitemapItems = ($this->sitemapItems) ? $this->navigation->activeItems() : false;
         $translates = ($this->translates) ? $this->multilanguage->getTranslates() : false;
         $metaSettingsArr = ($this->metaSettings) ? $this->settings->getAllSettings() : false;
-
 
         $keyWords = isset($metaSettingsArr['keys']['keywords']['value']) ? $metaSettingsArr['keys']['keywords']['value'] : false;
         $description = isset($metaSettingsArr['keys']['description']['value']) ? $metaSettingsArr['keys']['description']['value'] : false;
@@ -163,5 +160,4 @@ class Data
     {
         return array_merge($data, $customData);
     }
-
 }

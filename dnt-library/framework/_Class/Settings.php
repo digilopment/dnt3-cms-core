@@ -20,7 +20,6 @@ use function websettings;
  */
 class Settings
 {
-
     public function __construct()
     {
         $this->db = new DB();
@@ -28,7 +27,7 @@ class Settings
     }
 
     /**
-     * 
+     *
      * @param type $key
      * @return boolean
      */
@@ -58,7 +57,7 @@ class Settings
         $final['database'] = $this->getAllSettings();
 
         $vendorLoadedSettings = [];
-        $file = __DIR__ . "/../../../dnt-view/layouts/" . $this->vendor->getLayout() . "/Configurator.php";
+        $file = __DIR__ . '/../../../dnt-view/layouts/' . $this->vendor->getLayout() . '/Configurator.php';
         if (!class_exists('Configurator')) {
             if (file_exists($file)) {
                 include_once $file;
@@ -79,7 +78,7 @@ class Settings
     }
 
     /**
-     * 
+     *
      * @param type $key
      * @return boolean
      */
@@ -94,7 +93,7 @@ class Settings
     }
 
     /**
-     * 
+     *
      * @param type $catId
      * @return boolean
      */
@@ -113,7 +112,7 @@ class Settings
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function getMetaData()
@@ -131,7 +130,7 @@ class Settings
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function getAllSettings()
@@ -149,7 +148,7 @@ class Settings
     }
 
     /**
-     * 
+     *
      * @param type $key
      * @return boolean
      */
@@ -164,7 +163,7 @@ class Settings
         $query = "SELECT name FROM dnt_uploads WHERE `id_entity` = '" . $imageId . "'";
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
-                return WWW_CDN_PATH . "dnt-view/data/uploads/" . $row['name'];
+                return WWW_CDN_PATH . 'dnt-view/data/uploads/' . $row['name'];
             }
         } else {
             return false;
@@ -172,27 +171,27 @@ class Settings
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function showStatus()
     {
         return array(
-            "0" => "Vymazať",
-            "1" => "Publikovať post",
-            "2" => "Povoliť na webe (nezobrazí sa v menu alebo listingu)",
-            "3" => "Skryť z webu",
+            '0' => 'Vymazať',
+            '1' => 'Publikovať post',
+            '2' => 'Povoliť na webe (nezobrazí sa v menu alebo listingu)',
+            '3' => 'Skryť z webu',
         );
     }
 
     protected function settingsConf()
     {
         $settingsData = false;
-        $conf = __DIR__ . "/../../../dnt-view/layouts/" . $this->vendor->getLayout() . "/conf.php";
-        if (!function_exists("websettings")) {
+        $conf = __DIR__ . '/../../../dnt-view/layouts/' . $this->vendor->getLayout() . '/conf.php';
+        if (!function_exists('websettings')) {
             if (file_exists($conf)) {
                 include $conf;
-                if (function_exists("websettings")) {
+                if (function_exists('websettings')) {
                     $settingsData = websettings();
                 }
             }
@@ -203,7 +202,7 @@ class Settings
 
     protected function settingsConfigurator()
     {
-        $file = __DIR__ . "/../../../dnt-view/layouts/" . $this->vendor->getLayout() . "/Configurator.php";
+        $file = __DIR__ . '/../../../dnt-view/layouts/' . $this->vendor->getLayout() . '/Configurator.php';
         $modulesRegistrator = false;
         if (!class_exists('Configurator')) {
             if (file_exists($file)) {
@@ -222,9 +221,6 @@ class Settings
         return $modulesRegistrator;
     }
 
-    /**
-     * 
-     */
     public function loadNewSettingsFromConf()
     {
         if ($this->settingsConfigurator()) {
@@ -233,7 +229,6 @@ class Settings
             $settingsData = $this->settingsConf();
         }
         if ($settingsData) {
-
             $result = array();
             $existingKey = array();
 
@@ -259,5 +254,4 @@ class Settings
             }
         }
     }
-
 }

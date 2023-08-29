@@ -6,8 +6,8 @@ use DntLibrary\Base\Settings;
 
 class Plugin
 {
-
     protected $data;
+
     protected $settings;
 
     public function __construct($data, $currentPlugin, $plugin = false)
@@ -46,11 +46,11 @@ class Plugin
         ob_start();
         $this->data['plugin_data'] = $pluginData;
         $data = $this->data;
-        $file = dirname($path) . "/" . $layout . ".php";
+        $file = dirname($path) . '/' . $layout . '.php';
         if (file_exists($file)) {
             include $file;
         } else {
-            die("layout " . $layout . " not exists");
+            die('layout ' . $layout . ' not exists');
         }
         $response = ob_get_clean();
         if ($toString) {
@@ -59,5 +59,4 @@ class Plugin
             print $response;
         }
     }
-
 }

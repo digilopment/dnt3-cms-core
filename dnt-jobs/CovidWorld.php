@@ -9,17 +9,20 @@ use DOMDocument;
 
 class CovidWorldJob
 {
-
-    protected $dnt;
-    protected $dom;
-    protected $yesterdayCovidData;
-    protected $todayCovidData;
-    protected $finalData;
-
     const SERVICE_URL = 'https://www.worldometers.info/coronavirus/';
     const STATIC_FILE = 'data/covidWorld.json';
     const TODAY = 'main_table_countries_today';
     const YESTERDAY = 'main_table_countries_yesterday';
+
+    protected $dnt;
+
+    protected $dom;
+
+    protected $yesterdayCovidData;
+
+    protected $todayCovidData;
+
+    protected $finalData;
 
     public function __construct()
     {
@@ -75,7 +78,7 @@ class CovidWorldJob
             'reported1stcase' => 'Prvý prípad nákazy',
             'totaltests' => 'Počet testov',
             'tests1mpop' => 'Počet testov na mil. obyvateľov',
-            'search' => 'Search'
+            'search' => 'Search',
         ];
         if (isset($words[$currentKey])) {
             return $words[$currentKey];
@@ -314,7 +317,7 @@ class CovidWorldJob
             'North America' => 'Severná Amerika',
             'South America' => 'Južná Amerika',
             'South Sudan' => 'Južný sudán',
-            'Africa' => 'Afrika'
+            'Africa' => 'Afrika',
         ];
 
         if (isset($country[$current])) {
@@ -358,7 +361,7 @@ class CovidWorldJob
             $dataTable[$j][$this->clean($dataTableHeader[$index])] = [
                 'name_origin' => $dataTableHeader[$index],
                 'name' => $this->translate($dataTableHeader[$index]),
-                'value' => $this->replaceValue($nodeDetail->textContent)
+                'value' => $this->replaceValue($nodeDetail->textContent),
             ];
 
             $i = $i + 1;
@@ -384,7 +387,7 @@ class CovidWorldJob
         return [
             'name_origin' => $name,
             'name' => $name,
-            'value' => $value
+            'value' => $value,
         ];
     }
 
@@ -414,7 +417,7 @@ class CovidWorldJob
             'generated' => (new DateTime('NOW'))->format('Y-m-d H:i:s'),
             'updated_datetime' => $this->updated('Y-m-d H:i:s'),
             'updated_formated' => $this->updated('d.m.Y, H:i'),
-            'source' => self::SERVICE_URL
+            'source' => self::SERVICE_URL,
         ];
     }
 
@@ -432,7 +435,6 @@ class CovidWorldJob
 
         $countryKey = 0;
         foreach ($todayCovidData as $key1 => $column) {
-
             if ($column['countryother']['value'] != '') {
                 if ($column['countryother']['value'] == 'Total:') {
                     if ($column['totalcases']['value'] == $totalMax) {
@@ -441,7 +443,7 @@ class CovidWorldJob
                             $data[$countryKey][$key2] = [
                                 'name_origin' => $row['name_origin'],
                                 'name' => $row['name'],
-                                'value' => $this->translateCountry($value)
+                                'value' => $this->translateCountry($value),
                             ];
                         }
                     }
@@ -451,19 +453,19 @@ class CovidWorldJob
                         $data[$countryKey][$key2] = [
                             'name_origin' => $row['name_origin'],
                             'name' => $row['name'],
-                            'value' => $this->translateCountry($value)
+                            'value' => $this->translateCountry($value),
                         ];
                         $data[$countryKey]['mortality'] = $this->addColumn(
-                                'Úmrtnosť',
-                                $this->mortality($todayCovidData[$key1]['totalcases']['value'], $todayCovidData[$key1]['totaldeaths']['value'])
+                            'Úmrtnosť',
+                            $this->mortality($todayCovidData[$key1]['totalcases']['value'], $todayCovidData[$key1]['totaldeaths']['value'])
                         );
                         $data[$countryKey]['newrecovered'] = $this->addColumn(
-                                'Nové uzdravenia',
-                                $this->newRecovered($todayCovidData[$key1]['totalrecovered']['value'], $todayCovidData[$key1]['countryother']['value'])
+                            'Nové uzdravenia',
+                            $this->newRecovered($todayCovidData[$key1]['totalrecovered']['value'], $todayCovidData[$key1]['countryother']['value'])
                         );
                         $data[$countryKey]['search'] = $this->addColumn(
-                                'Hladaj',
-                                $this->clean($this->translateCountry($todayCovidData[$key1]['countryother']['value']))
+                            'Hladaj',
+                            $this->clean($this->translateCountry($todayCovidData[$key1]['countryother']['value']))
                         );
                     }
                 }
@@ -477,7 +479,7 @@ class CovidWorldJob
     {
         $response = [
             'settings' => $this->setSettingsData(),
-            'data' => $this->setCovidData()
+            'data' => $this->setCovidData(),
         ];
         $this->finalData = $response;
     }
@@ -488,5 +490,4 @@ class CovidWorldJob
         $json = $this->dataToJson($this->finalData);
         $this->writeToFile($json)->render();
     }
-
 }

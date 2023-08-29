@@ -16,7 +16,6 @@ use DntLibrary\Base\Vendor;
 
 class Navigation
 {
-
     public function __construct()
     {
         $this->db = new DB();
@@ -25,14 +24,14 @@ class Navigation
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function getParents()
     {
         $query = "SELECT * FROM dnt_posts WHERE 
 		type = 'sitemap' AND 
-		cat_id = '" . $this->adminContent->getCatId("sitemap") . "' AND 
+		cat_id = '" . $this->adminContent->getCatId('sitemap') . "' AND 
 		vendor_id = '" . $this->vendor->getId() . "' AND 
 		`show` = '1' ORDER BY `order` DESC";
         if ($this->db->num_rows($query) > 0) {
@@ -43,7 +42,7 @@ class Navigation
     }
 
     /**
-     * 
+     *
      * @param type $parentId
      * @return boolean
      */
@@ -62,7 +61,7 @@ class Navigation
     }
 
     /**
-     * 
+     *
      * @param type $parentId
      * @return type
      */
@@ -79,5 +78,4 @@ class Navigation
             return array(false);
         }
     }
-
 }

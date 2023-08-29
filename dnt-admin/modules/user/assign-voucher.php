@@ -1,17 +1,14 @@
 <?php
 
-use DntLibrary\Base\Dnt;
-use DntLibrary\Base\Voucher;
 
-$post_id = $rest->get("post_id");
+$post_id = $rest->get('post_id');
 if ($voucher->assignLastVoucher($post_id)) {
-    $url = "index.php?src=" . $rest->get("src") . "&type=" . $rest->get("type") . "";
+    $url = 'index.php?src=' . $rest->get('src') . '&type=' . $rest->get('type') . '';
     $dnt->redirect($url);
 } else {
-
     get_top();
     get_top_html();
-    error_message_default("Nie je možné pridať voucher. <br/>Pre pridanie vouchera, potrebujete mať naimportovaný zoznam voucherov.");
+    error_message_default('Nie je možné pridať voucher. <br/>Pre pridanie vouchera, potrebujete mať naimportovaný zoznam voucherov.');
     get_bottom_html();
     get_bottom();
 }

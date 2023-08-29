@@ -14,28 +14,27 @@ use DntLibrary\Base\Settings;
 
 class MessengerBot
 {
-
     public $bot_access;
+
     public $input;
+
     public $response;
+
     public $answer;
+
     public $bot_param;
+
     public $param;
+
     public $result;
 
-    /**
-     * 
-     */
     public function __construct()
     {
         $this->settings = new Settings();
-        $this->hubVerifyToken = $this->settings->get("msg_hub_verify_token");
-        $this->accessToken = $this->settings->get("msg_access_token");
+        $this->hubVerifyToken = $this->settings->get('msg_hub_verify_token');
+        $this->accessToken = $this->settings->get('msg_access_token');
     }
 
-    /**
-     * 
-     */
     public function init()
     {
         if ($_REQUEST['hub_verify_token'] === $this->hubVerifyToken) {
@@ -48,14 +47,12 @@ class MessengerBot
         $messageText = $input['entry'][0]['messaging'][0]['message']['text'];
         $answer = "Čafte developeri :D 'hi'.";
 
-
-
-        if ($messageText == "hi") {
-            $answer = "Hello";
+        if ($messageText == 'hi') {
+            $answer = 'Hello';
         }
         $response = [
             'recipient' => ['id' => $senderId],
-            'message' => ['text' => $answer]
+            'message' => ['text' => $answer],
         ];
 
         $ch = curl_init('https://graph.facebook.com/v2.6/me/messages?access_token=' . $this->accessToken);
@@ -68,7 +65,7 @@ class MessengerBot
     }
 
     /**
-     * 
+     *
      * @return boolean
      */
     public function equalHubToken()
@@ -86,7 +83,7 @@ class MessengerBot
     }
 
     /**
-     * 
+     *
      * @param type $response
      */
     public function connection($response)
@@ -100,10 +97,10 @@ class MessengerBot
     }
 
     /**
-     * 
+     *
      * @param type $param
      * @return type
-     * 
+     *
      * "param interface"
      * "first_name"
      * "last_name"
@@ -111,8 +108,8 @@ class MessengerBot
      * "locale"
      * "timezone"
      * "gender"
-     * 
-     * 
+     *
+     *
      */
     public function getUserParam($param)
     {
@@ -130,7 +127,7 @@ class MessengerBot
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function getSenderId()
@@ -140,7 +137,7 @@ class MessengerBot
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function getMessage()
@@ -150,7 +147,7 @@ class MessengerBot
     }
 
     /**
-     * 
+     *
      * @param type $time
      */
     public function timeout($time)
@@ -159,48 +156,47 @@ class MessengerBot
     }
 
     /**
-     * 
+     *
      * @param type $answer
      * @return type
      */
     public function addUI($answer)
     {
         //return $this->mainUI($answer);
-        return "Ahoj";
+        return 'Ahoj';
     }
 
     /**
-     * 
+     *
      * @param type $answer
      */
     public function getResponse($answer)
     {
 
         if (!$this->equalHubToken()) {
-
             $this->mark_seen = array(
-                "recipient" => array('id' => $this->getSenderId()),
-                "sender_action" => "mark_seen",
+                'recipient' => array('id' => $this->getSenderId()),
+                'sender_action' => 'mark_seen',
             );
 
             $this->typing_on = array(
-                "recipient" => array('id' => $this->getSenderId()),
-                "sender_action" => "typing_on",
+                'recipient' => array('id' => $this->getSenderId()),
+                'sender_action' => 'typing_on',
             );
             $this->typing_off = array(
-                "recipient" => array('id' => $this->getSenderId()),
-                "sender_action" => "typing_off",
+                'recipient' => array('id' => $this->getSenderId()),
+                'sender_action' => 'typing_off',
             );
 
             $this->response = array(
-                "recipient" => array('id' => $this->getSenderId()),
-                "message" => array('text' => $answer),
+                'recipient' => array('id' => $this->getSenderId()),
+                'message' => array('text' => $answer),
             );
 
             //add log to database
-            $log = new Log;
-            $log->add("", $this->getSenderId(), $this->getMessage(), $answer, "NOW()");
-            $log->addVendor($this->getSenderId(), $this->getUserParam("first_name"), $this->getUserParam("last_name"), $this->getUserParam("profile_pic"), $this->getUserParam("gender"));
+            $log = new Log();
+            $log->add('', $this->getSenderId(), $this->getMessage(), $answer, 'NOW()');
+            $log->addVendor($this->getSenderId(), $this->getUserParam('first_name'), $this->getUserParam('last_name'), $this->getUserParam('profile_pic'), $this->getUserParam('gender'));
 
             //creat all async post request "seen"
             $this->connection($this->mark_seen);
@@ -222,7 +218,7 @@ class MessengerBot
     }
 
     /**
-     * 
+     *
      * @param type $answer
      * @param type $senderId
      */
@@ -231,13 +227,13 @@ class MessengerBot
 
         if (!$this->equalHubToken()) {
             $this->response = array(
-                "recipient" => array('id' => $senderId),
-                "sender_actio" => "typing_on",
-                "message" => array('text' => $answer),
+                'recipient' => array('id' => $senderId),
+                'sender_actio' => 'typing_on',
+                'message' => array('text' => $answer),
             );
 
-            $log = new Log;
-            $log->add("25", $this->getSenderId(), $this->getMessage(), $answer, "NOW()");
+            $log = new Log();
+            $log->add('25', $this->getSenderId(), $this->getMessage(), $answer, 'NOW()');
 
             $this->connection($this->response);
         } else {
@@ -246,12 +242,11 @@ class MessengerBot
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function run()
     {
         return $this->getResponse($this->addUI($this->getMessage()));
     }
-
 }

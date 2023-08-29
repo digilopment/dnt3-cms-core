@@ -1,4 +1,5 @@
 <?php
+
 namespace DntAdmin\Moduls;
 
 use DntAdmin\App\AdminController;
@@ -7,10 +8,12 @@ use DntLibrary\Base\Rest;
 
 class TemporaryOnlineController extends AdminController
 {
-
     protected $rest;
+
     protected $stream;
+
     protected $tempPath = '../dnt-cache/temp/';
+
     protected $streamOutPath = '../dnt-view/data/static/';
 
     public function __construct()
@@ -29,5 +32,4 @@ class TemporaryOnlineController extends AdminController
             $this->stream->merge($this->tempPath, $this->streamOutPath);
         }
     }
-
 }

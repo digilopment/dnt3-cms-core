@@ -16,7 +16,6 @@ use SimpleXMLElement;
 
 class Api
 {
-
     protected $columns;
 
     public function __construct()
@@ -25,7 +24,7 @@ class Api
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function getAll()
@@ -40,7 +39,7 @@ class Api
     }
 
     /**
-     * 
+     *
      * @param type $query
      * @return boolean
      */
@@ -65,7 +64,7 @@ class Api
     }
 
     /**
-     * 
+     *
      * @param type $name_url
      * @param type $id
      * @param type $getQuery
@@ -89,13 +88,13 @@ class Api
     }
 
     /**
-     * 
+     *
      * @param type $query
      */
     public function getXmlData($query)
     {
         $xml = new SimpleXMLElement('<items/>');
-        $db = new DB;
+        $db = new DB();
         $this->getColumns($query);
         $count = $db->num_rows($query);
 
@@ -111,12 +110,12 @@ class Api
     }
 
     /**
-     * 
+     *
      * @param type $query
      */
     public function getJsonData($query)
     {
-        $db = new DB;
+        $db = new DB();
         $count = $db->num_rows($query);
 
         if ($count > 0) {
@@ -124,5 +123,4 @@ class Api
             echo json_encode($data);
         }
     }
-
 }

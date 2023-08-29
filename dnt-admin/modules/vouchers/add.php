@@ -1,13 +1,11 @@
 <?php
 
-use DntLibrary\Base\Dnt;
-use DntLibrary\Base\Vendor;
 
 if (isset($_POST['sent'])) {
-    $voucherValue = $rest->post("voucher");
+    $voucherValue = $rest->post('voucher');
     if ($voucherValue) {
         $db->dbTransaction();
-        $order = $dnt->getMaxValueFromColumn("dnt_vouchers", "`order`");
+        $order = $dnt->getMaxValueFromColumn('dnt_vouchers', '`order`');
         if (!$order) {
             $order = 1;
         } else {
@@ -15,17 +13,17 @@ if (isset($_POST['sent'])) {
         }
         $insertedData = array(
             'vendor_id' => $vendor->getId(),
-            'user_id' => "",
+            'user_id' => '',
             'value' => $voucherValue,
-            'file_name' => "",
+            'file_name' => '',
             'datetime_creat' => $dnt->datetime(),
             'datetime_update' => $dnt->datetime(),
             '`show`' => '1',
-            '`order`' => $order
+            '`order`' => $order,
         );
 
         $db->insert('dnt_vouchers', $insertedData);
         $db->dbcommit();
     }
 }
-$dnt->redirect(WWW_PATH_ADMIN_2 . "index.php?src=" . $rest->get("src") . "");
+$dnt->redirect(WWW_PATH_ADMIN_2 . 'index.php?src=' . $rest->get('src') . '');

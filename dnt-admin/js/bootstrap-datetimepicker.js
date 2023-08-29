@@ -74,22 +74,22 @@
                     clsName: 'days',
                     navFnc: 'M',
                     navStep: 1
-                },
+        },
                 {
                     clsName: 'months',
                     navFnc: 'y',
                     navStep: 1
-                },
+        },
                 {
                     clsName: 'years',
                     navFnc: 'y',
                     navStep: 10
-                },
+        },
                 {
                     clsName: 'decades',
                     navFnc: 'y',
                     navStep: 100
-                }
+        }
             ],
             viewModes = ['days', 'months', 'years', 'decades'],
             verticalModes = ['top', 'bottom', 'auto'],
@@ -124,7 +124,7 @@
                 84: 't',
                 'delete': 46,
                 46: 'delete'
-            },
+        },
             keyState = {},
 
             /********************************************************************************
@@ -166,39 +166,31 @@
                 var headTemplate = $('<thead>')
                         .append($('<tr>')
                             .append($('<th>').addClass('prev').attr('data-action', 'previous')
-                                .append($('<span>').addClass(options.icons.previous))
-                                )
+                                .append($('<span>').addClass(options.icons.previous)))
                             .append($('<th>').addClass('picker-switch').attr('data-action', 'pickerSwitch').attr('colspan', (options.calendarWeeks ? '6' : '5')))
                             .append($('<th>').addClass('next').attr('data-action', 'next')
-                                .append($('<span>').addClass(options.icons.next))
-                                )
-                            ),
+                                .append($('<span>').addClass(options.icons.next)))),
                     contTemplate = $('<tbody>')
                         .append($('<tr>')
-                            .append($('<td>').attr('colspan', (options.calendarWeeks ? '8' : '7')))
-                            );
+                            .append($('<td>').attr('colspan', (options.calendarWeeks ? '8' : '7'))));
 
                 return [
                     $('<div>').addClass('datepicker-days')
                         .append($('<table>').addClass('table-condensed')
                             .append(headTemplate)
-                            .append($('<tbody>'))
-                            ),
+                            .append($('<tbody>'))),
                     $('<div>').addClass('datepicker-months')
                         .append($('<table>').addClass('table-condensed')
                             .append(headTemplate.clone())
-                            .append(contTemplate.clone())
-                            ),
+                            .append(contTemplate.clone())),
                     $('<div>').addClass('datepicker-years')
                         .append($('<table>').addClass('table-condensed')
                             .append(headTemplate.clone())
-                            .append(contTemplate.clone())
-                            ),
+                            .append(contTemplate.clone())),
                     $('<div>').addClass('datepicker-decades')
                         .append($('<table>').addClass('table-condensed')
                             .append(headTemplate.clone())
-                            .append(contTemplate.clone())
-                            )
+                            .append(contTemplate.clone()))
                 ];
             },
 
@@ -620,7 +612,7 @@
             updateDecades = function () {
                 var decadesView = widget.find('.datepicker-decades'),
                     decadesViewHeader = decadesView.find('th'),
-                    startDecade = viewDate.isBefore(moment({y: 1999})) ? moment({y: 1899}) : moment({y: 1999}),
+                    startDecade = viewDate.isBefore(moment({y: 1999})) ? moment({y : 1899}) : moment({y : 1999}),
                     endDecade = startDecade.clone().add(100, 'y'),
                     html = '';
 
@@ -1114,7 +1106,7 @@
                 },
 
                 close: hide
-            },
+        },
 
             doAction = function (e) {
                 if ($(e.currentTarget).is('.disabled')) {
@@ -1143,7 +1135,7 @@
                         'minute': function (m) {
                             return m.seconds(0);
                         }
-                    };
+                };
 
                 if (input.prop('disabled') || (!options.ignoreReadonly && input.prop('readonly')) || widget) {
                     return picker;
@@ -1339,11 +1331,11 @@
 
                 actualFormat = format.replace(/(\[[^\[]*\])|(\\)?(LTS|LT|LL?L?L?|l{1,4})/g, function (formatInput) {
                     var newinput = date.localeData().longDateFormat(formatInput) || formatInput;
-                    return newinput.replace(/(\[[^\[]*\])|(\\)?(LTS|LT|LL?L?L?|l{1,4})/g, function (formatInput2) { //temp fix for #740
+                    return newinput.replace(/(\[[^\[]*\])|(\\)?(LTS|LT|LL?L?L?|l{1,4})/g, function (formatInput2) {
+ //temp fix for #740
                         return date.localeData().longDateFormat(formatInput2) || formatInput2;
                     });
                 });
-
 
                 parseFormats = options.extraFormats ? options.extraFormats.slice() : [];
                 if (parseFormats.indexOf(format) < 0 && parseFormats.indexOf(actualFormat) < 0) {
@@ -2284,8 +2276,7 @@
         }
         if (input.is('input') && input.val().trim().length !== 0) {
             setValue(parseInputDate(input.val().trim()));
-        }
-        else if (options.defaultDate && input.attr('placeholder') === undefined) {
+        } else if (options.defaultDate && input.attr('placeholder') === undefined) {
             setValue(options.defaultDate);
         }
         if (options.inline) {
@@ -2459,27 +2450,28 @@
             escape: function () {
                 this.hide();
             },
-            //tab: function (widget) { //this break the flow of the form. disabling for now
+            //tab: function (widget) {
+ //this break the flow of the form. disabling for now
             //    var toggle = widget.find('.picker-switch a[data-action="togglePicker"]');
             //    if(toggle.length > 0) toggle.click();
             //},
-            'control space': function (widget) {
-                if (widget.find('.timepicker').is(':visible')) {
-                    widget.find('.btn[data-action="togglePeriod"]').click();
+                'control space': function (widget) {
+                    if (widget.find('.timepicker').is(':visible')) {
+                        widget.find('.btn[data-action="togglePeriod"]').click();
+                    }
+                },
+                t: function () {
+                    this.date(moment());
+                },
+                'delete': function () {
+                    this.clear();
                 }
             },
-            t: function () {
-                this.date(moment());
-            },
-            'delete': function () {
-                this.clear();
-            }
-        },
-        debug: false,
-        allowInputToggle: false,
-        disabledTimeIntervals: false,
-        disabledHours: false,
-        enabledHours: false,
-        viewDate: false
-    };
+            debug: false,
+            allowInputToggle: false,
+            disabledTimeIntervals: false,
+            disabledHours: false,
+            enabledHours: false,
+            viewDate: false
+        };
 }));

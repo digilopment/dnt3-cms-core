@@ -1,6 +1,6 @@
 /* Notes
 -----------------------------------------------------------------------*/
-.note_form { 
+.note_form {
   display: none;
 }
 
@@ -15,11 +15,11 @@
   margin-right: 5px;
 }
 
-.page table.header td h1 { 
+.page table.header td h1 {
   margin: 0px;
 }
 
-.page table.header { 
+.page table.header {
   border-bottom: 1px solid black;
 }
 
@@ -40,7 +40,7 @@
   font-size: 1em;
 }
 
-.page p { 
+.page p {
   text-align: justify;
   font-size: 1em;
 }
@@ -83,20 +83,20 @@
   font-weight: bold;
 }
 
-.written_field { 
+.written_field {
   border-bottom: 0.1pt solid black;
 }
 
 .page .indent * { margin-left: 4em; }
 
-.checkbox { 
+.checkbox {
   border: 1px solid black;
   padding: 1px 2px;
   font-size: 7px;
   font-weight: bold;
 }
 
-table.fax_head { 
+table.fax_head {
   width: 100%;
   font-weight: bold;
   font-size: 1.1em;
@@ -105,24 +105,24 @@ table.fax_head {
 
 /* Sales-agreement specific
 -----------------------------------------------------------------------*/
-table.sa_signature_box { 
+table.sa_signature_box {
   margin: 2em auto 2em auto;
 }
 
-table.sa_signature_box tr td { 
+table.sa_signature_box tr td {
   padding-top: 1.5em;
   vertical-align: top;
   white-space: nowrap;
 }
 
-.special_conditions { 
+.special_conditions {
   font-style: italic;
-  margin-left: 2em; 
+  margin-left: 2em;
   white-space: pre;
   font-weight: bold;
 }
 
-.page h2 { 
+.page h2 {
   text-align: left;
 }
 

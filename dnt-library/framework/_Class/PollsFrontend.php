@@ -18,7 +18,6 @@ use DntLibrary\Base\Vendor;
 
 class PollsFrontend extends Polls
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -30,7 +29,7 @@ class PollsFrontend extends Polls
     }
 
     /**
-     * 
+     *
      * @param type $index
      * @param type $poll_id
      * @param type $question_id
@@ -38,13 +37,13 @@ class PollsFrontend extends Polls
      */
     public function url($index, $poll_id, $question_id)
     {
-        $result_url = "result";
+        $result_url = 'result';
         $next_question = false;
         $prev_question = false;
 
-        //first question 
-        $query = "SELECT `question_id` FROM dnt_polls_composer WHERE
-		vendor_id 	= " . $this->vendor->getId() . " AND
+        //first question
+        $query = 'SELECT `question_id` FROM dnt_polls_composer WHERE
+		vendor_id 	= ' . $this->vendor->getId() . " AND
 		`key`       = 'question' AND
 		poll_id 	= '" . $poll_id . "' LIMIT 1";
         if ($this->db->num_rows($query) > 0) {
@@ -56,8 +55,8 @@ class PollsFrontend extends Polls
         }
 
         //next question
-        $query = "SELECT `question_id` FROM dnt_polls_composer WHERE
-		vendor_id 	= " . $this->vendor->getId() . " AND
+        $query = 'SELECT `question_id` FROM dnt_polls_composer WHERE
+		vendor_id 	= ' . $this->vendor->getId() . " AND
 		`key`       = 'question' AND
 		`question_id` > '" . $question_id . "' AND
 		poll_id 	= '" . $poll_id . "' LIMIT 1";
@@ -70,8 +69,8 @@ class PollsFrontend extends Polls
         }
 
         //prev question
-        $query = "SELECT `question_id` FROM dnt_polls_composer WHERE
-		vendor_id 	= " . $this->vendor->getId() . " AND
+        $query = 'SELECT `question_id` FROM dnt_polls_composer WHERE
+		vendor_id 	= ' . $this->vendor->getId() . " AND
 		`key`       = 'question' AND
 		`question_id` < '" . $question_id . "' AND
 		poll_id 	= '" . $poll_id . "' LIMIT 1";
@@ -83,28 +82,28 @@ class PollsFrontend extends Polls
             $prev_question = 1;
         }
 
-        if ($index == "next")
-            return WWW_PATH . "" . $rest->webhook(1) . "/" . $poll_id . "/" . $rest->webhook(3) . "/" . $next_question;
-        elseif ($index == "prev") {
-            return WWW_PATH . "" . $rest->webhook(1) . "/" . $poll_id . "/" . $rest->webhook(3) . "/" . $prev_question;
-        } elseif ($index == "first") {
-            return WWW_PATH . "" . $rest->webhook(1) . "/" . $poll_id . "/" . $rest->webhook(3) . "/" . $first_question;
+        if ($index == 'next') {
+            return WWW_PATH . '' . $rest->webhook(1) . '/' . $poll_id . '/' . $rest->webhook(3) . '/' . $next_question;
+        } elseif ($index == 'prev') {
+            return WWW_PATH . '' . $rest->webhook(1) . '/' . $poll_id . '/' . $rest->webhook(3) . '/' . $prev_question;
+        } elseif ($index == 'first') {
+            return WWW_PATH . '' . $rest->webhook(1) . '/' . $poll_id . '/' . $rest->webhook(3) . '/' . $first_question;
             //www_PATH."/".$rest->webhook(1)."/".$rest->webhook(2)."/".$rest->webhook(3)."/1"
         }
     }
 
     /**
-     * 
+     *
      * @param type $poll_id
      * @param type $question_id
      * @return boolean
      */
     public function getCurrentQuestions($poll_id, $question_id)
     {
-        $query = "SELECT `value` FROM dnt_polls_composer WHERE
-		vendor_id 	= " . $this->vendor->getId() . " AND
-		poll_id 	= " . $poll_id . " AND
-		question_id 	= " . $question_id . " AND
+        $query = 'SELECT `value` FROM dnt_polls_composer WHERE
+		vendor_id 	= ' . $this->vendor->getId() . ' AND
+		poll_id 	= ' . $poll_id . ' AND
+		question_id 	= ' . $question_id . " AND
 		`key`       = 'question'";
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
@@ -130,15 +129,15 @@ class PollsFrontend extends Polls
     }
 
     /**
-     * 
+     *
      * @param type $vendor_ansewer_id
      * @return int
      * METODA 1
      */
     public function getCorrectOpinion($vendor_ansewer_id)
     {
-        $query = "SELECT `is_correct` FROM dnt_polls_composer WHERE
-		vendor_id 	= " . $this->vendor->getId() . " AND
+        $query = 'SELECT `is_correct` FROM dnt_polls_composer WHERE
+		vendor_id 	= ' . $this->vendor->getId() . " AND
 		is_correct 	= '1' AND
 		id_entity 	= '" . $vendor_ansewer_id . "'";
         if ($this->db->num_rows($query) > 0) {
@@ -151,7 +150,7 @@ class PollsFrontend extends Polls
     }
 
     /**
-     * 
+     *
      * @param type $poll_id
      * @return int
      * Funkcia vrati počet spravnych odpovedí v type ankety, kde je očakávaný počet percent ako výsledok
@@ -160,7 +159,7 @@ class PollsFrontend extends Polls
     {
         $correct = 0;
         foreach ($this->getPollsIds($poll_id) as $i) {
-            $vendor_ansewer_id = $this->cookie->Get("poll_" . $poll_id . "_" . $i);
+            $vendor_ansewer_id = $this->cookie->Get('poll_' . $poll_id . '_' . $i);
             $this->getCorrectOpinion($vendor_ansewer_id);
             if ($this->getCorrectOpinion($vendor_ansewer_id)) {
                 $correct++;
@@ -170,7 +169,7 @@ class PollsFrontend extends Polls
     }
 
     /**
-     * 
+     *
      * @param type $poll_id
      * @return type
      * Funkcia vrati percentualny vysledok spravnych odpovedi
@@ -181,7 +180,7 @@ class PollsFrontend extends Polls
     }
 
     /**
-     * 
+     *
      * @param type $poll_id
      * @return type
      * Funkcia vrati percentualny progress
@@ -198,15 +197,15 @@ class PollsFrontend extends Polls
     }
 
     /**
-     * 
+     *
      * @param type $vendor_ansewer_id
      * @return int
      * METODA 2
      */
     public function getVendorAnsewerPoints($vendor_ansewer_id)
     {
-        $query = "SELECT `points` FROM dnt_polls_composer WHERE
-		vendor_id 	= " . $this->vendor->getId() . " AND
+        $query = 'SELECT `points` FROM dnt_polls_composer WHERE
+		vendor_id 	= ' . $this->vendor->getId() . " AND
 		id_entity 	= '" . $vendor_ansewer_id . "'";
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
@@ -218,7 +217,7 @@ class PollsFrontend extends Polls
     }
 
     /**
-     * 
+     *
      * @param type $poll_id
      * @return type
      */
@@ -226,7 +225,7 @@ class PollsFrontend extends Polls
     {
         $correct = 0;
         foreach ($this->getPollsIds($poll_id) as $i) {
-            $vendor_ansewer_id = $this->cookie->Get("poll_" . $poll_id . "_" . $i);
+            $vendor_ansewer_id = $this->cookie->Get('poll_' . $poll_id . '_' . $i);
             $this->getVendorAnsewerPoints($vendor_ansewer_id);
             if ($this->getVendorAnsewerPoints($vendor_ansewer_id)) {
                 $correct += $this->getVendorAnsewerPoints($vendor_ansewer_id);
@@ -236,7 +235,7 @@ class PollsFrontend extends Polls
     }
 
     /**
-     * 
+     *
      * @param type $poll_id
      * @return type
      */
@@ -253,7 +252,7 @@ class PollsFrontend extends Polls
                 //ziska maximum z rozsahu
                 if ($row['points'] >= $points) {
                     $points_MAX = $row['points'];
-                    break; //zabezpeči len nasledujucu hodnotu, nie tie dalsie 
+                    break; //zabezpeči len nasledujucu hodnotu, nie tie dalsie
                 }
             }
 
@@ -265,14 +264,14 @@ class PollsFrontend extends Polls
             }
         }
         $data = array(
-            "max" => $points_MAX,
-            "min" => $points_MIN + 1 //+1 preto, aby sa dopočítal rozsah
+            'max' => $points_MAX,
+            'min' => $points_MIN + 1, //+1 preto, aby sa dopočítal rozsah
         );
         return $data;
     }
 
     /**
-     * 
+     *
      * @param type $poll_id
      * @return boolean
      */
@@ -299,7 +298,7 @@ class PollsFrontend extends Polls
     }
 
     /**
-     * 
+     *
      * @param type $column
      * @param type $id
      * @return boolean
@@ -320,14 +319,13 @@ class PollsFrontend extends Polls
     }
 
     /**
-     * 
+     *
      * @param type $poll_id
      */
     public function deleteCookies($poll_id)
     {
         foreach ($this->getPollsIds($poll_id) as $i) {
-            $this->cookie->Delete("poll_" . $poll_id . "_" . $i);
+            $this->cookie->Delete('poll_' . $poll_id . '_' . $i);
         }
     }
-
 }

@@ -19,7 +19,6 @@ use DntLibrary\Base\Vendor;
 
 class DntUpload
 {
-
     public function __construct()
     {
         $this->db = new DB();
@@ -37,9 +36,9 @@ class DntUpload
     protected function imageName($prefix = false)
     {
         if ($prefix) {
-            return $prefix . "_" . md5(time()) . "_o";
+            return $prefix . '_' . md5(time()) . '_o';
         }
-        return $this->vendor->getId() . "_" . md5(time()) . "_o";
+        return $this->vendor->getId() . '_' . md5(time()) . '_o';
     }
 
     public function imageFormats()
@@ -48,14 +47,14 @@ class DntUpload
             Image::THUMB,
             Image::SMALL,
             Image::MEDIUM,
-            Image::LARGE
+            Image::LARGE,
         );
     }
 
     protected function makeImageFormat($dntUpload, $path, $image_x, $fileName)
     {
 
-        if ($this->dnt->in_string("image", $dntUpload->file_src_mime)) {
+        if ($this->dnt->in_string('image', $dntUpload->file_src_mime)) {
             $dntUpload->file_new_name_body = $fileName;
             $dntUpload->image_resize = true;
             $dntUpload->image_ratio_y = true;
@@ -66,7 +65,7 @@ class DntUpload
     }
 
     /**
-     * 
+     *
      * @param type $file
      * @param type $table
      * @param type $setColumn
@@ -89,7 +88,7 @@ class DntUpload
                     $insertedData = array(
                         'vendor_id' => $this->vendor->getId(),
                         'name' => $dntUpload->file_dst_name,
-                        'type' => $dntUpload->file_src_mime
+                        'type' => $dntUpload->file_src_mime,
                     );
                     $this->db->dbTransaction();
                     $this->db->insert('dnt_uploads', $insertedData);
@@ -99,14 +98,14 @@ class DntUpload
 
                     //update settings columns
                     $this->db->update(
-                            $table, //table 
-                            array($setColumn => $imgId), //set
-                            array($updateColumn => $updateValue, '`vendor_id`' => $this->vendor->getId())//where
+                        $table, //table
+                        array($setColumn => $imgId), //set
+                        array($updateColumn => $updateValue, '`vendor_id`' => $this->vendor->getId())//where
                     );
                     $this->db->dbCommit();
                 }
                 foreach ($this->imageFormats() as $format) {
-                    $this->makeImageFormat(new Upload(@$_FILES[$file]), $path . "/formats/" . $format, $format, $fileName);
+                    $this->makeImageFormat(new Upload(@$_FILES[$file]), $path . '/formats/' . $format, $format, $fileName);
                 }
                 return $insertedData;
             }
@@ -114,7 +113,7 @@ class DntUpload
     }
 
     /**
-     * 
+     *
      * @param type $file
      * @param type $table
      * @param type $path
@@ -127,27 +126,26 @@ class DntUpload
         $dntUpload = new Upload(@$_FILES[$file]);
         $returnData = array();
         if (is_file($_FILES[$file]['tmp_name'])) {
-
             if ($dntUpload->uploaded) {
                 $dntUpload->Process($path);
                 if ($dntUpload->processed) {
                     //insert to files table of files
                     $face_detect = new FaceModify('dnt-library/framework/_Class/detection.dat');
-                    $face_detect->faceDetect($path . "/" . $dntUpload->file_dst_name);
-                    $face_detect->save($width, $width, $path . "/" . $dntUpload->file_dst_name);
+                    $face_detect->faceDetect($path . '/' . $dntUpload->file_dst_name);
+                    $face_detect->save($width, $width, $path . '/' . $dntUpload->file_dst_name);
                     $insertedData = array(
                         'vendor_id' => $this->vendor->getId(),
                         'name' => $dntUpload->file_dst_name,
-                        'type' => $dntUpload->file_src_mime
+                        'type' => $dntUpload->file_src_mime,
                     );
                     $this->db->insert('dnt_uploads', $insertedData);
                     $returnData = array(
-                        "file_dst_name" => $dntUpload->file_dst_name,
-                        "file_src_mime" => $dntUpload->file_src_mime,
+                        'file_dst_name' => $dntUpload->file_dst_name,
+                        'file_src_mime' => $dntUpload->file_src_mime,
                     );
                 }
                 foreach ($this->imageFormats() as $format) {
-                    $this->makeImageFormat(new Upload($file), $path . "/formats/" . $format, $format, $dntUpload->file_dst_name);
+                    $this->makeImageFormat(new Upload($file), $path . '/formats/' . $format, $format, $dntUpload->file_dst_name);
                 }
             }
             return $returnData;
@@ -155,7 +153,7 @@ class DntUpload
     }
 
     /**
-     * 
+     *
      * @param type $file_post
      * @return type
      */
@@ -175,7 +173,7 @@ class DntUpload
     }
 
     /**
-     * 
+     *
      * @param type $files
      * @param type $path
      */
@@ -195,7 +193,7 @@ class DntUpload
                     $insertedData = array(
                         'vendor_id' => $this->vendor->getId(),
                         'name' => $dntUpload->file_dst_name,
-                        'type' => $dntUpload->file_src_mime
+                        'type' => $dntUpload->file_src_mime,
                     );
                     if ($insertToDatabase) {
                         $this->db->insert('dnt_uploads', $insertedData);
@@ -205,7 +203,7 @@ class DntUpload
 
                 if ($moreFormats === true) {
                     foreach ($this->imageFormats() as $format) {
-                        $this->makeImageFormat(new Upload($file), $path . "/formats/" . $format, $format, $fileName);
+                        $this->makeImageFormat(new Upload($file), $path . '/formats/' . $format, $format, $fileName);
                     }
                 }
             }
@@ -230,7 +228,7 @@ class DntUpload
                 $insertedData = array(
                     'vendor_id' => ($vendorId) ? $vendorId : $this->vendor->getId(),
                     'name' => $dntUpload->file_dst_name,
-                    'type' => $dntUpload->file_src_mime
+                    'type' => $dntUpload->file_src_mime,
                 );
                 if ($insertToDatabase) {
                     $this->db->insert('dnt_uploads', $insertedData);
@@ -250,7 +248,7 @@ class DntUpload
     }
 
     /**
-     * 
+     *
      * @param type $files
      * @param type $table
      * @param type $setColumn
@@ -274,28 +272,27 @@ class DntUpload
                     $insertedData = array(
                         'vendor_id' => $this->vendor->getId(),
                         'name' => $dntUpload->file_dst_name,
-                        'type' => $dntUpload->file_src_mime
+                        'type' => $dntUpload->file_src_mime,
                     );
 
                     $this->db->insert('dnt_uploads', $insertedData);
                     $uploadedID[] = $this->dnt->getLastId('dnt_uploads');
                 }
                 foreach ($this->imageFormats() as $format) {
-                    $this->makeImageFormat(new Upload($file), $path . "/formats/" . $format, $format, $fileName);
+                    $this->makeImageFormat(new Upload($file), $path . '/formats/' . $format, $format, $fileName);
                 }
             }
         } //end foreach
         //get last ID of this file
         if (count($uploadedID) > 0) {
-            $imgId = implode(",", $uploadedID);
+            $imgId = implode(',', $uploadedID);
 
             //update settings columns
             $this->db->update(
-                    $table, //table 
-                    array($setColumn => $imgId), //set
-                    array($updateColumn => $updateValue, '`vendor_id`' => $this->vendor->getId())//where
+                $table, //table
+                array($setColumn => $imgId), //set
+                array($updateColumn => $updateValue, '`vendor_id`' => $this->vendor->getId())//where
             );
         }
     }
-
 }

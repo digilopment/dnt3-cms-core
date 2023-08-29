@@ -21,6 +21,12 @@
 
 namespace PHPMailer\PHPMailer;
 
+use Psr\Log\LoggerInterface;
+use const INTL_IDNA_VARIANT_2003;
+use const INTL_IDNA_VARIANT_UTS46;
+use const PHP_MAJOR_VERSION;
+use const PHP_VERSION_ID;
+
 /**
  * PHPMailer - PHP email creation and transport class.
  *
@@ -59,6 +65,72 @@ class PHPMailer
     const ICAL_METHOD_REFRESH = 'REFRESH';
     const ICAL_METHOD_COUNTER = 'COUNTER';
     const ICAL_METHOD_DECLINECOUNTER = 'DECLINECOUNTER';
+
+    /**
+     * The PHPMailer Version number.
+     *
+     * @var string
+     */
+    const VERSION = '6.5.1';
+
+    /**
+     * Error severity: message only, continue processing.
+     *
+     * @var int
+     */
+    const STOP_MESSAGE = 0;
+
+    /**
+     * Error severity: message, likely ok to continue processing.
+     *
+     * @var int
+     */
+    const STOP_CONTINUE = 1;
+
+    /**
+     * Error severity: message, plus full stop, critical error reached.
+     *
+     * @var int
+     */
+    const STOP_CRITICAL = 2;
+
+    /**
+     * The SMTP standard CRLF line break.
+     * If you want to change line break format, change static::$LE, not this.
+     */
+    const CRLF = "\r\n";
+
+    /**
+     * "Folding White Space" a white space string used for line folding.
+     */
+    const FWS = ' ';
+
+    /**
+     * The maximum line length supported by mail().
+     *
+     * Background: mail() will sometimes corrupt messages
+     * with headers headers longer than 65 chars, see #818.
+     *
+     * @var int
+     */
+    const MAIL_MAX_LINE_LENGTH = 63;
+
+    /**
+     * The maximum line length allowed by RFC 2822 section 2.1.1.
+     *
+     * @var int
+     */
+    const MAX_LINE_LENGTH = 998;
+
+    /**
+     * The lower maximum line length allowed by RFC 2822 section 2.1.1.
+     * This length does NOT include the line break
+     * 76 means that lines will be 77 or 78 chars depending on whether
+     * the line break format is LF or CRLF; both are valid.
+     *
+     * @var int
+     */
+    const STD_LINE_LENGTH = 76;
 
     /**
      * Email priority.
@@ -423,7 +495,7 @@ class PHPMailer
      *
      * @see SMTP::$Debugoutput
      *
-     * @var string|callable|\Psr\Log\LoggerInterface
+     * @var string|callable|LoggerInterface
      */
     public $Debugoutput = 'echo';
 
@@ -746,77 +818,11 @@ class PHPMailer
     protected $uniqueid = '';
 
     /**
-     * The PHPMailer Version number.
-     *
-     * @var string
-     */
-    const VERSION = '6.5.1';
-
-    /**
-     * Error severity: message only, continue processing.
-     *
-     * @var int
-     */
-    const STOP_MESSAGE = 0;
-
-    /**
-     * Error severity: message, likely ok to continue processing.
-     *
-     * @var int
-     */
-    const STOP_CONTINUE = 1;
-
-    /**
-     * Error severity: message, plus full stop, critical error reached.
-     *
-     * @var int
-     */
-    const STOP_CRITICAL = 2;
-
-    /**
-     * The SMTP standard CRLF line break.
-     * If you want to change line break format, change static::$LE, not this.
-     */
-    const CRLF = "\r\n";
-
-    /**
-     * "Folding White Space" a white space string used for line folding.
-     */
-    const FWS = ' ';
-
-    /**
      * SMTP RFC standard line ending; Carriage Return, Line Feed.
      *
      * @var string
      */
     protected static $LE = self::CRLF;
-
-    /**
-     * The maximum line length supported by mail().
-     *
-     * Background: mail() will sometimes corrupt messages
-     * with headers headers longer than 65 chars, see #818.
-     *
-     * @var int
-     */
-    const MAIL_MAX_LINE_LENGTH = 63;
-
-    /**
-     * The maximum line length allowed by RFC 2822 section 2.1.1.
-     *
-     * @var int
-     */
-    const MAX_LINE_LENGTH = 998;
-
-    /**
-     * The lower maximum line length allowed by RFC 2822 section 2.1.1.
-     * This length does NOT include the line break
-     * 76 means that lines will be 77 or 78 chars depending on whether
-     * the line break format is LF or CRLF; both are valid.
-     *
-     * @var int
-     */
-    const STD_LINE_LENGTH = 76;
 
     /**
      * Constructor.
@@ -895,7 +901,7 @@ class PHPMailer
             return;
         }
         //Is this a PSR-3 logger?
-        if ($this->Debugoutput instanceof \Psr\Log\LoggerInterface) {
+        if ($this->Debugoutput instanceof LoggerInterface) {
             $this->Debugoutput->debug($str);
 
             return;
@@ -1197,13 +1203,11 @@ class PHPMailer
             // Clear any potential IMAP errors to get rid of notices being thrown at end of script.
             imap_errors();
             foreach ($list as $address) {
-                if (
-                    '.SYNTAX-ERROR.' !== $address->host &&
+                if ('.SYNTAX-ERROR.' !== $address->host &&
                     static::validateAddress($address->mailbox . '@' . $address->host)
                 ) {
                     //Decode the name part if it's present and encoded
-                    if (
-                        property_exists($address, 'personal') &&
+                    if (property_exists($address, 'personal') &&
                         //Check for a Mbstring constant rather than using extension_loaded, which is sometimes disabled
                         defined('MB_CASE_UPPER') &&
                         preg_match('/^=\?.*\?=$/s', $address->personal)
@@ -1283,8 +1287,7 @@ class PHPMailer
         $name = trim(preg_replace('/[\r\n]+/', '', $name)); //Strip breaks and trim
         //Don't validate now addresses with IDN. Will be done in send().
         $pos = strrpos($address, '@');
-        if (
-            (false === $pos)
+        if ((false === $pos)
             || ((!$this->has8bitChars(substr($address, ++$pos)) || !static::idnSupported())
             && !static::validateAddress($address))
         ) {
@@ -1437,8 +1440,7 @@ class PHPMailer
     {
         //Verify we have required functions, CharSet, and at-sign.
         $pos = strrpos($address, '@');
-        if (
-            !empty($this->CharSet) &&
+        if (!empty($this->CharSet) &&
             false !== $pos &&
             static::idnSupported()
         ) {
@@ -1451,10 +1453,10 @@ class PHPMailer
                 $errorcode = 0;
                 if (defined('INTL_IDNA_VARIANT_UTS46')) {
                     //Use the current punycode standard (appeared in PHP 7.2)
-                    $punycode = idn_to_ascii($domain, $errorcode, \INTL_IDNA_VARIANT_UTS46);
+                    $punycode = idn_to_ascii($domain, $errorcode, INTL_IDNA_VARIANT_UTS46);
                 } elseif (defined('INTL_IDNA_VARIANT_2003')) {
                     //Fall back to this old, deprecated/removed encoding
-                    $punycode = idn_to_ascii($domain, $errorcode, \INTL_IDNA_VARIANT_2003);
+                    $punycode = idn_to_ascii($domain, $errorcode, INTL_IDNA_VARIANT_2003);
                 } else {
                     //Fall back to a default we don't know about
                     $punycode = idn_to_ascii($domain, $errorcode);
@@ -1504,9 +1506,8 @@ class PHPMailer
      */
     public function preSend()
     {
-        if (
-            'smtp' === $this->Mailer
-            || ('mail' === $this->Mailer && (\PHP_VERSION_ID >= 80000 || stripos(PHP_OS, 'WIN') === 0))
+        if ('smtp' === $this->Mailer
+            || ('mail' === $this->Mailer && (PHP_VERSION_ID >= 80000 || stripos(PHP_OS, 'WIN') === 0))
         ) {
             //SMTP mandates RFC-compliant line endings
             //and it's also used with mail() on Windows
@@ -1516,10 +1517,9 @@ class PHPMailer
             static::setLE(PHP_EOL);
         }
         //Check for buggy PHP versions that add a header with an incorrect line break
-        if (
-            'mail' === $this->Mailer
-            && ((\PHP_VERSION_ID >= 70000 && \PHP_VERSION_ID < 70017)
-                || (\PHP_VERSION_ID >= 70100 && \PHP_VERSION_ID < 70103))
+        if ('mail' === $this->Mailer
+            && ((PHP_VERSION_ID >= 70000 && PHP_VERSION_ID < 70017)
+                || (PHP_VERSION_ID >= 70100 && PHP_VERSION_ID < 70103))
             && ini_get('mail.add_x_header') === '1'
             && stripos(PHP_OS, 'WIN') === 0
         ) {
@@ -1599,8 +1599,7 @@ class PHPMailer
             }
 
             //Sign with DKIM if enabled
-            if (
-                !empty($this->DKIM_domain)
+            if (!empty($this->DKIM_domain)
                 && !empty($this->DKIM_selector)
                 && (!empty($this->DKIM_private_string)
                     || (!empty($this->DKIM_private)
@@ -1745,7 +1744,7 @@ class PHPMailer
                     $this->From,
                     []
                 );
-                $this->edebug("Result: " . ($result === 0 ? 'true' : 'false'));
+                $this->edebug('Result: ' . ($result === 0 ? 'true' : 'false'));
                 if (0 !== $result) {
                     throw new Exception($this->lang('execute') . $this->Sendmail, self::STOP_CRITICAL);
                 }
@@ -1768,7 +1767,7 @@ class PHPMailer
                 $this->From,
                 []
             );
-            $this->edebug("Result: " . ($result === 0 ? 'true' : 'false'));
+            $this->edebug('Result: ' . ($result === 0 ? 'true' : 'false'));
             if (0 !== $result) {
                 throw new Exception($this->lang('execute') . $this->Sendmail, self::STOP_CRITICAL);
             }
@@ -1790,8 +1789,7 @@ class PHPMailer
     protected static function isShellSafe($string)
     {
         //Future-proof
-        if (
-            escapeshellcmd($string) !== $string
+        if (escapeshellcmd($string) !== $string
             || !in_array(escapeshellarg($string), ["'$string'", "\"$string\""])
         ) {
             return false;
@@ -1845,7 +1843,7 @@ class PHPMailer
         if (strpos($path, '\\\\') !== 0) {
             $readable = $readable && is_readable($path);
         }
-        return  $readable;
+        return $readable;
     }
 
     /**
@@ -2073,12 +2071,11 @@ class PHPMailer
 
         foreach ($hosts as $hostentry) {
             $hostinfo = [];
-            if (
-                !preg_match(
-                    '/^(?:(ssl|tls):\/\/)?(.+?)(?::(\d+))?$/',
-                    trim($hostentry),
-                    $hostinfo
-                )
+            if (!preg_match(
+                '/^(?:(ssl|tls):\/\/)?(.+?)(?::(\d+))?$/',
+                trim($hostentry),
+                $hostinfo
+            )
             ) {
                 $this->edebug($this->lang('invalid_hostentry') . ' ' . trim($hostentry));
                 //Not a valid host entry
@@ -2117,8 +2114,7 @@ class PHPMailer
             }
             $host = $hostinfo[2];
             $port = $this->Port;
-            if (
-                array_key_exists(3, $hostinfo) &&
+            if (array_key_exists(3, $hostinfo) &&
                 is_numeric($hostinfo[3]) &&
                 $hostinfo[3] > 0 &&
                 $hostinfo[3] < 65536
@@ -2148,13 +2144,12 @@ class PHPMailer
                         //We must resend EHLO after TLS negotiation
                         $this->smtp->hello($hello);
                     }
-                    if (
-                        $this->SMTPAuth && !$this->smtp->authenticate(
-                            $this->Username,
-                            $this->Password,
-                            $this->AuthType,
-                            $this->oauth
-                        )
+                    if ($this->SMTPAuth && !$this->smtp->authenticate(
+                        $this->Username,
+                        $this->Password,
+                        $this->AuthType,
+                        $this->oauth
+                    )
                     ) {
                         throw new Exception($this->lang('authenticate'));
                     }
@@ -2257,9 +2252,8 @@ class PHPMailer
 
         //Validate $langcode
         $foundlang = true;
-        $langcode  = strtolower($langcode);
-        if (
-            !preg_match('/^(?P<lang>[a-z]{2})(?P<script>_[a-z]{4})?(?P<country>_[a-z]{2})?$/', $langcode, $matches)
+        $langcode = strtolower($langcode);
+        if (!preg_match('/^(?P<lang>[a-z]{2})(?P<script>_[a-z]{4})?(?P<country>_[a-z]{2})?$/', $langcode, $matches)
             && $langcode !== 'en'
         ) {
             $foundlang = false;
@@ -2300,12 +2294,11 @@ class PHPMailer
                     //These files are parsed as text and not PHP so as to avoid the possibility of code injection
                     //See https://blog.stevenlevithan.com/archives/match-quoted-string
                     $matches = [];
-                    if (
-                        preg_match(
-                            '/^\$PHPMAILER_LANG\[\'([a-z\d_]+)\'\]\s*=\s*(["\'])(.+)*?\2;/',
-                            $line,
-                            $matches
-                        ) &&
+                    if (preg_match(
+                        '/^\$PHPMAILER_LANG\[\'([a-z\d_]+)\'\]\s*=\s*(["\'])(.+)*?\2;/',
+                        $line,
+                        $matches
+                    ) &&
                         //Ignore unknown translation keys
                         array_key_exists($matches[1], $PHPMAILER_LANG)
                     ) {
@@ -2579,8 +2572,7 @@ class PHPMailer
         }
 
         //sendmail and mail() extract Bcc from the header before sending
-        if (
-            (
+        if ((
                 'sendmail' === $this->Mailer || 'qmail' === $this->Mailer || 'mail' === $this->Mailer
             )
             && count($this->bcc) > 0
@@ -2601,8 +2593,7 @@ class PHPMailer
 
         //Only allow a custom message ID if it conforms to RFC 5322 section 3.6.4
         //https://tools.ietf.org/html/rfc5322#section-3.6.4
-        if (
-            '' !== $this->MessageID &&
+        if ('' !== $this->MessageID &&
             preg_match(
                 '/^<((([a-z\d!#$%&\'*+\/=?^_`{|}~-]+(\.[a-z\d!#$%&\'*+\/=?^_`{|}~-]+)*)' .
                 '|("(([\x01-\x08\x0B\x0C\x0E-\x1F\x7F]|[\x21\x23-\x5B\x5D-\x7E])' .
@@ -4058,8 +4049,7 @@ class PHPMailer
     public static function isValidHost($host)
     {
         //Simple syntax limits
-        if (
-            empty($host)
+        if (empty($host)
             || !is_string($host)
             || strlen($host) > 256
             || !preg_match('/^([a-zA-Z\d.-]*|\[[a-fA-F\d:]+\])$/', $host)
@@ -4248,14 +4238,13 @@ class PHPMailer
                     if (strlen($directory) > 1 && '/' !== substr($directory, -1)) {
                         $directory .= '/';
                     }
-                    if (
-                        $this->addEmbeddedImage(
-                            $basedir . $directory . $filename,
-                            $cid,
-                            $filename,
-                            static::ENCODING_BASE64,
-                            static::_mime_types((string) static::mb_pathinfo($filename, PATHINFO_EXTENSION))
-                        )
+                    if ($this->addEmbeddedImage(
+                        $basedir . $directory . $filename,
+                        $cid,
+                        $filename,
+                        static::ENCODING_BASE64,
+                        static::_mime_types((string) static::mb_pathinfo($filename, PATHINFO_EXTENSION))
+                    )
                     ) {
                         $message = preg_replace(
                             '/' . $images[1][$imgindex] . '=["\']' . preg_quote($url, '/') . '["\']/Ui',
@@ -4675,13 +4664,13 @@ class PHPMailer
             $privKey = openssl_pkey_get_private($privKeyStr);
         }
         if (openssl_sign($signHeader, $signature, $privKey, 'sha256WithRSAEncryption')) {
-            if (\PHP_MAJOR_VERSION < 8) {
+            if (PHP_MAJOR_VERSION < 8) {
                 openssl_pkey_free($privKey);
             }
 
             return base64_encode($signature);
         }
-        if (\PHP_MAJOR_VERSION < 8) {
+        if (PHP_MAJOR_VERSION < 8) {
             openssl_pkey_free($privKey);
         }
 

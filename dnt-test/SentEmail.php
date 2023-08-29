@@ -6,16 +6,14 @@ use DntLibrary\Base\Mailer;
 
 class SentEmailTest
 {
-
     public function run()
     {
         $dntMailer = new Mailer();
 
-        $senderEmail = "test@winprizes.eu";
-        $recipientEmail = "thomas.doubek@gmail.com";
-        $msg = "Správa bola úspešne odoslaná";
-        $messageTitle = "Registrace do soutěže";
-
+        $senderEmail = 'test@winprizes.eu';
+        $recipientEmail = 'thomas.doubek@gmail.com';
+        $msg = 'Správa bola úspešne odoslaná';
+        $messageTitle = 'Registrace do soutěže';
 
         $dntMailer->set_recipient(array($recipientEmail));
         $dntMailer->set_msg($msg);
@@ -25,7 +23,6 @@ class SentEmailTest
         $dntMailer->sent_email();
 
         echo 'snet, time: ' . time();
-
 
         return array(
             1 => array(
@@ -91,8 +88,7 @@ class SentEmailTest
             63 => array('email' => array('thomas.doubek@gmail.com'), 'title' => 'Teleráno - súťaž o tehly', 'sender' => 'no-reply@markiza.sk',),
             64 => array('email' => array('thomas.doubek@gmail.com'), 'title' => 'Teleráno - Upratovacia čata', 'sender' => 'no-reply@markiza.sk',),
             65 => array('email' => array('thomas.doubek@gmail.com'), 'title' => 'Teleráno - Formulár Bona', 'sender' => 'no-reply@markiza.sk',),
-            66 => array('email' => array('thomas.doubek@gmail.com'), 'title' => 'Teleráno - Therapy Air Ion', 'sender' => 'no-reply@markiza.sk')
+            66 => array('email' => array('thomas.doubek@gmail.com'), 'title' => 'Teleráno - Therapy Air Ion', 'sender' => 'no-reply@markiza.sk'),
         );
     }
-
 }

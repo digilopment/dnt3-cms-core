@@ -12,14 +12,15 @@ use DntLibrary\Base\Vendor;
 
 class LoginController extends AdminController
 {
-
     protected $loc = __FILE__;
 
-	public function __construct(){
-		$this->adminUser = new AdminUser();
-		$this->dnt = new Dnt();
-		$this->vendor = new Vendor();
-	}
+    public function __construct()
+    {
+        $this->adminUser = new AdminUser();
+        $this->dnt = new Dnt();
+        $this->vendor = new Vendor();
+    }
+
     protected function processLogin()
     {
         $rest = new Rest();
@@ -95,5 +96,4 @@ class LoginController extends AdminController
             $dnt->redirect('index?src=' . DEFAULT_MODUL_ADMIN);
         }
     }
-
 }

@@ -11,10 +11,12 @@ use DntLibrary\Base\Vendor;
 
 class RouterAdmin
 {
-
     protected $db;
+
     public $navigation;
+
     public $session;
+
     public $rest;
 
     public function __construct()
@@ -28,10 +30,10 @@ class RouterAdmin
 
     protected function redirect()
     {
-        if (WWW_PATH_ADMIN_2 == HTTP_PROTOCOL . DOMAIN . WWW_FOLDERS . "/" . ADMIN_URL_2 . "/") {
+        if (WWW_PATH_ADMIN_2 == HTTP_PROTOCOL . DOMAIN . WWW_FOLDERS . '/' . ADMIN_URL_2 . '/') {
             $vendors = $this->vendor->getAll();
             $lastVendor = end($vendors);
-            $url = HTTP_PROTOCOL . $lastVendor['name_url'] . "." . DOMAIN . WWW_FOLDERS . "/" . ADMIN_URL_2 . "/";
+            $url = HTTP_PROTOCOL . $lastVendor['name_url'] . '.' . DOMAIN . WWW_FOLDERS . '/' . ADMIN_URL_2 . '/';
             $this->dnt->redirect($url);
         }
     }
@@ -57,9 +59,9 @@ class RouterAdmin
     {
 
         $classPrefix = $module;
-        $classFile = (new Autoloader())->className($classPrefix) . "Controller.php";
-        $className = (new Autoloader())->className($classPrefix) . "Controller";
-        $file = "modules/" . $module . "/" . $classFile;
+        $classFile = (new Autoloader())->className($classPrefix) . 'Controller.php';
+        $className = (new Autoloader())->className($classPrefix) . 'Controller';
+        $file = 'modules/' . $module . '/' . $classFile;
         if (file_exists($file)) {
             include $file;
             $className = 'DntAdmin\Moduls\\' . $className;
@@ -87,17 +89,17 @@ class RouterAdmin
 
     protected function navigation()
     {
-        $query = "SELECT * FROM `dnt_admin_menu` WHERE `parent_id` = '0' AND `show` = '1' AND `type` = 'menu' AND vendor_id = " . $this->vendor->getId() . "";
+        $query = "SELECT * FROM `dnt_admin_menu` WHERE `parent_id` = '0' AND `show` = '1' AND `type` = 'menu' AND vendor_id = " . $this->vendor->getId() . '';
         $this->navigation = $this->db->get_results($query);
         array_push(
-                $this->navigation,
-                ["name_url" => "login"],
-                ["name_url" => "logout"],
-                ["name_url" => "pdfgen"],
-                ["name_url" => "menucreator"],
-                ["name_url" => "vendor"],
-                ["name_url" => "services"],
-                ["name_url" => "temporary-online"]
+            $this->navigation,
+            ['name_url' => 'login'],
+            ['name_url' => 'logout'],
+            ['name_url' => 'pdfgen'],
+            ['name_url' => 'menucreator'],
+            ['name_url' => 'vendor'],
+            ['name_url' => 'services'],
+            ['name_url' => 'temporary-online']
         );
     }
 
@@ -115,9 +117,9 @@ class RouterAdmin
         $this->redirect();
         $this->navigation();
 
-        if ($this->session->get("admin_logged") && empty($this->rest->get('src'))) {
+        if ($this->session->get('admin_logged') && empty($this->rest->get('src'))) {
             $this->dnt->redirect('index.php?src=' . DEFAULT_MODUL_ADMIN);
-        } elseif ($this->session->get("admin_logged")) {
+        } elseif ($this->session->get('admin_logged')) {
             $getRequest = $this->rest->get('src');
             if (in_array($getRequest, $this->getNameUrlFromMenu())) {
                 $this->loadModul($getRequest);
@@ -125,14 +127,13 @@ class RouterAdmin
                 $this->loadModul('default');
             }
         } else {
-            if ($this->rest->get('src') == "forgotten-password") {
+            if ($this->rest->get('src') == 'forgotten-password') {
                 $this->loadModul('forgotten-password');
-            } elseif ($this->rest->get('src') == "temporary-online") {
+            } elseif ($this->rest->get('src') == 'temporary-online') {
                 $this->loadModul('temporary-online');
             } else {
                 $this->loadModul('login');
             }
         }
     }
-
 }

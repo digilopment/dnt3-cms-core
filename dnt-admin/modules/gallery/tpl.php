@@ -9,14 +9,14 @@ get_top();
 ?>
 <?php get_top_html(); ?>
 <?php
-$db = new DB;
-$rest = new Rest;
-$image = new Image;
+$db = new DB();
+$rest = new Rest();
+$image = new Image();
 ?>
 <!-- BEGIN CUSTOM TABLE -->
 
 <!-- The modal -->
-<?php galleryChooser("25"); ?>
+<?php galleryChooser('25'); ?>
 
 
 
@@ -44,22 +44,22 @@ $image = new Image;
     </div>
     <ul class="pagination">
         <li class="">
-            <a href="<?php echo FileAdmin::paginator("prev"); ?>">
+            <a href="<?php echo FileAdmin::paginator('prev'); ?>">
                 &laquo;
             </a>
         </li>
         <li>
-            <a href="<?php echo FileAdmin::paginator("first"); ?>">
-                <?php echo FileAdmin::getPage("first"); ?>
+            <a href="<?php echo FileAdmin::paginator('first'); ?>">
+                <?php echo FileAdmin::getPage('first'); ?>
             </a>
         </li>
         <li>
-            <a href="<?php echo FileAdmin::paginator("last"); ?>">
-                <?php echo FileAdmin::getPage("last"); ?>
+            <a href="<?php echo FileAdmin::paginator('last'); ?>">
+                <?php echo FileAdmin::getPage('last'); ?>
             </a>
         </li>
         <li>
-            <a href="<?php echo FileAdmin::paginator("next"); ?>">
+            <a href="<?php echo FileAdmin::paginator('next'); ?>">
                 &raquo;
             </a>
         </li>

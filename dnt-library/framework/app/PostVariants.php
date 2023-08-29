@@ -18,7 +18,6 @@ use DntLibrary\Base\Vendor;
 
 class PostVariants
 {
-
     public function __construct()
     {
         $this->rest = new Rest();
@@ -89,5 +88,4 @@ class PostVariants
             return $data;
         }
     }
-
 }

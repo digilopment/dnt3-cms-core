@@ -1,18 +1,16 @@
 <?php
 
 use DntLibrary\Base\DB;
-use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Image;
 use DntLibrary\Base\Rest;
-use DntLibrary\Base\Vendor;
 
 get_top();
 ?>
 <?php get_top_html(); ?>
 <?php
 $db = new DB();
-$rest = new Rest;
-$image = new Image;
+$rest = new Rest();
+$image = new Image();
 ?>
 <!-- BEGIN CUSTOM TABLE -->
 <section class="row content-header">
@@ -28,11 +26,11 @@ $image = new Image;
             <span class="bg-blue action text-center padding"><a href="#" style="color:#fff;" data-toggle="modal" data-target="#addVoucherManualy"><b>Pridať ručne</b></a></span>
         </li>
         <li class="post_type" style="display:block;margin-top: 7px;">
-            <span class="bg-red action text-center padding"><a <?php echo $dnt->confirmMsg("Naozaj chcete vymazať všetky vouchre, ktoré nie sú priradené používateľovi?"); ?> style="color:#fff;" href="index.php?src=vouchers&post_id=0&action=del-all"><b>Zmazať všetky</b></a></span>
+            <span class="bg-red action text-center padding"><a <?php echo $dnt->confirmMsg('Naozaj chcete vymazať všetky vouchre, ktoré nie sú priradené používateľovi?'); ?> style="color:#fff;" href="index.php?src=vouchers&post_id=0&action=del-all"><b>Zmazať všetky</b></a></span>
         </li>
     </ul>
 
-    <!-- START MODAL -->								
+    <!-- START MODAL -->                                
     <div class="modal fade" id="addVoucherManualy" tabindex="-1" role="dialog" aria-labelledby="myModalLabel8" aria-hidden="true">
         <div class="modal-wrapper">
             <div class="modal-dialog">
@@ -99,38 +97,38 @@ $image = new Image;
                                 $fileName = $row['file_name'];
                                 $imported = $row['datetime_creat'];
                                 $used = $row['datetime_update'];
-                                $delUrl = "index.php?src=vouchers&post_id=" . $postId . "&action=del";
+                                $delUrl = 'index.php?src=vouchers&post_id=' . $postId . '&action=del';
                                 $userUrl = "index.php?src=user&action=edit&post_id=$userId";
                                 ?>
                                 <tr>
                                     <td><?php echo $order; ?></td>
                                     <td><?php echo $postId ?></td>
                                     <td><?php if ($userId) {
-                                    echo '<a href="' . $userUrl . '"><u>' . $userId . '</u></a>';
-                                } else {
-                                    echo $userId;
-                                } ?></td>
+                                        echo '<a href="' . $userUrl . '"><u>' . $userId . '</u></a>';
+                                        } else {
+                                            echo $userId;
+                                        } ?></td>
                                     <td><?php echo $value ?></td>
                                     <td><a href="../dnt-view/data/uploads/<?php echo $fileName ?>"><?php echo $fileName ?></a></td>
                                     <td><?php echo $imported ?><br/><b><?php echo $used ?></b></td>
-                                    <td><a <?php echo $dnt->confirmMsg("Naozaj chcete vymazať tento voucher?"); ?> href="<?php echo $delUrl ?>"><i class="fa fa-times bg-red action"></i></a></td>
+                                    <td><a <?php echo $dnt->confirmMsg('Naozaj chcete vymazať tento voucher?'); ?> href="<?php echo $delUrl ?>"><i class="fa fa-times bg-red action"></i></a></td>
                                     <td>
-        <?php if ($userId) { ?>
+                                <?php if ($userId) { ?>
                                             <i title="Voucher je priradený" class="fa fa-check bg-green action"></i></td>
-                            <?php } else { ?>
+                                <?php } else { ?>
                                 <i title="Voucher čaká na priradenie" class="fa fa-times bg-blue action"></i>
-                            <?php } ?>
+                                <?php } ?>
                             </td>
                             </tr>
                             <thead>
 
                             </thead>
-        <?php
-    }
-} else {
-    no_results();
-}
-?>			  
+                                <?php
+                            }
+                        } else {
+                            no_results();
+                        }
+                        ?>            
                     </tbody>
                 </table>
             </div>

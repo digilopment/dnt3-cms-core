@@ -3,18 +3,17 @@
 
 use DntLibrary\Base\AdminUser;
 use DntLibrary\Base\Api;
-use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Rest;
 
 get_top();
 ?>
 <?php get_top_html(); ?>
 <?php
-$rest = new Rest;
-$user = new Api;
-$admin = new AdminUser;
-$post_id = $rest->get("post_id");
-$query = "SELECT * FROM dnt_users";
+$rest = new Rest();
+$user = new Api();
+$admin = new AdminUser();
+$post_id = $rest->get('post_id');
+$query = 'SELECT * FROM dnt_users';
 //var_dump($user->getColumns($query));
 ?>
 <section class="content">
@@ -45,26 +44,25 @@ $query = "SELECT * FROM dnt_users";
                                 <span style="font-weight: bold;">
                                     <?php
                                     foreach ($user->getColumns($query) as $key => $value) {
-                                        if (
-                                                $value != "id" &&
-                                                $value != "type" &&
-                                                $value != "session_id" &&
-                                                $value != "news" &&
-                                                $value != "news_2" &&
-                                                $value != "kliknute" &&
-                                                $value != "vendor_id" &&
-                                                $value != "datetime_creat" &&
-                                                $value != "datetime_update" &&
-                                                $value != "datetime_publish" &&
-                                                $value != "podmienky" &&
-                                                $value != "img" &&
-                                                $value != "ip_adresa" &&
-                                                $value != "parent_id" &&
-                                                $value != "hladam" &&
-                                                $value != "custom_1" &&
-                                                $value != "status" &&
-                                                $value != "sex" &&
-                                                $value != "pass"
+                                        if ($value != 'id' &&
+                                                $value != 'type' &&
+                                                $value != 'session_id' &&
+                                                $value != 'news' &&
+                                                $value != 'news_2' &&
+                                                $value != 'kliknute' &&
+                                                $value != 'vendor_id' &&
+                                                $value != 'datetime_creat' &&
+                                                $value != 'datetime_update' &&
+                                                $value != 'datetime_publish' &&
+                                                $value != 'podmienky' &&
+                                                $value != 'img' &&
+                                                $value != 'ip_adresa' &&
+                                                $value != 'parent_id' &&
+                                                $value != 'hladam' &&
+                                                $value != 'custom_1' &&
+                                                $value != 'status' &&
+                                                $value != 'sex' &&
+                                                $value != 'pass'
                                         ) {
                                             ?>
                                             <h5><?php echo $value; ?>:</h5>
@@ -72,8 +70,8 @@ $query = "SELECT * FROM dnt_users";
                                                 <input type="text" name="<?php echo $value; ?>" value="" class="form-control">
                                             </div>
                                         <?php } ?>  
-<?php } ?>
-                                    <br/>						
+                                    <?php } ?>
+                                    <br/>                       
                                     <h5><b>Vaše heslo:</b></h5>
                                     <div class="checkbox">
                                         <input type="password" name="pass" value="" class="form-control">

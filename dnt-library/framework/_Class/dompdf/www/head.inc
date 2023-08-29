@@ -2,15 +2,17 @@
 
 session_start();
 
-require_once "../dompdf_config.inc.php";
-require_once "functions.inc.php";
+require_once '../dompdf_config.inc.php';
+require_once 'functions.inc.php';
 
-function li_arrow() {
-  return '<li style="list-style-image: url(\'images/arrow_0' . rand(1,6) . '.gif\');">';  
+function li_arrow()
+{
+    return '<li style="list-style-image: url(\'images/arrow_0' . rand(1, 6) . '.gif\');">';
 }
 
-function li_star() {
-  return '<li style="list-style-image: url(\'images/star_0' . rand(1,5) . '.gif\');">';  
+function li_star()
+{
+    return '<li style="list-style-image: url(\'images/star_0' . rand(1, 5) . '.gif\');">';
 }
 
 auth_check();
@@ -24,9 +26,9 @@ auth_check();
   <link rel="SHORTCUT ICON" href="images/favicon.ico"/>
   <script type="text/javascript" src="jquery-1.4.2.js"></script>
   
-  <?php if (isset($_SESSION["auth_message"])) { ?>
+  <?php if (isset($_SESSION['auth_message'])) { ?>
     <script type="text/javascript">
-      alert("<?php echo $_SESSION["auth_message"]; ?>");
+      alert("<?php echo $_SESSION['auth_message']; ?>");
     </script>
   <?php } ?>
 </head>

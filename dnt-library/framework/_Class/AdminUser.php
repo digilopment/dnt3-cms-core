@@ -19,7 +19,6 @@ use DntLibrary\Base\XMLgenerator;
 
 class AdminUser extends Image
 {
-
     public function __construct()
     {
         $this->dnt = new Dnt();
@@ -49,12 +48,13 @@ class AdminUser extends Image
     public function updateDatetime($vendor_id, $email)
     {
         $this->db->update(
-                "dnt_users", //table
-                array(//set
-                    'datetime_update' => $this->dnt->datetime()
-                ), array(//where
+            'dnt_users', //table
+            array(//set
+                    'datetime_update' => $this->dnt->datetime(),
+                ),
+            array(//where
             'vendor_id' => $vendor_id,
-            'email' => $email
+            'email' => $email,
                 )
         );
     }
@@ -72,12 +72,13 @@ class AdminUser extends Image
     public function updatePassword($vendor_id, $email, $pass)
     {
         $this->db->update(
-                "dnt_users", //table
-                array(//set
-                    'pass' => md5($pass)
-                ), array(//where
+            'dnt_users', //table
+            array(//set
+                    'pass' => md5($pass),
+                ),
+            array(//where
             'vendor_id' => $vendor_id,
-            'email' => $email
+            'email' => $email,
                 )
         );
     }
@@ -96,12 +97,12 @@ class AdminUser extends Image
 
     public function getUserColumns()
     {
-        return $this->xml->getTableColumns("dnt_users", "*");
+        return $this->xml->getTableColumns('dnt_users', '*');
     }
 
     public function data($type, $column)
     {
-        $query = "SELECT $column FROM dnt_users WHERE type = '$type' AND email = '" . $this->sessions->get("admin_id") . "' AND vendor_id = '" . $this->vendor->getId() . "'";
+        $query = "SELECT $column FROM dnt_users WHERE type = '$type' AND email = '" . $this->sessions->get('admin_id') . "' AND vendor_id = '" . $this->vendor->getId() . "'";
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
                 return $row[$column];
@@ -113,7 +114,7 @@ class AdminUser extends Image
 
     public function avatar()
     {
-        $imageId = $this->data("admin", "img");
+        $imageId = $this->data('admin', 'img');
         return $this->getFileImage($imageId);
     }
 
@@ -143,8 +144,7 @@ class AdminUser extends Image
 
     public function avatarById($id)
     {
-        $imageId = $this->dataById("admin", "img", $id);
+        $imageId = $this->dataById('admin', 'img', $id);
         return $this->getFileImage($imageId);
     }
-
 }

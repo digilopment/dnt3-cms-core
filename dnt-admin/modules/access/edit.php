@@ -1,15 +1,13 @@
 <?php
 
-use DntLibrary\Base\AdminUser;
-use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Rest;
 
 get_top();
 ?>
 <?php get_top_html(); ?>
 <?php
-$rest = new Rest;
-$post_id = $rest->get("post_id");
+$rest = new Rest();
+$post_id = $rest->get('post_id');
 ?>
 <section class="content">
     <div class="row">
@@ -28,20 +26,20 @@ $post_id = $rest->get("post_id");
                                 <span style="font-weight: bold;">
                                     <h5>Meno:</h5>
                                     <div class="checkbox">
-                                        <input type="text" name="name" value="<?php echo $adminUser->dataById("admin", "name", $post_id); ?>" class="form-control">
+                                        <input type="text" name="name" value="<?php echo $adminUser->dataById('admin', 'name', $post_id); ?>" class="form-control">
                                     </div>
                                     <h5>Priezvisko:</h5>
                                     <div class="checkbox">
-                                        <input type="text" name="surname" value="<?php echo $adminUser->dataById("admin", "surname", $post_id); ?>" class="form-control">
+                                        <input type="text" name="surname" value="<?php echo $adminUser->dataById('admin', 'surname', $post_id); ?>" class="form-control">
                                     </div>
                                     <h5>Email:</h5>
                                     <div class="checkbox">
-                                        <input type="text" name="email" value="<?php echo $adminUser->dataById("admin", "email", $post_id); ?>" class="form-control">
+                                        <input type="text" name="email" value="<?php echo $adminUser->dataById('admin', 'email', $post_id); ?>" class="form-control">
                                     </div>
                                     <h5>Aktívny prístup?</h5>
                                     <div class="checkbox">
                                         <input type="radio" name="show" value="1" checked="">Áno
-                                        <input type="radio" name="show" value="0">Nie										
+                                        <input type="radio" name="show" value="0">Nie                                       
                                     </div>
                                     <h5>Zadajte heslo na overenie totožnosti:</h5>
                                     <div class="checkbox">
@@ -57,11 +55,11 @@ $post_id = $rest->get("post_id");
                                 <p>Ak máte eshop a vystavíte faktúru, vaše meno tam bude predvyplnené</p>
                                 <img src="<?php echo $adminUser->avatarById($post_id); ?>" style="max-width: 200px; margin: 15px;" alt="">
                                 <input type="file" name="userfile" class="btn-default btn-lg btn-block">
-<?php galleryChooser("user_avatar"); ?>
+<?php galleryChooser('user_avatar'); ?>
                                 <div class="padding"></div>
                                 <div class="checkbox">
 <?php echo $dnt->returnInput(); ?>
-                                    <input type="hidden" name="group" value="<?php echo $adminUser->dataById("admin", "type", $post_id); ?>" class="form-control">
+                                    <input type="hidden" name="group" value="<?php echo $adminUser->dataById('admin', 'type', $post_id); ?>" class="form-control">
                                     <input type="submit" name="sent" value="Uložiť" class="btn btn-primary" style="width: 40%;">
                                 </div>
                             </div>

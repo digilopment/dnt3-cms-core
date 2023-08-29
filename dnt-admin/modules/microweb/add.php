@@ -1,12 +1,14 @@
-<?php 
+<?php
+
 use DntLibrary\Base\DB;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Vendor;
+
 get_top(); ?>
 <?php
 get_top_html();
 $db = new DB();
-$rest = new Rest;
+$rest = new Rest();
 ?>
 <!-- BEGIN LEFT TABS -->
 <section class="content">
@@ -21,7 +23,7 @@ $rest = new Rest;
                     </div>
                 </div>
 
-                <form enctype='multipart/form-data' action="index.php?src=<?php echo $rest->get("src"); ?>&action=addData" method="POST">
+                <form enctype='multipart/form-data' action="index.php?src=<?php echo $rest->get('src'); ?>&action=addData" method="POST">
                     <div class="row form-group ">
                         <label class="col-sm-2 control-label"><b>Názov súťaže</b></label>
                         <div class="col-sm-6">

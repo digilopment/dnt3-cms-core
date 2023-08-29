@@ -44,10 +44,10 @@ table {
 }
 
 .fileupload-progress {
-	margin: 10px 0;
+    margin: 10px 0;
 }
 .fileupload-progress .progress-extended {
-	margin-top: 5px;
+    margin-top: 5px;
 }
 .error {
   color: red;

@@ -8,11 +8,14 @@ use DntLibrary\Base\Vendor;
 
 class Categories
 {
-
     protected $db;
+
     protected $vendor;
+
     protected $dnt;
+
     public $allCategories = [];
+
     protected $tempParentTree = [];
 
     public function __construct()
@@ -183,5 +186,4 @@ class Categories
     {
         $this->getAll($vendor_id);
     }
-
 }

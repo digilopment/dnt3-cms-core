@@ -4,7 +4,6 @@ namespace DntTest;
 
 class PointerTest
 {
-
     protected function something(&$arg)
     {
         $return = $arg;
@@ -24,5 +23,4 @@ class PointerTest
 
         var_dump($r);
     }
-
 }

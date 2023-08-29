@@ -8,20 +8,27 @@ use DntLibrary\Base\Dnt;
 use DntLibrary\Base\DntUpload;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Vendor;
-use DntLibrary\Base\Upload;
 
 class ImportContent
 {
-
     protected $rest;
+
     protected $articleView;
+
     protected $db;
+
     protected $dntUpload;
+
     protected $dnt;
+
     protected $imageUrl;
+
     protected $lastPostId;
+
     protected $vendor;
+
     protected $postData = [];
+
     protected $postMetaData = [];
 
     public function __construct()
@@ -60,18 +67,14 @@ class ImportContent
         //$content = str_replace('`', '', $content);
         $content = str_replace("'", '', $content);
 
-
         $this->service = $service;
         $this->vendorId = $vendor_id;
-
-
 
         $search = $name . $nameUrl . $content . $perex;
         $search = html_entity_decode($search);
         $search = $this->dnt->not_html($search);
         $search = $this->dnt->name_url($search);
         $search = str_replace('-', '', $search);
-
 
         $this->postData = [
             'name' => $name,
@@ -100,9 +103,9 @@ class ImportContent
         $this->db->dbcommit();
         $this->lastPostId = $this->dnt->getLastId('dnt_posts', $this->vendorId);
         $this->db->update(
-                'dnt_posts',
-                array('group_id' => $this->lastPostId),
-                array('id_entity' => $this->lastPostId, '`vendor_id`' => $this->vendorId)
+            'dnt_posts',
+            array('group_id' => $this->lastPostId),
+            array('id_entity' => $this->lastPostId, '`vendor_id`' => $this->vendorId)
         );
     }
 
@@ -115,9 +118,9 @@ class ImportContent
             if (isset($fileData['file'])) {
                 $imageData = $this->dntUpload->fromUrl($downloadPath . $fileData['file'], '../dnt-view/data/uploads/', $this->vendorId);
                 $this->db->update(
-                        'dnt_posts',
-                        array('img' => $imageData['lastImageId']),
-                        array('id_entity' => $this->lastPostId, '`vendor_id`' => $this->vendorId)
+                    'dnt_posts',
+                    array('img' => $imageData['lastImageId']),
+                    array('id_entity' => $this->lastPostId, '`vendor_id`' => $this->vendorId)
                 );
             }
         }
@@ -135,7 +138,7 @@ class ImportContent
                 '`content_type`' => 'text',
                 '`cat_id`' => '3',
                 '`description`' => 'Meta ' . ucfirst($key),
-                '`show`' => '1'
+                '`show`' => '1',
             );
             $this->db->insert('dnt_posts_meta', $insertedData);
         }
@@ -148,5 +151,4 @@ class ImportContent
         $this->insertPostMeta();
         $this->importImage();
     }
-
 }

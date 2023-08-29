@@ -8,10 +8,12 @@ use DntLibrary\Base\Rest;
 
 class ImportEmailsJob
 {
-
     protected $dbEmails = [];
+
     protected $fileEmails = [];
+
     protected $catId;
+
     protected $vendorId;
 
     public function __construct()
@@ -24,7 +26,7 @@ class ImportEmailsJob
 
     protected function countEmails()
     {
-        $db = new DB;
+        $db = new DB();
         $query = "SELECT email FROM dnt_mailer_mails WHERE cat_id = '" . $this->catId . "' AND vendor_id = '" . $this->vendorId . "'";
         $emails = [];
         foreach ($db->get_results($query) as $row) {
@@ -35,9 +37,9 @@ class ImportEmailsJob
 
     protected function writeToDb($email)
     {
-        $db = new DB;
-        $name = "";
-        $surname = "";
+        $db = new DB();
+        $name = '';
+        $surname = '';
 
         $insertedData = array(
             'name' => $name,
@@ -46,7 +48,7 @@ class ImportEmailsJob
             'vendor_id' => $this->vendorId,
             'cat_id' => $this->catId,
             'datetime_creat' => $this->dnt->datetime(),
-            'datetime_update' => $this->dnt->datetime()
+            'datetime_update' => $this->dnt->datetime(),
         );
 
         $db->insert('dnt_mailer_mails', $insertedData);
@@ -54,10 +56,10 @@ class ImportEmailsJob
 
     protected function deleteFromDb($email)
     {
-        $db = new DB;
+        $db = new DB();
         $where = array(
             'email' => $email,
-            'vendor_id' => $this->vendorId
+            'vendor_id' => $this->vendorId,
         );
         $db->delete('dnt_mailer_mails', $where, 1);
     }
@@ -65,8 +67,8 @@ class ImportEmailsJob
     protected function dbEmails()
     {
 
-        $table = "dnt_mailer_mails";
-        $db = new DB;
+        $table = 'dnt_mailer_mails';
+        $db = new DB();
 
         $query = "SELECT email FROM $table WHERE cat_id = '" . $this->catId . "' AND vendor_id = '" . $this->vendorId . "'";
         foreach ($db->get_results($query) as $row) {
@@ -77,8 +79,8 @@ class ImportEmailsJob
     protected function fileEmails($file)
     {
         $row = 1;
-        if (($handle = fopen($file, "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+        if (($handle = fopen($file, 'r')) !== false) {
+            while (($data = fgetcsv($handle, 1000, ',')) !== false) {
                 $num = count($data);
                 $row++;
                 for ($c = 0; $c < $num; $c++) {
@@ -92,32 +94,32 @@ class ImportEmailsJob
     protected function insert()
     {
         $this->dbEmails();
-        $this->fileEmails("data/" . $this->importFile . ".csv");
+        $this->fileEmails('data/' . $this->importFile . '.csv');
 
         //INSERT
         foreach ($this->fileEmails as $fileEmail) {
             if (!in_array($fileEmail, $this->dbEmails)) {
                 $this->writeToDb($fileEmail);
-                echo $fileEmail . "nie je v databaze<br/>";
+                echo $fileEmail . 'nie je v databaze<br/>';
             }
         }
     }
 
     protected function show()
     {
-        $this->fileEmails("data/" . $this->importFile . ".csv");
-        $db = new DB;
-        $table = "dnt_mailer_mails";
+        $this->fileEmails('data/' . $this->importFile . '.csv');
+        $db = new DB();
+        $table = 'dnt_mailer_mails';
         foreach ($this->fileEmails as $fileEmail) {
             $db->update(
-                    $table,
-                    [
+                $table,
+                [
                         'show' => 1,
                     ],
-                    [
+                [
                         'email' => $fileEmail,
                         'cat_id' => $this->catId,
-                        'vendor_id' => $this->vendorId
+                        'vendor_id' => $this->vendorId,
                     ]
             );
         }
@@ -126,7 +128,7 @@ class ImportEmailsJob
     protected function countUniqueNews()
     {
         $this->dbEmails();
-        $this->fileEmails("data/ak2019.csv");
+        $this->fileEmails('data/ak2019.csv');
 
         //INSERT
         $i = 0;
@@ -135,19 +137,19 @@ class ImportEmailsJob
                 $i++;
             }
         }
-        echo "Nových emailov " . $i;
+        echo 'Nových emailov ' . $i;
     }
 
     protected function delete()
     {
         $this->dbEmails();
-        $this->fileEmails("data/delete.csv");
+        $this->fileEmails('data/delete.csv');
 
         //DELETE GDPR
         foreach ($this->fileEmails as $fileEmail) {
             if (in_array($fileEmail, $this->dbEmails)) {
                 $this->deleteFromDb($fileEmail);
-                echo $fileEmail . "je v databaze a treba zmazat<br/>";
+                echo $fileEmail . 'je v databaze a treba zmazat<br/>';
             }
         }
     }
@@ -171,5 +173,4 @@ class ImportEmailsJob
             print $this->countUniqueNews();
         }
     }
-
 }

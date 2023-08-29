@@ -29,7 +29,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // /* */ indicates verbatim text from the HTML 5 specification
 // // indicates regular comments
 
-class HTML5_InputStream {
+class HTML5_InputStream
+{
     /**
      * The string data we're parsing.
      */
@@ -53,7 +54,8 @@ class HTML5_InputStream {
     /**
      * @param $data Data to parse
      */
-    public function __construct($data) {
+    public function __construct($data)
+    {
 
         /* Given an encoding, the bytes in the input stream must be
         converted to Unicode characters for the tokeniser, as
@@ -91,7 +93,7 @@ class HTML5_InputStream {
         for ($i = 0, $count = substr_count($data, "\0"); $i < $count; $i++) {
             $this->errors[] = array(
                 'type' => HTML5_Tokenizer::PARSEERROR,
-                'data' => 'null-character'
+                'data' => 'null-character',
             );
         }
         /* U+000D CARRIAGE RETURN (CR) characters and U+000A LINE FEED
@@ -105,12 +107,12 @@ class HTML5_InputStream {
             array(
                 "\0",
                 "\r\n",
-                "\r"
+                "\r",
             ),
             array(
                 "\xEF\xBF\xBD",
                 "\n",
-                "\n"
+                "\n",
             ),
             $data
         );
@@ -147,7 +149,7 @@ class HTML5_InputStream {
             for ($i = 0; $i < $count; $i++) {
                 $this->errors[] = array(
                     'type' => HTML5_Tokenizer::PARSEERROR,
-                    'data' => 'invalid-codepoint'
+                    'data' => 'invalid-codepoint',
                 );
             }
         } else {
@@ -156,15 +158,16 @@ class HTML5_InputStream {
 
         $this->data = $data;
         $this->char = 0;
-        $this->EOF  = strlen($data);
+        $this->EOF = strlen($data);
     }
 
     /**
      * Returns the current line that the tokenizer is at.
      */
-    public function getCurrentLine() {
+    public function getCurrentLine()
+    {
         // Check the string isn't empty
-        if($this->EOF) {
+        if ($this->EOF) {
             // Add one to $this->char because we want the number for the next
             // byte to be processed.
             return substr_count($this->data, "\n", 0, min($this->char, $this->EOF)) + 1;
@@ -177,7 +180,8 @@ class HTML5_InputStream {
     /**
      * Returns the current column of the current line that the tokenizer is at.
      */
-    public function getColumnOffset() {
+    public function getColumnOffset()
+    {
         // strrpos is weird, and the offset needs to be negative for what we
         // want (i.e., the last \n before $this->char). This needs to not have
         // one (to make it point to the next character, the one we want the
@@ -187,18 +191,18 @@ class HTML5_InputStream {
 
         // However, for here we want the length up until the next byte to be
         // processed, so add one to the current byte ($this->char).
-        if($lastLine !== false) {
+        if ($lastLine !== false) {
             $findLengthOf = substr($this->data, $lastLine + 1, $this->char - 1 - $lastLine);
         } else {
             $findLengthOf = substr($this->data, 0, $this->char);
         }
 
         // Get the length for the string we need.
-        if(extension_loaded('iconv')) {
+        if (extension_loaded('iconv')) {
             return iconv_strlen($findLengthOf, 'utf-8');
-        } elseif(extension_loaded('mbstring')) {
+        } elseif (extension_loaded('mbstring')) {
             return mb_strlen($findLengthOf, 'utf-8');
-        } elseif(extension_loaded('xml')) {
+        } elseif (extension_loaded('xml')) {
             return strlen(utf8_decode($findLengthOf));
         } else {
             $count = count_chars($findLengthOf);
@@ -213,7 +217,8 @@ class HTML5_InputStream {
      * Retrieve the currently consume character.
      * @note This performs bounds checking
      */
-    public function char() {
+    public function char()
+    {
         return ($this->char++ < $this->EOF)
             ? $this->data[$this->char - 1]
             : false;
@@ -223,8 +228,9 @@ class HTML5_InputStream {
      * Get all characters until EOF.
      * @note This performs bounds checking
      */
-    public function remainingChars() {
-        if($this->char < $this->EOF) {
+    public function remainingChars()
+    {
+        if ($this->char < $this->EOF) {
             $data = substr($this->data, $this->char);
             $this->char = $this->EOF;
             return $data;
@@ -238,7 +244,8 @@ class HTML5_InputStream {
      * and returns the matched substring.
      * @param $bytes Bytes to match.
      */
-    public function charsUntil($bytes, $max = null) {
+    public function charsUntil($bytes, $max = null)
+    {
         if ($this->char < $this->EOF) {
             if ($max === 0 || $max) {
                 $len = strcspn($this->data, $bytes, $this->char, $max);
@@ -258,7 +265,8 @@ class HTML5_InputStream {
      * and returns the matched substring.
      * @param $bytes Bytes to match.
      */
-    public function charsWhile($bytes, $max = null) {
+    public function charsWhile($bytes, $max = null)
+    {
         if ($this->char < $this->EOF) {
             if ($max === 0 || $max) {
                 $len = strspn($this->data, $bytes, $this->char, $max);
@@ -276,7 +284,8 @@ class HTML5_InputStream {
     /**
      * Unconsume one character.
      */
-    public function unget() {
+    public function unget()
+    {
         if ($this->char <= $this->EOF) {
             $this->char--;
         }

@@ -1,40 +1,40 @@
 body, select {
   color: #7d7a7a;
   font-family: 'trebuchet ms', verdana, sans-serif;
-	font-size: 13px;
+    font-size: 13px;
 }
 
-a:link, a:visited, a:active { 
-  color: #5F83BA; 
+a:link, a:visited, a:active {
+  color: #5F83BA;
   text-decoration: none;
 }
 
-a:hover { 
-  color: #5f83ba; 
-  text-decoration: underline; 
+a:hover {
+  color: #5f83ba;
+  text-decoration: underline;
 }
 
-img { 
+img {
   border: none;
 }
 
 pre,
-code { 
+code {
   font-size: 0.8em;
   font-family: "lucida console", monospace;
 }
 
 pre {
-  background-color: #f8f8f8; 
+  background-color: #f8f8f8;
   padding: 10px;
 }
 
-select { 
-	font-weight: bold; 
+select {
+    font-weight: bold;
 }
 
 h2 {
-	margin: 0.3em 0;
+    margin: 0.3em 0;
 }
 
 .bar {
@@ -66,8 +66,8 @@ h2 {
   border: none;
 }
 
-.badges { 
-  float: right; 
+.badges {
+  float: right;
 }
 
 #left_col, #content {
@@ -119,7 +119,7 @@ h2 {
   background-position: top left;
 }
 
-.message { 
+.message {
   margin-top: 1em;
   border: 1px dashed #5E83BA;
 }
@@ -129,7 +129,7 @@ h2 {
   vertical-align: top;
 }
 
-#content>*>li { 
+#content>*>li {
   margin-right: 40px;  /* keep things in line */
 }
 
@@ -138,7 +138,7 @@ h2 {
   color: #4A9166;
 }
 
-#content h3 { 
+#content h3 {
   margin-top: 2em;
 }
 
@@ -147,17 +147,17 @@ h2 {
 }
 
 #content table td,
-#content table th { 
-  padding: 0.3em; 
+#content table th {
+  padding: 0.3em;
 }
 
-#content table td.input { 
+#content table td.input {
   white-space: nowrap;
-  font-family: "lucida console", monospace; 
+  font-family: "lucida console", monospace;
   font-size: 0.8em;
 }
 
-#content textarea { 
+#content textarea {
   padding: 4px;
   width: 100%;
   border: 1px dashed #5F83BA;
@@ -166,26 +166,26 @@ h2 {
   box-shadow: inset 3px 3px 3px rgba(0,0,0,0.1);
 }
 
-#content button { 
+#content button {
   color: #6d6a6a;
   font-family: 'trebuchet ms', verdana, sans-serif;
 }
 
 #preview {
-	float: right; 
-	height: 800px; 
-	min-width: 400px; 
-	width: 60%; 
-	border: 1px solid #666; 
-	margin-left: 1em;
+    float: right;
+    height: 800px;
+    min-width: 400px;
+    width: 60%;
+    border: 1px solid #666;
+    margin-left: 1em;
   -moz-box-shadow: 0px 0px 6px rgba(0,0,0,0.5);
   -webkit-box-shadow: 0px 0px 6px rgba(0,0,0,0.5);
   box-shadow: 0px 0px 6px rgba(0,0,0,0.5);
 }
 
 table.setup {
-	border: 1px solid #ccc;
-	border-collapse: collapse;
+    border: 1px solid #ccc;
+    border-collapse: collapse;
 }
 
 table.setup td,
@@ -203,13 +203,13 @@ table.setup td.title {
 
 table.setup td.ok,
 table.setup tr:hover td.ok {
-	background-color: #9e4;
+    background-color: #9e4;
 }
 
 table.setup td.failed,
 table.setup tr:hover td.failed {
   background-color: #f43;
-	color: white;
+    color: white;
 }
 
 table.setup td.warning,
@@ -226,7 +226,7 @@ table.setup tr:hover td.title {
 }
 
 input[type="file"] {
-	width: 30em;
+    width: 30em;
 }
 
 /* Method definitions from phpdoc */
@@ -234,7 +234,7 @@ input[type="file"] {
   background-image: url('images/h_bar.gif');
   background-position: bottom center;
   background-repeat: repeat-x;
-  padding: 10px 10px 20px 10px;  
+  padding: 10px 10px 20px 10px;
   margin-bottom: 1em;
 }
 
@@ -251,5 +251,5 @@ input[type="file"] {
 .var-type,
 .method-result {
   color: #4A9166;
-  font-style: italic;  
+  font-style: italic;
 }

@@ -6,14 +6,15 @@ use DntLibrary\Base\Dnt;
 
 class FormExportJob
 {
-
-    protected $null = '';
-    private $dnt;
-    private $i;
-
     const DEFAUL_TIME = '1900-01-01 00:00:00';
     const CYCLONE_LAST_ID = 198861; //'190296';
-    const GOL_LAST_ID = 10719; //'10003';
+    const GOL_LAST_ID = 10719;
+
+    protected $null = '';
+
+    private $dnt;
+
+    private $i; //'10003';
 
     public function __construct()
     {
@@ -35,8 +36,8 @@ class FormExportJob
             $data = $row->$obj;
             $data = str_replace(';', '', $data);
             $data = str_replace('"', '', $data);
-            $data = str_replace("'", "", $data);
-            $data = str_replace("'", "", $data);
+            $data = str_replace("'", '', $data);
+            $data = str_replace("'", '', $data);
             $data = preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $data);
             return $data;
         }
@@ -116,7 +117,7 @@ class FormExportJob
             '2020-10-24 21:24:43',
             '2020-06-30 16:27:42',
             '2020-08-14 16:25:26',
-            '2020-08-07 13:38:30'
+            '2020-08-07 13:38:30',
         ];
         if (in_array($row->datetime_created, $datetime)) {
             return true;
@@ -227,11 +228,10 @@ class FormExportJob
             fputcsv(
                 $fp,
                 $fields,
-                ";",
+                ';',
                 '"',
-                "\\"
+                '\\'
             );
         }
     }
-
 }

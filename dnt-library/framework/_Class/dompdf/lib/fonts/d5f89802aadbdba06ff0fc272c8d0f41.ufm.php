@@ -1,5 +1,5 @@
 <?php return array (
-  'codeToName' => 
+  'codeToName' =>
   array (
     32 => 'space',
     33 => 'exclam',
@@ -228,7 +228,7 @@
   'FontHeightOffset' => '0',
   'Ascender' => '1069',
   'Descender' => '-293',
-  'FontBBox' => 
+  'FontBBox' =>
   array (
     0 => '-550',
     1 => '-271',
@@ -236,7 +236,7 @@
     3 => '1048',
   ),
   'StartCharMetrics' => '221',
-  'C' => 
+  'C' =>
   array (
     32 => 260.0,
     33 => 267.0,

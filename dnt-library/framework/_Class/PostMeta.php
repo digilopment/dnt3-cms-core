@@ -17,7 +17,6 @@ use function defaultModuleMetaDataConfiguration;
 
 class PostMeta
 {
-
     public function __construct()
     {
         $this->db = new DB();
@@ -25,7 +24,7 @@ class PostMeta
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function getServicePostsMeta($postId, $service)
@@ -43,7 +42,7 @@ class PostMeta
 
     public function getPostsMeta($postId)
     {
-        $query = "SELECT * FROM dnt_posts_meta WHERE `vendor_id` = '" . $this->vendor->getId() . "' AND post_id IN (" . $postId . ")";
+        $query = "SELECT * FROM dnt_posts_meta WHERE `vendor_id` = '" . $this->vendor->getId() . "' AND post_id IN (" . $postId . ')';
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
                 $arr['keys'][$row['post_id']][$row['key']]['show'] = $row['show'];
@@ -78,10 +77,10 @@ class PostMeta
 
     protected function loadNewPostMetaFromInstallConf($postId, $service)
     {
-        $conf = "../dnt-view/layouts/" . $this->vendor->getLayout() . "/modules/" . $service . "/install/install.php";
+        $conf = '../dnt-view/layouts/' . $this->vendor->getLayout() . '/modules/' . $service . '/install/install.php';
         if (file_exists($conf)) {
             include $conf;
-            if (function_exists("defaultModuleMetaDataConfiguration")) {
+            if (function_exists('defaultModuleMetaDataConfiguration')) {
                 $result = array();
                 $existingKey = array();
                 $settingsData = defaultModuleMetaDataConfiguration($postId, $service);
@@ -110,15 +109,14 @@ class PostMeta
     }
 
     /**
-     * 
+     *
      * @param type $postId
      * @param type $service
      */
     public function loadNewPostMetaFromConf($postId, $service)
     {
 
-
-        $conf = "../dnt-view/layouts/" . $this->vendor->getLayout() . "/modules/" . $service . "/install/MetaServices.php";
+        $conf = '../dnt-view/layouts/' . $this->vendor->getLayout() . '/modules/' . $service . '/install/MetaServices.php';
         if (file_exists($conf)) {
             include $conf;
             $metaServices = new MetaServices();
@@ -150,14 +148,14 @@ class PostMeta
 
                 foreach ($arrOfConfigKeysUpdate as $key => $val) {
                     $this->db->update(
-                            'dnt_posts_meta',
-                            array(
+                        'dnt_posts_meta',
+                        array(
                                 'order' => $settingsData[$key]['`order`'],
                                 //'show' => $settingsData[$key]['`show`'],
                                 'content_type' => $settingsData[$key]['`content_type`'],
                                 'description' => $settingsData[$key]['`description`'],
                             ),
-                            array(
+                        array(
                                 '`key`' => $settingsData[$key]['`key`'],
                                 '`post_id`' => $postId,
                                 '`vendor_id`' => $this->vendor->getId())
@@ -168,5 +166,4 @@ class PostMeta
             $this->loadNewPostMetaFromInstallConf($postId, $service);
         }
     }
-
 }

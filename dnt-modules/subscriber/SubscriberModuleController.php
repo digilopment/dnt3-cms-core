@@ -7,8 +7,8 @@ use DntLibrary\Base\Rest;
 
 class SubscriberModuleController
 {
-
     protected $subscriber;
+
     protected $dnt;
 
     public function __construct()
@@ -18,7 +18,7 @@ class SubscriberModuleController
         $this->customReferers = [
             'markiza',
             'tvnoviny',
-            'localhost'
+            'localhost',
         ];
     }
 
@@ -67,5 +67,4 @@ class SubscriberModuleController
     {
         $this->init();
     }
-
 }

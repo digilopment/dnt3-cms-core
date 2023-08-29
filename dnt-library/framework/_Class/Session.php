@@ -12,12 +12,8 @@ namespace DntLibrary\Base;
 
 class Sessions
 {
-
     protected $sessionID;
 
-    /**
-     * 
-     */
     public function init()
     {
         if (!isset($_SESSION)) {
@@ -25,9 +21,6 @@ class Sessions
         }
     }
 
-    /**
-     * 
-     */
     public function set_session_id()
     {
         //$this->start_session();
@@ -35,7 +28,7 @@ class Sessions
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function get_session_id()
@@ -44,7 +37,7 @@ class Sessions
     }
 
     /**
-     * 
+     *
      * @param type $session_name
      * @return boolean
      */
@@ -58,7 +51,7 @@ class Sessions
     }
 
     /**
-     * 
+     *
      * @param type $session_name
      * @param type $is_array
      */
@@ -74,7 +67,7 @@ class Sessions
     }
 
     /**
-     * 
+     *
      * @param type $session_name
      * @param array $data
      */
@@ -86,7 +79,7 @@ class Sessions
     }
 
     /**
-     * 
+     *
      * @param type $session_name
      */
     public function display_session($session_name)
@@ -97,7 +90,7 @@ class Sessions
     }
 
     /**
-     * 
+     *
      * @param type $session_name
      */
     public function remove($session_name = '')
@@ -112,7 +105,7 @@ class Sessions
     }
 
     /**
-     * 
+     *
      * @param type $session_name
      * @return boolean
      */
@@ -126,7 +119,7 @@ class Sessions
     }
 
     /**
-     * 
+     *
      * @param type $session_name
      * @param type $data
      */
@@ -134,5 +127,4 @@ class Sessions
     {
         $_SESSION[$session_name] = $data;
     }
-
 }

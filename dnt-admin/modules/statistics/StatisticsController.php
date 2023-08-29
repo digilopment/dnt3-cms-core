@@ -7,8 +7,8 @@ use DntLibrary\Base\DntLog;
 
 class StatisticsController extends AdminController
 {
-
     protected $loc = __FILE__;
+
     protected $log;
 
     public function __construct()
@@ -18,7 +18,7 @@ class StatisticsController extends AdminController
 
     public function indexAction()
     {
-        $agentUniq = $this->log->getCountOs("GROUP BY REMOTE_ADDR");
+        $agentUniq = $this->log->getCountOs('GROUP BY REMOTE_ADDR');
         if (isset($agentUniq['os'])) {
             $osArrUniq = $agentUniq['os'];
             $browserArrUniq = $agentUniq['browser'];
@@ -47,5 +47,4 @@ class StatisticsController extends AdminController
         ];
         $this->loadTemplate($this->loc, 'default', $data);
     }
-
 }

@@ -4,49 +4,47 @@ namespace DntTest;
 
 class SendGridV3Test
 {
-
     protected $dnt;
-	
+
     public function run()
     {
         $SEND_GRID_API_TEMPLATE_ID = SEND_GRID_API_TEMPLATE_ID;
         $YOUR_API_KEY = SEND_GRID_API_KEY;
         $params = [
-            "from" => [
-                "email" => "newsletter@markiza" . time() . ".sk",
-                "name" => "TV Markíza",
+            'from' => [
+                'email' => 'newsletter@markiza' . time() . '.sk',
+                'name' => 'TV Markíza',
             ],
-            "subject" => 'Voyo Novinky ' . time(),
-            "template_id" => $SEND_GRID_API_TEMPLATE_ID,
-            "content" => [
+            'subject' => 'Voyo Novinky ' . time(),
+            'template_id' => $SEND_GRID_API_TEMPLATE_ID,
+            'content' => [
                 [
-                    "type" => "text/html",
-                    "value" => file_get_contents('https://www.newsletter.coloria.sk/voyo/')
-                ]
+                    'type' => 'text/html',
+                    'value' => file_get_contents('https://www.newsletter.coloria.sk/voyo/'),
+                ],
             ],
-            "personalizations" => [
+            'personalizations' => [
                 [
-                    "to" => [
+                    'to' => [
                         [
-                            "email" => "thomas.doubek@gmail.com",
-                            "name" => "Tomáš Doubek",
-                        ]
+                            'email' => 'thomas.doubek@gmail.com',
+                            'name' => 'Tomáš Doubek',
+                        ],
                     ],
-                    "send_at" => time()
-                ]
+                    'send_at' => time(),
+                ],
             ],
-            "tracking_settings" => [
+            'tracking_settings' => [
                 'click_tracking' => [
-                    "enable" => false,
-                    "enable_text" => false,
+                    'enable' => false,
+                    'enable_text' => false,
                 ],
                 'click_tracking' => [
-                    "enable" => false,
-                    "enable_text" => false,
-                ]
-            ]
+                    'enable' => false,
+                    'enable_text' => false,
+                ],
+            ],
         ];
-
 
         $data = json_encode($params);
 
@@ -69,5 +67,4 @@ class SendGridV3Test
         var_dump($result);
         curl_close($ch);
     }
-
 }

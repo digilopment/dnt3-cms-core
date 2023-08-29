@@ -8,11 +8,11 @@ get_top();
 ?>
 <?php get_top_html(); ?>
 <?php
-$rest = new Rest;
-$user = new Api;
-$vendor = new Vendor;
-$post_id = $rest->get("post_id");
-$query = "SELECT * FROM dnt_users";
+$rest = new Rest();
+$user = new Api();
+$vendor = new Vendor();
+$post_id = $rest->get('post_id');
+$query = 'SELECT * FROM dnt_users';
 //var_dump($user->getColumns($query));
 ?>
 

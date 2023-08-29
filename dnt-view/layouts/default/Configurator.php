@@ -8,27 +8,30 @@ use DntLibrary\Base\Webhook;
 
 class Configurator extends Webhook
 {
-
     public function __construct()
     {
-		$this->vendor = new Vendor();
-        (new Autoloader)->addVendroClass(__FILE__, 'Foo');
+        $this->vendor = new Vendor();
+        (new Autoloader())->addVendroClass(__FILE__, 'Foo');
     }
 
     public function modulesRegistrator()
     {
         $modulesRegistrator = array(
             'default' => array_merge(
-                    array(), $this->getSitemapModules('default')
+                array(),
+                $this->getSitemapModules('default')
             ),
             'skeleton' => array_merge(
-                    array(), $this->getSitemapModules('skeleton')
+                array(),
+                $this->getSitemapModules('skeleton')
             ),
             'static_redirect' => array_merge(
-                    array(), $this->getSitemapModules('static_redirect')
+                array(),
+                $this->getSitemapModules('static_redirect')
             ),
             'subscriber' => array_merge(
-                    array(), $this->getSitemapModules('subscriber')
+                array(),
+                $this->getSitemapModules('subscriber')
             ),
         );
         return $modulesRegistrator;
@@ -38,10 +41,10 @@ class Configurator extends Webhook
     {
         return array(
             'default' => array(
-                'service_name' => 'Global 404 (all vendors)'
+                'service_name' => 'Global 404 (all vendors)',
             ),
             'skeleton' => array(
-                'service_name' => 'skeleton'
+                'service_name' => 'skeleton',
             ),
             'static_redirect' => array(
                 'service_name' => 'Presmerovanie',
@@ -67,5 +70,4 @@ class Configurator extends Webhook
 
         return $metaSettings;
     }
-
 }

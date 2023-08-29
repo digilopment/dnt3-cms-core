@@ -6,7 +6,6 @@ use DntLibrary\App\Dnt3Oauth;
 
 class OauthTest
 {
-
     public $setHeader = false;
 
     public function __construct()
@@ -20,12 +19,11 @@ class OauthTest
         $config = [
             'login' => 'tomas',
             'passwor' => 'admin',
-            'privateKey' => 'roots'
+            'privateKey' => 'roots',
         ];
         $this->setHeader = true;
         $this->dnt3Oauth->customDenied = true;
         $this->dnt3Oauth->setCredencials($config);
         print('logged');
     }
-
 }

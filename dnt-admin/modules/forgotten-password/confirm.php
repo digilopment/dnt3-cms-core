@@ -26,7 +26,7 @@
                             </form>
                             <!-- END LOGIN FORM -->
                         </div>
-                        <a href="<?php echo WWW_PATH_ADMIN_2 . "index.php?src=login"; ?>" class="text-center new-account">Prihlásiť sa</a>
+                        <a href="<?php echo WWW_PATH_ADMIN_2 . 'index.php?src=login'; ?>" class="text-center new-account">Prihlásiť sa</a>
                     </div>
                     <!-- END LOGIN BOX -->
                 </div>

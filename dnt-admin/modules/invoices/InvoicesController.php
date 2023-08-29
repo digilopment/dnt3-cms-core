@@ -14,16 +14,24 @@ use DntLibrary\Base\Vendor;
 
 class InvoicesController extends AdminController
 {
-
     protected $loc = __FILE__;
+
     protected $invoices;
+
     protected $createTable;
+
     protected $createOrder;
+
     protected $rest;
+
     protected $dnt;
+
     protected $settings;
+
     protected $image;
+
     protected $invoicePath;
+
     protected $pdf;
 
     public function __construct()
@@ -142,11 +150,11 @@ class InvoicesController extends AdminController
         $data['dnt'] = $this->dnt;
 
         $data['vendor'] = function ($key) use ($settings) {
-			if(isset($settings['keys'][$key]['value'])){
-				return $settings['keys'][$key]['value'];
-			}else{
-				return false;
-			}
+            if (isset($settings['keys'][$key]['value'])) {
+                return $settings['keys'][$key]['value'];
+            } else {
+                return false;
+            }
         };
 
         $data['image'] = function ($id) {
@@ -211,5 +219,4 @@ class InvoicesController extends AdminController
         $data['orders'] = $orders;
         $this->loadTemplate($this->loc, 'default', $data);
     }
-
 }

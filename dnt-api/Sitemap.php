@@ -11,7 +11,6 @@ use DntLibrary\Base\Rest;
 
 class SitemapApi
 {
-
     public function __construct()
     {
         $this->navigation = new Navigation();
@@ -20,20 +19,20 @@ class SitemapApi
     public function run()
     {
 
-        $rest = new Rest;
-        $db = new DB;
-        $api = new Api;
-        $dntLog = new DntLog;
-        $article = new ArticleView;
+        $rest = new Rest();
+        $db = new DB();
+        $api = new Api();
+        $dntLog = new DntLog();
+        $article = new ArticleView();
 
         $NAV_NAVIGATION = 1;
         $NAV_SUB_NAVIGATION = 0.7
         ;
         $dntLog->add(
-                array(
-                    "http_response" => 200,
-                    "system_status" => "log",
-                    "msg" => "Api sitemap",
+            array(
+                    'http_response' => 200,
+                    'system_status' => 'log',
+                    'msg' => 'Api sitemap',
                 )
         );
         header('Content-Type: text/xml');
@@ -44,7 +43,7 @@ class SitemapApi
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 
         foreach ($this->navigation->getParents() as $row) {
-            $name_url_1 = WWW_PATH . "" . $row['name_url'];
+            $name_url_1 = WWW_PATH . '' . $row['name_url'];
             echo '<url>';
             echo '<loc>' . $name_url_1 . '</loc>';
             echo '<lastmod>' . date('Y-m-d') . '</lastmod>';
@@ -53,7 +52,7 @@ class SitemapApi
             echo '</url>';
             if ($this->navigation->hasChild($row['id'])) {
                 foreach ($this->navigation->getChildren($row['id']) as $row2) {
-                    $name_url_2 = WWW_PATH . "" . $row2['name_url'];
+                    $name_url_2 = WWW_PATH . '' . $row2['name_url'];
                     ;
                     echo '<url>';
                     echo '<loc>' . $name_url_2 . '</loc>';
@@ -66,5 +65,4 @@ class SitemapApi
         }
         echo '</urlset>';
     }
-
 }

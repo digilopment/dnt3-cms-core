@@ -1,7 +1,7 @@
 <?php
 
 /**
- * 
+ *
  * http://skeleton.localhost/dnt3/dnt-api/multi/xml/JajsZ5s4/1028
  * http://skeleton.localhost/dnt3/dnt-api/multi/json/?query=SELECT%20*%20FROM%20dnt_users
  *
@@ -16,14 +16,13 @@ use DntLibrary\Base\Rest;
 
 class MultiApi
 {
-
     public function run()
     {
 
         $rest = new Rest();
         $dntLog = new DntLog();
         $api = new Api();
-        
+
         /*if (!isset($_SERVER['PHP_AUTH_USER'])) {
             header('WWW-Authenticate: Basic dnt3Platform="20Dnt3Platform20"');
             header('HTTP/1.0 401 Unauthorized');
@@ -49,43 +48,40 @@ class MultiApi
             exit;
         }*/
 
-
-
-        if ($rest->webhook(4) == "base64") {
-            $query = urldecode(str_replace("==", "", base64_decode($rest->webhook(5))));
-            $query = urldecode(base64_decode($rest->get("q")));
+        if ($rest->webhook(4) == 'base64') {
+            $query = urldecode(str_replace('==', '', base64_decode($rest->webhook(5))));
+            $query = urldecode(base64_decode($rest->get('q')));
         } else {
             $query = $api->getQuery(
-                    $rest->webhook(4),
-                    $rest->webhook(5),
-                    $rest->get("query")
+                $rest->webhook(4),
+                $rest->webhook(5),
+                $rest->get('query')
             );
         }
 
         $client = new Client();
         $client->init();
         $dntLog->add(
-                array(
-                    "http_response" => 200,
-                    "system_status" => "log",
-                    "msg" => "Api log",
+            array(
+                    'http_response' => 200,
+                    'system_status' => 'log',
+                    'msg' => 'Api log',
                 )
         );
         if ($query) {
-            if ($rest->webhook(3) == "xml") {
+            if ($rest->webhook(3) == 'xml') {
                 header('Content-type: text/xml');
                 $api->getXmlData($query);
-                $type = "xml";
-            } elseif ($rest->webhook(3) == "json") {
+                $type = 'xml';
+            } elseif ($rest->webhook(3) == 'json') {
                 header('Content-Type: application/json');
                 $api->getJsonData($query);
-                $type = "json";
+                $type = 'json';
             } else {
-                $type = "no data";
+                $type = 'no data';
             }
         } else {
-            $type = "no query";
+            $type = 'no query';
         }
     }
-
 }

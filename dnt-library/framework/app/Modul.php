@@ -19,10 +19,12 @@ use function custom_modules;
 
 class Modul
 {
-
     public $name;
+
     public $init;
+
     public $sitemapUrl = [];
+
     public $modul;
 
     public function __construct()
@@ -60,7 +62,6 @@ class Modul
         }
         $arr = array();
         if ($this->sitemapUrl) {
-
             foreach ($this->sitemapUrl as $item) {
                 if ($item->service == $eQ) {
                     $arr[] = $item->name_url;
@@ -81,7 +82,6 @@ class Modul
         if (count($request) == count($pattern)) {
             //var_dump(count($request), count($pattern));
             foreach ($pattern as $singlPattern) {
-
                 //strict
                 if ($singlPattern == $request[$i]) {
                     $compareString[] .= $singlPattern;
@@ -259,5 +259,4 @@ class Modul
             $this->init = true;
         }
     }
-
 }

@@ -6,8 +6,8 @@ use DntLibrary\App\Render;
 
 class DatacruitApi
 {
-
     protected $serviceUrl = '../dnt-jobs/data/datacruit.json';
+
     protected $content;
 
     public function __construct()
@@ -28,5 +28,4 @@ class DatacruitApi
     {
         (new Render($this->content))->renderWithJson();
     }
-
 }

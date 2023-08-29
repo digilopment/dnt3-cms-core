@@ -1,6 +1,5 @@
 <?php
 
-use DntLibrary\Base\Vendor;
 
 get_top();
 ?>
@@ -50,7 +49,7 @@ get_top();
                                         </span>
                                     </td>
                                     <td>
-                                        <a href="<?php echo WWW_PATH_ADMIN_2 . "index.php?src=" . $rest->get('src') . "&action=show_hide&post_id=" . $row['id_entity']; ?>">
+                                        <a href="<?php echo WWW_PATH_ADMIN_2 . 'index.php?src=' . $rest->get('src') . '&action=show_hide&post_id=' . $row['id_entity']; ?>">
                                             <i class="<?php echo admin_zobrazenie_stav($row['show']); ?>"></i>
 
                                 </tr>
@@ -59,7 +58,7 @@ get_top();
                         } else {
                             no_results();
                         }
-                        ?>									
+                        ?>                                  
                     </tbody>
                 </table>
             </div>

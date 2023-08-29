@@ -1,6 +1,5 @@
 <?php
 
-use DntLibrary\Base\Polls;
 
 get_top();
 ?>
@@ -28,7 +27,7 @@ get_top();
                         <label class="col-sm-2 control-label"><b>Typ ankety</b></label>
                         <div class="col-sm-6">
                             <select class="form-control" name="poll_type" style="">
-<?php $polls->currentType($polls->getParam("type", $poll_id)); ?>
+<?php $polls->currentType($polls->getParam('type', $poll_id)); ?>
                             </select>
                             <br>
                         </div>

@@ -13,14 +13,20 @@ use DntLibrary\Base\Vendor;
 
 class CategoriesController extends AdminController
 {
-
     protected $loc = __FILE__;
+
     protected $categories;
+
     protected $rest;
+
     protected $vendor;
+
     protected $db;
+
     protected $dnt;
+
     protected $posts;
+
     protected $adminContent;
 
     public function __construct()
@@ -30,7 +36,7 @@ class CategoriesController extends AdminController
         $this->db = new DB();
         $this->vendor = new Vendor();
         $this->dnt = new Dnt();
-        $this->posts = new Post;
+        $this->posts = new Post();
         $this->adminContent = new AdminContent();
         $this->categories->init();
         $this->posts->init();
@@ -77,13 +83,13 @@ class CategoriesController extends AdminController
         $data['children_test'] = $this->categories->getChildren(1);
         $data['children_test_all'] = $this->categories->getChildren(1, true);
 
-        $data['hasChild'] = function($parentId) {
+        $data['hasChild'] = function ($parentId) {
             return $this->categories->hasChild($parentId) ? true : false;
         };
-        $data['getChildren'] = function($parentId) {
+        $data['getChildren'] = function ($parentId) {
             return $this->categories->getChildren($parentId);
         };
-        $data['getElement'] = function($id) {
+        $data['getElement'] = function ($id) {
             return $this->categories->getElement($id);
         };
 
@@ -102,14 +108,14 @@ class CategoriesController extends AdminController
         $nameUrl = $this->dnt->name_url($name);
 
         $this->db->update(
-                'dnt_posts_categories',
-                [
+            'dnt_posts_categories',
+            [
                     'name' => $name,
                     'name_url' => $nameUrl,
                 ],
-                [
+            [
                     'id_entity' => $id,
-                    '`vendor_id`' => $this->vendor->getId()
+                    '`vendor_id`' => $this->vendor->getId(),
                 ]
         );
         $redirect = WWW_PATH_ADMIN_2 . 'index.php?src=categories';
@@ -128,7 +134,7 @@ class CategoriesController extends AdminController
             'type' => '',
             'name' => $name,
             'name_url' => $nameUrl,
-            '`show`' => '1'
+            '`show`' => '1',
         );
 
         $this->db->dbTransaction();
@@ -137,11 +143,11 @@ class CategoriesController extends AdminController
         $lastId = $this->dnt->getLastId('dnt_posts_categories');
         $newCharIndex = str_replace('-E', '-' . $lastId . '-E', $charIndex);
         $this->db->update(
-                'dnt_posts_categories',
-                ['char_index' => $newCharIndex],
-                [
+            'dnt_posts_categories',
+            ['char_index' => $newCharIndex],
+            [
                     'id_entity' => $lastId,
-                    '`vendor_id`' => $this->vendor->getId()
+                    '`vendor_id`' => $this->vendor->getId(),
                 ]
         );
         $redirect = WWW_PATH_ADMIN_2 . 'index.php?src=categories';
@@ -150,12 +156,10 @@ class CategoriesController extends AdminController
 
     public function removeTreeAction()
     {
-        
     }
 
     public function moveCatLevelAction()
     {
-        
     }
 
     protected function arrayNeighbor($arr, $key, $wrap = false)
@@ -236,13 +240,13 @@ class CategoriesController extends AdminController
 
         foreach ($finalItems as $key => $val) {
             $this->db->update(
-                    'dnt_posts_categories',
-                    [
+                'dnt_posts_categories',
+                [
                         'order' => $val,
                     ],
-                    [
+                [
                         'id' => $key,
-                        '`vendor_id`' => $this->vendor->getId()
+                        '`vendor_id`' => $this->vendor->getId(),
                     ]
             );
         }
@@ -290,13 +294,13 @@ class CategoriesController extends AdminController
 
         foreach ($finalItems as $key => $val) {
             $this->db->update(
-                    'dnt_posts_categories',
-                    [
+                'dnt_posts_categories',
+                [
                         'order' => $val,
                     ],
-                    [
+                [
                         'id' => $key,
-                        '`vendor_id`' => $this->vendor->getId()
+                        '`vendor_id`' => $this->vendor->getId(),
                     ]
             );
         }
@@ -312,22 +316,20 @@ class CategoriesController extends AdminController
         $newParent = $this->categories->getElement($moveTo);
         $newCharIndex = str_replace('-E', '-' . $id . '-E', $newParent['char_index']);
         if ($this->categories->hasChild($id)) {
-
             $newParentElement = $this->categories->getElement($moveTo);
             foreach ($this->categories->getChildren($id, true) as $childrenElement) {
                 if ($childrenElement['id_entity'] != $id) {
-
                     $charIndex = $childrenElement['char_index'];
                     $stableIndex = $id . '-' . explode('-' . $id . '-', $charIndex)[1];
                     $newPrefixIndex = str_replace('-E', '', $newParentElement['char_index']);
                     $newCharIndexChild = $newPrefixIndex . '-' . $stableIndex;
 
                     $this->db->update(
-                            'dnt_posts_categories',
-                            ['char_index' => $newCharIndexChild],
-                            [
+                        'dnt_posts_categories',
+                        ['char_index' => $newCharIndexChild],
+                        [
                                 'id_entity' => $childrenElement['id_entity'],
-                                '`vendor_id`' => $this->vendor->getId()
+                                '`vendor_id`' => $this->vendor->getId(),
                             ]
                     );
                 }
@@ -335,11 +337,11 @@ class CategoriesController extends AdminController
         }
 
         $this->db->update(
-                'dnt_posts_categories',
-                ['char_index' => $newCharIndex],
-                [
+            'dnt_posts_categories',
+            ['char_index' => $newCharIndex],
+            [
                     'id_entity' => $element['id_entity'],
-                    '`vendor_id`' => $this->vendor->getId()
+                    '`vendor_id`' => $this->vendor->getId(),
                 ]
         );
         $redirect = WWW_PATH_ADMIN_2 . 'index.php?src=categories';
@@ -350,11 +352,11 @@ class CategoriesController extends AdminController
     {
         $id_entity = $this->rest->get('post_id');
         $this->db->update(
-                'dnt_posts',
-                ['post_category_id' => false],
-                [
+            'dnt_posts',
+            ['post_category_id' => false],
+            [
                     'id_entity' => $id_entity,
-                    '`vendor_id`' => $this->vendor->getId()
+                    '`vendor_id`' => $this->vendor->getId(),
                 ]
         );
         $this->dnt->redirect();
@@ -384,13 +386,12 @@ class CategoriesController extends AdminController
         $id_entity = (int) $post['post_id_entity'];
         $post_category_id = (int) $post['post_category_id'];
         $this->db->update(
-                'dnt_posts',
-                ['post_category_id' => $post_category_id],
-                [
+            'dnt_posts',
+            ['post_category_id' => $post_category_id],
+            [
                     'id_entity' => $id_entity,
-                    '`vendor_id`' => $this->vendor->getId()
+                    '`vendor_id`' => $this->vendor->getId(),
                 ]
         );
     }
-
 }

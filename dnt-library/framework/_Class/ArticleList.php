@@ -20,7 +20,6 @@ use DntLibrary\Base\Vendor;
 
 class ArticleList extends AdminContent
 {
-
     public function __construct()
     {
         $this->articleView = new ArticleView();
@@ -32,7 +31,7 @@ class ArticleList extends AdminContent
     }
 
     /**
-     * 
+     *
      * @param type $is_limit
      * @return string
      */
@@ -41,31 +40,31 @@ class ArticleList extends AdminContent
 
         $servicesIDs = $this->frontend->get();
 
-
         $servicesIDs = $servicesIDs['article']['service_id'];
-        $servicesIDs = str_replace(",", "', '", $servicesIDs);
+        $servicesIDs = str_replace(',', "', '", $servicesIDs);
         if ($servicesIDsStatic) {
             $servicesIDs = $servicesIDsStatic;
         }
 
         if (isset($_GET['search'])) {
             $typ = "AND `name_url` LIKE '%" . $this->dnt->name_url($_GET['search']) . "%'";
-        } elseif ($this->rest->get("q")) {
-            $pharse = str_replace("-", "", $this->dnt->name_url(urldecode($this->rest->get("q"))));
+        } elseif ($this->rest->get('q')) {
+            $pharse = str_replace('-', '', $this->dnt->name_url(urldecode($this->rest->get('q'))));
             $typ = "AND `dnt_posts`.`search` LIKE '%" . $pharse . "%'";
         } else {
             $typ = "AND `dnt_post_type`.`id_entity` IN('" . $servicesIDs . "')";
         }
 
-        if ($is_limit == false)
+        if ($is_limit == false) {
             $limit = false;
-        else
+        } else {
             $limit = $is_limit;
+        }
 
         //AUTOREDIRECT URL
-        if ($postId == false)
+        if ($postId == false) {
             $typArticle = false;
-        else {
+        } else {
             $typArticle = " AND `dnt_posts`.`id_entity` IN('" . $postId . "') ";
             $typ = false;
         }
@@ -100,24 +99,24 @@ class ArticleList extends AdminContent
                     `dnt_post_type`.`vendor_id` = '" . $this->vendor->getId() . "' 
             AND
                     `dnt_posts`.`show` <> '0'
-            " . $typArticle . " 
-            " . $typ . " 
+            " . $typArticle . ' 
+            ' . $typ . ' 
             GROUP BY 
                     `dnt_posts`.`id_entity`
             ORDER BY 
-                    `dnt_posts`.`datetime_publish` DESC, `dnt_posts`.`order` DESC " . $limit . "";
+                    `dnt_posts`.`datetime_publish` DESC, `dnt_posts`.`order` DESC ' . $limit . '';
         return $query;
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function query($postId = false, $servicesIDsStatic = false)
     {
 
         if (isset($_GET['page'])) {
-            $returnPage = "&page=" . $_GET['page'];
+            $returnPage = '&page=' . $_GET['page'];
         } else {
             $returnPage = false;
         }
@@ -131,10 +130,11 @@ class ArticleList extends AdminContent
         $pocet = $this->db->num_rows($query);
         $limit = $this->limit();
 
-        if (isset($_GET['page']))
+        if (isset($_GET['page'])) {
             $strana = $_GET['page'];
-        else
+        } else {
             $strana = 1;
+        }
 
         $stranok = $pocet / $limit;
         $pociatok = ($strana * $limit) - $limit;
@@ -143,7 +143,7 @@ class ArticleList extends AdminContent
         $next_page = $strana + 1;
         $stranok_round = ceil($stranok);
 
-        $pager = "LIMIT " . $pociatok . ", " . $limit . "";
+        $pager = 'LIMIT ' . $pociatok . ', ' . $limit . '';
         return $this->prepare_query($pager, $postId, $servicesIDsStatic);
     }
 
@@ -154,7 +154,6 @@ class ArticleList extends AdminContent
      */
     public function getArticleUrl($postId, $fullPath = true, $type = false)
     {
-
 
         $query = $this->query($postId);
         if ($this->db->num_rows($query) > 0) {
@@ -176,7 +175,7 @@ class ArticleList extends AdminContent
     }
 
     /**
-     * 
+     *
      * @param type $postId
      * @param type $servicesIDsStatic
      * @return type
@@ -193,7 +192,7 @@ class ArticleList extends AdminContent
     }
 
     /**
-     * 
+     *
      * @param type $id
      * @return type
      */

@@ -16,10 +16,12 @@ use DOMPDF;
 
 class Pdf
 {
-
     protected $html2pdfAppKey = '8fc8992e7ab59463faeffa82343b41a21bb05a1fe5bc2102c52a02e0a171b864';
+
     protected $stream;
+
     public $file;
+
     public $url;
 
     public function __construct()
@@ -29,7 +31,7 @@ class Pdf
     }
 
     /**
-     * 
+     *
      * @param type $img
      * @return string
      */
@@ -42,7 +44,7 @@ class Pdf
     }
 
     /**
-     * 
+     *
      * @param type $html
      * @return type
      */
@@ -53,7 +55,7 @@ class Pdf
     }
 
     /**
-     * 
+     *
      * @param type $path
      * @param type $fileName
      * @param type $pdfName
@@ -72,7 +74,7 @@ class Pdf
     }
 
     /**
-     * 
+     *
      * @param type $path
      * @param type $fileName
      * @param type $pdfName
@@ -88,11 +90,11 @@ class Pdf
         $dompdf->load_html($html);
         $dompdf->set_paper('A4');
         $dompdf->render();
-        $dompdf->stream($pdfName . '.pdf', array("Attachment" => 1));
+        $dompdf->stream($pdfName . '.pdf', array('Attachment' => 1));
     }
 
     /**
-     * 
+     *
      * @param type $path
      * @param type $fileName
      * @param type $pdfName
@@ -106,8 +108,8 @@ class Pdf
         }
 
         $dompdf = new Dompdf();
-        $dompdf->set_option('enable_remote', TRUE);
-        $dompdf->set_option('enable_css_float', TRUE);
+        $dompdf->set_option('enable_remote', true);
+        $dompdf->set_option('enable_css_float', true);
         $dompdf->load_html($html);
         $dompdf->render();
         $this->file = $path . 'dnt-view/data/uploads/' . $fileName . '.pdf';
@@ -116,7 +118,7 @@ class Pdf
     }
 
     /**
-     * 
+     *
      * @param type $path
      * @param type $fileName
      * @param type $html
@@ -132,5 +134,4 @@ class Pdf
         unlink($streamResponse['tmpFile']);
         file_put_contents('../' . $path . $fileName, $output);
     }
-
 }

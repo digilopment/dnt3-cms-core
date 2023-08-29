@@ -8,8 +8,8 @@ use DntLibrary\Base\Rest;
 
 class AnalyticsNewslettersApi extends DntLog
 {
-
     protected $rest;
+
     protected $availableStatus = [
         'newsletter_log_click',
         'newsletter_log_seen',
@@ -27,7 +27,6 @@ class AnalyticsNewslettersApi extends DntLog
         $systemStatus = $this->rest->get('systemStatus');
 
         if (in_array($systemStatus, $this->availableStatus)) {
-
             $url = urldecode($this->rest->get('url'));
 
             $data = [
@@ -55,10 +54,9 @@ class AnalyticsNewslettersApi extends DntLog
                 $this->dnt->redirect($url);
             }
             if ($systemStatus == 'newsletter_log_seen') {
-                header("Content-type: image/png");
+                header('Content-type: image/png');
                 print(base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII='));
             }
         }
     }
-
 }

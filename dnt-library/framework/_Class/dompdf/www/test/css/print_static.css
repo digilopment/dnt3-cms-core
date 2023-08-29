@@ -2,13 +2,13 @@
 
 @import url(common.css);
 
-@page { 
+@page {
   margin: 0.25in;
 }
 
 /* General
 -----------------------------------------------------------------------*/
-body { 
+body {
   background-color: transparent;
   color: black;
   font-family: "verdana", "sans-serif";
@@ -17,7 +17,7 @@ body {
   font-size: 1em;
 }
 
-@media print { 
+@media print {
   p { margin: 2px; }
 }
 
@@ -30,7 +30,7 @@ h2 {
   font-size: 1.05em;
 }
 
-img { 
+img {
   border: none;
 }
 
@@ -66,7 +66,7 @@ a:hover {
   text-decoration: underline;
 }
 
-#body { 
+#body {
   padding-bottom: 2em;
   padding-top: 5px;
 }
@@ -93,7 +93,7 @@ a:hover {
   color: black;
 }
 
-#copyright { 
+#copyright {
   padding: 5px;
   font-size: 0.6em;
   background-color: white;
@@ -123,7 +123,7 @@ a:hover {
   text-align: center;
 }
 
-#job_header { 
+#job_header {
   text-align: left;
   background-color: white;
   margin-left: 5px;
@@ -199,21 +199,21 @@ a:hover {
   text-align: center;
 }
 
-.detail_label { 
+.detail_label {
   padding: 3px;
-  font-size: 0.75em;  
+  font-size: 0.75em;
   width: 16%;
   border-top: 1px solid #fff;
   border-bottom: 1px solid #fff;
   background-color: #ddd;
 }
 
-.detail_field { 
+.detail_field {
   width: 33%;
   font-size: 0.8em;
   /*color: ;*/
   text-align: center;
-  padding: 3px;  
+  padding: 3px;
 }
 
 .detail_sub_table {
@@ -240,7 +240,7 @@ a:hover {
   font-size: 0.1em;
 }
 
-.bar { 
+.bar {
   border-top: 1px solid black;
 }
 
@@ -256,7 +256,7 @@ a:hover {
   padding: 3px;
 }
 
-.form th, .form_head td { 
+.form th, .form_head td {
   background-color: #ddd;
   border-bottom: 1px solid black;
   color: black;
@@ -302,7 +302,7 @@ a:hover {
   font-size: 1em;
 }
 
-.button, a.button { 
+.button, a.button {
   color: black;
   background-color: white;
   border: 1px solid black;
@@ -311,7 +311,7 @@ a:hover {
   text-decoration: none;
 }
 
-a.button { 
+a.button {
   display: inline-block;
   text-align: center;
   padding: 2px;
@@ -342,7 +342,7 @@ a.button:hover {
 }
 */
 
-.form_foot td { 
+.form_foot td {
   background-color: #ddd;
   border-bottom: 1px solid black;
   color: black;
@@ -369,7 +369,7 @@ a.button:hover {
   white-space: nowrap;
 }
 
-tr.row_form td { 
+tr.row_form td {
   white-space: nowrap;
 }
 
@@ -388,7 +388,7 @@ tr.row_form td {
   text-indent: 2%;
 }
 
-.wizard td { 
+.wizard td {
   padding: 3px;
 /*  padding-left: 3px;
   padding-right: 3px;
@@ -441,7 +441,7 @@ tr.row_form td {
 }
 
 .list_table td,
-.notif_list_table td { 
+.notif_list_table td {
   padding: 3px 5px 3px 5px;
 }
 
@@ -513,7 +513,7 @@ tr.row_form td {
   border-bottom: 0.9px solid #ddd;
 }
 
-.spacer_row td { 
+.spacer_row td {
   line-height: 2px;
   font-size: 2px;
 }
@@ -523,12 +523,12 @@ tr.row_form td {
   font-size: 0.8em;
 }
 
-div.notif_list_text { 
+div.notif_list_text {
   margin-bottom: 1px;
   font-size: 1.1em;
 }
 
-.notif_list_row td.notif_list_job { 
+.notif_list_row td.notif_list_job {
   text-align: center;
   font-weight: bold;
   font-size: 0.65em;
@@ -541,7 +541,7 @@ div.notif_list_text {
   padding: 0px 2px 0px 2px;
 }
 
-.notif_list_row td { 
+.notif_list_row td {
   padding: 5px 5px 7px 5px;
   border-bottom: 1px dotted #ddd;
   background-color: white;
@@ -563,17 +563,17 @@ div.notif_list_text {
   background-color: transparent;
 }
 
-.page table.header h1{ 
+.page table.header h1{
   font-size: 12pt;
 }
 
 .page>h2,
-.page>p { 
+.page>p {
   margin-top: 2pt;
-  margin-bottom: 2pt;  
+  margin-bottom: 2pt;
 }
 
-.page h2 { 
+.page h2 {
   page-break-after: avoid;
 }
 
@@ -584,13 +584,13 @@ div.notif_list_text {
 
 /* Tree
 -----------------------------------------------------------------------*/
-.tree_div { 
+.tree_div {
   display: none;
   background-color: #ddd;
   border: 1px solid #333;
 }
 
-.tree_div .tree_step_bottom_border { 
+.tree_div .tree_step_bottom_border {
   border-bottom: 1px dashed #8B9DBE;
 }
 
@@ -609,10 +609,10 @@ div.notif_list_text {
 }
 */
 
-.tree_row_desc { 
+.tree_row_desc {
   font-weight: bold;
   font-size: 0.7em;
-  text-indent: -10px;  
+  text-indent: -10px;
 }
 
 .tree_row_info {
@@ -621,12 +621,12 @@ div.notif_list_text {
 }
 
 .tree_div_head a,
-.tree_row_desc a { 
+.tree_row_desc a {
   color: #000033;
   text-decoration: none;
 }
 
-.tree_div_head { 
+.tree_div_head {
   font-weight: bold;
   font-size: 0.7em;
 }
@@ -647,29 +647,29 @@ div.notif_list_text {
 
 /* Sales-agreement specific
 -----------------------------------------------------------------------*/
-table.sa_signature_box { 
+table.sa_signature_box {
   margin: 2em auto 2em auto;
 }
 
-table.sa_signature_box tr td { 
+table.sa_signature_box tr td {
   padding-top: 1.25em;
   vertical-align: top;
   white-space: nowrap;
 }
 
-.special_conditions { 
+.special_conditions {
   font-style: italic;
-  margin-left: 2em; 
+  margin-left: 2em;
   white-space: pre;
 }
 
-.sa_head * { 
+.sa_head * {
   font-size: 7pt;
 }
 
 /* Change order specific
 -----------------------------------------------------------------------*/
-table.change_order_items { 
+table.change_order_items {
   font-size: 8pt;
   width: 100%;
   border-collapse: collapse;
@@ -677,25 +677,25 @@ table.change_order_items {
   margin-bottom: 2em;
 }
 
-table.change_order_items>tbody { 
+table.change_order_items>tbody {
   border: 1px solid black;
 }
 
-table.change_order_items>tbody>tr>th { 
+table.change_order_items>tbody>tr>th {
   border-bottom: 1px solid black;
 }
 
-table.change_order_items>tbody>tr>td { 
+table.change_order_items>tbody>tr>td {
   border-right: 1px solid black;
   padding: 0.5em;
 }
 
-td.change_order_total_col { 
+td.change_order_total_col {
   padding-right: 4pt;
   text-align: right;
 }
 
-td.change_order_unit_col { 
+td.change_order_unit_col {
   padding-left: 2pt;
   text-align: left;
 }

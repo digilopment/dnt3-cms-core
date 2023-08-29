@@ -2,16 +2,15 @@
 
 namespace DntModules\Controllers;
 
+use DntLibrary\App\Client;
 use DntLibrary\Base\ArticleList;
 use DntLibrary\Base\ArticleView;
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Webhook;
-use DntLibrary\App\Client;
 
 class AutoRedirectModuleController extends Client
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -27,16 +26,16 @@ class AutoRedirectModuleController extends Client
         $this->init();
         $articleId = $this->rest->webhook(2);
         $name_url = $this->articleList->getArticleUrl($articleId, false);
-        $url = $this->wwwPath . $this->lang . "/" . $name_url;
+        $url = $this->wwwPath . $this->lang . '/' . $name_url;
 
-        $type = $this->articleView->getPostParam("type", $articleId);
+        $type = $this->articleView->getPostParam('type', $articleId);
         //internal redirect
-        if ($this->dnt->in_string("<WWW_PATH>", $name_url)) {
-            $this->dnt->redirect(str_replace("<WWW_PATH>", WWW_PATH, $name_url));
+        if ($this->dnt->in_string('<WWW_PATH>', $name_url)) {
+            $this->dnt->redirect(str_replace('<WWW_PATH>', WWW_PATH, $name_url));
         }
 
         //external redirect
-        if ($this->dnt->in_string(":\/\/", $name_url)) {
+        if ($this->dnt->in_string(':\/\/', $name_url)) {
             $this->dnt->redirect($name_url);
         }
 
@@ -47,12 +46,10 @@ class AutoRedirectModuleController extends Client
             }
         }
 
-
-        if ($type == "video") {
+        if ($type == 'video') {
             $this->dnt->redirect($this->articleList->getArticleUrl($articleId, true, $type));
         } else {
             $this->dnt->redirect($this->articleList->getArticleUrl($articleId));
         }
     }
-
 }

@@ -9,13 +9,18 @@ use DntLibrary\Base\Vendor;
 
 class AbstractUser
 {
-
     public $data;
+
     protected $init;
+
     protected $table;
+
     protected $type;
+
     protected $sessionId;
+
     protected $sessionStatus;
+
     protected $db;
 
     public function __construct($conf)
@@ -41,7 +46,7 @@ class AbstractUser
         if (empty($email)) {
             $email = $this->cookie->Get($this->sessionId);
         }
-        $query = "SELECT * FROM " . $this->table . " WHERE type = '" . $this->type . "' AND email = '" . $email . "' AND vendor_id = '" . $this->vendor->getId() . "'";
+        $query = 'SELECT * FROM ' . $this->table . " WHERE type = '" . $this->type . "' AND email = '" . $email . "' AND vendor_id = '" . $this->vendor->getId() . "'";
         if ($this->db->num_rows($query) > 0) {
             $this->data = $this->db->get_results($query, true);
         }
@@ -51,7 +56,7 @@ class AbstractUser
     public function logged()
     {
         $session = new Sessions();
-        if ($session->get($this->sessionStatus) || ($this->cookie->Get($this->sessionStatus) == 1 && $this->cookie->Get($this->sessionId) != "")) {
+        if ($session->get($this->sessionStatus) || ($this->cookie->Get($this->sessionStatus) == 1 && $this->cookie->Get($this->sessionId) != '')) {
             return true;
         } else {
             return false;
@@ -60,8 +65,8 @@ class AbstractUser
 
     public function validProcessLogin($email, $pass)
     {
-        $db = new DB;
-        $query = "SELECT pass FROM " . $this->table . " WHERE type = '" . $this->type . "' AND email = '" . $email . "' AND vendor_id = '" . $this->vendor->getId() . "'";
+        $db = new DB();
+        $query = 'SELECT pass FROM ' . $this->table . " WHERE type = '" . $this->type . "' AND email = '" . $email . "' AND vendor_id = '" . $this->vendor->getId() . "'";
         if ($db->num_rows($query) > 0) {
             foreach ($db->get_results($query) as $row) {
                 $db_pass = $row['pass'];
@@ -85,5 +90,4 @@ class AbstractUser
             return $this->data[0];
         }
     }
-
 }

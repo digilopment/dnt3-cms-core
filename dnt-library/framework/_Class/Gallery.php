@@ -16,7 +16,6 @@ use DntLibrary\Base\Vendor;
 
 class Gallery extends ArticleView
 {
-
     public function __construct()
     {
         $this->db = new DB();
@@ -35,11 +34,10 @@ class Gallery extends ArticleView
             foreach ($this->db->get_results($query) as $row) {
                 $data[] = $row['value'];
             }
-            $tmp = join(",", $data);
-            return explode(",", $tmp);
+            $tmp = join(',', $data);
+            return explode(',', $tmp);
         } else {
             return array();
         }
     }
-
 }

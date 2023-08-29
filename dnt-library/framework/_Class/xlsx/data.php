@@ -13,21 +13,21 @@ if (isset($argv[1])) {
     }
     exit;
 }
-require ('php-excel-reader/excel_reader2.php');
-require ('SpreadsheetReader.php');
+require('php-excel-reader/excel_reader2.php');
+require('SpreadsheetReader.php');
 date_default_timezone_set('Europe/Paris');
 $Spreadsheet = new SpreadsheetReader($Filepath);
 $Sheets = $Spreadsheet->Sheets();
 foreach ($Sheets as $Index => $Name) {
-    $excel_data.= "<h3>" . $Name . "</h3>";
-    $excel_data.= "<table>";
+    $excel_data .= '<h3>' . $Name . '</h3>';
+    $excel_data .= '<table>';
     foreach ($Spreadsheet as $Key => $Row) {
         foreach ($Row as $value) {
-            $excel_data.= "<td>" . $value . "</td>";
+            $excel_data .= '<td>' . $value . '</td>';
         }
-        $excel_data.= "</tr><tr>";
+        $excel_data .= '</tr><tr>';
     }
-    $excel_data.= "</table>";
+    $excel_data .= '</table>';
 }
 ?>
 <!doctype html>
@@ -37,8 +37,8 @@ foreach ($Sheets as $Index => $Name) {
 <title>Example PHP Excel Reader</title>
 <style type="text/css">
 #content{
-	margin: 0px auto;
-	width: 1000px;
+    margin: 0px auto;
+    width: 1000px;
 }
 table {
  border-collapse: collapse;
@@ -53,7 +53,7 @@ table {
     width: 640px; 
     border-collapse: 
     collapse; border-spacing: 0; 
-	width: 100%;
+    width: 100%;
 }
 
 td, th {  

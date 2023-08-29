@@ -10,8 +10,8 @@ use DntLibrary\Base\PostMeta;
 
 class Cart
 {
-
     public $postMetaDeta = [];
+
     public $cookieProductId;
 
     public function __construct()
@@ -47,7 +47,7 @@ class Cart
     public function price($postIds)
     {
         $finalPrices = [];
-        $query = "SELECT `value`, `post_id` FROM `dnt_posts_meta` WHERE post_id IN(" . join(',', $postIds) . ") AND vendor_id = 56 AND `key` = 'price' AND `show` = 1 AND `value` <> ''";
+        $query = 'SELECT `value`, `post_id` FROM `dnt_posts_meta` WHERE post_id IN(' . join(',', $postIds) . ") AND vendor_id = 56 AND `key` = 'price' AND `show` = 1 AND `value` <> ''";
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
                 $finalPrices[$row['post_id']] = $row['value'];
@@ -91,5 +91,4 @@ class Cart
             $this->postMetaDeta = $this->postMeta->getPostMeta($this->postData->id_entity);
         }
     }
-
 }

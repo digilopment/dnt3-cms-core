@@ -8,7 +8,6 @@ use DntLibrary\Base\Vendor;
 
 class AddTranslateJob
 {
-
     public function __construct()
     {
         $this->multiLanguage = new MultyLanguage();
@@ -19,23 +18,23 @@ class AddTranslateJob
 
         $translates = array(
             array(
-                "translate_id" => "partneri",
-                "translate" => "Partneri",
+                'translate_id' => 'partneri',
+                'translate' => 'Partneri',
             ),
             array(
-                "translate_id" => "pravidla_sutaze",
-                "translate" => "Pravidlá súťaže",
+                'translate_id' => 'pravidla_sutaze',
+                'translate' => 'Pravidlá súťaže',
             ),
             array(
-                "translate_id" => "socialne_siete",
-                "translate" => "Sociálne siete",
+                'translate_id' => 'socialne_siete',
+                'translate' => 'Sociálne siete',
             ),
         );
 
-        $table = "dnt_translates";
-        $db = new DB;
+        $table = 'dnt_translates';
+        $db = new DB();
         foreach ($translates as $translate) {
-            $vendor = new Vendor;
+            $vendor = new Vendor();
             foreach ($vendor->getAll() as $vendor) {
                 $query = $this->multiLanguage->getLangs(true);
                 if ($db->num_rows($query) > 0) {
@@ -53,14 +52,13 @@ class AddTranslateJob
                                 '`parent_id`' => '0',
                             );
                             $db->insert($table, $insertedData);
-                            print ("<span style='color:green'>Vendor: " . $vendor['id'] . " - translate <b>" . $translate['translate'] . "</b> was added<br/></span>");
+                            print ("<span style='color:green'>Vendor: " . $vendor['id'] . ' - translate <b>' . $translate['translate'] . '</b> was added<br/></span>');
                         } else {
-                            print ("<span style='color:red'>Vendor: " . $vendor['id'] . " - translate <b>" . $translate['translate'] . "</b> exists<br/></span>");
+                            print ("<span style='color:red'>Vendor: " . $vendor['id'] . ' - translate <b>' . $translate['translate'] . '</b> exists<br/></span>');
                         }
                     }
                 }
             }
         }
     }
-
 }

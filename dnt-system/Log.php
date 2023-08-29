@@ -7,7 +7,6 @@ use DntLibrary\Base\Rest;
 
 class LogSystem
 {
-
     public function run()
     {
         $dntLog = new DntLog();
@@ -20,5 +19,4 @@ class LogSystem
         $log_id = (new Rest())->get('log_id');
         $dntLog->show($log_id ? $log_id : 'last');
     }
-
 }

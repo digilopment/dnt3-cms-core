@@ -7,7 +7,7 @@ use DntLibrary\Base\Rest;
 use DntLibrary\Base\Vendor;
 
 $db = new DB();
-$rest = new Rest;
+$rest = new Rest();
 $image = new Image();
 
 $id = $rest->get('id');
@@ -16,8 +16,7 @@ if (isset($_POST['odoslat']) && isset($_GET['id'])) {
     $query = Meta::all_meta_competition();
     if ($db->num_rows($query) > 0) {
         foreach ($db->get_results($query) as $row) {
-
-            //update all content data 
+            //update all content data
             $db->query("UPDATE `dnt_microsites_composer` 
                             SET 
                     value = '" . $rest->post($row['meta']) . "' 
@@ -31,7 +30,7 @@ if (isset($_POST['odoslat']) && isset($_GET['id'])) {
             //update zobrazenie
             $db->query("UPDATE `dnt_microsites_composer` 
                             SET 
-                     zobrazenie = '" . $rest->post("zobrazit_" . $row['meta']) . "' 
+                     zobrazenie = '" . $rest->post('zobrazit_' . $row['meta']) . "' 
                             WHERE 
                     competition_id = '" . $id . "' AND 
                     vendor_id = '" . Vendor::getId() . "' AND 
@@ -40,7 +39,7 @@ if (isset($_POST['odoslat']) && isset($_GET['id'])) {
             //update poradie
             $db->query("UPDATE `dnt_microsites_composer` 
                             SET 
-                     poradie = '" . $rest->post("poradie_" . $row['meta']) . "' 
+                     poradie = '" . $rest->post('poradie_' . $row['meta']) . "' 
                             WHERE 
                     competition_id = '" . $id . "' AND 
                     vendor_id = '" . Vendor::getId() . "' AND 
@@ -53,7 +52,7 @@ if (isset($_POST['odoslat']) && isset($_GET['id'])) {
         $youtube_video = $rest->post('youtube_video');
 
         if (count(explode('?v=', $rest->post('youtube_video'))) > 1) {
-            $youtube_video = explode("?v=", $youtube_video);
+            $youtube_video = explode('?v=', $youtube_video);
             $youtube_hash = $youtube_video[1];
         } else {
             $youtube_hash = $rest->post('youtube_video');
@@ -68,25 +67,22 @@ if (isset($_POST['odoslat']) && isset($_GET['id'])) {
 		content_type = 'content' AND 
 		meta = 'youtube_video'");
     }
-    $presmeruj_url = "index.php?src=" . $rest->get('src') . "&id=" . $id . "&action=edit";
+    $presmeruj_url = 'index.php?src=' . $rest->get('src') . '&id=' . $id . '&action=edit';
 
 
     get_top();
     get_top_html();
-    getConfirmMessage($presmeruj_url, "Údaje sa úspešne uložili");
+    getConfirmMessage($presmeruj_url, 'Údaje sa úspešne uložili');
     get_bottom_html();
     get_bottom();
 } elseif (isset($_POST['odoslat_sutaz'])) {
-
-
-
-    $id_entity = $rest->post("id");
-    $real_url = $rest->post("real_url");
-    $real_url = str_replace("www.", "", $real_url);
-    $url = $rest->post("url");
-    $nazov = $rest->post("nazov");
-    $active = $rest->post("zobrazit_real_url");
-    $in_progress = $rest->post("zobrazit_in_progress");
+    $id_entity = $rest->post('id');
+    $real_url = $rest->post('real_url');
+    $real_url = str_replace('www.', '', $real_url);
+    $url = $rest->post('url');
+    $nazov = $rest->post('nazov');
+    $active = $rest->post('zobrazit_real_url');
+    $in_progress = $rest->post('zobrazit_in_progress');
 
     if (!empty($nazov)) {
         $db->query("UPDATE `dnt_microsites` 
@@ -136,12 +132,11 @@ if (isset($_POST['odoslat']) && isset($_GET['id'])) {
     }
 
 
-    $presmeruj_url = "index.php?src=" . $rest->get("src");
+    $presmeruj_url = 'index.php?src=' . $rest->get('src');
 
     get_top();
     get_top_html();
-    getConfirmMessage($presmeruj_url, "Údaje sa úspešne uložili");
+    getConfirmMessage($presmeruj_url, 'Údaje sa úspešne uložili');
     get_bottom_html();
     get_bottom();
 }
-

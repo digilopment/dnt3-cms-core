@@ -6,7 +6,6 @@ use DntLibrary\Base\Dnt;
 
 class ImageCreatorTest
 {
-
     public function __construct()
     {
         $this->dnt = new Dnt();
@@ -85,5 +84,4 @@ class ImageCreatorTest
     {
         $this->image();
     }
-
 }

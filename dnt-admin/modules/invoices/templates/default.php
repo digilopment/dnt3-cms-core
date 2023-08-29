@@ -47,16 +47,16 @@ get_top_html();
                                 <tr>
                                     <td><?php echo $row['id'] ?></td>
                                     <td> <span class="label label-fa bg-green action"> <?php echo $row['order_id'] ?></span> </td>
-                                    <td><b><?php echo (empty($row['company_name'])) ? $row['name'] . " " . $row['surname'] : $row['company_name'] ?> </b></td>
+                                    <td><b><?php echo (empty($row['company_name'])) ? $row['name'] . ' ' . $row['surname'] : $row['company_name'] ?> </b></td>
                                     <td><b><?php echo $dateCreated->format('d.m.Y H:i:s'); ?></b><br/><?php echo $dateUpdated->format('d.m.Y H:i:s'); ?><br/><?php echo $datePublish->format('d.m.Y H:i:s'); ?></td>
                                     <td> <span class="label label-fa bg-green action"> Objednávka je vybavená</span> </td>
                                     <td> <span class="text-green"> <b><big><?php echo $row['paid'] ?> €</big></b> </span> </td>
                                     <td> 
                                         <a title="Editovať objednávku" href="index.php?src=invoices&action=edit&id_entity=<?php echo $row['id_entity'] ?>"><i class="fa fa-pencil bg-blue action"></i></a>
                                         <a title="Vystaviť faktúru" href="index.php?src=invoices&action=print&id_entity=<?php echo $row['id_entity'] ?>"><i class="fa fa-file-o bg-green action"></i></a>
-                                        <a title="Vymazať objednávku" <?php echo Dnt::confirmMsg("Naozaj chcete vymazať túto objednávku? Operáciu už nebude možné vrátiť späť"); ?> href="index.php?src=invoices&action=del&id_entity=<?php echo $row['id_entity'] ?>"><i class="fa fa-trash bg-red action"></i></a> </td>
+                                        <a title="Vymazať objednávku" <?php echo Dnt::confirmMsg('Naozaj chcete vymazať túto objednávku? Operáciu už nebude možné vrátiť späť'); ?> href="index.php?src=invoices&action=del&id_entity=<?php echo $row['id_entity'] ?>"><i class="fa fa-trash bg-red action"></i></a> </td>
                                 </tr>
-<?php } ?>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>

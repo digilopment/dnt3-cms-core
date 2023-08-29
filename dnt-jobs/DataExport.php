@@ -17,7 +17,6 @@ use ZipArchive;
 
 class DataExportJob
 {
-
     public function __construct()
     {
         $this->dnt = new Dnt();
@@ -28,22 +27,21 @@ class DataExportJob
     {
 
         $rest = new Rest();
-        $config = new Config;
-        $dntLog = new DntLog;
-        $XMLgenerator = new XMLgenerator;
-        $dnt = new Dnt;
-        $dntCache = new Cache;
+        $config = new Config();
+        $dntLog = new DntLog();
+        $XMLgenerator = new XMLgenerator();
+        $dnt = new Dnt();
+        $dntCache = new Cache();
 
         $vendor_id = (new Rest())->get('vendor_id');
 
         if ($vendor_id || $vendor_id == 0) {
-
             $mysqlUserName = DB_USER;
             $mysqlPassword = DB_PASS;
             $mysqlHostName = DB_HOST;
             $DbName = DB_NAME;
             $tables = false;
-            $backup_name = "../dnt-install/install.sql";
+            $backup_name = '../dnt-install/install.sql';
             $this->install->Export_Database($mysqlHostName, $mysqlUserName, $mysqlPassword, $DbName, $tables = false, $backup_name, $vendor_id);
 
             // Get real path for our folder
@@ -56,11 +54,11 @@ class DataExportJob
             // Create recursive directory iterator
             /** @var SplFileInfo[] $files */
             $files = new RecursiveIteratorIterator(
-                    new RecursiveDirectoryIterator($rootPath),
-                    RecursiveIteratorIterator::LEAVES_ONLY
+                new RecursiveDirectoryIterator($rootPath),
+                RecursiveIteratorIterator::LEAVES_ONLY
             );
 
-            $db = new DB;
+            $db = new DB();
             foreach ($files as $name => $file) {
                 // Skip directories (they would be added automatically)
                 if (!$file->isDir()) {
@@ -68,9 +66,8 @@ class DataExportJob
                     $filePath = $file->getRealPath();
                     $relativePath = substr($filePath, strlen($rootPath) + 1);
 
-                    if (
-                            $this->dnt->in_string("dnt-view", $relativePath) ||
-                            $this->dnt->in_string("dnt-install", $relativePath)
+                    if ($this->dnt->in_string('dnt-view', $relativePath) ||
+                            $this->dnt->in_string('dnt-install', $relativePath)
                     ) {
                         $query = "SELECT name FROM dnt_uploads WHERE vendor_id = $vendor_id";
                         if ($db->num_rows($query) > 0) {
@@ -80,7 +77,7 @@ class DataExportJob
                                 }
                             }
                         }
-                        if ($this->dnt->in_string("dnt-install", $relativePath)) {
+                        if ($this->dnt->in_string('dnt-install', $relativePath)) {
                             $zip->addFile($filePath, $relativePath);
                         }
                     }
@@ -90,11 +87,10 @@ class DataExportJob
             // Zip archive will be created only after closing object
             $zip->close();
 
-            $url = WWW_PATH . "dnt-backup/" . $vendor_id . "_dnt3.zip";
+            $url = WWW_PATH . 'dnt-backup/' . $vendor_id . '_dnt3.zip';
             echo '<a target="_blank" href="' . $url . '">Download => ' . $url . '</a>';
         } else {
             echo 'no vendor';
         }
     }
-
 }

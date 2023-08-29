@@ -3,31 +3,48 @@
 namespace DntTest;
 
 use DntLibrary\Base\DB;
+use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Vendor;
-use DntLibrary\Base\Dnt;
 
 class NewsletterCampaignTest
 {
-
     protected $campaignId = 'newsletter-spring-2020';
+
     protected $emailCatId;
+
     protected $db;
+
     protected $dnt;
+
     protected $vendor;
+
     protected $logs = [];
+
     protected $sentEmails = [];
+
     protected $clickedUrls = [];
+
     protected $seenLogs = [];
+
     protected $uniqueClick = 0;
+
     protected $uniqueSeen = 0;
+
     protected $showUsers = true;
+
     protected $countSentEmails = 0;
+
     protected $countLogoutedUrlUnique = 0;
+
     protected $countAllEmails = 0;
+
     protected $countClickLogs = 0;
+
     protected $clickLogs = [];
+
     protected $countSeenLogs = 0;
+
     protected $countDefaultUrl = 0;
 
     public function __construct()
@@ -92,7 +109,7 @@ class NewsletterCampaignTest
     protected function getSeenLogs()
     {
         $logs = [];
-        /* $query = "SELECT * FROM `dnt_logs` WHERE 
+        /* $query = "SELECT * FROM `dnt_logs` WHERE
           `system_status` = 'newsletter_log_seen'
           AND `msg` LIKE '%" . $this->campaignId . "%'
           AND vendor_id = '" . $this->vendor->getId() . "' AND `REMOTE_ADDR` <> '54.71.187.124'";
@@ -108,7 +125,7 @@ class NewsletterCampaignTest
     protected function getClickLogs()
     {
         $logs = [];
-        /* $query = "SELECT * FROM `dnt_logs` WHERE 
+        /* $query = "SELECT * FROM `dnt_logs` WHERE
           `system_status` = 'newsletter_log_click' AND ( (`HTTP_ACCEPT` LIKE '%text%' or `HTTP_ACCEPT` LIKE '%image%' or `HTTP_ACCEPT` LIKE '%xml%' or `HTTP_ACCEPT` LIKE '%html%') AND `HTTP_ACCEPT_LANGUAGE` <> '' AND `REMOTE_ADDR` <> '54.71.187.124')
           AND `msg` LIKE '%" . $this->campaignId . "%'
           AND vendor_id = '" . $this->vendor->getId() . "'";
@@ -123,7 +140,7 @@ class NewsletterCampaignTest
     protected function getLogs()
     {
         $logs = [];
-        /* $query = "SELECT * FROM `dnt_logs` WHERE 
+        /* $query = "SELECT * FROM `dnt_logs` WHERE
           (`system_status` = 'newsletter_log_seen' OR
           (`system_status` = 'newsletter_log_click' AND ( (`HTTP_ACCEPT` LIKE '%text%' or `HTTP_ACCEPT` LIKE '%image%' or `HTTP_ACCEPT` LIKE '%xml%' or `HTTP_ACCEPT` LIKE '%html%') AND `HTTP_ACCEPT_LANGUAGE` <> '' AND `REMOTE_ADDR` <> '54.71.187.124')))
           AND `msg` LIKE '%" . $this->campaignId . "%'
@@ -158,7 +175,7 @@ class NewsletterCampaignTest
             $link = json_decode($log->msg)->redirectTo;
             $checkDnt3 = explode('dnt3ClickId', $link);
             if (isset($checkDnt3[1])) {
-                $link = substr_replace($checkDnt3[0], "", -1);
+                $link = substr_replace($checkDnt3[0], '', -1);
             }
             $url[] = $link;
         }
@@ -172,7 +189,7 @@ class NewsletterCampaignTest
         foreach ($countLinks as $link => $count) {
             $checkDnt3 = explode('dnt3ClickId', $link);
             if (isset($checkDnt3[1])) {
-                $link = substr_replace($checkDnt3[0], "", -1);
+                $link = substr_replace($checkDnt3[0], '', -1);
             }
             if ($this->dnt->in_string('plugin=subscriber', $link)) {
                 $email = base64_decode(urldecode($this->dnt->HexToStr(explode('&', explode('id=', $link)[1])[0])));
@@ -218,14 +235,14 @@ class NewsletterCampaignTest
             $data[$email] = [
                 'seen' => 1,
                 'logs' => $logsByEmail,
-                'clicked' => function() use ($click) {
+                'clicked' => function () use ($click) {
                     if ($click > 0) {
                         return 'ÁNO';
                     } else {
                         return 'NIE';
                     }
                 },
-                'countClick' => function() use ($click) {
+                'countClick' => function () use ($click) {
                     return $click;
                 },
             ];
@@ -248,14 +265,14 @@ class NewsletterCampaignTest
             $data[$email] = [
                 'seen' => 1,
                 'logs' => $logsByEmail,
-                'clicked' => function() use ($click) {
+                'clicked' => function () use ($click) {
                     if ($click > 0) {
                         return 'ÁNO';
                     } else {
                         return 'NIE';
                     }
                 },
-                'countClick' => function() use ($click) {
+                'countClick' => function () use ($click) {
                     return $click;
                 },
             ];
@@ -278,14 +295,14 @@ class NewsletterCampaignTest
             $data[$email] = [
                 'seen' => 1,
                 'logs' => $logsByEmail,
-                'clicked' => function() use ($click) {
+                'clicked' => function () use ($click) {
                     if ($click > 0) {
                         return 'ÁNO';
                     } else {
                         return 'NIE';
                     }
                 },
-                'countClick' => function() use ($click) {
+                'countClick' => function () use ($click) {
                     return $click;
                 },
             ];
@@ -326,7 +343,6 @@ class NewsletterCampaignTest
 
         $data['campaignId'] = $this->rest->get('campaignId');
         if ($this->rest->get('layout') != 'api') {
-
             if (empty($this->rest->get('layout'))) {
                 $data['setLogData'] = $this->setLogData();
                 $data['setLogSeenData'] = $this->setLogSeenData();
@@ -337,7 +353,6 @@ class NewsletterCampaignTest
             $data['baseUrl'] = 'https://varenypeceny.markiza.sk/dnt-markiza/forms/';
             $data['dnt'] = $this->dnt;
             $data['datetime'] = $this->dnt->datetime();
-
 
             //COUNT MAILS
             if ($this->rest->get('countMails')) {
@@ -397,5 +412,4 @@ class NewsletterCampaignTest
     {
         $this->init();
     }
-
 }

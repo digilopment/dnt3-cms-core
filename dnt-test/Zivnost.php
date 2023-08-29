@@ -6,13 +6,18 @@ use DntLibrary\Base\Dnt;
 
 class ZivnostTest
 {
-
     protected $dnt;
+
     protected $monthFixTPP = 1900; //1848.9; //1480
+
     protected $aproximateYears = 3;
+
     protected $cistaMzdaPercent = 73.42;
+
     protected $superHrubaMzdaPercent = 135.21;
+
     protected $cistaMzdaTppMesiac;
+
     protected $cistaMzdaTppRok;
 
     public function __construct()
@@ -94,5 +99,4 @@ class ZivnostTest
         $render .= '</table>';
         echo $render;
     }
-
 }

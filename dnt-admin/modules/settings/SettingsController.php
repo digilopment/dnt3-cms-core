@@ -15,13 +15,18 @@ use DntLibrary\Base\Webhook;
 
 class SettingsController extends AdminController
 {
-
     protected $loc = __FILE__;
+
     protected $db;
+
     protected $rest;
+
     protected $restdntUpload;
+
     protected $settings;
+
     protected $vendor;
+
     protected $dnt;
 
     public function __construct()
@@ -166,54 +171,54 @@ class SettingsController extends AdminController
                     }
 
                     $db->update(
-                            'dnt_settings',
-                            array(
+                        'dnt_settings',
+                        array(
                                 'value' => $galleryData,
                             ),
-                            array(
+                        array(
                                 'id_entity' => $row['id_entity'],
-                                '`vendor_id`' => $vendor->getId()
+                                '`vendor_id`' => $vendor->getId(),
                             )
                     );
                 } else {
                     $dntUpload->multypleUploadFiles(
-                            $_FILES['userfile_' . $row['id_entity']],
-                            'dnt_settings',
-                            'value',
-                            '`id_entity`',
-                            $row['id_entity'],
-                            '../dnt-view/data/uploads'
+                        $_FILES['userfile_' . $row['id_entity']],
+                        'dnt_settings',
+                        'value',
+                        '`id_entity`',
+                        $row['id_entity'],
+                        '../dnt-view/data/uploads'
                     );
                 }
             } else {
                 if ($row['key'] == 'youtube_sw') {
                     $db->update(
-                            'dnt_settings',
-                            array(
+                        'dnt_settings',
+                        array(
                                 'value' => $dnt->youtubeVideoToEmbed($rest->post('key_' . $row['id_entity'])),
                             ),
-                            array(
+                        array(
                                 'id_entity' => $row['id_entity'],
                                 '`vendor_id`' => $vendor->getId())
                     );
                 } else {
                     $db->update(
-                            'dnt_settings',
-                            array(
-                                'value' => $rest->post('key_' . $row['id_entity'])
+                        'dnt_settings',
+                        array(
+                                'value' => $rest->post('key_' . $row['id_entity']),
                             ),
-                            array(
+                        array(
                                 'id_entity' => $row['id_entity'],
                                 '`vendor_id`' => $vendor->getId())
                     );
                 }
             }
             $db->update(
-                    'dnt_settings',
-                    array(
-                        'show' => $rest->post('zobrazit_' . $row['id_entity'])
+                'dnt_settings',
+                array(
+                        'show' => $rest->post('zobrazit_' . $row['id_entity']),
                     ),
-                    array(
+                array(
                         'id_entity' => $row['id_entity'],
                         '`vendor_id`' => $vendor->getId())
             );
@@ -271,9 +276,8 @@ class SettingsController extends AdminController
     {
         $originDomain = $GLOBALS['ORIGIN_DOMAIN'];
         $dbDomain = $GLOBALS['DB_DOMAIN'];
-        $this->cache->deleteCacheByDomain("../dnt-cache/", $originDomain);
-        $this->cache->deleteCacheByDomain("../dnt-cache/", $dbDomain);
-        $this->dnt->redirect("index.php?src=settings");
+        $this->cache->deleteCacheByDomain('../dnt-cache/', $originDomain);
+        $this->cache->deleteCacheByDomain('../dnt-cache/', $dbDomain);
+        $this->dnt->redirect('index.php?src=settings');
     }
-
 }

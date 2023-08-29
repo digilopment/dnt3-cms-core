@@ -11,21 +11,21 @@
 namespace DntLibrary\App;
 
 use DntLibrary\App\Autoloader;
+use DntLibrary\App\Client;
 use DntLibrary\Base\Autoload;
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Install;
 use DntLibrary\Base\Sessions;
-use DntLibrary\App\Client;
 
 class Bootstrap
 {
-
     protected $path;
+
     public $client;
 
     public function __construct($path)
     {
-        $this->path = dirname($path) . "/";
+        $this->path = dirname($path) . '/';
     }
 
     protected function registerDefaultGlobals()
@@ -51,21 +51,21 @@ class Bootstrap
 
     protected function registerDefine($client)
     {
-        define('WWW_PATH_LANG', WWW_PATH . $client->lang . "/");
+        define('WWW_PATH_LANG', WWW_PATH . $client->lang . '/');
     }
 
     public function boot()
     {
         $this->registerDefaultGlobals();
         $path = $this->path;
-        include $path . "dnt-library/framework/_Class/Autoload.php";
-        include $path . "dnt-library/framework/app/Autoload.php";
+        include $path . 'dnt-library/framework/_Class/Autoload.php';
+        include $path . 'dnt-library/framework/app/Autoload.php';
         $autoload = new Autoload();
         $autoload->load($path);
         $this->dnt = new Dnt();
         $this->install = new Install();
         if (!$this->install->db_exists()) {
-            $this->dnt->redirect("dnt-install/index.php");
+            $this->dnt->redirect('dnt-install/index.php');
         }
         $autoloader = new Autoloader();
         $autoloader->load($path);
@@ -77,5 +77,4 @@ class Bootstrap
         $this->registerDefine($client);
         $this->client = $client;
     }
-
 }

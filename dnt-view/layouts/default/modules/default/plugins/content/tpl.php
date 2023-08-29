@@ -10,6 +10,6 @@
     </p>
     <hr>
     <footer class="text-center">
-        <p>&copy; 2013 - <?php echo date("Y"); ?> <?php echo DOMAIN ?></p>
+        <p>&copy; 2013 - <?php echo date('Y'); ?> <?php echo DOMAIN ?></p>
     </footer>
 </div>

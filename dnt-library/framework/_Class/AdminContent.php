@@ -16,7 +16,6 @@ use DntLibrary\Base\Vendor;
  */
 class AdminContent extends MultyLanguage
 {
-
     public function __construct()
     {
         $this->multiLanguage = new MultyLanguage();
@@ -26,7 +25,7 @@ class AdminContent extends MultyLanguage
     }
 
     /**
-     * 
+     *
      * @return int
      */
     public function limit()
@@ -35,24 +34,24 @@ class AdminContent extends MultyLanguage
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function primaryCat()
     {
         return array(
-            "post" => "Obsah",
-            "sitemap" => "Sitemapa",
-            "article" => "Články",
-            "video" => "Video",
-            "gallery" => "Galérie",
-            "product" => "Produkt",
-            "variant" => "Variant",
+            'post' => 'Obsah',
+            'sitemap' => 'Sitemapa',
+            'article' => 'Články',
+            'video' => 'Video',
+            'gallery' => 'Galérie',
+            'product' => 'Produkt',
+            'variant' => 'Variant',
         );
     }
 
     /**
-     * 
+     *
      * @param type $type
      * @return boolean
      */
@@ -69,7 +68,7 @@ class AdminContent extends MultyLanguage
     }
 
     /**
-     * 
+     *
      * @param type $type
      * @return boolean
      */
@@ -84,7 +83,7 @@ class AdminContent extends MultyLanguage
     }
 
     /**
-     * 
+     *
      * @param type $is_limit
      * @return string
      */
@@ -96,7 +95,7 @@ class AdminContent extends MultyLanguage
             if (isset($params[0]) && isset($params[1])) {
                 $typ = "AND `$params[0]` = '" . $params[1] . "'";
             }
-        } elseif (isset($_GET['included']) && $_GET['included'] == "article") {
+        } elseif (isset($_GET['included']) && $_GET['included'] == 'article') {
             $typ = "AND sub_cat_id = '" . $_GET['filter'] . "' AND `show` > 0 ";
         } elseif (isset($_GET['included']) && isset($_GET['filter'])) {
             $typ = "AND cat_id = '" . $_GET['filter'] . "' AND `show` > 0 ";
@@ -105,12 +104,13 @@ class AdminContent extends MultyLanguage
         } elseif (isset($_GET['search'])) {
             $typ = "AND `name_url` LIKE '%" . $this->dnt->name_url($_GET['search']) . "%'";
         } else {
-            $typ = "AND `show` > 0 ";
+            $typ = 'AND `show` > 0 ';
         }
-        if ($is_limit == false)
+        if ($is_limit == false) {
             $limit = false;
-        else
+        } else {
             $limit = $is_limit;
+        }
 
         /* if (isset($_GET['included']) && $_GET['included'] == "article") {
           $typ = "AND sub_cat_id = '" . $_GET['filter'] . "'";
@@ -136,19 +136,19 @@ class AdminContent extends MultyLanguage
           $limit = $is_limit;
          */
 
-        $query = "SELECT * FROM `dnt_posts` WHERE  `type` <> 'variant' AND `vendor_id` = '" . $this->vendor->getId() . "' " . $typ . " ORDER BY `order` DESC, `id_entity` DESC " . $limit . "";
+        $query = "SELECT * FROM `dnt_posts` WHERE  `type` <> 'variant' AND `vendor_id` = '" . $this->vendor->getId() . "' " . $typ . ' ORDER BY `order` DESC, `id_entity` DESC ' . $limit . '';
         return $query;
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function query()
     {
 
         if (isset($_GET['page'])) {
-            $returnPage = "&page=" . $_GET['page'];
+            $returnPage = '&page=' . $_GET['page'];
         } else {
             $returnPage = false;
         }
@@ -157,10 +157,11 @@ class AdminContent extends MultyLanguage
         $pocet = $this->db->num_rows($query);
         $limit = $this->limit();
 
-        if (isset($_GET['page']))
+        if (isset($_GET['page'])) {
             $strana = $_GET['page'];
-        else
+        } else {
             $strana = 1;
+        }
 
         $stranok = $pocet / $limit;
         $pociatok = ($strana * $limit) - $limit;
@@ -169,18 +170,17 @@ class AdminContent extends MultyLanguage
         $next_page = $strana + 1;
         $stranok_round = ceil($stranok);
 
-        $pager = "LIMIT " . $pociatok . ", " . $limit . "";
+        $pager = 'LIMIT ' . $pociatok . ', ' . $limit . '';
         return $this->prepare_query($pager);
     }
 
     /**
-     * 
+     *
      * @param type $index
      * @return int
      */
     public function getPage($index)
     {
-
 
         if (isset($_GET['page'])) {
             $strana = $_GET['page'];
@@ -197,49 +197,48 @@ class AdminContent extends MultyLanguage
         $stranok_round = ceil($stranok);
         $prev_page = $strana - 1;
 
-        if ($index == "next") {
+        if ($index == 'next') {
             $next_page = $strana + 1;
             if ($next_page <= $stranok_round) {
                 return $next_page;
             } else {
                 return $stranok_round;
             }
-        } elseif ($index == "prev") {
+        } elseif ($index == 'prev') {
             if ($prev_page < 1) {
                 return 1;
             } else {
                 return $prev_page;
             }
-        } elseif ($index == "first") {
+        } elseif ($index == 'first') {
             return 1;
-        } elseif ($index == "last") {
-
+        } elseif ($index == 'last') {
             return $stranok_round;
-        } elseif ($index == "current") {
+        } elseif ($index == 'current') {
             return $strana;
         }
     }
 
     /**
-     * 
+     *
      * @param type $index
      * @return type
      */
     public function paginator($index)
     {
-        $adresa = explode("?", WWW_FULL_PATH);
+        $adresa = explode('?', WWW_FULL_PATH);
         if (isset($_GET['page'])) {
-            $adresa_bez_page = explode("&page=" . $_GET['page'] . "", $adresa[1]); //src=obsah&page=2
+            $adresa_bez_page = explode('&page=' . $_GET['page'] . '', $adresa[1]); //src=obsah&page=2
             $return = $adresa_bez_page[0];
         } else {
             $return = $adresa[1]; //this function return an array
         }
 
-        return WWW_PATH_ADMIN . "index.php?" . $return . "&page=" . $this->getPage($index);
+        return WWW_PATH_ADMIN . 'index.php?' . $return . '&page=' . $this->getPage($index);
     }
 
     /**
-     * 
+     *
      * @param type $action
      * @param type $cat_id
      * @param type $sub_cat_id
@@ -251,7 +250,7 @@ class AdminContent extends MultyLanguage
     public function url($action, $cat_id, $sub_cat_id, $type, $post_id, $page)
     {
 
-        if ($action == "filter") {
+        if ($action == 'filter') {
             return "index.php?src=content&filter=$cat_id&sub_cat_id=$sub_cat_id&included=$type";
         } else {
             if (isset($_GET['filter'])) {
@@ -264,7 +263,7 @@ class AdminContent extends MultyLanguage
     }
 
     /**
-     * 
+     *
      * @param type $column
      * @param type $post_id
      * @return boolean
@@ -283,48 +282,47 @@ class AdminContent extends MultyLanguage
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function showOrder()
     {
-        return ($this->getPage("current") * $this->limit()) - $this->limit() + 1;
+        return ($this->getPage('current') * $this->limit()) - $this->limit() + 1;
     }
 
     /**
-     * 
+     *
      * @param type $tags
      * @return type
      * tags
      */
     public function databseTagsString($tags)
     {
-        $tags = str_replace(", ", ",", $tags);
-        $tags = str_replace(" ,", ",", $tags);
-        $tags = str_replace(", ", ",", $tags);
-        $tags = str_replace(" ", "-", $tags);
+        $tags = str_replace(', ', ',', $tags);
+        $tags = str_replace(' ,', ',', $tags);
+        $tags = str_replace(', ', ',', $tags);
+        $tags = str_replace(' ', '-', $tags);
         return $tags;
     }
 
     /**
-     * 
+     *
      * @param type $data
      * @return type
      */
     public function showTags($data)
     {
-        return explode(",", $data);
+        return explode(',', $data);
     }
 
     /**
-     * 
+     *
      * @param type $data
      * @return type
      */
     public function showTagName($data)
     {
-        $data = str_replace("-", " ", $data);
+        $data = str_replace('-', ' ', $data);
         return ucfirst($data);
     }
-
 }

@@ -4,7 +4,6 @@ namespace DntLibrary\App;
 
 class Render
 {
-
     protected $data;
 
     public function __construct($data)
@@ -23,5 +22,4 @@ class Render
         header('Content-Type: application/json');
         print $this->data;
     }
-
 }

@@ -17,22 +17,21 @@ use function modulesConfig;
 
 class Webhook
 {
-
     public function __construct()
     {
         $this->vendor = new Vendor();
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function getSitemapModules($type = false, $vendorId = false)
     {
         $db = new DB();
-        $ml = new MultyLanguage;
+        $ml = new MultyLanguage();
 
-        if ($type == "static_view") {
+        if ($type == 'static_view') {
             $eQ = "AND `dnt_posts`.`service` = ''";
         } else {
             if ($type) {
@@ -73,7 +72,7 @@ class Webhook
             if ($db->num_rows($query) > 0) {
                 foreach ($db->get_results($query) as $row) {
                     $arr[] = $row['name_url'];
-                    if ($row['translate'] != "") {
+                    if ($row['translate'] != '') {
                         $arr[] = $row['translate'];
                     }
                 }
@@ -94,7 +93,7 @@ class Webhook
     }
 
     /**
-     * 
+     *
      * @param type $postId
      * @param type $config
      * @return type
@@ -103,27 +102,27 @@ class Webhook
     {
         if ($config === true) {
             return array(
-                "config" => array(
-                    "sql" => "INSERT INTO `dnt_posts_meta` (`id`, `id_entity`, `service`, `vendor_id`, `key`, `value`, `content_type`, `cat_id`, `description`, `order`, `show`) VALUES",
+                'config' => array(
+                    'sql' => 'INSERT INTO `dnt_posts_meta` (`id`, `id_entity`, `service`, `vendor_id`, `key`, `value`, `content_type`, `cat_id`, `description`, `order`, `show`) VALUES',
                 ),
             );
         }
-        $file = "../dnt-view/layouts/" . $this->vendor->getLayout() . "/conf.php";
-        if (!function_exists("modulesConfig")) {
+        $file = '../dnt-view/layouts/' . $this->vendor->getLayout() . '/conf.php';
+        if (!function_exists('modulesConfig')) {
             if (file_exists($file)) {
                 include $file;
             }
         }
         if (file_exists($file)) {
-            if (function_exists("modulesConfig")) {
+            if (function_exists('modulesConfig')) {
                 return modulesConfig();
             }
         } else {
             return array(
                 //homepage
-                "homepage" => array(
-                    "service_name" => "Homepage",
-                    "sql" => "
+                'homepage' => array(
+                    'service_name' => 'Homepage',
+                    'sql' => "
                         (null, $postId, 'homepage', '" . $this->vendor->getId() . "', 'name', 'uvod', 'content', '1', 'Url adresa', 1),
                         (null, $postId, 'homepage', '" . $this->vendor->getId() . "', 'name_url', 'Úvod', 'content', '1','Nazov sekcie', 1),
                         (null, $postId, 'homepage', '" . $this->vendor->getId() . "', 'info', 'Toto je info', 'content', '1','Informácie', 1),
@@ -131,50 +130,50 @@ class Webhook
                         (null, $postId, 'homepage', '" . $this->vendor->getId() . "', 'test', 'Toto je test', 'content', '1','Testovacia zóna', 0);
                     "),
                 //contact
-                "contact" => array(
-                    "service_name" => "Kontakt",
-                    "sql" => "
+                'contact' => array(
+                    'service_name' => 'Kontakt',
+                    'sql' => "
                         (null, $postId, 'contact', '" . $this->vendor->getId() . "', 'info', 'Toto je info', 'content', '1','Informácie', 1),
                         (null, $postId, 'contact', '" . $this->vendor->getId() . "', 'info_url', 'Toto je info url', 'content', '1','Informácie url', 1),
                         (null, $postId, 'contact', '" . $this->vendor->getId() . "', 'new', 'Toto je info url', 'content', '1','Informácie url', 1),
                         (null, $postId, 'contact', '" . $this->vendor->getId() . "', 'test', 'Toto je test', 'content', '1','Testovacia zóna', 0);
                     "),
                 //about-us
-                "about-us" => array(
-                    "service_name" => "O nás",
-                    "sql" => "
+                'about-us' => array(
+                    'service_name' => 'O nás',
+                    'sql' => "
                         (null, $postId, 'about-us', '" . $this->vendor->getId() . "', 'about-us', 'Toto je about-us', 'content', '1','about-us', 1),
                         (null, $postId, 'about-us', '" . $this->vendor->getId() . "', 'test', 'Toto je about-us', 'content', '1','about-us zóna', 0);
                        "),
                 //partneri
-                "partners" => array(
-                    "service_name" => "Partnetri",
-                    "sql" => "
+                'partners' => array(
+                    'service_name' => 'Partnetri',
+                    'sql' => "
                         (null, $postId, 'partners', '" . $this->vendor->getId() . "', 'partners', 'Toto je partnerss', 'content', '1', 'partners', 1),
                         (null, $postId, 'partners', '" . $this->vendor->getId() . "', 'test', 'Toto je partners', 'content', '1', 'partners zóna', 0);
                     "),
                 //partneri
-                "article_list" => array(
-                    "service_name" => "Article List",
-                    "sql" => ""
+                'article_list' => array(
+                    'service_name' => 'Article List',
+                    'sql' => '',
                 ),
                 //ZOZNAM ANKIET
-                "polls" => array(
-                    "service_name" => "Kvízy",
-                    "sql" => ""
+                'polls' => array(
+                    'service_name' => 'Kvízy',
+                    'sql' => '',
                 ),
                 //ESHOP
-                "eshop" => array(
-                    "service_name" => "Eshop List",
-                    "sql" => ""
+                'eshop' => array(
+                    'service_name' => 'Eshop List',
+                    'sql' => '',
                 ),
                 //ESHOP
-                "wp_hotely" => array(
-                    "service_name" => "WP Hotely",
-                    "sql" => "
+                'wp_hotely' => array(
+                    'service_name' => 'WP Hotely',
+                    'sql' => "
                         (null, $postId, 'wp_hotely', '" . $this->vendor->getId() . "', 'hotel_', 'Toto je partnerss', 'content', '1', 'partners', 1),
                         (null, $postId, 'wp_hotely', '" . $this->vendor->getId() . "', 'test', 'Toto je partners', 'content', '1', 'partners zóna', 0);
-                    "
+                    ",
                 ),
             );
         }
@@ -182,7 +181,7 @@ class Webhook
 
     public function services($postId = false, $config = false)
     {
-        $file = "../dnt-view/layouts/" . $this->vendor->getLayout() . "/Configurator.php";
+        $file = '../dnt-view/layouts/' . $this->vendor->getLayout() . '/Configurator.php';
         if (class_exists('DntView\Layout\Configurator')) {
             $configurator = new Configurator();
             if (method_exists($configurator, 'modulesConfigurator')) {
@@ -200,7 +199,7 @@ class Webhook
     }
 
     /**
-     * 
+     *
      * @return boolean
      */
     public function getArticleViewCat()
@@ -220,12 +219,12 @@ class Webhook
     }
 
     /**
-     * 
+     *
      * @param type $custom_modules
      * @return type
-     * 
+     *
      * key_array -> represent modul service
-     * array_alue-> represent the hook get PARAMETER 
+     * array_alue-> represent the hook get PARAMETER
      */
     public function get($custom_modules = false)
     {
@@ -236,28 +235,29 @@ class Webhook
         }
 
         $modules = array(
-            //CLANKY V KATEGORIACH			  
-            "article_list" => array_merge(
-                    array(""), $this->getSitemapModules("article_list")
+            //CLANKY V KATEGORIACH
+            'article_list' => array_merge(
+                array(''),
+                $this->getSitemapModules('article_list')
             ),
-            //redirect na article_list 
-            "auto_redirect" => array(
-                "a",
-                "article",
+            //redirect na article_list
+            'auto_redirect' => array(
+                'a',
+                'article',
             ),
             //404
-            "default" => array(
-                "error-404",
-                "not-found",
+            'default' => array(
+                'error-404',
+                'not-found',
             ),
             //MEDIALNY OBSAH
-            "media_downloads" => array(
-                "media-download",
-                "download-media",
+            'media_downloads' => array(
+                'media-download',
+                'download-media',
             ),
             //RPC API
-            "rpc" => array(
-                "rpc",
+            'rpc' => array(
+                'rpc',
             ),
             //SEARCH
             /* "search" => array(
@@ -266,12 +266,12 @@ class Webhook
               ), */
 
             //STATIC VIEW
-            "static_view" => array_merge(
-                    array(), $this->getSitemapModules("static_view")
+            'static_view' => array_merge(
+                array(),
+                $this->getSitemapModules('static_view')
             ),
         );
         $modules = array_merge($custom_modules, $modules);
         return $modules;
     }
-
 }

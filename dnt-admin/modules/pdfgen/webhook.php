@@ -1,33 +1,33 @@
 <?php
 
+use DntLibrary\Base\AdminUser;
 use DntLibrary\Base\DB;
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Sessions;
 use DntLibrary\Base\Settings;
 use DntLibrary\Base\Vendor;
-use DntLibrary\Base\AdminUser;
 
-$rest = new Rest;
-$session = new Sessions;
-$dnt = new Dnt;
+$rest = new Rest();
+$session = new Sessions();
+$dnt = new Dnt();
 $db = new DB();
 $settings = new Settings();
 $vendor = new Vendor();
 $adminUser = new AdminUser();
 
-include "export.php";
+include 'export.php';
 
 /*
 if($rest->get("action") == "update")
 {
-	include "update.php";
+    include "update.php";
 }
 elseif($rest->get("action") == "add")
 {
-	//empty
+    //empty
 }
 else{
-	include "tpl.php";
+    include "tpl.php";
 }
 */

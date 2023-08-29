@@ -1,9 +1,9 @@
 <?php
 
-use DntLibrary\Base\Frontend;
+
 ?>
 <!DOCTYPE html> 
-<html lang="<?php echo $data['frontend']->getMetaSetting($data, "language"); ?>">
+<html lang="<?php echo $data['frontend']->getMetaSetting($data, 'language'); ?>">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

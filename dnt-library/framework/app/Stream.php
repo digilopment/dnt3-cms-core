@@ -7,14 +7,20 @@ use DntLibrary\Base\Rest;
 
 class Stream
 {
-
     protected $dnt;
+
     protected $rest;
+
     protected $tempPath = '../dnt-cache/temp/';
+
     protected $externalService = 'http://app.query.sk/temporary-online/?param=1';
+
     protected $internalService = WWW_PATH_ADMIN_2 . 'index.php?src=temporary-online';
+
     protected $maxCharsPerStream = 1000;
+
     protected $status = 0;
+
     protected $uniqId;
 
     public function __construct()
@@ -127,5 +133,4 @@ class Stream
             'serverUrl' => $mergePageUrl,
         ];
     }
-
 }
