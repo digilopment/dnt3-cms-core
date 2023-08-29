@@ -126,6 +126,9 @@ class MultyLanguage
      */
     public function getLang()
     {
+        if (MULTY_LANGUAGE === false) {
+            return $GLOBALS['ORIGIN_DOMAIN_LNG'] ?? 'sk';
+        }
         return $this->rest->webhook(0);
     }
 
