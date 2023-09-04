@@ -1279,4 +1279,12 @@ class Dnt
         }
         return $string;
     }
+    
+    public function render($template)
+    {
+        ob_start();
+        require_once $template;
+        print ob_get_clean();
+        //print($this->minify(ob_get_clean()));
+    }
 }
