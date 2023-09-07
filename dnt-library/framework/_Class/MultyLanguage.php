@@ -127,7 +127,7 @@ class MultyLanguage
     public function getLang()
     {
         if (MULTY_LANGUAGE === false) {
-            return 'sk';
+            return DEAFULT_LANG;
         }
         return $this->rest->webhook(0);
     }
@@ -156,7 +156,7 @@ class MultyLanguage
     public function translate($data, $key, $value)
     {
         $lang = $this->getLang();
-        $return = false;
+        //$return = false;
         foreach ($data['translates'] as $translate) {
             if ($lang == 0) {
                 if ($translate['translate_id'] == $key && $translate['lang_id'] == DEAFULT_LANG) {

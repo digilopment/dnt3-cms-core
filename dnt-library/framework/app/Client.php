@@ -178,7 +178,8 @@ class Client extends Database
         }
     }
 
-    public function route($index)
+
+public function route($index)
     {
         $data = ltrim($this->requestNoParam, '/');
         $data = explode('/', $data);
@@ -187,7 +188,7 @@ class Client extends Database
                 $this->routes = $data;
                 $this->lang = $this->urlLang();
             } else {
-                $this->lang = $this->getSetting('language');
+                $this->lang = (MULTY_LANGUAGE === false) ? DEAFULT_LANG : $this->getSetting('language');
                 $this->routes = array_merge(array(
                     $this->lang,
                         ), $data);
@@ -293,7 +294,7 @@ class Client extends Database
             }
 
             //presmerovanie z default lang na no-lang
-            if ($this->urlLang($this->request) == $language && $data['lang'] == false && $this->rpc === null) {
+            if ($this->urlLang($this->request) == $language && $data['lang'] == false && $this->rpc === null && MULTY_LANGUAGE === true) {
                 $newDomain = $data['protocol'] . $www . $data['domain'] . $this->requestNoLang;
                 $this->redirect($newDomain);
                 exit;
@@ -306,13 +307,14 @@ class Client extends Database
                 //zhoda
             } else {
                 if ($this->showRealUrl) {
-                    if ($language) {
-                        $newDomain = $data['protocol'] . $www . $data['domain'] . '/' . $language . $this->requestNoLang;
-                    } else {
-                        $newDomain = $data['protocol'] . $www . $data['domain'] . $this->request;
+                    $newDomain = $data['protocol'] . $www . $data['domain'];
+                    if ($language && (rtrim(WWW_PATH, '/') != rtrim($dbDomain, '/'))) {
+                        $newDomainPath = $newDomain . '/' . $language . $this->requestNoLang;
+                        $newDomainPath = $dbDomain . '/' . $this->requestNoLang;
+                        $this->redirect($newDomainPath);
+                        exit;
                     }
-                    $this->redirect($newDomain);
-                    exit;
+                    
                 }
             }
         } else {
