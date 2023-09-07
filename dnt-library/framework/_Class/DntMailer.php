@@ -1,5 +1,4 @@
 <?php
-
 /**
  *  class       Mailer
  *  author      Tomas Doubek
@@ -17,18 +16,13 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 class Mailer
 {
+
     public $recipient; //array
-
     public $sender_email; //string
-
     public $sender_name; //string
-
     public $title; //string
-
     public $msg; //string
-
     public $subject; //string
-
     public $response;
 
     /**
@@ -467,11 +461,11 @@ class Mailer
         }
 
         //SPOJ DOKPOPY
-        $subject = iconv('UTF-8', 'windows-1250', $predmet);
-        $title = 'Html Email';
-        $message = iconv('UTF-8', 'windows-1250', $email_sprava);
-        $headers = 'MIME-Version: 1.0' . "\r\n";
-        $headers .= 'Content-type: text/html; charset=windows-1250' . "\r\n";
+        //$subject = iconv('UTF-8', 'windows-1250', $predmet);
+        //$title = 'Html Email';
+        //$message = iconv('UTF-8', 'windows-1250', $email_sprava);
+        //$headers = 'MIME-Version: 1.0' . "\r\n";
+        //$headers .= 'Content-type: text/html; charset=windows-1250' . "\r\n";
         $headers .= 'To:  <' . $to . '>' . "\r\n"; // dalsi mail sa oddeluje ciarkou
         $headers .= 'From: ' . $od_meno . ' <' . $od_email . '>' . "\r\n";
 
@@ -479,6 +473,11 @@ class Mailer
             $SEND_GRID_API_KEY = $this->settings->get('send_grid_api_key');
             $SEND_GRID_API_TEMPLATE_ID = $this->settings->get('send_grid_api_template_id');
         } else {
+            $SEND_GRID_API_KEY = SEND_GRID_API_KEY;
+            $SEND_GRID_API_TEMPLATE_ID = SEND_GRID_API_TEMPLATE_ID;
+        }
+
+        if (DB_NAME === 'dnt3_win') {
             $SEND_GRID_API_KEY = SEND_GRID_API_KEY;
             $SEND_GRID_API_TEMPLATE_ID = SEND_GRID_API_TEMPLATE_ID;
         }
@@ -525,6 +524,7 @@ class Mailer
             curl_close($session);
             //SEND GRID END
         } elseif (SEND_EMAIL_VIA == 'smtp') {
+            
         }
     }
 
@@ -660,4 +660,5 @@ class Mailer
             $this->prepare_mail($to);
         }
     }
+
 }
