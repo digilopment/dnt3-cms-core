@@ -16,13 +16,18 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 class Mailer
 {
-
     public $recipient; //array
+
     public $sender_email; //string
+
     public $sender_name; //string
+
     public $title; //string
+
     public $msg; //string
+
     public $subject; //string
+
     public $response;
 
     /**
@@ -524,7 +529,6 @@ class Mailer
             curl_close($session);
             //SEND GRID END
         } elseif (SEND_EMAIL_VIA == 'smtp') {
-            
         }
     }
 
@@ -660,5 +664,4 @@ class Mailer
             $this->prepare_mail($to);
         }
     }
-
 }

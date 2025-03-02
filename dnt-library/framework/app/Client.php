@@ -324,6 +324,10 @@ public function route($index)
                     $newDomain = $data['protocol'] . $data['domain'] . $this->requestNoLang;
                     $this->redirect($newDomain);
                     exit;
+                }else{
+                    $newDomain = $data['protocol'] . $data['domain'] . $this->requestNoLang;
+                    $this->redirect($newDomain);
+                    exit;
                 }
             }
         }

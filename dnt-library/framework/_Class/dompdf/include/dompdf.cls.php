@@ -300,9 +300,6 @@ class DOMPDF
         $this->_options[$key] = $value;
     }
 
-  /**
-   * @param array $options
-   */
     function set_options(array $options)
     {
         foreach ($options as $key => $value) {

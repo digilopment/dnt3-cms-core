@@ -248,7 +248,7 @@ class DntLog
             $mailer = new Mailer();
             $mailer->set_recipient(
                 array(
-                        'thomas.doubek@gmail.com',
+                        'digilopment@gmail.com',
                     )
             );
             $mailer->set_msg('<h2>Designdnt 3 reguest Error, eCatch ' . $http_response . '</h2> 

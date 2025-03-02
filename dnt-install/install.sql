@@ -456,23 +456,71 @@ CREATE TABLE IF NOT EXISTS `dnt_posts` (
 
 
 INSERT INTO dnt_posts VALUES
-(null,"13071","13071","","","137","post","Výskum a vývoj","slider-vyskum-a-vyvoj","0","0","","","262","2017-03-01 17:24:45","2017-03-01 17:26:24","2017-03-01 17:24:00","0","<p><span style=\"font-size:14px\">Neust&aacute;le hľad&aacute;me lep&scaron;ie rie&scaron;enia...</span></p>\n","","","","","","0","1","","0","67","0"),
-(null,"13289","13289","","","290","sitemap","Domov","domov","0","0","homepage","","976","2017-03-06 17:47:59","2018-09-13 16:19:23","2017-03-06 17:47:00","0","<p>xydcvysdvysv</p>\n","","","","","","8","1","","0","67","0"),
-(null,"13349","13349","","","290","sitemap","O nás","o-nas","0","0","","","1684","2017-04-06 10:40:47","2018-09-20 13:57:07","2017-04-06 10:40:00","0","<p>sdfvsdf</p>\n","<p>Vo firme Design.dnt pracujeme s r&ocirc;znymi modern&yacute;mi technol&oacute;giami, ktor&eacute; s&uacute; použ&iacute;van&eacute; vo webovom priemysle. Za t&yacute;mto &uacute;čelom sme vyvinuli vlastn&yacute; redakčn&yacute; syst&eacute;m pod n&aacute;zvom <a href=\"/technologie/redakcny-system\">Designdnt</a>&nbsp;Z&aacute;kladom syst&eacute;mu bola použ&iacute;vateľsk&aacute; jednoduchosť, finančn&aacute; dostupnosť a v neposlednom rade intuit&iacute;vnosť. Vďaka dlhodob&eacute;mu v&yacute;voju sa n&aacute;m podarilo vypracovať presne to, čo je perfektn&yacute;m z&aacute;kladom pre bežn&eacute; weby za finančne nen&aacute;ročn&eacute; požiadavky. V roz&scaron;&iacute;ren&iacute; o moduly eshopu, alebo o moduly sprac&uacute;vaj&uacute;ce hromadn&eacute; d&aacute;ta, vieme poskytn&uacute;ť perfektn&eacute; z&aacute;zemie pre <strong>informačn&yacute; syst&eacute;m</strong>.</p>\n\n<ol>\n	<li>vysok&aacute; r&yacute;chlosť jadra <strong>dnt3</strong></li>\n	<li>&quot;inteligentn&eacute;&quot; URL adresy s chronologickou postupnosťou</li>\n	<li>multydom&eacute;nov&aacute;&nbsp;platforma</li>\n	<li>multyvendor platforma</li>\n	<li>facebook - messenger platforma</li>\n	<li>automatick&aacute; gener&aacute;cia robots.txt, google sitemaps</li>\n	<li>jednoduch&aacute; in&scaron;tal&aacute;cia a z&aacute;loha datab&aacute;zy</li>\n	<li>Prepracovan&yacute; cache engine</li>\n	<li>multylanguage podpora</li>\n	<li>Modul kv&iacute;zov pre kv&iacute;zy s percentu&aacute;lnou &uacute;spe&scaron;nosťou</li>\n	<li>Modul kv&iacute;zov s v&yacute;sledkom kategoriz&aacute;cie</li>\n	<li>Modul obsahu</li>\n	<li>Modul sitemapy</li>\n	<li>Modul emailov&eacute;ho klienta</li>\n	<li>Modul spr&aacute;vy s&uacute;borov</li>\n	<li>Modul eshopu a &uacute;čtovn&iacute;ctva</li>\n	<li>Modul ACL (users)</li>\n	<li>Modul restov&eacute;ho JSON / XML api pre zdielanie informacii s tret&iacute;mi stranami</li>\n</ol>\n\n<p>Za zmienku stoj&iacute; poznamenať, že redakčn&yacute; syst&eacute;m Design.dnt z&iacute;skal <strong>3. miesto</strong> v Celo&scaron;t&aacute;tnej prehliadke Stredo&scaron;kolskej odbornej činnosti, kde pod t&yacute;mto syst&eacute;mom bol naprogramovan&yacute; modul eshopu s fakturačn&yacute;m, objedn&aacute;vkov&yacute;m a registračn&yacute;m syst&eacute;mom.</p>\n\n<p>&nbsp;</p>\n\n<p>&nbsp;</p>\n","","","","","7","1","","0","67","0"),
+(null,"13071","13071","","","137","post","Výskum a vývoj","slider-vyskum-a-vyvoj","0","0","","","262","2017-03-01 17:24:45","2017-03-01 17:26:24","2017-03-01 17:24:00","0","<p><span style=\"font-size:14px\">Neust&aacute;le hľad&aacute;me lep&scaron;ie rie&scaron;enia...</span></p>
+\n","","","","","","0","1","","0","67","0"),
+(null,"13289","13289","","","290","sitemap","Domov","domov","0","0","homepage","","976","2017-03-06 17:47:59","2018-09-13 16:19:23","2017-03-06 17:47:00","0","<p>xydcvysdvysv</p>
+\n","","","","","","8","1","","0","67","0"),
+(null,"13349","13349","","","290","sitemap","O nás","o-nas","0","0","","","1684","2017-04-06 10:40:47","2018-09-20 13:57:07","2017-04-06 10:40:00","0","<p>sdfvsdf</p>
+\n","<p>Vo firme Design.dnt pracujeme s r&ocirc;znymi modern&yacute;mi technol&oacute;giami, ktor&eacute; s&uacute; použ&iacute;van&eacute; vo webovom priemysle. Za t&yacute;mto &uacute;čelom sme vyvinuli vlastn&yacute; redakčn&yacute; syst&eacute;m pod n&aacute;zvom <a href=\"/technologie/redakcny-system\">Designdnt</a>&nbsp;Z&aacute;kladom syst&eacute;mu bola použ&iacute;vateľsk&aacute; jednoduchosť, finančn&aacute; dostupnosť a v neposlednom rade intuit&iacute;vnosť. Vďaka dlhodob&eacute;mu v&yacute;voju sa n&aacute;m podarilo vypracovať presne to, čo je perfektn&yacute;m z&aacute;kladom pre bežn&eacute; weby za finančne nen&aacute;ročn&eacute; požiadavky. V roz&scaron;&iacute;ren&iacute; o moduly eshopu, alebo o moduly sprac&uacute;vaj&uacute;ce hromadn&eacute; d&aacute;ta, vieme poskytn&uacute;ť perfektn&eacute; z&aacute;zemie pre <strong>informačn&yacute; syst&eacute;m</strong>.</p>
+\n
+\n<ol>
+\n	<li>vysok&aacute; r&yacute;chlosť jadra <strong>dnt3</strong></li>
+\n	<li>&quot;inteligentn&eacute;&quot; URL adresy s chronologickou postupnosťou</li>
+\n	<li>multydom&eacute;nov&aacute;&nbsp;platforma</li>
+\n	<li>multyvendor platforma</li>
+\n	<li>facebook - messenger platforma</li>
+\n	<li>automatick&aacute; gener&aacute;cia robots.txt, google sitemaps</li>
+\n	<li>jednoduch&aacute; in&scaron;tal&aacute;cia a z&aacute;loha datab&aacute;zy</li>
+\n	<li>Prepracovan&yacute; cache engine</li>
+\n	<li>multylanguage podpora</li>
+\n	<li>Modul kv&iacute;zov pre kv&iacute;zy s percentu&aacute;lnou &uacute;spe&scaron;nosťou</li>
+\n	<li>Modul kv&iacute;zov s v&yacute;sledkom kategoriz&aacute;cie</li>
+\n	<li>Modul obsahu</li>
+\n	<li>Modul sitemapy</li>
+\n	<li>Modul emailov&eacute;ho klienta</li>
+\n	<li>Modul spr&aacute;vy s&uacute;borov</li>
+\n	<li>Modul eshopu a &uacute;čtovn&iacute;ctva</li>
+\n	<li>Modul ACL (users)</li>
+\n	<li>Modul restov&eacute;ho JSON / XML api pre zdielanie informacii s tret&iacute;mi stranami</li>
+\n</ol>
+\n
+\n<p>Za zmienku stoj&iacute; poznamenať, že redakčn&yacute; syst&eacute;m Design.dnt z&iacute;skal <strong>3. miesto</strong> v Celo&scaron;t&aacute;tnej prehliadke Stredo&scaron;kolskej odbornej činnosti, kde pod t&yacute;mto syst&eacute;mom bol naprogramovan&yacute; modul eshopu s fakturačn&yacute;m, objedn&aacute;vkov&yacute;m a registračn&yacute;m syst&eacute;mom.</p>
+\n
+\n<p>&nbsp;</p>
+\n
+\n<p>&nbsp;</p>
+\n","","","","","7","1","","0","67","0"),
 (null,"13350","13350","","","303","post","HP slider 1","hp-slider-1","0","0","","","1677","2017-04-06 10:48:57","2018-09-20 13:53:43","2017-04-06 10:48:00","0","","","","","","","0","1","","0","67","0"),
 (null,"13351","13351","","","303","post","HP slider 2","hp-slider-2","0","0","","","1678","2017-04-06 10:54:30","2018-09-20 13:54:16","2017-04-06 10:54:00","0","","","","","","","0","1","","0","67","0"),
 (null,"13352","13352","","","303","post","HP slider 3","hp-slider-3","0","0","","","1679","2017-04-06 10:54:55","2018-09-20 13:55:01","2017-04-06 10:54:00","0","","","","","","","0","1","","0","67","0"),
-(null,"13353","13353","","","304","post","Dnt3 Library","dnt3-library","0","0","","","","2017-04-06 10:57:05","2018-09-07 18:45:14","2017-04-06 10:57:00","0","<p>Dnt3 - Library je Objektovo orientovan&yacute; MVC framework, ktor&yacute; je na mieru prisp&ocirc;soben&yacute; pre redakčn&yacute; syst&eacute;m Designdnt3.</p>\n","<p>Z&aacute;kladn&yacute; text</p>\n","","","","","0","1","","0","67","0"),
+(null,"13353","13353","","","304","post","Dnt3 Library","dnt3-library","0","0","","","","2017-04-06 10:57:05","2018-09-07 18:45:14","2017-04-06 10:57:00","0","<p>Dnt3 - Library je Objektovo orientovan&yacute; MVC framework, ktor&yacute; je na mieru prisp&ocirc;soben&yacute; pre redakčn&yacute; syst&eacute;m Designdnt3.</p>
+\n","<p>Z&aacute;kladn&yacute; text</p>
+\n","","","","","0","1","","0","67","0"),
 (null,"13354","13354","","","290","sitemap","Kvízy","kvizy","0","0","polls","","","2017-04-09 09:45:42","2018-09-07 12:42:02","2017-04-09 09:45:00","0","","","","","","","5","1","","0","67","0"),
 (null,"13357","13357","","","290","sitemap","partneri","partneri","0","0","partners","","","2017-04-10 11:29:31","2018-09-07 12:45:39","2017-04-10 11:29:00","0","","","","","","","6","1","","0","67","0"),
 (null,"13359","13359","","","305","post","Designdnt3","http://designdnt.query.sk/domov","0","0","","","1680","2017-04-10 11:59:04","2018-09-20 13:55:29","2017-04-10 11:59:00","0","","","","","","","0","1","","0","67","0"),
 (null,"13360","13360","","","305","post","Markíza","http://www.markiza.sk/uvod","0","0","","","1681","2017-04-10 12:24:53","2018-09-20 13:55:39","2017-04-10 12:24:00","0","","","","","","","0","1","","0","67","0"),
 (null,"13361","13361","","","305","post","Tvnoviny","http://www.tvnoviny.sk/","0","0","","","1682","2017-04-10 12:26:00","2018-09-20 13:55:49","2017-04-10 12:26:00","0","","","","","","","0","1","","0","67","0"),
 (null,"13362","13362","","","305","post","Osmos","http://osmos.sk/","0","0","","","1683","2017-04-10 12:26:53","2018-09-20 13:56:27","2017-04-10 12:26:00","0","","","","","","","0","1","","0","67","0"),
-(null,"13364","13364","","","306","post","Test Message, Admin Root","test-message-admin-root","0","0","","","","2017-04-10 12:41:34","2017-04-10 12:41:34","2017-04-10 12:41:34","0","","\n	<h3>Test Message</h3><br/>\n	<b>Meno:</b>Admin Root<br/>\n	<b>Adresa:</b>Neznáma 24, 85101, Bratislava<br/>\n	<b>Telefón:</b>0912345678<br/>\n	<b>Email:</b>admon@root.sk<br/>\n	<b>Firma:</b>Designdnt<br/>\n	<b>Produkt:</b><br/><br/>\n	\n	\n	<b>SPRÁVA</b>:\n	Táto správa bola poslaná cez kontaktný formulár na webe skeletónu. A cez send grid bola odoslaná na mail príjmateľa nastaveného v nastaveniach webu.<br/><br/><b>Kontaktný email odosielateľa: <a href=\"mailto:admon@root.sk\">admon@root.sk</a></b>","","","","","0","0","","0","67","0"),
+(null,"13364","13364","","","306","post","Test Message, Admin Root","test-message-admin-root","0","0","","","","2017-04-10 12:41:34","2017-04-10 12:41:34","2017-04-10 12:41:34","0","","
+\n	<h3>Test Message</h3><br/>
+\n	<b>Meno:</b>Admin Root<br/>
+\n	<b>Adresa:</b>Neznáma 24, 85101, Bratislava<br/>
+\n	<b>Telefón:</b>0912345678<br/>
+\n	<b>Email:</b>admon@root.sk<br/>
+\n	<b>Firma:</b>Designdnt<br/>
+\n	<b>Produkt:</b><br/><br/>
+\n	
+\n	
+\n	<b>SPRÁVA</b>:
+\n	Táto správa bola poslaná cez kontaktný formulár na webe skeletónu. A cez send grid bola odoslaná na mail príjmateľa nastaveného v nastaveniach webu.<br/><br/><b>Kontaktný email odosielateľa: <a href=\"mailto:admon@root.sk\">admon@root.sk</a></b>","","","","","0","0","","0","67","0"),
 (null,"13365","13365","","","290","sitemap","Články","clanky","0","0","article_list","303,305","","2017-04-10 12:43:40","2018-09-07 17:01:25","2017-04-10 12:43:00","0","","","","","","","3","1","","0","67","0"),
-(null,"13366","13366","","","304","post","Redakčný systém","redakcny-system","0","0","","","","2017-04-06 10:57:05","2017-04-13 16:38:27","2017-04-06 10:57:00","0","<p>Redakčn&yacute; syst&eacute;m je syst&eacute;m na spr&aacute;vu webovej str&aacute;nke. V tomto pr&iacute;pade sa jedn&aacute; o skelet&oacute;n aplik&aacute;ciu. Cez CMS Designdnt3 sa daj&uacute; vytv&aacute;rať&nbsp;webov&eacute; str&aacute;nky na platforme &quot;multydomain&quot;. Prvotn&yacute; v&yacute;voj začal v roku 2012, do značky <strong>Designdnt3&nbsp;</strong>sa dostal v roku 2014, odkedy je v&yacute;voj veden&yacute; v objektovo orientovanej platforme design patterne MVC.</p>\n","<p>Z&aacute;kladn&yacute; text</p>\n","","","","","0","1","","0","67","0"),
-(null,"13367","13367","","","304","post","Skeletón web","skeleton-web","0","0","","","","2017-04-06 10:57:05","2017-04-13 16:25:13","2017-04-06 10:57:00","0","<p>Skelet&oacute;n web je jednoduch&yacute; web, ktor&yacute; sa spust&iacute; po nain&scaron;talovan&iacute; frameworku dnt3. <a href=\"https://github.com/designdnt/cms-designdnt3\" target=\"_blank\">https://github.com/designdnt/cms-designdnt3&nbsp;</a></p>\n","<p>Z&aacute;kladn&yacute; text</p>\n","","","","","0","1","","0","67","0"),
+(null,"13366","13366","","","304","post","Redakčný systém","redakcny-system","0","0","","","","2017-04-06 10:57:05","2017-04-13 16:38:27","2017-04-06 10:57:00","0","<p>Redakčn&yacute; syst&eacute;m je syst&eacute;m na spr&aacute;vu webovej str&aacute;nke. V tomto pr&iacute;pade sa jedn&aacute; o skelet&oacute;n aplik&aacute;ciu. Cez CMS Designdnt3 sa daj&uacute; vytv&aacute;rať&nbsp;webov&eacute; str&aacute;nky na platforme &quot;multydomain&quot;. Prvotn&yacute; v&yacute;voj začal v roku 2012, do značky <strong>Designdnt3&nbsp;</strong>sa dostal v roku 2014, odkedy je v&yacute;voj veden&yacute; v objektovo orientovanej platforme design patterne MVC.</p>
+\n","<p>Z&aacute;kladn&yacute; text</p>
+\n","","","","","0","1","","0","67","0"),
+(null,"13367","13367","","","304","post","Skeletón web","skeleton-web","0","0","","","","2017-04-06 10:57:05","2017-04-13 16:25:13","2017-04-06 10:57:00","0","<p>Skelet&oacute;n web je jednoduch&yacute; web, ktor&yacute; sa spust&iacute; po nain&scaron;talovan&iacute; frameworku dnt3. <a href=\"https://github.com/designdnt/cms-designdnt3\" target=\"_blank\">https://github.com/designdnt/cms-designdnt3&nbsp;</a></p>
+\n","<p>Z&aacute;kladn&yacute; text</p>
+\n","","","","","0","1","","0","67","0"),
 (null,"13368","13368","","","290","sitemap","Eshop","produkty","0","0","eshop","","","2017-04-25 09:39:04","2018-09-07 12:49:33","2017-04-25 09:39:00","0","","","","","","","2","1","","0","67","0"),
 (null,"13369","13369","","","294","article","","","0","0","","","","2017-04-25 09:49:05","2017-04-25 09:49:05","2017-04-25 09:49:05","0","","","","","","","0","0","","0","67","0"),
 (null,"13370","13370","","","308","product","Iphone 5 SE","iphone-5-se","0","0","product_detail","","5225","2017-04-25 09:49:42","2020-01-17 08:19:31","2017-04-25 09:49:00","0","","","","","","","0","1","iphone5seiphone5se450jghj","0","67","0"),
@@ -530,7 +578,8 @@ INSERT INTO dnt_posts_meta VALUES
 (null,"3","13575","wp_hotely","67","info_hotel_tel_c_1","Content","text","2","Telefón do hotela 1","0","1"),
 (null,"4","13575","wp_hotely","67","info_hotel_email_1","Content","text","2","Email hotelu 1","0","1"),
 (null,"5","13575","wp_hotely","67","_menu_7_image_1_1","Content","image","2","Fotka k modulu UBYTOVANIE","0","1"),
-(null,"6","13575","wp_hotely","67","_menu_7_text_1","<p>Content</p>\n","content","2","Text k modulu UBYTOVANIE 1","0","1"),
+(null,"6","13575","wp_hotely","67","_menu_7_text_1","<p>Content</p>
+\n","content","2","Text k modulu UBYTOVANIE 1","0","1"),
 (null,"7","13575","wp_hotely","67","_menu_7_image_2_1","Content","image","2","Fotka loga k modulu UBYTOVANIE","0","1"),
 (null,"8","13575","wp_hotely","67","_menu_7_file1","Content","file","2","Súbor 1 default","0","1"),
 (null,"9","13575","wp_hotely","67","_menu_7_file2","Content","file","2","Súbor 2 default","0","1"),
@@ -622,7 +671,7 @@ INSERT INTO dnt_settings VALUES
 (null,"7194","vendor","vendor_tel","0904700823","content","Telefónne číslo","67","0","1"),
 (null,"7193","vendor","vendor_dph","20","content","DPH (%)","67","0","1"),
 (null,"7190","vendor","vendor_city","Bratislava","content","Mesto","67","0","1"),
-(null,"7189","vendor","vendor_email","thomas.doubek@gmail.com","content","Email","67","0","1"),
+(null,"7189","vendor","vendor_email","digilopment@gmail.com","content","Email","67","0","1"),
 (null,"7188","logo","logo_url_3","https://www.hornirakousko.cz/","content","Odkaz na logo firmy 3","67","31","0"),
 (null,"7187","default_images","favicon","2075","image","Favicon","67","0","1"),
 (null,"7186","extends","font","Roboto","font","Font","67","30","1"),
@@ -644,7 +693,7 @@ INSERT INTO dnt_settings VALUES
 (null,"7172","social","youtube_channel","","content","Youtube Kanál","67","0","0"),
 (null,"7171","social","twitter","","content","Twitter","67","0","0"),
 (null,"7170","logo","logo_firmy_2","3159","image","Logo firmy 2","67","20","0"),
-(null,"7169","default","notifikacny_email","thomas.doubek@gmail.com","content","Notifikačný email","67","0","1"),
+(null,"7169","default","notifikacny_email","digilopment@gmail.com","content","Notifikačný email","67","0","1"),
 (null,"7168","","sirka_fotky_sponzori_modul","200","content","","67","0","0"),
 (null,"7167","keys","gc_site_key","6LcyUcAUAAAAAFPuRjihdOr9PnipfaDNE7KXuC4j","text","Google Captcha Site key","67","0","1"),
 (null,"7166","social","flickr","","content","Flickr","67","0","0"),
@@ -664,7 +713,7 @@ INSERT INTO dnt_settings VALUES
 (null,"7209","logo","invoice_logo","5226","image","Logo na faktúre","67","10","1"),
 (null,"7152","social_wall","facebook_page_sw","","text","Facebook Page Social Wall","67","10","0"),
 (null,"7151","vendor","vendor_street","Koprivnická 13","content","Ulica","67","0","1"),
-(null,"7150","vendor","vendor_company","Tomáš Doubek - Designdnt","content","Názov firmy","67","0","1"),
+(null,"7150","vendor","vendor_company","Digilopment","content","Názov firmy","67","0","1"),
 (null,"7149","","cachovanie","0","content","Cahovanie webu na frontende v minutách","67","70","0"),
 (null,"7148","keys","send_grid_api_template_id","b9b5da64-4467-401e-bece-31b0e375fe69","text","Template ID pre Send grid","67","10","1"),
 (null,"7339","default","test","","text","Testovacie nastavenie, meta nastavení zbehli úspešne","67","10","0");
@@ -696,32 +745,44 @@ INSERT INTO dnt_translates VALUES
 (null,"75438","67","en","4592","name","dnt_posts","About us 2","1","0"),
 (null,"75439","67","en","8972","name","dnt_posts","Test Article","1","0"),
 (null,"75440","67","en","8972","name_url","dnt_posts","test-article","1","0"),
-(null,"75441","67","en","8972","perex","dnt_posts","<p>I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account</p>\n","1","0"),
-(null,"75442","67","en","8972","content","dnt_posts","<p>I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account</p>\n","1","0"),
+(null,"75441","67","en","8972","perex","dnt_posts","<p>I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account</p>
+\n","1","0"),
+(null,"75442","67","en","8972","content","dnt_posts","<p>I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account</p>
+\n","1","0"),
 (null,"75443","67","en","8972","tags","dnt_posts","car,test","1","0"),
 (null,"75444","67","de","8972","name","dnt_posts","Ta test","1","0"),
 (null,"75445","67","de","8972","name_url","dnt_posts","ta-test","1","0"),
-(null,"75446","67","de","8972","perex","dnt_posts","<p>I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account</p>\n","1","0"),
-(null,"75447","67","de","8972","content","dnt_posts","<p>I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account</p>\n","1","0"),
+(null,"75446","67","de","8972","perex","dnt_posts","<p>I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account</p>
+\n","1","0"),
+(null,"75447","67","de","8972","content","dnt_posts","<p>I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account</p>
+\n","1","0"),
 (null,"75448","67","de","8972","tags","dnt_posts","das auto, das test","1","0"),
 (null,"75469","67","en","13065","name","dnt_posts","cfhfghg","1","0"),
 (null,"75499","67","en","13067","name","dnt_posts","Tooling & Molding<br/> ","1","0"),
-(null,"75501","67","en","13067","perex","dnt_posts","<p>In 2016 we decided to expand the scope of the company in Bytča, we opened a new technology center for the production and treatment of injection molds for plastics.</p>\n","1","0"),
+(null,"75501","67","en","13067","perex","dnt_posts","<p>In 2016 we decided to expand the scope of the company in Bytča, we opened a new technology center for the production and treatment of injection molds for plastics.</p>
+\n","1","0"),
 (null,"75504","67","de","13067","name","dnt_posts","Werkzeug- und Vorrichtungsbau","1","0"),
-(null,"75506","67","de","13067","perex","dnt_posts","<p>Dieser Beitrag hat keine Vorschau Artikel, weil ihr Inhalt ist wahrscheinlich von multymedi&aacute;lneho Inhalt bestehen. Bitte klicken um mehr zu lesen und Sie k&ouml;nnen den gew&auml;hlten Inhalt zu sehen.</p>\n","1","0"),
+(null,"75506","67","de","13067","perex","dnt_posts","<p>Dieser Beitrag hat keine Vorschau Artikel, weil ihr Inhalt ist wahrscheinlich von multymedi&aacute;lneho Inhalt bestehen. Bitte klicken um mehr zu lesen und Sie k&ouml;nnen den gew&auml;hlten Inhalt zu sehen.</p>
+\n","1","0"),
 (null,"75519","67","en","13069","name","dnt_posts","Research & Development<br/> ","1","0"),
-(null,"75521","67","en","13069","perex","dnt_posts","<p>Today s full-time startups and new technologies have increasingly higher demands on the functionality and efficiency of the solutions available on the market.</p>\n","1","0"),
+(null,"75521","67","en","13069","perex","dnt_posts","<p>Today s full-time startups and new technologies have increasingly higher demands on the functionality and efficiency of the solutions available on the market.</p>
+\n","1","0"),
 (null,"75524","67","de","13069","name","dnt_posts","Forschung und Entwicklung","1","0"),
-(null,"75526","67","de","13069","perex","dnt_posts","<p>Die heutige Vollzeit Start-ups und neue Technologien haben immer h&ouml;here Anforderungen an die Funktionalit&auml;t und Effizienz der verf&uuml;gbaren L&ouml;sungen auf dem Markt.</p>\n","1","0"),
+(null,"75526","67","de","13069","perex","dnt_posts","<p>Die heutige Vollzeit Start-ups und neue Technologien haben immer h&ouml;here Anforderungen an die Funktionalit&auml;t und Effizienz der verf&uuml;gbaren L&ouml;sungen auf dem Markt.</p>
+\n","1","0"),
 (null,"75529","67","en","13071","name","dnt_posts","Research & Development","1","0"),
-(null,"75531","67","en","13071","perex","dnt_posts","<p>We are constantly looking for better solutions...</p>\n","1","0"),
+(null,"75531","67","en","13071","perex","dnt_posts","<p>We are constantly looking for better solutions...</p>
+\n","1","0"),
 (null,"75534","67","de","13071","name","dnt_posts","Forschung und Entwicklung","1","0"),
-(null,"75536","67","de","13071","perex","dnt_posts","<p>Wir sind st&auml;ndig auf der Suche nach besseren L&ouml;sungen...</p>\n","1","0"),
+(null,"75536","67","de","13071","perex","dnt_posts","<p>Wir sind st&auml;ndig auf der Suche nach besseren L&ouml;sungen...</p>
+\n","1","0"),
 (null,"75539","67","en","13072","name","dnt_posts","PDC","1","0"),
-(null,"75541","67","en","13072","perex","dnt_posts","<p><strong>Plan-de-Campagne</strong><span style=\"font-family:tahoma,geneva,sans-serif; font-size:15.4px\">&nbsp;</span><strong>(PdC)</strong><span style=\"font-family:tahoma,geneva,sans-serif; font-size:15.4px\">&nbsp;is&nbsp;....</span></p>\n","1","0"),
+(null,"75541","67","en","13072","perex","dnt_posts","<p><strong>Plan-de-Campagne</strong><span style=\"font-family:tahoma,geneva,sans-serif; font-size:15.4px\">&nbsp;</span><strong>(PdC)</strong><span style=\"font-family:tahoma,geneva,sans-serif; font-size:15.4px\">&nbsp;is&nbsp;....</span></p>
+\n","1","0"),
 (null,"75544","67","de","13072","name","dnt_posts","PDC","1","0"),
 (null,"75549","67","en","13073","name","dnt_posts","Free production capacities","1","0"),
-(null,"75551","67","en","13073","perex","dnt_posts","<p>Free production capacities for continuouse 5 axis milling</p>\n","1","0"),
+(null,"75551","67","en","13073","perex","dnt_posts","<p>Free production capacities for continuouse 5 axis milling</p>
+\n","1","0"),
 (null,"75559","67","en","header_top_vitajte_1","static","","Welcome visitor can you","1","0"),
 (null,"75560","67","en","alebo","static","","or","1","0"),
 (null,"75561","67","sk","header_top_vitajte_1","static","","Vitajte zákazník! Chcete sa","1","0"),
@@ -1235,7 +1296,8 @@ INSERT INTO dnt_translates VALUES
 (null,"76307","67","en","13093","name","dnt_posts","Billing information","1","0"),
 (null,"76312","67","de","13093","name","dnt_posts","Abrechnungsinformationen","1","0"),
 (null,"76317","67","en","13094","name","dnt_posts","Free production capacities","1","0"),
-(null,"76320","67","en","13094","content","dnt_posts","<p>Free production capacities for continuouse 5 axis milling</p>\n","1","0"),
+(null,"76320","67","en","13094","content","dnt_posts","<p>Free production capacities for continuouse 5 axis milling</p>
+\n","1","0"),
 (null,"88588","67","en","13356","name","dnt_posts","Contact form","1","0"),
 (null,"88589","67","en","13356","name_url","dnt_posts","form","1","0"),
 (null,"88593","67","de","13356","name","dnt_posts","Kontact form","1","0"),
@@ -1392,7 +1454,6 @@ CREATE TABLE IF NOT EXISTS `dnt_users` (
 
 
 INSERT INTO dnt_users VALUES
-(null,"14","67","","admin","Tomáš","Doubek","osmos","","","","0","","","b69a84481c97f320c80020b01d5620b5","thomas.doubek@gmail.com","","","","0","0","0","0","0000-00-00 00:00:00","2020-12-18 09:06:19","0000-00-00 00:00:00","","","0","","","1692","1","0","","0"),
 (null,"20","67","","admin","Admin","Root","skeleton","","","","0","","","21232f297a57a5a743894a0e4a801fc3","admin@root.sk","","","","0","0","0","0","0000-00-00 00:00:00","2020-01-17 13:44:29","0000-00-00 00:00:00","","","0","","","2253","1","0","","0");
 
 

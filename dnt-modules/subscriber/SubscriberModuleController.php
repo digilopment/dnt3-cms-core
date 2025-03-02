@@ -43,7 +43,7 @@ class SubscriberModuleController
     {
         if ($this->rest->get('test') == 1) {
             $id_entity = 46899;
-            $email = 'thomas.doubek@gmail.com';
+            $email = 'digilopment@gmail.com';
             $unSubscribeUrl = $this->subscriber->generateUrl($id_entity, $email, 0);
 
             echo 'zrusit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $unSubscribeUrl;

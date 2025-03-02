@@ -17,11 +17,11 @@ class SendGridTest
     {
 
         $data = [
-            'to' => 'thomas.doubek@gmail.com',
-            'toName' => 'Tomáš Doubek',
-            'from' => 'newsletter@mailer.service.com',
-            'fromName' => 'Markiza Mail',
-            'subject' => 'Voyo TEST',
+            'to' => 'digilopment@gmail.com',
+            'toName' => 'Digilopment',
+            'from' => 'digilopment@gmail.com',
+            'fromName' => 'Digilopment Mail',
+            'subject' => 'Digilopment TEST',
             'message' => file_get_contents('https://www.newsletter.coloria.sk/voyo/'),
             'attachements' => [
                 '710944582_result.pdf' => 'data/710944582_result.pdf',

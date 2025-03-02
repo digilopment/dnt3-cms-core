@@ -1279,7 +1279,7 @@ class Dnt
         }
         return $string;
     }
-    
+
     public function render($template)
     {
         ob_start();

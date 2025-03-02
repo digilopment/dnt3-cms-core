@@ -12,23 +12,23 @@ class SendGridV3Test
         $YOUR_API_KEY = SEND_GRID_API_KEY;
         $params = [
             'from' => [
-                'email' => 'newsletter@markiza' . time() . '.sk',
-                'name' => 'TV Markíza',
+                'email' => 'digilopment@gmail.com',
+                'name' => 'Digilopment',
             ],
-            'subject' => 'Voyo Novinky ' . time(),
+            'subject' => 'Digilopment Novinky ' . time(),
             'template_id' => $SEND_GRID_API_TEMPLATE_ID,
             'content' => [
                 [
                     'type' => 'text/html',
-                    'value' => file_get_contents('https://www.newsletter.coloria.sk/voyo/'),
+                    'value' => '<html><body><h2>it Works</h2></body></html>',
                 ],
             ],
             'personalizations' => [
                 [
                     'to' => [
                         [
-                            'email' => 'thomas.doubek@gmail.com',
-                            'name' => 'Tomáš Doubek',
+                            'email' => 'digilopment@gmail.com',
+                            'name' => 'Digilopment',
                         ],
                     ],
                     'send_at' => time(),
