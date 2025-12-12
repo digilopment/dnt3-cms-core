@@ -20,6 +20,8 @@ class Subscriber
 
     protected $settings;
 
+    protected $vendor;
+
     public function __construct()
     {
         $this->db = new DB();

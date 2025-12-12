@@ -20,6 +20,8 @@ class Pdf
 
     protected $stream;
 
+    protected $dnt;
+
     public $file;
 
     public $url;

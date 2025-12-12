@@ -34,6 +34,10 @@ class InvoicesController extends AdminController
 
     protected $pdf;
 
+    protected $db;
+
+    protected $vendor;
+
     public function __construct()
     {
         (new Autoloader())->addClass($this->loc, 'Invoices');
@@ -217,6 +221,7 @@ class InvoicesController extends AdminController
             $orders[] = array_merge($extendedData, $order);
         }
         $data['orders'] = $orders;
+        $data['dnt'] = $this->dnt;
         $this->loadTemplate($this->loc, 'default', $data);
     }
 }

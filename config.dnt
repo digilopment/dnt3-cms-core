@@ -9,7 +9,7 @@
 define( 'DB_HOST', 'mysql' ); 	// set database host
 define( 'DB_USER', 'root' ); 		// set database user
 define( 'DB_PASS', 'root' );                // set database password
-define( 'DB_NAME', 'dnt3_win' ); 		// set database name
+define( 'DB_NAME', 'dnt3' ); 		// set database name
 
 /* 
  *
@@ -32,7 +32,7 @@ if (!isset($_SERVER['SERVER_NAME'])) {
  ************* APPLICATION SETTING ********************************************************************************
  *
 */
-define( 'WWW_FOLDERS', "/dnt3-winprizes" ); //YOUR APPLICATION FOLDER. IF APPLICATION IS IN ROOT FOLDER PLEASE SET as define( 'WWW_FOLDERS', "" );
+define( 'WWW_FOLDERS', "/dnt3" ); //YOUR APPLICATION FOLDER. IF APPLICATION IS IN ROOT FOLDER PLEASE SET as define( 'WWW_FOLDERS', "" );
 define( 'DEAFULT_MODUL', 'default' ); // set system default modul
 define( 'DEFAULT_MODUL_ADMIN', 'settings' ); // set dnt-admin default modul
 

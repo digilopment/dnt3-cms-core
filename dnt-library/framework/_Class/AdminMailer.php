@@ -17,6 +17,14 @@ use DntLibrary\Base\Vendor;
 
 class AdminMailer
 {
+    protected $adminContent;
+
+    protected $db;
+
+    protected $dnt;
+
+    protected $vendor;
+
     public function __construct()
     {
         $this->adminContent = new AdminContent();

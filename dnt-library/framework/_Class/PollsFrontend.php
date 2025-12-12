@@ -18,6 +18,8 @@ use DntLibrary\Base\Vendor;
 
 class PollsFrontend extends Polls
 {
+    protected $cookie;
+
     public function __construct()
     {
         parent::__construct();

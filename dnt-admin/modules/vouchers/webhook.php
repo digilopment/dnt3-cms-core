@@ -4,6 +4,8 @@ use DntLibrary\Base\DB;
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Rest;
 use DntLibrary\Base\Sessions;
+use DntLibrary\Base\Vendor;
+use DntLibrary\Base\Xlsx;
 
 $rest = new Rest();
 $session = new Sessions();

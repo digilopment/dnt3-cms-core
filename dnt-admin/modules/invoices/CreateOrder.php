@@ -17,6 +17,8 @@ class CreateOrder
 
     protected $data;
 
+    protected $vendor;
+
     protected $tableName = 'dnt_orders';
 
     public function __construct($data = false)

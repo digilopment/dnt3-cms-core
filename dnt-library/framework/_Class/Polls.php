@@ -17,6 +17,14 @@ use DntLibrary\Base\Vendor;
 
 class Polls
 {
+    protected $db;
+
+    protected $dnt;
+
+    protected $vendor;
+
+    protected $rest;
+
     public function __construct()
     {
         $this->db = new DB();

@@ -4,6 +4,7 @@ use DntLibrary\Base\Dnt;
 
 get_top();
 get_top_html();
+$dnt = $data['dnt'];
 ?>
 <section class="col-xs-12" style="margin-bottom:15px">
     <a href="index.php?src=invoices">
@@ -54,7 +55,7 @@ get_top_html();
                                     <td> 
                                         <a title="Editovať objednávku" href="index.php?src=invoices&action=edit&id_entity=<?php echo $row['id_entity'] ?>"><i class="fa fa-pencil bg-blue action"></i></a>
                                         <a title="Vystaviť faktúru" href="index.php?src=invoices&action=print&id_entity=<?php echo $row['id_entity'] ?>"><i class="fa fa-file-o bg-green action"></i></a>
-                                        <a title="Vymazať objednávku" <?php echo Dnt::confirmMsg('Naozaj chcete vymazať túto objednávku? Operáciu už nebude možné vrátiť späť'); ?> href="index.php?src=invoices&action=del&id_entity=<?php echo $row['id_entity'] ?>"><i class="fa fa-trash bg-red action"></i></a> </td>
+                                        <a title="Vymazať objednávku" <?php echo $dnt->confirmMsg('Naozaj chcete vymazať túto objednávku? Operáciu už nebude možné vrátiť späť'); ?> href="index.php?src=invoices&action=del&id_entity=<?php echo $row['id_entity'] ?>"><i class="fa fa-trash bg-red action"></i></a> </td>
                                 </tr>
                             <?php } ?>
                         </tbody>

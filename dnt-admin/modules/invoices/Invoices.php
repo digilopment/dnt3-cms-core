@@ -16,6 +16,10 @@ class Invoices
 
     protected $rest;
 
+    protected $dnt;
+
+    protected $vendor;
+
     public function __construct()
     {
         $this->db = new DB();

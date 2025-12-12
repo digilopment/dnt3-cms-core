@@ -44,6 +44,8 @@ class MailerController extends AdminController
 
     protected $settings;
 
+    protected $post;
+
     public function __construct()
     {
         parent::__construct();
