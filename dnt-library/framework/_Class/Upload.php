@@ -484,6 +484,7 @@ class Upload
      * @var double
      */
     var $file_max_size;
+    var $file_max_size_raw;
 
     /**
      * Set this variable to true to resize the file if it is an image

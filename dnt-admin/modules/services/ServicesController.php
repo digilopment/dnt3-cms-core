@@ -17,24 +17,22 @@ use DntLibrary\Base\Vendor;
 
 class ServicesController extends AdminController
 {
-    protected $loc = __FILE__;
-
-    protected $rest;
-
-    protected $image;
-
-    protected $adminContent;
-
-    protected $dnt;
-
-    protected $articleView;
-
-    protected $db;
-
-    protected $dntUpload;
+    protected string $loc = __FILE__;
+    protected Rest $rest;
+    protected Image $image;
+    protected AdminContent $adminContent;
+    protected Dnt $dnt;
+    protected ArticleView $articleView;
+    protected DB $db;
+    protected DntUpload $dntUpload;
+    protected PostVariants $postVariants;
+    protected Post $post;
+    protected PostMeta $postMeta;
+    protected Vendor $vendor;
 
     public function __construct()
     {
+        parent::__construct();
         $this->rest = new Rest();
         $this->image = new Image();
         $this->adminContent = new AdminContent();
