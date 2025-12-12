@@ -17,6 +17,11 @@ use DntLibrary\Base\Sessions;
 
 class Url
 {
+    protected DB $db;
+    protected Dnt $dnt;
+    protected MultyLanguage $multiLanguage;
+    protected Sessions $sessions;
+
     public function __construct()
     {
         $this->db = new DB();

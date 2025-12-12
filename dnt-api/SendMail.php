@@ -2,102 +2,88 @@
 
 namespace DntApi;
 
-use DntLibrary\Base\Rest;
+use DntLibrary\App\SendGrid;
 
-class SendMailApi
+class SendMailApi extends BaseApiController
 {
-    protected $dnt;
+    protected string $fromEmail = '';
+    protected string $fromName = '';
+    protected string $toEmail = '';
+    protected string $subject = '';
+    protected string $content = '';
 
-    public function __construct()
+    /**
+     * Prepare email data from request
+     */
+    protected function prepare(): void
     {
-        $this->rest = new Rest();
+        $this->fromEmail = urldecode($this->rest->get('fromEmail') ?: '');
+        $this->fromName = urldecode($this->rest->get('fromName') ?: '');
+        $this->toEmail = urldecode($this->rest->get('toEmail') ?: '');
+        $this->subject = urldecode($this->rest->get('subject') ?: '');
     }
 
-    public function pripare()
+    /**
+     * Generate email content
+     */
+    protected function generateContent(string $confirmUrl): void
     {
-        if ($this->rest->get('fromEmail')) {
-            $this->fromEmail = urldecode($this->rest->get('fromEmail'));
-        }
-        if ($this->rest->get('fromName')) {
-            $this->fromName = urldecode($this->rest->get('fromName'));
-        }
-        if ($this->rest->get('toEmail')) {
-            $this->toEmail = urldecode($this->rest->get('toEmail'));
-        }
-        if ($this->rest->get('subject')) {
-            $this->subject = urldecode($this->rest->get('subject'));
-        }
+        $this->content = '<html><body><h2>Confirm data</h2><p><a href="' . htmlspecialchars($confirmUrl) . '">Confirm</a></p></body></html>';
     }
 
-    public function content($confirmUrl)
+    /**
+     * Send email via SendGrid
+     */
+    protected function sendViaSendGrid(string $toEmail, string $subject, string $content, string $fromEmail = '', string $fromName = ''): array
     {
-        $this->content = '<html><body><h2>Confirm data</h2></body></html>';
+        if (!defined('SEND_GRID_API_KEY') || empty(SEND_GRID_API_KEY)) {
+            return ['success' => false, 'error' => 'SendGrid API key not configured'];
+        }
+
+        $sendGrid = new SendGrid();
+        return $sendGrid->send([
+            'to' => $toEmail,
+            'from' => $fromEmail ?: (defined('SEND_EMAIL_FROM') ? SEND_EMAIL_FROM : ''),
+            'from_name' => $fromName ?: (defined('SEND_EMAIL_FROM_NAME') ? SEND_EMAIL_FROM_NAME : ''),
+            'subject' => $subject,
+            'content' => $content,
+        ]);
     }
 
-    public function run()
+    /**
+     * Main run method
+     */
+    public function run(): void
     {
-        $domain = $this->rest->get('confirmUrl');
-        $confirmUrl = $domain . '?signature=' . $this->rest->get('signature') . '&time_signature=' . $this->rest->get('time_signature') . '&round_id=' . $this->rest->get('round_id');
-       
-        $this->pripare();
-        $this->content($confirmUrl);
+        $this->prepare();
 
-        $SEND_GRID_API_TEMPLATE_ID = SEND_GRID_API_TEMPLATE_ID;
-        $YOUR_API_KEY = SEND_GRID_API_KEY;
-        $params = [
-            'from' => [
-                'email' => $this->fromEmail,
-                'name' => $this->fromName,
-            ],
+        // Validate required fields
+        if (!$this->validateRequired(['toEmail', 'subject'], [
+            'toEmail' => $this->toEmail,
             'subject' => $this->subject,
-            'template_id' => $SEND_GRID_API_TEMPLATE_ID,
-            'content' => [
-                [
-                    'type' => 'text/html',
-                    'value' => $this->content,
-                ],
-            ],
-            'personalizations' => [
-                [
-                    'to' => [
-                        [
-                            'email' => $this->toEmail,
-                        ],
-                    ],
-                    'send_at' => time(),
-                ],
-            ],
-            'tracking_settings' => [
-                'click_tracking' => [
-                    'enable' => false,
-                    'enable_text' => false,
-                ],
-                'click_tracking' => [
-                    'enable' => false,
-                    'enable_text' => false,
-                ],
-            ],
-        ];
-
-        $data = json_encode($params);
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://api.sendgrid.com/v3/mail/send');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
-        $headers = array();
-        $headers[] = 'Authorization: Bearer ' . $YOUR_API_KEY;
-        $headers[] = 'Content-Type: application/json';
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-        $result = curl_exec($ch);
-        if (curl_errno($ch)) {
-            echo 'Error:' . curl_error($ch);
+        ])) {
+            return;
         }
-        var_dump($result);
-        curl_close($ch);
+
+        $domain = $this->rest->get('confirmUrl') ?: '';
+        $confirmUrl = $domain . '?signature=' . urlencode($this->rest->get('signature') ?: '') 
+            . '&time_signature=' . urlencode($this->rest->get('time_signature') ?: '') 
+            . '&round_id=' . urlencode($this->rest->get('round_id') ?: '');
+       
+        $this->generateContent($confirmUrl);
+
+        $result = $this->sendViaSendGrid(
+            $this->toEmail,
+            $this->subject,
+            $this->content,
+            $this->fromEmail,
+            $this->fromName
+        );
+
+        if ($result['success']) {
+            $this->successResponse(['message_id' => $result['message_id'] ?? null], 'Email sent successfully');
+        } else {
+            $this->errorResponse($result['error'] ?? 'Failed to send email', 500);
+        }
     }
 }

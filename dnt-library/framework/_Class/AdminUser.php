@@ -19,6 +19,12 @@ use DntLibrary\Base\XMLgenerator;
 
 class AdminUser extends Image
 {
+    protected Dnt $dnt;
+    protected Sessions $sessions;
+    protected Vendor $vendor;
+    protected XMLgenerator $xml;
+    protected DB $db;
+
     public function __construct()
     {
         $this->dnt = new Dnt();
@@ -28,45 +34,68 @@ class AdminUser extends Image
         $this->db = new DB();
     }
 
-    public function validProcessLogin($type, $email, $pass)
+    /**
+     * @param string $type
+     * @param string $email
+     * @param string $pass
+     * @return bool
+     */
+    public function validProcessLogin(string $type, string $email, string $pass): bool
     {
-        $query = "SELECT pass FROM dnt_users WHERE type = '$type' AND email = '" . $email . "' AND vendor_id = '" . $this->vendor->getId() . "'";
-        if ($this->db->num_rows($query) > 0) {
-            foreach ($this->db->get_results($query) as $row) {
-                $db_pass = $row['pass'];
-            }
-            if ($db_pass == md5($pass)) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
+        if (empty($type) || empty($email) || empty($pass)) {
             return false;
         }
+
+        $emailEscaped = $this->db->escape($email);
+        $typeEscaped = $this->db->escape($type);
+        $vendorId = $this->vendor->getId();
+        
+        $query = "SELECT pass FROM dnt_users WHERE type = '" . $typeEscaped . "' AND email = '" . $emailEscaped . "' AND vendor_id = '" . $vendorId . "' LIMIT 1";
+        
+        $db_pass = null;
+        if ($this->db->num_rows($query) > 0) {
+            $results = $this->db->get_results($query);
+            if (!empty($results)) {
+                $db_pass = $results[0]['pass'] ?? null;
+            }
+        }
+        
+        if ($db_pass !== null && $db_pass === md5($pass)) {
+            return true;
+        }
+        
+        return false;
     }
 
-    public function updateDatetime($vendor_id, $email)
+    /**
+     * @param int $vendor_id
+     * @param string $email
+     * @return bool
+     */
+    public function updateDatetime(int $vendor_id, string $email): bool
     {
-        $this->db->update(
-            'dnt_users', //table
-            array(//set
-                    'datetime_update' => $this->dnt->datetime(),
-                ),
-            array(//where
-            'vendor_id' => $vendor_id,
-            'email' => $email,
-                )
+        return $this->db->update(
+            'dnt_users',
+            [
+                'datetime_update' => $this->dnt->datetime(),
+            ],
+            [
+                'vendor_id' => $vendor_id,
+                'email' => $this->db->escape($email),
+            ]
         );
     }
 
-    public function emailExists($email, $vendor_id)
+    /**
+     * @param string $email
+     * @param int $vendor_id
+     * @return bool
+     */
+    public function emailExists(string $email, int $vendor_id): bool
     {
-        $query = "SELECT email FROM dnt_users WHERE email = '" . $email . "' AND vendor_id = '" . $vendor_id . "'";
-        if ($this->db->num_rows($query) > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        $emailEscaped = $this->db->escape($email);
+        $query = "SELECT email FROM dnt_users WHERE email = '" . $emailEscaped . "' AND vendor_id = '" . $vendor_id . "' LIMIT 1";
+        return $this->db->num_rows($query) > 0;
     }
 
     public function updatePassword($vendor_id, $email, $pass)

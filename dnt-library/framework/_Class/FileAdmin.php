@@ -17,6 +17,11 @@ use DntLibrary\Base\Vendor;
 
 class FileAdmin
 {
+    protected DB $db;
+    protected Dnt $dnt;
+    protected AdminContent $adminContent;
+    protected Vendor $vendor;
+
     public function __construct()
     {
         $this->db = new DB();

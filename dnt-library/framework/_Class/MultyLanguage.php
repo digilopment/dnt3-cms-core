@@ -19,6 +19,11 @@ class MultyLanguage
 {
     public $countActiveLangs = false;
 
+    protected DB $db;
+    protected Dnt $dnt;
+    protected Rest $rest;
+    protected Vendor $vendor;
+
     public function __construct()
     {
         $this->db = new DB();

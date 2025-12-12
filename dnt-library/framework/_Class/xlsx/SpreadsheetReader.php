@@ -206,7 +206,8 @@ class SpreadsheetReader implements SeekableIterator, Countable
      * Rewind the Iterator to the first element.
      * Similar to the reset() function for arrays in PHP
      */
-    public function rewind()
+    #[\ReturnTypeWillChange]
+    public function rewind(): void
     {
         $this -> Index = 0;
         if ($this -> Handle) {
@@ -220,7 +221,8 @@ class SpreadsheetReader implements SeekableIterator, Countable
      *
      * @return mixed current element from the collection
      */
-    public function current()
+    #[\ReturnTypeWillChange]
+    public function current(): mixed
     {
         if ($this -> Handle) {
             return $this -> Handle -> current();
@@ -232,14 +234,13 @@ class SpreadsheetReader implements SeekableIterator, Countable
      * Move forward to next element.
      * Similar to the next() function for arrays in PHP
      */
-    public function next()
+    #[\ReturnTypeWillChange]
+    public function next(): void
     {
         if ($this -> Handle) {
             $this -> Index++;
-
-            return $this -> Handle -> next();
+            $this -> Handle -> next();
         }
-        return null;
     }
 
     /**
@@ -248,7 +249,8 @@ class SpreadsheetReader implements SeekableIterator, Countable
      *
      * @return mixed either an integer or a string
      */
-    public function key()
+    #[\ReturnTypeWillChange]
+    public function key(): mixed
     {
         if ($this -> Handle) {
             return $this -> Handle -> key();
@@ -262,7 +264,8 @@ class SpreadsheetReader implements SeekableIterator, Countable
      *
      * @return boolean FALSE if there's nothing more to iterate over
      */
-    public function valid()
+    #[\ReturnTypeWillChange]
+    public function valid(): bool
     {
         if ($this -> Handle) {
             return $this -> Handle -> valid();
@@ -271,7 +274,8 @@ class SpreadsheetReader implements SeekableIterator, Countable
     }
 
     // !Countable interface method
-    public function count()
+    #[\ReturnTypeWillChange]
+    public function count(): int
     {
         if ($this -> Handle) {
             return $this -> Handle -> count();
@@ -285,7 +289,8 @@ class SpreadsheetReader implements SeekableIterator, Countable
      *
      * @param int Position in file
      */
-    public function seek($Position)
+    #[\ReturnTypeWillChange]
+    public function seek(int $offset): void
     {
         if (!$this -> Handle) {
             throw new OutOfBoundsException('SpreadsheetReader: No file opened');
@@ -293,20 +298,18 @@ class SpreadsheetReader implements SeekableIterator, Countable
 
         $CurrentIndex = $this -> Handle -> key();
 
-        if ($CurrentIndex != $Position) {
-            if ($Position < $CurrentIndex || is_null($CurrentIndex) || $Position == 0) {
+        if ($CurrentIndex != $offset) {
+            if ($offset < $CurrentIndex || is_null($CurrentIndex) || $offset == 0) {
                 $this -> rewind();
             }
 
-            while ($this -> Handle -> valid() && ($Position > $this -> Handle -> key())) {
+            while ($this -> Handle -> valid() && ($offset > $this -> Handle -> key())) {
                 $this -> Handle -> next();
             }
 
             if (!$this -> Handle -> valid()) {
-                throw new OutOfBoundsException('SpreadsheetError: Position ' . $Position . ' not found');
+                throw new OutOfBoundsException('SpreadsheetError: Position ' . $offset . ' not found');
             }
         }
-
-        return null;
     }
 }

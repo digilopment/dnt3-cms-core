@@ -2,44 +2,25 @@
 
 namespace DntAdmin\Moduls;
 
-use DntAdmin\App\AdminController;
+use DntAdmin\App\BaseAdminController;
+use DntAdmin\App\Traits\CrudTrait;
 use DntLibrary\App\Categories;
-use DntLibrary\App\Post;
-use DntLibrary\Base\AdminContent;
-use DntLibrary\Base\DB;
-use DntLibrary\Base\Dnt;
-use DntLibrary\Base\Rest;
-use DntLibrary\Base\Vendor;
 
-class CategoriesController extends AdminController
+class CategoriesController extends BaseAdminController
 {
-    protected $loc = __FILE__;
+    use CrudTrait;
 
-    protected $categories;
-
-    protected $rest;
-
-    protected $vendor;
-
-    protected $db;
-
-    protected $dnt;
-
-    protected $posts;
-
-    protected $adminContent;
+    protected string $loc = __FILE__;
+    protected string $namespace = __NAMESPACE__;
+    
+    protected Categories $categories;
 
     public function __construct()
     {
+        parent::__construct();
         $this->categories = new Categories();
-        $this->rest = new Rest();
-        $this->db = new DB();
-        $this->vendor = new Vendor();
-        $this->dnt = new Dnt();
-        $this->posts = new Post();
-        $this->adminContent = new AdminContent();
         $this->categories->init();
-        $this->posts->init();
+        $this->post->init();
     }
 
     protected function postFilter()
@@ -75,83 +56,77 @@ class CategoriesController extends AdminController
         return $final;
     }
 
-    public function indexAction()
+    public function indexAction(): void
     {
         $this->categories->init();
 
-        $data['root_categories'] = $this->categories->getRoot();
-        $data['children_test'] = $this->categories->getChildren(1);
-        $data['children_test_all'] = $this->categories->getChildren(1, true);
-
-        $data['hasChild'] = function ($parentId) {
-            return $this->categories->hasChild($parentId) ? true : false;
-        };
-        $data['getChildren'] = function ($parentId) {
-            return $this->categories->getChildren($parentId);
-        };
-        $data['getElement'] = function ($id) {
-            return $this->categories->getElement($id);
-        };
-
-        $data['primaryCat'] = $this->adminContent->primaryCat();
-
-        $data['getPosts'] = $this->postFilter();
-        $data['dnt'] = $this->dnt;
+        $data = array_merge($this->getCommonData(), [
+            'root_categories' => $this->categories->getRoot(),
+            'children_test' => $this->categories->getChildren(1),
+            'children_test_all' => $this->categories->getChildren(1, true),
+            'hasChild' => function ($parentId) {
+                return $this->categories->hasChild($parentId);
+            },
+            'getChildren' => function ($parentId) {
+                return $this->categories->getChildren($parentId);
+            },
+            'getElement' => function ($id) {
+                return $this->categories->getElement($id);
+            },
+            'primaryCat' => $this->adminContent->primaryCat(),
+            'getPosts' => $this->postFilter(),
+        ]);
 
         $this->loadTemplate($this->loc, 'default', $data);
     }
 
-    public function editNameAction()
+    public function editNameAction(): void
     {
         $id = $this->rest->get('id');
-        $name = urldecode($this->rest->get('name'));
+        $name = urldecode($this->rest->get('name') ?: '');
         $nameUrl = $this->dnt->name_url($name);
 
-        $this->db->update(
+        $this->genericUpdate(
             'dnt_posts_categories',
+            $id,
             [
-                    'name' => $name,
-                    'name_url' => $nameUrl,
-                ],
-            [
-                    'id_entity' => $id,
-                    '`vendor_id`' => $this->vendor->getId(),
-                ]
+                'name' => $name,
+                'name_url' => $nameUrl,
+            ]
         );
-        $redirect = WWW_PATH_ADMIN_2 . 'index.php?src=categories';
-        $this->dnt->redirect($redirect);
+        
+        $this->dnt->redirect($this->getRedirectUrl('categories'));
     }
 
-    public function addCatAction()
+    public function addCatAction(): void
     {
-        $charIndex = $this->rest->get('charindex');
-        $name = urldecode($this->rest->get('name'));
+        $charIndex = $this->rest->get('charindex') ?: '';
+        $name = urldecode($this->rest->get('name') ?: '');
         $nameUrl = $this->dnt->name_url($name);
 
-        $insertedData = array(
-            'vendor_id' => $this->vendor->getId(),
-            'post_id' => 0,
-            'type' => '',
-            'name' => $name,
-            'name_url' => $nameUrl,
-            '`show`' => '1',
-        );
-
-        $this->db->dbTransaction();
-        $this->db->insert('dnt_posts_categories', $insertedData);
-        $this->db->dbcommit();
-        $lastId = $this->dnt->getLastId('dnt_posts_categories');
-        $newCharIndex = str_replace('-E', '-' . $lastId . '-E', $charIndex);
-        $this->db->update(
+        $this->genericAdd(
             'dnt_posts_categories',
-            ['char_index' => $newCharIndex],
             [
-                    'id_entity' => $lastId,
-                    '`vendor_id`' => $this->vendor->getId(),
-                ]
+                'post_id' => 0,
+                'type' => '',
+                'name' => $name,
+                'name_url' => $nameUrl,
+                '`show`' => '1',
+            ],
+            null,
+            function ($lastId, $insertedData) use ($charIndex) {
+                $newCharIndex = str_replace('-E', '-' . $lastId . '-E', $charIndex);
+                $this->db->update(
+                    'dnt_posts_categories',
+                    ['char_index' => $newCharIndex],
+                    [
+                        'id_entity' => $lastId,
+                        '`vendor_id`' => $this->vendor->getId(),
+                    ]
+                );
+                $this->dnt->redirect($this->getRedirectUrl('categories'));
+            }
         );
-        $redirect = WWW_PATH_ADMIN_2 . 'index.php?src=categories';
-        $this->dnt->redirect($redirect);
     }
 
     public function removeTreeAction()
@@ -362,19 +337,31 @@ class CategoriesController extends AdminController
         $this->dnt->redirect();
     }
 
-    public function removeCatAction()
+    public function removeCatAction(): void
     {
         $id = $this->rest->get('id');
-        if ($this->categories->hasChild($id)) {
-            echo 'Nie je možné odstraniť kategóriu, pretože obsahuje ďalšie podkategórie';
-        } elseif ($this->categories->hasPosts($id)) {
-            echo 'Kategória, ktorú sa snažíte odstrániť obsahuje priradené posty';
-        } else {
-            $where = array('id_entity' => $id, 'vendor_id' => $this->vendor->getId());
-            $this->db->delete('dnt_posts_categories', $where);
-            $redirect = WWW_PATH_ADMIN_2 . 'index.php?src=categories';
-            $this->dnt->redirect($redirect);
-        }
+        
+        $this->genericDelete(
+            'dnt_posts_categories',
+            $id,
+            [],
+            function ($id, $where) {
+                if ($this->categories->hasChild($id)) {
+                    echo 'Nie je možné odstraniť kategóriu, pretože obsahuje ďalšie podkategórie';
+                    return false;
+                }
+                if ($this->categories->hasPosts($id)) {
+                    echo 'Kategória, ktorú sa snažíte odstrániť obsahuje priradené posty';
+                    return false;
+                }
+                return true;
+            },
+            function ($id, $result) {
+                if ($result) {
+                    $this->dnt->redirect($this->getRedirectUrl('categories'));
+                }
+            }
+        );
     }
 
     public function savePostsToCatAction()

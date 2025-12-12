@@ -22,8 +22,19 @@ use DntLibrary\Base\Webhook;
 
 class ArticleView extends AdminContent
 {
+    protected DB $db;
+    protected Settings $settings;
+    protected Rest $rest;
+    protected MultyLanguage $multiLanguage;
+    protected Vendor $vendor;
+    protected Url $url;
+    protected Image $image;
+    protected Dnt $dnt;
+    protected Webhook $webhook;
+
     public function __construct()
     {
+        parent::__construct();
         $this->db = new DB();
         $this->settings = new Settings();
         $this->rest = new Rest();

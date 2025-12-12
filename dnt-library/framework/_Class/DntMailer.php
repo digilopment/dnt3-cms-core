@@ -29,6 +29,8 @@ class Mailer
     public $subject; //string
 
     public $response;
+    protected Dnt $dnt;
+    protected Settings $settings;
 
     /**
      *

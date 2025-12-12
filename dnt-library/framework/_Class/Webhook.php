@@ -17,6 +17,8 @@ use function modulesConfig;
 
 class Webhook
 {
+    protected Vendor $vendor;
+
     public function __construct()
     {
         $this->vendor = new Vendor();

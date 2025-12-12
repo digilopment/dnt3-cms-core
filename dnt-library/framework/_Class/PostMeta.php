@@ -17,6 +17,9 @@ use function defaultModuleMetaDataConfiguration;
 
 class PostMeta
 {
+    protected DB $db;
+    protected Vendor $vendor;
+
     public function __construct()
     {
         $this->db = new DB();

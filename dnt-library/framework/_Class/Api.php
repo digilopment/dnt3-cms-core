@@ -18,6 +18,8 @@ class Api
 {
     protected $columns;
 
+    protected Vendor $vendor;
+
     public function __construct()
     {
         $this->vendor = new Vendor();

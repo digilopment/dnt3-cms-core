@@ -20,6 +20,13 @@ use DntLibrary\Base\Vendor;
 
 class User extends Image
 {
+    protected DB $db;
+    protected Dnt $dnt;
+    protected Vendor $vendor;
+    protected Rest $rest;
+    protected Api $api;
+    protected DntUpload $dntUpload;
+
     public function __construct()
     {
         parent::__construct();

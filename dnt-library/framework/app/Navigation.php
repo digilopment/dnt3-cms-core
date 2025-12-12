@@ -7,7 +7,9 @@ use DntLibrary\Base\Vendor;
 
 class Navigation
 {
-    protected $posts = [];
+    protected array $posts = [];
+    protected DB $db;
+    protected Vendor $vendor;
 
     public function __construct()
     {

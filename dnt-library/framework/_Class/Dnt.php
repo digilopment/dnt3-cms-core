@@ -17,6 +17,9 @@ use DntLibrary\Base\Vendor;
 
 class Dnt
 {
+    protected DB $db;
+    protected Vendor $vendor;
+
     public function __construct()
     {
         $this->db = new DB();
@@ -25,68 +28,63 @@ class Dnt
 
     /**
      *
-     * @param type $table
-     * @return boolean
+     * @param string $table
+     * @param int|false $vendor_id
+     * @return int|false
      */
-    public function getLastId($table, $vendor_id = false)
+    public function getLastId(string $table, $vendor_id = false)
     {
-
+        $return = false;
         if ($vendor_id) {
-            $query = 'SELECT MAX(id) FROM ' . $table . ' WHERE vendor_id = ' . $vendor_id . '';
+            $query = 'SELECT MAX(id) FROM ' . $table . ' WHERE vendor_id = ' . (int)$vendor_id . '';
         } else {
             $query = 'SELECT MAX(id) FROM ' . $table . ' WHERE vendor_id = ' . $this->vendor->getId() . '';
         }
 
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
-                $return = $row['MAX(id)'];
+                $return = (int)$row['MAX(id)'];
             }
-        } else {
-            $return = false;
         }
         return $return;
     }
 
     /**
      *
-     * @param type $table
-     * @param type $column
-     * @param type $vendor_id
-     * @return boolean
+     * @param string $table
+     * @param string $column
+     * @param bool $vendor_id
+     * @return mixed|false
      */
-    public function getMaxValueFromColumn($table, $column, $vendor_id = true)
+    public function getMaxValueFromColumn(string $table, string $column, bool $vendor_id = true)
     {
-
+        $return = false;
         if ($vendor_id) {
-            $query = "SELECT MAX($column) FROM " . $table . " WHERE vendor_id = '" . $this->vendor->getId() . "'";
+            $query = "SELECT MAX(`" . $this->db->escape($column) . "`) FROM `" . $this->db->escape($table) . "` WHERE vendor_id = '" . $this->vendor->getId() . "'";
         } else {
-            $query = "SELECT MAX($column) FROM " . $table;
+            $query = "SELECT MAX(`" . $this->db->escape($column) . "`) FROM `" . $this->db->escape($table) . "`";
         }
 
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
-                $return = $row["MAX($column)"];
+                $return = $row["MAX(`" . $column . "`)"];
             }
-        } else {
-            $return = false;
         }
         return $return;
     }
 
     /**
      *
-     * @return boolean
+     * @return int|false
      */
     public function getLastIdVendor()
     {
-
+        $return = false;
         $query = 'SELECT MAX(id) FROM dnt_vendors ';
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
-                $return = $row['MAX(id)'];
+                $return = (int)$row['MAX(id)'];
             }
-        } else {
-            $return = false;
         }
         return $return;
     }
@@ -626,12 +624,17 @@ class Dnt
      *
      * @param type $presmeruj_url
      */
-    public function redirect($presmeruj_url = false)
+    public function redirect($presmeruj_url = false): void
     {
         if ($presmeruj_url) {
             $redirect = $presmeruj_url;
         } else {
             $redirect = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '/';
+        }
+
+        // Ensure session is saved before redirect
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_write_close();
         }
 
         if (!headers_sent()) {
@@ -662,17 +665,24 @@ class Dnt
      * @param type $str
      * @return type
      */
+    /**
+     * @param string|array $str
+     * @return string|array
+     */
     public function safe($str)
     {
         if (is_array($str)) {
-            return array_map(__METHOD__, $str);
+            return array_map([$this, 'safe'], $str);
         }
 
         if (!empty($str) && is_string($str)) {
+            if (isset($GLOBALS['DATABASE']) && $GLOBALS['DATABASE'] instanceof \mysqli) {
+                return $GLOBALS['DATABASE']->real_escape_string($str);
+            }
             return str_replace(array('\\', "\0", "\n", "\r", "'", '"', "\x1a"), array('\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'), $str);
         }
 
-        return $str = mysql_real_escape_string($str);
+        return $str;
     }
 
     /**

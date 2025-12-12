@@ -15,6 +15,9 @@ use DntLibrary\Base\Dnt;
 
 class XMLgenerator
 {
+    protected DB $db;
+    protected Dnt $dnt;
+
     public function __construct()
     {
         $this->db = new DB();

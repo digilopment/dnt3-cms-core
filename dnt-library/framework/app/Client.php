@@ -54,23 +54,23 @@ class Client extends Database
 
     public $rpc;
 
-    protected function url()
+    protected function url(): void
     {
-        $hosts = explode('.', @$_SERVER['HTTP_HOST']);
-        $host = $hosts[0];
+        $hosts = explode('.', $_SERVER['HTTP_HOST'] ?? '');
+        $host = $hosts[0] ?? '';
 
-        if ($host == 'www') {
+        if ($host === 'www' && isset($hosts[1])) {
             $this->url = $hosts[1];
-        } elseif ($host == @$_SERVER['HTTP_HOST']) { //ak nie je subdomena, tak vrati false
+        } elseif ($host === ($_SERVER['HTTP_HOST'] ?? '')) { //ak nie je subdomena, tak vrati false
             $this->url = false;
         } else {
-            $this->url = $host;
+            $this->url = $host ?: false;
         }
     }
 
-    protected function isIncluded($pharse, $str)
+    protected function isIncluded(string $pharse, string $str): bool
     {
-        return preg_match('/' . $pharse . '/', $str);
+        return (bool)preg_match('/' . preg_quote($pharse, '/') . '/', $str);
     }
 
     protected function clients()
@@ -104,12 +104,15 @@ class Client extends Database
         return false;
     }
 
-    protected function id()
+    protected function id(): void
     {
         $hasMatch = 0;
         foreach ($this->clients as $client) {
             if ($client->real_url) {
                 $realUrlNp = explode('://', $client->real_url);
+                if (!isset($realUrlNp[1])) {
+                    continue;
+                }
                 $realUrlNp = $realUrlNp[1];
                 if ((str_replace('/', '', $this->domainNP . $this->urlHooks(0)) == str_replace('/', '', $realUrlNp) ||
                         str_replace('/', '', 'www.' . $this->domainNP . $this->urlHooks(0)) == str_replace('/', '', $realUrlNp)) &&
@@ -127,6 +130,9 @@ class Client extends Database
         foreach ($this->clients as $client) {
             if ($client->real_url) {
                 $realUrlNp = explode('://', $client->real_url);
+                if (!isset($realUrlNp[1])) {
+                    continue;
+                }
                 $realUrlNp = $realUrlNp[1];
 
                 if ((str_replace('/', '', $this->domainNP) == str_replace('/', '', $realUrlNp) ||
@@ -152,27 +158,41 @@ class Client extends Database
         }
     }
 
-    protected function rootDomainParser()
+    protected function rootDomainParser(): void
     {
         if ($this->isIncluded('www.', WWW_PATH)) {
             $this->domainWww = 'www';
         }
 
-        $data = str_replace('www.', '', WWW_PATH);
         $data = WWW_PATH;
         $data = explode('://', $data);
-        $ORIGIN_PROTOCOL = '' . $data[0] . '://';
+        $ORIGIN_PROTOCOL = (isset($data[0]) ? $data[0] : 'http') . '://';
+        
+        if (!isset($data[1])) {
+            $this->domainNP = '';
+            $this->originProtocol = $ORIGIN_PROTOCOL;
+            $this->request = '';
+            $this->requestNoParam = '';
+            $this->requestNoLang = '';
+            return;
+        }
+        
         $data = explode('/', $data[1]);
-        $ORIGIN_DOMAIN = HTTP_PROTOCOL . $data[0] . '' . WWW_FOLDERS . '';
-        $ORIGIN_DOMAIN_NP = $data[0] . '' . WWW_FOLDERS . '';
+        $ORIGIN_DOMAIN = HTTP_PROTOCOL . ($data[0] ?? '') . '' . WWW_FOLDERS . '';
+        $ORIGIN_DOMAIN_NP = ($data[0] ?? '') . '' . WWW_FOLDERS . '';
 
         $this->domainNP = $ORIGIN_DOMAIN_NP;
         $this->originProtocol = $ORIGIN_PROTOCOL;
-        $this->request = explode($this->domainNP, WWW_FULL_PATH) [1];
-        $this->requestNoParam = explode('?', $this->request) [0];
+        
+        $requestParts = explode($this->domainNP, WWW_FULL_PATH);
+        $this->request = $requestParts[1] ?? '';
+        
+        $requestNoParamParts = explode('?', $this->request);
+        $this->requestNoParam = $requestNoParamParts[0] ?? '';
 
         if ($this->urlLang()) {
-            $this->requestNoLang = explode('/' . $this->urlLang(), $this->requestNoParam) [1];
+            $requestNoLangParts = explode('/' . $this->urlLang(), $this->requestNoParam);
+            $this->requestNoLang = $requestNoLangParts[1] ?? $this->requestNoParam;
         } else {
             $this->requestNoLang = $this->requestNoParam;
         }
@@ -200,7 +220,7 @@ public function route($index)
         }
     }
 
-    protected function domainParser($dbDomain)
+    protected function domainParser(string $dbDomain): array
     {
         $www = false;
         $protocol = false;
@@ -213,10 +233,14 @@ public function route($index)
             $protocol = $data[0] . '://';
         }
 
-        $dataLng = explode('/', $data[1]);
-        $lng = $dataLng[count($dataLng) - 1];
-        if (strlen($lng) == 2) {
-            $lang = $lng;
+        if (isset($data[1])) {
+            $dataLng = explode('/', $data[1]);
+            if (!empty($dataLng)) {
+                $lng = $dataLng[count($dataLng) - 1];
+                if (strlen($lng) == 2) {
+                    $lang = $lng;
+                }
+            }
         }
 
         if ($this->isIncluded(str_replace('/', '~', WWW_FOLDERS), str_replace('/', '~', $dbDomain))) {
@@ -226,10 +250,10 @@ public function route($index)
         if (isset($data[1])) {
             $domain = $data[1];
             $domain = str_replace('www.', '', $domain);
-            $domain = explode('/', $domain);
-            $domain = $domain[0];
+            $domainParts = explode('/', $domain);
+            $domain = $domainParts[0] ?? '';
 
-            if ($www_folders) {
+            if ($www_folders && $domain) {
                 $domain = $domain . '' . $www_folders;
             }
         }
@@ -238,28 +262,31 @@ public function route($index)
             $www = 'www';
         }
 
-        return array(
+        return [
             'www' => $www,
             'protocol' => $protocol,
             'domain' => $domain,
             'www_folders' => $www_folders,
             'lang' => $lang,
-        );
+        ];
     }
 
-    protected function redirect($domain)
+    protected function redirect(string $domain): void
     {
-        header("Location: $domain");
+        if (!headers_sent()) {
+            header("Location: $domain");
+            exit;
+        }
     }
 
-    public function urlLang()
+    public function urlLang(): string|false
     {
-        $urlLang = explode('/', ltrim($this->request, '/')) [0];
+        $parts = explode('/', ltrim($this->request ?? '', '/'));
+        $urlLang = $parts[0] ?? '';
         if (strlen($urlLang) == 2) {
             return $urlLang;
-        } else {
-            return false;
         }
+        return false;
     }
 
     protected function rpc()

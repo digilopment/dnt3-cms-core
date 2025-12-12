@@ -14,17 +14,15 @@ use DntLibrary\Base\Vendor;
 
 class UpdateContent
 {
-    protected $rest;
-
-    protected $cache;
-
-    protected $articleView;
-
-    protected $db;
-
-    protected $multiLanguage;
-
-    protected $dntUpload;
+    protected Rest $rest;
+    protected Cache $cache;
+    protected ArticleView $articleView;
+    protected ArticleList $articleList;
+    protected DB $db;
+    protected MultyLanguage $multiLanguage;
+    protected DntUpload $dntUpload;
+    protected Dnt $dnt;
+    protected Vendor $vendor;
 
     public function __construct()
     {

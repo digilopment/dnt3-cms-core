@@ -19,6 +19,13 @@ use DntLibrary\Base\Vendor;
 
 class Voucher
 {
+    protected DB $db;
+    protected Frontend $frontend;
+    protected Dnt $dnt;
+    protected Mailer $mailer;
+    protected User $user;
+    protected Vendor $vendor;
+
     public function __construct()
     {
         $this->db = new DB();

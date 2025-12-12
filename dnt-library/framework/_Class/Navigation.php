@@ -16,6 +16,10 @@ use DntLibrary\Base\Vendor;
 
 class Navigation
 {
+    protected DB $db;
+    protected Vendor $vendor;
+    protected AdminContent $adminContent;
+
     public function __construct()
     {
         $this->db = new DB();

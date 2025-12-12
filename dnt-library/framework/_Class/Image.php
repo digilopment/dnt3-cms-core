@@ -16,11 +16,15 @@ use DntLibrary\Base\Vendor;
 
 class Image
 {
-
     const THUMB = 150;
     const SMALL = 350;
     const MEDIUM = 600;
     const LARGE = 950;
+
+    protected DB $db;
+    protected Dnt $dnt;
+    protected Vendor $vendor;
+    protected Settings $settings;
 
     public function __construct()
     {

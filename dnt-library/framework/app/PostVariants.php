@@ -18,6 +18,13 @@ use DntLibrary\Base\Vendor;
 
 class PostVariants
 {
+    protected Rest $rest;
+    protected DB $db;
+    protected Vendor $vendor;
+    protected Post $post;
+    protected PostMeta $postMeta;
+    protected Dnt $dnt;
+
     public function __construct()
     {
         $this->rest = new Rest();

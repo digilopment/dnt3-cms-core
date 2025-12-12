@@ -15,22 +15,19 @@ use DntLibrary\Base\Webhook;
 
 class SettingsController extends AdminController
 {
-    protected $loc = __FILE__;
-
-    protected $db;
-
-    protected $rest;
-
-    protected $restdntUpload;
-
-    protected $settings;
-
-    protected $vendor;
-
-    protected $dnt;
+    protected string $loc = __FILE__;
+    protected DB $db;
+    protected Rest $rest;
+    protected ?Rest $restdntUpload = null;
+    protected Settings $settings;
+    protected Vendor $vendor;
+    protected Dnt $dnt;
+    protected DntUpload $dntUpload;
+    protected Cache $cache;
 
     public function __construct()
     {
+        parent::__construct();
         $this->db = new DB();
         $this->rest = new Rest();
         $this->dntUpload = new DntUpload();

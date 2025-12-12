@@ -37,25 +37,25 @@ class Vendor
 
     /**
      * new method
-     * @return boolean
+     * @param string $url
+     * @return string|false
      */
-    public function getProtocolFromUrl($url)
+    public function getProtocolFromUrl(string $url)
     {
         $tmp = explode('//', $url);
-        $tmp = $tmp[0];
-        if ($tmp == 'http:' || 'https:') {
-            return $tmp . '//';
-        } else {
-            return false;
+        $protocol = $tmp[0] ?? '';
+        if ($protocol === 'http:' || $protocol === 'https:') {
+            return $protocol . '//';
         }
+        return false;
     }
 
     /**
      *
-     * @param type $url
-     * @return boolean
+     * @param string $url
+     * @return string|false
      */
-    public function getDomainFromUrl($url)
+    public function getDomainFromUrl(string $url)
     {
         $tmp = explode('://', $url);
         if (isset($tmp[1])) {
@@ -67,41 +67,49 @@ class Vendor
 
     /**
      *
-     * @return boolean
+     * @return int
      */
-    public static function getId()
+    public static function getId(): int
     {
-        if ($GLOBALS['VENDOR_ID']) {
-            return $GLOBALS['VENDOR_ID'];
-        } else {
-            $GLOBALS['VENDOR_ID'] = 0;
-            return $GLOBALS['VENDOR_ID'];
+        if (isset($GLOBALS['VENDOR_ID']) && $GLOBALS['VENDOR_ID']) {
+            return (int)$GLOBALS['VENDOR_ID'];
         }
+        $GLOBALS['VENDOR_ID'] = 0;
+        return 0;
     }
 
     /**
      *
-     * @return boolean
+     * @return string|false
      */
     public static function getLayout()
     {
-        if ($GLOBALS['VENDOR_LAYOUT']) {
+        if (isset($GLOBALS['VENDOR_LAYOUT']) && $GLOBALS['VENDOR_LAYOUT']) {
             return $GLOBALS['VENDOR_LAYOUT'];
         }
+        return false;
     }
 
     /**
      *
-     * @return type
+     * @return array
      */
-    public function getLayouts()
+    public function getLayouts(): array
     {
-        $layouts = array();
-        $files = scandir('../dnt-view/layouts/');
+        $layouts = [];
+        $dir = '../dnt-view/layouts/';
+        if (!is_dir($dir)) {
+            return $layouts;
+        }
+        $files = scandir($dir);
+        if ($files === false) {
+            return $layouts;
+        }
         foreach ($files as $file) {
-            if ($file == '.' || $file == '..') {
+            if ($file === '.' || $file === '..') {
                 continue;
-            } else {
+            }
+            if (is_dir($dir . $file)) {
                 $layouts[] = $file;
             }
         }
@@ -111,9 +119,9 @@ class Vendor
 
     /**
      *
-     * @return type
+     * @return array
      */
-    public function getAll()
+    public function getAll(): array
     {
         $db = new DB();
 
@@ -121,28 +129,27 @@ class Vendor
 
         if ($db->num_rows($query) > 0) {
             return $db->get_results($query);
-        } else {
-            return array();
         }
+        return [];
     }
 
     /**
      *
-     * @param type $column
-     * @return boolean
+     * @param string $column
+     * @return mixed|false
      */
-    public function getColumn($column)
+    public function getColumn(string $column)
     {
         $db = new DB();
-        $query = 'SELECT `' . $column . "` FROM `dnt_vendors` WHERE 
+        $query = 'SELECT `' . $db->escape($column) . "` FROM `dnt_vendors` WHERE 
 			`id_entity` = '" . $this->getId() . "'
 			";
+        $return = false;
         if ($db->num_rows($query) > 0) {
-            foreach ($db->get_results($query) as $row) {
-                $return = $row[$column];
+            $results = $db->get_results($query);
+            if (!empty($results)) {
+                $return = $results[0][$column] ?? false;
             }
-        } else {
-            $return = false;
         }
 
         return $return;

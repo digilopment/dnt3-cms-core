@@ -16,6 +16,10 @@ use mysqli;
 
 class Install
 {
+    protected mysqli $dbMysqli;
+    protected DB $db;
+    protected Dnt $dnt;
+
     public function __construct()
     {
         $this->dbMysqli = new mysqli(DB_HOST, DB_USER, DB_PASS);

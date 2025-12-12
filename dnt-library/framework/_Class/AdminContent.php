@@ -16,8 +16,14 @@ use DntLibrary\Base\Vendor;
  */
 class AdminContent extends MultyLanguage
 {
+    protected MultyLanguage $multiLanguage;
+    protected DB $db;
+    protected Dnt $dnt;
+    protected Vendor $vendor;
+
     public function __construct()
     {
+        parent::__construct();
         $this->multiLanguage = new MultyLanguage();
         $this->db = new DB();
         $this->dnt = new Dnt();

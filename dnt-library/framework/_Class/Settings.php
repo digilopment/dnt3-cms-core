@@ -20,6 +20,9 @@ use function websettings;
  */
 class Settings
 {
+    protected DB $db;
+    protected Vendor $vendor;
+
     public function __construct()
     {
         $this->db = new DB();
@@ -28,19 +31,19 @@ class Settings
 
     /**
      *
-     * @param type $key
-     * @return boolean
+     * @param string $key
+     * @return mixed|false
      */
-    public function get($key)
+    public function get(string $key)
     {
-        $query = "SELECT value FROM dnt_settings WHERE `key` = '" . $key . "' AND `vendor_id` = '" . $this->vendor->getId() . "'";
+        $query = "SELECT value FROM dnt_settings WHERE `key` = '" . $this->db->escape($key) . "' AND `vendor_id` = '" . $this->vendor->getId() . "'";
         if ($this->db->num_rows($query) > 0) {
-            foreach ($this->db->get_results($query) as $row) {
-                return $row['value'];
+            $results = $this->db->get_results($query);
+            if (!empty($results)) {
+                return $results[0]['value'];
             }
-        } else {
-            return false;
         }
+        return false;
     }
 
     public function getGlobals()
@@ -79,17 +82,13 @@ class Settings
 
     /**
      *
-     * @param type $key
-     * @return boolean
+     * @param string $key
+     * @return bool
      */
-    public function show($key)
+    public function show(string $key): bool
     {
-        $query = "SELECT * FROM dnt_settings WHERE `key` = '" . $key . "' AND `vendor_id` = '" . $this->vendor->getId() . "' AND `show` = '1'";
-        if ($this->db->num_rows($query) > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        $query = "SELECT * FROM dnt_settings WHERE `key` = '" . $this->db->escape($key) . "' AND `vendor_id` = '" . $this->vendor->getId() . "' AND `show` = '1'";
+        return $this->db->num_rows($query) > 0;
     }
 
     /**
@@ -113,38 +112,38 @@ class Settings
 
     /**
      *
-     * @return type
+     * @return array
      */
-    public function getMetaData()
+    public function getMetaData(): array
     {
         $query = "SELECT * FROM dnt_settings WHERE `type` = 'custom' AND `vendor_id` = '" . $this->vendor->getId() . "'";
+        $arr = [];
 
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
                 $arr['keys'][$row['key']]['show'] = $row['show'];
                 $arr['keys'][$row['key']]['value'] = $row['value'];
             }
-            return $arr;
         }
-        return array();
+        return $arr;
     }
 
     /**
      *
-     * @return type
+     * @return array
      */
-    public function getAllSettings()
+    public function getAllSettings(): array
     {
         $query = "SELECT * FROM dnt_settings WHERE `vendor_id` = '" . $this->vendor->getId() . "'";
+        $arr = [];
 
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
                 $arr['keys'][$row['key']]['show'] = $row['show'];
                 $arr['keys'][$row['key']]['value'] = $row['value'];
             }
-            return $arr;
         }
-        return array();
+        return $arr;
     }
 
     /**

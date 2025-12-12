@@ -16,26 +16,29 @@ use DntLibrary\Base\Vendor;
 
 class Post extends Client
 {
-    public $postsModel = array();
+    public array $postsModel = [];
+    public array $postsNavigation = [];
+    public array $postsSubNavigation = [];
 
-    public $postsNavigation = array();
-
-    public $postsSubNavigation = array();
-
-    protected $rest;
-
-    protected $db;
-
-    protected $vendor;
+    protected Rest $rest;
+    protected DB $db;
+    protected Vendor $vendor;
 
     public function __construct()
     {
+        parent::__construct();
         $this->rest = new Rest();
         $this->db = new DB();
         $this->vendor = new Vendor();
     }
 
-    protected function order($data, $column = 'id', $sort = 'ASC')
+    /**
+     * @param array $data
+     * @param string $column
+     * @param string $sort
+     * @return array
+     */
+    protected function order(array $data, string $column = 'id', string $sort = 'ASC'): array
     {
         $sortArray = array();
         foreach ($data as $item) {
@@ -61,7 +64,7 @@ class Post extends Client
         return $data;
     }
 
-    protected function postsModel()
+    protected function postsModel(): void
     {
         $query = "SELECT * FROM `dnt_posts` WHERE vendor_id = '" . $this->vendor->getId() . "'";
         if ($this->db->num_rows($query) > 0) {
@@ -69,30 +72,35 @@ class Post extends Client
         }
     }
 
-    protected function postsNavigation()
+    protected function postsNavigation(): void
     {
         foreach ($this->postsModel as $model) {
             if ($model->type == 'sitemap' && ($model->show >= 1 && $model->show <= 2) && $model->sub_cat_id == '') {
                 $this->postsNavigation[] = $model;
             }
         }
-        if ($this->postsNavigation) {
+        if (!empty($this->postsNavigation)) {
             $this->postsNavigation = $this->order($this->postsNavigation, 'order', 'desc');
         }
     }
 
-    protected function postsSubNavigation()
+    protected function postsSubNavigation(): void
     {
         foreach ($this->postsModel as $model) {
             if ($model->type == 'sitemap' && ($model->show >= 1 && $model->show <= 2) && $model->sub_cat_id != '') {
                 $this->postsSubNavigation[] = $model;
             }
         }
-        if ($this->postsSubNavigation) {
+        if (!empty($this->postsSubNavigation)) {
             $this->postsSubNavigation = $this->order($this->postsSubNavigation, 'order', 'desc');
         }
     }
 
+    /**
+     * @param string|int $nameUrlOrId
+     * @param string|false $service
+     * @return object|false
+     */
     public function getPost($nameUrlOrId, $service = false)
     {
 

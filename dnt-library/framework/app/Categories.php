@@ -8,15 +8,12 @@ use DntLibrary\Base\Vendor;
 
 class Categories
 {
-    protected $db;
+    protected DB $db;
+    protected Vendor $vendor;
+    protected Dnt $dnt;
 
-    protected $vendor;
-
-    protected $dnt;
-
-    public $allCategories = [];
-
-    protected $tempParentTree = [];
+    public array $allCategories = [];
+    protected array $tempParentTree = [];
 
     public function __construct()
     {
@@ -25,39 +22,53 @@ class Categories
         $this->vendor = new Vendor();
     }
 
-    protected function getAll($vendor_id)
+    /**
+     * @param int|false $vendor_id
+     * @return void
+     */
+    protected function getAll($vendor_id = false): void
     {
-        $vendorId = ($vendor_id) ? $vendor_id : $this->vendor->getId();
+        $vendorId = ($vendor_id) ? (int)$vendor_id : $this->vendor->getId();
         $query = 'SELECT * FROM dnt_posts_categories WHERE vendor_id = ' . $vendorId . ' order by `order` DESC, `id_entity` ASC';
         if ($this->db->num_rows($query) > 0) {
             $this->allCategories = $this->db->get_results($query);
         }
     }
 
-    public function getRoot()
+    /**
+     * @return array
+     */
+    public function getRoot(): array
     {
         $sub = [];
         foreach ($this->allCategories as $category) {
-            if (preg_match('/B-\d+-E/', $category['char_index'])) {
+            if (preg_match('/B-\d+-E/', $category['char_index'] ?? '')) {
                 $sub[] = $category;
             }
         }
         return $sub;
     }
 
-    public function getParentCharIndex($parentId)
+    /**
+     * @param int $parentId
+     * @return string|false
+     */
+    public function getParentCharIndex(int $parentId)
     {
         foreach ($this->allCategories as $category) {
-            if (preg_match('/' . $parentId . '-E/', $category['char_index'])) {
+            if (preg_match('/' . $parentId . '-E/', $category['char_index'] ?? '')) {
                 return $category['char_index'];
             }
         }
         return false;
     }
 
-    public function getElement($id)
+    /**
+     * @param int $id
+     * @return array|false
+     */
+    public function getElement(int $id)
     {
-
         foreach ($this->allCategories as $category) {
             if ($id == $category['id_entity']) {
                 return $category;
@@ -66,15 +77,21 @@ class Categories
         return false;
     }
 
-    public function getParentElement($id)
+    /**
+     * @param int $id
+     * @return array|false
+     */
+    public function getParentElement(int $id)
     {
-
         foreach ($this->allCategories as $category) {
             if ($id == $category['id_entity']) {
-                $charIndex = $category['char_index'];
-                $temp = (explode('-', explode('-' . $id, $charIndex)[0]));
-                $parentId = (int) end($temp);
-                return $this->getElement($parentId);
+                $charIndex = $category['char_index'] ?? '';
+                $parts = explode('-' . $id, $charIndex);
+                if (isset($parts[0])) {
+                    $temp = explode('-', $parts[0]);
+                    $parentId = (int) end($temp);
+                    return $this->getElement($parentId);
+                }
             }
         }
         return false;

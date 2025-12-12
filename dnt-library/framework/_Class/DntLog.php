@@ -20,6 +20,10 @@ use DntLibrary\Base\XMLgenerator;
 class DntLog
 {
     public $results;
+    protected DB $db;
+    protected Dnt $dnt;
+    protected Vendor $vendor;
+    protected Sessions $sessions;
 
     public function __construct()
     {

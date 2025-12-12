@@ -19,6 +19,13 @@ use DntLibrary\Base\Vendor;
 
 class Frontend
 {
+    protected ArticleView $article;
+    protected Settings $settings;
+    protected Rest $rest;
+    protected AppNavigation $navigation;
+    protected MultyLanguage $multiLanguage;
+    protected Vendor $vendor;
+
     public function __construct()
     {
         $this->article = new ArticleView();

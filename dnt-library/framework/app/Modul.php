@@ -26,6 +26,9 @@ class Modul
     public $sitemapUrl = [];
 
     public $modul;
+    protected Vendor $vendor;
+    protected Dnt $dnt;
+    protected DB $db;
 
     public function __construct()
     {

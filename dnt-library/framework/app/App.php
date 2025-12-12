@@ -23,6 +23,8 @@ class App
     protected $dntCache;
 
     protected $modul;
+    protected Vendor $vendor;
+    protected Dnt $dnt;
 
     public function __construct($client)
     {

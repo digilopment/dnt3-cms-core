@@ -18,6 +18,11 @@ use function custom_modules;
 
 class Rest
 {
+    protected Dnt $dnt;
+    protected Webhook $webhook;
+    protected Settings $settings;
+    protected $post;
+
     public function __construct()
     {
         $this->dnt = new Dnt();
@@ -27,11 +32,11 @@ class Rest
 
     /**
      *
-     * @param type $get
-     * @return type
+     * @param string $get
+     * @return string|false
      * this method creat a GET method of `default` and `rewrited` addr
      */
-    public function get($get)
+    public function get(string $get)
     {
         $return = false;
         if (isset($_GET[SRC]) && $get == SRC) {
@@ -58,9 +63,10 @@ class Rest
     /**
      *
      * domain redirector
-     * @param type $stillRedirect
+     * @param int $stillRedirect
+     * @return void
      */
-    public function redirectToDomain($stillRedirect = 0)
+    public function redirectToDomain(int $stillRedirect = 0): void
     {
 
         if ($stillRedirect == 0) {
@@ -119,8 +125,8 @@ class Rest
 
     /**
      *
-     * @param type $thisArg
-     * @return boolean
+     * @param int|false $thisArg
+     * @return mixed
      */
     public function webhook($thisArg = false)
     {
@@ -273,13 +279,13 @@ class Rest
 
     /**
      *
-     * @param type $post
-     * @return type
+     * @param string $post
+     * @return mixed
      */
-    public function post($post)
+    public function post(string $post)
     {
-        if (isset($_POST[$post])) {
-            $this->post = @$_POST[$post];
+        if (isset($_POST[$post]) && $_POST[$post] !== '') {
+            $this->post = $_POST[$post];
         } else {
             $this->post = false;
         }
@@ -304,25 +310,25 @@ class Rest
 
     /**
      *
-     * @param type $input
-     * @return type
+     * @param string $input
+     * @return string
      */
-    public function escape($input)
+    public function escape(string $input): string
     {
-        $this->escape = mysql_real_escape_string($input);
+        if (isset($GLOBALS['DATABASE']) && $GLOBALS['DATABASE'] instanceof \mysqli) {
+            $this->escape = $GLOBALS['DATABASE']->real_escape_string($input);
+        } else {
+            $this->escape = addslashes($input);
+        }
         return $this->escape;
     }
 
     /**
      *
-     * @return boolean
+     * @return bool
      */
-    public function isAdmin()
+    public function isAdmin(): bool
     {
-        if ($this->dnt->in_string('dnt-admin', WWW_FULL_PATH)) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->dnt->in_string('dnt-admin', WWW_FULL_PATH);
     }
 }

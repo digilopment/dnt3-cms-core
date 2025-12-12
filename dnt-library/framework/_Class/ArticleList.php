@@ -20,8 +20,16 @@ use DntLibrary\Base\Vendor;
 
 class ArticleList extends AdminContent
 {
+    protected ArticleView $articleView;
+    protected Frontend $frontend;
+    protected Rest $rest;
+    protected DB $db;
+    protected Dnt $dnt;
+    protected Vendor $vendor;
+
     public function __construct()
     {
+        parent::__construct();
         $this->articleView = new ArticleView();
         $this->frontend = new Frontend();
         $this->rest = new Rest();

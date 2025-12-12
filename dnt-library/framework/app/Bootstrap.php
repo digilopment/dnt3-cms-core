@@ -19,42 +19,48 @@ use DntLibrary\Base\Sessions;
 
 class Bootstrap
 {
-    protected $path;
+    protected string $path;
+    protected ?Dnt $dnt = null;
+    protected ?Install $install = null;
 
-    public $client;
+    public ?Client $client = null;
 
-    public function __construct($path)
+    public function __construct(string $path)
     {
         $this->path = dirname($path) . '/';
     }
 
-    protected function registerDefaultGlobals()
+    protected function registerDefaultGlobals(): void
     {
-        $GLOBALS['DATABASE'] = '';
+        if (!isset($GLOBALS['DATABASE'])) {
+            $GLOBALS['DATABASE'] = '';
+        }
     }
 
-    protected function registerGlobals($client)
+    protected function registerGlobals(Client $client): void
     {
         $GLOBALS['VENDOR_LAYOUT'] = $client->layout;
         $GLOBALS['MODULE'] = false;
         $GLOBALS['VENDOR_ID'] = $client->id;
-        $GLOBALS['WEBHOOKS'] = $client->routes;
-        $GLOBALS['WEBHOOK'] = $client->routes;
+        $GLOBALS['WEBHOOKS'] = $client->routes ?? [];
+        $GLOBALS['WEBHOOK'] = $client->routes ?? [];
         $GLOBALS['GET_MODUL'] = false;
         $GLOBALS['ORIGIN_DOMAIN'] = $client->wwwPath;
-        $GLOBALS['ORIGIN_DOMAIN_LNG'] = $client->lang;
-        $GLOBALS['DB_DOMAIN'] = $client->realUrl;
+        $GLOBALS['ORIGIN_DOMAIN_LNG'] = $client->lang ?? '';
+        $GLOBALS['DB_DOMAIN'] = $client->realUrl ?? '';
         $GLOBALS['DB_PROTOCOL'] = false;
-        $GLOBALS['ORIGIN_PROTOCOL'] = $client->originProtocol;
+        $GLOBALS['ORIGIN_PROTOCOL'] = $client->originProtocol ?? '';
         $GLOBALS['ACTIVE_LANGS_ARR'] = [];
     }
 
-    protected function registerDefine($client)
+    protected function registerDefine(Client $client): void
     {
-        define('WWW_PATH_LANG', WWW_PATH . $client->lang . '/');
+        if (!defined('WWW_PATH_LANG')) {
+            define('WWW_PATH_LANG', WWW_PATH . ($client->lang ?? '') . '/');
+        }
     }
 
-    public function boot()
+    public function boot(): void
     {
         $this->registerDefaultGlobals();
         $path = $this->path;
