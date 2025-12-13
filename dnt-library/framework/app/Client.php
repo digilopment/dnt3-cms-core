@@ -417,8 +417,20 @@ public function route($index)
             $debugInfo['route_0'] = $this->route(0);
             $debugInfo['MULTY_LANGUAGE'] = defined('MULTY_LANGUAGE') ? MULTY_LANGUAGE : false;
 
+            // Kontrola a presmerovanie na správny protokol (http/https) ak je toDbDomain true
+            if ($toDbDomain && $this->originProtocol !== $data['protocol']) {
+                $targetProtocol = $data['protocol'];
+                $targetDomain = $www . $data['domain'];
+                $redirectUrl = $targetProtocol . $targetDomain . $this->request;
+                $status = 'protocol_redirect';
+                $debugInfo['status'] = $status;
+                $debugInfo['redirect_url'] = $redirectUrl;
+                $debugInfo['protocol_mismatch'] = true;
+                $debugInfo['origin_protocol'] = $this->originProtocol;
+                $debugInfo['target_protocol'] = $targetProtocol;
+            }
             // Presmerovanie z default lang na no-lang
-            if ($this->urlLang($this->request) == $language && 
+            elseif ($this->urlLang($this->request) == $language && 
                 $data['lang'] == false && 
                 $this->rpc === null && 
                 MULTY_LANGUAGE === true) {
