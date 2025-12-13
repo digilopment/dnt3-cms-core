@@ -536,103 +536,58 @@ class Mailer
 
     public function prepare_mail_v3($to, $messages = false)
     {
+        // SENDER
+        $od_email = $this->sender_email ?: $this->settings->get('vendor_email');
 
-        //SENDER
-        if ($this->sender_email == false) {
-            $od_email = $this->settings->get('vendor_email');
-        } else {
-            $od_email = $this->sender_email;
-        }
-
-        //PREDMET
-        if ($this->subject == false) {
+        // SUBJECT
+        if (!$this->subject) {
             $predmet = '(no subject)';
         } else {
-            if (SEND_EMAIL_VIA == 'internal') {
-                $predmet = $this->dnt->odstran_diakritiku($this->subject);
-            } elseif (SEND_EMAIL_VIA == 'send_grid') {
-                $predmet = $this->subject;
-            }
+            $predmet = (SEND_EMAIL_VIA == 'internal')
+                ? $this->dnt->odstran_diakritiku($this->subject)
+                : $this->subject;
         }
 
-        //OD MENO
-        if ($this->sender_name == false) {
-            $od_meno = $this->settings->get('vendor_company');
-        } else {
-            if (SEND_EMAIL_VIA == 'internal') {
-                $od_meno = $this->dnt->odstran_diakritiku($this->sender_name);
-            } elseif (SEND_EMAIL_VIA == 'send_grid') {
-                $od_meno = $this->sender_name;
-            }
+        // FROM NAME
+        $od_meno = $this->sender_name ?: $this->settings->get('vendor_company');
+        if (SEND_EMAIL_VIA == 'internal' && $this->sender_name) {
+            $od_meno = $this->dnt->odstran_diakritiku($this->sender_name);
         }
 
-        //EMAIL SPRAVA
-        if ($this->msg == false) {
-            $email_sprava = false;
-        } else {
-            $email_sprava = $this->msg;
-        }
+        // MESSAGE
+        $email_sprava = $this->msg ?: '';
 
-        if ($this->settings->show('send_grid_api_key') == true && $this->settings->show('send_grid_api_template_id') == true) {
-            $SEND_GRID_API_KEY = $this->settings->get('send_grid_api_key');
-            $SEND_GRID_API_TEMPLATE_ID = $this->settings->get('send_grid_api_template_id');
-        } else {
-            $SEND_GRID_API_KEY = SEND_GRID_API_KEY;
-            $SEND_GRID_API_TEMPLATE_ID = SEND_GRID_API_TEMPLATE_ID;
-        }
+        // API KEY
+        $SEND_GRID_API_KEY = $this->settings->show('send_grid_api_key')
+            ? $this->settings->get('send_grid_api_key')
+            : SEND_GRID_API_KEY;
 
-        if (is_array($to) && is_array($messages)) {
-            $emailTo = [];
-            $messageTo = [];
+        // Recipients
+        $recipients = [];
+        if (is_array($to)) {
             foreach ($to as $singl) {
-                $emailTo[] = ['email' => $singl];
-                $messageTo[] = [
-                    'type' => 'text/html',
-                    'value' => $email_sprava,
-                ];
+                $recipients[] = ['email' => $singl];
             }
         } else {
-            $emailTo = [
-                'email' => $to,
-                'name' => $to,
-            ];
-            $messageTo = [
-                'type' => 'text/html',
-                'value' => $email_sprava,
-            ];
+            $recipients[] = ['email' => $to];
         }
+
+        // Build params
         $params = [
-            'from' => [
-                'email' => $od_email,
-                'name' => $od_meno,
-            ],
-            'subject' => $predmet,
-            'template_id' => $SEND_GRID_API_TEMPLATE_ID,
-            'content' => [
-                [
-                    'type' => 'text/html',
-                    'value' => $email_sprava,
-                ],
-            ],
             'personalizations' => [
                 [
-                    'to' => [
-                        [
-                            'email' => $to,
-                            'name' => $to,
-                        ],
-                    ],
-                    'send_at' => time(),
+                    'to' => $recipients,
+                    'subject' => $predmet,
                 ],
             ],
-            'tracking_settings' => [
-                'click_tracking' => [
-                    'enable' => false,
-                    'enable_text' => false,
-                ],
-                'click_tracking' => [
-                    'enable' => false,
-                    'enable_text' => false,
+            'from' => [
+                'email' => $od_email,
+                'name'  => $od_meno,
+            ],
+            'content' => [
+                [
+                    'type'  => 'text/html',
+                    'value' => $email_sprava,
                 ],
             ],
         ];
@@ -646,15 +601,17 @@ class Mailer
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
-        $headers = array();
-        $headers[] = 'Authorization: Bearer ' . $SEND_GRID_API_KEY;
-        $headers[] = 'Content-Type: application/json';
+        $headers = [
+            'Authorization: Bearer ' . $SEND_GRID_API_KEY,
+            'Content-Type: application/json',
+        ];
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
         $response = curl_exec($ch);
         $this->response = $response;
-        var_dump($this->response);
         curl_close($ch);
+
+        return $response;
     }
 
     /**
@@ -663,7 +620,7 @@ class Mailer
     public function sent_email()
     {
         foreach ($this->recipient as $to) {
-            $this->prepare_mail($to);
+            $this->prepare_mail_v3($to);
         }
     }
 }
