@@ -186,6 +186,20 @@ class DOMPDF
     private $_quirksmode = false;
 
   /**
+   * Messages array for warnings/errors
+   *
+   * @var array
+   */
+    protected $_messages = array();
+
+  /**
+   * Base protocol
+   *
+   * @var string
+   */
+    protected $_base_protocol = '';
+
+  /**
    * The list of built-in fonts
    *
    * @var array
@@ -636,7 +650,10 @@ class DOMPDF
           // http://stackoverflow.com/a/11310258/264628
             $doc = new DOMDocument();
             $doc->preserveWhiteSpace = true;
-            $doc->loadHTML(mb_convert_encoding($str, 'HTML-ENTITIES', 'UTF-8'));
+            // Convert HTML entities properly for PHP 8.4+ (avoid deprecated mb_convert_encoding with HTML-ENTITIES)
+            // Use htmlentities/htmlspecialchars_decode instead
+            $html = htmlspecialchars_decode(htmlentities($str, ENT_COMPAT | ENT_HTML401, 'UTF-8', false), ENT_COMPAT | ENT_HTML401);
+            $doc->loadHTML($html);
 
           // If some text is before the doctype, we are in quirksmode
             if (preg_match('/^(.+)<!doctype/i', ltrim($str), $matches)) {
@@ -732,7 +749,7 @@ class DOMPDF
                             if (!$accept) {
                             //found at least one mediatype, but none of the accepted ones
                             //Skip this css file.
-                                continue;
+                                continue 2;
                             }
                         }
 
@@ -752,7 +769,7 @@ class DOMPDF
                     if ($tag->hasAttributes() &&
                     ($media = $tag->getAttribute('media')) &&
                     !in_array($media, $acceptedmedia)) {
-                        continue;
+                        continue 2;
                     }
 
                     $css = '';

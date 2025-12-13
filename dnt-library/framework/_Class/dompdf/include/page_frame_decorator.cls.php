@@ -446,7 +446,10 @@ class Page_Frame_Decorator extends Frame_Decorator
         }
 
       // Determine the frame's maximum y value
-        $max_y = $frame->get_position('y') + $margin_height;
+        // Ensure both values are numeric to avoid TypeError
+        $frame_y = is_numeric($frame->get_position('y')) ? (float)$frame->get_position('y') : 0.0;
+        $margin_h = is_numeric($margin_height) ? (float)$margin_height : 0.0;
+        $max_y = $frame_y + $margin_h;
 
       // If a split is to occur here, then the bottom margins & paddings of all
       // parents of $frame must fit on the page as well:
@@ -556,7 +559,7 @@ class Page_Frame_Decorator extends Frame_Decorator
 
   //........................................................................
 
-    function split(Frame $frame = null, $force_pagebreak = false)
+    function split(?Frame $frame = null, $force_pagebreak = false)
     {
       // Do nothing
     }
@@ -596,7 +599,10 @@ class Page_Frame_Decorator extends Frame_Decorator
 
         foreach ($this->_floating_frames as $key => $frame) {
             if ($side === 'both' || $frame->get_style()->float === $side) {
-                $y = max($y, $frame->get_position('y') + $frame->get_margin_height());
+                // Ensure both values are numeric to avoid TypeError
+                $frame_y = is_numeric($frame->get_position('y')) ? (float)$frame->get_position('y') : 0.0;
+                $frame_margin_h = is_numeric($frame->get_margin_height()) ? (float)$frame->get_margin_height() : 0.0;
+                $y = max($y, $frame_y + $frame_margin_h);
 
                 if ($float !== 'none') {
                     $this->remove_floating_frame($key);

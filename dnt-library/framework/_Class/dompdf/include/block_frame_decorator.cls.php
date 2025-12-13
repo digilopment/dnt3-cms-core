@@ -230,7 +230,10 @@ class Block_Frame_Decorator extends Frame_Decorator
   //       return;
 
         $this->_line_boxes[$this->_cl]->br = $br;
-        $y = $this->_line_boxes[$this->_cl]->y + $this->_line_boxes[$this->_cl]->h;
+        // Ensure both values are numeric to avoid TypeError
+        $line_y = is_numeric($this->_line_boxes[$this->_cl]->y) ? (float)$this->_line_boxes[$this->_cl]->y : 0.0;
+        $line_h = is_numeric($this->_line_boxes[$this->_cl]->h) ? (float)$this->_line_boxes[$this->_cl]->h : 0.0;
+        $y = $line_y + $line_h;
 
         $new_line = new Line_Box($this, $y);
 

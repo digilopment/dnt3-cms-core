@@ -285,10 +285,10 @@ class Stylesheet
   /**
    * create a new Style object associated with this stylesheet
    *
-   * @param Style $parent The style of this style's parent in the DOM tree
+   * @param Style|null $parent The style of this style's parent in the DOM tree
    * @return Style
    */
-    function create_style(Style $parent = null)
+    function create_style(?Style $parent = null)
     {
         return new Style($this, $this->_current_origin);
     }
@@ -338,7 +338,7 @@ class Stylesheet
             }
 
             set_error_handler('record_warnings');
-            $css = file_get_contents($file, null, $this->_dompdf->get_http_context());
+            $css = file_get_contents($file, false, $this->_dompdf->get_http_context());
             restore_error_handler();
 
             $good_mime_type = true;
@@ -1117,15 +1117,16 @@ class Stylesheet
                             case ':even':
                             case ':first':
                                   $key = $page_selector;
+                                break;
 
                             default:
-                                continue;
+                                continue 2; // Skip this match and continue in foreach loop
                         }
 
                 // Store the style for later...
-                        if (empty($this->_page_styles[$key])) {
+                        if ($key !== null && empty($this->_page_styles[$key])) {
                             $this->_page_styles[$key] = $this->_parse_properties($match[5]);
-                        } else {
+                        } elseif ($key !== null) {
                             $this->_page_styles[$key]->merge($this->_parse_properties($match[5]));
                         }
                         break;

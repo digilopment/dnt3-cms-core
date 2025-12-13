@@ -220,7 +220,9 @@ class Block_Frame_Reflower extends Frame_Reflower
         $height = 0;
 
         foreach ($lines as $line) {
-            $height += $line->h;
+            // Ensure h is numeric to avoid TypeError
+            $line_h = is_numeric($line->h) ? (float)$line->h : 0.0;
+            $height += $line_h;
         }
 
       /*

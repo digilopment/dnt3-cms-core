@@ -46,10 +46,32 @@ class Text_Frame_Reflower extends Frame_Reflower
 
     protected function _line_break($text)
     {
+        // Ensure block parent exists
+        if (!$this->_block_parent) {
+            $this->_block_parent = $this->_frame->find_block_parent();
+        }
+        
+        if (!$this->_block_parent) {
+            // If still no block parent, return empty array to avoid fatal error
+            error_log('DOMPDF Warning: No block-level parent found in Text_Frame_Reflower. Cannot break line.');
+            return array();
+        }
+        
         $style = $this->_frame->get_style();
         $size = $style->font_size;
         $font = $style->font_family;
+        
+        if (!$this->_block_parent) {
+            // Return empty array if no block parent
+            return array();
+        }
+        
         $current_line = $this->_block_parent->get_current_line_box();
+        
+        if (!$current_line) {
+            // Return empty array if no current line
+            return array();
+        }
 
       // Determine the available width
         $line_width = $this->_frame->get_containing_block('w');
@@ -261,7 +283,9 @@ class Text_Frame_Reflower extends Frame_Reflower
               // Trim newlines from the beginning of the line
               //$this->_frame->set_text(ltrim($text, "\n\r"));
 
-                $this->_block_parent->add_line();
+                if ($this->_block_parent) {
+                    $this->_block_parent->add_line();
+                }
                 $frame->position();
 
               // Layout the new line
@@ -288,7 +312,9 @@ class Text_Frame_Reflower extends Frame_Reflower
             }
 
             if ($add_line) {
-                $this->_block_parent->add_line();
+                if ($this->_block_parent) {
+                    $this->_block_parent->add_line();
+                }
                 $frame->position();
             }
         } else {
@@ -318,7 +344,7 @@ class Text_Frame_Reflower extends Frame_Reflower
 
   //........................................................................
 
-    function reflow(Block_Frame_Decorator $block = null)
+    function reflow(?Block_Frame_Decorator $block = null)
     {
         $frame = $this->_frame;
         $page = $frame->get_root();

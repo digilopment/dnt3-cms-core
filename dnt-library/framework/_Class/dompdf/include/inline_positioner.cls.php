@@ -38,7 +38,19 @@ class Inline_Positioner extends Positioner
       // End debugging
 
         if (!$p) {
-            throw new DOMPDF_Exception('No block-level parent found.  Not good.');
+            // Try to find root frame as fallback
+            $root = $this->_frame;
+            while ($root->get_parent()) {
+                $root = $root->get_parent();
+            }
+            // If still no block parent found, create a warning but continue
+            if (!$root || !($root instanceof Block_Frame_Decorator)) {
+                // Log warning but don't throw exception - try to continue
+                error_log('DOMPDF Warning: No block-level parent found for inline element. Attempting to continue.');
+                // Return early to avoid further errors
+                return;
+            }
+            $p = $root;
         }
 
         $f = $this->_frame;

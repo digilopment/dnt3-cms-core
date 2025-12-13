@@ -137,7 +137,7 @@ class Text_Renderer extends Abstract_Renderer
 
             switch ($text_deco) {
                 default:
-                    continue;
+                    break;
 
                 case 'underline':
                     $deco_y += $base - $descent + $underline_offset + $line_thickness / 2;
