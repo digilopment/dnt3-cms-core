@@ -103,6 +103,7 @@ class Subscriber
                 'dnt_mailer_mails',
                 array(
                         'show' => $this->status,
+                        'datetime_update' => $this->dnt->datetime(),
                     ),
                 array(
                         'vendor_id' => $this->vendor_id,
