@@ -304,10 +304,19 @@ $data = $rest->post('data');
 
 ## 📚 Dokumentácia
 
-- [REPOSITORY_MAP.md](REPOSITORY_MAP.md) - Detailná mapa repozitára
-- [REFACTORING_CHANGES.md](REFACTORING_CHANGES.md) - Zmeny pre PHP 8.4
-- [PHP84_REFACTORING_PROGRESS.md](PHP84_REFACTORING_PROGRESS.md) - Progress refaktoringu
-- [MULTILINGUAL_SETUP_GUIDE.md](MULTILINGUAL_SETUP_GUIDE.md) - Nastavenie vícejazyčnosti
+Všetka dokumentácia sa nachádza v priečinku [`readme/`](readme/):
+
+### Hlavné dokumenty
+- [REPOSITORY_MAP.md](readme/REPOSITORY_MAP.md) - Detailná mapa repozitára a štruktúra projektu
+- [REFACTORING_CHANGES.md](readme/REFACTORING_CHANGES.md) - Zmeny pre PHP 8.4 kompatibilitu
+- [PHP84_REFACTORING_PROGRESS.md](readme/PHP84_REFACTORING_PROGRESS.md) - Progress refaktoringu na PHP 8.4
+
+### Návody a príručky
+- [MULTILINGUAL_SETUP_GUIDE.md](readme/MULTILINGUAL_SETUP_GUIDE.md) - Nastavenie vícejazyčnosti
+- [TEMPLATE_CREATION_GUIDE.md](readme/TEMPLATE_CREATION_GUIDE.md) - Príručka pre vytváranie šablón
+- [PAGE_BUILDER_GUIDE.md](readme/PAGE_BUILDER_GUIDE.md) - Príručka pre Page Builder modul
+- [DOMAIN_REDIRECT_GUIDE.md](readme/DOMAIN_REDIRECT_GUIDE.md) - Nastavenie presmerovaní domén
+- [LOGGER_GUIDE.md](readme/LOGGER_GUIDE.md) - Príručka pre error logging systém
 
 ---
 
