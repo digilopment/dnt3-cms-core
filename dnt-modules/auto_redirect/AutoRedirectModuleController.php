@@ -11,6 +11,12 @@ use DntLibrary\Base\Webhook;
 
 class AutoRedirectModuleController extends Client
 {
+    protected $articleList;
+    protected $articleView;
+    protected $rest;
+    protected $webhook;
+    protected $dnt;
+
     public function __construct()
     {
         parent::__construct();
