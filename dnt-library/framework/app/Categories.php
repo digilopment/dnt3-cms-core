@@ -153,7 +153,7 @@ class Categories
                 $final[] = $id[0];
             }
         }
-        $this->tempParentTree = null;
+        $this->tempParentTree = [];
         return $final;
     }
 

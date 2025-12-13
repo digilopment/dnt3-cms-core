@@ -14,6 +14,16 @@ class Cart
 
     public $cookieProductId;
 
+    protected $cookies;
+
+    protected $posts;
+
+    protected $postMeta;
+
+    protected $postVariants;
+
+    protected $db;
+
     public function __construct()
     {
         $this->cookies = new Cookie();

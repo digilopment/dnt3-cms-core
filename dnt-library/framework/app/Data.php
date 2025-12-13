@@ -20,6 +20,38 @@ use DntLibrary\Base\Vendor;
 
 class Data
 {
+    protected $vendor;
+
+    protected $articleView;
+
+    protected $settings;
+
+    protected $rest;
+
+    protected $navigation;
+
+    protected $multilanguage;
+
+    protected $post;
+
+    protected $customData;
+
+    protected $postId;
+
+    protected $sitemapData;
+
+    protected $postObject;
+
+    protected $postMeta;
+
+    protected $menuItems;
+
+    protected $sitemapItems;
+
+    protected $translates;
+
+    protected $metaSettings;
+
     public function __construct()
     {
         $this->vendor = new Vendor();

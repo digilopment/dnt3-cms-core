@@ -23,6 +23,10 @@ class BaseController
 
     protected $settinhs;
 
+    protected $dnt;
+
+    protected $vendor;
+
     public function __construct()
     {
         $this->dnt = new Dnt();
@@ -32,7 +36,8 @@ class BaseController
     protected function modul()
     {
         $settings = new Settings();
-        return $settings->getGlobals()->module;
+        $globals = $settings->getGlobals();
+        return isset($globals->module) ? $globals->module : false;
     }
 
     protected function path()
@@ -276,10 +281,10 @@ class BaseController
     protected function modulConfigurator($data, $modul = false)
     {
         //var_dump('sss');exit;
-        if ($modul) {
+        if ($modul && $modul !== false && $modul !== '') {
             $data['article']['service'] = $modul;
             $confFile = 'dnt-view/layouts/' . $this->vendor->getLayout() . '/modules/' . $modul . '/' . $this->confFile;
-        } elseif (isset($data['article']['service']) && !empty($data['article']['service'])) {
+        } elseif (isset($data['article']['service']) && !empty($data['article']['service']) && $data['article']['service'] !== false && $data['article']['service'] !== '') {
             $confFile = 'dnt-view/layouts/' . $this->vendor->getLayout() . '/modules/' . $data['article']['service'] . '/' . $this->confFile;
         } else {
             $confFile = false;

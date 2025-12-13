@@ -9,6 +9,10 @@ class AggrBuilder
 {
     public $decode;
 
+    protected $rest;
+
+    protected $dnt;
+
     public function __construct()
     {
         $this->rest = new Rest();

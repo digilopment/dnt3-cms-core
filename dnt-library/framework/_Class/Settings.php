@@ -49,12 +49,15 @@ class Settings
     public function getGlobals()
     {
         $parsed = [];
+        $final = [];
         foreach (array_keys($GLOBALS) as $key) {
             $parsed[strtolower($key)] = $GLOBALS[$key];
         }
 
-        foreach ($parsed['globals']['GLOBALS'] as $key2 => $val) {
-            $final[strtolower($key2)] = $GLOBALS[$key2];
+        if (isset($parsed['globals']['GLOBALS']) && is_array($parsed['globals']['GLOBALS'])) {
+            foreach ($parsed['globals']['GLOBALS'] as $key2 => $val) {
+                $final[strtolower($key2)] = $GLOBALS[$key2];
+            }
         }
 
         $final['database'] = $this->getAllSettings();
