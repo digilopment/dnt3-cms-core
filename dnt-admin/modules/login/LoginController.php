@@ -141,11 +141,16 @@ class LoginController extends AdminController
             $this->logInfo("Cookies before redirect: " . json_encode($_COOKIE ?? [], JSON_UNESCAPED_UNICODE));
             
             // Force session save and regenerate ID for security
-            if (session_status() === PHP_SESSION_ACTIVE) {
+            // Regenerate ID only if headers haven't been sent yet
+            if (session_status() === PHP_SESSION_ACTIVE && !headers_sent()) {
                 session_regenerate_id(true); // Regenerate ID for security
                 // Write session data immediately
                 session_write_close();
                 // Reopen for redirect
+                $session->init();
+            } elseif (session_status() === PHP_SESSION_ACTIVE) {
+                // If headers already sent, just save session without regenerating ID
+                session_write_close();
                 $session->init();
             }
             

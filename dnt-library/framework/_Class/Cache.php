@@ -45,10 +45,11 @@ class Cache
     {
         $this->dnt = new Dnt();
         $this->cacheTime = defined('CACHE_TIME_SEC') ? (int)CACHE_TIME_SEC : 86400;
+        // Ensure cache directory exists and resolve to absolute path first
+        $this->ensureCacheDir();
         $this->cacheFile = base64_encode(($_SERVER['HTTP_HOST'] ?? '') . ($_SERVER['REQUEST_URI'] ?? ''));
         $this->cacheFileName = $this->cacheDir . '/' . $this->cacheFile . '.txt';
         $this->cacheLogFile = $this->cacheDir . '/log.txt';
-        $this->ensureCacheDir();
         if (file_exists($this->cacheLogFile)) {
             $logContent = file_get_contents($this->cacheLogFile);
             if ($logContent !== false) {
@@ -63,22 +64,105 @@ class Cache
      */
     protected function ensureCacheDir(): void
     {
-        if (!is_dir($this->cacheDir)) {
-            // Try to create directory recursively
-            if (!@mkdir($this->cacheDir, 0755, true)) {
-                // If mkdir fails, try with parent directory permissions
-                $parentDir = dirname($this->cacheDir);
-                if (is_dir($parentDir) && is_writable($parentDir)) {
-                    @mkdir($this->cacheDir, 0755, true);
+        // Resolve absolute path to cache directory
+        // Cache directory should be in /var/www/html/<projectFolder>/dnt-cache
+        // Use SCRIPT_FILENAME to find index.php location (most reliable method)
+        
+        $projectRoot = null;
+        
+        // Method 1: Use SCRIPT_FILENAME to find project root
+        // If script is in dnt-admin/, we need to go up one level to find project root
+        if (isset($_SERVER['SCRIPT_FILENAME'])) {
+            $scriptPath = dirname($_SERVER['SCRIPT_FILENAME']);
+            $scriptPathReal = realpath($scriptPath);
+            
+            if ($scriptPathReal !== false) {
+                // Check if we're in admin subdirectory (dnt-admin)
+                if (strpos($scriptPathReal, '/dnt-admin') !== false || strpos($scriptPathReal, '\\dnt-admin') !== false) {
+                    // Go up one level to project root
+                    $projectRoot = dirname($scriptPathReal);
                 } else {
-                    // Log error but don't break execution
-                    error_log("Cache: Cannot create cache directory: {$this->cacheDir}. Check permissions.");
+                    // Already in project root or other location
+                    $projectRoot = $scriptPathReal;
+                }
+                
+                // Verify we found the correct project root by checking for main index.php
+                // (the root index.php, not dnt-admin/index.php)
+                if ($projectRoot && file_exists($projectRoot . '/index.php')) {
+                    // Make sure we're not still in dnt-admin
+                    if (strpos($projectRoot, '/dnt-admin') === false && strpos($projectRoot, '\\dnt-admin') === false) {
+                        $projectRoot = realpath($projectRoot);
+                    } else {
+                        // Still in dnt-admin, go up one more level
+                        $projectRoot = dirname($projectRoot);
+                        if (file_exists($projectRoot . '/index.php')) {
+                            $projectRoot = realpath($projectRoot);
+                        } else {
+                            $projectRoot = null;
+                        }
+                    }
+                } else {
+                    // Try going up one more level if we didn't find root index.php
+                    $parentPath = dirname($projectRoot);
+                    if (file_exists($parentPath . '/index.php')) {
+                        $projectRoot = realpath($parentPath);
+                    } else {
+                        $projectRoot = null;
+                    }
                 }
             }
         }
+        
+        // Method 2: Fallback - resolve from current file location
+        if (!$projectRoot) {
+            // Cache.php is in dnt-library/framework/_Class/, so project root is 4 levels up
+            $projectRoot = realpath(dirname(dirname(dirname(dirname(__DIR__)))));
+        }
+        
+        if ($projectRoot === false || !is_dir($projectRoot)) {
+            error_log("Cache: Cannot resolve project root path. SCRIPT_FILENAME: " . ($_SERVER['SCRIPT_FILENAME'] ?? 'not set'));
+            return;
+        }
+        
+        $cachePath = $projectRoot . '/' . $this->cacheDir;
+        
+        // Check if directory already exists
+        if (is_dir($cachePath)) {
+            // Directory exists, just ensure it's writable
+            if (!is_writable($cachePath)) {
+                // Try to make it writable (permissions are already 0777 according to user)
+                @chmod($cachePath, 0777);
+            }
+            // Update cacheDir to absolute path for future use
+            $this->cacheDir = $cachePath;
+            return;
+        }
+        
+        // Directory doesn't exist, try to create it
+        $parentDir = dirname($cachePath);
+        if (!is_dir($parentDir)) {
+            // Parent doesn't exist, try to create it first
+            @mkdir($parentDir, 0777, true);
+        }
+        
+        if (is_dir($parentDir) && is_writable($parentDir)) {
+            // Create cache directory with 0777 permissions
+            if (!@mkdir($cachePath, 0777, true)) {
+                error_log("Cache: Cannot create cache directory: {$cachePath}. Check permissions. Parent: {$parentDir}, Writable: " . (is_writable($parentDir) ? 'yes' : 'no'));
+                return;
+            }
+        } else {
+            error_log("Cache: Cannot create cache directory: {$cachePath}. Parent directory is not writable: {$parentDir}");
+            return;
+        }
+        
         // Ensure directory is writable
-        if (is_dir($this->cacheDir) && !is_writable($this->cacheDir)) {
-            error_log("Cache: Cache directory is not writable: {$this->cacheDir}. Check permissions.");
+        if (is_dir($cachePath)) {
+            if (!is_writable($cachePath)) {
+                @chmod($cachePath, 0777);
+            }
+            // Update cacheDir to absolute path for future use
+            $this->cacheDir = $cachePath;
         }
     }
 

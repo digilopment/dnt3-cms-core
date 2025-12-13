@@ -11,6 +11,10 @@ class AbstractUser
 {
     public $data;
 
+    public $cookie;
+
+    public $vendor;
+
     protected $init;
 
     protected $table;
@@ -40,7 +44,10 @@ class AbstractUser
     protected function model(): void
     {
         $session = new Sessions();
-        $session->init(); // Ensure session is initialized
+        // Only initialize session if headers haven't been sent yet
+        if (!headers_sent()) {
+            $session->init(); // Ensure session is initialized
+        }
 
         $email = $session->get($this->sessionId);
         if (empty($email)) {
@@ -69,7 +76,10 @@ class AbstractUser
     public function logged(): bool
     {
         $session = new Sessions();
-        $session->init(); // Ensure session is initialized
+        // Only initialize session if headers haven't been sent yet
+        if (!headers_sent()) {
+            $session->init(); // Ensure session is initialized
+        }
         if ($session->get($this->sessionStatus) || ($this->cookie->Get($this->sessionStatus) == 1 && $this->cookie->Get($this->sessionId) != '')) {
             return true;
         } else {
