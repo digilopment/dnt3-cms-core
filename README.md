@@ -312,7 +312,8 @@ Všetka dokumentácia sa nachádza v priečinku [`readme/`](readme/):
 - [PHP84_REFACTORING_PROGRESS.md](readme/PHP84_REFACTORING_PROGRESS.md) - Progress refaktoringu na PHP 8.4
 
 ### Návody a príručky
-- [MULTILINGUAL_SETUP_GUIDE.md](readme/MULTILINGUAL_SETUP_GUIDE.md) - Nastavenie vícejazyčnosti
+- [multilanguage.md](readme/multilanguage.md) - **Príručka pre klienta: Viacjazyčnosť a nastavenie domén**
+- [MULTILINGUAL_SETUP_GUIDE.md](readme/MULTILINGUAL_SETUP_GUIDE.md) - Nastavenie vícejazyčnosti (technická dokumentácia)
 - [TEMPLATE_CREATION_GUIDE.md](readme/TEMPLATE_CREATION_GUIDE.md) - Príručka pre vytváranie šablón
 - [PAGE_BUILDER_GUIDE.md](readme/PAGE_BUILDER_GUIDE.md) - Príručka pre Page Builder modul
 - [DOMAIN_REDIRECT_GUIDE.md](readme/DOMAIN_REDIRECT_GUIDE.md) - Nastavenie presmerovaní domén
