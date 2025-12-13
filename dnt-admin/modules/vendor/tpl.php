@@ -1,10 +1,12 @@
 
 <?php
 
+use DntLibrary\Base\DB;
 use DntLibrary\Base\Vendor;
-
+use DntLibrary\Base\Settings;
 get_top(); ?>
 <?php get_top_html();
+   $db = new DB();
    $vendor = new Vendor();
 ?>
 <section class="content">
@@ -146,12 +148,138 @@ get_top(); ?>
                                                             </div>
                                                          </div>
                                                          <div class="form-group">
-                                                            <label class="col-sm-3 control-label"><b>Vlastná URL adresa:</b></label>
-                                                            <div class="col-sm-9">
-                                                               <input type="text"  value="<?php echo $row['real_url']; ?>" name="real_url" class="form-control" placeholder="Názov:">
-                                                               <br/>
-                                                            </div>
+                                                         <label class="col-sm-3 control-label"><b>Domena:</b></label>
+                                                         <div class="col-sm-9 ">
+                                                            <table style="width: 100%;">
+                                                               <tr>
+                                                                  <td style="width: 65%; padding-right: 10px; vertical-align: top;">
+                                                                     <input type="text" id="real_url_domain_<?php echo $row['id_entity']; ?>" class="form-control" placeholder="http://kilpi.localhost/dnt3-winprizes" value="<?php
+                                                                        // Rozlož existujúcu real_url na doménu a jazyk
+                                                                        $currentRealUrl = $row['real_url'];
+                                                                        $domainUrl = '';
+                                                                        if (!empty($currentRealUrl)) {
+                                                                            $urlParts = parse_url($currentRealUrl);
+                                                                            if (isset($urlParts['scheme']) && isset($urlParts['host'])) {
+                                                                                $pathParts = isset($urlParts['path']) ? explode('/', trim($urlParts['path'], '/')) : [];
+                                                                                // Ak posledný segment je 2-znakový kód jazyka, odstráň ho
+                                                                                if (!empty($pathParts)) {
+                                                                                    $lastPart = end($pathParts);
+                                                                                    if (strlen($lastPart) == 2 && ctype_alpha($lastPart)) {
+                                                                                        array_pop($pathParts);
+                                                                                    }
+                                                                                }
+                                                                                $domainUrl = $urlParts['scheme'] . '://' . $urlParts['host'];
+                                                                                if (!empty($pathParts)) {
+                                                                                    $domainUrl .= '/' . implode('/', $pathParts);
+                                                                                }
+                                                                            } else {
+                                                                                $domainUrl = $currentRealUrl;
+                                                                            }
+                                                                        }
+                                                                        echo htmlspecialchars($domainUrl);
+                                                                        ?>">
+                                                                  </td>
+                                                                  <td style="width: 35%; vertical-align: top;">
+                                                                     <select id="real_url_language_<?php echo $row['id_entity']; ?>" class="form-control">
+                                                                  <?php
+                                                                  // Získaj jazyky pre konkrétny vendor (nie aktuálny vendor)
+                                                                  $vendorId = $row['id_entity'];
+                                                                  
+                                                                  // Získaj defaultný jazyk z nastavení (key = language)
+                                                                  // Settings trieda má metódu get('language'), ale používa aktuálny vendor
+                                                                  // Preto použijeme priamy SQL dotaz pre konkrétny vendor
+                                                                  $defaultLangQuery = "SELECT value FROM dnt_settings WHERE `key` = 'language' AND vendor_id = '" . $db->escape($vendorId) . "' LIMIT 1";
+                                                                  $defaultLang = '';
+                                                                  if ($db->num_rows($defaultLangQuery) > 0) {
+                                                                      $defaultLangResult = $db->get_results($defaultLangQuery);
+                                                                      if (!empty($defaultLangResult) && is_array($defaultLangResult) && isset($defaultLangResult[0]['value'])) {
+                                                                          $defaultLang = strtoupper(trim($defaultLangResult[0]['value']));
+                                                                      }
+                                                                  }
+                                                                  
+                                                                  // Text pre option bez jazyka
+                                                                  $noLangText = 'Bez jazyka v url';
+                                                                  if ($defaultLang) {
+                                                                      $noLangText = '' . $defaultLang . ' - ' . $noLangText;
+                                                                  }
+                                                                  
+                                                                  echo '<option value="">' . htmlspecialchars($noLangText) . '</option>';
+                                                                  
+                                                                  $langQuery = "SELECT * FROM dnt_languages WHERE `show` = '1' AND vendor_id = '" . $vendorId . "' ORDER BY slug ASC";
+                                                                  $currentRealUrl = $row['real_url'];
+                                                                  $detectedLang = '';
+                                                                  
+                                                                  // Detekcia jazyka z real_url
+                                                                  if (!empty($currentRealUrl)) {
+                                                                      $urlParts = parse_url($currentRealUrl);
+                                                                      if (isset($urlParts['path'])) {
+                                                                          $pathParts = explode('/', trim($urlParts['path'], '/'));
+                                                                          if (!empty($pathParts)) {
+                                                                              $lastPart = end($pathParts);
+                                                                              // Skontroluj či je to 2-znakový kód jazyka
+                                                                              if (strlen($lastPart) == 2 && ctype_alpha($lastPart)) {
+                                                                                  $detectedLang = strtolower($lastPart);
+                                                                              }
+                                                                          }
+                                                                      }
+                                                                  }
+                                                                  
+                                                                  if ($db->num_rows($langQuery) > 0) {
+                                                                      foreach ($db->get_results($langQuery) as $langRow) {
+                                                                          $selected = ($detectedLang == strtolower($langRow['slug'])) ? 'selected' : '';
+                                                                          echo '<option value="' . htmlspecialchars($langRow['slug']) . '" ' . $selected . '>' . htmlspecialchars(strtoupper($langRow['slug'])) . ' - ' . htmlspecialchars($langRow['name']) . '</option>';
+                                                                      }
+                                                                  }
+                                                                  ?>
+                                                                     </select>
+                                                                  </td>
+                                                               </tr>
+                                                            </table>
+                                                            <br/>
                                                          </div>
+                                                         <!-- Skryté pole pre finálnu URL, ktorá sa pošle v POSTe -->
+                                                         <input type="hidden" id="real_url_<?php echo $row['id_entity']; ?>" name="real_url" value="<?php echo htmlspecialchars($row['real_url']); ?>">
+                                                         <script>
+                                                         (function() {
+                                                             var vendorId = <?php echo $row['id_entity']; ?>;
+                                                             var domainInput = document.getElementById('real_url_domain_' + vendorId);
+                                                             var languageSelect = document.getElementById('real_url_language_' + vendorId);
+                                                             var realUrlHidden = document.getElementById('real_url_' + vendorId);
+                                                             
+                                                             if (!domainInput || !languageSelect || !realUrlHidden) return;
+                                                             
+                                                             // Funkcia na kombinovanie domény a jazyka do finálnej URL
+                                                             function combineDomainAndLanguage() {
+                                                                 var domain = domainInput.value.trim();
+                                                                 var language = languageSelect.value.trim();
+                                                                 
+                                                                 if (!domain) {
+                                                                     realUrlHidden.value = '';
+                                                                     return;
+                                                                 }
+                                                                 
+                                                                 // Odstráň trailing slash z domény
+                                                                 if (domain.endsWith('/')) {
+                                                                     domain = domain.slice(0, -1);
+                                                                 }
+                                                                 
+                                                                 // Ak je vybraný jazyk, pridaj ho na koniec
+                                                                 if (language && language !== '') {
+                                                                     realUrlHidden.value = domain + '/' + language.toLowerCase();
+                                                                 } else {
+                                                                     realUrlHidden.value = domain;
+                                                                 }
+                                                             }
+                                                             
+                                                             // Event listenery: keď sa zmení doména alebo jazyk, aktualizuj finálnu URL
+                                                             domainInput.addEventListener('input', combineDomainAndLanguage);
+                                                             domainInput.addEventListener('blur', combineDomainAndLanguage);
+                                                             languageSelect.addEventListener('change', combineDomainAndLanguage);
+                                                             
+                                                             // Počiatočná aktualizácia
+                                                             combineDomainAndLanguage();
+                                                         })();
+                                                         </script>
                                                       </div>
                                                    </div>
                                                    <br/>
@@ -169,6 +297,7 @@ get_top(); ?>
                            </div>
                         </div>
                         <!-- END MODAL -->
+                       
                      </td>
                      <td>
                         <?php if ($vendor->getId() == $row['id_entity'] || DELETING_VENDORS == false) {

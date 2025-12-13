@@ -307,57 +307,230 @@ public function route($index)
         }
     }
 
+    /**
+     * Metóda pre správu domén a presmerovaní (redirects)
+     * 
+     * Táto metóda zabezpečuje správne presmerovanie používateľov na správnu doménu
+     * podľa nastavení v administrácii. Podporuje multi-domain setup, multi-language
+     * presmerovania a ochranu pred nekonečnými redirectmi.
+     * 
+     * @param string $dbDomain Externá doména z databázy (real_url z tabuľky dnt_vendors)
+     * @param string $wwwPath Aktuálna WWW_PATH konštanta
+     * @param bool $toDbDomain Smer presmerovania: true = na externú doménu, false = na internú doménu
+     * @param string|false $language Kód jazyka (napr. 'sk', 'en') alebo false ak nie je multi-language
+     * 
+     * @return array Debug informácie obsahujúce:
+     *   - 'branch': Ktorá vetva sa vykonala ('toDbDomain_true' alebo 'toDbDomain_false')
+     *   - 'status': Aktuálny stav presmerovania
+     *   - 'final_status': Finálny stav
+     *   - 'final_redirect_url': URL na ktorú sa presmeruje (alebo null)
+     *   - Ďalšie debug informácie (current_url, target_url, parsed_data, atď.)
+     * 
+     * @see Nastavenie v administrácii:
+     *   1. Prihlásiť sa do administrácie: /dnt-admin/
+     *   2. Prejsť na: Moduly → Vendor (Klienti)
+     *   3. Kliknúť na ikonu editácie (modrý ceruzka) pri konkrétnom klientovi
+     *   4. V modálnom okne nastaviť:
+     *      - "Zobraziť na vlastnej adrese": Zapnúť/Vypnúť (show_real_url)
+     *      - "Vlastná URL adresa": Zadať externú doménu (napr. http://kilpi.localhost/dnt3-winprizes)
+     *   5. Uložiť zmeny
+     * 
+     * @see Možné stavy (status):
+     *   - 'no_redirect': Žiadny redirect sa nevykoná
+     *   - 'default_lang_to_no_lang': Presmerovanie z default jazyka na verziu bez jazyka
+     *   - 'already_on_correct_domain': Už sme na správnej doméne, neredirectujeme
+     *   - 'showRealUrl_with_language': Presmerovanie na externú doménu s jazykom
+     *   - 'showRealUrl_without_language_redirect_to_base': Presmerovanie na základnú URL bez jazyka
+     *   - 'showRealUrl_without_language_redirect_to_dbDomain': Presmerovanie na dbDomain tak ako je
+     *   - 'showRealUrl_already_on_target_url': Už sme na cieľovej URL, neredirectujeme
+     *   - 'lang_removal': Odstránenie jazyka z URL
+     *   - 'default_redirect': Default redirect
+     * 
+     * @example Príklad 1: Základné presmerovanie na externú doménu
+     *   Nastavenie v admin:
+     *   - "Zobraziť na vlastnej adrese": ZAPNUTÉ
+     *   - "Vlastná URL adresa": http://kilpi.localhost/dnt3-winprizes
+     *   
+     *   Výsledok:
+     *   - URL: http://localhost/dnt3-winprizes/sk/intro
+     *   → Presmeruje na: http://kilpi.localhost/dnt3-winprizes/
+     * 
+     * @example Príklad 2: Presmerovanie s jazykom
+     *   Nastavenie v admin:
+     *   - "Zobraziť na vlastnej adrese": ZAPNUTÉ
+     *   - "Vlastná URL adresa": http://kilpi.localhost/dnt3-winprizes
+     *   - Multi-language: ZAPNUTÉ, default jazyk: 'sk'
+     *   
+     *   Výsledok:
+     *   - URL: http://localhost/dnt3-winprizes/sk/intro
+     *   → Presmeruje na: http://kilpi.localhost/dnt3-winprizes/intro
+     * 
+     * @example Príklad 3: Odstránenie default jazyka z URL
+     *   Nastavenie v admin:
+     *   - Multi-language: ZAPNUTÉ, default jazyk: 'sk'
+     *   - "Vlastná URL adresa": http://kilpi.localhost/dnt3-winprizes (bez jazyka)
+     *   
+     *   Výsledok:
+     *   - URL: http://kilpi.localhost/dnt3-winprizes/sk/intro
+     *   → Presmeruje na: http://kilpi.localhost/dnt3-winprizes/intro
+     * 
+     * @example Debugovanie:
+     *   // Odkomentovať riadky 445-446 v metóde pre debug output:
+     *   // var_dump($debugInfo);
+     *   // exit;
+     *   
+     *   Alebo zachytiť návratovú hodnotu:
+     *   $debugInfo = $client->setDomain($dbDomain, $wwwPath, $toDbDomain, $language);
+     *   var_dump($debugInfo);
+     * 
+     * @throws Die s chybovou hláškou ak je toDbDomain=true ale dbDomain je prázdny
+     */
     public function setDomain($dbDomain, $wwwPath, $toDbDomain = true, $language = false)
     {
+        $redirectUrl = null;
+        $debugInfo = [];
+        $status = 'no_redirect';
+        
         if ($toDbDomain || $dbDomain == $wwwPath || $dbDomain == rtrim($wwwPath . $this->urlLang(), '/')) {
             if ($toDbDomain && empty($dbDomain)) {
                 die('<h2>Externá doména neexistuje, alebo nie je priradená k webu.</h2>Prosím vypnite v nastaveniach permanentné presmerovanie na externú doménu, alebo pridajte externú doménu.');
             }
+            
             $data = $this->domainParser($dbDomain);
-            if ($data['www']) {
-                $www = 'www.';
-            } else {
-                $www = '';
-            }
+            $www = $data['www'] ? 'www.' : '';
+            
+            $debugInfo['branch'] = 'toDbDomain_true';
+            $debugInfo['dbDomain'] = $dbDomain;
+            $debugInfo['wwwPath'] = $wwwPath;
+            $debugInfo['toDbDomain'] = $toDbDomain;
+            $debugInfo['language'] = $language;
+            $debugInfo['parsed_data'] = $data;
+            $debugInfo['www'] = $www;
+            $debugInfo['urlLang'] = $this->urlLang($this->request);
+            $debugInfo['request'] = $this->request;
+            $debugInfo['requestNoLang'] = $this->requestNoLang;
+            $debugInfo['showRealUrl'] = $this->showRealUrl;
+            $debugInfo['originProtocol'] = $this->originProtocol;
+            $debugInfo['domainNP'] = $this->domainNP;
+            $debugInfo['domainWww'] = $this->domainWww;
+            $debugInfo['rpc'] = $this->rpc;
+            $debugInfo['route_0'] = $this->route(0);
+            $debugInfo['MULTY_LANGUAGE'] = defined('MULTY_LANGUAGE') ? MULTY_LANGUAGE : false;
 
-            //presmerovanie z default lang na no-lang
-            if ($this->urlLang($this->request) == $language && $data['lang'] == false && $this->rpc === null && MULTY_LANGUAGE === true) {
-                $newDomain = $data['protocol'] . $www . $data['domain'] . $this->requestNoLang;
-                $this->redirect($newDomain);
-                exit;
+            // Presmerovanie z default lang na no-lang
+            if ($this->urlLang($this->request) == $language && 
+                $data['lang'] == false && 
+                $this->rpc === null && 
+                MULTY_LANGUAGE === true) {
+                
+                $redirectUrl = $data['protocol'] . $www . $data['domain'] . $this->requestNoLang;
+                $status = 'default_lang_to_no_lang';
+                $debugInfo['status'] = $status;
+                $debugInfo['redirect_url'] = $redirectUrl;
             }
-            //presmerovanie na protocol
-            if ($this->originProtocol == $data['protocol'] &&
+            // Kontrola či už sme na správnej doméne (ak áno, neredirectujeme)
+            elseif ($this->originProtocol == $data['protocol'] &&
                     $this->domainNP == $www . $data['domain'] &&
                     ($this->route(0) == $language || $language == '') &&
                     $this->domainWww == $data['www']) {
-                //zhoda
-            } else {
-                if ($this->showRealUrl) {
-                    $newDomain = $data['protocol'] . $www . $data['domain'];
-                    if ($language && (rtrim(WWW_PATH, '/') != rtrim($dbDomain, '/'))) {
-                        $newDomainPath = $newDomain . '/' . $language . $this->requestNoLang;
-                        $newDomainPath = $dbDomain . '/' . $this->requestNoLang;
-                        $this->redirect($newDomainPath);
-                        exit;
-                    }
+                
+                $status = 'already_on_correct_domain';
+                $debugInfo['status'] = $status;
+                $redirectUrl = null;
+            }
+            // Presmerovanie na real URL ak je zapnuté
+            elseif ($this->showRealUrl) {
+                if ($language && (rtrim(WWW_PATH, '/') != rtrim($dbDomain, '/'))) {
+                    // Presmerovanie s jazykom
+                    $targetUrl = $dbDomain . '/' . $this->requestNoLang;
+                    $status = 'showRealUrl_with_language';
+                    $debugInfo['status'] = $status;
+                    $debugInfo['target_url'] = $targetUrl;
+                } else {
+                    // Presmerovanie bez jazyka
+                    $dbDomainNormalized = rtrim($dbDomain, '/');
+                    $baseUrl = $data['protocol'] . $www . $data['domain'];
+                    $baseUrlNormalized = rtrim($baseUrl, '/');
                     
+                    $debugInfo['dbDomain'] = $dbDomain;
+                    $debugInfo['dbDomain_normalized'] = $dbDomainNormalized;
+                    $debugInfo['baseUrl'] = $baseUrl;
+                    $debugInfo['baseUrl_normalized'] = $baseUrlNormalized;
+                    
+                    // Ak dbDomain je len základná URL (rovná sa baseUrl), presmeruj na základnú URL
+                    if ($dbDomainNormalized === $baseUrlNormalized) {
+                        $targetUrl = $baseUrl . '/';
+                        $status = 'showRealUrl_without_language_redirect_to_base';
+                        $debugInfo['status'] = $status;
+                        $debugInfo['target_url'] = $targetUrl;
+                    } else {
+                        // Ak dbDomain obsahuje cestu, použij dbDomain tak ako je
+                        $targetUrl = $dbDomain;
+                        $status = 'showRealUrl_without_language_redirect_to_dbDomain';
+                        $debugInfo['status'] = $status;
+                        $debugInfo['target_url'] = $targetUrl;
+                    }
+                }
+                
+                // Kontrola či už sme na cieľovej URL (aby sa zabránilo nekonečnému redirectu)
+                $currentUrl = $this->originProtocol . ($this->domainWww ? 'www.' : '') . $this->domainNP . $this->request;
+                $targetUrlNormalized = rtrim($targetUrl, '/');
+                $currentUrlNormalized = rtrim($currentUrl, '/');
+                
+                $debugInfo['current_url'] = $currentUrl;
+                $debugInfo['current_url_normalized'] = $currentUrlNormalized;
+                $debugInfo['target_url_normalized'] = $targetUrlNormalized;
+                
+                // Ak už sme na cieľovej URL, neredirectujeme
+                if ($currentUrlNormalized === $targetUrlNormalized) {
+                    $status = 'showRealUrl_already_on_target_url';
+                    $debugInfo['status'] = $status;
+                    $redirectUrl = null;
+                } else {
+                    $redirectUrl = $targetUrl;
                 }
             }
         } else {
+            // Presmerovanie z dbDomain na wwwPath
             if ($toDbDomain == false) {
                 $data = $this->domainParser(WWW_PATH);
-                if ($this->urlLang($this->request) == $language && $data['lang'] == false && $this->rpc === null) {
-                    $newDomain = $data['protocol'] . $data['domain'] . $this->requestNoLang;
-                    $this->redirect($newDomain);
-                    exit;
-                }else{
-                    $newDomain = $data['protocol'] . $data['domain'] . $this->requestNoLang;
-                    $this->redirect($newDomain);
-                    exit;
+                
+                $debugInfo['branch'] = 'toDbDomain_false';
+                $debugInfo['WWW_PATH'] = WWW_PATH;
+                $debugInfo['parsed_data'] = $data;
+                $debugInfo['urlLang'] = $this->urlLang($this->request);
+                $debugInfo['language'] = $language;
+                $debugInfo['requestNoLang'] = $this->requestNoLang;
+                $debugInfo['rpc'] = $this->rpc;
+                
+                $redirectUrl = $data['protocol'] . $data['domain'] . $this->requestNoLang;
+                if ($this->urlLang($this->request) == $language && 
+                    $data['lang'] == false && 
+                    $this->rpc === null) {
+                    $status = 'lang_removal';
+                } else {
+                    $status = 'default_redirect';
                 }
+                $debugInfo['status'] = $status;
+                $debugInfo['redirect_url'] = $redirectUrl;
             }
         }
+        
+        $debugInfo['final_status'] = $status;
+        $debugInfo['final_redirect_url'] = $redirectUrl;
+        
+        // Debug output - odkomentovať pre debugovanie
+        // var_dump($debugInfo);
+        // exit;
+        
+        // Finálny redirect až na konci
+        if ($redirectUrl !== null) {
+            $this->redirect($redirectUrl);
+            exit;
+        }
+        
+        // Vrátiť debug info pre debugovanie (ak je potrebné)
+        return $debugInfo;
     }
 
     public function init()

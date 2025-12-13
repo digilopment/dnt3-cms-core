@@ -74,3 +74,4 @@ function dnt_log_deprecated(string $message, array $context = []): void
     Logger::getInstance()->deprecated($message, $context);
 }
 
+
