@@ -14,6 +14,7 @@ use DntLibrary\App\Autoloader;
 use DntLibrary\App\Client;
 use DntLibrary\Base\Autoload;
 use DntLibrary\Base\Dnt;
+use DntLibrary\Base\ErrorLogger;
 use DntLibrary\Base\Install;
 use DntLibrary\Base\Sessions;
 
@@ -62,6 +63,10 @@ class Bootstrap
 
     public function boot(): void
     {
+        // Initialize ErrorLogger early to catch all errors
+        require_once $this->path . 'dnt-library/framework/_Class/ErrorLogger.php';
+        ErrorLogger::init($this->path);
+        
         $this->registerDefaultGlobals();
         $path = $this->path;
         include $path . 'dnt-library/framework/_Class/Autoload.php';
