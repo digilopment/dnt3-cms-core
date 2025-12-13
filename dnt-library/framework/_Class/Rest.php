@@ -12,6 +12,7 @@ namespace DntLibrary\Base;
 
 use DntLibrary\Base\Dnt;
 use DntLibrary\Base\Settings;
+use DntLibrary\Base\Vendor;
 use DntLibrary\Base\Webhook;
 use DntView\Layout\Configurator;
 use function custom_modules;
@@ -21,13 +22,16 @@ class Rest
     protected Dnt $dnt;
     protected Webhook $webhook;
     protected Settings $settings;
+    protected Vendor $vendor;
     protected $post;
+    protected $escape;
 
     public function __construct()
     {
         $this->dnt = new Dnt();
         $this->webhook = new Webhook();
         $this->settings = new Settings();
+        $this->vendor = new Vendor();
     }
 
     /**
