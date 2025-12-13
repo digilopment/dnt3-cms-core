@@ -488,7 +488,7 @@ public function route($index)
                     $debugInfo['status'] = $status;
                     $redirectUrl = null;
                 } else {
-                    $redirectUrl = $null;
+                    $redirectUrl = null;
                 }
             }
         } else {
