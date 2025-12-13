@@ -9,11 +9,13 @@ class StaticRedirectModuleController
 {
     public function __construct()
     {
+
         $this->dnt = new Dnt();
     }
 
     public function run()
     {
+        exit;
         $article = new ArticleView();
         $id = $article->getStaticId();
         $name_url = $article->getPostParam('embed', $id);

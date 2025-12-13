@@ -16,10 +16,11 @@ class Configurator extends Webhook
 
     public function modulesRegistrator()
     {
+        
         $modulesRegistrator = array(
             'default' => array_merge(
                 array(),
-                $this->getSitemapModules('default')
+                $this->getSitemapModules(false)
             ),
             'skeleton' => array_merge(
                 array(),

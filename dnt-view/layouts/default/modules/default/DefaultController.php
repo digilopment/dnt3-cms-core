@@ -10,6 +10,10 @@ use DntLibrary\Base\MultyLanguage;
 
 class DefaultController extends BaseController
 {
+    protected $frontend;
+    protected $article;
+    protected $multiLanguage;
+
     public function __construct()
     {
         parent::__construct();

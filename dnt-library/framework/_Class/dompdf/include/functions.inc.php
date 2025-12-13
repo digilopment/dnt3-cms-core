@@ -1092,7 +1092,8 @@ if (function_exists('curl_init')) {
     function DOMPDF_fetch_url($url, &$headers = null)
     {
         $data = file_get_contents($url);
-        $headers = $http_response_header;
+        // Use http_get_last_response_headers() instead of deprecated $http_response_header
+        $headers = function_exists('http_get_last_response_headers') ? http_get_last_response_headers() : (isset($http_response_header) ? $http_response_header : []);
 
         return $data;
     }

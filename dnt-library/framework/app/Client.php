@@ -457,6 +457,7 @@ public function route($index)
                     $debugInfo['baseUrl'] = $baseUrl;
                     $debugInfo['baseUrl_normalized'] = $baseUrlNormalized;
                     
+                    
                     // Ak dbDomain je len základná URL (rovná sa baseUrl), presmeruj na základnú URL
                     if ($dbDomainNormalized === $baseUrlNormalized) {
                         $targetUrl = $baseUrl . '/';
