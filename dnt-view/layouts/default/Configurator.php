@@ -16,23 +16,32 @@ class Configurator extends Webhook
 
     public function modulesRegistrator()
     {
+        // Optimalizované: načítame všetky moduly naraz v jednom SQL dotaze
+        $services = array(
+            'default' => false,           // false = service = '' alebo NULL
+            'skeleton' => 'skeleton',
+            'static_redirect' => 'static_redirect',
+            'subscriber' => 'subscriber',
+        );
+        
+        $sitemapModules = $this->getSitemapModulesBatch($services);
         
         $modulesRegistrator = array(
             'default' => array_merge(
                 array(),
-                $this->getSitemapModules(false)
+                $sitemapModules['default'] ?? array()
             ),
             'skeleton' => array_merge(
                 array(),
-                $this->getSitemapModules('skeleton')
+                $sitemapModules['skeleton'] ?? array()
             ),
             'static_redirect' => array_merge(
                 array(),
-                $this->getSitemapModules('static_redirect')
+                $sitemapModules['static_redirect'] ?? array()
             ),
             'subscriber' => array_merge(
                 array(),
-                $this->getSitemapModules('subscriber')
+                $sitemapModules['subscriber'] ?? array()
             ),
         );
         return $modulesRegistrator;

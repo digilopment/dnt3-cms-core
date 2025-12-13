@@ -75,6 +75,48 @@ class Modul
         return $arr;
     }
 
+    /**
+     * Optimalizovaná metóda na načítanie viacerých modulov naraz z už načítanej sitemapy
+     * 
+     * @param array $services Asociatívne pole služieb, kde kľúč je názov služby a hodnota je filter (false pre default, string pre konkrétnu službu, '' pre static_view)
+     * @return array Asociatívne pole, kde kľúč je názov služby a hodnota je pole URL-iek
+     */
+    public function getSitemapModulesBatch(array $services)
+    {
+        // Inicializujeme výsledné pole pre všetky služby
+        $result = [];
+        foreach (array_keys($services) as $serviceName) {
+            $result[$serviceName] = [];
+        }
+
+        if ($this->sitemapUrl) {
+            foreach ($this->sitemapUrl as $item) {
+                $service = $item->service ?: '';
+                
+                // Nájdeme správnu službu pre tento záznam
+                foreach ($services as $serviceName => $serviceFilter) {
+                    $matches = false;
+                    if ($serviceFilter === false || $serviceFilter === null) {
+                        $matches = ($service === '' || $service === null);
+                    } elseif ($serviceFilter === 'static_view') {
+                        $matches = ($service === '');
+                    } else {
+                        $matches = ($service === $serviceFilter);
+                    }
+
+                    if ($matches) {
+                        if (!in_array($item->name_url, $result[$serviceName])) {
+                            $result[$serviceName][] = $item->name_url;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        return $result;
+    }
+
     protected function hasPattern($request, $pattern)
     {
         $request = explode('/', ltrim($request, '/'));
@@ -168,6 +210,7 @@ class Modul
         } else {
             $modulesRegistrator = $this->oldModulesRegistrator($client);
         }
+        
         /* foreach (array_keys($modulesRegistrator) as $index) {
           foreach ($modulesRegistrator[$index] as $key => $modulUrl) {
           if ($this->hasPattern($client->requestNoLang, '/' . $modulUrl) == $client->requestNoLang) {
@@ -187,6 +230,7 @@ class Modul
           }
           } */
         $module = $this->getPattern($client, $modulesRegistrator);
+
         if ($client->route(1) == '') {
             $default = $client->getSetting('startovaci_modul');
             $moduleUrl = $this->getSitemapModules($default);
@@ -201,6 +245,8 @@ class Modul
                 $module = DEAFULT_MODUL;
             }
         }
+
+
 
         $this->name = $module;
         $this->init = true;

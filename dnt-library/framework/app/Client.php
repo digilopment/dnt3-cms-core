@@ -488,7 +488,7 @@ public function route($index)
                     $debugInfo['status'] = $status;
                     $redirectUrl = null;
                 } else {
-                    $redirectUrl = $targetUrl;
+                    $redirectUrl = $null;
                 }
             }
         } else {
@@ -521,7 +521,9 @@ public function route($index)
         $debugInfo['final_redirect_url'] = $redirectUrl;
         
         // Debug output - odkomentovať pre debugovanie
-        // var_dump($debugInfo);
+        //
+        // 
+          //var_dump($debugInfo);
         // exit;
         
         // Finálny redirect až na konci

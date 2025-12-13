@@ -95,6 +95,130 @@ class Webhook
     }
 
     /**
+     * Optimalizovaná metóda na načítanie viacerých modulov naraz v jednom SQL dotaze
+     * 
+     * @param array $services Asociatívne pole služieb, kde kľúč je názov služby a hodnota je filter (false pre default, string pre konkrétnu službu, '' pre static_view)
+     * @param int|false $vendorId ID vendora, ak false použije sa aktuálny vendor
+     * @return array Asociatívne pole, kde kľúč je názov služby a hodnota je pole URL-iek
+     */
+    public function getSitemapModulesBatch(array $services, $vendorId = false)
+    {
+        $db = new DB();
+        $ml = new MultyLanguage();
+
+        if ($vendorId) {
+            $vendorId = $vendorId;
+        } else {
+            $vendorId = $this->vendor->getId();
+        }
+
+        // Vytvoríme podmienky pre jednotlivé služby
+        $serviceConditions = [];
+        foreach ($services as $serviceName => $serviceFilter) {
+            if ($serviceFilter === false || $serviceFilter === null) {
+                // Pre default službu (service = '' alebo NULL)
+                $serviceConditions[] = "(`dnt_posts`.`service` = '' OR `dnt_posts`.`service` IS NULL)";
+            } elseif ($serviceFilter === 'static_view') {
+                $serviceConditions[] = "`dnt_posts`.`service` = ''";
+            } else {
+                $serviceConditions[] = "`dnt_posts`.`service` = '" . $db->escape($serviceFilter) . "'";
+            }
+        }
+
+        $serviceWhere = !empty($serviceConditions) ? '(' . implode(' OR ', $serviceConditions) . ')' : '';
+
+        // Query s prekladmi (pre viacjazyčné verzie)
+        $query = "
+            SELECT `dnt_posts`.`service`, `dnt_posts`.`name_url`, `dnt_translates`.`translate`
+            FROM `dnt_posts` 
+            LEFT JOIN `dnt_translates` ON `dnt_posts`.`id_entity` = `dnt_translates`.`translate_id` 
+            WHERE `dnt_posts`.`type` = 'sitemap' 
+            AND `dnt_translates`.`type` = 'name_url' 
+            AND `dnt_posts`.`show` > '0' 
+            AND `dnt_posts`.`vendor_id` = '" . $vendorId . "'
+            " . ($serviceWhere ? "AND " . $serviceWhere : "") . "
+            GROUP BY `dnt_posts`.`name_url`, `dnt_posts`.`service`
+        ";
+
+        // Query bez prekladov (pre jednoduché verzie)
+        $query2 = "
+            SELECT `dnt_posts`.`service`, `dnt_posts`.`name_url`
+            FROM `dnt_posts` 
+            WHERE `dnt_posts`.`type` = 'sitemap' 
+            AND `dnt_posts`.`show` > '0' 
+            AND `dnt_posts`.`vendor_id` = '" . $vendorId . "'
+            " . ($serviceWhere ? "AND " . $serviceWhere : "") . "
+            GROUP BY `dnt_posts`.`name_url`, `dnt_posts`.`service`
+        ";
+
+        // Inicializujeme výsledné pole pre všetky služby
+        $result = [];
+        foreach (array_keys($services) as $serviceName) {
+            $result[$serviceName] = [];
+        }
+
+        if ($ml->countActiveLangs > 1) {
+            if ($db->num_rows($query) > 0) {
+                foreach ($db->get_results($query) as $row) {
+                    $service = $row['service'] ?: '';
+                    $nameUrl = $row['name_url'];
+                    $translate = isset($row['translate']) ? $row['translate'] : '';
+
+                    // Nájdeme správnu službu pre tento záznam
+                    foreach ($services as $serviceName => $serviceFilter) {
+                        $matches = false;
+                        if ($serviceFilter === false || $serviceFilter === null) {
+                            $matches = ($service === '' || $service === null);
+                        } elseif ($serviceFilter === 'static_view') {
+                            $matches = ($service === '');
+                        } else {
+                            $matches = ($service === $serviceFilter);
+                        }
+
+                        if ($matches) {
+                            if (!in_array($nameUrl, $result[$serviceName])) {
+                                $result[$serviceName][] = $nameUrl;
+                            }
+                            if ($translate != '' && !in_array($translate, $result[$serviceName])) {
+                                $result[$serviceName][] = $translate;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        } else {
+            if ($db->num_rows($query2) > 0) {
+                foreach ($db->get_results($query2) as $row) {
+                    $service = $row['service'] ?: '';
+                    $nameUrl = $row['name_url'];
+
+                    // Nájdeme správnu službu pre tento záznam
+                    foreach ($services as $serviceName => $serviceFilter) {
+                        $matches = false;
+                        if ($serviceFilter === false || $serviceFilter === null) {
+                            $matches = ($service === '' || $service === null);
+                        } elseif ($serviceFilter === 'static_view') {
+                            $matches = ($service === '');
+                        } else {
+                            $matches = ($service === $serviceFilter);
+                        }
+
+                        if ($matches) {
+                            if (!in_array($nameUrl, $result[$serviceName])) {
+                                $result[$serviceName][] = $nameUrl;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      *
      * @param type $postId
      * @param type $config
