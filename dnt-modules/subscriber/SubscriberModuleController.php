@@ -8,8 +8,8 @@ use DntLibrary\Base\Rest;
 class SubscriberModuleController
 {
     protected $subscriber;
-
-    protected $dnt;
+    protected $rest;
+    protected $customReferers;
 
     public function __construct()
     {

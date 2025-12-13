@@ -7,6 +7,8 @@ use DntLibrary\Base\Dnt;
 
 class StaticRedirectModuleController
 {
+    protected $dnt;
+
     public function __construct()
     {
 
@@ -15,7 +17,6 @@ class StaticRedirectModuleController
 
     public function run()
     {
-        exit;
         $article = new ArticleView();
         $id = $article->getStaticId();
         $name_url = $article->getPostParam('embed', $id);
