@@ -30,6 +30,7 @@ get_top(); ?>
                   <tr>
                      <th>#</th>
                      <th>id</th>
+                     <th>lang</th>
                      <th>Názov webu</th>
                      <th>Administrácia webu</th>
                      <th>Zobrazenie na pracovnej adrese</th>
@@ -48,10 +49,61 @@ get_top(); ?>
                         $email = $adminUser->data('admin', 'email');
                         $vendorId = $row['id_entity'];
                         $adminUrl = $webUrl . '/' . ADMIN_URL_2 . '/index.php?src=login&action=auto-login&domain_change=1&admin_id=' . $email . '&id_entity=' . $vendorId;
+                        
+                        // Extrahuj doménu z real_url pre farbu pozadia
+                        $domainForColor = '';
+                        if (!empty($realUrl)) {
+                            $urlParts = parse_url($realUrl);
+                            if (isset($urlParts['scheme']) && isset($urlParts['host'])) {
+                                $pathParts = isset($urlParts['path']) ? explode('/', trim($urlParts['path'], '/')) : [];
+                                // Odstráň jazyk ak existuje (posledný 2-znakový segment)
+                                if (!empty($pathParts)) {
+                                    $lastPart = end($pathParts);
+                                    if (strlen($lastPart) == 2 && ctype_alpha($lastPart)) {
+                                        array_pop($pathParts);
+                                    }
+                                }
+                                $domainForColor = $urlParts['scheme'] . '://' . $urlParts['host'];
+                                if (!empty($pathParts)) {
+                                    $domainForColor .= '/' . implode('/', $pathParts);
+                                }
+                            } else {
+                                $domainForColor = $realUrl;
+                            }
+                        }
+                        
+                        // Generuj farbu z domény pomocou hash
+                        // Podfarbenie sa aplikuje len ak je doména nastavená A show_real_url je 1 (áno)
+                        $bgColorStyle = '';
+                        if (!empty($domainForColor) && isset($row['show_real_url']) && $row['show_real_url'] == 1) {
+                            $hash = md5($domainForColor);
+                            // Extrahuj RGB hodnoty z hash (prvých 6 znakov)
+                            $r = hexdec(substr($hash, 0, 2));
+                            $g = hexdec(substr($hash, 2, 2));
+                            $b = hexdec(substr($hash, 4, 2));
+                            // Použij opacity 0.1
+                            $bgColorStyle = 'style="background-color: rgba(' . $r . ', ' . $g . ', ' . $b . ', 0.1);"';
+                        }
+                        // Ak nie je doména nastavená alebo show_real_url je 0, $bgColorStyle zostane prázdny = biely background bez podfarbenia
                         ?>
-                  <tr>
+                  <tr <?php echo $bgColorStyle; ?>>
                      <td><?php echo $i; ?></td>
                      <td><?php echo $row['id_entity']; ?></td>
+                     <td>
+                        <?php
+                        // Získaj defaultný jazyk z nastavení (key = language)
+                        $vendorId = $row['id_entity'];
+                        $defaultLangQuery = "SELECT value FROM dnt_settings WHERE `key` = 'language' AND vendor_id = '" . $db->escape($vendorId) . "' LIMIT 1";
+                        $defaultLang = '';
+                        if ($db->num_rows($defaultLangQuery) > 0) {
+                            $defaultLangResult = $db->get_results($defaultLangQuery);
+                            if (!empty($defaultLangResult) && is_array($defaultLangResult) && isset($defaultLangResult[0]['value'])) {
+                                $defaultLang = strtoupper(trim($defaultLangResult[0]['value']));
+                            }
+                        }
+                        echo $defaultLang ? htmlspecialchars($defaultLang) : '-';
+                        ?>
+                     </td>
                      <td style="max-width: 500px;"><b><a target="_blank" href="<?php echo $adminUrl; ?>"><?php echo $row['name']; ?></a></b></td>
                      <td><a href="<?php echo $adminUrl; ?>"><i class="fa fa-pencil bg-blue action"></i></a></td>
                      <td>
@@ -87,7 +139,7 @@ get_top(); ?>
                                              <div class="tab-content" style="border: 0px solid; padding: 0px;">
                                                 <div class="tab-pane active" id="home-lang">
                                                    <p class="lead dnt_bold">
-                                                      <span class="dnt_lang">Defaultný jazyk</span>
+                                                      <span class="dnt_lang">Defaultný jazyk (<?php echo $defaultLang; ?>)</span>
                                                    </p>
                                                    <br/>
                                                    <div class="row">
