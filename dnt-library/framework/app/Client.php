@@ -390,7 +390,9 @@ public function route($index)
         $redirectUrl = null;
         $debugInfo = [];
         $status = 'no_redirect';
-        
+
+        $toDbDomain = (bool)$toDbDomain;
+
         if ($toDbDomain || $dbDomain == $wwwPath || $dbDomain == rtrim($wwwPath . $this->urlLang(), '/')) {
             if ($toDbDomain && empty($dbDomain)) {
                 die('<h2>Externá doména neexistuje, alebo nie je priradená k webu.</h2>Prosím vypnite v nastaveniach permanentné presmerovanie na externú doménu, alebo pridajte externú doménu.');
@@ -416,6 +418,7 @@ public function route($index)
             $debugInfo['rpc'] = $this->rpc;
             $debugInfo['route_0'] = $this->route(0);
             $debugInfo['MULTY_LANGUAGE'] = defined('MULTY_LANGUAGE') ? MULTY_LANGUAGE : false;
+
 
             // Kontrola a presmerovanie na správny protokol (http/https) ak je toDbDomain true
             if ($toDbDomain && $this->originProtocol !== $data['protocol']) {
@@ -504,8 +507,11 @@ public function route($index)
                 }
             }
         } else {
+
+            $redirectUrl = null;
             // Presmerovanie z dbDomain na wwwPath
-            if ($toDbDomain == false) {
+            /*if ($toDbDomain == false) {
+
                 $data = $this->domainParser(WWW_PATH);
                 
                 $debugInfo['branch'] = 'toDbDomain_false';
@@ -516,7 +522,7 @@ public function route($index)
                 $debugInfo['requestNoLang'] = $this->requestNoLang;
                 $debugInfo['rpc'] = $this->rpc;
                 
-                $redirectUrl = $data['protocol'] . $data['domain'] . $this->requestNoLang;
+                $redirectUrl = null; // $data['protocol'] . $data['domain'] . $this->requestNoLang;
                 if ($this->urlLang($this->request) == $language && 
                     $data['lang'] == false && 
                     $this->rpc === null) {
@@ -526,7 +532,7 @@ public function route($index)
                 }
                 $debugInfo['status'] = $status;
                 $debugInfo['redirect_url'] = $redirectUrl;
-            }
+            }*/
         }
         
         $debugInfo['final_status'] = $status;
