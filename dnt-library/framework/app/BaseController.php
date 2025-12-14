@@ -280,7 +280,6 @@ class BaseController
 
     protected function modulConfigurator($data, $modul = false)
     {
-        //var_dump('sss');exit;
         if ($modul && $modul !== false && $modul !== '') {
             $data['article']['service'] = $modul;
             $confFile = 'dnt-view/layouts/' . $this->vendor->getLayout() . '/modules/' . $modul . '/' . $this->confFile;

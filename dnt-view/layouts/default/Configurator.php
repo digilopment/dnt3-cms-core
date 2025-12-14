@@ -44,6 +44,7 @@ class Configurator extends Webhook
                 $sitemapModules['subscriber'] ?? array()
             ),
         );
+        
         return $modulesRegistrator;
     }
 

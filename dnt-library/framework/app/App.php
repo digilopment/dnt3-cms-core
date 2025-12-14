@@ -42,7 +42,7 @@ class App
         $this->client->setDomain(
             $this->client->realUrl,
             $this->client->wwwPath,
-            $this->client->getSetting('still_redirect_to_domain'),
+            (bool) $this->client->getSetting('still_redirect_to_domain'),
             $this->client->getSetting('language')
         );
         $this->post->init();
