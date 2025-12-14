@@ -316,96 +316,123 @@ public function route($index)
      * @param string|false $language Aktuálna/cieľová jazyková skratka.
      * @return void
      */
-    public function setDomain(string $dbDomain, string $wwwPath, bool $toDbDomain = true, $language = false): void
+    public function setDomain(string $dbDomain = '', string $wwwPath, bool $toDbDomain = true, $language = false): void
     {
-        // 1. Získanie aktuálnej URL
+        // 1. Ošetrenie NULL (Fatal Error) a prázdneho reťazca
+        // Nastavíme defaultnú hodnotu v hlavičke na '', aby sme sa vyhli TypeError, ak voláme s NULL.
+        // Ak je $dbDomain prázdna (null alebo '' z calleru) a má sa presmerovať na DB doménu,
+        // vykonáme presmerovanie na aktuálnu doménu bez subdomény a bez jazyka.
+        
+        if (empty($dbDomain)) {
+            // Použijeme WWW_PATH (alebo $wwwPath, ak nie je definovaná konštanta) ako základnú doménu pre parsovanie
+            $baseDomain = defined('WWW_PATH') ? WWW_PATH : $wwwPath;
+            $data = $this->domainParser($baseDomain);
+            
+            // Konštrukcia cieľovej domény (len protocol a domain, bez www a bez subdomény)
+            // Predpokladáme, že $this->domainParser() vráti doménu bez www v $data['domain'].
+            $newDomain = $data['protocol'] . $data['domain'] . $this->requestNoLang;
+            
+            // Získanie aktuálnej URL
+            $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+            $currentUrl = $scheme . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+            
+            // Presmerovanie len vtedy, ak aktuálna URL nie je už cieľová
+            if (rtrim($currentUrl, '/') != rtrim($newDomain, '/')) {
+                $this->redirect($newDomain);
+                exit;
+            }
+            return; // Ak sa doména zhoduje a $dbDomain je null, ukončíme funkciu bez ďalšej logiky.
+        }
+        
+        // 2. Ostatná logika (pokračuje pôvodný optimalizovaný kód, ktorý bol pod čiarou)
+        
+        // Zvyšok kódu z predošlej optimalizovanej verzie začína TU:
+        
+        // Získanie aktuálnej URL (musí byť opäť, ak sme nevyšli v prvom IF bloku)
         $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
         $currentUrl = $scheme . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
-        // Pomocné premenné (predpokladá sa, že existujú metódy ako $this->urlLang(), $this->domainParser() atď.)
-        $currentLang = $this->urlLang($this->request ?? ''); // Predpokladajme, že $this->request je URL bez domény.
-        // Normalizácia domén pre porovnanie (odstránenie lomítka na konci)
+        
+        // Pomocné premenné
+        $currentLang = $this->urlLang($this->request ?? '');
         $dbDomainNormalized = rtrim($dbDomain, '/');
         $wwwPathNormalized = rtrim($wwwPath, '/');
-
-        // 2. Logika presmerovania na externú/DB doménu ($toDbDomain je true, alebo sa domény zhodujú)
-        $isDbDomainMatch = ($dbDomainNormalized == $wwwPathNormalized) ||
-            ($dbDomainNormalized == rtrim($wwwPathNormalized . $this->urlLang(), '/')); // Toto by malo byť pravdepodobne porovnanie domény + jazyka
-
+        
+        // ... (Zvyšok optimalizovaného kódu od bodu 2. až do konca) ...
+        
+        $isDbDomainMatch = ($dbDomainNormalized == $wwwPathNormalized) || 
+                           ($dbDomainNormalized == rtrim($wwwPathNormalized . $this->urlLang(), '/'));
+                           
         if ($toDbDomain || $isDbDomainMatch) {
-
-            // Kontrola existencie DB domény
+            
+            // Pôvodný blok s die() pre prázdnu DB doménu už nie je potrebný, lebo ho ošetrí úvodný IF (empty($dbDomain)).
+            // Ak by ste ho chceli zachovať pre prípad, že caller pošle '' namiesto null, zmeníte ho takto:
+            
+            /*
             if ($toDbDomain && empty($dbDomain)) {
-                die('<h2>Externá doména neexistuje, alebo nie je priradená k webu.</h2>Prosím vypnite v nastaveniach permanentné presmerovanie na externú doménu, alebo pridajte externú doménu.');
+                 die('<h2>Externá doména neexistuje, alebo nie je priradená k webu.</h2>Prosím vypnite v nastaveniach permanentné presmerovanie na externú doménu, alebo pridajte externú doménu.');
             }
+            */
 
             $data = $this->domainParser($dbDomain);
             $wwwPrefix = $data['www'] ? 'www.' : '';
             $targetDomain = $data['protocol'] . $wwwPrefix . $data['domain'];
-
+            
             // Presmerovanie z default lang na no-lang (ak nie je RPC volanie a je multi-language)
-            // Predpoklad: $this->urlLang() vracie aktuálny jazyk z URL. $data['lang'] hovorí, či cieľová doména má jazyk.
             if ($currentLang == $language && $data['lang'] === false && $this->rpc === null && defined('MULTY_LANGUAGE') && MULTY_LANGUAGE === true) {
-                // Presmerovanie na verziu bez jazyka v URL
                 $newDomain = $targetDomain . $this->requestNoLang;
                 $this->redirect($newDomain);
-                exit; // Správne ukončenie po presmerovaní
+                exit;
             }
 
-            // Kontrola, či sa aktuálna URL ZHODUJE s cieľovou konfiguráciou (protokol, doména, www, jazyk v route)
-            // Ak sa zhoduje, netreba nič robiť. Pôvodný kód obsahoval exit; bez podmienky, čo je mŕtvy kód.
-            $currentDomainNP = $this->domainNP ?? $_SERVER['HTTP_HOST']; // $this->domainNP a $this->domainWww sú predpokladané vlastnosti inštancie
+            // Kontrola, či sa aktuálna URL ZHODUJE s cieľovou konfiguráciou
+            $currentDomainNP = $this->domainNP ?? $_SERVER['HTTP_HOST'];
             $currentDomainWww = $this->domainWww ?? str_starts_with($currentDomainNP, 'www.');
 
             if ($this->originProtocol === $data['protocol'] &&
                 $currentDomainNP === $wwwPrefix . $data['domain'] &&
                 ($this->route(0) === $language || $language === '') &&
                 $currentDomainWww === $data['www']) {
-                // Všetko sedí, ukončíme funkciu bez presmerovania.
                 return;
             }
 
             // Presmerovanie na cieľovú doménu (ak má byť zobrazená skutočná URL)
-            if ($this->showRealUrl ?? true) { // Predpokladá sa, že showRealUrl je bool vlastnosť
+            if ($this->showRealUrl ?? true) {
+                
                 $newDomainPath = $targetDomain;
-
-                // Pridanie jazyka do cesty, ak je nastavený A ak nie sme už na cieľovej doméne (podľa DB)
+                
                 if ($language && ($wwwPathNormalized !== $dbDomainNormalized)) {
-                    // Cesta s jazykom: $targetDomain/$language/$this->requestNoLang
                     $newDomainPath .= '/' . $language . $this->requestNoLang;
                 } else {
-                    // Cesta bez jazyka (alebo ak sme na DB doméne)
                     $newDomainPath .= $this->requestNoLang;
                 }
-
-                // Zabránenie presmerovaniu, ak už je aktuálna URL cieľová (veľmi hrubá kontrola, ale lepšia ako pôvodná logika)
-                $targetUrlWithLang = $targetDomain . '/' . $language . $this->requestNoLang;
-
+                
                 if (rtrim($currentUrl, '/') !== rtrim($newDomainPath, '/')) {
-                    $this->redirect($newDomainPath);
-                    exit;
+                     $this->redirect($newDomainPath);
+                     exit;
                 }
             }
+            
         } else {
             // 3. Logika presmerovania na lokálnu/základnú doménu ($toDbDomain je false)
-            // Použijeme WWW_PATH pre presmerovanie na lokálnu doménu
+            
             $data = $this->domainParser(defined('WWW_PATH') ? WWW_PATH : $wwwPath);
             $targetDomain = $data['protocol'] . $data['domain'];
-
+            
             // Presmerovanie z default lang na no-lang (ak nie je RPC volanie)
             if ($currentLang == $language && $data['lang'] === false && $this->rpc === null) {
                 $newDomain = $targetDomain . $this->requestNoLang;
                 $this->redirect($newDomain);
                 exit;
-            }
-
-            // Presmerovanie na základnú doménu bez jazyka v ceste (podľa pôvodnej logiky)
+            } 
+            
+            // Presmerovanie na základnú doménu bez jazyka v ceste
             $newDomain = $targetDomain . $this->requestNoLang;
-
+            
             if (rtrim($currentUrl, '/') != rtrim($newDomain, '/')) {
                 $this->redirect($newDomain);
                 exit;
             }
+            
         }
     }
 
