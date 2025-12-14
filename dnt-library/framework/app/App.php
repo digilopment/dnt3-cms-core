@@ -39,11 +39,10 @@ class App
 
     public function run()
     {
-        //var_dump($this->vendor->getColumn('show_real_url'));
         $this->client->setDomain(
             $this->client->realUrl,
             $this->client->wwwPath,
-            $this->vendor->getColumn('show_real_url'),
+            $this->client->getSetting('still_redirect_to_domain'),
             $this->client->getSetting('language')
         );
         $this->post->init();
