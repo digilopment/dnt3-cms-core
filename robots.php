@@ -16,6 +16,8 @@ use DntLibrary\Base\Vendor;
 
 (new class
 {
+    protected Vendor $vendor;
+
     public function __construct()
     {
         require 'dnt-library/framework/app/Bootstrap.php';
