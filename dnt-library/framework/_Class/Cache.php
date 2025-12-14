@@ -71,29 +71,39 @@ class Cache
         $projectRoot = null;
         
         // Method 1: Use SCRIPT_FILENAME to find project root
-        // If script is in dnt-admin/, we need to go up one level to find project root
         if (isset($_SERVER['SCRIPT_FILENAME'])) {
             $scriptPath = dirname($_SERVER['SCRIPT_FILENAME']);
             $scriptPathReal = realpath($scriptPath);
             
             if ($scriptPathReal !== false) {
-                // Check if we're in admin subdirectory (dnt-admin)
-                if (strpos($scriptPathReal, '/dnt-admin') !== false || strpos($scriptPathReal, '\\dnt-admin') !== false) {
-                    // Go up one level to project root
-                    $projectRoot = dirname($scriptPathReal);
-                } else {
+                // Check if we're in a subdirectory (dnt-admin, dnt-api, dnt-view, etc.)
+                $subdirs = ['dnt-admin', 'dnt-api', 'dnt-view', 'dnt-jobs', 'dnt-install'];
+                $isInSubdir = false;
+                
+                foreach ($subdirs as $subdir) {
+                    if (strpos($scriptPathReal, '/' . $subdir . '/') !== false || 
+                        strpos($scriptPathReal, '\\' . $subdir . '\\') !== false ||
+                        basename($scriptPathReal) === $subdir) {
+                        // Go up one level to project root
+                        $projectRoot = dirname($scriptPathReal);
+                        $isInSubdir = true;
+                        break;
+                    }
+                }
+                
+                if (!$isInSubdir) {
                     // Already in project root or other location
                     $projectRoot = $scriptPathReal;
                 }
                 
                 // Verify we found the correct project root by checking for main index.php
-                // (the root index.php, not dnt-admin/index.php)
                 if ($projectRoot && file_exists($projectRoot . '/index.php')) {
-                    // Make sure we're not still in dnt-admin
-                    if (strpos($projectRoot, '/dnt-admin') === false && strpos($projectRoot, '\\dnt-admin') === false) {
+                    // Make sure we're not still in a subdirectory
+                    $basename = basename($projectRoot);
+                    if (!in_array($basename, $subdirs)) {
                         $projectRoot = realpath($projectRoot);
                     } else {
-                        // Still in dnt-admin, go up one more level
+                        // Still in subdirectory, go up one more level
                         $projectRoot = dirname($projectRoot);
                         if (file_exists($projectRoot . '/index.php')) {
                             $projectRoot = realpath($projectRoot);
