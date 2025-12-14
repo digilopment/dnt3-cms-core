@@ -13,14 +13,13 @@ class WeatherForecastApi
     const API_SCARPER = 'soit-sk/scraper-shmu-observations';
     const API_KEY = 'vSXgYJi4eENlfbXJKsCl';
 
+    protected Rest $rest;
+    protected Dnt $dnt;
     protected $serviceUrl;
-
     protected $content;
-
     protected $endPoint;
-
     protected $getCity;
-
+    protected $query;
     protected $allowReferers = [];
 
     public function __construct()
@@ -83,8 +82,7 @@ class WeatherForecastApi
 
     protected function allowReferers()
     {
-
-        $referer = $_SERVER['HTTP_REFERER'];
+        $referer = $_SERVER['HTTP_REFERER'] ?? '';
         $this->allowReferers = array(
             'digilopment',
             'query',

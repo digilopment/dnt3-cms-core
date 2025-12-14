@@ -62,7 +62,9 @@ class ServicesController extends AdminController
         $ids = [];
         $metaData = [];
         foreach ($sourceItems as $item) {
-            $ids[] = $item['id_entity'];
+            if (isset($item['id_entity'])) {
+                $ids[] = $item['id_entity'];
+            }
         }
         $idsIn = join(',', $ids);
         if ($idsIn) {
@@ -72,7 +74,10 @@ class ServicesController extends AdminController
         $final = [];
         foreach ($sourceItems as $key => $item) {
             $final[$key] = $item;
-            $postId = $item['id_entity'];
+            $postId = $item['id_entity'] ?? null;
+            if (!$postId) {
+                continue;
+            }
             $final[$key]['price'] = isset($metaData['keys'][$postId]['price']) && $metaData['keys'][$postId]['price']['show'] == 1 ? $metaData['keys'][$postId]['price']['value'] : false;
             $final[$key]['isInStock'] = isset($metaData['keys'][$postId]['isInStock']) && $metaData['keys'][$postId]['isInStock']['show'] == 1 ? $metaData['keys'][$postId]['isInStock']['value'] : false;
             $final[$key]['variant'] = isset($metaData['keys'][$postId]['variant']) && $metaData['keys'][$postId]['variant']['show'] == 1 ? $metaData['keys'][$postId]['variant']['value'] : false;

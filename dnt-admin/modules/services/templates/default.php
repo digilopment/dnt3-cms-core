@@ -6,7 +6,7 @@ get_top();
 get_top_html();
 
 $postId = $data['post_id'];
-$groupId = $data['item'][0]['group_id'];
+$groupId = (isset($data['item'][0]) && isset($data['item'][0]['group_id'])) ? $data['item'][0]['group_id'] : '';
 $rest = $data['rest'];
 $dnt = $data['dnt'];
 $article = $data['article'];
@@ -47,21 +47,27 @@ $actionUrl = 'index.php?src=services&included=' . $service . '&filter=' . $rest-
                     <ul class="nav nav-tabs">
                         <?php
                         foreach ($data['item'] as $variant) {
+                            if (!isset($variant['type']) || !isset($variant['cat_id']) || !isset($variant['id_entity']) || !isset($variant['service'])) {
+                                continue;
+                            }
                             $srvUrl = 'index.php?src=services&included=' . $variant['type'] . '&filter=' . $variant['cat_id'] . '&post_id=' . $variant['id_entity'] . '&service=' . $variant['service'] . '';
                             ?>
-                            <li class="<?php echo ($variant['id_entity'] == $postId) ? 'active' : false; ?>">
-                                <a href="<?php echo $srvUrl; ?>"><?php echo $variant['name']; ?> <br/> <?php echo $variant['variant']; ?>
-                                    - <small class="text-center"><?php echo $variant['type']; ?></small>
+                            <li class="<?php echo (isset($variant['id_entity']) && $variant['id_entity'] == $postId) ? 'active' : false; ?>">
+                                <a href="<?php echo $srvUrl; ?>"><?php echo $variant['name'] ?? ''; ?> <br/> <?php echo $variant['variant'] ?? ''; ?>
+                                    - <small class="text-center"><?php echo $variant['type'] ?? ''; ?></small>
                                 </a>
                             </li>
                         <?php } ?>
                         <?php
                         foreach ($data['variants'] as $variant) {
+                            if (!isset($variant['type']) || !isset($variant['cat_id']) || !isset($variant['id_entity']) || !isset($variant['service'])) {
+                                continue;
+                            }
                             $srvUrl = 'index.php?src=services&included=' . $variant['type'] . '&filter=' . $variant['cat_id'] . '&post_id=' . $variant['id_entity'] . '&service=' . $variant['service'] . '';
                             ?>
-                            <li class="<?php echo ($variant['id_entity'] == $postId) ? 'active' : false; ?>">
-                                <a href="<?php echo $srvUrl; ?>"><?php echo $variant['name']; ?> <br/> <?php echo $variant['variant']; ?>
-                                    - <small><?php echo $variant['type']; ?></small>
+                            <li class="<?php echo (isset($variant['id_entity']) && $variant['id_entity'] == $postId) ? 'active' : false; ?>">
+                                <a href="<?php echo $srvUrl; ?>"><?php echo $variant['name'] ?? ''; ?> <br/> <?php echo $variant['variant'] ?? ''; ?>
+                                    - <small><?php echo $variant['type'] ?? ''; ?></small>
                                 </a>
                             </li>
                         <?php } ?>

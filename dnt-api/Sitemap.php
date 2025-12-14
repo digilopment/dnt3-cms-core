@@ -11,6 +11,8 @@ use DntLibrary\Base\Rest;
 
 class SitemapApi
 {
+    protected Navigation $navigation;
+
     public function __construct()
     {
         $this->navigation = new Navigation();

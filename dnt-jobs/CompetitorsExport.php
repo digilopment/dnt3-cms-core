@@ -8,6 +8,8 @@ use DntLibrary\Base\Vendor;
 
 class CompetitorsExportJob
 {
+    protected Dnt $dnt;
+
     public function __construct()
     {
         $this->dnt = new Dnt();

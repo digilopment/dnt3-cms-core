@@ -1109,10 +1109,12 @@ if (function_exists('curl_init')) {
         if (function_exists('http_get_last_response_headers')) {
             $headers = http_get_last_response_headers();
         } else {
-            // Suppress deprecation warning for $http_response_header in PHP 8.2+
-            // The variable is automatically created by PHP when file_get_contents() is used with HTTP/HTTPS
-            // Using @ to suppress deprecation warning when accessing the variable
-            $headers = @(isset($http_response_header) ? $http_response_header : []);
+            // For PHP 8.2+, avoid using deprecated $http_response_header
+            // Set headers to empty array if http_get_last_response_headers() is not available
+            // The headers are not critical for DOMPDF functionality
+            $headers = [];
+            // Note: $http_response_header is deprecated in PHP 8.2+
+            // If headers are needed, install pecl_http extension for http_get_last_response_headers()
         }
 
         return $data;
