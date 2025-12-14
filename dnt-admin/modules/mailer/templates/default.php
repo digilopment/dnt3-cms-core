@@ -358,7 +358,7 @@ $countPages = $data['countPages'];
                                         <input type="submit" name="odoslat" value="Upraviť" class="label-primary bg-green" />
                                     </td>
                                     <td>
-                                        <a href="<?php echo $adminMailer->url('del_cat', $cat_id, false, false, $post_id, $page) ?>"><i class="fa fa-times bg-red action"></i></a>
+                                        <a href="<?php echo $adminMailer->url('del_cat', $row['cat_id'], false, false, $row['id_entity'], $page) ?>"><i class="fa fa-times bg-red action"></i></a>
                                     </td>
                                 </tr>
                             </form>

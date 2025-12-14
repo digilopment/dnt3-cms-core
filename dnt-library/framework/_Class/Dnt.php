@@ -66,8 +66,11 @@ class Dnt
         }
 
         if ($this->db->num_rows($query) > 0) {
-            foreach ($this->db->get_results($query) as $row) {
-                $return = $row["MAX(`" . $column . "`)"];
+            $results = $this->db->get_results($query);
+            if (is_array($results)) {
+                foreach ($results as $row) {
+                    $return = $row["MAX(`" . $column . "`)"];
+                }
             }
         }
         return $return;

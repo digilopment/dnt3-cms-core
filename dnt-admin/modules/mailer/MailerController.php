@@ -421,6 +421,7 @@ class MailerController extends AdminController
             $senderMethod = $this->rest->post('senderMethod');
             $senderName = $this->rest->post('senderName');
             $senderEmail = $this->rest->post('senderEmail');
+            $content = '';
 
             if ($this->rest->post('template') != '') {
                 $id = $this->rest->post('template');
