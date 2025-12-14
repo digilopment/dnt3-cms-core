@@ -6,6 +6,8 @@ use DntLibrary\App\Curl;
 
 class CurlTest
 {
+    protected $curl;
+
     public function __construct()
     {
         $this->curl = new Curl();

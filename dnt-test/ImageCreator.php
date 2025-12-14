@@ -6,6 +6,8 @@ use DntLibrary\Base\Dnt;
 
 class ImageCreatorTest
 {
+    protected $dnt;
+
     public function __construct()
     {
         $this->dnt = new Dnt();
@@ -22,7 +24,8 @@ class ImageCreatorTest
         }
         $source_file_name = (file_exists($file)) ? $file : 'data/g2ao-splnomocnenec_zlatice_kusnirovej_roman_kvasnica_.jpg';
         $source_file_modified = (file_exists($source_file_name)) ? filemtime($source_file_name) : 0;
-        $source_ext = @strtolower(array_pop(explode('.', $source_file_name)));
+        $fileParts = explode('.', $source_file_name);
+        $source_ext = @strtolower(array_pop($fileParts));
         $mime_types = array('png' => 'image/png', 'jpe' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'jpg' => 'image/jpeg', 'gif' => 'image/gif');
         $mime_type = false;
         if (array_key_exists($source_ext, $mime_types)) {

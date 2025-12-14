@@ -46,6 +46,10 @@ class NewsletterCampaignTest
     protected $countSeenLogs = 0;
 
     protected $countDefaultUrl = 0;
+    protected $rest;
+    protected $json;
+    protected $countLogs;
+    protected $countLogoutedUrl;
 
     public function __construct()
     {

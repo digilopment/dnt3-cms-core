@@ -7,6 +7,7 @@ use DntLibrary\App\Stream;
 class StreamContentTest
 {
     protected $pdf;
+    protected $stream;
 
     protected $content = 'https://static.markiza.sk/media/a501/image/file/21/1747/g2ao.splnomocnenec_zlatice_kusnirovej_roman_kvasnica_.jpg';
 

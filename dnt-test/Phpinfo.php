@@ -2,7 +2,7 @@
 
 namespace DntTest;
 
-class PHPInfoTest
+class PhpinfoTest
 {
     public function run()
     {

@@ -11,6 +11,18 @@ use DntLibrary\Base\Vendor;
 
 class PrepareCacheByUrlJob
 {
+    protected $vendor;
+    protected $modul;
+    protected $rest;
+    protected $categories;
+    protected $posts;
+    protected $articleView;
+    protected $singlVendor;
+    protected $vendors;
+    protected $context;
+    protected $vendorId;
+    protected $finaUrls;
+
     public function __construct()
     {
         $this->vendor = new Vendor();
@@ -95,6 +107,7 @@ class PrepareCacheByUrlJob
 
     public function initVendor()
     {
+        $finalUrl = [];
         foreach ($this->vendors as $vendor) {
             $this->modul->getSitemap(false, $vendor['id']);
             foreach ($this->modul->sitemapUrl as $module) {
@@ -114,6 +127,7 @@ class PrepareCacheByUrlJob
 
     public function initVendors()
     {
+        $finalUrl = [];
         foreach ($this->getVendors() as $vendor) {
             $url = HTTP_PROTOCOL . $vendor['name_url'] . '.' . DOMAIN . $_SERVER['REQUEST_URI'];
             $this->initGetRequest($url);

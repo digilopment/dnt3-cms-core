@@ -7,6 +7,7 @@ use DntLibrary\App\Dnt3Oauth;
 class OauthTest
 {
     public $setHeader = false;
+    protected $dnt3Oauth;
 
     public function __construct()
     {

@@ -63,7 +63,7 @@ class AdminContent extends MultyLanguage
      */
     public function getCatId($type)
     {
-        $query = "SELECT id_entity FROM dnt_post_type WHERE name_url = '" . $type . "' AND `vendor_id` = '" . $this->vendor->getId() . "'";
+        $query = "SELECT id_entity FROM dnt_post_type WHERE admin_cat = '" . $type . "' AND `vendor_id` = '" . $this->vendor->getId() . "'";
         if ($this->db->num_rows($query) > 0) {
             foreach ($this->db->get_results($query) as $row) {
                 return $row['id_entity'];

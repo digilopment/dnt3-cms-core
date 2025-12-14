@@ -65,6 +65,5 @@ class SendGridV3Test
             echo 'Error:' . curl_error($ch);
         }
         var_dump($result);
-        curl_close($ch);
     }
 }

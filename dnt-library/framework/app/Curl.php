@@ -38,10 +38,6 @@ class Curl
         $error = curl_error($ch);
         $errno = curl_errno($ch);
 
-        if (is_resource($ch)) {
-            curl_close($ch);
-        }
-
         if (0 !== $errno) {
             throw new RuntimeException($error, $errno);
         }

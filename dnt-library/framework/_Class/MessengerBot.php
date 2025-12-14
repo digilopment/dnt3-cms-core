@@ -28,6 +28,13 @@ class MessengerBot
 
     public $result;
 
+    protected $settings;
+    protected $hubVerifyToken;
+    protected $accessToken;
+    protected $mark_seen;
+    protected $typing_on;
+    protected $typing_off;
+
     public function __construct()
     {
         $this->settings = new Settings();
@@ -61,7 +68,6 @@ class MessengerBot
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($response));
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
         curl_exec($ch);
-        curl_close($ch);
     }
 
     /**
@@ -93,7 +99,6 @@ class MessengerBot
         curl_setopt($this->bot_access, CURLOPT_POSTFIELDS, json_encode($response));
         curl_setopt($this->bot_access, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
         curl_exec($this->bot_access);
-        curl_close($this->bot_access);
     }
 
     /**
@@ -120,7 +125,6 @@ class MessengerBot
         curl_setopt($this->bot_param, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->bot_param, CURLOPT_URL, 'https://graph.facebook.com/v2.6/' . $userId . '?fields=first_name,last_name&access_token=' . $this->accessToken . '');
         $this->result = curl_exec($this->bot_param);
-        curl_close($this->bot_param);
 
         $this->param = json_decode($this->result);
         return @$this->param->$param;

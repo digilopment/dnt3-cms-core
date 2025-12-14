@@ -46,6 +46,8 @@ class MailerController extends AdminController
 
     protected $post;
 
+    protected $replacedcontent;
+
     public function __construct()
     {
         parent::__construct();

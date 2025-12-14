@@ -359,10 +359,22 @@ if (!extension_loaded('mbstring')) {
         function mb_convert_encoding($data, $to_encoding, $from_encoding = 'UTF-8')
         {
             if (str_replace('-', '', strtolower($to_encoding)) === 'utf8') {
-                return utf8_encode($data);
+                // utf8_encode() deprecated in PHP 8.2, removed in PHP 8.3
+                // Use mb_convert_encoding() instead
+                if (function_exists('mb_convert_encoding')) {
+                    return mb_convert_encoding($data, 'UTF-8', $from_encoding);
+                }
+                // Fallback: return as-is if mb_convert_encoding not available
+                return $data;
             }
 
-            return utf8_decode($data);
+            // utf8_decode() deprecated in PHP 8.2, removed in PHP 8.3
+            // Use mb_convert_encoding() instead
+            if (function_exists('mb_convert_encoding')) {
+                return mb_convert_encoding($data, $from_encoding, 'UTF-8');
+            }
+            // Fallback: return as-is if mb_convert_encoding not available
+            return $data;
         }
     }
 
@@ -394,13 +406,15 @@ if (!extension_loaded('mbstring')) {
     if (!function_exists('mb_strlen')) {
         function mb_strlen($str, $encoding = 'iso-8859-1')
         {
+            // utf8_encode/utf8_decode deprecated in PHP 8.2, removed in PHP 8.3
+            // Use strlen() directly as fallback since mb_strlen is not available
             switch (str_replace('-', '', strtolower($encoding))) {
                 case 'utf8':
-                    return strlen(utf8_encode($str));
+                    return strlen($str);
                 case '8bit':
                     return strlen($str);
                 default:
-                    return strlen(utf8_decode($str));
+                    return strlen($str);
             }
         }
     }
@@ -1084,7 +1098,6 @@ if (function_exists('curl_init')) {
         $raw_headers = substr($data, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
         $headers = preg_split("/[\n\r]+/", trim($raw_headers));
         $data = substr($data, curl_getinfo($ch, CURLINFO_HEADER_SIZE));
-        curl_close($ch);
 
         return $data;
     }
@@ -1093,7 +1106,14 @@ if (function_exists('curl_init')) {
     {
         $data = file_get_contents($url);
         // Use http_get_last_response_headers() instead of deprecated $http_response_header
-        $headers = function_exists('http_get_last_response_headers') ? http_get_last_response_headers() : (isset($http_response_header) ? $http_response_header : []);
+        if (function_exists('http_get_last_response_headers')) {
+            $headers = http_get_last_response_headers();
+        } else {
+            // Suppress deprecation warning for $http_response_header in PHP 8.2+
+            // The variable is automatically created by PHP when file_get_contents() is used with HTTP/HTTPS
+            // Using @ to suppress deprecation warning when accessing the variable
+            $headers = @(isset($http_response_header) ? $http_response_header : []);
+        }
 
         return $data;
     }

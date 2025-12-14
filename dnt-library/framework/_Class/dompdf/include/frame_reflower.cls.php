@@ -371,7 +371,7 @@ abstract class Frame_Reflower
                         }
                         $p = $p->lookup_counter_frame($counter_id);
                     }
-                    $text .= implode($string, $tmp);
+                    $text .= implode($tmp, $string);
                 } else {
                   // countertops?
                     continue;

@@ -344,7 +344,8 @@ class Stylesheet
             $good_mime_type = true;
 
           // See http://the-stickman.com/web-development/php/getting-http-response-headers-when-using-file_get_contents/
-            if (isset($http_response_header) && !$this->_dompdf->get_quirksmode()) {
+            // Suppress deprecation warning for $http_response_header in PHP 8.2+
+            if (@isset($http_response_header) && !$this->_dompdf->get_quirksmode()) {
                 foreach ($http_response_header as $_header) {
                     if (preg_match('@Content-Type:\s*([\w/]+)@i', $_header, $matches) &&
                     ($matches[1] !== 'text/css')) {

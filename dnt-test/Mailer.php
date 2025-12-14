@@ -6,6 +6,8 @@ use DntLibrary\Base\Mailer;
 
 class MailerTest
 {
+    protected $mailer;
+
     public function __construct()
     {
         $this->mailer = new Mailer();

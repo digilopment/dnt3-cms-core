@@ -7,6 +7,8 @@ use DntLibrary\Base\Dnt;
 
 class WeekNumberTest
 {
+    protected $dnt;
+
     public function __construct()
     {
         $this->dnt = new Dnt();

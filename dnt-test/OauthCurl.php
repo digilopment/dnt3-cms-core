@@ -8,6 +8,8 @@ use DntLibrary\App\Dnt3Oauth;
 class OauthCurlTest
 {
     public $setHeader = false;
+    protected $dnt3Oauth;
+    protected $curl;
 
     public function __construct()
     {

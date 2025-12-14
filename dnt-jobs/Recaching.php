@@ -8,6 +8,13 @@ use DntLibrary\Base\Vendor;
 
 class RecachingJob
 {
+    protected $vendor;
+    protected $rest;
+    protected $dnt;
+    protected $vendorId;
+    protected $response;
+    protected $vendors;
+
     public function __construct()
     {
         $this->vendor = new Vendor();

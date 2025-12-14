@@ -77,7 +77,6 @@ class ObchodZakazniciExportJob
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
         curl_setopt($ch, CURLOPT_USERPWD, "$login:$password");
         $result = curl_exec($ch);
-        curl_close($ch);
         return true;
     }
 

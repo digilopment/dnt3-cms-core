@@ -233,7 +233,6 @@ class Mailer
         $response = curl_exec($ch);
         $this->response = $response;
         //var_dump($this->response);
-        curl_close($ch);
     }
 
     public function methodSendGrid($config)
@@ -333,7 +332,6 @@ class Mailer
           // obtain response
           $response = curl_exec($session);
           $this->response = $response;
-          curl_close($session);
          * */
     }
 
@@ -528,7 +526,6 @@ class Mailer
             $response = curl_exec($session);
             $this->response = $response;
             //var_dump($response, curl_error($session));
-            curl_close($session);
             //SEND GRID END
         } elseif (SEND_EMAIL_VIA == 'smtp') {
         }
@@ -609,7 +606,6 @@ class Mailer
 
         $response = curl_exec($ch);
         $this->response = $response;
-        curl_close($ch);
 
         return $response;
     }

@@ -535,7 +535,8 @@ class DOMPDF
         $encoding = null;
 
       // See http://the-stickman.com/web-development/php/getting-http-response-headers-when-using-file_get_contents/
-        if (isset($http_response_header)) {
+        // Suppress deprecation warning for $http_response_header in PHP 8.2+
+        if (@isset($http_response_header)) {
             foreach ($http_response_header as $_header) {
                 if (preg_match('@Content-Type:\s*[\w/]+;\s*?charset=([^\s]+)@i', $_header, $matches)) {
                     $encoding = strtoupper($matches[1]);

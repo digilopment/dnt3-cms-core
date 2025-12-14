@@ -16,6 +16,10 @@ class AplicationInstall
 
     protected $adm;
 
+    protected $url;
+
+    protected $dnt;
+
     public function __construct()
     {
         $this->url = new Url();

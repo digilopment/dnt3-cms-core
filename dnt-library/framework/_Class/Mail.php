@@ -1923,28 +1923,11 @@ class PHPMailer
             if (!is_readable($path)) {
                 throw new phpmailerException($this->Lang('file_open') . $path, self::STOP_CONTINUE);
             }
-            //  if (!function_exists('get_magic_quotes')) {
-            //    function get_magic_quotes() {
-            //      return false;
-            //    }
-            //  }
-            $magic_quotes = get_magic_quotes_runtime();
-            if ($magic_quotes) {
-                if (version_compare(PHP_VERSION, '5.3.0', '<')) {
-                    set_magic_quotes_runtime(0);
-                } else {
-                    ini_set('magic_quotes_runtime', 0);
-                }
-            }
+            // get_magic_quotes_runtime() was removed in PHP 8.0
+            // Magic quotes were removed in PHP 5.4.0, so this code is no longer needed
+            // $magic_quotes = false; // Always false in PHP 8.0+
             $file_buffer = file_get_contents($path);
             $file_buffer = $this->EncodeString($file_buffer, $encoding);
-            if ($magic_quotes) {
-                if (version_compare(PHP_VERSION, '5.3.0', '<')) {
-                    set_magic_quotes_runtime($magic_quotes);
-                } else {
-                    ini_set('magic_quotes_runtime', $magic_quotes);
-                }
-            }
             return $file_buffer;
         } catch (Exception $e) {
             $this->SetError($e->getMessage());
@@ -2127,7 +2110,7 @@ class PHPMailer
         $eol = "\r\n";
         $escape = '=';
         $output = '';
-        while (list(, $line) = each($lines)) {
+        foreach ($lines as $line) {
             $linlen = strlen($line);
             $newline = '';
             for ($i = 0; $i < $linlen; $i++) {

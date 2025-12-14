@@ -7,6 +7,7 @@ use DntLibrary\App\SendGrid;
 class SendGridTest
 {
     protected $dnt;
+    protected $sendGrid;
 
     public function __construct()
     {

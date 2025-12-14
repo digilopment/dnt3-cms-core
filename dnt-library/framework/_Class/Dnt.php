@@ -260,6 +260,8 @@ class Dnt
      */
     public function in_string($pharse, $str)
     {
+        // Convert null to empty string to avoid deprecation warning in PHP 8.1+
+        $str = $str ?? '';
         return preg_match('/' . $pharse . '/', $str);
         //return preg_match("/".$pharse."\b/i", "".$str."");
     }
@@ -730,7 +732,7 @@ class Dnt
             $truncated[] = $fragment;
         }
 
-        $result = implode($truncated, ' ');
+        $result = implode(' ', $truncated);
 
         if ($input == $result) {
             return $input;
